@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "net.m3tte.tcorp.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "tcorp.mixins.refmap.json",
+  "server": [
+  ],
+  "mixins": [
+      "DamageMixin"
+  ],
+  "client": [
+
+  ],
+  "minVersion": "0.8"
+}

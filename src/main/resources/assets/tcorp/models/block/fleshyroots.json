@@ -1,0 +1,7 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "tcorp:blocks/fleshy_roots",
+    "particle": "tcorp:blocks/fleshy_roots"
+  }
+}

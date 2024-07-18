@@ -1,0 +1,7 @@
+{
+  "parent": "tcorp:custom/knife",
+  "textures": {
+    "0": "tcorp:blocks/knife",
+    "particle": "tcorp:items/katana"
+  }
+}

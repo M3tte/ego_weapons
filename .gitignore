@@ -1,0 +1,12 @@
+
+/build/
+/elements/
+/.mcreator/
+/.idea/
+/run/
+/libs/
+/gradle/
+/tcorp.mcreator
+/mcreator.gradle
+/libs/EFM/
+/libs/EpicFight/

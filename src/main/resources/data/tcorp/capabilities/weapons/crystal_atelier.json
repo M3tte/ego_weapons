@@ -1,0 +1,11 @@
+{
+	"attributes":
+	{
+		"common":
+		{
+			"impact":1,
+			"max_strikes":4
+		}
+	},
+	"type":"crystal_atelier"
+}

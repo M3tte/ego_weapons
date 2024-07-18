@@ -1,0 +1,7 @@
+{
+  "parent": "tcorp:custom/justizia",
+  "textures": {
+    "0": "tcorp:blocks/justizia",
+    "particle": "tcorp:items/defiled_cutter"
+  }
+}

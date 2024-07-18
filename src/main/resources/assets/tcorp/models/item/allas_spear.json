@@ -1,0 +1,7 @@
+{
+  "parent": "tcorp:custom/allas_workshop",
+  "textures": {
+    "0": "tcorp:blocks/allas_workshop",
+    "particle": "tcorp:items/katana"
+  }
+}

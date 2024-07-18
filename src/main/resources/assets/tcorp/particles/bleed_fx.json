@@ -1,0 +1,9 @@
+{
+  "textures": [
+    "tcorp:effects/bleed0",
+    "tcorp:effects/bleed1",
+    "tcorp:effects/bleed2",
+    "tcorp:effects/bleed3",
+    "tcorp:effects/bleed4"
+  ]
+}

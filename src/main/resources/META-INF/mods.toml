@@ -1,0 +1,35 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+license="Academic Free License v3.0"
+
+[[mods]]
+modId="tcorp"
+version="1.0.0"
+displayName="TCorp"
+credits="Created using mod maker MCreator - https://mcreator.net/about"
+displayURL="https://mcreator.net"
+authors="M3tte"
+
+[[dependencies.tcorp]]
+    modId="forge" #mandatory
+    mandatory=true #mandatory
+    versionRange="[36.2.39,)" #mandatory
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.tcorp]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.5]"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.tcorp]]
+    modId="epicfight"
+    mandatory=true
+    versionRange="[16.6.4,)"
+    ordering="BEFORE"
+    side="BOTH"
+
+
+
+
+

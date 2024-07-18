@@ -1,0 +1,11 @@
+{
+	"attributes":
+	{
+		"common":
+		{
+			"impact":5,
+			"max_strikes":2
+		}
+	},
+	"type":"old_boys_workshop"
+}

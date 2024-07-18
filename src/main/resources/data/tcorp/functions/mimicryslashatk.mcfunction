@@ -1,0 +1,1 @@
+execute at @s positioned ~ ~1.5 ~ run particle tcorp:mimicryslash ^ ^ ^2.4

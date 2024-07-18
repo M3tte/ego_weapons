@@ -1,0 +1,8 @@
+{
+  "parent": "tcorp:custom/atelier_pistol",
+  "textures": {
+    "0": "tcorp:blocks/atelier_pistol",
+    "missing": "tcorp:blocks/atelier_pistol",
+    "particle": "tcorp:items/disposal_cutter"
+  }
+}

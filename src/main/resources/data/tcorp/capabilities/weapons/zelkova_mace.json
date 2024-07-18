@@ -1,0 +1,11 @@
+{
+	"attributes":
+	{
+		"common":
+		{
+			"impact":12,
+			"max_strikes":2
+		}
+	},
+	"type":"zelkova_mace"
+}

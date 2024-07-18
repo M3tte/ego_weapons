@@ -1,0 +1,8 @@
+{
+  "parent": "tcorp:custom/crimson_fan",
+  "textures": {
+    "0": "tcorp:blocks/crimson_fan",
+    "missing": "tcorp:blocks/crimson_fan",
+    "particle": "tcorp:items/heavens_watcher"
+  }
+}

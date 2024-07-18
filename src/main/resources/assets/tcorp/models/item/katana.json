@@ -1,0 +1,7 @@
+{
+  "parent": "tcorp:custom/katana",
+  "textures": {
+    "0": "tcorp:blocks/normalkatana",
+    "particle": "tcorp:items/disposal_cutter"
+  }
+}

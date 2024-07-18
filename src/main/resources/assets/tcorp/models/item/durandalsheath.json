@@ -1,0 +1,7 @@
+{
+  "parent": "tcorp:custom/durandal_sheath",
+  "textures": {
+    "2": "tcorp:blocks/durandal_sheath",
+    "particle": "tcorp:items/defiled_cutter"
+  }
+}

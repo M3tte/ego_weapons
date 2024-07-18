@@ -1,0 +1,488 @@
+{
+  "nothing_there.blunt": {
+    "category": "player",
+    "subtitle": "subtitles.nothing_there_blunt",
+    "sounds": [
+      {
+        "name": "tcorp:nothingthere/blunt",
+        "stream": false
+      }
+    ]
+  },
+  "nothing_there.i_love_you": {
+    "category": "player",
+    "subtitle": "subtitles.nothing_there_i_love_you",
+    "sounds": [
+      {
+        "name": "tcorp:nothingthere/i_love_you",
+        "stream": false
+      }
+    ]
+  },
+  "nothing_there.hello": {
+    "category": "player",
+    "subtitle": "subtitles.nothing_there_hello",
+    "sounds": [
+      {
+        "name": "tcorp:nothingthere/hello",
+        "stream": false
+      }
+    ]
+  },
+  "nothing_there.goodbye": {
+    "category": "player",
+    "subtitle": "subtitles.nothing_there_goodbye",
+    "sounds": [
+      {
+        "name": "tcorp:nothingthere/goodbye",
+        "stream": false
+      }
+    ]
+  },
+  "nothing_there.slash": {
+    "category": "player",
+    "subtitle": "subtitles.nothing_there_slash",
+    "sounds": [
+      {
+        "name": "tcorp:nothingthere/slash",
+        "stream": false
+      }
+    ]
+  },
+  "fingersnap": {
+    "category": "player",
+    "subtitle": "subtitles.fingersnap",
+    "sounds": [
+      {
+        "name": "tcorp:fingersnap",
+        "stream": false
+      }
+    ]
+  },
+  "kali.split.horizontal.ring": {
+    "category": "player",
+    "subtitle": "subtitles.kali_split_horizontal_ring",
+    "sounds": [
+      {
+        "name": "tcorp:kali/split_horizontal_ring",
+        "stream": false
+      }
+    ]
+  },
+  "paper_flip": {
+    "category": "player",
+    "subtitle": "subtitles.paper_flip",
+    "sounds": [
+      {
+        "name": "tcorp:paper_flip",
+        "stream": false
+      }
+    ]
+  },
+  "kali.hard_horizontal": {
+    "category": "player",
+    "subtitle": "subtitles.kali_hard_horizontal",
+    "sounds": [
+      {
+        "name": "tcorp:kali/hard_horizontal",
+        "stream": false
+      }
+    ]
+  },
+  "kali.horizontal": {
+    "category": "player",
+    "subtitle": "subtitles.kali_horizontal",
+    "sounds": [
+      {
+        "name": "tcorp:kali/horizontal",
+        "stream": false
+      }
+    ]
+  },
+  "kali.split.vertical.slash": {
+    "category": "player",
+    "subtitle": "subtitles.kali_vertical_slash",
+    "sounds": [
+      {
+        "name": "tcorp:kali/vertical_slash",
+        "stream": false
+      }
+    ]
+  },
+  "kali.split.vertical.hit": {
+    "category": "player",
+    "subtitle": "subtitles.kali_vertical_hit",
+    "sounds": [
+      {
+        "name": "tcorp:kali/vertical_hit",
+        "stream": false
+      }
+    ]
+  },
+  "kali.stab": {
+    "category": "player",
+    "subtitle": "subtitles.kali_stab",
+    "sounds": [
+      {
+        "name": "tcorp:kali/stab",
+        "stream": false
+      }
+    ]
+  },
+  "kali.split.horizontal.hit": {
+    "category": "player",
+    "subtitle": "subtitles.kali_split_horizontal_hit",
+    "sounds": [
+      {
+        "name": "tcorp:kali/split_horizontal_hit",
+        "stream": false
+      }
+    ]
+  },
+  "kali.split.horizontal.swing": {
+    "category": "player",
+    "subtitle": "subtitles.kali_split_horizontal_swing",
+    "sounds": [
+      {
+        "name": "tcorp:kali/split_horizontal_swing",
+        "stream": false
+      }
+    ]
+  },
+  "dice_roll": {
+    "category": "player",
+    "subtitle": "subtitles.dice_roll",
+    "sounds": [
+      {
+        "name": "tcorp:dice_roll",
+        "stream": false
+      }
+    ]
+  },
+  "result_positive": {
+    "category": "player",
+    "subtitle": "subtitles.result_positive",
+    "sounds": [
+      {
+        "name": "tcorp:end_win",
+        "stream": false
+      }
+    ]
+  },
+  "blacksilence.wheels.impact": {
+    "category": "player",
+    "subtitle": "subtitles.result_positive",
+    "sounds": [
+      {
+        "name": "tcorp:wheels/impact",
+        "stream": false
+      }
+    ]
+  },
+  "roland": {
+    "category": "record",
+    "subtitle": "subtitles.roland",
+    "sounds": [
+      {
+        "name": "tcorp:roland_phase3",
+        "stream": true
+      }
+    ]
+  },
+  "ateliershoot": {
+    "category": "player",
+    "subtitle": "subtitles.ateliershoot",
+    "sounds": [
+      {
+        "name": "tcorp:bullet1-_mp3cut.net_",
+        "stream": false
+      }
+    ]
+  },
+  "thatsthatthisisthis": {
+    "category": "player",
+    "subtitle": "subtitles.thatsthatthisisthis",
+    "sounds": [
+      {
+        "name": "tcorp:thatsthatthisisthis",
+        "stream": false
+      }
+    ]
+  },
+  "heavyslash": {
+    "category": "player",
+    "subtitle": "subtitles.heavyslash",
+    "sounds": [
+      {
+        "name": "tcorp:slashheavy",
+        "stream": false
+      }
+    ]
+  },
+  "bullet_crit": {
+    "category": "player",
+    "subtitle": "subtitles.bullet_crit",
+    "sounds": [
+      {
+        "name": "tcorp:impact",
+        "stream": false
+      }
+    ]
+  },
+  "cross_slash": {
+    "category": "player",
+    "subtitle": "subtitles.cross_slash",
+    "sounds": [
+      {
+        "name": "tcorp:crossslash",
+        "stream": false
+      }
+    ]
+  },
+  "woosh": {
+    "category": "neutral",
+    "subtitle": "subtitles.woosh",
+    "sounds": [
+      {
+        "name": "tcorp:woosh1",
+        "stream": false
+      },
+      {
+        "name": "tcorp:woosh2",
+        "stream": false
+      },
+      {
+        "name": "tcorp:woosh3",
+        "stream": false
+      }
+    ]
+  },
+  "heavy_woosh": {
+    "category": "neutral",
+    "subtitle": "subtitles.heavy_woosh",
+    "sounds": [
+      {
+        "name": "tcorp:heavy_woosh",
+        "stream": false
+      }
+    ]
+  },
+  "metal_clash": {
+    "category": "neutral",
+    "subtitle": "subtitles.metal_clash",
+    "sounds": [
+      {
+        "name": "tcorp:metalclank",
+        "stream": false
+      }
+    ]
+  },
+  "ominousbell": {
+    "category": "neutral",
+    "subtitle": "subtitles.ominousbell",
+    "sounds": [
+      {
+        "name": "tcorp:bell",
+        "stream": false
+      }
+    ]
+  },
+  "ominouseffect": {
+    "category": "neutral",
+    "subtitle": "subtitles.ominouseffect",
+    "sounds": [
+      {
+        "name": "tcorp:ominous",
+        "stream": false
+      }
+    ]
+  },
+  "blacksilence.evade": {
+    "category": "player",
+    "subtitle": "subtitles.blacksilence.evade",
+    "sounds": [
+      {
+        "name": "tcorp:bs_evade",
+        "stream": false
+      }
+    ]
+  },
+  "blacksilence.crystal_atelier": {
+    "category": "player",
+    "subtitle": "subtitles.blacksilence.crystal_atelier",
+    "sounds": [
+      {
+        "name": "tcorp:crystal_atelier",
+        "stream": false
+      }
+    ]
+  },
+  "blacksilence.zelkova.axe": {
+    "category": "neutral",
+    "sounds": [
+      {
+        "name": "tcorp:zelkova_axe",
+        "stream": false
+      }
+    ]
+  },
+  "blacksilence.zelkova.mace": {
+    "category": "neutral",
+    "subtitle": "subtitles.blacksilence.zelkova.mace",
+    "sounds": [
+      {
+        "name": "tcorp:zelkova_mace",
+        "stream": false
+      }
+    ]
+  },
+  "blacksilence.durandal.strong": {
+    "category": "neutral",
+    "subtitle": "subtitles.blacksilence.durandal.strong",
+    "sounds": [
+      {
+        "name": "tcorp:durandal_strong",
+        "stream": false
+      }
+    ]
+  },
+  "blacksilence.crystal_atelier.strong": {
+    "category": "player",
+    "subtitle": "subtitles.blacksilence.crystal_atelier.strong",
+    "sounds": [
+      {
+        "name": "tcorp:crystal_atelier_strong",
+        "stream": false
+      }
+    ]
+  },
+  "blacksilence.shortsword": {
+    "category": "neutral",
+    "subtitle": "subtitles.blacksilence.shortsword",
+    "sounds": [
+      {
+        "name": "tcorp:blacksilence_shortsword",
+        "stream": false
+      }
+    ]
+  },
+  "blacksilence.mook.unsheath": {
+    "category": "neutral",
+    "subtitle": "subtitles.blacksilence.mook.unsheath",
+    "sounds": [
+      {
+        "name": "tcorp:mook/mook_unsheath",
+        "stream": false
+      }
+    ]
+  },
+  "blacksilence.mook.cut": {
+    "category": "neutral",
+    "subtitle": "subtitles.blacksilence.mook.cut",
+    "sounds": [
+      {
+        "name": "tcorp:mook/mook_cut",
+        "stream": false
+      }
+    ]
+  },
+  "blacksilence.mook.hit": {
+    "category": "neutral",
+    "subtitle": "subtitles.blacksilence.mook.hit",
+    "sounds": [
+      {
+        "name": "tcorp:mook/mook_hit",
+        "stream": false
+      }
+    ]
+  },
+  "sword_stab": {
+    "category": "neutral",
+    "subtitle": "subtitles.sword_stab",
+    "sounds": [
+      {
+        "name": "tcorp:sword_stab",
+        "stream": false
+      }
+    ]
+  },
+  "stagger": {
+    "category": "neutral",
+    "subtitle": "subtitles.stagger",
+    "sounds": [
+      {
+        "name": "tcorp:stagger",
+        "stream": false
+      }
+    ]
+  },
+  "guard_win": {
+    "category": "neutral",
+    "subtitle": "subtitles.guard_win",
+    "sounds": [
+      {
+        "name": "tcorp:guard_win",
+        "stream": false
+      }
+    ]
+  },
+  "clockticking": {
+    "category": "player",
+    "subtitle": "subtitles.clockticking",
+    "sounds": [
+      {
+        "name": "tcorp:ticking",
+        "stream": false
+      }
+    ]
+  },
+  "click": {
+    "category": "neutral",
+    "subtitle": "subtitles.click",
+    "sounds": [
+      {
+        "name": "tcorp:click",
+        "stream": false
+      }
+    ]
+  },
+  "blacksilence.atelier.revolver": {
+    "category": "neutral",
+    "subtitle": "subtitles.blacksilence.atelier.revolver",
+    "sounds": [
+      {
+        "name": "tcorp:blacksilence_revolver",
+        "stream": false
+      }
+    ]
+  },
+  "blacksilence.atelier.shotgun": {
+    "category": "neutral",
+    "sounds": [
+      {
+        "name": "tcorp:shotgun",
+        "stream": false
+      }
+    ]
+  },
+  "blacksilence.durandal.down": {
+    "category": "neutral",
+    "subtitle": "subtitles.blacksilence.durandal.down",
+    "sounds": [
+      {
+        "name": "tcorp:durandal_down",
+        "stream": false
+      }
+    ]
+  },
+  "blacksilence.durandal.up": {
+    "category": "neutral",
+    "subtitle": "subtitles.blacksilence.durandal.up",
+    "sounds": [
+      {
+        "name": "tcorp:durandal_up",
+        "stream": false
+      }
+    ]
+  }
+}

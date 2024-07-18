@@ -1,0 +1,8 @@
+{
+  "parent": "tcorp:custom/atelier_logic_shotgun",
+  "textures": {
+    "0": "tcorp:blocks/atelier_logic_shotgun",
+    "missing": "tcorp:blocks/atelier_logic_shotgun",
+    "particle": "tcorp:items/defiled_cutter"
+  }
+}

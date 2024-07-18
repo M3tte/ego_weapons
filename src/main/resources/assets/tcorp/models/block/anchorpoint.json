@@ -1,0 +1,10 @@
+{
+  "parent": "tcorp:custom/galaxy_savepoint",
+  "textures": {
+    "all": "tcorp:blocks/recallpointbottom",
+    "particle": "tcorp:blocks/recallpointbottom",
+    "0": "tcorp:blocks/recallpointarrow",
+    "1": "tcorp:blocks/recallpointbottom",
+    "missing": "tcorp:blocks/recallpointbottom"
+  }
+}

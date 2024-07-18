@@ -1,0 +1,18 @@
+{
+  "replace": false,
+  "values": [
+    "tcorp:atelier_logic_shotgun",
+    "tcorp:crystal_atelier",
+    "tcorp:allas_spear",
+    "tcorp:zelkova_mace",
+    "tcorp:ranga_claw_l",
+    "tcorp:atelier_logic_pistols",
+    "tcorp:zelkova_axe",
+    "tcorp:durandal",
+    "tcorp:ranga_dagger",
+    "tcorp:ranga_claw",
+    "tcorp:mook_workshop",
+    "tcorp:wheels_industry",
+    "tcorp:old_boys_workshop"
+  ]
+}

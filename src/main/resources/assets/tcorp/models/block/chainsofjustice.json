@@ -1,0 +1,9 @@
+{
+  "parent": "tcorp:custom/justicechaineffect",
+  "textures": {
+    "all": "tcorp:blocks/justicechains",
+    "particle": "tcorp:blocks/justicechains",
+    "0": "tcorp:blocks/justicechains",
+    "missing": "tcorp:blocks/justicechains"
+  }
+}
