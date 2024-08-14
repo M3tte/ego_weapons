@@ -31,19 +31,39 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static net.m3tte.tcorp.TcorpModVariables.PLAYER_VARIABLES_CAPABILITY;
+
+
 @Mod.EventBusSubscriber({Dist.CLIENT})
 public class GenericOverlay extends ModIngameGui {
 
 	static long latestArmorUnready = 0;
 	static boolean hasPlayedUnready = false;
 
+	static double currentHealthPercent = -1;
+	static double currentBrightHealthPercent = -1;
+
+	static double currentStaggerPercent = -1;
+	static double currentBrightStaggerPercent = -1;
 	static long latestWeaponUnready = 0;
+
+
+	static long lastRenderedTick = 0;
 	static boolean hasPlayedWeaponUnready = false;
 
-	static ResourceLocation[] shellLeft = parseShellState(1 ,5, "shell_left");
-	static ResourceLocation[] shellRight = parseShellState(1 ,5, "shell_right");
 
-	private static ResourceLocation[] parseShellState(int min, int max, String prefix) {
+	final static ResourceLocation base_ui = new ResourceLocation("tcorp:textures/screens/gui/base_ui.png");
+	final static ResourceLocation healthbar = new ResourceLocation("tcorp:textures/screens/gui/healthbar.png");
+	final static ResourceLocation healthbar_b = new ResourceLocation("tcorp:textures/screens/gui/healthbar_bright.png");
+	final static ResourceLocation staggerbar = new ResourceLocation("tcorp:textures/screens/gui/staggerbar.png");
+	final static ResourceLocation staggerbar_b = new ResourceLocation("tcorp:textures/screens/gui/staggerbar_bright.png");
+
+
+	static ResourceLocation[] shellLeft = parseMultiStateTexture(1 ,5, "shell_left");
+	static ResourceLocation[] shellRight = parseMultiStateTexture(1 ,5, "shell_right");
+	static ResourceLocation[] shellHealthbar = parseMultiStateTexture(1 ,5, "ui/healthbar_shell");
+
+	private static ResourceLocation[] parseMultiStateTexture(int min, int max, String prefix) {
 		ResourceLocation[] array = new ResourceLocation[max - min + 1];
 
 		int index = 0;
@@ -66,7 +86,7 @@ public class GenericOverlay extends ModIngameGui {
 			double _x = 0;
 			double _y = 0;
 			double _z = 0;
-			PlayerEntity entity = Minecraft.getInstance().player;
+			PlayerEntity entity = !(Minecraft.getInstance().getCameraEntity() instanceof PlayerEntity) ? null : (PlayerEntity)Minecraft.getInstance().getCameraEntity();
 			if (entity != null) {
 				_world = entity.level;
 				_x = entity.getX();
@@ -89,24 +109,34 @@ public class GenericOverlay extends ModIngameGui {
 
 			MatrixStack matStack = event.getMatrixStack();
 
-			matStack.pushPose();
+
+			// Blip UI
+
+			/*matStack.pushPose();
 			matStack.scale(2F, 2F, 2.0F);
 			Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("tcorp:textures/screens/power_blip.png"));
 			ModIngameGui.blit(matStack, posX , posY, 55, 55, 3, 9, 3, 9);
-			matStack.popPose();
+			matStack.popPose();*/
 
 
 			//Minecraft.getInstance().font.draw(event.getMatrixStack(), "TCorp - Indev - Bugs are to be expected", 30, 20, -1);
 
 			Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("tcorp:textures/screens/blip_background.png"));
 			blit(event.getMatrixStack(), posX + 94, posY + 98, 0, 0, 64, 20, 64, 20);
-
+			Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("tcorp:textures/screens/power_blip.png"));
 			for (int sc = 0; sc < energy; sc++) {
-                Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("tcorp:textures/screens/power_blip.png"));
                 blit(event.getMatrixStack(), posX + 98 + sc * 6, posY + 102, 0, 0, 3, 9, 3, 9);
             }
 			ItemStack equippedArmor = entity.getItemBySlot(EquipmentSlotType.CHEST);
 			ItemStack equippedItem = entity.getItemBySlot(EquipmentSlotType.MAINHAND);
+
+			// Main UI
+
+			// UI
+
+			renderStatisticUI(h-70, 2, entity, playerVariables, event);
+
+
 
 			if (!equippedArmor.isEmpty()) { // Calculate Ability Widget
 				ItemAbility ability = ArmorAbilityProcedure.getForItem(equippedArmor.getItem());
@@ -127,7 +157,7 @@ public class GenericOverlay extends ModIngameGui {
 						hasPlayedUnready = false;
 					}
 
-					renderAbility(ability, 50, entity, playerVariables, event, h, icon, flashProgress);
+					renderAbility(ability, -13, entity, playerVariables, event, h, icon, flashProgress);
 				}
 			}
 
@@ -150,7 +180,7 @@ public class GenericOverlay extends ModIngameGui {
 						hasPlayedWeaponUnready = false;
 					}
 
-					renderAbility(ability, -15, entity, playerVariables, event, h, icon, flashProgress);
+					renderAbility(ability, -63, entity, playerVariables, event, h, icon, flashProgress);
 				}
 			}
 
@@ -165,6 +195,10 @@ public class GenericOverlay extends ModIngameGui {
 			RenderSystem.enableAlphaTest();
 			RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
+
+
+			// Overlays
+
 			if (entity.hasEffect(Shell.get())) {
 				int level = entity.getEffect(Shell.get()).getAmplifier();
 				if (level > 4) level = 4;
@@ -175,6 +209,104 @@ public class GenericOverlay extends ModIngameGui {
 				blit(event.getMatrixStack(), w - (int)(60 * ((float)h/90)), 0, 0, 0, (int)(60 * ((float)h/90)), h, (int)(60 * ((float)h/90)), h);
 
 			}
+
+
+		}
+	}
+
+	private static void renderHealth() {
+
+	}
+
+	private static void renderStatisticUI(int offsetY, int offsetX, PlayerEntity player, TcorpModVariables.PlayerVariables playerVariables, RenderGameOverlayEvent.Post event) {
+		double targetPercent = player.getHealth() != 0 ? player.getHealth() : -1;
+		double targetStagger = playerVariables.stagger != 0 ? playerVariables.stagger : -1;
+
+		if (lastRenderedTick != player.tickCount) {
+			if (player.getHealth() != 0)
+				targetPercent = player.getHealth() / player.getMaxHealth();
+
+			if (playerVariables.maxStagger != 0)
+				targetStagger = playerVariables.stagger / playerVariables.maxStagger;
+
+			// Calc Health
+			if (currentHealthPercent == -1)
+				currentHealthPercent = targetPercent;
+			else {
+				if (Math.abs(currentHealthPercent - targetPercent) < 0.01) {
+					currentHealthPercent = targetPercent;
+				} else {
+					currentHealthPercent = (currentHealthPercent * 3 + targetPercent) / 4;
+				}
+			}
+			// Calc Stagger
+			if (currentStaggerPercent == -1)
+				currentStaggerPercent = targetStagger;
+			else {
+				if (Math.abs(currentStaggerPercent - targetStagger) < 0.01) {
+					currentStaggerPercent = targetStagger;
+				} else {
+					currentStaggerPercent = (currentStaggerPercent * 3 + targetStagger) / 4;
+				}
+			}
+
+			// Calc Bright Health
+			if (currentBrightHealthPercent == -1)
+				currentBrightHealthPercent = targetPercent;
+			else {
+				if (Math.abs(currentBrightHealthPercent - targetPercent) < 0.01) {
+					currentBrightHealthPercent = targetPercent;
+				} else {
+					currentBrightHealthPercent = (currentBrightHealthPercent * 8 + targetPercent) / 9;
+				}
+			}
+
+			// Calc Bright Stagger
+			if (currentBrightStaggerPercent == -1)
+				currentBrightStaggerPercent = targetStagger;
+			else {
+				if (Math.abs(currentBrightStaggerPercent - targetStagger) < 0.01) {
+					currentBrightStaggerPercent = targetStagger;
+				} else {
+					currentBrightStaggerPercent = (currentBrightStaggerPercent * 8 + targetStagger) / 9;
+				}
+			}
+
+			lastRenderedTick = player.tickCount;
+		}
+
+
+
+		Minecraft.getInstance().getTextureManager().bind(base_ui);
+		blit(event.getMatrixStack(), offsetX, offsetY, 0, 0, 200, 48, 200, 48);
+
+		if (targetPercent != -1) {
+			if (currentHealthPercent <= currentBrightHealthPercent) {
+				Minecraft.getInstance().getTextureManager().bind(healthbar_b);
+				blit(event.getMatrixStack(), offsetX+ 29, offsetY + 8, 0, 0, (int)(154 * currentBrightHealthPercent), 11, 154, 11);
+			}
+			Minecraft.getInstance().getTextureManager().bind(healthbar);
+			blit(event.getMatrixStack(), offsetX+ 29, offsetY + 8, 0, 0, (int)(154 * currentHealthPercent), 11, 154, 11);
+		}
+
+		if (targetPercent != -1) {
+			if (currentHealthPercent <= currentBrightHealthPercent) {
+				Minecraft.getInstance().getTextureManager().bind(staggerbar_b);
+				blit(event.getMatrixStack(), offsetX+ 29, offsetY + 31, 0, 0, (int)(136 * currentBrightStaggerPercent), 8, 136, 11);
+			}
+			Minecraft.getInstance().getTextureManager().bind(staggerbar);
+			blit(event.getMatrixStack(), offsetX+ 29, offsetY + 31, 0, 0, (int)(136 * currentStaggerPercent), 8, 136, 11);
+		}
+
+
+		renderShellOverlayBar(offsetX, offsetY, player, event);
+	}
+
+
+	private static void renderShellOverlayBar(int offsetX, int offsetY, PlayerEntity player,  RenderGameOverlayEvent.Post event) {
+		if (player.hasEffect(Shell.get())) {
+			Minecraft.getInstance().getTextureManager().bind(shellHealthbar[Math.min(player.getEffect(Shell.get()).getAmplifier(),4)]);
+			blit(event.getMatrixStack(), offsetX+ 29, offsetY + 8, 0, 0, 154, 11, 154, 11);
 		}
 	}
 

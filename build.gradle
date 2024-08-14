@@ -30,10 +30,9 @@ minecraft {
 
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-
             property 'mixin.env.remapRefMap', 'true'
-                        property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
-                        args '-mixin.config=tcorp.mixins.json'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
+            args '-mixin.config=tcorp.mixins.json'
 
             mods {
                 tcorp {
@@ -47,10 +46,9 @@ minecraft {
 
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-
             property 'mixin.env.remapRefMap', 'true'
-                        property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
-                        args '-mixin.config=tcorp.mixins.json'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
+            args '-mixin.config=tcorp.mixins.json'
 
 
             mods {
@@ -76,10 +74,14 @@ repositories {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 mixin {
-    add sourceSets.main, "epicfight.mixins.refmap.json"
+    add sourceSets.main, "tcorp.mixins.refmap.json"
+    showMessageTypes = true
+
+    config 'tcorp.mixins.json'
 }
 
 dependencies {
+    implementation 'org.jetbrains:annotations:24.0.0'
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.39'
     implementation fg.deobf('curse.maven:epicfight-405076:4029362')
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'

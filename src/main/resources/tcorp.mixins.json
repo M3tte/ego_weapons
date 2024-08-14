@@ -6,10 +6,10 @@
   "server": [
   ],
   "mixins": [
-      "DamageMixin"
+    "LivingEntityDamageMixin",
+    "PlayerEntityDamageMixin"
   ],
   "client": [
-
   ],
   "minVersion": "0.8"
 }

@@ -66,6 +66,7 @@ public class ClientModBusEvent {
         particleEngine.register(TCorpParticleRegistry.MIMICRY_DASH_HIT.get(), new MimicryDashHit.Provider());
         particleEngine.register(TCorpParticleRegistry.MIMICRY_VERTICAL_STRIKE.get(), MimicryVerticalStrikeParticle.Provider::new);
         particleEngine.register(TCorpParticleRegistry.MIMICRY_VERTICAL_HIT.get(), new MimicryVerticalSplitHit.Provider());
+        particleEngine.register(TCorpParticleRegistry.STAGGER.get(), StaggerParticle.Provider::new);
     }
 
 }

@@ -51,5 +51,6 @@ public class TCorpParticleRegistry {
 
     public static final RegistryObject<BasicParticleType> MIMICRY_VERTICAL_STRIKE = PARTICLES.register("vertical_split_strike", () -> new BasicParticleType(true));
     public static final RegistryObject<HitParticleType> MIMICRY_VERTICAL_HIT = PARTICLES.register("vertical_split_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ATTACKER_XY_ROTATION));
+    public static final RegistryObject<BasicParticleType> STAGGER = PARTICLES.register("stagger", () -> new BasicParticleType(true));
 
 }

@@ -1,5 +1,6 @@
 package net.m3tte.tcorp;
 
+import net.m3tte.tcorp.network.TCorpPackageHandler.SendStaggerMessage;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -37,6 +38,10 @@ public class TcorpModVariables {
 				WorldSavedDataSyncMessage::handler);
 		elements.addNetworkMessage(PlayerVariablesSyncMessage.class, PlayerVariablesSyncMessage::buffer, PlayerVariablesSyncMessage::new,
 				PlayerVariablesSyncMessage::handler);
+		elements.addNetworkMessage(SyncStaggerMessage.class, SyncStaggerMessage::buffer, SyncStaggerMessage::new,
+				SyncStaggerMessage::handler);
+		elements.addNetworkMessage(SendStaggerMessage.class, SendStaggerMessage::buffer, SendStaggerMessage::new,
+				SendStaggerMessage::handler);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::init);
 	}
 
@@ -234,6 +239,8 @@ public class TcorpModVariables {
 			nbt.putBoolean("firingMode", instance.firingMode);
 			nbt.putDouble("blacksilence_ws", instance.blacksilence_ws);
 			nbt.putDouble("iFrames", instance.iFrames);
+			nbt.putDouble("maxStagger", instance.maxStagger);
+			nbt.putDouble("stagger", instance.stagger);
 			return nbt;
 		}
 
@@ -259,6 +266,8 @@ public class TcorpModVariables {
 			instance.firingMode = nbt.getBoolean("firingMode");
 			instance.blacksilence_ws = nbt.getDouble("blacksilence_ws");
 			instance.iFrames = nbt.getDouble("iFrames");
+			instance.maxStagger = nbt.getDouble("maxStagger");
+			instance.stagger = nbt.getDouble("stagger");
 		}
 	}
 
@@ -282,10 +291,17 @@ public class TcorpModVariables {
 		public boolean firingMode = true;
 		public double blacksilence_ws = 0;
 		public double iFrames = 0;
+		public double maxStagger = 20;
+		public double stagger = 20;
 
 		public void syncPlayerVariables(Entity entity) {
 			if (entity instanceof ServerPlayerEntity)
 				TcorpMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) entity), new PlayerVariablesSyncMessage(this));
+		}
+
+		public void syncStagger(Entity entity) {
+			if (entity instanceof ServerPlayerEntity)
+				TcorpMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) entity), new SyncStaggerMessage(this));
 		}
 	}
 
@@ -335,6 +351,8 @@ public class TcorpModVariables {
 		clone.blacksilence_ws = original.blacksilence_ws;
 		if (!event.isWasDeath()) {
 			clone.iFrames = original.iFrames;
+			clone.maxStagger = original.maxStagger;
+			clone.stagger = original.stagger;
 		}
 	}
 
@@ -379,9 +397,47 @@ public class TcorpModVariables {
 					variables.firingMode = message.data.firingMode;
 					variables.blacksilence_ws = message.data.blacksilence_ws;
 					variables.iFrames = message.data.iFrames;
+					variables.maxStagger = message.data.maxStagger;
+					variables.stagger = message.data.stagger;
 				}
 			});
 			context.setPacketHandled(true);
 		}
 	}
+
+	public static class SyncStaggerMessage {
+		public PlayerVariables data;
+
+		public SyncStaggerMessage(PacketBuffer buffer) {
+			this.data = new PlayerVariables();
+			new PlayerVariablesStorage().readNBT(null, this.data, null, buffer.readNbt());
+		}
+
+		public SyncStaggerMessage(PlayerVariables data) {
+			this.data = data;
+		}
+
+		public static void buffer(SyncStaggerMessage message, PacketBuffer buffer) {
+			buffer.writeNbt((CompoundNBT) new PlayerVariablesStorage().writeNBT(null, message.data, null));
+		}
+
+		public static void handler(SyncStaggerMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
+			NetworkEvent.Context context = contextSupplier.get();
+			context.enqueueWork(() -> {
+				if (!context.getDirection().getReceptionSide().isServer()) {
+					PlayerVariables variables = ((PlayerVariables) Minecraft.getInstance().player.getCapability(PLAYER_VARIABLES_CAPABILITY, null)
+							.orElse(new PlayerVariables()));
+					variables.maxStagger = message.data.maxStagger;
+					variables.stagger = message.data.stagger;
+
+					/*if (variables.stagger <= 0) {
+						StaggerSystem.stagger(Minecraft.getInstance().player);
+					}*/
+				}
+			});
+			context.setPacketHandled(true);
+		}
+	}
+
+
 }

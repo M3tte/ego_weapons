@@ -120,6 +120,7 @@ public class TCorpAnimations {
 
     public static StaticAnimation RANGA_GUARD_STAGGER;
 
+    public static StaticAnimation STAGGER;
     public static StaticAnimation RANGA_ATTACK_1;
     public static StaticAnimation RANGA_ATTACK_2;
     public static StaticAnimation RANGA_ATTACK_3;
@@ -433,6 +434,7 @@ public class TCorpAnimations {
         RANGA_GUARD = new StaticAnimation( true, "biped/ranga/guard", biped);
         RANGA_GUARD_HIT = new GuardAnimation(0.05f,0.4f, "biped/ranga/guard_hit", biped);
         RANGA_GUARD_STAGGER = new LongHitAnimation(0.05f, "biped/ranga/guard_stagger", biped);
+        STAGGER = new LongHitAnimation(0.05f, "biped/generic/stagger", biped);
         PUMMEL_DOWN = new LongHitAnimation(0.05f, "biped/generic/pummel_down", biped);
 
         RANGA_ATTACK_1 = (new DashAttackAnimation(0.1F, 0.05F, 0.25F, 0.6F, 0.7F, ColliderPreset.SWORD, "Tool_R", "biped/ranga/attack_1", biped))
