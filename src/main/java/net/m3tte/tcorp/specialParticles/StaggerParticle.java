@@ -34,7 +34,6 @@ public class StaggerParticle extends HitParticle {
 		Random rand = new Random();
 
 		float angle = rand.nextFloat() * 20 - 10;
-		System.out.println("Getting entity with uuid: "+entityUUID);
 		if (entityUUID == 0) {
 			if (world.isClientSide()) {
 				boundEntity = Minecraft.getInstance().player;
@@ -42,7 +41,6 @@ public class StaggerParticle extends HitParticle {
 		} else {
 			boundEntity = this.level.getEntity((int)entityUUID);
 		}
-		System.out.println("Result is: "+boundEntity);
 		angle = (float)Math.toRadians(rand.nextFloat() * 20.0F + angle - 20f);
 		this.oRoll = angle;
 		this.roll = angle;

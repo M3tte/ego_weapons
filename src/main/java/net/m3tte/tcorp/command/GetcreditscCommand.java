@@ -2,7 +2,7 @@
 package net.m3tte.tcorp.command;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import net.m3tte.tcorp.procedures.GetcreditsProcedure;
+import net.m3tte.tcorp.procedures.legacy.GetcreditsProcedure;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;

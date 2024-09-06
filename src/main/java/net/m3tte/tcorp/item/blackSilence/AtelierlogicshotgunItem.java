@@ -22,7 +22,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.block.BlockState;
 
-import net.m3tte.tcorp.procedures.AtelierlogicshotgunuseProcedure;
+import net.m3tte.tcorp.procedures.legacy.AtelierlogicshotgunuseProcedure;
 import net.m3tte.tcorp.TcorpModElements;
 
 import javax.annotation.Nullable;
@@ -35,7 +35,7 @@ import java.util.AbstractMap;
 @TcorpModElements.ModElement.Tag
 public class AtelierlogicshotgunItem extends TcorpModElements.ModElement {
 	@ObjectHolder("tcorp:atelier_logic_shotgun")
-	public static final Item block = null;
+	public static final Item item = null;
 
 	public AtelierlogicshotgunItem(TcorpModElements instance) {
 		super(instance, 207);

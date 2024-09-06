@@ -1,0 +1,11 @@
+{
+	"attributes":
+	{
+		"common":
+		{
+			"impact":6,
+			"max_strikes":1
+		}
+	},
+	"type":"magic_bullet"
+}

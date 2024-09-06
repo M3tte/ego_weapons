@@ -17,6 +17,8 @@
  */
 package net.m3tte.tcorp;
 
+import net.m3tte.tcorp.entity.renderer.AtelierpistolsRenderer;
+import net.m3tte.tcorp.event.ModelRegisterHandler;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityType;
@@ -50,6 +52,7 @@ public class TcorpMod {
 	public TcorpMod() {
 		elements = new TcorpModElements();
 		FMLJavaModLoadingContext.get().getModEventBus().register(this);
+		FMLJavaModLoadingContext.get().getModEventBus().register(new ModelRegisterHandler());
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::init);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientLoad);
 		TCorpEpicFightLoader.registerStuffs(FMLJavaModLoadingContext.get().getModEventBus());
@@ -75,10 +78,6 @@ public class TcorpMod {
 		event.getRegistry().registerAll(elements.getItems().stream().map(Supplier::get).toArray(Item[]::new));
 	}
 
-	@SubscribeEvent
-	public void registerEntities(RegistryEvent.Register<EntityType<?>> event) {
-		event.getRegistry().registerAll(elements.getEntities().stream().map(Supplier::get).toArray(EntityType[]::new));
-	}
 
 	@SubscribeEvent
 	public void registerEnchantments(RegistryEvent.Register<Enchantment> event) {

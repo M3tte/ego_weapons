@@ -50,7 +50,13 @@ public class TCorpParticleRegistry {
     public static final RegistryObject<HitParticleType> MIMICRY_DASH_HIT = PARTICLES.register("mimicry_dash_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
 
     public static final RegistryObject<BasicParticleType> MIMICRY_VERTICAL_STRIKE = PARTICLES.register("vertical_split_strike", () -> new BasicParticleType(true));
-    public static final RegistryObject<HitParticleType> MIMICRY_VERTICAL_HIT = PARTICLES.register("vertical_split_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ATTACKER_XY_ROTATION));
+    public static final RegistryObject<HitParticleType> MIMICRY_VERTICAL_HIT = PARTICLES.register("vertical_split_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
+
+    public static final RegistryObject<BasicParticleType> MAGIC_BULLET_IMPACT = PARTICLES.register("magic_bullet_impact", () -> new BasicParticleType(true));
+    public static final RegistryObject<HitParticleType> MAGIC_BULLET_IMPACT_HIT = PARTICLES.register("magic_bullet_impact_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
+    public static final RegistryObject<BasicParticleType> MAGIC_BULLET_STRIKE = PARTICLES.register("magic_bullet_strike", () -> new BasicParticleType(true));
+    public static final RegistryObject<HitParticleType> MAGIC_BULLET_HIT = PARTICLES.register("magic_bullet_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
+
     public static final RegistryObject<BasicParticleType> STAGGER = PARTICLES.register("stagger", () -> new BasicParticleType(true));
 
 }

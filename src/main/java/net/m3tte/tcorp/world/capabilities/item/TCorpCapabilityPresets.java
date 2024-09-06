@@ -35,6 +35,9 @@ public class TCorpCapabilityPresets {
 
     public static final Collider LONGER_BLADE = new MultiOBBCollider(4, 0.4, 0.6, 0.9, 0.0, 0.0, -0.8);
     public static final Collider SPLIT_HORIZONTAL = new MultiOBBCollider(4, 0.4, 0.6, 1.1, 0.0, 0.0, -0.8);
+
+
+    public static final Collider RIFLE = new MultiOBBCollider(4, 0.2, 1, 0.2, 0, 0.0, -0.4);
     public static final Function<Item, CapabilityItem.Builder> MOOK_WORKSHOP = (item) ->
             WeaponCapability.builder().category(TCorpCategories.MOOK_WORKSHOP).canBePlacedOffhand(false).styleProvider((playerpatch) ->
                             (playerpatch.getOriginal().hasEffect(FuriosoPotionEffect.potion) && playerpatch.getOriginal().getPersistentData().getDouble("furiosoattacks") < 10) ? TCorpStyles.FURIOSO : Styles.TWO_HAND)
@@ -366,7 +369,7 @@ public class TCorpCapabilityPresets {
                     return TCorpStyles.FURIOSO;
                 return Styles.TWO_HAND;
             })
-            .collider(ColliderPreset.DAGGER)
+            .collider(RIFLE)
             .hitSound(EpicFightSounds.BLUNT_HIT)
 
             .livingMotionModifier(Styles.TWO_HAND, LivingMotions.IDLE, TCorpAnimations.ATELIER_SHOTGUN_IDLE)
@@ -381,6 +384,28 @@ public class TCorpCapabilityPresets {
 
             .newStyleCombo(Styles.TWO_HAND, TCorpAnimations.ATELIER_SHOTGUN_AUTO_1, TCorpAnimations.ATELIER_SHOTGUN_AUTO_2, TCorpAnimations.ATELIER_SHOTGUN_AUTO_3, TCorpAnimations.ATELIER_SHOTGUN_AUTO_1, TCorpAnimations.ATELIER_SHOTGUN_AUTO_2)
             .newStyleCombo(TCorpStyles.FURIOSO, TCorpAnimations.ATELIER_SHOTGUN_AUTO_1, TCorpAnimations.ATELIER_SHOTGUN_AUTO_2, TCorpAnimations.ATELIER_SHOTGUN_AUTO_3, TCorpAnimations.ATELIER_SHOTGUN_AUTO_1, TCorpAnimations.ATELIER_SHOTGUN_AUTO_2)
+
+            .canBePlacedOffhand(false);
+
+    public static final Function<Item, CapabilityItem.Builder> MAGIC_BULLET = (item) -> WeaponCapability.builder()
+            .category(TCorpCategories.MAGIC_BULLET)
+            .styleProvider((playerpatch) -> {
+                return Styles.TWO_HAND;
+            })
+            .collider(RIFLE)
+            .hitSound(EpicFightSounds.BLUNT_HIT)
+
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.IDLE, TCorpAnimations.MAGIC_BULLET_IDLE)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.WALK, TCorpAnimations.MAGIC_BULLET_WALK)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.SNEAK, TCorpAnimations.MAGIC_BULLET_SNEAK)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.KNEEL, TCorpAnimations.MAGIC_BULLET_KNEEL)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.RUN, TCorpAnimations.MAGIC_BULLET_RUN)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.JUMP, TCorpAnimations.MAGIC_BULLET_JUMP)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.BLOCK, TCorpAnimations.MAGIC_BULLET_GUARD)
+            .passiveSkill(TCorpSkills.MAGIC_BULLET_PASSIVE)
+            .specialAttack(Styles.TWO_HAND, TCorpSkills.MAGIC_BULLET_DETONATE)
+
+            .newStyleCombo(Styles.TWO_HAND, TCorpAnimations.MAGIC_BULLET_AUTO_1, TCorpAnimations.MAGIC_BULLET_AUTO_2, TCorpAnimations.MAGIC_BULLET_AUTO_3, TCorpAnimations.MAGIC_BULLET_DASH, TCorpAnimations.MAGIC_BULLET_JUMP_ATTACK)
 
             .canBePlacedOffhand(false);
     public TCorpCapabilityPresets() {
@@ -401,5 +426,6 @@ public class TCorpCapabilityPresets {
         event.getTypeEntry().put("mook_workshop", MOOK_WORKSHOP);
         event.getTypeEntry().put("old_boys_workshop", OLD_BOYS);
         event.getTypeEntry().put("wheels_industry", WHEELS_INDUSTRY);
+        event.getTypeEntry().put("magic_bullet", MAGIC_BULLET);
     }
 }

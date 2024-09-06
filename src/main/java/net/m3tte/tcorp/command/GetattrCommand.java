@@ -3,7 +3,7 @@ package net.m3tte.tcorp.command;
 
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import net.m3tte.tcorp.procedures.GetattrprocProcedure;
+import net.m3tte.tcorp.procedures.legacy.GetattrprocProcedure;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;

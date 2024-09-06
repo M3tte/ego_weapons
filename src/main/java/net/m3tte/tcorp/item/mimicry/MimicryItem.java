@@ -7,7 +7,8 @@ import net.m3tte.tcorp.gameasset.TCorpAnimations;
 import net.m3tte.tcorp.item.redmist.RedMistEGOSuit;
 import net.m3tte.tcorp.item.redmist.RedMistJacket;
 import net.m3tte.tcorp.potion.BleedPotionEffect;
-import net.m3tte.tcorp.procedures.MimicryhitentityProcedure;
+import net.m3tte.tcorp.procedures.BlipTick;
+import net.m3tte.tcorp.procedures.legacy.MimicryhitentityProcedure;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -40,7 +41,7 @@ import static net.m3tte.tcorp.execFunctions.HitProcedure.hitStunEffect;
 @TcorpModElements.ModElement.Tag
 public class MimicryItem extends TcorpModElements.ModElement {
 	@ObjectHolder("tcorp:mimicry")
-	public static final Item block = null;
+	public static final Item item = null;
 
 	public MimicryItem(TcorpModElements instance) {
 		super(instance, 165);
@@ -153,9 +154,8 @@ public class MimicryItem extends TcorpModElements.ModElement {
 						sourceentity.heal(1);
 					}
 
-					if (anim_id == TCorpAnimations.KALI_IMPACT.getId() && entityData.blips < entityData.maxblips) {
-						entitypatch.playSound(TCorpSounds.RESULT_POSITIVE, 1,1);
-						entityData.blips = entityData.blips + 1;
+					if (anim_id == TCorpAnimations.KALI_IMPACT.getId()) {
+						BlipTick.chargeBlips((PlayerEntity) sourceentity, entityData, 1, true);
 					}
 				} else {
 					if (anim_id == TCorpAnimations.MIMICRY_HELLO.getId()) {
@@ -177,10 +177,7 @@ public class MimicryItem extends TcorpModElements.ModElement {
 				if (chestItem.equals(MimicryarmorItem.body.getItem())){
 					if (anim_id == TCorpAnimations.MIMICRY_HELLO.getId()) {
 						if (entityData.globalcooldown == 1) {
-							if (entityData.blips < entityData.maxblips) {
-								entityData.blips = Math.min(entityData.blips+1, entityData.maxblips);
-								target.level.playSound(null,target.blockPosition(), TCorpSounds.RESULT_POSITIVE, SoundCategory.PLAYERS, 1, 1);
-							}
+							BlipTick.chargeBlips((PlayerEntity) sourceentity, entityData, 1, true);
 
 							sourceentity.heal(4);
 							((PlayerEntity) sourceentity).getCooldowns().addCooldown(itemstack.getItem(), (int) 5);

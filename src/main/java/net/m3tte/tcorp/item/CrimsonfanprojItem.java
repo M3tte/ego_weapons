@@ -5,7 +5,6 @@ import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.fml.network.FMLPlayMessages;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
 
@@ -29,7 +28,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.Entity;
 
-import net.m3tte.tcorp.entity.renderer.CrimsonfanprojRenderer;
 import net.m3tte.tcorp.TcorpModElements;
 
 import java.util.Random;
@@ -38,19 +36,17 @@ import java.util.Random;
 public class CrimsonfanprojItem extends TcorpModElements.ModElement {
 	@ObjectHolder("tcorp:crimsonfanproj")
 	public static final Item block = null;
-	public static final EntityType arrow = (EntityType.Builder.<ArrowCustomEntity>of(ArrowCustomEntity::new, EntityClassification.MISC)
+	public static final EntityType<ArrowCustomEntity> crimson_wind = (EntityType<ArrowCustomEntity>) (EntityType.Builder.<ArrowCustomEntity>of(ArrowCustomEntity::new, EntityClassification.MISC)
 			.setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).setCustomClientFactory(ArrowCustomEntity::new)
-			.sized(0.5f, 0.5f)).build("projectile_crimsonfanproj").setRegistryName("projectile_crimsonfanproj");
+			.sized(0.5f, 0.5f)).build("projectile_crimsonfanproj");
 
 	public CrimsonfanprojItem(TcorpModElements instance) {
 		super(instance, 110);
-		FMLJavaModLoadingContext.get().getModEventBus().register(new CrimsonfanprojRenderer.ModelRegisterHandler());
 	}
 
 	@Override
 	public void initElements() {
 		elements.items.add(() -> new ItemRanged());
-		elements.entities.add(() -> arrow);
 	}
 
 	public static class ItemRanged extends Item {
@@ -98,7 +94,7 @@ public class CrimsonfanprojItem extends TcorpModElements.ModElement {
 	@OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem.class)
 	public static class ArrowCustomEntity extends AbstractArrowEntity implements IRendersAsItem {
 		public ArrowCustomEntity(FMLPlayMessages.SpawnEntity packet, World world) {
-			super(arrow, world);
+			super(crimson_wind, world);
 		}
 
 		public ArrowCustomEntity(EntityType<? extends ArrowCustomEntity> type, World world) {
@@ -146,7 +142,7 @@ public class CrimsonfanprojItem extends TcorpModElements.ModElement {
 	}
 
 	public static ArrowCustomEntity shoot(World world, LivingEntity entity, Random random, float power, double damage, int knockback) {
-		ArrowCustomEntity entityarrow = new ArrowCustomEntity(arrow, entity, world);
+		ArrowCustomEntity entityarrow = new ArrowCustomEntity(crimson_wind, entity, world);
 		entityarrow.shoot(entity.getLookAngle().x, entity.getLookAngle().y, entity.getLookAngle().z, power * 2, 0);
 		entityarrow.setSilent(true);
 		entityarrow.setBaseDamage(damage);
@@ -162,7 +158,7 @@ public class CrimsonfanprojItem extends TcorpModElements.ModElement {
 	}
 
 	public static ArrowCustomEntity shoot(LivingEntity entity, LivingEntity target) {
-		ArrowCustomEntity entityarrow = new ArrowCustomEntity(arrow, entity, entity.level);
+		ArrowCustomEntity entityarrow = new ArrowCustomEntity(crimson_wind, entity, entity.level);
 		double d0 = target.getY() + (double) target.getEyeHeight() - 1.1;
 		double d1 = target.getX() - entity.getX();
 		double d3 = target.getZ() - entity.getZ();

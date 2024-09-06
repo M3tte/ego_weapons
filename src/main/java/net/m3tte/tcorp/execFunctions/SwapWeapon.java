@@ -7,7 +7,7 @@ import net.m3tte.tcorp.particle.BlacksilenceshadowParticle;
 import net.m3tte.tcorp.particle.ShadowpuffParticle;
 import net.m3tte.tcorp.potion.OrlandoPotionEffect;
 import net.m3tte.tcorp.potion.FuriosoPotionEffect;
-import net.m3tte.tcorp.procedures.ClearOldWeaponsProcedure;
+import net.m3tte.tcorp.procedures.legacy.ClearOldWeaponsProcedure;
 import net.minecraft.command.FunctionObject;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -103,8 +103,8 @@ public class SwapWeapon {
 
 				break;
 			case 1: // Pistols
-				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(AtelierlogicpistolsItem.block));
-				entity.setItemInHand(Hand.OFF_HAND, new ItemStack(AtelierlogicpistolsItem.block));
+				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(AtelierlogicpistolsItem.item));
+				entity.setItemInHand(Hand.OFF_HAND, new ItemStack(AtelierlogicpistolsItem.item));
 
 				entity.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
 					capability.gunMagSize = 0;
@@ -115,7 +115,7 @@ public class SwapWeapon {
 
 				break;
 			case 2: // Allas
-				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(AllasSpearItem.block));
+				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(AllasSpearItem.item));
 
 				animation = TCorpAnimations.ALLAS_SPEAR_EQUIP;
 
@@ -127,13 +127,13 @@ public class SwapWeapon {
 				break;
 
 			case 4: // Mook
-				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(MookWorkshop.block));
+				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(MookWorkshop.item));
 				animation = TCorpAnimations.DURANDAL_EQUIP;
 
 				break;
 
 			case 5: // Ranga
-				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(RangaclawItem.block));
+				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(RangaclawItem.item));
 				entity.setItemInHand(Hand.OFF_HAND, new ItemStack(RangaclawlItem.block));
 				animation = TCorpAnimations.DUAL_EQUIP;
 
@@ -150,12 +150,12 @@ public class SwapWeapon {
 				animation = TCorpAnimations.ATELIER_SHOTGUN_EQUIP;
 				break;
 			case 8: // Crystal Atelier
-				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(CrystalatelierItem.block));
-				entity.setItemInHand(Hand.OFF_HAND, new ItemStack(CrystalatelierItem.block));
+				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(CrystalatelierItem.item));
+				entity.setItemInHand(Hand.OFF_HAND, new ItemStack(CrystalatelierItem.item));
 				animation = TCorpAnimations.DUAL_EQUIP;
 				break;
 			case 9: // Atelier Logic Shotgun
-				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(AtelierlogicshotgunItem.block));
+				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(AtelierlogicshotgunItem.item));
 				animation = TCorpAnimations.ATELIER_SHOTGUN_EQUIP;
 
 				break;

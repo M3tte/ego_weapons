@@ -19,7 +19,7 @@ import java.util.List;
 @TcorpModElements.ModElement.Tag
 public class MookWorkshop extends TcorpModElements.ModElement {
 	@ObjectHolder("tcorp:mook_workshop")
-	public static final Item block = null;
+	public static final Item item = null;
 
 	public MookWorkshop(TcorpModElements instance) {
 		super(instance, 77);

@@ -21,6 +21,7 @@ public class TCorpEpicFightLoader {
         bus.addListener(TCorpCapabilityPresets::register);
 
         TCorpParticleRegistry.PARTICLES.register(bus);
+        TCorpModEntities.ENTITIES.register(bus);
 
         TCorpCategories.ENUM_MANAGER.loadPreemptive(TCorpCategories.class);
     }

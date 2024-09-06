@@ -5,6 +5,7 @@ import net.m3tte.tcorp.block.ClocksigilBlock;
 import net.m3tte.tcorp.particle.BlipeffectParticle;
 import net.m3tte.tcorp.particle.ClockparticleParticle;
 import net.m3tte.tcorp.potion.FractaldistortionPotionEffect;
+import net.m3tte.tcorp.procedures.abilities.ItemAbility;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.math.BlockPos;

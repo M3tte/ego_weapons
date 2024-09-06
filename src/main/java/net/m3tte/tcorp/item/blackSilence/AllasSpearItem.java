@@ -19,7 +19,7 @@ import java.util.List;
 @TcorpModElements.ModElement.Tag
 public class AllasSpearItem extends TcorpModElements.ModElement {
 	@ObjectHolder("tcorp:allas_spear")
-	public static final Item block = null;
+	public static final Item item = null;
 
 	public AllasSpearItem(TcorpModElements instance) {
 		super(instance, 82);

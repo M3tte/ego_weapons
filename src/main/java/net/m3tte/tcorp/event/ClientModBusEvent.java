@@ -67,6 +67,10 @@ public class ClientModBusEvent {
         particleEngine.register(TCorpParticleRegistry.MIMICRY_VERTICAL_STRIKE.get(), MimicryVerticalStrikeParticle.Provider::new);
         particleEngine.register(TCorpParticleRegistry.MIMICRY_VERTICAL_HIT.get(), new MimicryVerticalSplitHit.Provider());
         particleEngine.register(TCorpParticleRegistry.STAGGER.get(), StaggerParticle.Provider::new);
+        particleEngine.register(TCorpParticleRegistry.MAGIC_BULLET_STRIKE.get(), MagicBulletStrike.Provider::new);
+        particleEngine.register(TCorpParticleRegistry.MAGIC_BULLET_HIT.get(), new MagicBulletHit.Provider());
+        particleEngine.register(TCorpParticleRegistry.MAGIC_BULLET_IMPACT.get(), MagicBulletImpact.Provider::new);
+        particleEngine.register(TCorpParticleRegistry.MAGIC_BULLET_IMPACT_HIT.get(), new MagicBulletImpactHit.Provider());
     }
 
 }

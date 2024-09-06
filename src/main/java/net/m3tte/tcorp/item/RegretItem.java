@@ -15,7 +15,7 @@ import net.minecraft.item.IItemTier;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.client.util.ITooltipFlag;
 
-import net.m3tte.tcorp.procedures.RegretHitProcedure;
+import net.m3tte.tcorp.procedures.legacy.RegretHitProcedure;
 import net.m3tte.tcorp.TcorpModElements;
 
 import java.util.stream.Stream;

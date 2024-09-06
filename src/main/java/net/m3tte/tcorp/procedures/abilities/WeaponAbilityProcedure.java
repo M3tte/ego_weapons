@@ -1,10 +1,11 @@
 package net.m3tte.tcorp.procedures.abilities;
 
 import net.m3tte.tcorp.TcorpModVariables;
+import net.m3tte.tcorp.item.magic_bullet.MagicBullet;
 import net.m3tte.tcorp.item.mimicry.MimicryItem;
 import net.m3tte.tcorp.item.blackSilence.*;
-import net.m3tte.tcorp.procedures.abilities.armorAbilities.ItemAbility;
 import net.m3tte.tcorp.procedures.abilities.weaponAbilities.BlackSilenceWeaponAbility;
+import net.m3tte.tcorp.procedures.abilities.weaponAbilities.MagicBulletWeaponAbility;
 import net.m3tte.tcorp.procedures.abilities.weaponAbilities.MimicryWeaponAbility;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -36,23 +37,26 @@ public class WeaponAbilityProcedure {
 		weaponAbilities.put(DurandalItem.block, bsWeaponAb);
 		weaponAbilities.put(ZelkovaaxeItem.block, bsWeaponAb);
 		weaponAbilities.put(ZelkovamaceItem.block, bsWeaponAb);
-		weaponAbilities.put(AtelierlogicpistolsItem.block, bsWeaponAb);
-		weaponAbilities.put(AtelierlogicshotgunItem.block, bsWeaponAb);
+		weaponAbilities.put(AtelierlogicpistolsItem.item, bsWeaponAb);
+		weaponAbilities.put(AtelierlogicshotgunItem.item, bsWeaponAb);
 		weaponAbilities.put(WheelsIndustry.item, bsWeaponAb);
-		weaponAbilities.put(CrystalatelierItem.block, bsWeaponAb);
-		weaponAbilities.put(RangaclawItem.block, bsWeaponAb);
-		weaponAbilities.put(RangadaggerItem.block, bsWeaponAb);
+		weaponAbilities.put(CrystalatelierItem.item, bsWeaponAb);
+		weaponAbilities.put(RangaclawItem.item, bsWeaponAb);
+		weaponAbilities.put(RangadaggerItem.item, bsWeaponAb);
 		weaponAbilities.put(OldBoysWorkshop.item, bsWeaponAb);
-		weaponAbilities.put(AllasSpearItem.block, bsWeaponAb);
-		weaponAbilities.put(MookWorkshop.block, bsWeaponAb);
+		weaponAbilities.put(AllasSpearItem.item, bsWeaponAb);
+		weaponAbilities.put(MookWorkshop.item, bsWeaponAb);
 
-		weaponAbilities.put(MimicryItem.block, new MimicryWeaponAbility());
-
+		weaponAbilities.put(MimicryItem.item, new MimicryWeaponAbility());
+		weaponAbilities.put(MagicBullet.item, new MagicBulletWeaponAbility());
 	}
 
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		PlayerEntity entity = (PlayerEntity) dependencies.get("entity");
 		TcorpModVariables.PlayerVariables playerVars = entity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
+
+		if (playerVars.globalcooldown > 0)
+			return;
 
 		Item chestItem = entity.getItemBySlot(EquipmentSlotType.MAINHAND).getItem();
 

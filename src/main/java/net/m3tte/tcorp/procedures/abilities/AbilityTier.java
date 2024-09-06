@@ -9,8 +9,7 @@ public enum AbilityTier {
     DELTA(new ResourceLocation(TcorpMod.MODID, "textures/screens/abilities/bg/beta.png")),
     GAMMA(new ResourceLocation(TcorpMod.MODID, "textures/screens/abilities/bg/beta.png")),
     BETA(new ResourceLocation(TcorpMod.MODID, "textures/screens/abilities/bg/beta.png")),
-    ALPHA(new ResourceLocation(TcorpMod.MODID, "textures/screens/abilities/bg/alpha.png"))
-    ;
+    ALPHA(new ResourceLocation(TcorpMod.MODID, "textures/screens/abilities/bg/alpha.png"));
 
 
     public static ResourceLocation baseBG = new ResourceLocation(TcorpMod.MODID, "textures/screens/abilities/bg/base.png");

@@ -6,6 +6,7 @@ import net.m3tte.tcorp.particle.BlackdamageParticle;
 import net.m3tte.tcorp.particle.SparkparticleParticle;
 import net.m3tte.tcorp.potion.BleedPotionEffect;
 import net.m3tte.tcorp.potion.FuriosoPotionEffect;
+import net.m3tte.tcorp.procedures.BlipTick;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -30,9 +31,6 @@ public class BlackSilenceEvaluator {
             entity.getPersistentData().putDouble(statistic, (entity.getPersistentData().getDouble(statistic) + amount));
         }
 
-    public static void getStatistic(LivingEntity entity, int amount, String statistic) {
-        entity.getPersistentData().putDouble(statistic, (entity.getPersistentData().getDouble(statistic) + amount));
-    }
 
         public static void furiosoAddAttackStat(Entity entity, int amnt) {
             if (entity instanceof LivingEntity) {
@@ -166,16 +164,10 @@ public class BlackSilenceEvaluator {
 
                     //System.out.println(player.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, (Direction)null).orElse(new TcorpModVariables.PlayerVariables()).blips + 2.0);
 
-                    double _setval = Math.min(player.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, (Direction)null).orElse(new TcorpModVariables.PlayerVariables()).blips + 1.0, 10.0);
                     if (player.getCooldowns().isOnCooldown(player.getItemInHand(Hand.MAIN_HAND).getItem())) {
                         player.getCooldowns().addCooldown(player.getItemInHand(Hand.OFF_HAND).getItem(), 90);
                         player.getCooldowns().addCooldown(player.getItemInHand(Hand.MAIN_HAND).getItem(), 90);
-                        player.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, (Direction)null).ifPresent((capability) -> {
-                            capability.blips = _setval;
-                            capability.syncPlayerVariables(entity);
-
-                            player.playSound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("tcorp:result_positive")), 1.0F, 1.0F);
-                        });
+                        BlipTick.chargeBlips(player, 1, true);
                     } else {
                         player.getCooldowns().addCooldown(player.getItemInHand(Hand.MAIN_HAND).getItem(), 100);
                     }
@@ -212,14 +204,7 @@ public class BlackSilenceEvaluator {
                 if (!player.getCooldowns().isOnCooldown(player.getItemInHand(Hand.MAIN_HAND).getItem())) {
                     PlayerPatch<?> entitypatch = (PlayerPatch)player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, (Direction)null).orElse((EntityPatch) null);
                     entitypatch.setStamina(Math.min(entitypatch.getMaxStamina(), entitypatch.getStamina() + entitypatch.getMaxStamina() * 0.3F));
-                    double _setval = Math.min(player.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, (Direction)null).orElse(new TcorpModVariables.PlayerVariables()).blips + 1.0, 10.0);
-                    player.getCooldowns().addCooldown(player.getItemInHand(Hand.MAIN_HAND).getItem(), 220);
-                    player.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, (Direction)null).ifPresent((capability) -> {
-                        capability.blips = _setval;
-                        capability.syncPlayerVariables(entity);
-
-                        player.playSound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("tcorp:result_positive")), 1.0F, 1.0F);
-                    });
+                    BlipTick.chargeBlips(player, 1, true);
                 }
             }
         }

@@ -3,6 +3,7 @@ package net.m3tte.tcorp.procedures.abilities.armorAbilities;
 import net.m3tte.tcorp.TCorpSounds;
 import net.m3tte.tcorp.TcorpModVariables;
 import net.m3tte.tcorp.block.ChainsofjusticeBlock;
+import net.m3tte.tcorp.procedures.abilities.ItemAbility;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;

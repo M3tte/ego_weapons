@@ -25,7 +25,7 @@ import java.util.List;
 @TcorpModElements.ModElement.Tag
 public class RangaclawItem extends TcorpModElements.ModElement {
 	@ObjectHolder("tcorp:ranga_claw")
-	public static final Item block = null;
+	public static final Item item = null;
 
 	public RangaclawItem(TcorpModElements instance) {
 		super(instance, 192);

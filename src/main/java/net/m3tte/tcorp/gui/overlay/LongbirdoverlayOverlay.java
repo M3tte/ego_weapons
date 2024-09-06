@@ -3,7 +3,7 @@ package net.m3tte.tcorp.gui.overlay;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.m3tte.tcorp.procedures.TrapoverlayProcedure;
+import net.m3tte.tcorp.procedures.legacy.TrapoverlayProcedure;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;

@@ -54,9 +54,9 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Block;
 
-import net.m3tte.tcorp.procedures.FleshyrootsUpdateTickProcedure;
-import net.m3tte.tcorp.procedures.FleshyrootsEntityCollidesInTheBlockProcedure;
-import net.m3tte.tcorp.procedures.FleshyrootsBlockAddedProcedure;
+import net.m3tte.tcorp.procedures.legacy.FleshyrootsUpdateTickProcedure;
+import net.m3tte.tcorp.procedures.legacy.FleshyrootsEntityCollidesInTheBlockProcedure;
+import net.m3tte.tcorp.procedures.legacy.FleshyrootsBlockAddedProcedure;
 import net.m3tte.tcorp.TcorpModElements;
 
 import javax.annotation.Nullable;

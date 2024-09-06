@@ -1,7 +1,7 @@
 package net.m3tte.tcorp.execFunctions;
 
+import net.m3tte.tcorp.TCorpSounds;
 import net.m3tte.tcorp.TcorpModVariables;
-import net.m3tte.tcorp.item.blackSilence.AtelierlogicpistolsItem;
 import net.m3tte.tcorp.item.blackSilence.AtelierlogicshotgunItem;
 import net.m3tte.tcorp.potion.FuriosoPotionEffect;
 import net.minecraft.entity.Entity;
@@ -18,40 +18,29 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class AtelierCooldownHandler {
 
+	public static boolean hasFuriosoBonus(LivingEntity entity) {
+		return entity.hasEffect(FuriosoPotionEffect.potion) && entity.getPersistentData().getDouble("furiosoattacks") < 15.0;
+	}
+
 	public static void executePistol(IWorld world, Entity entity, double x, double y, double z) {
 		if (!world.isClientSide()) {
 			world.playSound(null, new BlockPos(x, y, z),
-                    ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("tcorp:blacksilence.atelier.revolver")),
+                    TCorpSounds.ATELIER_SHOOT,
 					SoundCategory.NEUTRAL, (float) 1, (float) 1);
 		}
 
 		if (entity instanceof LivingEntity) {
 			LivingEntity living = (LivingEntity) entity;
+			TcorpModVariables.PlayerVariables capability = entity.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new TcorpModVariables.PlayerVariables());
 
-			if ((entity.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, null)
-					.orElse(new TcorpModVariables.PlayerVariables())).gunMagSize == 1) {
-				{
-					entity.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-						capability.gunMagSize = 2;
-						capability.syncPlayerVariables(entity);
-					});
 
-					entity.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-						capability.globalcooldown = 30;
-						capability.syncPlayerVariables(entity);
-					});
+			if (capability.gunMagSize == 1) {
+				capability.gunMagSize = 2;
+				capability.globalcooldown = hasFuriosoBonus(living) ? 10 : 30;
+				if (!hasFuriosoBonus(living) && !world.isClientSide())
+					capability.blips -= 2;
 
-					if (!world.isClientSide() && !hasFuriosoBonus(living)) {
-						double _setval = ((entity.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, null)
-								.orElse(new TcorpModVariables.PlayerVariables())).blips - 1);
-						entity.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-							capability.blips = _setval;
-							capability.syncPlayerVariables(entity);
-						});
-					}
-				}
-				if (entity instanceof PlayerEntity)
-					((PlayerEntity) entity).getCooldowns().addCooldown(AtelierlogicpistolsItem.block, (int) 10);
+
 				new Object() {
 					private int ticks = 0;
 					private float waitTicks;
@@ -87,21 +76,12 @@ public class AtelierCooldownHandler {
 				}.start(world, (int) 40);
 			} else {
 				{
-					entity.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-						capability.gunMagSize = 1;
-						capability.syncPlayerVariables(entity);
-					});
-
-					if (!world.isClientSide() && !hasFuriosoBonus(living)) {
-						double _setval = ((entity.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, null)
-								.orElse(new TcorpModVariables.PlayerVariables())).blips - 1);
-						entity.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-							capability.blips = _setval;
-							capability.syncPlayerVariables(entity);
-						});
-					}
+					capability.gunMagSize = 1;
+					if (!hasFuriosoBonus(living) && !world.isClientSide())
+						capability.blips--;
 				}
 			}
+			capability.syncPlayerVariables(living);
 		}
 	}
 
@@ -112,31 +92,26 @@ public class AtelierCooldownHandler {
 
 			if (!world.isClientSide()) {
 				world.playSound(null, new BlockPos(x, y, z),
-						ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("tcorp:blacksilence.atelier.shotgun")),
+						TCorpSounds.BLACK_SILENCE_SHOTGUN,
 						SoundCategory.NEUTRAL, (float) 1, (float) 1);
 			}
 			//entity.getPersistentData().putDouble("furiosoattacks", (entity.getPersistentData().getDouble("furiosoattacks") + 10));
-			entity.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-				capability.gunMagSize = 1;
-				capability.syncPlayerVariables(entity);
-			});
 
-			entity.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+			TcorpModVariables.PlayerVariables capability = entity.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new TcorpModVariables.PlayerVariables());
+
+			capability.gunMagSize = 1;
+
+			if (hasFuriosoBonus(living))
+				capability.globalcooldown = 10;
+			else
 				capability.globalcooldown = 50;
-				capability.syncPlayerVariables(entity);
-			});
 
 			if (!world.isClientSide() && !hasFuriosoBonus(living)) {
-				double _setval = ((entity.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, null)
-						.orElse(new TcorpModVariables.PlayerVariables())).blips - 2);
-				entity.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-					capability.blips = _setval;
-					capability.syncPlayerVariables(entity);
-				});
+				capability.blips -= 2;
 			}
-
+			capability.syncPlayerVariables(entity);
 			if (entity instanceof PlayerEntity)
-				((PlayerEntity) entity).getCooldowns().addCooldown(AtelierlogicshotgunItem.block, (int) 20);
+				((PlayerEntity) entity).getCooldowns().addCooldown(AtelierlogicshotgunItem.item, (int) 20);
 			new Object() {
 				private int ticks = 0;
 				private float waitTicks;
@@ -181,7 +156,5 @@ public class AtelierCooldownHandler {
 
 
 	}
-	public static boolean hasFuriosoBonus(LivingEntity entity) {
-		return entity.hasEffect(FuriosoPotionEffect.potion) && entity.getPersistentData().getDouble("furiosoattacks") < 15.0;
-	}
+
 }

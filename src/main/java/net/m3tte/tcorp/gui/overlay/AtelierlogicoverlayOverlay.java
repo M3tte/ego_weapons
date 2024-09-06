@@ -35,7 +35,7 @@ public class AtelierlogicoverlayOverlay {
 					GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 			RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 			RenderSystem.disableAlphaTest();
-			if (AtelierlogicpistolsItem.block == ((entity instanceof LivingEntity) ? entity.getMainHandItem().getItem() : ItemStack.EMPTY)) {
+			if (AtelierlogicpistolsItem.item == ((entity instanceof LivingEntity) ? entity.getMainHandItem().getItem() : ItemStack.EMPTY)) {
 				if (world.isClientSide) {
 					double capacity = ((entity.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, null)
 							.orElse(new TcorpModVariables.PlayerVariables())).gunMagSize);
@@ -67,7 +67,7 @@ public class AtelierlogicoverlayOverlay {
 					}
 				}
 			}
-			else if (AtelierlogicshotgunItem.block == ((entity instanceof LivingEntity) ? entity.getMainHandItem().getItem() : ItemStack.EMPTY)) {
+			else if (AtelierlogicshotgunItem.item == ((entity instanceof LivingEntity) ? entity.getMainHandItem().getItem() : ItemStack.EMPTY)) {
 
 				double capacity = ((entity.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, null)
 						.orElse(new TcorpModVariables.PlayerVariables())).gunMagSize);

@@ -4,6 +4,7 @@ import net.m3tte.tcorp.TcorpModVariables;
 import net.m3tte.tcorp.particle.BlipeffectParticle;
 import net.m3tte.tcorp.particle.ShadowpuffParticle;
 import net.m3tte.tcorp.potion.ShadowIncarnate;
+import net.m3tte.tcorp.procedures.abilities.ItemAbility;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;

@@ -25,7 +25,7 @@ import java.util.List;
 @TcorpModElements.ModElement.Tag
 public class RangadaggerItem extends TcorpModElements.ModElement {
 	@ObjectHolder("tcorp:ranga_dagger")
-	public static final Item block = null;
+	public static final Item item = null;
 
 	public RangadaggerItem(TcorpModElements instance) {
 		super(instance, 193);

@@ -5,6 +5,7 @@ import net.m3tte.tcorp.TcorpModVariables;
 import net.m3tte.tcorp.particle.BlipeffectParticle;
 import net.m3tte.tcorp.particle.GalaxyparticleParticle;
 import net.m3tte.tcorp.procedures.abilities.AbilityUtils;
+import net.m3tte.tcorp.procedures.abilities.ItemAbility;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;

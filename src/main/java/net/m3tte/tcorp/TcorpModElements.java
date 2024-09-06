@@ -6,6 +6,7 @@
  */
 package net.m3tte.tcorp;
 
+import net.m3tte.tcorp.item.magic_bullet.MagicBulletProjectile;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityType;
@@ -34,7 +35,6 @@ public class TcorpModElements {
 	public final List<ModElement> elements = new ArrayList<>();
 	public final List<Supplier<Block>> blocks = new ArrayList<>();
 	public final List<Supplier<Item>> items = new ArrayList<>();
-	public final List<Supplier<EntityType<?>>> entities = new ArrayList<>();
 	public final List<Supplier<Enchantment>> enchantments = new ArrayList<>();
 	public static Map<ResourceLocation, net.minecraft.util.SoundEvent> sounds = TCorpSounds.SOUNDS;
 
@@ -80,10 +80,6 @@ public class TcorpModElements {
 
 	public List<Supplier<Item>> getItems() {
 		return items;
-	}
-
-	public List<Supplier<EntityType<?>>> getEntities() {
-		return entities;
 	}
 
 	public List<Supplier<Enchantment>> getEnchantments() {

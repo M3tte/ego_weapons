@@ -18,7 +18,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.Minecraft;
 
-import net.m3tte.tcorp.procedures.SwapFiringModePressProcedure;
+import net.m3tte.tcorp.procedures.legacy.SwapFiringModePressProcedure;
 import net.m3tte.tcorp.TcorpModElements;
 import net.m3tte.tcorp.TcorpMod;
 

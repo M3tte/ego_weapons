@@ -6,7 +6,6 @@ import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.fml.network.FMLPlayMessages;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
 
@@ -35,9 +34,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.block.Blocks;
 
-import net.m3tte.tcorp.procedures.AtelierpistolsRangedItemUsedProcedure;
-import net.m3tte.tcorp.procedures.AtelierPistolHitProcedure;
-import net.m3tte.tcorp.entity.renderer.AtelierpistolsRenderer;
+import net.m3tte.tcorp.procedures.legacy.AtelierpistolsRangedItemUsedProcedure;
+import net.m3tte.tcorp.procedures.legacy.AtelierPistolHitProcedure;
 import net.m3tte.tcorp.TcorpModElements;
 
 import javax.annotation.Nullable;
@@ -52,19 +50,17 @@ import java.util.AbstractMap;
 public class AtelierpistolsItem extends TcorpModElements.ModElement {
 	@ObjectHolder("tcorp:atelier_pistol")
 	public static final Item block = null;
-	public static final EntityType arrow = (EntityType.Builder.<ArrowCustomEntity>of(ArrowCustomEntity::new, EntityClassification.MISC)
+	public static final EntityType<ArrowCustomEntity> pistol_bullet = (EntityType<ArrowCustomEntity>) (EntityType.Builder.<ArrowCustomEntity>of(ArrowCustomEntity::new, EntityClassification.MISC)
 			.setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).setCustomClientFactory(ArrowCustomEntity::new)
-			.sized(0.5f, 0.5f)).build("projectile_atelier_pistol").setRegistryName("projectile_atelier_pistol");
+			.sized(0.5f, 0.5f)).build("projectile_atelier_pistol");
 
 	public AtelierpistolsItem(TcorpModElements instance) {
 		super(instance, 83);
-		FMLJavaModLoadingContext.get().getModEventBus().register(new AtelierpistolsRenderer.ModelRegisterHandler());
 	}
 
 	@Override
 	public void initElements() {
 		elements.items.add(() -> new ItemRanged());
-		elements.entities.add(() -> arrow);
 	}
 
 	public static class ItemRanged extends Item {
@@ -120,10 +116,10 @@ public class AtelierpistolsItem extends TcorpModElements.ModElement {
 		}
 	}
 
-	@OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem.class)
-	public static class ArrowCustomEntity extends AbstractArrowEntity implements IRendersAsItem {
+	@OnlyIn(value = Dist.CLIENT)
+	public static class ArrowCustomEntity extends AbstractArrowEntity {
 		public ArrowCustomEntity(FMLPlayMessages.SpawnEntity packet, World world) {
-			super(arrow, world);
+			super((EntityType<? extends AbstractArrowEntity>) pistol_bullet, world);
 		}
 
 		public ArrowCustomEntity(EntityType<? extends ArrowCustomEntity> type, World world) {
@@ -141,12 +137,6 @@ public class AtelierpistolsItem extends TcorpModElements.ModElement {
 		@Override
 		public IPacket<?> getAddEntityPacket() {
 			return NetworkHooks.getEntitySpawningPacket(this);
-		}
-
-		@Override
-		@OnlyIn(Dist.CLIENT)
-		public ItemStack getItem() {
-			return new ItemStack(Blocks.WARPED_STEM);
 		}
 
 		@Override
@@ -197,7 +187,7 @@ public class AtelierpistolsItem extends TcorpModElements.ModElement {
 
 
 	public static ArrowCustomEntity shoot(World world, LivingEntity entity, Random random, float power, double damage, int knockback) {
-		ArrowCustomEntity entityarrow = new ArrowCustomEntity(arrow, entity, world);
+		ArrowCustomEntity entityarrow = new ArrowCustomEntity(pistol_bullet, entity, world);
 		entityarrow.shoot(entity.getLookAngle().x, entity.getLookAngle().y, entity.getLookAngle().z, power * 2, 0);
 		entityarrow.setSilent(true);
 		entityarrow.setBaseDamage(damage);
@@ -213,7 +203,7 @@ public class AtelierpistolsItem extends TcorpModElements.ModElement {
 	}
 
 	public static ArrowCustomEntity shoot(LivingEntity entity, LivingEntity target) {
-		ArrowCustomEntity entityarrow = new ArrowCustomEntity(arrow, entity, entity.level);
+		ArrowCustomEntity entityarrow = new ArrowCustomEntity(pistol_bullet, entity, entity.level);
 		double d0 = target.getY() + (double) target.getEyeHeight() - 1.1;
 		double d1 = target.getX() - entity.getX();
 		double d3 = target.getZ() - entity.getZ();

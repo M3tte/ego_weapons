@@ -25,13 +25,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 
 @OnlyIn(Dist.CLIENT)
 public class AteliershotgunRenderer {
-	public static class ModelRegisterHandler {
-		@SubscribeEvent
-		@OnlyIn(Dist.CLIENT)
-		public void registerModels(ModelRegistryEvent event) {
-			RenderingRegistry.registerEntityRenderingHandler(AteliershotgunItem.arrow, renderManager -> new CustomRender(renderManager));
-		}
-	}
 
 	@OnlyIn(Dist.CLIENT)
 	public static class CustomRender extends EntityRenderer<AteliershotgunItem.ArrowCustomEntity> {

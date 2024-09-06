@@ -1,7 +1,0 @@
-{
-  "parent": "tcorp:custom/freischutz",
-  "textures": {
-    "0": "tcorp:blocks/freischutz",
-    "particle": "tcorp:items/fairy_spear"
-  }
-}

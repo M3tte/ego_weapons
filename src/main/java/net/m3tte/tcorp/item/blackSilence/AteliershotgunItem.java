@@ -6,14 +6,12 @@ import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.fml.network.FMLPlayMessages;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
 
 import net.minecraft.world.World;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.ResourceLocation;
@@ -35,9 +33,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.block.Blocks;
 
-import net.m3tte.tcorp.procedures.AteliershotgunhitProcedure;
-import net.m3tte.tcorp.procedures.AtelierpistolsRangedItemUsedProcedure;
-import net.m3tte.tcorp.entity.renderer.AteliershotgunRenderer;
+import net.m3tte.tcorp.procedures.legacy.AteliershotgunhitProcedure;
+import net.m3tte.tcorp.procedures.legacy.AtelierpistolsRangedItemUsedProcedure;
 import net.m3tte.tcorp.TcorpModElements;
 
 import javax.annotation.Nullable;
@@ -52,25 +49,23 @@ import java.util.AbstractMap;
 public class AteliershotgunItem extends TcorpModElements.ModElement {
 	@ObjectHolder("tcorp:atelier_shotgun")
 	public static final Item block = null;
-	public static final EntityType arrow = (EntityType.Builder.<ArrowCustomEntity>of(ArrowCustomEntity::new, EntityClassification.MISC)
+	public static final EntityType<ArrowCustomEntity> shotgun_slug = (EntityType<ArrowCustomEntity>) (EntityType.Builder.<ArrowCustomEntity>of(ArrowCustomEntity::new, EntityClassification.MISC)
 			.setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).setCustomClientFactory(ArrowCustomEntity::new)
-			.sized(0.5f, 0.5f)).build("projectile_ateliershotgun").setRegistryName("projectile_ateliershotgun");
+			.sized(0.5f, 0.5f)).build("projectile_ateliershotgun");
 
 	public AteliershotgunItem(TcorpModElements instance) {
 		super(instance, 204);
-		FMLJavaModLoadingContext.get().getModEventBus().register(new AteliershotgunRenderer.ModelRegisterHandler());
 	}
 
 	@Override
 	public void initElements() {
 		elements.items.add(() -> new ItemRanged());
-		elements.entities.add(() -> arrow);
 	}
 
 	public static class ItemRanged extends Item {
 		public ItemRanged() {
 			super(new Properties().tab(null).stacksTo(1));
-			setRegistryName("ateliershotgun");
+			setRegistryName("atelier_shotgun");
 		}
 
 		@Override
@@ -82,7 +77,7 @@ public class AteliershotgunItem extends TcorpModElements.ModElement {
 		@Override
 		public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> list, ITooltipFlag p_77624_4_) {
 			super.appendHoverText(p_77624_1_, p_77624_2_, list, p_77624_4_);
-			list.add(new StringTextComponent("Pistols... echoing with vengeance"));
+			list.add(new StringTextComponent("A shotgun... darkened with wrath"));
 			list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Swap to next weapon. ").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 1 E").withStyle(TextFormatting.AQUA)));
 		}
 
@@ -119,7 +114,7 @@ public class AteliershotgunItem extends TcorpModElements.ModElement {
 	@OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem.class)
 	public static class ArrowCustomEntity extends AbstractArrowEntity implements IRendersAsItem {
 		public ArrowCustomEntity(FMLPlayMessages.SpawnEntity packet, World world) {
-			super(arrow, world);
+			super(shotgun_slug, world);
 		}
 
 		public ArrowCustomEntity(EntityType<? extends ArrowCustomEntity> type, World world) {
@@ -191,7 +186,7 @@ public class AteliershotgunItem extends TcorpModElements.ModElement {
 	}
 
 	public static ArrowCustomEntity shoot(World world, LivingEntity entity, Random random, float power, double damage, int knockback) {
-		ArrowCustomEntity entityarrow = new ArrowCustomEntity(arrow, entity, world);
+		ArrowCustomEntity entityarrow = new ArrowCustomEntity(shotgun_slug, entity, world);
 		entityarrow.shoot(entity.getLookAngle().x, entity.getLookAngle().y, entity.getLookAngle().z, power * 2, 0);
 		entityarrow.setSilent(true);
 		entityarrow.setCritArrow(false);
@@ -207,23 +202,4 @@ public class AteliershotgunItem extends TcorpModElements.ModElement {
 		return entityarrow;
 	}
 
-	public static ArrowCustomEntity shoot(LivingEntity entity, LivingEntity target) {
-		ArrowCustomEntity entityarrow = new ArrowCustomEntity(arrow, entity, entity.level);
-		double d0 = target.getY() + (double) target.getEyeHeight() - 1.1;
-		double d1 = target.getX() - entity.getX();
-		double d3 = target.getZ() - entity.getZ();
-		entityarrow.shoot(d1, d0 - entityarrow.getY() + (double) MathHelper.sqrt(d1 * d1 + d3 * d3) * 0.2F, d3, 1.4f * 2, 12.0F);
-		entityarrow.setSilent(true);
-		entityarrow.setBaseDamage(3.5);
-		entityarrow.setKnockback(0);
-		entityarrow.setCritArrow(false);
-		entity.level.addFreshEntity(entityarrow);
-		double x = entity.getX();
-		double y = entity.getY();
-		double z = entity.getZ();
-		entity.level.playSound((PlayerEntity) null, (double) x, (double) y, (double) z,
-				(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("tcorp:ateliershoot")),
-				SoundCategory.PLAYERS, 1, 1f / (new Random().nextFloat() * 0.5f + 1));
-		return entityarrow;
-	}
 }

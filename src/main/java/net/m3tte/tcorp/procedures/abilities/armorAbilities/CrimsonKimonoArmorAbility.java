@@ -6,6 +6,7 @@ import net.m3tte.tcorp.particle.BlipeffectParticle;
 import net.m3tte.tcorp.particle.CrimsonfanparticleParticle;
 import net.m3tte.tcorp.particle.RedpowerupParticle;
 import net.m3tte.tcorp.procedures.abilities.AbilityUtils;
+import net.m3tte.tcorp.procedures.abilities.ItemAbility;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;

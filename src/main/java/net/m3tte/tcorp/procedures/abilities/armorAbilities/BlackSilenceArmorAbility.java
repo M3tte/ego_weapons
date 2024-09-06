@@ -10,6 +10,7 @@ import net.m3tte.tcorp.potion.FuriosoPotionEffect;
 import net.m3tte.tcorp.potion.OrlandoPotionEffect;
 import net.m3tte.tcorp.procedures.abilities.AbilityTier;
 import net.m3tte.tcorp.procedures.abilities.AbilityUtils;
+import net.m3tte.tcorp.procedures.abilities.ItemAbility;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
@@ -58,13 +59,13 @@ public class BlackSilenceArmorAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (player.hasEffect(OrlandoPotionEffect.potion) && playerVars.blips > 6) {
-            playerVars.blips -= 5;
+        if (player.hasEffect(OrlandoPotionEffect.potion) && playerVars.blips >= 6) {
+            playerVars.blips -= 6;
             furiosoEffect(player, playerVars);
             applyBlipCooldown(60, playerVars);
 
             playerVars.syncPlayerVariables(player);
-        } else if (playerVars.blips > 9) {
+        } else if (playerVars.blips >= 9) {
             orlandoEffect(player);
             playerVars.syncPlayerVariables(player);
         }

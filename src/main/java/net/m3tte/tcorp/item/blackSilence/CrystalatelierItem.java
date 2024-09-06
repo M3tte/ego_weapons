@@ -18,7 +18,7 @@ import java.util.List;
 @TcorpModElements.ModElement.Tag
 public class CrystalatelierItem extends TcorpModElements.ModElement {
 	@ObjectHolder("tcorp:crystal_atelier")
-	public static final Item block = null;
+	public static final Item item = null;
 
 	public CrystalatelierItem(TcorpModElements instance) {
 		super(instance, 191);

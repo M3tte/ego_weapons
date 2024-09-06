@@ -1,7 +1,7 @@
 
 package net.m3tte.tcorp.potion;
 
-import net.m3tte.tcorp.procedures.BlacksilenceOnEffectActiveTickProcedure;
+import net.m3tte.tcorp.procedures.legacy.BlacksilenceOnEffectActiveTickProcedure;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifierManager;

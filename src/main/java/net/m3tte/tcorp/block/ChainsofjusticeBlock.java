@@ -54,9 +54,9 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Block;
 
-import net.m3tte.tcorp.procedures.FleshyrootsBlockAddedProcedure;
-import net.m3tte.tcorp.procedures.ChainsofjusticecollideProcedure;
-import net.m3tte.tcorp.procedures.ChainsofjudgementtickProcedure;
+import net.m3tte.tcorp.procedures.legacy.FleshyrootsBlockAddedProcedure;
+import net.m3tte.tcorp.procedures.legacy.ChainsofjusticecollideProcedure;
+import net.m3tte.tcorp.procedures.legacy.ChainsofjudgementtickProcedure;
 import net.m3tte.tcorp.TcorpModElements;
 
 import javax.annotation.Nullable;

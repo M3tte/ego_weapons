@@ -6,7 +6,7 @@ import net.m3tte.tcorp.execFunctions.SwapWeapon;
 import net.m3tte.tcorp.gui.BlacksilenceswapuiGui;
 import net.m3tte.tcorp.procedures.abilities.AbilityTier;
 import net.m3tte.tcorp.procedures.abilities.AbilityUtils;
-import net.m3tte.tcorp.procedures.abilities.armorAbilities.ItemAbility;
+import net.m3tte.tcorp.procedures.abilities.ItemAbility;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -44,7 +44,7 @@ public class BlackSilenceWeaponAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.blips > 1 || player.getPersistentData().getDouble("furiosohits") > 10) {
+        if (playerVars.blips >= 1 || player.getPersistentData().getDouble("furiosohits") > 10) {
             double x = player.getX();
             double y = player.getY();
             double z = player.getZ();

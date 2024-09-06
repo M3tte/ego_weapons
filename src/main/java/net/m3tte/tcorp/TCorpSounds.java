@@ -18,7 +18,22 @@ public class TCorpSounds {
         SOUNDS.put(event.getLocation(), event);
         return event;
     }
+    public static SoundEvent MAGIC_BULLET_SPIN_SWING = generateSoundEvent(new SoundEvent(locationFrom("magic_bullet.spin.swing")));
+    public static SoundEvent MAGIC_BULLET_SPIN_HIT = generateSoundEvent(new SoundEvent(locationFrom("magic_bullet.spin.hit")));
+    public static SoundEvent MAGIC_BULLET_SPIN_SPAM = generateSoundEvent(new SoundEvent(locationFrom("magic_bullet.spin.spam")));
+    public static SoundEvent MAGIC_BULLET_SPIN_DETONATE = generateSoundEvent(new SoundEvent(locationFrom("magic_bullet.spin.detonate")));
 
+    public static SoundEvent MAGIC_BULLET_AIM_2 = generateSoundEvent(new SoundEvent(locationFrom("magic_bullet.aim.2")));
+    public static SoundEvent MAGIC_BULLET_FIRE_2 = generateSoundEvent(new SoundEvent(locationFrom("magic_bullet.fire.2")));
+    public static SoundEvent MAGIC_BULLET_FIRE_SWING = generateSoundEvent(new SoundEvent(locationFrom("magic_bullet.fire.swing")));
+    public static SoundEvent MAGIC_BULLET_FIRE_3 = generateSoundEvent(new SoundEvent(locationFrom("magic_bullet.fire.3")));
+    public static SoundEvent MAGIC_BULLET_BREATHE = generateSoundEvent(new SoundEvent(locationFrom("magic_bullet.breathe")));
+    public static SoundEvent MAGIC_BULLET_SWING_1 = generateSoundEvent(new SoundEvent(locationFrom("magic_bullet.swing.1")));
+    public static SoundEvent MAGIC_BULLET_SWING_2 = generateSoundEvent(new SoundEvent(locationFrom("magic_bullet.swing.2")));
+    public static SoundEvent MAGIC_BULLET_HIT_1 = generateSoundEvent(new SoundEvent(locationFrom("magic_bullet.hit.1")));
+    public static SoundEvent MAGIC_BULLET_HIT_2 = generateSoundEvent(new SoundEvent(locationFrom("magic_bullet.hit.2")));
+    public static SoundEvent MAGIC_BULLET_AIM_1 = generateSoundEvent(new SoundEvent(locationFrom("magic_bullet.aim.1")));
+    public static SoundEvent MAGIC_BULLET_FIRE_1 = generateSoundEvent(new SoundEvent(locationFrom("magic_bullet.fire.1")));
     public static SoundEvent NOTHING_THERE_LOVE_YOU = generateSoundEvent(new SoundEvent(locationFrom("nothing_there.i_love_you")));
     public static SoundEvent NOTHING_THERE_SLASH = generateSoundEvent(new SoundEvent(locationFrom("nothing_there.slash")));
     public static SoundEvent NOTHING_THERE_GOODBYE = generateSoundEvent(new SoundEvent(locationFrom("nothing_there.goodbye")));

@@ -54,9 +54,9 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Block;
 
-import net.m3tte.tcorp.procedures.PutridrootstouchProcedure;
-import net.m3tte.tcorp.procedures.PutridrootstickProcedure;
-import net.m3tte.tcorp.procedures.FleshyrootsBlockAddedProcedure;
+import net.m3tte.tcorp.procedures.legacy.PutridrootstouchProcedure;
+import net.m3tte.tcorp.procedures.legacy.PutridrootstickProcedure;
+import net.m3tte.tcorp.procedures.legacy.FleshyrootsBlockAddedProcedure;
 import net.m3tte.tcorp.TcorpModElements;
 
 import javax.annotation.Nullable;

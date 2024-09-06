@@ -1,6 +1,7 @@
 package net.m3tte.tcorp;
 
-import net.m3tte.tcorp.network.TCorpPackageHandler.SendStaggerMessage;
+import net.m3tte.tcorp.network.packages.AbilityPackages;
+import net.m3tte.tcorp.network.packages.StaggerPackages.SendStaggerMessage;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -40,8 +41,12 @@ public class TcorpModVariables {
 				PlayerVariablesSyncMessage::handler);
 		elements.addNetworkMessage(SyncStaggerMessage.class, SyncStaggerMessage::buffer, SyncStaggerMessage::new,
 				SyncStaggerMessage::handler);
+		elements.addNetworkMessage(SyncEmotionMessage.class, SyncEmotionMessage::buffer, SyncEmotionMessage::new,
+				SyncEmotionMessage::handler);
 		elements.addNetworkMessage(SendStaggerMessage.class, SendStaggerMessage::buffer, SendStaggerMessage::new,
 				SendStaggerMessage::handler);
+		elements.addNetworkMessage(AbilityPackages.SyncOnrushData.class, AbilityPackages.SyncOnrushData::buffer, AbilityPackages.SyncOnrushData::new,
+				AbilityPackages.SyncOnrushData::handler);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::init);
 	}
 
@@ -241,6 +246,10 @@ public class TcorpModVariables {
 			nbt.putDouble("iFrames", instance.iFrames);
 			nbt.putDouble("maxStagger", instance.maxStagger);
 			nbt.putDouble("stagger", instance.stagger);
+			nbt.putDouble("maxSanity", instance.maxSanity);
+			nbt.putDouble("sanity", instance.sanity);
+			nbt.putInt("emotionLevel", instance.emotionLevel);
+			nbt.putDouble("emotionLevelProgress", instance.emotionLevelProgress);
 			return nbt;
 		}
 
@@ -268,6 +277,10 @@ public class TcorpModVariables {
 			instance.iFrames = nbt.getDouble("iFrames");
 			instance.maxStagger = nbt.getDouble("maxStagger");
 			instance.stagger = nbt.getDouble("stagger");
+			instance.maxSanity = nbt.getDouble("maxSanity");
+			instance.sanity = nbt.getDouble("sanity");
+			instance.emotionLevel = nbt.getInt("emotionLevel");
+			instance.emotionLevelProgress = nbt.getDouble("emotionLevelProgress");
 		}
 	}
 
@@ -294,6 +307,12 @@ public class TcorpModVariables {
 		public double maxStagger = 20;
 		public double stagger = 20;
 
+		public double maxSanity = 20;
+		public double sanity = 20;
+
+		public int emotionLevel = 0;
+		public double emotionLevelProgress = 0;
+
 		public void syncPlayerVariables(Entity entity) {
 			if (entity instanceof ServerPlayerEntity)
 				TcorpMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) entity), new PlayerVariablesSyncMessage(this));
@@ -302,6 +321,11 @@ public class TcorpModVariables {
 		public void syncStagger(Entity entity) {
 			if (entity instanceof ServerPlayerEntity)
 				TcorpMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) entity), new SyncStaggerMessage(this));
+		}
+
+		public void syncEmotionLevel(Entity entity) {
+			if (entity instanceof ServerPlayerEntity)
+				TcorpMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) entity), new SyncEmotionMessage(this.emotionLevel, this.emotionLevelProgress));
 		}
 	}
 
@@ -353,6 +377,10 @@ public class TcorpModVariables {
 			clone.iFrames = original.iFrames;
 			clone.maxStagger = original.maxStagger;
 			clone.stagger = original.stagger;
+			clone.maxSanity = original.maxSanity;
+			clone.sanity = original.sanity;
+			clone.emotionLevel = original.emotionLevel;
+			clone.emotionLevelProgress = original.emotionLevelProgress;
 		}
 	}
 
@@ -399,6 +427,10 @@ public class TcorpModVariables {
 					variables.iFrames = message.data.iFrames;
 					variables.maxStagger = message.data.maxStagger;
 					variables.stagger = message.data.stagger;
+					variables.maxSanity = message.data.maxSanity;
+					variables.sanity = message.data.sanity;
+					variables.emotionLevelProgress = message.data.emotionLevelProgress;
+					variables.emotionLevel = message.data.emotionLevel;
 				}
 			});
 			context.setPacketHandled(true);
@@ -406,19 +438,22 @@ public class TcorpModVariables {
 	}
 
 	public static class SyncStaggerMessage {
-		public PlayerVariables data;
+		public double maxStagger;
+		public double stagger;
 
 		public SyncStaggerMessage(PacketBuffer buffer) {
-			this.data = new PlayerVariables();
-			new PlayerVariablesStorage().readNBT(null, this.data, null, buffer.readNbt());
+			this.maxStagger = buffer.readDouble();
+			this.stagger = buffer.readDouble();
 		}
 
 		public SyncStaggerMessage(PlayerVariables data) {
-			this.data = data;
+			this.maxStagger = data.maxStagger;
+			this.stagger = data.stagger;
 		}
 
 		public static void buffer(SyncStaggerMessage message, PacketBuffer buffer) {
-			buffer.writeNbt((CompoundNBT) new PlayerVariablesStorage().writeNBT(null, message.data, null));
+			buffer.writeDouble(message.maxStagger);
+			buffer.writeDouble(message.stagger);
 		}
 
 		public static void handler(SyncStaggerMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
@@ -427,8 +462,8 @@ public class TcorpModVariables {
 				if (!context.getDirection().getReceptionSide().isServer()) {
 					PlayerVariables variables = ((PlayerVariables) Minecraft.getInstance().player.getCapability(PLAYER_VARIABLES_CAPABILITY, null)
 							.orElse(new PlayerVariables()));
-					variables.maxStagger = message.data.maxStagger;
-					variables.stagger = message.data.stagger;
+					variables.maxStagger = message.maxStagger;
+					variables.stagger = message.stagger;
 
 					/*if (variables.stagger <= 0) {
 						StaggerSystem.stagger(Minecraft.getInstance().player);
@@ -439,5 +474,37 @@ public class TcorpModVariables {
 		}
 	}
 
+	public static class SyncEmotionMessage {
+		public int emotionLevel;
+		public double emotionLevelProgress;
+
+		public SyncEmotionMessage(PacketBuffer buffer) {
+			this.emotionLevel = buffer.readInt();
+			this.emotionLevelProgress = buffer.readInt();
+		}
+
+		public SyncEmotionMessage(int level, double progress) {
+			this.emotionLevel = level;
+			this.emotionLevelProgress = progress;
+		}
+
+		public static void buffer(SyncEmotionMessage message, PacketBuffer buffer) {
+			buffer.writeInt(message.emotionLevel);
+			buffer.writeDouble(message.emotionLevelProgress);
+		}
+
+		public static void handler(SyncEmotionMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
+			NetworkEvent.Context context = contextSupplier.get();
+			context.enqueueWork(() -> {
+				if (!context.getDirection().getReceptionSide().isServer()) {
+					PlayerVariables variables = ((PlayerVariables) Minecraft.getInstance().player.getCapability(PLAYER_VARIABLES_CAPABILITY, null)
+							.orElse(new PlayerVariables()));
+					variables.emotionLevel = message.emotionLevel;
+					variables.emotionLevelProgress = message.emotionLevelProgress;
+				}
+			});
+			context.setPacketHandled(true);
+		}
+	}
 
 }

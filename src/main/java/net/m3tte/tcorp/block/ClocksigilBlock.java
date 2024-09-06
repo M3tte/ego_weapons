@@ -28,7 +28,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Block;
 
-import net.m3tte.tcorp.procedures.ClocksigilClientDisplayRandomTickProcedure;
+import net.m3tte.tcorp.procedures.legacy.ClocksigilClientDisplayRandomTickProcedure;
 import net.m3tte.tcorp.TcorpModElements;
 
 import java.util.stream.Stream;

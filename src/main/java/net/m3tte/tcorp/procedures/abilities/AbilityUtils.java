@@ -22,7 +22,9 @@ public class AbilityUtils {
         return new ResourceLocation(TcorpMod.MODID, "textures/screens/abilities/"+ability+".png");
     }
 
-
+    public static ResourceLocation getOverlay(String overlay) {
+        return new ResourceLocation(TcorpMod.MODID, "textures/screens/abilities/bg/overlays/"+overlay+".png");
+    }
 
 
 

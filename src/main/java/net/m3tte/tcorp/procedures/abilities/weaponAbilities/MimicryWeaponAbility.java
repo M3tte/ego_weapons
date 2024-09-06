@@ -11,7 +11,7 @@ import net.m3tte.tcorp.particle.DamagefxParticle;
 import net.m3tte.tcorp.particle.RedflashParticle;
 import net.m3tte.tcorp.procedures.abilities.AbilityTier;
 import net.m3tte.tcorp.procedures.abilities.AbilityUtils;
-import net.m3tte.tcorp.procedures.abilities.armorAbilities.ItemAbility;
+import net.m3tte.tcorp.procedures.abilities.ItemAbility;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.potion.EffectInstance;
@@ -69,7 +69,7 @@ public class MimicryWeaponAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.blips > getBlipCost(player, playerVars)) {
+        if (playerVars.blips >= getBlipCost(player, playerVars)) {
 
             if (isWearingMimicry(player)) {
                 playerVars.blips-= getBlipCost(player, playerVars);
@@ -91,7 +91,7 @@ public class MimicryWeaponAbility extends ItemAbility {
                 }
 
                 LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-                player.getCooldowns().addCooldown(MimicryItem.block.getItem(), (int) 20);
+                player.getCooldowns().addCooldown(MimicryItem.item.getItem(), (int) 20);
                 playerVars.globalcooldown = 200;
                 player.addEffect(new EffectInstance(Effects.DIG_SLOWDOWN, (int) 80, (int) 4, (false), (false)));
                 player.addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 75, 1));
@@ -116,7 +116,7 @@ public class MimicryWeaponAbility extends ItemAbility {
 
 
                 LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-                player.getCooldowns().addCooldown(MimicryItem.block.getItem(), (int) 20);
+                player.getCooldowns().addCooldown(MimicryItem.item.getItem(), (int) 20);
                 playerVars.globalcooldown = 200;
                 player.addEffect(new EffectInstance(Effects.DIG_SLOWDOWN, (int) 80, (int) 4, (false), (false)));
                 player.addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 75, 1));

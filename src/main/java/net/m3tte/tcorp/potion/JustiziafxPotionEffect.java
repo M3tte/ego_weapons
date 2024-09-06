@@ -1,7 +1,7 @@
 
 package net.m3tte.tcorp.potion;
 
-import net.m3tte.tcorp.procedures.JustiziafxActiveTickConditionProcedure;
+import net.m3tte.tcorp.procedures.legacy.JustiziafxActiveTickConditionProcedure;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;

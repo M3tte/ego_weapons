@@ -15,6 +15,9 @@ import net.m3tte.tcorp.skill.*;
 import net.m3tte.tcorp.skill.allas.AllasPassive;
 import net.m3tte.tcorp.skill.allas.BlackSilenceAllasGuard;
 import net.m3tte.tcorp.skill.durandal.BasicBlockablePassive;
+import net.m3tte.tcorp.skill.magic_bullet.MagicBulletDetonate;
+import net.m3tte.tcorp.skill.magic_bullet.MagicBulletGuard;
+import net.m3tte.tcorp.skill.magic_bullet.MagicBulletPassive;
 import net.m3tte.tcorp.skill.oldBoys.OldBoysGuard;
 import net.m3tte.tcorp.skill.oldBoys.OldBoysPassive;
 import net.m3tte.tcorp.skill.red_mist.RedMistActiveGuard;
@@ -25,10 +28,8 @@ import yesman.epicfight.api.forgeevent.SkillRegistryEvent;
 import yesman.epicfight.api.utils.ExtendedDamageSource.StunType;
 import yesman.epicfight.api.utils.math.ExtraDamageType;
 import yesman.epicfight.api.utils.math.ValueCorrector;
-import yesman.epicfight.skill.SimpleSpecialAttackSkill;
-import yesman.epicfight.skill.Skill;
-import yesman.epicfight.skill.SkillCategories;
-import yesman.epicfight.skill.SpecialAttackSkill;
+import yesman.epicfight.gameasset.Animations;
+import yesman.epicfight.skill.*;
 
 public class TCorpSkills {
     public static Skill LESSER_SPLIT_VERTICAL;
@@ -68,6 +69,14 @@ public class TCorpSkills {
     public static Skill OLD_BOYS_GUARD;
 
     public static Skill OLD_BOYS_PASSIVE;
+
+    public static Skill MAGIC_BULLET_GUARD;
+
+    public static Skill MAGIC_BULLET_EVADE;
+
+    public static Skill MAGIC_BULLET_PASSIVE;
+
+    public static Skill MAGIC_BULLET_DETONATE;
     public TCorpSkills() {
     }
 
@@ -148,6 +157,8 @@ public class TCorpSkills {
                 .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.LONG)
                 .registerPropertiesToAnimation(), false);
 
+        MAGIC_BULLET_DETONATE = event.registerSkill(new MagicBulletDetonate(SpecialAttackSkill.createBuilder(new ResourceLocation(TcorpMod.MODID, "magic_bullet_detonate")).setConsumption(35.0F)), false);
+
         GENERIC_ACTIVE_GUARD = event.registerSkill(new BlackSilenceActiveGuard(BlackSilenceActiveGuard.createBuilder(new ResourceLocation(TcorpMod.MODID, "blacksilence_active_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
 
         BASIC_BLOCKABLE_PASSIVE = event.registerSkill(new BasicBlockablePassive(Skill.createBuilder(new ResourceLocation(TcorpMod.MODID, "basic_blockable_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
@@ -162,5 +173,10 @@ public class TCorpSkills {
 
         OLD_BOYS_PASSIVE = event.registerSkill(new OldBoysPassive(Skill.createBuilder(new ResourceLocation(TcorpMod.MODID, "old_boys_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
 
+        MAGIC_BULLET_GUARD =event.registerSkill(new MagicBulletGuard(MagicBulletGuard.createBuilder(new ResourceLocation(TcorpMod.MODID, "magic_bullet_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
+
+        MAGIC_BULLET_PASSIVE = event.registerSkill(new MagicBulletPassive(Skill.createBuilder(new ResourceLocation(TcorpMod.MODID, "magic_bullet_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
+
+        MAGIC_BULLET_EVADE = event.registerSkill(new StepSkill(DodgeSkill.createBuilder(new ResourceLocation(TcorpMod.MODID, "magic_bullet_evade")).setConsumption(3.0F).setAnimations(TCorpAnimations.MAGIC_BULLET_EVADE_FORWARD, TCorpAnimations.MAGIC_BULLET_EVADE_BACKWARD, TCorpAnimations.MAGIC_BULLET_EVADE_LEFT, TCorpAnimations.MAGIC_BULLET_EVADE_RIGHT)), false);
     }
 }

@@ -7,6 +7,7 @@ import net.m3tte.tcorp.particle.BlipeffectParticle;
 import net.m3tte.tcorp.potion.ILoveYou;
 import net.m3tte.tcorp.procedures.abilities.AbilityTier;
 import net.m3tte.tcorp.procedures.abilities.AbilityUtils;
+import net.m3tte.tcorp.procedures.abilities.ItemAbility;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;

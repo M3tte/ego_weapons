@@ -12,7 +12,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effect;
 import net.minecraft.entity.LivingEntity;
 
-import net.m3tte.tcorp.procedures.ShadowincarnateOnEffectActiveTickProcedure;
+import net.m3tte.tcorp.procedures.legacy.ShadowincarnateOnEffectActiveTickProcedure;
 
 import java.util.stream.Stream;
 import java.util.Map;

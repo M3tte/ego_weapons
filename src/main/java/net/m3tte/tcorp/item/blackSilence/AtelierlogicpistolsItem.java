@@ -17,7 +17,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.block.BlockState;
 
-import net.m3tte.tcorp.procedures.AtelierLogicPistolUseProcedure;
+import net.m3tte.tcorp.procedures.legacy.AtelierLogicPistolUseProcedure;
 import net.m3tte.tcorp.TcorpModElements;
 
 import javax.annotation.Nullable;
@@ -30,7 +30,7 @@ import java.util.AbstractMap;
 @TcorpModElements.ModElement.Tag
 public class AtelierlogicpistolsItem extends TcorpModElements.ModElement {
 	@ObjectHolder("tcorp:atelier_logic_pistols")
-	public static final Item block = null;
+	public static final Item item = null;
 
 	public AtelierlogicpistolsItem(TcorpModElements instance) {
 		super(instance, 197);

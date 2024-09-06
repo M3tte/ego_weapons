@@ -3,7 +3,7 @@ package net.m3tte.tcorp.command;
 
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import net.m3tte.tcorp.procedures.IFrameSetterProcedure;
+import net.m3tte.tcorp.procedures.legacy.IFrameSetterProcedure;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;

@@ -20,7 +20,8 @@ public enum TCorpCategories implements WeaponCategory {
     OLD_BOYS,
     WHEELS_INDUSTRY,
     CRYSTAL_ATELIER,
-    MIMICRY;
+    MIMICRY,
+    MAGIC_BULLET;
 
     final int id;
 

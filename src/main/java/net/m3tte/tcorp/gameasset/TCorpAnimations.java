@@ -12,8 +12,16 @@ import net.m3tte.tcorp.TcorpModVariables;
 import net.m3tte.tcorp.execFunctions.AtelierCooldownHandler;
 import net.m3tte.tcorp.execFunctions.BlackSilenceEvaluator;
 import net.m3tte.tcorp.item.blackSilence.*;
+import net.m3tte.tcorp.item.magic_bullet.MagicBulletProjectile;
+import net.m3tte.tcorp.particle.MagicBulletAimParticle;
 import net.m3tte.tcorp.particle.BlacksilenceshadowParticle;
+import net.m3tte.tcorp.particle.MagicBulletShell;
 import net.m3tte.tcorp.potion.FuriosoPotionEffect;
+import net.m3tte.tcorp.potion.MagicBulletPotionEffect;
+import net.m3tte.tcorp.procedures.BlipTick;
+import net.m3tte.tcorp.specialParticles.StaggerParticle;
+import net.m3tte.tcorp.world.capabilities.SanitySystem;
+import net.m3tte.tcorp.world.capabilities.StaggerSystem;
 import net.m3tte.tcorp.world.capabilities.item.TCorpCapabilityPresets;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityPredicate;
@@ -67,6 +75,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static net.m3tte.tcorp.procedures.SharedFunctions.onStaggered;
 import static yesman.epicfight.api.animation.property.AnimationProperty.StaticAnimationProperty;
 import static yesman.epicfight.api.utils.ExtendedDamageSource.StunType;
 
@@ -224,6 +233,7 @@ public class TCorpAnimations {
     public static StaticAnimation KALI_AUTO_3;
     public static StaticAnimation KALI_AUTO_4;
     public static StaticAnimation KALI_DASH;
+    public static StaticAnimation KALI_ONRUSH;
     public static StaticAnimation KALI_REND;
     public static StaticAnimation KALI_JUMP;
     public static StaticAnimation KALI_IMPACT;
@@ -265,6 +275,31 @@ public class TCorpAnimations {
     public static StaticAnimation KALI_EGO_SNEAK;
     public static StaticAnimation PUMMEL_DOWN;
 
+
+
+
+    public static StaticAnimation MAGIC_BULLET_IDLE;
+    public static StaticAnimation MAGIC_BULLET_WALK;
+    public static StaticAnimation MAGIC_BULLET_RUN;
+    public static StaticAnimation MAGIC_BULLET_KNEEL;
+    public static StaticAnimation MAGIC_BULLET_SNEAK;
+    public static StaticAnimation MAGIC_BULLET_JUMP;
+    public static StaticAnimation MAGIC_BULLET_EVADE_FORWARD;
+    public static StaticAnimation MAGIC_BULLET_EVADE_BACKWARD;
+    public static StaticAnimation MAGIC_BULLET_EVADE_RIGHT;
+    public static StaticAnimation MAGIC_BULLET_EVADE_LEFT;
+
+    public static StaticAnimation MAGIC_BULLET_AUTO_1;
+    public static StaticAnimation MAGIC_BULLET_AUTO_2;
+    public static StaticAnimation MAGIC_BULLET_AUTO_3;
+    public static StaticAnimation MAGIC_BULLET_DASH;
+    public static StaticAnimation MAGIC_BULLET_JUMP_ATTACK;
+    public static StaticAnimation MAGIC_BULLET_GUARD_HIT;
+    public static StaticAnimation MAGIC_BULLET_GUARD;
+    public static StaticAnimation MAGIC_BULLET_AIM_1;
+    public static StaticAnimation MAGIC_BULLET_AIM_2;
+    public static StaticAnimation MAGIC_BULLET_SPIN_1;
+    public static StaticAnimation MAGIC_BULLET_SPIN_2;
     public TCorpAnimations() {
     }
 
@@ -906,7 +941,7 @@ public class TCorpAnimations {
                 .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.75f);
 
 
-        KALI_REND = (new DashAttackAnimation(0.02F, 0.35F, 0.4F, 0.66F, 1F, null, "Tool_R", "biped/kali/rend", biped))
+        KALI_REND = (new DashAttackAnimation(0.02F, 0.35F, 0.4F, 0.66F, 1F, TCorpCapabilityPresets.LONGER_BLADE, "Tool_R", "biped/kali/rend", biped))
                 .addProperty(AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AttackAnimationProperty.ROTATE_X, true)
                 .addProperty(AttackPhaseProperty.HIT_SOUND, EpicFightSounds.EVISCERATE)
                 .addProperty(AttackPhaseProperty.PARTICLE, EpicFightParticles.EVISCERATE)
@@ -1032,6 +1067,167 @@ public class TCorpAnimations {
 
         MIMICRY_GUARD = new StaticAnimation( true, "biped/mimicry/guard", biped);
         MIMICRY_GUARD_HIT = new GuardAnimation(0.05f,0.4f, "biped/mimicry/guard_hit", biped);
+
+        KALI_ONRUSH = (new DashAttackAnimation(0.02F, 0.4F, 0.5F, 0.833F, 1.5F, ColliderPreset.FIST, "Arm_L", "biped/kali/onrush", biped))
+                .addProperty(AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AttackAnimationProperty.ROTATE_X, true)
+                .addProperty(AttackPhaseProperty.HIT_SOUND, TCorpSounds.BLACK_SILENCE_ZELKOVA_MACE)
+                .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.MIMICRY_DASH_HIT)
+                .addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(1))
+                .addProperty(AttackPhaseProperty.SWING_SOUND, TCorpSounds.BLACK_SILENCE_EVADE)
+                .addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1f))
+                .addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(2.5f))
+                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.6f)
+                .addProperty(StaticAnimationProperty.EVENTS, onrushEvent());
+
+
+        MAGIC_BULLET_IDLE = new StaticAnimation(0.3f,true, "biped/magic_bullet/idle", biped);
+        MAGIC_BULLET_WALK = new MovementAnimation(true, "biped/magic_bullet/walk", biped);
+        MAGIC_BULLET_RUN = new MovementAnimation(true, "biped/magic_bullet/run", biped)
+                .addProperty(StaticAnimationProperty.PLAY_SPEED, 1f);
+        MAGIC_BULLET_KNEEL = new StaticAnimation(true, "biped/magic_bullet/kneel", biped);
+        MAGIC_BULLET_SNEAK = new MovementAnimation(true, "biped/magic_bullet/sneak", biped);
+        MAGIC_BULLET_JUMP = new MovementAnimation(0.3f,false, "biped/magic_bullet/jump", biped)
+                .addProperty(StaticAnimationProperty.PLAY_SPEED, 2.0f);
+
+        MAGIC_BULLET_EVADE_FORWARD = new DodgeAnimation(0f, "biped/magic_bullet/step_forward", 0.5f, 0.5f, biped)
+                .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, true)
+                .addProperty(AnimationProperty.ActionAnimationProperty.STOP_MOVEMENT, true)
+                .addProperty(StaticAnimationProperty.PLAY_SPEED,1f)
+                .addProperty(StaticAnimationProperty.EVENTS, magicBulletDodgeEvent());
+
+        MAGIC_BULLET_EVADE_BACKWARD = new DodgeAnimation(0f, "biped/magic_bullet/step_backward", 0.5f, 0.5f, biped)
+                .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, true)
+                .addProperty(AnimationProperty.ActionAnimationProperty.STOP_MOVEMENT, true)
+                .addProperty(StaticAnimationProperty.PLAY_SPEED,1f)
+                .addProperty(StaticAnimationProperty.EVENTS, magicBulletDodgeEvent());
+
+        MAGIC_BULLET_EVADE_LEFT = new DodgeAnimation(0f, "biped/magic_bullet/step_left", 0.5f, 0.8f, biped)
+                .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, true)
+                .addProperty(AnimationProperty.ActionAnimationProperty.STOP_MOVEMENT, true)
+                .addProperty(StaticAnimationProperty.PLAY_SPEED,1f)
+                .addProperty(StaticAnimationProperty.EVENTS, magicBulletDodgeEvent());
+
+        MAGIC_BULLET_EVADE_RIGHT = new DodgeAnimation(0f, "biped/magic_bullet/step_right", 0.5f, 0.8f, biped)
+                .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, true)
+                .addProperty(AnimationProperty.ActionAnimationProperty.STOP_MOVEMENT, true)
+                .addProperty(StaticAnimationProperty.PLAY_SPEED,1f)
+                .addProperty(StaticAnimationProperty.EVENTS, magicBulletDodgeEvent());
+
+        MAGIC_BULLET_AUTO_1 = new BasicAttackAnimation(0.08F, 0.05F, 0.28F, 0.5F, 0.7F, null, "Tool_R", "biped/magic_bullet/auto_1", biped)
+                .addProperty(AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AttackPhaseProperty.HIT_SOUND, TCorpSounds.MAGIC_BULLET_HIT_2)
+                .addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(2))
+                .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
+                .addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.adder(3f))
+                .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.MAGIC_BULLET_HIT)
+                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.6F);
+
+        MAGIC_BULLET_AUTO_2 = new BasicAttackAnimation(0.08F, 0.05F, 0.8F, 1.1F, 1.2F, null, "Tool_R", "biped/magic_bullet/auto_2", biped)
+                .addProperty(AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AttackPhaseProperty.HIT_SOUND, TCorpSounds.MAGIC_BULLET_HIT_1)
+                .addProperty(AttackPhaseProperty.SWING_SOUND, TCorpSounds.WOOSH)
+                .addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(1))
+                .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
+                .addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.adder(3f))
+                .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.MAGIC_BULLET_HIT)
+                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.6F)
+                .addProperty(StaticAnimationProperty.EVENTS, magicBulletSwingsoundHandler(1));
+
+        MAGIC_BULLET_AUTO_3 = new BasicAttackAnimation(0.01F, 0.05F, 0.5F, 0.7F, 1.5F, null, "Tool_R", "biped/magic_bullet/auto_3", biped)
+                .addProperty(AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AttackPhaseProperty.HIT_SOUND, TCorpSounds.MAGIC_BULLET_HIT_2)
+                .addProperty(AttackPhaseProperty.SWING_SOUND, TCorpSounds.WOOSH)
+                .addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(3))
+                .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.LONG)
+                .addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1.5f))
+                .addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.adder(-4.5f))
+                .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.MAGIC_BULLET_HIT)
+                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.7F)
+                .addProperty(StaticAnimationProperty.EVENTS, magicBulletSwingsoundHandler(2));
+
+        MAGIC_BULLET_DASH = new BasicAttackAnimation(0.08F, 0.05F, 0.8F, 1.1F, 1.5F, null, "Tool_R", "biped/magic_bullet/dash", biped)
+                .addProperty(AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AttackPhaseProperty.HIT_SOUND, TCorpSounds.MAGIC_BULLET_HIT_1)
+                .addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(1))
+                .addProperty(AttackPhaseProperty.SWING_SOUND, TCorpSounds.WOOSH)
+                .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.SHORT)
+                .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.MAGIC_BULLET_HIT)
+                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.7F)
+                .addProperty(StaticAnimationProperty.EVENTS, magicBulletSwingsoundHandler(1));
+
+        MAGIC_BULLET_JUMP_ATTACK = new BasicAttackAnimation(0.08F, 0.05F, 0.3F, 0.6F, 1F, null, "Tool_R", "biped/magic_bullet/jump_attack", biped)
+                .addProperty(AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AttackPhaseProperty.HIT_SOUND, TCorpSounds.MAGIC_BULLET_HIT_2)
+                .addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(3))
+                .addProperty(AttackPhaseProperty.SWING_SOUND, TCorpSounds.WOOSH)
+                .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.LONG)
+                .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.MAGIC_BULLET_HIT)
+                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.65F);
+
+        MAGIC_BULLET_GUARD = new StaticAnimation( true, "biped/magic_bullet/guard", biped);
+        MAGIC_BULLET_GUARD_HIT = new GuardAnimation(0.05f,0.2f, "biped/magic_bullet/guard_hit", biped);
+
+        MAGIC_BULLET_AIM_1 = new AttackAnimation(0.08F, 0.05F, 0.3F, 0.3F, 2F,null, "Tool_R", "biped/magic_bullet/aim_1", biped)
+                .addProperty(AttackAnimationProperty.LOCK_ROTATION, false)
+                .addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(0))
+                .addProperty(AttackPhaseProperty.SWING_SOUND, TCorpSounds.MAGIC_BULLET_BREATHE)
+
+                .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false)
+                .addProperty(StaticAnimationProperty.EVENTS, magicBulletFire1Event())
+                .addProperty(StaticAnimationProperty.PLAY_SPEED, 0.7f);
+        MAGIC_BULLET_AIM_2 = new AttackAnimation(0.08F, 0.05F, 0.3F, 0.3F, 2.9F,null, "Tool_R", "biped/magic_bullet/aim_2", biped)
+                .addProperty(AttackAnimationProperty.LOCK_ROTATION, false)
+                .addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(0))
+                .addProperty(AttackPhaseProperty.SWING_SOUND, TCorpSounds.MAGIC_BULLET_BREATHE)
+
+                .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false)
+                .addProperty(StaticAnimationProperty.EVENTS, magicBulletFire2Event())
+                .addProperty(StaticAnimationProperty.PLAY_SPEED, 0.9f);
+
+        MAGIC_BULLET_SPIN_1 = new BasicAttackAnimation(0.01F, 0.05F, 1.23F, 1.45F, 1.5F, null, "Tool_R", "biped/magic_bullet/special_1", biped)
+                .addProperty(AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AttackPhaseProperty.HIT_SOUND, TCorpSounds.MAGIC_BULLET_SPIN_HIT)
+                .addProperty(AttackPhaseProperty.SWING_SOUND, TCorpSounds.WOOSH)
+                .addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(3))
+                .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
+                .addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1f))
+                .addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.adder(4f))
+                .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.MAGIC_BULLET_HIT)
+                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.5F)
+                .addProperty(StaticAnimationProperty.EVENTS, magicBulletSwingSpamHandler1());
+
+        MAGIC_BULLET_SPIN_2 = (new SpecialAttackAnimation(0.01F, "biped/magic_bullet/special_2", biped,
+                new AttackAnimation.Phase(0.0F, 0.0F, 0.01F, 0.05F, 0.1F, 0.1F, "Tool_R", TCorpCapabilityPresets.RIFLE)
+                        .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
+                        .addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.4f))
+                        .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.MAGIC_BULLET_HIT),
+                new AttackAnimation.Phase(0.1F, 0.1F, 0.11F, 0.15F, 0.2F, 0.2F, "Tool_R", TCorpCapabilityPresets.RIFLE)
+                        .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
+                        .addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.4f))
+                        .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.MAGIC_BULLET_HIT),
+                new AttackAnimation.Phase(0.2F, 0.2F, 0.21F, 0.25F, 0.3F, 0.3F, "Tool_R", TCorpCapabilityPresets.RIFLE)
+                        .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
+                        .addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.4f))
+                        .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.MAGIC_BULLET_HIT),
+                new AttackAnimation.Phase(0.3F, 0.3F, 0.31F, 0.35F, 0.4F, 0.4F, "Tool_R", TCorpCapabilityPresets.RIFLE)
+                        .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
+                        .addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.4f))
+                        .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.MAGIC_BULLET_HIT),
+                new AttackAnimation.Phase(0.4F, 0.4F, 0.41F, 0.45F, 1F, 1F, "Tool_R", TCorpCapabilityPresets.RIFLE)
+                        .addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1.5f))
+                        .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.MAGIC_BULLET_IMPACT_HIT)
+                        .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.LONG)
+                        .addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(0.4f))
+                        .addProperty(AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT)
+                )
+                .addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(3))
+                .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.SHORT)
+                .addProperty(AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT)
+                .addProperty(AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
+                .addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(2))
+                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.5F)
+                .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.MAGIC_BULLET_HIT)
+                .addProperty(StaticAnimationProperty.EVENTS, magicBulletSwingSpamHandler2()));
     }
 
     private static void spawnArmatureParticle(LivingEntityPatch<?> entityPatch, int partialTicks, Vector3d offsets, int amount, IParticleData particle, float speedmult, String jointName) {
@@ -1056,7 +1252,6 @@ public class TCorpAnimations {
         //entityPatch.getAnimator().getPose((float) (i + r.nextInt(3) - 1) / 10F).getJointTransformData().get("Tool_R").toMatrix().mulFront(middleModelTf);
 
         Vector3d particlePos = OpenMatrix4f.transform(middleJointTf, offsets);
-        System.out.println(particlePos);
         for (int x = 0; x < amount; x++) {
             if (l.isClientSide()) {
                 l.addParticle(particle, particlePos.x, particlePos.y, particlePos.z, r.nextFloat() * speedmult - speedMultHalf,r.nextFloat() * speedmult - speedMultHalf,r.nextFloat() * speedmult - speedMultHalf); //r.nextFloat() * 0.2 - 0.1, r.nextFloat() * 0.2 - 0.1, );
@@ -1167,7 +1362,7 @@ public class TCorpAnimations {
         events[0] = StaticAnimation.Event.create(0.5F, (entitypatch) -> {
             Entity entity = entitypatch.getOriginal();
             BlackSilenceEvaluator.furiosoAddAttackStat(entity, 10);
-            entity.playSound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("tcorp:blacksilence.wheels.impact")), 1, 1);
+            entity.playSound(TCorpSounds.WHEELS_IMPACT, 1, 1);
         }, StaticAnimation.Event.Side.BOTH);
 
         events[1] = StaticAnimation.Event.create(0.6F, (entitypatch) -> {
@@ -1230,8 +1425,13 @@ public class TCorpAnimations {
                             LivingEntityPatch<?> targetPatch = (LivingEntityPatch<?>) living.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
                             if (targetPatch != null) {
 
+                                StaggerSystem.reduceStagger(living, 5, (n) -> {
+                                    if (entity instanceof PlayerEntity)
+                                        onStaggered((PlayerEntity) entity, living);
+                                });
+
                                 if (targetPatch.getCurrentLivingMotion().equals(LivingMotions.BLOCK)) {
-                                    targetPatch.playSound(TcorpModElements.sounds.get(ResourceLocation.of("tcorp:stagger", ':')), 1, -0.05F, 0.1F);
+                                    targetPatch.playSound(TCorpSounds.STAGGER, 1, -0.05F, 0.1F);
 
                                     if (entity instanceof PlayerEntity)
                                         living.hurt(DamageSource.playerAttack((PlayerEntity) entity), (float) 6);
@@ -1251,8 +1451,8 @@ public class TCorpAnimations {
                                         living.hurt(DamageSource.playerAttack((PlayerEntity) entity), (float) 12);
                                     else
                                         living.hurt(DamageSource.mobAttack(entity), (float) 12);
-
-                                    if (entity.hasEffect(FuriosoPotionEffect.potion)) {
+                                    if (entity.hasEffect(FuriosoPotionEffect.potion.getEffect())) {
+                                        System.out.println("Furioso active, doing minor attack.");
                                         if (targetPatch.getHitAnimation(StunType.LONG) == Animations.BIPED_HIT_LONG) {
                                             targetPatch.playAnimationSynchronized(TCorpAnimations.PUMMEL_DOWN, 0.0F);
                                         }
@@ -1289,6 +1489,16 @@ public class TCorpAnimations {
         return events;
     }
 
+    private static StaticAnimation.Event[] onrushEvent() {
+        StaticAnimation.Event[] events = new StaticAnimation.Event[1];
+        events[0] = StaticAnimation.Event.create(0.4F, (entitypatch) -> {
+            Entity entity = entitypatch.getOriginal();
+            entitypatch.getOriginal().level.addParticle(EpicFightParticles.ENTITY_AFTER_IMAGE.get(), entity.getX(), entity.getY(), entity.getZ(), Double.longBitsToDouble(entity.getId()), 0, 0);
+        }, StaticAnimation.Event.Side.BOTH);
+
+        return events;
+    }
+
     private static StaticAnimation.Event[] genericDodgeEvent() {
         StaticAnimation.Event[] events = new StaticAnimation.Event[1];
         events[0] = StaticAnimation.Event.create(0.01F, (entitypatch) -> {
@@ -1300,7 +1510,7 @@ public class TCorpAnimations {
                         30, 0.2, 0.5, 0.2, 0);
             }
 
-            entity.playSound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("tcorp:blacksilence.evade")), 1, 1);
+            entity.playSound(TCorpSounds.BLACK_SILENCE_EVADE, 1, 1);
 
 
         }, StaticAnimation.Event.Side.BOTH);
@@ -1308,6 +1518,19 @@ public class TCorpAnimations {
         return events;
     }
 
+    private static StaticAnimation.Event[] magicBulletDodgeEvent() {
+        StaticAnimation.Event[] events = new StaticAnimation.Event[1];
+        events[0] = StaticAnimation.Event.create(0.01F, (entitypatch) -> {
+            Entity entity = entitypatch.getOriginal();
+            entity.level.addParticle(EpicFightParticles.ENTITY_AFTER_IMAGE.get(), entity.getX(), entity.getY(), entity.getZ(), Double.longBitsToDouble(entity.getId()), 0, 0);
+
+            entity.playSound(TCorpSounds.BLACK_SILENCE_EVADE, 1, 1);
+
+
+        }, StaticAnimation.Event.Side.BOTH);
+
+        return events;
+    }
 
     private static StaticAnimation.Event[] rangaEvents() {
         StaticAnimation.Event[] events = new StaticAnimation.Event[1];
@@ -1384,17 +1607,7 @@ public class TCorpAnimations {
                         //if (playerPatch.getOriginal().getCooldowns().isOnCooldown(SuitItem.helmet.getItem()))
                         //    playerPatch.getOriginal().getCooldowns().removeCooldown(SuitItem.helmet.getItem());
 
-                        entity.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, (Direction)null).ifPresent((capability) -> {
-                            capability.blips = _setval;
-                            capability.syncPlayerVariables(entity);
-
-                            // REPLACE WITH SERVER SIDE
-                            //playerPatch.getOriginal().playSound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("tcorp:result_positive")), 1.0F, 1.0F);
-                        });
-                        (world).playSound(null, new BlockPos(entity.getX(),entity.getY(),entity.getZ()),
-                                (net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("tcorp:result_positive")),
-                                SoundCategory.PLAYERS, (float) 1, (float) 1);
-
+                        BlipTick.chargeBlips((PlayerEntity) entity, (double) (mookStacks - mookStacks % 2) / 2, true);
                         spawnArmatureParticle(entitypatch, 0, new Vector3d(0,0,-0.3), 1, EpicFightParticles.HIT_BLUNT.get(), 0, "Tool_L", true);
 
                     }
@@ -1425,13 +1638,13 @@ public class TCorpAnimations {
         events[0] = StaticAnimation.Event.create(0F, (entitypatch) -> {
             LivingEntity entity = entitypatch.getOriginal();
             BlackSilenceEvaluator.furiosoAddAttackStat(entity, 11);
-            entity.playSound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("tcorp:blacksilence.mook.unsheath")), 1, 1f);
+            entity.playSound(TCorpSounds.BLACK_SILENCE_UNSHEATH, 1, 1f);
 
                 }, StaticAnimation.Event.Side.BOTH);
         events[1] = StaticAnimation.Event.create(0.6F, (entitypatch) -> {
             LivingEntity entity = entitypatch.getOriginal();
             World world = entity.level;
-            entity.playSound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("tcorp:blacksilence.mook.cut")), 1, 1f);
+            entity.playSound(TCorpSounds.BLACK_SILENCE_MOOK_CUT, 1, 1f);
             entity.playSound(EpicFightSounds.WHOOSH, 1, 1.4f);
 
             spawnArmatureParticle(entitypatch, 0, new Vector3d(0,0,-0.3), 1, EpicFightParticles.HIT_BLUNT.get(), 0, "Tool_L", false);
@@ -1468,7 +1681,7 @@ public class TCorpAnimations {
                             chosenEntity.hurt(DamageSource.playerAttack((PlayerEntity) entity), (float) 20);
                         else
                             chosenEntity.hurt(DamageSource.mobAttack(entity), (float) 20);
-                        chosenEntity.playSound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("tcorp:blacksilence.mook.hit")), 1, 1f);
+                        chosenEntity.playSound(TCorpSounds.BLACK_SILENCE_MOOK_HIT, 1, 1f);
                         LivingEntityPatch<?> targetPatch = (LivingEntityPatch<?>) chosenEntity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
                         if (targetPatch != null) {
                             if (targetPatch.getHitAnimation(StunType.SHORT) != null) {
@@ -1533,7 +1746,7 @@ public class TCorpAnimations {
 
         events[1] = StaticAnimation.Event.create(0.7F, (entitypatch) -> {
             LivingEntity entity = entitypatch.getOriginal();
-            entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(RangadaggerItem.block));
+            entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(RangadaggerItem.item));
         }, StaticAnimation.Event.Side.SERVER);
 
         return events;
@@ -1548,9 +1761,9 @@ public class TCorpAnimations {
             BlackSilenceEvaluator.furiosoAddAttackStat(entity, 4);
 
             if (entity instanceof PlayerEntity) {
-                ((PlayerEntity) entity).getCooldowns().addCooldown(RangadaggerItem.block.asItem(), (int) 80);
+                ((PlayerEntity) entity).getCooldowns().addCooldown(RangadaggerItem.item.asItem(), (int) 80);
                 ((PlayerEntity) entity).getCooldowns().addCooldown(RangaclawlItem.block.asItem(), (int) 80);
-                ((PlayerEntity) entity).getCooldowns().addCooldown(RangaclawItem.block.asItem(), (int) 80);
+                ((PlayerEntity) entity).getCooldowns().addCooldown(RangaclawItem.item.asItem(), (int) 80);
             }
 
         }, StaticAnimation.Event.Side.CLIENT);
@@ -1558,8 +1771,8 @@ public class TCorpAnimations {
         events[1] = StaticAnimation.Event.create(1.5F, (entitypatch) -> {
             LivingEntity entity = entitypatch.getOriginal();
 
-            if (entity.getItemInHand(Hand.MAIN_HAND).equals(new ItemStack(RangadaggerItem.block), false))
-                entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(RangaclawItem.block));
+            if (entity.getItemInHand(Hand.MAIN_HAND).equals(new ItemStack(RangadaggerItem.item), false))
+                entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(RangaclawItem.item));
         }, StaticAnimation.Event.Side.BOTH);
 
 
@@ -1577,9 +1790,9 @@ public class TCorpAnimations {
             entitypatch.getOriginal().level.addParticle(EpicFightParticles.ENTITY_AFTER_IMAGE.get(), entity.getX(), entity.getY(), entity.getZ(), Double.longBitsToDouble(entity.getId()), 0, 0);
             BlackSilenceEvaluator.furiosoAddAttackStat(entity, 4);
             if (entity instanceof PlayerEntity) {
-                ((PlayerEntity) entity).getCooldowns().addCooldown(RangadaggerItem.block.getItem(), (int) 80);
+                ((PlayerEntity) entity).getCooldowns().addCooldown(RangadaggerItem.item.getItem(), (int) 80);
                 ((PlayerEntity) entity).getCooldowns().addCooldown(RangaclawlItem.block.getItem(), (int) 80);
-                ((PlayerEntity) entity).getCooldowns().addCooldown(RangaclawItem.block.getItem(), (int) 80);
+                ((PlayerEntity) entity).getCooldowns().addCooldown(RangaclawItem.item.getItem(), (int) 80);
             }
 
         }, StaticAnimation.Event.Side.BOTH);
@@ -1587,8 +1800,8 @@ public class TCorpAnimations {
         events[1] = StaticAnimation.Event.create(0.8F, (entitypatch) -> {
             LivingEntity entity = entitypatch.getOriginal();
 
-            if (entity.getItemInHand(Hand.MAIN_HAND).equals(new ItemStack(RangadaggerItem.block), false))
-                entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(RangaclawItem.block));
+            if (entity.getItemInHand(Hand.MAIN_HAND).equals(new ItemStack(RangadaggerItem.item), false))
+                entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(RangaclawItem.item));
         }, StaticAnimation.Event.Side.BOTH);
 
 
@@ -1654,7 +1867,7 @@ public class TCorpAnimations {
             if (!projectileLevel.isClientSide()) {
                 ProjectileEntity _entityToSpawn = new Object() {
                     public ProjectileEntity getArrow(World world, Entity shooter, float damage, int knockback) {
-                        AbstractArrowEntity entityToSpawn = new AtelierpistolsItem.ArrowCustomEntity(AtelierpistolsItem.arrow, world);
+                        AbstractArrowEntity entityToSpawn = new AtelierpistolsItem.ArrowCustomEntity(AtelierpistolsItem.pistol_bullet, world);
                         entityToSpawn.setOwner(shooter);
                         entityToSpawn.setBaseDamage(damage);
                         entityToSpawn.setKnockback(knockback);
@@ -1696,7 +1909,7 @@ public class TCorpAnimations {
             if (!projectileLevel.isClientSide()) {
                 ProjectileEntity _entityToSpawn = new Object() {
                     public ProjectileEntity getArrow(World world, Entity shooter, float damage, int knockback) {
-                        AbstractArrowEntity entityToSpawn = new AtelierpistolsItem.ArrowCustomEntity(AtelierpistolsItem.arrow, world);
+                        AbstractArrowEntity entityToSpawn = new AtelierpistolsItem.ArrowCustomEntity(AtelierpistolsItem.pistol_bullet, world);
                         entityToSpawn.setOwner(shooter);
                         entityToSpawn.setBaseDamage(damage);
                         entityToSpawn.setKnockback(knockback);
@@ -1712,7 +1925,7 @@ public class TCorpAnimations {
 
             if (!world.isClientSide()) {
                 world.playSound(null, new BlockPos(entity.getX(), entity.getY(), entity.getZ()),
-                        ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("tcorp:blacksilence.atelier.revolver")),
+                        TCorpSounds.BLACK_SILENCE_ATELIER_REVOLVER,
                         SoundCategory.NEUTRAL, (float) 0.3, (float) 1);
             }
 
@@ -1734,13 +1947,12 @@ public class TCorpAnimations {
             ServerWorld serverWorld = null;
             if (!world.isClientSide())
                 serverWorld = (ServerWorld) world;
-            BlackSilenceEvaluator.furiosoAddAttackStat(entity, 10);
             Entity _shootFrom = entity;
             World projectileLevel = _shootFrom.level;
             if (!projectileLevel.isClientSide()) {
                 ProjectileEntity _entityToSpawn = new Object() {
                     public ProjectileEntity getArrow(World world, Entity shooter, float damage, int knockback) {
-                        AbstractArrowEntity entityToSpawn = new AteliershotgunItem.ArrowCustomEntity(AteliershotgunItem.arrow, world);
+                        AbstractArrowEntity entityToSpawn = new AteliershotgunItem.ArrowCustomEntity(AteliershotgunItem.shotgun_slug, world);
                         entityToSpawn.setOwner(shooter);
                         entityToSpawn.setBaseDamage(damage);
                         entityToSpawn.setKnockback(knockback);
@@ -1763,7 +1975,207 @@ public class TCorpAnimations {
             MinecraftServer mcserv = ServerLifecycleHooks.getCurrentServer();
             spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1.1,0), 1, EpicFightParticles.HIT_BLUNT.get(), 0, "Tool_L", false);
             AtelierCooldownHandler.executeShotgun(world, entity, entity.getX(), entity.getY(), entity.getZ());
+            BlackSilenceEvaluator.furiosoAddAttackStat(entity, 20);
 
+        }, StaticAnimation.Event.Side.BOTH);
+
+        return events;
+    }
+
+    private static StaticAnimation.Event[] magicBulletSwingsoundHandler(int stage) {
+        StaticAnimation.Event[] events = new StaticAnimation.Event[1];
+        events[0] = StaticAnimation.Event.create(0.0F, (entitypatch) -> {
+            World world = entitypatch.getOriginal().level;
+            LivingEntity entity = entitypatch.getOriginal();
+            if (!world.isClientSide()) {
+                world.playSound(null, new BlockPos(entity.getX(), entity.getY(), entity.getZ()),
+                        (stage == 1) ? TCorpSounds.MAGIC_BULLET_SWING_1 : TCorpSounds.MAGIC_BULLET_SWING_2,
+                        SoundCategory.PLAYERS, (float) 0.6, (float) 1);
+            }
+
+        }, StaticAnimation.Event.Side.BOTH);
+
+
+        return events;
+    }
+
+    private static StaticAnimation.Event[] magicBulletSwingSpamHandler1() {
+        StaticAnimation.Event[] events = new StaticAnimation.Event[1];
+        events[0] = StaticAnimation.Event.create(0.0F, (entitypatch) -> {
+            World world = entitypatch.getOriginal().level;
+            LivingEntity entity = entitypatch.getOriginal();
+            if (!world.isClientSide()) {
+                world.playSound(null, new BlockPos(entity.getX(), entity.getY(), entity.getZ()),
+                        TCorpSounds.MAGIC_BULLET_SPIN_SWING,
+                        SoundCategory.PLAYERS, (float) 0.6, (float) 1);
+            }
+
+        }, StaticAnimation.Event.Side.BOTH);
+
+
+        return events;
+    }
+
+    private static StaticAnimation.Event[] magicBulletSwingSpamHandler2() {
+        StaticAnimation.Event[] events = new StaticAnimation.Event[2];
+        events[0] = StaticAnimation.Event.create(0.0F, (entitypatch) -> {
+            World world = entitypatch.getOriginal().level;
+            LivingEntity entity = entitypatch.getOriginal();
+            if (!world.isClientSide()) {
+                world.playSound(null, new BlockPos(entity.getX(), entity.getY(), entity.getZ()),
+                        TCorpSounds.MAGIC_BULLET_SPIN_SPAM,
+                        SoundCategory.PLAYERS, (float) 1.5, (float) 1);
+            }
+
+        }, StaticAnimation.Event.Side.BOTH);
+
+        events[1] = StaticAnimation.Event.create(0.5F, (entitypatch) -> {
+            World world = entitypatch.getOriginal().level;
+            LivingEntity entity = entitypatch.getOriginal();
+            if (!world.isClientSide()) {
+                world.playSound(null, new BlockPos(entity.getX(), entity.getY(), entity.getZ()),
+                        TCorpSounds.MAGIC_BULLET_SPIN_DETONATE,
+                        SoundCategory.PLAYERS, (float) 1.5, (float) 1);
+            }
+
+            if (!entity.hasEffect(MagicBulletPotionEffect.get()) || entity.getEffect(MagicBulletPotionEffect.get()).getAmplifier() < 3) {
+                spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-0.1,-0.5), 1, MagicBulletShell.particle, 0.8f, "Tool_R", false);
+                MagicBulletPotionEffect.increaseMagicBullet(entity);
+            }
+
+        }, StaticAnimation.Event.Side.BOTH);
+
+        return events;
+    }
+
+    private static StaticAnimation.Event[] magicBulletFire1Event() {
+        StaticAnimation.Event[] events = new StaticAnimation.Event[3];
+
+        events[0] = StaticAnimation.Event.create(0.4F, (entitypatch) -> {
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-0.1,-0.5), 1, MagicBulletShell.particle, 0.4f, "Tool_R", false);
+        }, StaticAnimation.Event.Side.BOTH);
+
+        events[1] = StaticAnimation.Event.create(0.7F, (entitypatch) -> {
+            LivingEntity entity = entitypatch.getOriginal();
+            MagicBulletPotionEffect.increaseMagicBullet(entitypatch.getOriginal());
+
+            int ampl = 1;
+
+            if (entity.hasEffect(MagicBulletPotionEffect.get())) {
+                ampl = entity.getEffect(MagicBulletPotionEffect.get()).getAmplifier() + 1;
+            }
+
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-2,-0.7), 1, MagicBulletAimParticle.particle, 0, "Tool_R", false);
+            if (ampl >= 3)
+                spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-2.5,-0.7), 1, MagicBulletAimParticle.particle, 0, "Tool_R", false);
+        }, StaticAnimation.Event.Side.BOTH);
+
+
+
+        events[2] = StaticAnimation.Event.create(1.37F, (entitypatch) -> {
+            LivingEntity entity = entitypatch.getOriginal();
+            World world = entity.level;
+
+            int ampl = 1;
+
+            if (entity.hasEffect(MagicBulletPotionEffect.get())) {
+                ampl = entity.getEffect(MagicBulletPotionEffect.get()).getAmplifier() + 1;
+            }
+
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0.4,-1.5,0), 1, EpicFightParticles.HIT_BLUNT.get(), 0, "Tool_R", false);
+
+
+            if (entity instanceof PlayerEntity) {
+                if (SanitySystem.getSanity((PlayerEntity) entity) > ampl * 1.5f) {
+                    SanitySystem.damageSanity((PlayerEntity) entity, ampl * 1.5f);
+                    MagicBulletProjectile.shoot(entity, ampl-1, false);
+                } else {
+                    ampl--;
+                    MagicBulletProjectile.shoot(entity, ampl-1, true);
+                    if (world instanceof ServerWorld) {
+                        ((ServerWorld) world).sendParticles(TCorpParticleRegistry.MAGIC_BULLET_IMPACT_HIT.get(), (entity.getX()), (entity.getY()),
+                                (entity.getZ()), (int) 1, (entity.getBbWidth() / 7), (entity.getBbHeight() / 7), (entity.getBbWidth() / 7), 0);
+                    }
+                    entity.hurt(DamageSource.playerAttack((PlayerEntity) entity).setMagic(), (7 + ampl) * 1.8f);
+                }
+            } else {
+                MagicBulletProjectile.shoot(entity, ampl-1, false);
+            }
+
+
+
+        }, StaticAnimation.Event.Side.BOTH);
+
+        return events;
+    }
+
+    private static StaticAnimation.Event[] magicBulletFire2Event() {
+        StaticAnimation.Event[] events = new StaticAnimation.Event[4];
+
+        events[0] = StaticAnimation.Event.create(0.4F, (entitypatch) -> {
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-0.1,-0.5), 1, MagicBulletShell.particle, 0.4f, "Tool_R", false);
+        }, StaticAnimation.Event.Side.BOTH);
+
+        events[1] = StaticAnimation.Event.create(0.7F, (entitypatch) -> {
+            LivingEntity entity = entitypatch.getOriginal();
+            MagicBulletPotionEffect.increaseMagicBullet(entitypatch.getOriginal());
+
+            int ampl = 1;
+
+            if (entity.hasEffect(MagicBulletPotionEffect.get())) {
+                ampl = entity.getEffect(MagicBulletPotionEffect.get()).getAmplifier() + 1;
+            }
+
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-2,-0.7), 1, MagicBulletAimParticle.particle, 0, "Tool_R", false);
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-2.5,-0.7), 1, MagicBulletAimParticle.particle, 0, "Tool_R", false);
+            if (ampl >= 6)
+                spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-3,-0.7), 1, MagicBulletAimParticle.particle, 0, "Tool_R", false);
+
+        }, StaticAnimation.Event.Side.BOTH);
+        events[2] = StaticAnimation.Event.create(1.28F, (entitypatch) -> {
+            LivingEntity entity = entitypatch.getOriginal();
+            entity.level.playSound((PlayerEntity) null, entity.getX(), entity.getY(), entity.getZ(),
+                    TCorpSounds.MAGIC_BULLET_FIRE_SWING,
+                    SoundCategory.PLAYERS, 2, 1f / (new Random().nextFloat() * 0.5f + 1));
+        }, StaticAnimation.Event.Side.BOTH);
+        events[3] = StaticAnimation.Event.create(2.08F, (entitypatch) -> {
+            LivingEntity entity = entitypatch.getOriginal();
+            World world = entity.level;
+
+            int ampl = 1;
+
+            if (entity.hasEffect(MagicBulletPotionEffect.get())) {
+                ampl = entity.getEffect(MagicBulletPotionEffect.get()).getAmplifier() + 1;
+            }
+
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0.4,-1.5,0), 1, EpicFightParticles.HIT_BLUNT.get(), 0, "Tool_R", false);
+
+            if (entity instanceof PlayerEntity) {
+                if (SanitySystem.getSanity((PlayerEntity) entity) > ampl * 1.5f) {
+                    SanitySystem.damageSanity((PlayerEntity) entity, ampl * 1.5f);
+                    MagicBulletProjectile.shoot(entity, ampl-1, false);
+                } else {
+                    ampl--;
+                    MagicBulletProjectile.shoot(entity, ampl-1, true);
+                    if (world instanceof ServerWorld) {
+                        ((ServerWorld) world).sendParticles(TCorpParticleRegistry.MAGIC_BULLET_IMPACT_HIT.get(), (entity.getX()), (entity.getY()),
+                                (entity.getZ()), (int) 1, (entity.getBbWidth() / 7), (entity.getBbHeight() / 7), (entity.getBbWidth() / 7), 0);
+                    }
+                    entity.hurt(DamageSource.playerAttack((PlayerEntity) entity).setMagic(), (7 + ampl) * 1.8f);
+                }
+            } else {
+                MagicBulletProjectile.shoot(entity, ampl-1, false);
+            }
+
+            if (ampl >= 7) {
+                entity.removeEffect(MagicBulletPotionEffect.get());
+
+                if (entitypatch instanceof PlayerPatch<?>) {
+                    PlayerPatch<?> playerPatch = (PlayerPatch<?>) entitypatch;
+
+                    playerPatch.setStamina(Math.min(playerPatch.getStamina() + 1,playerPatch.getMaxStamina()));
+                }
+            }
         }, StaticAnimation.Event.Side.BOTH);
 
         return events;

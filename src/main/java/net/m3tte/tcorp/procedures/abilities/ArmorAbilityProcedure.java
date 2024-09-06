@@ -4,6 +4,7 @@ import net.m3tte.tcorp.TcorpModVariables;
 import net.m3tte.tcorp.item.*;
 import net.m3tte.tcorp.item.blackSilence.BlacksilencesuitItem;
 import net.m3tte.tcorp.item.mimicry.MimicryarmorItem;
+import net.m3tte.tcorp.item.redmist.RedMistEGOSuit;
 import net.m3tte.tcorp.item.redmist.RedMistJacket;
 import net.m3tte.tcorp.procedures.abilities.armorAbilities.*;
 import net.minecraft.entity.player.PlayerEntity;
@@ -51,18 +52,19 @@ public class ArmorAbilityProcedure {
 
 		armorAbilities.put(MimicryarmorItem.body.getItem(), new MimicryArmorAbility());
 
+		armorAbilities.put(RedMistEGOSuit.body.getItem(), new RedMistEgoArmorAbility());
+
 	}
 
 	public static void executeArmorAbility(Map<String, Object> dependencies) {
 		PlayerEntity entity = (PlayerEntity) dependencies.get("entity");
 		TcorpModVariables.PlayerVariables playerVars = entity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
+		if (playerVars.globalcooldown > 0)
+			return;
+
 		Item chestItem = entity.getItemBySlot(EquipmentSlotType.CHEST).getItem();
 
-
-
 		getForItem(chestItem).trigger(entity,playerVars);
-
-
 	}
 }
