@@ -107,7 +107,7 @@ public class MagicBullet extends TcorpModElements.ModElement {
 					PlayerEntity sourcePlayer = (PlayerEntity) sourceentity;
 					if (!(sourcePlayer.getCooldowns().isOnCooldown(this.getItem()) && entityData.globalcooldown <= 0)) {
 						entitypatch.setStamina(Math.min(entitypatch.getStamina() + 1f, entitypatch.getMaxStamina()));
-						StaggerSystem.healStagger(sourceentity, 2);
+						StaggerSystem.healStagger(sourceentity, 0.4f);
 
 						if (MagicBulletArmor.body.getItem().equals(sourcePlayer.getItemBySlot(EquipmentSlotType.CHEST).getItem())) {
 							sourcePlayer.level.playSound((PlayerEntity) null, sourcePlayer.getX(), sourcePlayer.getY(), sourcePlayer.getZ(),

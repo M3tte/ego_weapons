@@ -1,6 +1,7 @@
 package net.m3tte.tcorp.skill;
 
 import net.m3tte.tcorp.gameasset.TCorpAnimations;
+import net.m3tte.tcorp.world.capabilities.EmotionSystem;
 import net.m3tte.tcorp.world.capabilities.item.TCorpCategories;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
@@ -10,7 +11,9 @@ import yesman.epicfight.gameasset.Animations;
 import yesman.epicfight.skill.EnergizingGuardSkill;
 import yesman.epicfight.skill.GuardSkill;
 import yesman.epicfight.skill.SkillContainer;
+import yesman.epicfight.world.capabilities.item.CapabilityItem;
 import yesman.epicfight.world.capabilities.item.WeaponCategory;
+import yesman.epicfight.world.entity.eventlistener.HurtEvent;
 
 public class BlackSilenceWeakGuard extends EnergizingGuardSkill {
     public BlackSilenceWeakGuard(Builder builder) {
@@ -36,6 +39,12 @@ public class BlackSilenceWeakGuard extends EnergizingGuardSkill {
 
     public void onRemoved(SkillContainer container) {
         super.onRemoved(container);
+    }
+
+    @Override
+    public void guard(SkillContainer container, CapabilityItem itemCapapbility, HurtEvent.Pre event, float knockback, float impact, boolean advanced) {
+        EmotionSystem.handleGuard(event.getPlayerPatch().getOriginal(), event.getAmount(), impact, false);
+        super.guard(container, itemCapapbility, event, knockback, impact, advanced);
     }
 
     @OnlyIn(Dist.CLIENT)

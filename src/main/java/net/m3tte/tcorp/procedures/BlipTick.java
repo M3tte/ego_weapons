@@ -120,6 +120,9 @@ public class BlipTick {
 					entityData.sanity = entityData.maxSanity;
 			}
 
+			if (entityData.stagger < entityData.maxStagger) {
+				entityData.stagger = Math.min(entityData.stagger + 0.05f, entityData.maxStagger);
+			}
 
 			EmotionSystem.decreaseEmotionPoints(entity, 1);
 

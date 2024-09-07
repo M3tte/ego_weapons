@@ -79,8 +79,9 @@ public class AtelierpistolsItem extends TcorpModElements.ModElement {
 		public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> list, ITooltipFlag p_77624_4_) {
 			super.appendHoverText(p_77624_1_, p_77624_2_, list, p_77624_4_);
 			list.add(new StringTextComponent("Pistols... echoing with vengeance"));
+			list.add(new StringTextComponent("Some say it is a holy sword..."));
 			list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Swap to next weapon. ").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 1 E").withStyle(TextFormatting.AQUA)));
-			list.add(new StringTextComponent("[Passive] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Parries engage counterattack ").withStyle(TextFormatting.GRAY)));
+			list.add(new StringTextComponent("[Parry] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Counterattack ").withStyle(TextFormatting.GRAY)));
 
 		}
 

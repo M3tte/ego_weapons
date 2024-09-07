@@ -17,6 +17,9 @@ import net.minecraft.util.SoundCategory;
 import net.minecraftforge.fml.network.PacketDistributor;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import yesman.epicfight.api.animation.types.DynamicAnimation;
+import yesman.epicfight.api.utils.ExtendedDamageSource;
+import yesman.epicfight.skill.SkillCategories;
+import yesman.epicfight.skill.SkillContainer;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 import yesman.epicfight.world.effect.EpicFightMobEffects;
@@ -27,6 +30,20 @@ import static net.m3tte.tcorp.world.capabilities.StaggerSystem.isStaggered;
 public class SharedFunctions {
 
     public static float modifyDamageGeneric(float amount, DamageSource source, LivingEntity self) {
+
+
+        if (source.getEntity() instanceof PlayerEntity) {
+            increaseSkillResource(source, (PlayerEntity) source.getEntity(), 5);
+        }
+
+
+
+        if (source.getEntity() instanceof PlayerEntity) {
+            PlayerEntity srcEntity = (PlayerEntity) source.getEntity();
+
+            EmotionSystem.increaseEmotionPoints(srcEntity, (int) amount / 2 + 3);
+        }
+
         if(self.hasEffect(ILoveYou.get())) {
             ILoveYou.onHit(source.getEntity(), self);
 
@@ -70,7 +87,6 @@ public class SharedFunctions {
             PlayerEntity source = (PlayerEntity) src.getEntity();
 
             PlayerPatch<?> entitypatch = (PlayerPatch<?>) source.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-
             DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
             final int anim_id = currentanim.getId();
 
@@ -120,8 +136,8 @@ public class SharedFunctions {
                     onStaggered((PlayerEntity) src.getEntity(), self);
 
             } else {
-                reduceStagger(self, amount * 2, (n) -> {
-                    if (src.getEntity() != null)
+                reduceStagger(self, amount * 1.3f, (n) -> {
+                    if (src.getEntity() instanceof PlayerEntity)
                         onStaggered((PlayerEntity) src.getEntity(), self);
                 });
             }
@@ -130,12 +146,27 @@ public class SharedFunctions {
         }
 
 
-
-        if (src.getEntity() instanceof PlayerEntity) {
-            PlayerEntity source = (PlayerEntity) src.getEntity();
-
-            EmotionSystem.increaseEmotionPoints(source, (int) amount);
-        }
     }
+
+    public static void increaseSkillResource(DamageSource src, PlayerEntity plr, float amount) {
+
+        if (!(src instanceof ExtendedDamageSource))
+            return;
+
+        if (plr.level.isClientSide())
+            return;
+        PlayerPatch<?> plrPatch = (PlayerPatch<?>) plr.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+
+        plrPatch.gatherDamageDealt((ExtendedDamageSource) src, amount);
+        /*SkillContainer skl = plrPatch.getSkill(SkillCategories.WEAPON_SPECIAL_ATTACK);
+        System.out.println("Res is: "+skl.getResource()+" needed is: "+skl.getNeededResource()+" amount is: "+amount);
+        skl.setResource(skl.getResource()+Math.min(amount,skl.getNeededResource()));
+
+        if (skl.getNeededResource() <= 0) {
+            skl.activate();
+        }*/
+    }
+
+
 
 }

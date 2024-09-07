@@ -1046,7 +1046,7 @@ public class TCorpAnimations {
                 .addProperty(AttackPhaseProperty.SWING_SOUND, TCorpSounds.KALI_SPLIT_HORIZONTAL_SWING)
                 .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.KNOCKDOWN)
                 .addProperty(AttackPhaseProperty.ARMOR_NEGATION, ValueCorrector.adder(25f))
-                .addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(3f))
+                .addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1.5f))
                 .addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(1f))
                 .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.6f);
 

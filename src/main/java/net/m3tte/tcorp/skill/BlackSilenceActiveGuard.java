@@ -3,6 +3,7 @@ package net.m3tte.tcorp.skill;
 import com.google.common.collect.Lists;
 import net.m3tte.tcorp.TcorpModElements;
 import net.m3tte.tcorp.gameasset.TCorpAnimations;
+import net.m3tte.tcorp.world.capabilities.EmotionSystem;
 import net.m3tte.tcorp.world.capabilities.item.TCorpCategories;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -131,7 +132,7 @@ public class BlackSilenceActiveGuard extends GuardSkill {
                 if (blockType == BlockType.GUARD_BREAK) {
                     event.getPlayerPatch().playSound(TcorpModElements.sounds.get(ResourceLocation.of("tcorp:stagger", ':')), 3.0F, 0.0F, 0.1F);
                 }
-
+                EmotionSystem.handleGuard(playerentity, event.getAmount(), impact, successParrying);
                 this.dealEvent(event.getPlayerPatch(), event);
                 return;
             }

@@ -17,6 +17,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -108,9 +109,8 @@ public class BlacksilencesuitItem extends TcorpModElements.ModElement {
 			public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> list, ITooltipFlag p_77624_4_) {
 				super.appendHoverText(p_77624_1_, p_77624_2_, list, p_77624_4_);
 				list.add(new StringTextComponent("Thats that... and this is this..."));
-				list.add(new StringTextComponent("[Ability] Orlando - 10E"));
-				list.add(new StringTextComponent("[Ability] Furioso - 6E"));
-				list.add(new StringTextComponent("[Passive] Chance to Auto Dodge Attacks"));
+				list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Orlando").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 10 E").withStyle(TextFormatting.AQUA)));
+				list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Furioso").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 6 E").withStyle(TextFormatting.AQUA)));
 			}
 
 			@Override

@@ -9,6 +9,7 @@ import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ObjectHolder;
 
@@ -62,7 +63,11 @@ public class CrystalatelierItem extends TcorpModElements.ModElement {
 			public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> list, ITooltipFlag p_77624_4_) {
 				super.appendHoverText(p_77624_1_, p_77624_2_, list, p_77624_4_);
 				list.add(new StringTextComponent("A clear blade for quick strikes."));
-				list.add(new StringTextComponent("[Ability] Swap to different weapon type - 1E"));
+				list.add(new StringTextComponent("Pistols... echoing with vengeance"));
+				list.add(new StringTextComponent("Some say it is a holy sword..."));
+				list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Swap to next weapon. ").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 1 E").withStyle(TextFormatting.AQUA)));
+				list.add(new StringTextComponent("[Parry] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Counterattack ").withStyle(TextFormatting.GRAY)));
+
 			}
 
 

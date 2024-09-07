@@ -2,6 +2,7 @@ package net.m3tte.tcorp.skill.allas;
 
 import net.m3tte.tcorp.TcorpModElements;
 import net.m3tte.tcorp.gameasset.TCorpAnimations;
+import net.m3tte.tcorp.world.capabilities.EmotionSystem;
 import net.m3tte.tcorp.world.capabilities.item.TCorpCategories;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -124,9 +125,9 @@ public class BlackSilenceAllasGuard extends EnergizingGuardSkill {
                 event.getPlayerPatch().playSound(EpicFightSounds.CLASH, -0.05F, 0.1F);
 
 
-            ServerPlayerEntity serveerPlayer = event.getPlayerPatch().getOriginal();
+            ServerPlayerEntity serverPlayer = event.getPlayerPatch().getOriginal();
 
-            EpicFightParticles.HIT_BLUNT.get().spawnParticleWithArgument(((ServerWorld)serveerPlayer.level), HitParticleType.FRONT_OF_EYES, HitParticleType.ZERO, serveerPlayer, damageSource.getDirectEntity());
+            EpicFightParticles.HIT_BLUNT.get().spawnParticleWithArgument(((ServerWorld)serverPlayer.level), HitParticleType.FRONT_OF_EYES, HitParticleType.ZERO, serverPlayer, damageSource.getDirectEntity());
 
             if (damageSource.getEntity() instanceof LivingEntity) {
                 knockback += EnchantmentHelper.getKnockbackBonus((LivingEntity)damageSource.getEntity()) * 0.1F;
@@ -156,6 +157,8 @@ public class BlackSilenceAllasGuard extends EnergizingGuardSkill {
                 event.getPlayerPatch().playSound(TcorpModElements.sounds.get(ResourceLocation.of("tcorp:stagger", ':')),3,  -0.05F, 0.1F);
                 event.getPlayerPatch().playSound(EpicFightSounds.NEUTRALIZE_MOBS, 3.0F, 0.0F, 0.1F);
             }
+
+            EmotionSystem.handleGuard(serverPlayer, event.getAmount(), impact, successParrying);
 
             this.dealEvent(event.getPlayerPatch(), event);
         }

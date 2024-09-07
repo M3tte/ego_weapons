@@ -79,6 +79,7 @@ public class AteliershotgunItem extends TcorpModElements.ModElement {
 			super.appendHoverText(p_77624_1_, p_77624_2_, list, p_77624_4_);
 			list.add(new StringTextComponent("A shotgun... darkened with wrath"));
 			list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Swap to next weapon. ").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 1 E").withStyle(TextFormatting.AQUA)));
+
 		}
 
 		@Override

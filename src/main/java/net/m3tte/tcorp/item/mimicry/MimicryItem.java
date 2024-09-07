@@ -19,6 +19,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ObjectHolder;
 import yesman.epicfight.api.animation.types.DynamicAnimation;
@@ -86,8 +87,9 @@ public class MimicryItem extends TcorpModElements.ModElement {
 			public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 				super.appendHoverText(itemstack, world, list, flag);
 				list.add(new StringTextComponent("A disgusting reminder to what shall not be."));
-				list.add(new StringTextComponent("[Ability] Horizontal Split - 7E"));
-				list.add(new StringTextComponent("[Passive] Heal when dealing damage"));
+				list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Horizontal Split").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 7 E").withStyle(TextFormatting.AQUA)));
+				list.add(new StringTextComponent("[Passive] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Heal when dealing damage").withStyle(TextFormatting.GRAY)));
+
 			}
 
 			@Override

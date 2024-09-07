@@ -83,7 +83,7 @@ public class TCorpSkills {
     public static void registerSkills(SkillRegistryEvent event) {
         LESSER_SPLIT_VERTICAL = event.registerSkill((
                 new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(TcorpMod.MODID, "lesser_split_vertical"))
-                    .setConsumption(40.0F).setAnimations(TCorpAnimations.DURANDAL_DRAW)))
+                    .setConsumption(50.0F).setAnimations(TCorpAnimations.DURANDAL_DRAW)))
                     .newPropertyLine().addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.adder(2.0F))
                     .addProperty(AttackPhaseProperty.HIT_SOUND, TcorpModElements.sounds.get(ResourceLocation.of("tcorp:blacksilence.durandal.strong", ':')))
                     .addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(2.0F))
@@ -93,7 +93,7 @@ public class TCorpSkills {
 
         GREATER_SPLIT_VERTICAL = event.registerSkill((
                 new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(TcorpMod.MODID, "greater_split_vertical"))
-                        .setConsumption(80.0F).setAnimations(TCorpAnimations.GREAT_SPLIT_VERTICAL)))
+                        .setConsumption(70.0F).setAnimations(TCorpAnimations.GREAT_SPLIT_VERTICAL)))
                 .newPropertyLine().addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.adder(2.0F))
                 .addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.8F))
                 .addProperty(AttackPhaseProperty.ARMOR_NEGATION, ValueCorrector.adder(60.0F))
@@ -101,7 +101,7 @@ public class TCorpSkills {
 
         HELLO = event.registerSkill((
                 new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(TcorpMod.MODID, "hello"))
-                        .setConsumption(90.0F).setAnimations(TCorpAnimations.MIMICRY_HELLO)))
+                        .setConsumption(70.0F).setAnimations(TCorpAnimations.MIMICRY_HELLO)))
                 .newPropertyLine().addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.adder(6.0F)), false);
 
 
@@ -119,7 +119,7 @@ public class TCorpSkills {
                         .setConsumption(40.0F).setMaxStack(2).setAnimations(TCorpAnimations.MOOK_CUT))), false);
         CRYSTAL_ATELIER = event.registerSkill((
                 new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(TcorpMod.MODID, "crystal_atelier"))
-                    .setConsumption(40.0F)
+                    .setConsumption(50.0F)
                     .setAnimations(TCorpAnimations.CRYSTAL_ATELIER_SKILL))).newPropertyLine()
                     .addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.adder(3.0F))
                     .addProperty(AttackPhaseProperty.ARMOR_NEGATION, ValueCorrector.adder(20.0F))
@@ -157,7 +157,7 @@ public class TCorpSkills {
                 .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.LONG)
                 .registerPropertiesToAnimation(), false);
 
-        MAGIC_BULLET_DETONATE = event.registerSkill(new MagicBulletDetonate(SpecialAttackSkill.createBuilder(new ResourceLocation(TcorpMod.MODID, "magic_bullet_detonate")).setConsumption(35.0F)), false);
+        MAGIC_BULLET_DETONATE = event.registerSkill(new MagicBulletDetonate(SpecialAttackSkill.createBuilder(new ResourceLocation(TcorpMod.MODID, "magic_bullet_detonate")).setConsumption(45.0F)), false);
 
         GENERIC_ACTIVE_GUARD = event.registerSkill(new BlackSilenceActiveGuard(BlackSilenceActiveGuard.createBuilder(new ResourceLocation(TcorpMod.MODID, "blacksilence_active_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
 

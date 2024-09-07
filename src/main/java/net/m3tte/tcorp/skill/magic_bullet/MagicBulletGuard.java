@@ -2,6 +2,7 @@ package net.m3tte.tcorp.skill.magic_bullet;
 
 import net.m3tte.tcorp.TcorpModElements;
 import net.m3tte.tcorp.gameasset.TCorpAnimations;
+import net.m3tte.tcorp.world.capabilities.EmotionSystem;
 import net.m3tte.tcorp.world.capabilities.SanitySystem;
 import net.m3tte.tcorp.world.capabilities.item.TCorpCategories;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -92,13 +93,13 @@ public class MagicBulletGuard extends EnergizingGuardSkill {
             float penalty = container.getDataManager().getDataValue(PENALTY) + this.getPenaltyMultiplier(itemCapapbility);
 
             //boolean successParrying = event.getPlayerPatch().getOriginal().ticksExisted - container.getDataManager().getDataValue(LAST_ACTIVE) < 6;
-            ServerPlayerEntity serveerPlayer = event.getPlayerPatch().getOriginal();
+            ServerPlayerEntity serverPlayer = event.getPlayerPatch().getOriginal();
 
             event.getPlayerPatch().playSound(EpicFightSounds.CLASH, -0.05F, 0.1F);
-            SanitySystem.healSanity(serveerPlayer, 0.4f);
+            SanitySystem.healSanity(serverPlayer, 0.4f);
 
 
-            EpicFightParticles.HIT_BLUNT.get().spawnParticleWithArgument(((ServerWorld)serveerPlayer.level), HitParticleType.FRONT_OF_EYES, HitParticleType.ZERO, serveerPlayer, damageSource.getDirectEntity());
+            EpicFightParticles.HIT_BLUNT.get().spawnParticleWithArgument(((ServerWorld)serverPlayer.level), HitParticleType.FRONT_OF_EYES, HitParticleType.ZERO, serverPlayer, damageSource.getDirectEntity());
 
             if (damageSource.getEntity() instanceof LivingEntity) {
                 knockback += EnchantmentHelper.getKnockbackBonus((LivingEntity)damageSource.getEntity()) * 0.1F;
@@ -124,6 +125,8 @@ public class MagicBulletGuard extends EnergizingGuardSkill {
                 event.getPlayerPatch().playSound(TcorpModElements.sounds.get(ResourceLocation.of("tcorp:stagger", ':')),3,  -0.05F, 0.1F);
                 event.getPlayerPatch().playSound(EpicFightSounds.NEUTRALIZE_MOBS, 3.0F, 0.0F, 0.1F);
             }
+
+            EmotionSystem.handleGuard(serverPlayer, event.getAmount(), impact, false);
 
             this.dealEvent(event.getPlayerPatch(), event);
         }

@@ -36,7 +36,7 @@ public class DurandalItem extends TcorpModElements.ModElement {
 
 			@Override
 			public float getSpeed() {
-				return 4;
+				return 4.44f;
 			}
 
 			@Override

@@ -1,7 +1,10 @@
 package net.m3tte.tcorp.skill.oldBoys;
 
+import net.m3tte.tcorp.TCorpSounds;
 import net.m3tte.tcorp.TcorpModElements;
 import net.m3tte.tcorp.gameasset.TCorpAnimations;
+import net.m3tte.tcorp.world.capabilities.EmotionSystem;
+import net.m3tte.tcorp.world.capabilities.StaggerSystem;
 import net.m3tte.tcorp.world.capabilities.item.TCorpCategories;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -102,59 +105,25 @@ public class OldBoysGuard extends EnergizingGuardSkill {
 
             if (isRudimentaryBlockable(damageSource, advanced) && successParrying) {
                 if (event.getDamageSource().getEntity() instanceof LivingEntity) {
-                    event.getPlayerPatch().playSound(TcorpModElements.sounds.get(ResourceLocation.of("tcorp:guard_win", ':')), -0.05F, 0.1F);
+                    event.getPlayerPatch().playSound(TCorpSounds.RESULT_POSITIVE, -0.05F, 0.1F);
                     LivingEntity entitySource = (LivingEntity) event.getDamageSource().getEntity();
                     LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) entitySource.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
                     if (entitypatch != null) {
-                        if (entitySource instanceof PlayerEntity) {
-                            PlayerPatch<?> playerPatch = (PlayerPatch<?>) entitySource.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-                            playerPatch.setStamina(playerPatch.getStamina() - 2);
-
-                            if (playerPatch.getStamina() <= 0) {
-                                playerPatch.setStamina(0);
-                                event.getPlayerPatch().playSound(TcorpModElements.sounds.get(ResourceLocation.of("tcorp:stagger", ':')),3,  -0.05F, 0.1F);
-                                entitypatch.playAnimationSynchronized(TCorpAnimations.RANGA_GUARD_STAGGER, 1f);
-                            } else {
-                                entitypatch.knockBackEntity(event.getPlayerPatch().getOriginal().position(), 0.15f);
-                                entitypatch.playAnimationSynchronized(entitypatch.getHitAnimation(ExtendedDamageSource.StunType.SHORT), 0.3f);
-                            }
-                        } else {
-                            double stagger = entitySource.getPersistentData().getDouble("staggerProg");
-
-                            stagger += 10;
-
-                            if (stagger > ((entitySource.getHealth() + entitySource.getMaxHealth()) /2)) {
-                                if (entitypatch.getHitAnimation(ExtendedDamageSource.StunType.LONG) == Animations.BIPED_HIT_LONG) {
-                                    event.getPlayerPatch().playSound(TcorpModElements.sounds.get(ResourceLocation.of("tcorp:stagger", ':')),3,  -0.05F, 0.1F);
-                                    entitypatch.playAnimationSynchronized(TCorpAnimations.RANGA_GUARD_STAGGER, 0.2f);
-                                }
-                                stagger = 0;
-                            } else {
-                                entitypatch.playAnimationSynchronized(entitypatch.getHitAnimation(ExtendedDamageSource.StunType.SHORT), 0.3f);
-                                entitypatch.knockBackEntity(event.getPlayerPatch().getOriginal().position(), 0.15f);
-                            }
-
-                            entitySource.getPersistentData().putDouble("staggerProg", stagger);
-
-                        }
-
+                        StaggerSystem.reduceStagger(entitySource, event.getAmount() * 0.8f);
                     }
 
-
                     container.getDataManager().setDataSync(LAST_ACTIVE, container.getDataManager().getDataValue(LAST_ACTIVE) - 30, event.getPlayerPatch().getOriginal());
-
-
 
                     penalty = penalty + 0.2f;
 
                 }
             }
-            ServerPlayerEntity serveerPlayer = event.getPlayerPatch().getOriginal();
+            ServerPlayerEntity serverPlayer = event.getPlayerPatch().getOriginal();
 
             if (successParrying) {
                 event.getPlayerPatch().playSound(EpicFightSounds.CLASH, -0.05F, 0.1F);
-                EpicFightParticles.HIT_BLUNT.get().spawnParticleWithArgument(((ServerWorld)serveerPlayer.level), HitParticleType.FRONT_OF_EYES, HitParticleType.ZERO, serveerPlayer, damageSource.getDirectEntity());
+                EpicFightParticles.HIT_BLUNT.get().spawnParticleWithArgument(((ServerWorld)serverPlayer.level), HitParticleType.FRONT_OF_EYES, HitParticleType.ZERO, serverPlayer, damageSource.getDirectEntity());
 
             }
 
@@ -187,7 +156,7 @@ public class OldBoysGuard extends EnergizingGuardSkill {
                 event.getPlayerPatch().playSound(TcorpModElements.sounds.get(ResourceLocation.of("tcorp:stagger", ':')),3,  -0.05F, 0.1F);
                 event.getPlayerPatch().playSound(EpicFightSounds.NEUTRALIZE_MOBS, 3.0F, 0.0F, 0.1F);
             }
-
+            EmotionSystem.handleGuard(serverPlayer, event.getAmount(), impact, successParrying);
             this.dealEvent(event.getPlayerPatch(), event, !successParrying);
         }
     }

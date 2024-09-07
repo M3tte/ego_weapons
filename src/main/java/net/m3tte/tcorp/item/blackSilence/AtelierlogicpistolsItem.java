@@ -2,6 +2,7 @@
 package net.m3tte.tcorp.item.blackSilence;
 
 import net.minecraft.item.*;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.registries.ObjectHolder;
 
 import net.minecraft.world.World;
@@ -70,7 +71,10 @@ public class AtelierlogicpistolsItem extends TcorpModElements.ModElement {
 			public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> list, ITooltipFlag p_77624_4_) {
 				super.appendHoverText(p_77624_1_, p_77624_2_, list, p_77624_4_);
 				list.add(new StringTextComponent("Revolvers. Radiating vengeance."));
-				list.add(new StringTextComponent("[Ability] Swap Weapon Type - 1E"));
+				list.add(new StringTextComponent("Some say it is a holy sword..."));
+				list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Swap to next weapon. ").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 1 E").withStyle(TextFormatting.AQUA)));
+				list.add(new StringTextComponent("[Parry] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Counterattack ").withStyle(TextFormatting.GRAY)));
+
 			}
 
 			@Override

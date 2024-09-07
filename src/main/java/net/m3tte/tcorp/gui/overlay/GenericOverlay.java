@@ -254,6 +254,9 @@ public class GenericOverlay extends ModIngameGui {
 
 		double emotionBarProgress = playerVariables.emotionLevelProgress / EmotionSystem.getEmotionRequired(playerVariables);
 
+		if (emotionBarProgress > 1)
+			emotionBarProgress = 1;
+
 		if (playerVariables.emotionLevel >= 5)
 			emotionBarProgress = 1;
 
@@ -390,7 +393,7 @@ public class GenericOverlay extends ModIngameGui {
 
 	private static void renderShellOverlayBar(int offsetX, int offsetY, PlayerEntity player,  RenderGameOverlayEvent.Post event) {
 		if (player.hasEffect(Shell.get())) {
-			Minecraft.getInstance().getTextureManager().bind(shellHealthbar[Math.min(player.getEffect(Shell.get()).getAmplifier(),4)]);
+			Minecraft.getInstance().getTextureManager().bind(shellHealthbar[Math.max(Math.min(player.getEffect(Shell.get()).getAmplifier(),4),0)]);
 			blit(event.getMatrixStack(), offsetX+ 29, offsetY + 8, 0, 0, 154, 11, 154, 11);
 		}
 	}

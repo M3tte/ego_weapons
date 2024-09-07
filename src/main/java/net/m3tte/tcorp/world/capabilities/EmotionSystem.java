@@ -28,7 +28,7 @@ public class EmotionSystem {
     }
 
     public static int getEmotionRequired(PlayerVariables playerVars) {
-        return playerVars.emotionLevel * 50 + 50;
+        return playerVars.emotionLevel * 35 + 35;
     }
 
     public static int getMaxEnergy(PlayerEntity player) {
@@ -119,4 +119,16 @@ public class EmotionSystem {
 
     }
 
+    public static void handleGuard(PlayerEntity player, float damage, float impact, boolean parried) {
+        float mult = 1;
+        if (parried) {
+            StaggerSystem.healStagger(player, impact * 0.4f);
+            mult = 1.25f;
+        } else {
+            StaggerSystem.reduceStagger(player, impact * 0.8f);
+        }
+
+
+        increaseEmotionPoints(player, (int)(damage*mult*1.3));
+    }
 }

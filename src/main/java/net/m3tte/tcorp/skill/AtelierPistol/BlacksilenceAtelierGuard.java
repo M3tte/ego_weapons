@@ -3,6 +3,7 @@ package net.m3tte.tcorp.skill.AtelierPistol;
 import net.m3tte.tcorp.TcorpModElements;
 import net.m3tte.tcorp.TcorpModVariables;
 import net.m3tte.tcorp.gameasset.TCorpAnimations;
+import net.m3tte.tcorp.world.capabilities.EmotionSystem;
 import net.m3tte.tcorp.world.capabilities.item.TCorpCategories;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -193,7 +194,7 @@ public class BlacksilenceAtelierGuard extends EnergizingGuardSkill {
                 event.getPlayerPatch().playSound(TcorpModElements.sounds.get(ResourceLocation.of("tcorp:stagger", ':')),3,  -0.05F, 0.1F);
                 event.getPlayerPatch().playSound(EpicFightSounds.NEUTRALIZE_MOBS, 3.0F, 0.0F, 0.1F);
             }
-
+            EmotionSystem.handleGuard(serverPlayer, event.getAmount(), impact, successParrying);
             this.dealEvent(event.getPlayerPatch(), event, successParrying);
         }
     }

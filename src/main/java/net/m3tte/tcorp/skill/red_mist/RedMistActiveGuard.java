@@ -6,6 +6,7 @@ import net.m3tte.tcorp.TcorpModVariables;
 import net.m3tte.tcorp.gameasset.TCorpAnimations;
 import net.m3tte.tcorp.item.mimicry.MimicryItem;
 import net.m3tte.tcorp.procedures.BlipTick;
+import net.m3tte.tcorp.world.capabilities.EmotionSystem;
 import net.m3tte.tcorp.world.capabilities.item.TCorpCategories;
 import net.m3tte.tcorp.world.capabilities.item.TCorpStyles;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -138,7 +139,7 @@ public class RedMistActiveGuard extends GuardSkill {
                 if (blockType == BlockType.GUARD_BREAK) {
                     event.getPlayerPatch().playSound(TCorpSounds.STAGGER, 3.0F, 0.0F, 0.1F);
                 }
-
+                EmotionSystem.handleGuard(playerentity, event.getAmount(), impact, successParrying);
                 this.dealEvent(event.getPlayerPatch(), event);
                 return;
             }
