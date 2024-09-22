@@ -162,5 +162,10 @@
   "item.tcorp.red_mist_ego_chestplate": "Red Mist Chestplate",
   "item.tcorp.red_mist_ego_leggings": "Red Mist Leggings",
   "effect.manifest_ego": "EGO Manifested",
-  "item.tcorp.red_mist_ego_helmet": "Red Mist Helmet"
+  "effect.ethernal_rest": "Ethernal Rest",
+  "item.tcorp.red_mist_ego_helmet": "Red Mist Helmet",
+  "item.tcorp.solemn_lament_living": "The Living",
+  "item.tcorp.solemn_lament_departed": "The Departed",
+  "item.tcorp.solemn_lament_cloak": "Cloak of the Undertaker",
+  "item.tcorp.solemn_lament_butterfly": "A living butterfly"
 }

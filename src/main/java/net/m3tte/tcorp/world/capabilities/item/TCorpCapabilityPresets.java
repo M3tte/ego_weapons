@@ -5,11 +5,13 @@
 
 package net.m3tte.tcorp.world.capabilities.item;
 
+import net.m3tte.tcorp.TCorpItems;
 import net.m3tte.tcorp.gameasset.TCorpAnimations;
 import net.m3tte.tcorp.gameasset.TCorpSkills;
 import net.m3tte.tcorp.item.redmist.RedMistEGOSuit;
 import net.m3tte.tcorp.item.redmist.RedMistJacket;
 import net.m3tte.tcorp.potion.FuriosoPotionEffect;
+import net.m3tte.tcorp.potion.SolemnLamentEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
@@ -26,6 +28,7 @@ import yesman.epicfight.gameasset.Skills;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.item.CapabilityItem;
 import yesman.epicfight.world.capabilities.item.CapabilityItem.Styles;
+import yesman.epicfight.world.capabilities.item.Style;
 import yesman.epicfight.world.capabilities.item.WeaponCapability;
 
 import java.util.function.Function;
@@ -38,6 +41,9 @@ public class TCorpCapabilityPresets {
 
 
     public static final Collider RIFLE = new MultiOBBCollider(4, 0.2, 1, 0.2, 0, 0.0, -0.4);
+
+    public static final Collider SOLEMN_LAMENT_HITBOX = new MultiOBBCollider(4, 0.6, 2.8, 0.6, 0, -2.5, 0);
+    public static final Collider SOLEMN_LAMENT_HITBOX_EXT = new MultiOBBCollider(4, 0.6, 3.3, 0.6, 0, -3.3, 0);
     public static final Function<Item, CapabilityItem.Builder> MOOK_WORKSHOP = (item) ->
             WeaponCapability.builder().category(TCorpCategories.MOOK_WORKSHOP).canBePlacedOffhand(false).styleProvider((playerpatch) ->
                             (playerpatch.getOriginal().hasEffect(FuriosoPotionEffect.potion) && playerpatch.getOriginal().getPersistentData().getDouble("furiosoattacks") < 10) ? TCorpStyles.FURIOSO : Styles.TWO_HAND)
@@ -91,8 +97,8 @@ public class TCorpCapabilityPresets {
 
     public static final Function<Item, CapabilityItem.Builder> MIMICRY = (item) ->
             WeaponCapability.builder().category(TCorpCategories.MIMICRY).canBePlacedOffhand(false).styleProvider((playerpatch) ->
-                            (playerpatch.getOriginal().getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(RedMistJacket.body.getItem()) ? TCorpStyles.KALI :
-                                    playerpatch.getOriginal().getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(RedMistEGOSuit.body.getItem()) ? TCorpStyles.KALI_EGO : Styles.TWO_HAND))
+                            (playerpatch.getOriginal().getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(TCorpItems.JACKET_OF_THE_RED_MIST.get()) ? TCorpStyles.KALI :
+                                    playerpatch.getOriginal().getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(TCorpItems.RED_MIST_EGO_CHESTPLATE.get()) ? TCorpStyles.KALI_EGO : Styles.TWO_HAND))
 
                     .livingMotionModifier(Styles.TWO_HAND, LivingMotions.IDLE, TCorpAnimations.MIMICRY_IDLE)
                     .livingMotionModifier(Styles.TWO_HAND, LivingMotions.WALK, TCorpAnimations.MIMICRY_WALK)
@@ -387,6 +393,90 @@ public class TCorpCapabilityPresets {
 
             .canBePlacedOffhand(false);
 
+    public static final Function<Item, CapabilityItem.Builder> SOLEMN_LAMENT = (item) -> WeaponCapability.builder()
+            .category(TCorpCategories.SOLEMN_LAMENT)
+            .styleProvider((playerpatch) -> {
+
+                boolean leftHandValid = true;
+                boolean rightHandValid = true;
+                if (!playerpatch.getOriginal().getMainHandItem().getItem().equals(TCorpItems.SOLEMN_LAMENT_WHITE.get())) {
+                    rightHandValid = false;
+                }
+
+                if (!playerpatch.getOriginal().getOffhandItem().getItem().equals(TCorpItems.SOLEMN_LAMENT_BLACK.get())) {
+                    leftHandValid = false;
+                }
+
+                if (!(rightHandValid || leftHandValid)) {
+                    return Styles.ONE_HAND;
+                }
+
+
+                if ((SolemnLamentEffects.getAmmoCount(playerpatch.getOriginal(), SolemnLamentEffects.getLiving()) <= 0)) {
+                    rightHandValid = false;
+                }
+
+                if ((SolemnLamentEffects.getAmmoCount(playerpatch.getOriginal(), SolemnLamentEffects.getDeparted()) <= 0)) {
+                    leftHandValid = false;
+                }
+
+
+                if (rightHandValid) {
+                    return (leftHandValid) ? TCorpStyles.DUAL_WIELDED : TCorpStyles.RIGHT_HANDED;
+                } else if (leftHandValid) {
+                    return TCorpStyles.LEFT_HANDED;
+                } else {
+                    return Styles.ONE_HAND;
+                }
+            }
+            )
+            .collider(SOLEMN_LAMENT_HITBOX)
+            .specialAttack(TCorpStyles.DUAL_WIELDED, TCorpSkills.SOLEMN_LAMENT_BURST)
+            .specialAttack(TCorpStyles.LEFT_HANDED, TCorpSkills.SOLEMN_LAMENT_BURST)
+            .specialAttack(TCorpStyles.RIGHT_HANDED, TCorpSkills.SOLEMN_LAMENT_BURST)
+            .specialAttack(Styles.ONE_HAND, TCorpSkills.SOLEMN_LAMENT_BURST)
+            .hitSound(EpicFightSounds.BLUNT_HIT)
+            .weaponCombinationPredicator((entitypatch) -> EpicFightCapabilities.getItemStackCapability(entitypatch.getOriginal().getOffhandItem()).getWeaponCategory() == TCorpCategories.SOLEMN_LAMENT)
+            .livingMotionModifier(TCorpStyles.DUAL_WIELDED, LivingMotions.IDLE, TCorpAnimations.SOLEMN_LAMENT_IDLE)
+            .livingMotionModifier(TCorpStyles.DUAL_WIELDED, LivingMotions.WALK, TCorpAnimations.SOLEMN_LAMENT_WALK)
+            .livingMotionModifier(TCorpStyles.DUAL_WIELDED, LivingMotions.SNEAK, TCorpAnimations.SOLEMN_LAMENT_SNEAK)
+            .livingMotionModifier(TCorpStyles.DUAL_WIELDED, LivingMotions.KNEEL, TCorpAnimations.SOLEMN_LAMENT_KNEEL)
+            .livingMotionModifier(TCorpStyles.DUAL_WIELDED, LivingMotions.RUN, TCorpAnimations.SOLEMN_LAMENT_RUN)
+            .livingMotionModifier(TCorpStyles.DUAL_WIELDED, LivingMotions.JUMP, TCorpAnimations.SOLEMN_LAMENT_JUMP)
+            .livingMotionModifier(TCorpStyles.DUAL_WIELDED, LivingMotions.BLOCK, TCorpAnimations.SOLEMN_LAMENT_GUARD)
+
+            .livingMotionModifier(TCorpStyles.RIGHT_HANDED, LivingMotions.IDLE, TCorpAnimations.SOLEMN_LAMENT_IDLE)
+            .livingMotionModifier(TCorpStyles.RIGHT_HANDED, LivingMotions.WALK, TCorpAnimations.SOLEMN_LAMENT_WALK)
+            .livingMotionModifier(TCorpStyles.RIGHT_HANDED, LivingMotions.SNEAK, TCorpAnimations.SOLEMN_LAMENT_SNEAK)
+            .livingMotionModifier(TCorpStyles.RIGHT_HANDED, LivingMotions.KNEEL, TCorpAnimations.SOLEMN_LAMENT_KNEEL)
+            .livingMotionModifier(TCorpStyles.RIGHT_HANDED, LivingMotions.RUN, TCorpAnimations.SOLEMN_LAMENT_RUN)
+            .livingMotionModifier(TCorpStyles.RIGHT_HANDED, LivingMotions.JUMP, TCorpAnimations.SOLEMN_LAMENT_JUMP)
+            .livingMotionModifier(TCorpStyles.RIGHT_HANDED, LivingMotions.BLOCK, TCorpAnimations.SOLEMN_LAMENT_GUARD)
+
+            .livingMotionModifier(TCorpStyles.LEFT_HANDED, LivingMotions.IDLE, TCorpAnimations.SOLEMN_LAMENT_IDLE)
+            .livingMotionModifier(TCorpStyles.LEFT_HANDED, LivingMotions.WALK, TCorpAnimations.SOLEMN_LAMENT_WALK)
+            .livingMotionModifier(TCorpStyles.LEFT_HANDED, LivingMotions.SNEAK, TCorpAnimations.SOLEMN_LAMENT_SNEAK)
+            .livingMotionModifier(TCorpStyles.LEFT_HANDED, LivingMotions.KNEEL, TCorpAnimations.SOLEMN_LAMENT_KNEEL)
+            .livingMotionModifier(TCorpStyles.LEFT_HANDED, LivingMotions.RUN, TCorpAnimations.SOLEMN_LAMENT_RUN)
+            .livingMotionModifier(TCorpStyles.LEFT_HANDED, LivingMotions.JUMP, TCorpAnimations.SOLEMN_LAMENT_JUMP)
+            .livingMotionModifier(TCorpStyles.LEFT_HANDED, LivingMotions.BLOCK, TCorpAnimations.SOLEMN_LAMENT_GUARD)
+
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.IDLE, TCorpAnimations.SOLEMN_LAMENT_IDLE)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.WALK, TCorpAnimations.SOLEMN_LAMENT_WALK)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.SNEAK, TCorpAnimations.SOLEMN_LAMENT_SNEAK)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.KNEEL, TCorpAnimations.SOLEMN_LAMENT_KNEEL)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.RUN, TCorpAnimations.SOLEMN_LAMENT_RUN)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.JUMP, TCorpAnimations.SOLEMN_LAMENT_JUMP)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.BLOCK, TCorpAnimations.SOLEMN_LAMENT_GUARD)
+            .passiveSkill(TCorpSkills.SOLEMN_LAMENT_PASSIVE)
+            //.specialAttack(TCorpStyles.DUAL_WIELDED, TCorpSkills.MAGIC_BULLET_DETONATE)
+            .newStyleCombo(TCorpStyles.DUAL_WIELDED, TCorpAnimations.SOLEMN_LAMENT_AUTO_D0, TCorpAnimations.SOLEMN_LAMENT_AUTO_D1, TCorpAnimations.SOLEMN_LAMENT_AUTO_D2, TCorpAnimations.SOLEMN_LAMENT_AUTO_D3, TCorpAnimations.SOLEMN_LAMENT_AUTO_D4, TCorpAnimations.SOLEMN_LAMENT_AUTO_D5, TCorpAnimations.SOLEMN_LAMENT_AUTO_D4, TCorpAnimations.SOLEMN_LAMENT_AUTO_D5, TCorpAnimations.SOLEMN_LAMENT_AUTO_D4, TCorpAnimations.SOLEMN_LAMENT_AUTO_D5, TCorpAnimations.SOLEMN_LAMENT_AUTO_D4, TCorpAnimations.SOLEMN_LAMENT_AUTO_D5, TCorpAnimations.SOLEMN_LAMENT_AUTO_D4, TCorpAnimations.SOLEMN_LAMENT_AUTO_D5, TCorpAnimations.SOLEMN_LAMENT_AUTO_D4, TCorpAnimations.SOLEMN_LAMENT_AUTO_D5, TCorpAnimations.SOLEMN_LAMENT_AUTO_D4, TCorpAnimations.SOLEMN_LAMENT_AUTO_D5, TCorpAnimations.SOLEMN_LAMENT_DASH_L, TCorpAnimations.SOLEMN_LAMENT_JUMP_ATTACK)
+            .newStyleCombo(TCorpStyles.RIGHT_HANDED, TCorpAnimations.SOLEMN_LAMENT_AUTO_R0, TCorpAnimations.SOLEMN_LAMENT_AUTO_R1, TCorpAnimations.SOLEMN_LAMENT_AUTO_R2, TCorpAnimations.SOLEMN_LAMENT_AUTO_R2, TCorpAnimations.SOLEMN_LAMENT_AUTO_R2, TCorpAnimations.SOLEMN_LAMENT_AUTO_R2, TCorpAnimations.SOLEMN_LAMENT_AUTO_R2, TCorpAnimations.SOLEMN_LAMENT_AUTO_R2, TCorpAnimations.SOLEMN_LAMENT_AUTO_R2, TCorpAnimations.SOLEMN_LAMENT_AUTO_R2, TCorpAnimations.SOLEMN_LAMENT_AUTO_R2, TCorpAnimations.SOLEMN_LAMENT_AUTO_R2, TCorpAnimations.SOLEMN_LAMENT_AUTO_R2, TCorpAnimations.SOLEMN_LAMENT_AUTO_R2, TCorpAnimations.SOLEMN_LAMENT_AUTO_R2, TCorpAnimations.SOLEMN_LAMENT_AUTO_R2, TCorpAnimations.SOLEMN_LAMENT_AUTO_R2, TCorpAnimations.SOLEMN_LAMENT_AUTO_R2, TCorpAnimations.SOLEMN_LAMENT_DASH_R, TCorpAnimations.SOLEMN_LAMENT_JUMP_ATTACK)
+            .newStyleCombo(TCorpStyles.LEFT_HANDED, TCorpAnimations.SOLEMN_LAMENT_AUTO_L0, TCorpAnimations.SOLEMN_LAMENT_AUTO_L1, TCorpAnimations.SOLEMN_LAMENT_AUTO_L2, TCorpAnimations.SOLEMN_LAMENT_AUTO_L2, TCorpAnimations.SOLEMN_LAMENT_AUTO_L2, TCorpAnimations.SOLEMN_LAMENT_AUTO_L2, TCorpAnimations.SOLEMN_LAMENT_AUTO_L2, TCorpAnimations.SOLEMN_LAMENT_AUTO_L2, TCorpAnimations.SOLEMN_LAMENT_AUTO_L2, TCorpAnimations.SOLEMN_LAMENT_AUTO_L2, TCorpAnimations.SOLEMN_LAMENT_AUTO_L2, TCorpAnimations.SOLEMN_LAMENT_AUTO_L2, TCorpAnimations.SOLEMN_LAMENT_AUTO_L2, TCorpAnimations.SOLEMN_LAMENT_AUTO_L2, TCorpAnimations.SOLEMN_LAMENT_AUTO_L2, TCorpAnimations.SOLEMN_LAMENT_AUTO_L2, TCorpAnimations.SOLEMN_LAMENT_AUTO_L2, TCorpAnimations.SOLEMN_LAMENT_AUTO_L2, TCorpAnimations.SOLEMN_LAMENT_DASH_L, TCorpAnimations.SOLEMN_LAMENT_JUMP_ATTACK)
+            .newStyleCombo(Styles.ONE_HAND, TCorpAnimations.SOLEMN_LAMENT_MELEE_ATTACK, TCorpAnimations.SOLEMN_LAMENT_MELEE_ATTACK, TCorpAnimations.SOLEMN_LAMENT_JUMP_ATTACK)
+
+            .canBePlacedOffhand(true);
+
     public static final Function<Item, CapabilityItem.Builder> MAGIC_BULLET = (item) -> WeaponCapability.builder()
             .category(TCorpCategories.MAGIC_BULLET)
             .styleProvider((playerpatch) -> {
@@ -427,5 +517,6 @@ public class TCorpCapabilityPresets {
         event.getTypeEntry().put("old_boys_workshop", OLD_BOYS);
         event.getTypeEntry().put("wheels_industry", WHEELS_INDUSTRY);
         event.getTypeEntry().put("magic_bullet", MAGIC_BULLET);
+        event.getTypeEntry().put("solemn_lament", SOLEMN_LAMENT);
     }
 }

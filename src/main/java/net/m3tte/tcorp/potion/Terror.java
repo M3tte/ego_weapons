@@ -14,6 +14,7 @@ import net.minecraftforge.registries.ObjectHolder;
 
 import java.util.Objects;
 
+import static net.m3tte.tcorp.TcorpModVariables.*;
 import static net.m3tte.tcorp.TcorpModVariables.PLAYER_VARIABLES_CAPABILITY;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -77,7 +78,7 @@ public class Terror {
 			super.applyEffectTick(entity, p_76394_2_);
 
 			if (entity instanceof PlayerEntity) {
-				TcorpModVariables.PlayerVariables playerVars = entity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
+				PlayerVariables playerVars = entity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables());
 
 				if (playerVars.globalcooldown <= 5) {
 					playerVars.globalcooldown = 5;

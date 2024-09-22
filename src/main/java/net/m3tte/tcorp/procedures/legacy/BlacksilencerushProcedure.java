@@ -1,5 +1,6 @@
 package net.m3tte.tcorp.procedures.legacy;
 
+import net.m3tte.tcorp.TCorpItems;
 import net.m3tte.tcorp.TcorpMod;
 import net.m3tte.tcorp.gameasset.TCorpAnimations;
 import net.m3tte.tcorp.item.SuitItem;
@@ -68,9 +69,9 @@ public class BlacksilencerushProcedure {
 		Entity target = null;
 		if (entity instanceof LivingEntity) {
 			if (entity instanceof PlayerEntity)
-				((PlayerEntity) entity).inventory.armor.set((int) 3, new ItemStack(SuitItem.helmet));
+				((PlayerEntity) entity).inventory.armor.set((int) 3, new ItemStack(TCorpItems.PERCEPTION_BLOCKING_MASK.get()));
 			else
-				((LivingEntity) entity).setItemSlot(EquipmentSlotType.HEAD, new ItemStack(SuitItem.helmet));
+				((LivingEntity) entity).setItemSlot(EquipmentSlotType.HEAD, new ItemStack(TCorpItems.PERCEPTION_BLOCKING_MASK.get()));
 			if (entity instanceof ServerPlayerEntity)
 				((ServerPlayerEntity) entity).inventory.setChanged();
 		}

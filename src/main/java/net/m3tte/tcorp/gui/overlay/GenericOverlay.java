@@ -4,11 +4,13 @@ package net.m3tte.tcorp.gui.overlay;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.m3tte.tcorp.TCorpItems;
 import net.m3tte.tcorp.TCorpSounds;
+import net.m3tte.tcorp.TcorpMod;
 import net.m3tte.tcorp.TcorpModVariables;
-import net.m3tte.tcorp.item.magic_bullet.MagicBullet;
 import net.m3tte.tcorp.potion.MagicBulletPotionEffect;
 import net.m3tte.tcorp.potion.Shell;
+import net.m3tte.tcorp.potion.SolemnLamentEffects;
 import net.m3tte.tcorp.procedures.legacy.BlipwarninghandlerProcedure;
 import net.m3tte.tcorp.procedures.abilities.AbilityTier;
 import net.m3tte.tcorp.procedures.abilities.WeaponAbilityProcedure;
@@ -16,6 +18,7 @@ import net.m3tte.tcorp.procedures.abilities.ItemAbility;
 import net.m3tte.tcorp.procedures.abilities.ArmorAbilityProcedure;
 import net.m3tte.tcorp.world.capabilities.EmotionSystem;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -52,7 +55,8 @@ public class GenericOverlay extends ModIngameGui {
 	static double currentBrightSanityPercent = -1;
 	static long latestWeaponUnready = 0;
 
-
+	static ResourceLocation DEPARTED_BULLET = new ResourceLocation(TcorpMod.MODID, "textures/screens/gui/solemn_lament/the_departed_bullet.png");
+	static ResourceLocation LIVING_BULLET = new ResourceLocation(TcorpMod.MODID, "textures/screens/gui/solemn_lament/the_living_bullet.png");
 	static long lastRenderedTick = 0;
 	static boolean hasPlayedWeaponUnready = false;
 
@@ -73,6 +77,13 @@ public class GenericOverlay extends ModIngameGui {
 	static ResourceLocation[] shellHealthbar = parseMultiStateTexture(1 ,5, "overlay/shell/ui/healthbar_shell");
 	static ResourceLocation[] emotionLevels = parseMultiStateTexture(0 ,5, "gui/emotion");
 
+	static ResourceLocation[] trumpetLeft = parseMultiStateTexture(1, 4, "overlay/warnings/trumpet");
+	static ResourceLocation[] trumpetRight = parseMultiStateTexture(1, 4, "overlay/warnings/trumpet","right");
+
+	static ResourceLocation[] trumpetTextLeft = parseMultiStateTexture(1, 4, "overlay/warnings/texts/trumpet");
+	static ResourceLocation[] trumpetTextRight = parseMultiStateTexture(1, 4, "overlay/warnings/texts/trumpet","inv");
+
+
 	private static ResourceLocation[] parseMultiStateTexture(int min, int max, String prefix) {
 		ResourceLocation[] array = new ResourceLocation[max - min + 1];
 
@@ -84,43 +95,64 @@ public class GenericOverlay extends ModIngameGui {
 		return array;
 	}
 
+	private static ResourceLocation[] parseMultiStateTexture(int min, int max, String prefix, String suffix) {
+		ResourceLocation[] array = new ResourceLocation[max - min + 1];
 
+		int index = 0;
+		for (int x = min; x <= max; x++) {
+			array[index] = new ResourceLocation("tcorp:textures/screens/"+prefix+"_"+x+"_"+suffix+".png");
+			index++;
+		}
+		return array;
+	}
+	static boolean drawnThisFrame = false;
 	@SubscribeEvent(priority = EventPriority.NORMAL)
-	public static void eventHandler(RenderGameOverlayEvent.Post event) {
-		if (event.getType() == RenderGameOverlayEvent.ElementType.HELMET) {
-			int w = event.getWindow().getGuiScaledWidth();
-			int h = event.getWindow().getGuiScaledHeight();
-			int posX = w / 2;
-			int posY = h / 2;
-			World _world = null;
-			double _x = 0;
-			double _y = 0;
-			double _z = 0;
-			PlayerEntity entity = !(Minecraft.getInstance().getCameraEntity() instanceof PlayerEntity) ? null : (PlayerEntity)Minecraft.getInstance().getCameraEntity();
-			if (entity != null) {
-				_world = entity.level;
-				_x = entity.getX();
-				_y = entity.getY();
-				_z = entity.getZ();
-			}
-			World world = _world;
-			double x = _x;
-			double y = _y;
-			double z = _z;
-			RenderSystem.disableDepthTest();
-			RenderSystem.depthMask(false);
-			RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
-					GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-			RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-			RenderSystem.disableAlphaTest();
-
-			TcorpModVariables.PlayerVariables playerVariables = entity.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new TcorpModVariables.PlayerVariables());
-			int energy = (int) playerVariables.blips;
-
-			MatrixStack matStack = event.getMatrixStack();
+	public static void preOverlay(RenderGameOverlayEvent.Pre event) {
 
 
-			// Blip UI
+		if (event.getType() == RenderGameOverlayEvent.ElementType.ALL)
+		{
+			drawnThisFrame = false;
+			return;
+		}
+
+		if (Minecraft.getInstance().options.hideGui || drawnThisFrame)
+			return;
+
+
+		int w = event.getWindow().getGuiScaledWidth();
+		int h = event.getWindow().getGuiScaledHeight();
+		int posX = w / 2;
+		int posY = h / 2;
+		World _world = null;
+		double _x = 0;
+		double _y = 0;
+		double _z = 0;
+		PlayerEntity entity = !(Minecraft.getInstance().getCameraEntity() instanceof PlayerEntity) ? null : (PlayerEntity)Minecraft.getInstance().getCameraEntity();
+		if (entity != null) {
+			_world = entity.level;
+			_x = entity.getX();
+			_y = entity.getY();
+			_z = entity.getZ();
+		}
+		World world = _world;
+		double x = _x;
+		double y = _y;
+		double z = _z;
+
+		TcorpModVariables.PlayerVariables playerVariables = entity.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new TcorpModVariables.PlayerVariables());
+		int energy = (int) playerVariables.blips;
+
+		//Fetch Render System
+
+		GL11.glPushMatrix();
+		RenderSystem.enableBlend();
+		RenderSystem.disableAlphaTest();
+
+		MatrixStack matStack = event.getMatrixStack();
+
+
+		// Blip UI
 
 			/*matStack.pushPose();
 			matStack.scale(2F, 2F, 2.0F);
@@ -129,113 +161,193 @@ public class GenericOverlay extends ModIngameGui {
 			matStack.popPose();*/
 
 
-			//Minecraft.getInstance().font.draw(event.getMatrixStack(), "TCorp - Indev - Bugs are to be expected", 30, 20, -1);
+		//Minecraft.getInstance().font.draw(event.getMatrixStack(), "TCorp - Indev - Bugs are to be expected", 30, 20, -1);
 
-			Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("tcorp:textures/screens/blip_background.png"));
+		Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("tcorp:textures/screens/blip_background.png"));
+		blit(event.getMatrixStack(), posX + 94, posY + 98, 0, 0, 64, 20, 64, 20);
+		Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("tcorp:textures/screens/power_blip.png"));
+		for (int sc = 0; sc < Math.min(energy, 10); sc++) {
+			blit(event.getMatrixStack(), posX + 98 + sc * 6, posY + 102, 0, 0, 3, 9, 3, 9);
+		}
+		if (energy > 10) {
+			Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("tcorp:textures/screens/golden_blip.png"));
+			for (int sc = 10; sc < Math.min(energy, 20); sc++) {
+				blit(event.getMatrixStack(), posX + 97 + (sc - 10) * 6, posY + 101, 0, 0, 5, 11, 5, 11);
+			}
+		}
+		ItemStack equippedArmor = entity.getItemBySlot(EquipmentSlotType.CHEST);
+		ItemStack equippedItem = entity.getItemBySlot(EquipmentSlotType.MAINHAND);
+
+		// Main UI
+
+		// UI
+
+		renderStatisticUI(h-70, 2, entity, playerVariables, event);
+
+		renderEmotionLevel(h-70, 2, entity, playerVariables, event);
+
+		renderSolemnLament(100, h-100, entity, event);
+
+		if (!equippedArmor.isEmpty()) { // Calculate Ability Widget
+			ItemAbility ability = ArmorAbilityProcedure.getForItem(equippedArmor.getItem());
+			ResourceLocation icon = ability.getIconLocation(entity, playerVariables);
+			ResourceLocation overlay = ability.getOverlay(entity, playerVariables);
+
+			if (icon != null) {
+				float availability = ability.getAvailability(entity, playerVariables);
+				float flashProgress = 0;
+				if (availability >= 1) {
+					flashProgress = 1 - ((float) (entity.tickCount - latestArmorUnready) / 11);
+
+					if (!hasPlayedUnready) {
+						hasPlayedUnready = true;
+						entity.playSound(TCorpSounds.PAPER_FLIP, 1F, (float) (0.8+entity.getRandom().nextFloat()*0.4f));
+					}
+				} else {
+					latestArmorUnready = entity.tickCount;
+					hasPlayedUnready = false;
+				}
+
+				renderAbility(ability, -13, entity, playerVariables, event, h, icon, overlay, flashProgress);
+			}
+		}
+
+		if (!equippedItem.isEmpty()) { // Calculate Ability Widget
+			ItemAbility ability = WeaponAbilityProcedure.getForItem(equippedItem.getItem());
+			ResourceLocation icon = ability.getIconLocation(entity, playerVariables);
+			ResourceLocation overlay = ability.getOverlay(entity, playerVariables);
+
+			if (icon != null) {
+				float availability = ability.getAvailability(entity, playerVariables);
+				float flashProgress = 0;
+				if (availability >= 1) {
+					flashProgress = 1 - ((float) (entity.tickCount - latestWeaponUnready) / 11);
+
+					if (!hasPlayedWeaponUnready) {
+						hasPlayedWeaponUnready = true;
+						entity.playSound(TCorpSounds.PAPER_FLIP, 1,  (float) (0.8+entity.getRandom().nextFloat()*0.4f));
+					}
+				} else {
+					latestWeaponUnready = entity.tickCount;
+					hasPlayedWeaponUnready = false;
+				}
+
+				renderAbility(ability, -63, entity, playerVariables, event, h, icon, overlay, flashProgress);
+			}
+		}
+
+
+		if (BlipwarninghandlerProcedure.executeProcedure(Stream.of(new AbstractMap.SimpleEntry<>("entity", entity)).collect(HashMap::new,
+				(_m, _e) -> _m.put(_e.getKey(), _e.getValue()), Map::putAll))) {
+			Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("tcorp:textures/screens/blip_warning.png"));
 			blit(event.getMatrixStack(), posX + 94, posY + 98, 0, 0, 64, 20, 64, 20);
-			Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("tcorp:textures/screens/power_blip.png"));
-			for (int sc = 0; sc < Math.min(energy, 10); sc++) {
-                blit(event.getMatrixStack(), posX + 98 + sc * 6, posY + 102, 0, 0, 3, 9, 3, 9);
-            }
-			if (energy > 10) {
-				Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("tcorp:textures/screens/golden_blip.png"));
-				for (int sc = 10; sc < Math.min(energy, 20); sc++) {
-					blit(event.getMatrixStack(), posX + 97 + (sc - 10) * 6, posY + 101, 0, 0, 5, 11, 5, 11);
-				}
-			}
-			ItemStack equippedArmor = entity.getItemBySlot(EquipmentSlotType.CHEST);
-			ItemStack equippedItem = entity.getItemBySlot(EquipmentSlotType.MAINHAND);
+		}
+		//
 
-			// Main UI
+		if (entity.getItemInHand(Hand.MAIN_HAND).getItem().equals(TCorpItems.MAGIC_BULLET.get())) {
+			renderMagicBullet(h / 2 - 10, 100, entity, event);
+		}
 
-			// UI
+		// Overlays
 
-			renderStatisticUI(h-70, 2, entity, playerVariables, event);
+		if (entity.hasEffect(Shell.get())) {
+			int level = entity.getEffect(Shell.get()).getAmplifier();
+			if (level > 4) level = 4;
+			Minecraft.getInstance().getTextureManager().bind(shellLeft[level]);
+			blit(event.getMatrixStack(), 0, 0, 0, 0, (int)(60 * ((float)h/90)), h, (int)(60 * ((float)h/90)), h);
 
-			renderEmotionLevel(h-70, 2, entity, playerVariables, event);
+			Minecraft.getInstance().getTextureManager().bind(shellRight[level]);
+			blit(event.getMatrixStack(), w - (int)(60 * ((float)h/90)), 0, 0, 0, (int)(60 * ((float)h/90)), h, (int)(60 * ((float)h/90)), h);
+		}
 
+		renderWarningState(entity, event, w);
 
-
-			if (!equippedArmor.isEmpty()) { // Calculate Ability Widget
-				ItemAbility ability = ArmorAbilityProcedure.getForItem(equippedArmor.getItem());
-				ResourceLocation icon = ability.getIconLocation(entity, playerVariables);
-				ResourceLocation overlay = ability.getOverlay(entity, playerVariables);
-
-				if (icon != null) {
-					float availability = ability.getAvailability(entity, playerVariables);
-					float flashProgress = 0;
-					if (availability >= 1) {
-						flashProgress = 1 - ((float) (entity.tickCount - latestArmorUnready) / 11);
-
-						if (!hasPlayedUnready) {
-							hasPlayedUnready = true;
-							entity.playSound(TCorpSounds.PAPER_FLIP, 1F, (float) (0.8+entity.getRandom().nextFloat()*0.4f));
-						}
-					} else {
-						latestArmorUnready = entity.tickCount;
-						hasPlayedUnready = false;
-					}
-
-					renderAbility(ability, -13, entity, playerVariables, event, h, icon, overlay, flashProgress);
-				}
-			}
-
-			if (!equippedItem.isEmpty()) { // Calculate Ability Widget
-				ItemAbility ability = WeaponAbilityProcedure.getForItem(equippedItem.getItem());
-				ResourceLocation icon = ability.getIconLocation(entity, playerVariables);
-				ResourceLocation overlay = ability.getOverlay(entity, playerVariables);
-
-				if (icon != null) {
-					float availability = ability.getAvailability(entity, playerVariables);
-					float flashProgress = 0;
-					if (availability >= 1) {
-						flashProgress = 1 - ((float) (entity.tickCount - latestWeaponUnready) / 11);
-
-						if (!hasPlayedWeaponUnready) {
-							hasPlayedWeaponUnready = true;
-							entity.playSound(TCorpSounds.PAPER_FLIP, 1,  (float) (0.8+entity.getRandom().nextFloat()*0.4f));
-						}
-					} else {
-						latestWeaponUnready = entity.tickCount;
-						hasPlayedWeaponUnready = false;
-					}
-
-					renderAbility(ability, -63, entity, playerVariables, event, h, icon, overlay, flashProgress);
-				}
-			}
+		drawnThisFrame = true;
+		// End of the func
+		GL11.glPopMatrix();
+		RenderSystem.depthMask(true);
+		RenderSystem.enableDepthTest();
+		RenderSystem.enableAlphaTest();
+		RenderSystem.defaultAlphaFunc();
+		RenderSystem.defaultBlendFunc();
+	}
 
 
-            if (BlipwarninghandlerProcedure.executeProcedure(Stream.of(new AbstractMap.SimpleEntry<>("entity", entity)).collect(HashMap::new,
-                    (_m, _e) -> _m.put(_e.getKey(), _e.getValue()), Map::putAll))) {
-                Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("tcorp:textures/screens/blip_warning.png"));
-                blit(event.getMatrixStack(), posX + 94, posY + 98, 0, 0, 64, 20, 64, 20);
-            }
-            RenderSystem.depthMask(true);
-			RenderSystem.enableDepthTest();
-			RenderSystem.enableAlphaTest();
-			RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+	private static void renderWarningState(PlayerEntity player, RenderGameOverlayEvent.Pre event, int width) {
 
-			if (entity.getItemInHand(Hand.MAIN_HAND).getItem().equals(MagicBullet.item.getItem())) {
-				renderMagicBullet(h / 2 - 10, 100, entity, event);
-			}
+		World level = player.level;
 
-			// Overlays
+		float scale = 2.2f;
 
-			if (entity.hasEffect(Shell.get())) {
-				int level = entity.getEffect(Shell.get()).getAmplifier();
-				if (level > 4) level = 4;
-				Minecraft.getInstance().getTextureManager().bind(shellLeft[level]);
-				blit(event.getMatrixStack(), 0, 0, 0, 0, (int)(60 * ((float)h/90)), h, (int)(60 * ((float)h/90)), h);
+		float fadeTickMult = (float) (player.tickCount%31) / 30f;
 
-				Minecraft.getInstance().getTextureManager().bind(shellRight[level]);
-				blit(event.getMatrixStack(), w - (int)(60 * ((float)h/90)), 0, 0, 0, (int)(60 * ((float)h/90)), h, (int)(60 * ((float)h/90)), h);
+		float warningState = TcorpModVariables.MapVariables.get(level).globalWarningTension;
+		if (warningState >= 1) {
+			warningState = Math.min(warningState - 1, 3);
+
+
+			int defSize = scaleInt(120,scale);
+			int defSizePart = scaleInt(48,scale);
+
+
+			Minecraft.getInstance().getTextureManager().bind(trumpetLeft[(int)warningState]);
+			blit(event.getMatrixStack(), 0, 0, 0, 0, defSize, defSizePart, defSize, defSizePart);
+			Minecraft.getInstance().getTextureManager().bind(trumpetRight[(int)warningState]);
+			blit(event.getMatrixStack(), width - defSize, 0, 0, 0, defSize, defSizePart, defSize, defSizePart);
+
+
+			defSize = scaleInt(64,scale);
+			defSizePart = scaleInt(42,scale);
+			int halfSize = defSize / 2;
+
+			Minecraft.getInstance().getTextureManager()
+					.bind(trumpetTextLeft[(int)warningState]);
+			blit(event.getMatrixStack(), -2, -1, halfSize * fadeTickMult, halfSize * (1-fadeTickMult), (int) defSizePart, defSizePart, (int) defSize, defSize);
+
+
+			Minecraft.getInstance().getTextureManager()
+					.bind(trumpetTextRight[(int)warningState]);
+			blit(event.getMatrixStack(), (int) (width-halfSize-3), -6, halfSize * (1-fadeTickMult), halfSize * (1-fadeTickMult) , defSizePart, defSizePart, (int) defSize, defSize);
+			String txt = "First";
+			int color = 15519232;
+
+			switch ((int)warningState) {
+				case 1:
+					txt = "Second";
+					color = 16736512;
+					break;
+				case 2:
+					txt = "Third";
+					color = 12452608;
+					break;
+
+				case 3:
+					txt = "Fourth";
+					color = 3006207;
+					break;
 			}
 
+			GL11.glPushMatrix();
+			GL11.glTranslated(width - ((double) halfSize /4) - 5,  5,0); // -265,245
+			GL11.glPushMatrix();
+			GL11.glScaled(0.8f, 0.8f, 0.8f);
+			GL11.glRotated(45,0,0,1);
+			Minecraft.getInstance().font.draw(event.getMatrixStack(), txt, 0, 0, color);
+			Minecraft.getInstance().font.draw(event.getMatrixStack(), "Trumpet", -2, 12, color);
+			RenderSystem.enableBlend();
+			GL11.glPopMatrix();
+			GL11.glPopMatrix();
 
 		}
 	}
 
-	private static void renderMagicBullet(int offsetY, int offsetX, PlayerEntity player, RenderGameOverlayEvent.Post event) {
+
+
+	private static int scaleInt(int input, float scale) {
+		return (int) (input * scale);
+	}
+
+	private static void renderMagicBullet(int offsetY, int offsetX, PlayerEntity player, RenderGameOverlayEvent.Pre event) {
 		int magicBullet = 0;
 
 		if (player.hasEffect(MagicBulletPotionEffect.get())) {
@@ -248,9 +360,10 @@ public class GenericOverlay extends ModIngameGui {
 		Minecraft.getInstance().getTextureManager().bind(magic_bullet);
 		blit(event.getMatrixStack(), 0, 0, 0, 0, 16, 16, 16, 16);
 		Minecraft.getInstance().font.draw(event.getMatrixStack(), magicBullet+"", 6, 6,  (16773613));
+		RenderSystem.enableBlend();
 		GL11.glPopMatrix();
 	}
-	private static void renderEmotionLevel(int offsetY, int offsetX, PlayerEntity player, TcorpModVariables.PlayerVariables playerVariables, RenderGameOverlayEvent.Post event) {
+	private static void renderEmotionLevel(int offsetY, int offsetX, PlayerEntity player, TcorpModVariables.PlayerVariables playerVariables, RenderGameOverlayEvent.Pre event) {
 
 		double emotionBarProgress = playerVariables.emotionLevelProgress / EmotionSystem.getEmotionRequired(playerVariables);
 
@@ -272,7 +385,7 @@ public class GenericOverlay extends ModIngameGui {
 
 	}
 
-	private static void renderStatisticUI(int offsetY, int offsetX, PlayerEntity player, TcorpModVariables.PlayerVariables playerVariables, RenderGameOverlayEvent.Post event) {
+	private static void renderStatisticUI(int offsetY, int offsetX, PlayerEntity player, TcorpModVariables.PlayerVariables playerVariables, RenderGameOverlayEvent.Pre event) {
 		double targetPercent = player.getHealth() != 0 ? player.getHealth() : -1;
 		double targetStagger = playerVariables.stagger != 0 ? playerVariables.stagger : -1;
 		double targetSanity = playerVariables.sanity != 0 ? playerVariables.sanity : -1;
@@ -391,14 +504,31 @@ public class GenericOverlay extends ModIngameGui {
 	}
 
 
-	private static void renderShellOverlayBar(int offsetX, int offsetY, PlayerEntity player,  RenderGameOverlayEvent.Post event) {
+	private static void renderShellOverlayBar(int offsetX, int offsetY, PlayerEntity player,  RenderGameOverlayEvent.Pre event) {
 		if (player.hasEffect(Shell.get())) {
 			Minecraft.getInstance().getTextureManager().bind(shellHealthbar[Math.max(Math.min(player.getEffect(Shell.get()).getAmplifier(),4),0)]);
 			blit(event.getMatrixStack(), offsetX+ 29, offsetY + 8, 0, 0, 154, 11, 154, 11);
 		}
 	}
 
-	private static void renderAbility(ItemAbility ability, int offsetY, PlayerEntity entity, TcorpModVariables.PlayerVariables playerVariables, RenderGameOverlayEvent.Post event, int h, ResourceLocation icon,ResourceLocation overlay,  float flashProgress) {
+
+	private static void renderSolemnLament(int offsetX, int offsetY, PlayerEntity player, RenderGameOverlayEvent.Pre event) {
+
+
+		Minecraft.getInstance().getTextureManager().bind(DEPARTED_BULLET);
+		int departedcount = SolemnLamentEffects.getAmmoCount(player, SolemnLamentEffects.getDeparted());
+		for (int x = 0; x < departedcount; x++) {
+			AbstractGui.blit(event.getMatrixStack(), offsetX + 10 * x, offsetY + 20, 0, 0, 16, 16, 16, 16);
+		}
+		Minecraft.getInstance().getTextureManager().bind(LIVING_BULLET);
+		int livingCount = SolemnLamentEffects.getAmmoCount(player, SolemnLamentEffects.getLiving());
+		for (int x = 0; x < livingCount; x++) {
+			AbstractGui.blit(event.getMatrixStack(), offsetX + 10 * x, offsetY, 0, 0, 16, 16, 16, 16);
+		}
+	}
+
+
+	private static void renderAbility(ItemAbility ability, int offsetY, PlayerEntity entity, TcorpModVariables.PlayerVariables playerVariables, RenderGameOverlayEvent.Pre event, int h, ResourceLocation icon,ResourceLocation overlay,  float flashProgress) {
 
 		float availability = ability.getAvailability(entity, playerVariables);
 
@@ -450,10 +580,11 @@ public class GenericOverlay extends ModIngameGui {
 			GL11.glScaled(0.8f,0.8f,0.8f);
 			GL11.glTranslated(30,  120,0); // -265,245
 			GL11.glRotated(-13,0,0,1);
-			Minecraft.getInstance().font.draw(event.getMatrixStack(), cost + " Energy", 0, 0,  (cost == 0) ? 50944 : 16773613);
-			GL11.glPopMatrix();
-			GL11.glPopMatrix();
 
+			Minecraft.getInstance().font.draw(event.getMatrixStack(), cost + " Energy", 0, 0,  (cost == 0) ? 50944 : 16773613);
+			RenderSystem.enableBlend();
+			GL11.glPopMatrix();
+			GL11.glPopMatrix();
 
 
 			GL11.glPopMatrix();

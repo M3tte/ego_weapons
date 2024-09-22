@@ -1,5 +1,6 @@
 package net.m3tte.tcorp.procedures.legacy;
 
+import net.m3tte.tcorp.TCorpItems;
 import net.m3tte.tcorp.TcorpMod;
 import net.m3tte.tcorp.item.SuitItem;
 import net.m3tte.tcorp.potion.OrlandoPotionEffect;
@@ -28,7 +29,7 @@ public class BlacksilencesuitHelmetTickEventProcedure {
 			}
 		}.check(entity))) {
 			if (entity instanceof PlayerEntity) {
-				ItemStack _stktoremove = new ItemStack(SuitItem.helmet);
+				ItemStack _stktoremove = new ItemStack(TCorpItems.PERCEPTION_BLOCKING_MASK.get());
 				((PlayerEntity) entity).inventory.removeItem(_stktoremove);
 			}
 		}

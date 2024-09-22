@@ -1,9 +1,10 @@
 package net.m3tte.tcorp.procedures.legacy;
 
+import net.m3tte.tcorp.TCorpItems;
 import net.m3tte.tcorp.TcorpModVariables;
 import net.m3tte.tcorp.execFunctions.AtelierCooldownHandler;
 import net.m3tte.tcorp.gameasset.TCorpAnimations;
-import net.m3tte.tcorp.item.blackSilence.AtelierlogicpistolsItem;
+import net.m3tte.tcorp.item.blackSilence.weapons.AtelierlogicpistolsItem;
 import net.m3tte.tcorp.world.capabilities.item.TCorpStyles;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -43,7 +44,7 @@ public class AtelierLogicPistolUseProcedure {
 								entitypatch.playAnimationSynchronized(TCorpAnimations.ATELIER_REVOLVER_FURIOSO_1, 0);
 								break;
 							case 1:
-								if (entitypatch.getOriginal().getItemInHand(Hand.OFF_HAND).getItem().equals(AtelierlogicpistolsItem.item.getItem()))
+								if (entitypatch.getOriginal().getItemInHand(Hand.OFF_HAND).getItem().equals(TCorpItems.ATELIER_LOGIC_PISTOLS.get()))
 									entitypatch.playAnimationSynchronized(TCorpAnimations.ATELIER_REVOLVER_FURIOSO_2, 0);
 								else
 									entitypatch.playAnimationSynchronized(TCorpAnimations.ATELIER_REVOLVER_FURIOSO_1, 0);
@@ -55,7 +56,7 @@ public class AtelierLogicPistolUseProcedure {
 								entitypatch.playAnimationSynchronized(TCorpAnimations.ATELIER_REVOLVER_FIRE_1, 0);
 								break;
 							case 1:
-								if (entitypatch.getOriginal().getItemInHand(Hand.OFF_HAND).getItem().equals(AtelierlogicpistolsItem.item.getItem()))
+								if (entitypatch.getOriginal().getItemInHand(Hand.OFF_HAND).getItem().equals(TCorpItems.ATELIER_LOGIC_PISTOLS.get()))
 									entitypatch.playAnimationSynchronized(TCorpAnimations.ATELIER_REVOLVER_FIRE_2, 0);
 								else
 									entitypatch.playAnimationSynchronized(TCorpAnimations.ATELIER_REVOLVER_FIRE_1, 0);

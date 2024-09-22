@@ -1,4 +1,134 @@
 {
+  "first_warning": {
+    "category": "music",
+    "subtitle": "subtitles.first_warning",
+    "sounds": [
+      {
+        "name": "tcorp:music/first_warning",
+        "stream": true
+      }
+    ]
+  },
+  "second_warning": {
+    "category": "music",
+    "subtitle": "subtitles.second_warning",
+    "sounds": [
+      {
+        "name": "tcorp:music/second_warning",
+        "stream": true
+      }
+    ]
+  },
+  "third_warning": {
+    "category": "music",
+    "subtitle": "subtitles.third_warning",
+    "sounds": [
+      {
+        "name": "tcorp:music/third_warning",
+        "stream": true
+      }
+    ]
+  },
+  "fourth_warning": {
+    "category": "music",
+    "subtitle": "subtitles.fourth_warning",
+    "sounds": [
+      {
+        "name": "tcorp:music/fourth_warning",
+        "stream": true
+      }
+    ]
+  },
+  "solemn_lament.special.spin": {
+    "category": "player",
+    "subtitle": "subtitles.solemn_lament.special.ready",
+    "sounds": [
+      {
+        "name": "tcorp:solemn_lament/special_ready"
+      }
+    ]
+  },
+  "solemn_lament.special.impact": {
+    "category": "player",
+    "subtitle": "subtitles.solemn_lament.special.impact",
+    "sounds": [
+      {
+        "name": "tcorp:solemn_lament/special_impact"
+      }
+    ]
+  },
+  "solemn_lament.special.reload": {
+    "category": "player",
+    "subtitle": "subtitles.solemn_lament.special.reload",
+    "sounds": [
+      {
+        "name": "tcorp:solemn_lament/special_reload"
+      }
+    ]
+  },
+  "solemn_lament.ready": {
+    "category": "player",
+    "subtitle": "subtitles.solemn_lament.ready",
+    "sounds": [
+      {
+        "name": "tcorp:solemn_lament/ready"
+      }
+    ]
+  },
+  "solemn_lament.reload": {
+    "category": "player",
+    "subtitle": "subtitles.solemn_lament.reload",
+    "sounds": [
+      {
+        "name": "tcorp:solemn_lament/reload"
+      }
+    ]
+  },
+  "solemn_lament.spin": {
+    "category": "player",
+    "subtitle": "subtitles.solemn_lament.spin",
+    "sounds": [
+      {
+        "name": "tcorp:solemn_lament/spin"
+      }
+    ]
+  },
+  "solemn_lament.fast.black": {
+    "category": "player",
+    "subtitle": "subtitles.solemn_lament.fast.white",
+    "sounds": [
+      {
+        "name": "tcorp:solemn_lament/fastshoot_black"
+      }
+    ]
+  },
+  "solemn_lament.fast.white": {
+    "category": "player",
+    "subtitle": "subtitles.solemn_lament.fast.white",
+    "sounds": [
+      {
+        "name": "tcorp:solemn_lament/fastshoot_white"
+      }
+    ]
+  },
+  "solemn_lament.auto.black": {
+    "category": "player",
+    "subtitle": "subtitles.solemn_lament.white",
+    "sounds": [
+      {
+        "name": "tcorp:solemn_lament/auto_black"
+      }
+    ]
+  },
+  "solemn_lament.auto.white": {
+    "category": "player",
+    "subtitle": "subtitles.solemn_lament.white",
+    "sounds": [
+      {
+        "name": "tcorp:solemn_lament/auto_white"
+      }
+    ]
+  },
   "magic_bullet.swing.1": {
     "category": "player",
     "subtitle": "subtitles.magic.bullet.swing1",

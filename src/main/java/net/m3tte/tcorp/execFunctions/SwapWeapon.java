@@ -1,8 +1,9 @@
 package net.m3tte.tcorp.execFunctions;
 
+import net.m3tte.tcorp.TCorpItems;
 import net.m3tte.tcorp.TcorpModVariables;
 import net.m3tte.tcorp.gameasset.TCorpAnimations;
-import net.m3tte.tcorp.item.blackSilence.*;
+import net.m3tte.tcorp.item.blackSilence.weapons.*;
 import net.m3tte.tcorp.particle.BlacksilenceshadowParticle;
 import net.m3tte.tcorp.particle.ShadowpuffParticle;
 import net.m3tte.tcorp.potion.OrlandoPotionEffect;
@@ -96,15 +97,15 @@ public class SwapWeapon {
 		switch(weaponIndex) {
 			// If the index is 0, switch to durandal
 			case 0: // Durandal
-				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(DurandalItem.block));
+				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(TCorpItems.DURANDAL.get()));
 
 
 				animation = TCorpAnimations.DURANDAL_EQUIP;
 
 				break;
 			case 1: // Pistols
-				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(AtelierlogicpistolsItem.item));
-				entity.setItemInHand(Hand.OFF_HAND, new ItemStack(AtelierlogicpistolsItem.item));
+				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(TCorpItems.ATELIER_LOGIC_PISTOLS.get()));
+				entity.setItemInHand(Hand.OFF_HAND, new ItemStack(TCorpItems.ATELIER_LOGIC_PISTOLS.get()));
 
 				entity.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
 					capability.gunMagSize = 0;
@@ -115,47 +116,47 @@ public class SwapWeapon {
 
 				break;
 			case 2: // Allas
-				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(AllasSpearItem.item));
+				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(TCorpItems.ALLAS_SPEAR.get()));
 
 				animation = TCorpAnimations.ALLAS_SPEAR_EQUIP;
 
 				break;
 
 			case 3: // Old Boys
-				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(OldBoysWorkshop.item));
+				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(TCorpItems.OLD_BOYS_WORKSHOP.get()));
 				animation = TCorpAnimations.OLD_BOYS_EQUIP;
 				break;
 
 			case 4: // Mook
-				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(MookWorkshop.item));
+				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(TCorpItems.MOOK_WORKSHOP.get()));
 				animation = TCorpAnimations.DURANDAL_EQUIP;
 
 				break;
 
 			case 5: // Ranga
-				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(RangaclawItem.item));
-				entity.setItemInHand(Hand.OFF_HAND, new ItemStack(RangaclawlItem.block));
+				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(TCorpItems.RANGA_CLAW_L.get()));
+				entity.setItemInHand(Hand.OFF_HAND, new ItemStack(TCorpItems.RANGA_CLAW.get()));
 				animation = TCorpAnimations.DUAL_EQUIP;
 
 				break;
 			case 6: // Zelkova
-				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(ZelkovaaxeItem.block));
-				entity.setItemInHand(Hand.OFF_HAND, new ItemStack(ZelkovamaceItem.block));
+				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(TCorpItems.ZELKOVA_AXE.get()));
+				entity.setItemInHand(Hand.OFF_HAND, new ItemStack(TCorpItems.ZELKOVA_MACE.get()));
 				animation = TCorpAnimations.DUAL_EQUIP;
 
 				break;
 
 			case 7: // Wheels Industry
-				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(WheelsIndustry.item));
+				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(TCorpItems.WHEELS_INDUSTRY.get()));
 				animation = TCorpAnimations.ATELIER_SHOTGUN_EQUIP;
 				break;
 			case 8: // Crystal Atelier
-				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(CrystalatelierItem.item));
-				entity.setItemInHand(Hand.OFF_HAND, new ItemStack(CrystalatelierItem.item));
+				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(TCorpItems.CRYSTAL_ATELIER.get()));
+				entity.setItemInHand(Hand.OFF_HAND, new ItemStack(TCorpItems.CRYSTAL_ATELIER.get()));
 				animation = TCorpAnimations.DUAL_EQUIP;
 				break;
 			case 9: // Atelier Logic Shotgun
-				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(AtelierlogicshotgunItem.item));
+				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(TCorpItems.ATELIER_LOGIC_SHOTGUN.get()));
 				animation = TCorpAnimations.ATELIER_SHOTGUN_EQUIP;
 
 				break;

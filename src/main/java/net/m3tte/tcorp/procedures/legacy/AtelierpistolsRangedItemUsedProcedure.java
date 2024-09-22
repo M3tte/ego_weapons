@@ -1,5 +1,6 @@
 package net.m3tte.tcorp.procedures.legacy;
 
+import net.m3tte.tcorp.TCorpItems;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.item.ItemStack;
@@ -8,7 +9,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Entity;
 
 import net.m3tte.tcorp.potion.FuriosoPotionEffect;
-import net.m3tte.tcorp.item.blackSilence.AtelierpistolsItem;
+import net.m3tte.tcorp.item.blackSilence.AtelierPistolsBullet;
 import net.m3tte.tcorp.TcorpMod;
 
 import java.util.Map;
@@ -41,7 +42,7 @@ public class AtelierpistolsRangedItemUsedProcedure {
 				return false;
 			}
 		}.check(entity) && entity.getPersistentData().getDouble("furiosohits") <= 10) {
-			if (AtelierpistolsItem.block.getItem() == ((entity instanceof LivingEntity) ? ((LivingEntity) entity).getOffhandItem().getItem() : ItemStack.EMPTY.getItem())) {
+			if (TCorpItems.ATELIER_LOGIC_PISTOLS.get() == ((entity instanceof LivingEntity) ? ((LivingEntity) entity).getOffhandItem().getItem() : ItemStack.EMPTY.getItem())) {
 				if (new Object() {
 					boolean check(Entity _entity) {
 						if (_entity instanceof LivingEntity) {
@@ -65,7 +66,7 @@ public class AtelierpistolsRangedItemUsedProcedure {
 					((PlayerEntity) entity).getCooldowns().addCooldown(itemstack.getItem(), (int) 30);
 			}
 		} else {
-			if (AtelierpistolsItem.block.getItem() == ((entity instanceof LivingEntity) ? ((LivingEntity) entity).getOffhandItem().getItem() : ItemStack.EMPTY.getItem())) {
+			if (TCorpItems.ATELIER_LOGIC_PISTOLS.get() == ((entity instanceof LivingEntity) ? ((LivingEntity) entity).getOffhandItem().getItem() : ItemStack.EMPTY.getItem())) {
 				if (entity instanceof PlayerEntity)
 					((PlayerEntity) entity).getCooldowns().addCooldown(itemstack.getItem(), (int) 30);
 			} else {

@@ -22,13 +22,14 @@ import net.m3tte.tcorp.skill.oldBoys.OldBoysGuard;
 import net.m3tte.tcorp.skill.oldBoys.OldBoysPassive;
 import net.m3tte.tcorp.skill.red_mist.RedMistActiveGuard;
 import net.m3tte.tcorp.skill.red_mist.RedMistBlockable;
+import net.m3tte.tcorp.skill.solemnLament.SolemnLamentActiveGuard;
+import net.m3tte.tcorp.skill.solemnLament.SolemnLamentPassive;
 import net.minecraft.util.ResourceLocation;
 import yesman.epicfight.api.animation.property.AnimationProperty.AttackPhaseProperty;
 import yesman.epicfight.api.forgeevent.SkillRegistryEvent;
 import yesman.epicfight.api.utils.ExtendedDamageSource.StunType;
 import yesman.epicfight.api.utils.math.ExtraDamageType;
 import yesman.epicfight.api.utils.math.ValueCorrector;
-import yesman.epicfight.gameasset.Animations;
 import yesman.epicfight.skill.*;
 
 public class TCorpSkills {
@@ -77,6 +78,11 @@ public class TCorpSkills {
     public static Skill MAGIC_BULLET_PASSIVE;
 
     public static Skill MAGIC_BULLET_DETONATE;
+
+    public static Skill SOLEMN_LAMENT_BURST;
+
+    public static Skill SOLEMN_LAMENT_PASSIVE;
+    public static Skill SOLEMN_LAMENT_GUARD;
     public TCorpSkills() {
     }
 
@@ -103,6 +109,12 @@ public class TCorpSkills {
                 new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(TcorpMod.MODID, "hello"))
                         .setConsumption(70.0F).setAnimations(TCorpAnimations.MIMICRY_HELLO)))
                 .newPropertyLine().addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.adder(6.0F)), false);
+
+
+        SOLEMN_LAMENT_BURST = event.registerSkill((
+                new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(TcorpMod.MODID, "solemn_burst"))
+                        .setConsumption(65.0F).setAnimations(TCorpAnimations.SOLEMN_LAMENT_SPECIAL_ATTACK)))
+                .newPropertyLine(), false);
 
 
         WHEELS_SMASH = event.registerSkill((
@@ -178,5 +190,10 @@ public class TCorpSkills {
         MAGIC_BULLET_PASSIVE = event.registerSkill(new MagicBulletPassive(Skill.createBuilder(new ResourceLocation(TcorpMod.MODID, "magic_bullet_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
 
         MAGIC_BULLET_EVADE = event.registerSkill(new StepSkill(DodgeSkill.createBuilder(new ResourceLocation(TcorpMod.MODID, "magic_bullet_evade")).setConsumption(3.0F).setAnimations(TCorpAnimations.MAGIC_BULLET_EVADE_FORWARD, TCorpAnimations.MAGIC_BULLET_EVADE_BACKWARD, TCorpAnimations.MAGIC_BULLET_EVADE_LEFT, TCorpAnimations.MAGIC_BULLET_EVADE_RIGHT)), false);
+
+        SOLEMN_LAMENT_GUARD =event.registerSkill(new SolemnLamentActiveGuard(SolemnLamentActiveGuard.createBuilder(new ResourceLocation(TcorpMod.MODID, "solemn_lament_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
+
+        SOLEMN_LAMENT_PASSIVE = event.registerSkill(new SolemnLamentPassive(Skill.createBuilder(new ResourceLocation(TcorpMod.MODID, "solemn_lament_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
+
     }
 }

@@ -29,7 +29,7 @@ public class RedMistBlockable extends Skill {
 
         SkillContainer guardskill = executer.getSkillCapability().skillContainers[SkillCategories.GUARD.universalOrdinal()];
 
-        if (bsguardskill.hasSkill(TCorpSkills.GENERIC_ACTIVE_GUARD)) {
+        if (bsguardskill.hasSkill(TCorpSkills.KALI_GUARD)) {
             bsguardskill.setSkill((Skill) null);
             guardskill.getSkill().onInitiate(bsguardskill);
         }

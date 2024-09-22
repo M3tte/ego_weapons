@@ -1,5 +1,6 @@
 package net.m3tte.tcorp.procedures.abilities.weaponAbilities;
 
+import net.m3tte.tcorp.TCorpItems;
 import net.m3tte.tcorp.TCorpSounds;
 import net.m3tte.tcorp.TcorpModVariables.PlayerVariables;
 import net.m3tte.tcorp.gameasset.TCorpAnimations;
@@ -16,6 +17,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -32,7 +34,7 @@ import static net.m3tte.tcorp.procedures.abilities.AbilityUtils.applyBlipCooldow
 public class MimicryWeaponAbility extends ItemAbility {
 
     private boolean isWearingMimicry(PlayerEntity player) {
-        return (player.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(RedMistJacket.body) || player.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(RedMistEGOSuit.body));
+        return (player.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(TCorpItems.JACKET_OF_THE_RED_MIST.get()) || player.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(TCorpItems.RED_MIST_EGO_CHESTPLATE.get()));
     }
 
 
@@ -91,7 +93,7 @@ public class MimicryWeaponAbility extends ItemAbility {
                 }
 
                 LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-                player.getCooldowns().addCooldown(MimicryItem.item.getItem(), (int) 20);
+                player.getCooldowns().addCooldown(TCorpItems.MIMICRY.get(), (int) 20);
                 playerVars.globalcooldown = 200;
                 player.addEffect(new EffectInstance(Effects.DIG_SLOWDOWN, (int) 80, (int) 4, (false), (false)));
                 player.addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 75, 1));
@@ -114,9 +116,8 @@ public class MimicryWeaponAbility extends ItemAbility {
                     ((ServerWorld) world).sendParticles(BlipeffectParticle.particle, x, (y + 1), z, (int) 4, 0.4, 0.6, 0.4, 0);
                 }
 
-
                 LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-                player.getCooldowns().addCooldown(MimicryItem.item.getItem(), (int) 20);
+                player.getCooldowns().addCooldown(TCorpItems.MIMICRY.get(), (int) 20);
                 playerVars.globalcooldown = 200;
                 player.addEffect(new EffectInstance(Effects.DIG_SLOWDOWN, (int) 80, (int) 4, (false), (false)));
                 player.addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 75, 1));

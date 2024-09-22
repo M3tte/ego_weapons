@@ -1,6 +1,7 @@
 package net.m3tte.tcorp.skill.red_mist;
 
 import com.google.common.collect.Lists;
+import net.m3tte.tcorp.TCorpItems;
 import net.m3tte.tcorp.TCorpSounds;
 import net.m3tte.tcorp.TcorpModVariables;
 import net.m3tte.tcorp.gameasset.TCorpAnimations;
@@ -105,14 +106,14 @@ public class RedMistActiveGuard extends GuardSkill {
                     if (stamina > event.getPlayerPatch().getMaxStamina()) {
                         stamina = event.getPlayerPatch().getMaxStamina();
                         TcorpModVariables.PlayerVariables entityData = event.getPlayerPatch().getOriginal().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
-                        if (!event.getPlayerPatch().getOriginal().getCooldowns().isOnCooldown(MimicryItem.item) && entityData != null && entityData.globalcooldown <= 0) {
+                        if (!event.getPlayerPatch().getOriginal().getCooldowns().isOnCooldown(TCorpItems.MIMICRY.get()) && entityData != null && entityData.globalcooldown <= 0) {
                             event.getPlayerPatch().playAnimationSynchronized(TCorpAnimations.KALI_PARRY_EVADE, 0);
                             event.getPlayerPatch().playSound(TCorpSounds.BLACK_SILENCE_EVADE, 1, 1);
 
 
                             BlipTick.chargeBlips(playerentity, 1, true);
 
-                            event.getPlayerPatch().getOriginal().getCooldowns().addCooldown(MimicryItem.item.getItem(), 100);
+                            event.getPlayerPatch().getOriginal().getCooldowns().addCooldown(TCorpItems.MIMICRY.get(), 100);
                             entityData.globalcooldown = 100;
                             entityData.syncPlayerVariables(event.getPlayerPatch().getOriginal());
                             return;

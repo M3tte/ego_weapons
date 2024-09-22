@@ -1,44 +1,32 @@
 package net.m3tte.tcorp.item.magic_bullet;
 
-import net.m3tte.tcorp.TCorpModEntities;
-import net.m3tte.tcorp.TCorpParticleRegistry;
-import net.m3tte.tcorp.TCorpSounds;
-import net.m3tte.tcorp.TcorpModElements;
-import net.m3tte.tcorp.item.blackSilence.AtelierpistolsItem;
+import net.m3tte.tcorp.*;
 import net.m3tte.tcorp.particle.ArmourupparticleParticle;
-import net.m3tte.tcorp.particle.ShadowpuffParticle;
 import net.m3tte.tcorp.particle.SonicwavefxParticle;
-import net.m3tte.tcorp.particle.SparkparticleParticle;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.FMLPlayMessages;
 import net.minecraftforge.fml.network.NetworkHooks;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Random;
 
-@TcorpModElements.ModElement.Tag
 public class MagicBulletProjectile {
 
     public static final EntityType<MagicBulletProj> bullet = (EntityType.Builder.<MagicBulletProj>of(MagicBulletProj::new, EntityClassification.MISC)
             .setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).setCustomClientFactory(MagicBulletProj::new)
             .sized(0.5f, 0.5f)).build("projectile_magic_bullet");
 
-    @OnlyIn(value = Dist.CLIENT)
+    //@OnlyIn(value = Dist.CLIENT)
     public static class MagicBulletProj extends AbstractArrowEntity {
         public MagicBulletProj(FMLPlayMessages.SpawnEntity packet, World world) {
             super(bullet, world);
@@ -108,9 +96,13 @@ public class MagicBulletProjectile {
     public static void shoot(LivingEntity entity, int pierce, boolean hitself) {
         AbstractArrowEntity projectile = new MagicBulletProj(bullet, entity, entity.level);
 
+
+        if (pierce <= 0 && hitself)
+            return;
+
         float suitMult = 1;
 
-        if (MagicBulletArmor.body.getItem().equals(entity.getItemBySlot(EquipmentSlotType.CHEST))); {
+        if (TCorpItems.MAGIC_BULLET_CLOAK.get().equals(entity.getItemBySlot(EquipmentSlotType.CHEST).getItem())); {
             suitMult = 1.25f;
         }
 

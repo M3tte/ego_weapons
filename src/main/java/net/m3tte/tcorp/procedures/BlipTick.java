@@ -1,5 +1,6 @@
 package net.m3tte.tcorp.procedures;
 
+import net.m3tte.tcorp.TCorpItems;
 import net.m3tte.tcorp.TCorpSounds;
 import net.m3tte.tcorp.TcorpMod;
 import net.m3tte.tcorp.TcorpModVariables;
@@ -9,10 +10,13 @@ import net.m3tte.tcorp.potion.EnergyboostPotionEffect;
 import net.m3tte.tcorp.potion.EnergyfatiguePotionEffect;
 import net.m3tte.tcorp.potion.Terror;
 import net.m3tte.tcorp.world.capabilities.EmotionSystem;
+import net.m3tte.tcorp.world.capabilities.SanitySystem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
@@ -60,7 +64,7 @@ public class BlipTick {
 		float multiplier = 1;
 		float pitch = 1;
 
-		if (MagicBulletArmor.body.getItem().equals(player.getItemBySlot(EquipmentSlotType.CHEST).getItem())) {
+		if (TCorpItems.MAGIC_BULLET_CLOAK.get().equals(player.getItemBySlot(EquipmentSlotType.CHEST).getItem())) {
 
 			if (!player.level.isClientSide() && player.level.random.nextFloat() > 0.7f) {
 				pitch = 1.5f;
@@ -116,18 +120,23 @@ public class BlipTick {
 			if (entityData.sanity < entityData.maxSanity) {
 				entityData.sanity = Math.min(entityData.sanity + 0.05f, entityData.maxSanity);
 
-				if (entityData.sanity < 0)
-					entityData.sanity = entityData.maxSanity;
 			}
 
 			if (entityData.stagger < entityData.maxStagger) {
 				entityData.stagger = Math.min(entityData.stagger + 0.05f, entityData.maxStagger);
 			}
 
-			EmotionSystem.decreaseEmotionPoints(entity, 1);
+			EmotionSystem.decreaseEmotionPoints(entity, 0.6f);
 
 			entityData.maxblips = EmotionSystem.getMaxEnergy(entityData);
 
+			if (SanitySystem.getSanity(entity)<=1) {
+				entity.addEffect(new EffectInstance(Effects.BLINDNESS, 300, 0));
+				entity.addEffect(new EffectInstance(Effects.WEAKNESS, 300, 1));
+				entity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 300, 1));
+				entity.addEffect(new EffectInstance(Effects.DIG_SLOWDOWN, 300, 1));
+				SanitySystem.healSanity(entity, 10);
+			}
 
 			if (entityData.blips < entityData.maxblips) {
 				if (entityData.blipcooldown <= 0 && !entity.hasEffect(Terror.get())) {

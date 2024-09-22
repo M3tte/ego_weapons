@@ -71,6 +71,13 @@ public class ClientModBusEvent {
         particleEngine.register(TCorpParticleRegistry.MAGIC_BULLET_HIT.get(), new MagicBulletHit.Provider());
         particleEngine.register(TCorpParticleRegistry.MAGIC_BULLET_IMPACT.get(), MagicBulletImpact.Provider::new);
         particleEngine.register(TCorpParticleRegistry.MAGIC_BULLET_IMPACT_HIT.get(), new MagicBulletImpactHit.Provider());
+        particleEngine.register(TCorpParticleRegistry.SOLEMN_LAMENT_FIRE_LIVING.get(), SolemnLamentParticle.Provider::new);
+        particleEngine.register(TCorpParticleRegistry.SOLEMN_LAMENT_FIRE_DEPARTED.get(), SolemnLamentParticle.Provider::new);
+        particleEngine.register(TCorpParticleRegistry.SOLEMN_LAMENT_LIVING_HIT.get(), new SolemnLamentLivingHit.Provider());
+        particleEngine.register(TCorpParticleRegistry.SOLEMN_LAMENT_DEPARTED_HIT.get(), new SolemnLamentDepartedHit.Provider());
+        particleEngine.register(TCorpParticleRegistry.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get(), SolemnLamentButterfly.Provider::new);
+        particleEngine.register(TCorpParticleRegistry.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), SolemnLamentButterfly.Provider::new);
+        particleEngine.register(TCorpParticleRegistry.SOLEMN_LAMENT_BURST_HIT.get(), new SolemnLamentBurstHit.Provider());
     }
 
 }

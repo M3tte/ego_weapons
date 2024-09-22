@@ -1,5 +1,6 @@
 package net.m3tte.tcorp.procedures.abilities.armorAbilities;
 
+import net.m3tte.tcorp.TCorpItems;
 import net.m3tte.tcorp.TcorpModVariables.PlayerVariables;
 import net.m3tte.tcorp.item.redmist.RedMistEGOSuit;
 import net.m3tte.tcorp.particle.BlacksilenceshadowParticle;
@@ -65,9 +66,9 @@ public class RedMistArmorAbility extends ItemAbility {
         double x = player.getX();
         double y = player.getY();
         double z = player.getZ();
-        player.setItemSlot(EquipmentSlotType.LEGS, RedMistEGOSuit.leggings.getDefaultInstance());
-        player.setItemSlot(EquipmentSlotType.CHEST, RedMistEGOSuit.body.getDefaultInstance());
-        player.setItemSlot(EquipmentSlotType.HEAD, RedMistEGOSuit.helmet.getDefaultInstance());
+        player.setItemSlot(EquipmentSlotType.LEGS, TCorpItems.RED_MIST_EGO_LEGGINGS.get().getDefaultInstance());
+        player.setItemSlot(EquipmentSlotType.CHEST, TCorpItems.RED_MIST_EGO_CHESTPLATE.get().getDefaultInstance());
+        player.setItemSlot(EquipmentSlotType.HEAD, TCorpItems.RED_MIST_EGO_HELMET.get().getDefaultInstance());
         player.inventory.setChanged();
         if (player.level instanceof ServerWorld) {
             ((ServerWorld) player.level).sendParticles(BlipeffectParticle.particle, x, (y + 1), z, (int) 8, 0.4, 0.6, 0.4, 0);

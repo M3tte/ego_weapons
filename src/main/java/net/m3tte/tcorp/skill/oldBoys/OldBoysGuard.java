@@ -110,7 +110,7 @@ public class OldBoysGuard extends EnergizingGuardSkill {
                     LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) entitySource.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
                     if (entitypatch != null) {
-                        StaggerSystem.reduceStagger(entitySource, event.getAmount() * 0.8f);
+                        StaggerSystem.reduceStagger(entitySource, event.getAmount() * 0.8f, event.getPlayerPatch().getOriginal(), true);
                     }
 
                     container.getDataManager().setDataSync(LAST_ACTIVE, container.getDataManager().getDataValue(LAST_ACTIVE) - 30, event.getPlayerPatch().getOriginal());

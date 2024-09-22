@@ -28,119 +28,113 @@ import net.minecraftforge.registries.ObjectHolder;
 
 import java.util.List;
 
-@TcorpModElements.ModElement.Tag
-public class MagicBulletArmor extends TcorpModElements.ModElement {
-	@ObjectHolder("tcorp:magic_bullet_cloak")
-	public static final Item body = null;
+public class MagicBulletArmor extends ArmorItem {
 
-	@ObjectHolder("tcorp:magic_bullet_pipe")
-	public static final Item head = null;
-	static String texture = "tcorp:textures/entities/magic_bullet.png";
+	static IArmorMaterial magicBulletArmor = new IArmorMaterial() {
+		@Override
+		public int getDurabilityForSlot(EquipmentSlotType slot) {
+			return new int[]{13, 15, 16, 11}[slot.getIndex()] * 999;
+		}
 
-	public MagicBulletArmor(TcorpModElements instance) {
-		super(instance, 183);
+		@Override
+		public int getDefenseForSlot(EquipmentSlotType slot) {
+			return new int[]{0, 0, 20, 0}[slot.getIndex()];
+		}
+
+		@Override
+		public int getEnchantmentValue() {
+			return 9;
+		}
+
+		@Override
+		public SoundEvent getEquipSound() {
+			return (SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.armor.equip_leather"));
+		}
+
+		@Override
+		public Ingredient getRepairIngredient() {
+			return null;
+		}
+
+		@OnlyIn(Dist.CLIENT)
+		@Override
+		public String getName() {
+			return "magic_bullet";
+		}
+
+		@Override
+		public float getToughness() {
+			return 9f;
+		}
+
+		@Override
+		public float getKnockbackResistance() {
+			return 0.1f;
+		}
+	};
+
+	public MagicBulletArmor(IArmorMaterial p_i48534_1_, EquipmentSlotType p_i48534_2_, Properties p_i48534_3_) {
+		super(p_i48534_1_, p_i48534_2_, p_i48534_3_);
 	}
 
+	// Texture Override
 	@Override
-	public void initElements() {
-		IArmorMaterial armormaterial = new IArmorMaterial() {
-			@Override
-			public int getDurabilityForSlot(EquipmentSlotType slot) {
-				return new int[]{13, 15, 16, 11}[slot.getIndex()] * 999;
-			}
-
-			@Override
-			public int getDefenseForSlot(EquipmentSlotType slot) {
-				return new int[]{0, 0, 20, 0}[slot.getIndex()];
-			}
-
-			@Override
-			public int getEnchantmentValue() {
-				return 9;
-			}
-
-			@Override
-			public SoundEvent getEquipSound() {
-				return (SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.armor.equip_leather"));
-			}
-
-			@Override
-			public Ingredient getRepairIngredient() {
-				return null;
-			}
-
-			@OnlyIn(Dist.CLIENT)
-			@Override
-			public String getName() {
-				return "magic_bullet";
-			}
-
-			@Override
-			public float getToughness() {
-				return 9f;
-			}
-
-			@Override
-			public float getKnockbackResistance() {
-				return 0.1f;
-			}
-		};
-
-		elements.items.add(() -> new ArmorItem(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Item.Properties().tab(ItemGroup.TAB_COMBAT)) {
-			@Override
-			@OnlyIn(Dist.CLIENT)
-			public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
-				BipedModel armorModel = new BipedModel(1);
-				MagicBulletModel m = new MagicBulletModel();
-				armorModel.head = m.Head;
-				armorModel.hat = m.Head;
-				return armorModel;
-			}
-			@Override
-			public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-				return texture;
-			}
-			@Override
-			public float getToughness() {
-				return 0;
-			}
-
-			@Override
-			public int getDefense() {
-				return 0;
-			}
-		}.setRegistryName("magic_bullet_pipe"));
-
-		elements.items.add(() -> new ArmorItem(armormaterial, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT)) {
-			@Override
-			@OnlyIn(Dist.CLIENT)
-			public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
-				BipedModel armorModel = new BipedModel(1);
-				armorModel.head = new MagicBulletModel().Head;
-				armorModel.hat = new MagicBulletModel().Head;
-				armorModel.body = new MagicBulletModel().Body;
-				armorModel.leftArm = new MagicBulletModel().LeftArm;
-				armorModel.rightArm = new MagicBulletModel().RightArm;
-				armorModel.crouching = living.isCrouching();
-				armorModel.riding = defaultModel.riding;
-				armorModel.young = living.isBaby();
-				return armorModel;
-			}
-
-			@Override
-			public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
-				super.appendHoverText(itemstack, world, list, flag);
-				list.add(new StringTextComponent("The cloak of a marksman ever unmatched").withStyle(TextFormatting.BLUE));
-				list.add(new StringTextComponent("[Passive] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent(" Chance to regenerate extra energy").withStyle(TextFormatting.GRAY)));
-				list.add(new StringTextComponent("[Passive] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent(" Increase MAGIC BULLET damage").withStyle(TextFormatting.GRAY)));
-			}
-
-			@Override
-			public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-				return texture;
-			}
-		}.setRegistryName("magic_bullet_cloak"));
+	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
+		return "tcorp:textures/entities/magic_bullet.png";
 	}
+
+	public static Item getArmorForSlot(EquipmentSlotType slot) {
+		switch (slot) {
+			default: return null;
+			case CHEST: return chest;
+			case HEAD: return pipe;
+		}
+	}
+	static Item chest = new MagicBulletArmor(magicBulletArmor, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT)) {
+		@Override
+		@OnlyIn(Dist.CLIENT)
+		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
+			BipedModel armorModel = new BipedModel(1);
+			armorModel.head = new MagicBulletModel().Head;
+			armorModel.hat = new MagicBulletModel().Head;
+			armorModel.body = new MagicBulletModel().Body;
+			armorModel.leftArm = new MagicBulletModel().LeftArm;
+			armorModel.rightArm = new MagicBulletModel().RightArm;
+			armorModel.crouching = living.isCrouching();
+			armorModel.riding = defaultModel.riding;
+			armorModel.young = living.isBaby();
+			return armorModel;
+		}
+
+		@Override
+		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+			super.appendHoverText(itemstack, world, list, flag);
+			list.add(new StringTextComponent("The cloak of a marksman ever unmatched").withStyle(TextFormatting.BLUE));
+			list.add(new StringTextComponent("[Passive] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent(" Chance to regenerate extra energy").withStyle(TextFormatting.GRAY)));
+			list.add(new StringTextComponent("[Passive] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent(" Increase MAGIC BULLET damage").withStyle(TextFormatting.GRAY)));
+		}
+
+	};
+	static Item pipe = new MagicBulletArmor(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Item.Properties().tab(ItemGroup.TAB_COMBAT)) {
+		@Override
+		@OnlyIn(Dist.CLIENT)
+		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
+			BipedModel armorModel = new BipedModel(1);
+			MagicBulletModel m = new MagicBulletModel();
+			armorModel.head = m.Head;
+			armorModel.hat = m.Head;
+			return armorModel;
+		}
+		@Override
+		public float getToughness() {
+			return 0;
+		}
+
+		@Override
+		public int getDefense() {
+			return 0;
+		}
+	};
 
 	// Made with Blockbench 4.7.1
 	// Exported for Minecraft version 1.15 - 1.16 with MCP mappings

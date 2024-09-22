@@ -47,7 +47,7 @@ public class MagicBulletShell {
 			this.gravity = (float) 0.4;
 			this.hasPhysics = false;
 			this.xd = vx * 0.7;
-			this.yd = vy * 0.4 + Math.abs(vy * 0.8);
+			this.yd = vy * 0.2 + Math.abs(vy * 1.2);
 			this.zd = vz * 0.7;
 			this.setSprite(spriteSet.get(world.random));
 		}
@@ -55,7 +55,7 @@ public class MagicBulletShell {
 
 		@Override
 		public IParticleRenderType getRenderType() {
-			return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+			return IParticleRenderType.PARTICLE_SHEET_LIT;
 		}
 
 		@Override

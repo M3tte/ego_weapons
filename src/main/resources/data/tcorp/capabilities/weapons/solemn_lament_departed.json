@@ -1,0 +1,11 @@
+{
+	"attributes":
+	{
+		"common":
+		{
+			"impact":3.5,
+			"max_strikes":2
+		}
+	},
+	"type":"solemn_lament"
+}

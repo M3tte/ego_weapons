@@ -10,7 +10,8 @@
     "PlayerEntityDamageMixin"
   ],
   "client": [
-    "HotbarRenderMixin"
+    "HotbarRenderMixin",
+    "MusicTickerMixin"
   ],
   "minVersion": "0.8"
 }

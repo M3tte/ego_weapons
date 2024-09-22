@@ -20,9 +20,12 @@ public class TCorpEpicFightLoader {
         bus.addListener(TCorpSkills::registerSkills);
         bus.addListener(TCorpCapabilityPresets::register);
 
+        TCorpCategories.ENUM_MANAGER.loadPreemptive(TCorpCategories.class);
+
+        TCorpItems.ITEMS.register(bus);
         TCorpParticleRegistry.PARTICLES.register(bus);
         TCorpModEntities.ENTITIES.register(bus);
 
-        TCorpCategories.ENUM_MANAGER.loadPreemptive(TCorpCategories.class);
+
     }
 }

@@ -1,5 +1,6 @@
 package net.m3tte.tcorp.procedures.legacy;
 
+import net.m3tte.tcorp.TCorpItems;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.item.ItemStack;
@@ -9,7 +10,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Entity;
 
 import net.m3tte.tcorp.particle.DamagefxParticle;
-import net.m3tte.tcorp.item.mimicry.MimicryarmorItem;
+import net.m3tte.tcorp.item.mimicry.MimicryArmor;
 import net.m3tte.tcorp.TcorpModVariables;
 import net.m3tte.tcorp.TcorpMod;
 
@@ -53,7 +54,7 @@ public class MimicryhitentityProcedure {
 			if (source instanceof LivingEntity)
 				((LivingEntity) source)
 						.setHealth((float) (((source instanceof LivingEntity) ? ((LivingEntity) source).getHealth() : -1) + 1.5));
-			if (MimicryarmorItem.body == ((source instanceof LivingEntity)
+			if (TCorpItems.MIMICRY_CHESTPLATE.get() == ((source instanceof LivingEntity)
 					? ((LivingEntity) source).getItemBySlot(EquipmentSlotType.CHEST)
 					: ItemStack.EMPTY).getItem()) {
 				if (source instanceof LivingEntity)

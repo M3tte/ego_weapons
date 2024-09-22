@@ -1,12 +1,12 @@
 package net.m3tte.tcorp.procedures.abilities;
 
+import net.m3tte.tcorp.TCorpItems;
 import net.m3tte.tcorp.TcorpModVariables;
-import net.m3tte.tcorp.item.magic_bullet.MagicBullet;
-import net.m3tte.tcorp.item.mimicry.MimicryItem;
-import net.m3tte.tcorp.item.blackSilence.*;
+import net.m3tte.tcorp.item.blackSilence.weapons.*;
 import net.m3tte.tcorp.procedures.abilities.weaponAbilities.BlackSilenceWeaponAbility;
 import net.m3tte.tcorp.procedures.abilities.weaponAbilities.MagicBulletWeaponAbility;
 import net.m3tte.tcorp.procedures.abilities.weaponAbilities.MimicryWeaponAbility;
+import net.m3tte.tcorp.procedures.abilities.weaponAbilities.SolemnLamentWeaponAbility;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
@@ -34,21 +34,23 @@ public class WeaponAbilityProcedure {
 	public static void setupWeaponAbilities() {
 		weaponAbilities = new HashMap<>();
 		BlackSilenceWeaponAbility bsWeaponAb = new BlackSilenceWeaponAbility();
-		weaponAbilities.put(DurandalItem.block, bsWeaponAb);
-		weaponAbilities.put(ZelkovaaxeItem.block, bsWeaponAb);
-		weaponAbilities.put(ZelkovamaceItem.block, bsWeaponAb);
-		weaponAbilities.put(AtelierlogicpistolsItem.item, bsWeaponAb);
-		weaponAbilities.put(AtelierlogicshotgunItem.item, bsWeaponAb);
-		weaponAbilities.put(WheelsIndustry.item, bsWeaponAb);
-		weaponAbilities.put(CrystalatelierItem.item, bsWeaponAb);
-		weaponAbilities.put(RangaclawItem.item, bsWeaponAb);
-		weaponAbilities.put(RangadaggerItem.item, bsWeaponAb);
-		weaponAbilities.put(OldBoysWorkshop.item, bsWeaponAb);
-		weaponAbilities.put(AllasSpearItem.item, bsWeaponAb);
-		weaponAbilities.put(MookWorkshop.item, bsWeaponAb);
+		weaponAbilities.put(TCorpItems.DURANDAL.get(), bsWeaponAb);
+		weaponAbilities.put(TCorpItems.ZELKOVA_AXE.get(), bsWeaponAb);
+		weaponAbilities.put(TCorpItems.ZELKOVA_MACE.get(), bsWeaponAb);
+		weaponAbilities.put(TCorpItems.ATELIER_LOGIC_PISTOLS.get(), bsWeaponAb);
+		weaponAbilities.put(TCorpItems.ATELIER_LOGIC_SHOTGUN.get(), bsWeaponAb);
+		weaponAbilities.put(TCorpItems.WHEELS_INDUSTRY.get(), bsWeaponAb);
+		weaponAbilities.put(TCorpItems.CRYSTAL_ATELIER.get(), bsWeaponAb);
+		weaponAbilities.put(TCorpItems.RANGA_DAGGER.get(), bsWeaponAb);
+		weaponAbilities.put(TCorpItems.RANGA_CLAW.get(), bsWeaponAb);
+		weaponAbilities.put(TCorpItems.OLD_BOYS_WORKSHOP.get(), bsWeaponAb);
+		weaponAbilities.put(TCorpItems.ALLAS_SPEAR.get(), bsWeaponAb);
+		weaponAbilities.put(TCorpItems.MOOK_WORKSHOP.get(), bsWeaponAb);
 
-		weaponAbilities.put(MimicryItem.item, new MimicryWeaponAbility());
-		weaponAbilities.put(MagicBullet.item, new MagicBulletWeaponAbility());
+		weaponAbilities.put(TCorpItems.MIMICRY.get(), new MimicryWeaponAbility());
+		weaponAbilities.put(TCorpItems.MAGIC_BULLET.get(), new MagicBulletWeaponAbility());
+		weaponAbilities.put(TCorpItems.SOLEMN_LAMENT_WHITE.get(), new SolemnLamentWeaponAbility());
+		weaponAbilities.put(TCorpItems.SOLEMN_LAMENT_BLACK.get(), new SolemnLamentWeaponAbility());
 	}
 
 	public static void executeProcedure(Map<String, Object> dependencies) {

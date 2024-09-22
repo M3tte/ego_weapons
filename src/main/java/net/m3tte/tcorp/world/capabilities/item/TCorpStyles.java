@@ -6,12 +6,15 @@ public enum TCorpStyles implements Style {
 
     FURIOSO(false),
     KALI(false),
+    LEFT_HANDED(true),
+    RIGHT_HANDED(true),
+    DUAL_WIELDED(false),
     KALI_EGO(false);
 
 
     @Override
     public boolean canUseOffhand() {
-        return false;
+        return canUseOffhand;
     }
 
     @Override

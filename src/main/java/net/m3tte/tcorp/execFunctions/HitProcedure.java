@@ -1,11 +1,11 @@
 package net.m3tte.tcorp.execFunctions;
 
+import net.m3tte.tcorp.TCorpItems;
 import net.m3tte.tcorp.TcorpModElements;
 import net.m3tte.tcorp.TcorpModVariables;
 import net.m3tte.tcorp.gameasset.TCorpAnimations;
 import net.m3tte.tcorp.item.CrimsonkimonoItem;
-import net.m3tte.tcorp.item.SuitItem;
-import net.m3tte.tcorp.item.blackSilence.WheelsIndustry;
+import net.m3tte.tcorp.item.blackSilence.weapons.WheelsIndustry;
 import net.m3tte.tcorp.particle.ArmourupparticleParticle;
 import net.m3tte.tcorp.particle.CrimsonfanparticleParticle;
 import net.m3tte.tcorp.potion.MarkedeffectPotionEffect;
@@ -59,7 +59,7 @@ public class HitProcedure {
 						LivingEntity sourceLiving = (LivingEntity) sourceentity;
 
 
-						if (sourceLiving.getItemInHand(Hand.MAIN_HAND).getItem().equals(WheelsIndustry.item)) {
+						if (sourceLiving.getItemInHand(Hand.MAIN_HAND).getItem().equals(TCorpItems.WHEELS_INDUSTRY.get())) {
 							LivingEntityPatch<?> patch = (LivingEntityPatch) living.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, (Direction) null).orElse((LivingEntityPatch) null);
 							if (patch != null) {
 
@@ -139,10 +139,10 @@ public class HitProcedure {
 						PlayerPatch<?> entitypatch = (PlayerPatch<?>) entity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 						// Blacksilence Auto Dodge, has a 30% Chance
-						if (!world.isClientSide() && !player.getCooldowns().isOnCooldown(SuitItem.helmet) && entitypatch.getStamina() > entitypatch.getMaxStamina() * 0.2f) {
+						if (!world.isClientSide() && !player.getCooldowns().isOnCooldown(TCorpItems.PERCEPTION_BLOCKING_MASK.get()) && entitypatch.getStamina() > entitypatch.getMaxStamina() * 0.2f) {
 							if (amount > 6 && living.getRandom().nextFloat() > 0.7) {
 								entitypatch.setStamina(entitypatch.getStamina() - entitypatch.getMaxStamina() * 0.4f);
-								player.getCooldowns().addCooldown(SuitItem.helmet, 240);
+								player.getCooldowns().addCooldown(TCorpItems.PERCEPTION_BLOCKING_MASK.get(), 240);
 								entitypatch.playAnimationSynchronized(TCorpAnimations.BS_DODGE, 0);
 
 								if (dependencies.get("event") != null) {
@@ -154,7 +154,7 @@ public class HitProcedure {
 									}
 								}
 							} else if (amount > 6) {
-								player.getCooldowns().addCooldown(SuitItem.helmet, 60);
+								player.getCooldowns().addCooldown(TCorpItems.PERCEPTION_BLOCKING_MASK.get(), 60);
 							}
 						}
 					}

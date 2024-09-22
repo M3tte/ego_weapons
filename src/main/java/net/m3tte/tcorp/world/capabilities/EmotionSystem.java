@@ -79,7 +79,7 @@ public class EmotionSystem {
      * @param value
      * @return Returns true when emotion level is decreased.
      */
-    public static boolean decreaseEmotionPoints(PlayerEntity player, int value) {
+    public static boolean decreaseEmotionPoints(PlayerEntity player, float value) {
         PlayerVariables playerVariables = player.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables());
         boolean levelChange = false;
         playerVariables.emotionLevelProgress -= value;
@@ -118,17 +118,19 @@ public class EmotionSystem {
         }
 
     }
-
-    public static void handleGuard(PlayerEntity player, float damage, float impact, boolean parried) {
+    public static void handleGuard(PlayerEntity player, float damage, float impact, boolean parried, float staggerMult) {
         float mult = 1;
         if (parried) {
-            StaggerSystem.healStagger(player, impact * 0.4f);
+            StaggerSystem.healStagger(player, impact * 0.8f * staggerMult);
             mult = 1.25f;
         } else {
-            StaggerSystem.reduceStagger(player, impact * 0.8f);
+            StaggerSystem.reduceStagger(player, impact * 0.8f * staggerMult, true);
         }
 
 
-        increaseEmotionPoints(player, (int)(damage*mult*1.3));
+        increaseEmotionPoints(player, (int)(damage*mult*2));
+    }
+    public static void handleGuard(PlayerEntity player, float damage, float impact, boolean parried) {
+        EmotionSystem.handleGuard(player, damage, impact, parried, 1);
     }
 }

@@ -119,6 +119,7 @@ public class TcorpModVariables {
 	public static class MapVariables extends WorldSavedData {
 		public static final String DATA_NAME = "tcorp_mapvars";
 		public String screenoverlaytype = "\"\"";
+		public float globalWarningTension = 0;
 
 		public MapVariables() {
 			super(DATA_NAME);
@@ -131,11 +132,13 @@ public class TcorpModVariables {
 		@Override
 		public void load(CompoundNBT nbt) {
 			screenoverlaytype = nbt.getString("screenoverlaytype");
+			globalWarningTension = nbt.getFloat("globalWarningTension");
 		}
 
 		@Override
 		public CompoundNBT save(CompoundNBT nbt) {
 			nbt.putString("screenoverlaytype", screenoverlaytype);
+			nbt.putFloat("globalWarningTension", globalWarningTension);
 			return nbt;
 		}
 

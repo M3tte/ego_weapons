@@ -1,8 +1,9 @@
 package net.m3tte.tcorp.execFunctions;
 
+import net.m3tte.tcorp.TCorpItems;
 import net.m3tte.tcorp.TCorpSounds;
 import net.m3tte.tcorp.TcorpModVariables;
-import net.m3tte.tcorp.item.blackSilence.AtelierlogicshotgunItem;
+import net.m3tte.tcorp.item.blackSilence.weapons.AtelierlogicshotgunItem;
 import net.m3tte.tcorp.potion.FuriosoPotionEffect;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -111,7 +112,7 @@ public class AtelierCooldownHandler {
 			}
 			capability.syncPlayerVariables(entity);
 			if (entity instanceof PlayerEntity)
-				((PlayerEntity) entity).getCooldowns().addCooldown(AtelierlogicshotgunItem.item, (int) 20);
+				((PlayerEntity) entity).getCooldowns().addCooldown(TCorpItems.ATELIER_LOGIC_SHOTGUN.get(), (int) 20);
 			new Object() {
 				private int ticks = 0;
 				private float waitTicks;

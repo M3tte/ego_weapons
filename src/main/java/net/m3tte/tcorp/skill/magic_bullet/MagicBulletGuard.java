@@ -126,7 +126,7 @@ public class MagicBulletGuard extends EnergizingGuardSkill {
                 event.getPlayerPatch().playSound(EpicFightSounds.NEUTRALIZE_MOBS, 3.0F, 0.0F, 0.1F);
             }
 
-            EmotionSystem.handleGuard(serverPlayer, event.getAmount(), impact, false);
+            EmotionSystem.handleGuard(serverPlayer, event.getAmount(), impact, false, 0.5f);
 
             this.dealEvent(event.getPlayerPatch(), event);
         }

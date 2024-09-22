@@ -74,12 +74,6 @@ public class TcorpMod {
 	}
 
 	@SubscribeEvent
-	public void registerItems(RegistryEvent.Register<Item> event) {
-		event.getRegistry().registerAll(elements.getItems().stream().map(Supplier::get).toArray(Item[]::new));
-	}
-
-
-	@SubscribeEvent
 	public void registerEnchantments(RegistryEvent.Register<Enchantment> event) {
 		event.getRegistry().registerAll(elements.getEnchantments().stream().map(Supplier::get).toArray(Enchantment[]::new));
 	}

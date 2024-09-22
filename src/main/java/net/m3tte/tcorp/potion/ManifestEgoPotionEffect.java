@@ -1,6 +1,7 @@
 
 package net.m3tte.tcorp.potion;
 
+import net.m3tte.tcorp.TCorpItems;
 import net.m3tte.tcorp.TcorpModVariables;
 import net.m3tte.tcorp.gameasset.TCorpAnimations;
 import net.m3tte.tcorp.item.redmist.RedMistEGOSuit;
@@ -127,7 +128,7 @@ public class ManifestEgoPotionEffect {
 			double y = entity.getY();
 			double z = entity.getZ();
 
-			if (!(entity.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(RedMistEGOSuit.body)) || !(entity.getItemBySlot(EquipmentSlotType.LEGS).getItem().equals(RedMistEGOSuit.leggings))) {
+			if (!(entity.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(TCorpItems.RED_MIST_EGO_CHESTPLATE.get())) || !(entity.getItemBySlot(EquipmentSlotType.LEGS).getItem().equals(TCorpItems.RED_MIST_EGO_LEGGINGS.get()))) {
 				entity.removeEffect(ManifestEgoPotionEffect.potion);
 			}
 

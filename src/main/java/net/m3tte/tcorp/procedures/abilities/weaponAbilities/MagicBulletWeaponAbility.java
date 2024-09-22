@@ -1,5 +1,6 @@
 package net.m3tte.tcorp.procedures.abilities.weaponAbilities;
 
+import net.m3tte.tcorp.TCorpItems;
 import net.m3tte.tcorp.TCorpSounds;
 import net.m3tte.tcorp.TcorpModVariables.PlayerVariables;
 import net.m3tte.tcorp.gameasset.TCorpAnimations;
@@ -28,9 +29,6 @@ import static net.m3tte.tcorp.procedures.abilities.AbilityUtils.applyBlipCooldow
 
 public class MagicBulletWeaponAbility extends ItemAbility {
 
-    private boolean isWearingMimicry(PlayerEntity player) {
-        return (player.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(RedMistJacket.body) || player.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(RedMistEGOSuit.body));
-    }
 
 
     @Override
@@ -111,7 +109,7 @@ public class MagicBulletWeaponAbility extends ItemAbility {
 
 
             LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-            player.getCooldowns().addCooldown(MimicryItem.item.getItem(), (int) 20);
+            player.getCooldowns().addCooldown(TCorpItems.MIMICRY.get(), (int) 20);
             playerVars.globalcooldown = 100;
 
 

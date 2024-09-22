@@ -2,11 +2,14 @@
 package net.m3tte.tcorp.command;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import net.m3tte.tcorp.TcorpModVariables;
+import net.m3tte.tcorp.TcorpModVariables.PlayerVariables;
 import net.m3tte.tcorp.procedures.legacy.RefillblipsProcedure;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.FakePlayerFactory;
@@ -25,17 +28,18 @@ public class FillblipsCommand {
 	public static void registerCommands(RegisterCommandsEvent event) {
 		event.getDispatcher().register(LiteralArgumentBuilder.<CommandSource>literal("fillblips").requires(s -> s.hasPermission(4))
 				.then(Commands.argument("name", EntityArgument.player()).executes(arguments -> {
-					ServerWorld world = arguments.getSource().getLevel();
-					double x = arguments.getSource().getPosition().x();
-					double y = arguments.getSource().getPosition().y();
-					double z = arguments.getSource().getPosition().z();
-					Entity entity = arguments.getSource().getEntity();
-					if (entity == null)
-						entity = FakePlayerFactory.getMinecraft(world);
-					Direction direction = entity.getDirection();
 
-					RefillblipsProcedure.executeProcedure(Stream.of(new AbstractMap.SimpleEntry<>("arguments", arguments)).collect(HashMap::new,
-							(_m, _e) -> _m.put(_e.getKey(), _e.getValue()), Map::putAll));
+					System.out.println("Executing");
+					PlayerEntity target = EntityArgument.getPlayer(arguments, "name");
+					System.out.println("Target is: "+target.getName());
+					PlayerVariables vars = target.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY).orElse(new PlayerVariables());
+					System.out.println("Vars is: "+vars);
+					vars.globalcooldown = 0;
+					System.out.println("Cooldown reset");
+					vars.blips = vars.maxblips;
+					System.out.println("Blips reset");
+					vars.syncPlayerVariables(target);
+					System.out.println("Synced");
 					return 0;
 				})));
 	}

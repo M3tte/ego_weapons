@@ -59,4 +59,15 @@ public class TCorpParticleRegistry {
 
     public static final RegistryObject<BasicParticleType> STAGGER = PARTICLES.register("stagger", () -> new BasicParticleType(true));
 
+    public static final RegistryObject<BasicParticleType> SOLEMN_LAMENT_FIRE_DEPARTED = PARTICLES.register("solemn_lament_fire_departed", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> SOLEMN_LAMENT_FIRE_LIVING = PARTICLES.register("solemn_lament_fire_living", () -> new BasicParticleType(true));
+
+    public static final RegistryObject<HitParticleType> SOLEMN_LAMENT_LIVING_HIT = PARTICLES.register("solemn_lament_hit_living", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
+    public static final RegistryObject<HitParticleType> SOLEMN_LAMENT_DEPARTED_HIT = PARTICLES.register("solemn_lament_hit_departed", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
+    public static final RegistryObject<HitParticleType> SOLEMN_LAMENT_BURST_HIT = PARTICLES.register("solemn_lament_burst_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
+
+
+    public static final RegistryObject<BasicParticleType> SOLEMN_LAMENT_LIVING_BUTTERFLY = PARTICLES.register("solemn_lament_living_butterflies", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> SOLEMN_LAMENT_DEPARTED_BUTTERFLY = PARTICLES.register("solemn_lament_departed_butterflies", () -> new BasicParticleType(true));
+
 }

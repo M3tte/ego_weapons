@@ -21,6 +21,7 @@ public enum TCorpCategories implements WeaponCategory {
     WHEELS_INDUSTRY,
     CRYSTAL_ATELIER,
     MIMICRY,
+    SOLEMN_LAMENT,
     MAGIC_BULLET;
 
     final int id;

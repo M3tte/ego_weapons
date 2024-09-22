@@ -5,9 +5,11 @@ import net.m3tte.tcorp.gameasset.TCorpAnimations;
 import net.m3tte.tcorp.network.packages.StaggerPackages;
 import net.m3tte.tcorp.particle.StaggerShardParticle;
 import net.m3tte.tcorp.potion.Staggered;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.CombatRules;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -20,6 +22,7 @@ import yesman.epicfight.world.effect.EpicFightMobEffects;
 import java.util.function.Consumer;
 
 import static net.m3tte.tcorp.TcorpModVariables.PLAYER_VARIABLES_CAPABILITY;
+import static net.m3tte.tcorp.procedures.SharedFunctions.onStaggered;
 
 public class StaggerSystem {
 
@@ -32,14 +35,25 @@ public class StaggerSystem {
             return entity.getPersistentData().getDouble("stagger") > entity.getMaxHealth();
         }
     }
-    public static void reduceStagger(LivingEntity entity, float amnt) {
-        reduceStagger(entity, amnt, (n) -> {});
+
+    public static void reduceStagger(LivingEntity entity, float amnt, Entity source, boolean bypassArmor) {
+        reduceStagger(entity, amnt, (e) -> {
+            if (source instanceof PlayerEntity)
+                onStaggered((PlayerEntity) source, entity);
+        }, bypassArmor);
     }
-    public static void reduceStagger(LivingEntity entity, float amnt, Consumer<?> onStagger) {
+
+    public static void reduceStagger(LivingEntity entity, float amnt, boolean bypassArmor) {
+        reduceStagger(entity, amnt, (n) -> {}, bypassArmor);
+    }
+    public static void reduceStagger(LivingEntity entity, float amnt, Consumer<?> onStagger, boolean bypassArmor) {
         if (entity instanceof PlayerEntity) {
             TcorpModVariables.PlayerVariables entityData = entity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
             entityData.stagger = Math.min(entityData.stagger, entityData.maxStagger);
-            System.out.println("Reducing stagger, threshold is currently at: "+entityData.stagger);
+
+            if (!bypassArmor)
+                amnt = CombatRules.getDamageAfterAbsorb(amnt, entity.getArmorValue(), 0);
+
             entityData.stagger -= amnt;
 
 

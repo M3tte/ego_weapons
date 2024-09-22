@@ -9,6 +9,7 @@ import net.m3tte.tcorp.potion.ILoveYou;
 import net.m3tte.tcorp.potion.Shell;
 import net.m3tte.tcorp.potion.Terror;
 import net.m3tte.tcorp.world.capabilities.EmotionSystem;
+import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
@@ -28,6 +29,7 @@ import static net.m3tte.tcorp.world.capabilities.StaggerSystem.*;
 import static net.m3tte.tcorp.world.capabilities.StaggerSystem.isStaggered;
 
 public class SharedFunctions {
+    public static SimpleSound[] warningSounds = {SimpleSound.forMusic(TCorpSounds.FIRST_WARNING), SimpleSound.forMusic(TCorpSounds.SECOND_WARNING), SimpleSound.forMusic(TCorpSounds.THIRD_WARNING), SimpleSound.forMusic(TCorpSounds.FOURTH_WARNING)};
 
     public static float modifyDamageGeneric(float amount, DamageSource source, LivingEntity self) {
 
@@ -136,10 +138,7 @@ public class SharedFunctions {
                     onStaggered((PlayerEntity) src.getEntity(), self);
 
             } else {
-                reduceStagger(self, amount * 1.3f, (n) -> {
-                    if (src.getEntity() instanceof PlayerEntity)
-                        onStaggered((PlayerEntity) src.getEntity(), self);
-                });
+                reduceStagger(self, amount * 1.3f, src.getEntity(), true);
             }
         } else {
             onKilled(src, self);

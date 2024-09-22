@@ -1,8 +1,5 @@
 package net.m3tte.tcorp.entity.renderer;
 
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
 
@@ -18,7 +15,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 
-import net.m3tte.tcorp.item.blackSilence.AtelierpistolsItem;
+import net.m3tte.tcorp.item.blackSilence.AtelierPistolsBullet;
 
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -27,7 +24,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 public class AtelierpistolsRenderer {
 
 	@OnlyIn(Dist.CLIENT)
-	public static class CustomRender extends EntityRenderer<AtelierpistolsItem.ArrowCustomEntity> {
+	public static class CustomRender extends EntityRenderer<AtelierPistolsBullet.ArrowCustomEntity> {
 		private static final ResourceLocation texture = new ResourceLocation("tcorp:textures/entities/bullet.png");
 
 		public CustomRender(EntityRendererManager renderManager) {
@@ -35,8 +32,8 @@ public class AtelierpistolsRenderer {
 		}
 
 		@Override
-		public void render(AtelierpistolsItem.ArrowCustomEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
-				IRenderTypeBuffer bufferIn, int packedLightIn) {
+		public void render(AtelierPistolsBullet.ArrowCustomEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
+                           IRenderTypeBuffer bufferIn, int packedLightIn) {
 			IVertexBuilder vb = bufferIn.getBuffer(RenderType.entityCutout(this.getTextureLocation(entityIn)));
 			matrixStackIn.pushPose();
 			matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(MathHelper.lerp(partialTicks, entityIn.xRotO, entityIn.xRotO) - 90));
@@ -48,7 +45,7 @@ public class AtelierpistolsRenderer {
 		}
 
 		@Override
-		public ResourceLocation getTextureLocation(AtelierpistolsItem.ArrowCustomEntity p_110775_1_) {
+		public ResourceLocation getTextureLocation(AtelierPistolsBullet.ArrowCustomEntity p_110775_1_) {
 			return texture;
 		}
 

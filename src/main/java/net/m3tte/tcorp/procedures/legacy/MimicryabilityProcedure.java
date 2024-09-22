@@ -1,5 +1,6 @@
 package net.m3tte.tcorp.procedures.legacy;
 
+import net.m3tte.tcorp.TCorpItems;
 import net.m3tte.tcorp.TCorpSounds;
 import net.m3tte.tcorp.TcorpModVariables;
 import net.m3tte.tcorp.gameasset.TCorpAnimations;
@@ -59,7 +60,7 @@ public class MimicryabilityProcedure {
 
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) entity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 		TcorpModVariables.PlayerVariables entityData = entity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
-		((PlayerEntity) entity).getCooldowns().addCooldown(MimicryItem.item.getItem(), (int) 20);
+		((PlayerEntity) entity).getCooldowns().addCooldown(TCorpItems.MIMICRY.get(), (int) 20);
 		entityData.globalcooldown = 20;
 
 		entity.addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 75, 1));

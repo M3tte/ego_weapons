@@ -1,8 +1,9 @@
 package net.m3tte.tcorp.procedures.legacy;
 
+import net.m3tte.tcorp.TCorpItems;
 import net.m3tte.tcorp.TcorpMod;
 import net.m3tte.tcorp.item.SuitItem;
-import net.m3tte.tcorp.item.blackSilence.BlacksilencesuitItem;
+import net.m3tte.tcorp.item.blackSilence.BlackSilenceArmor;
 import net.m3tte.tcorp.particle.BlacksilenceshadowParticle;
 import net.m3tte.tcorp.potion.OrlandoPotionEffect;
 import net.m3tte.tcorp.potion.FuriosoPotionEffect;
@@ -61,9 +62,9 @@ public class BlacksilenceOnEffectActiveTickProcedure {
 					(entity.getZ()), (int) 3, (entity.getBbWidth() / 2.5), (entity.getBbHeight() / 3), (entity.getBbWidth() / 2.5), 0);
 		}
 		if (!(((entity instanceof LivingEntity) ? ((LivingEntity) entity).getItemBySlot(EquipmentSlotType.CHEST) : ItemStack.EMPTY)
-				.getItem() == BlacksilencesuitItem.body)
+				.getItem() == TCorpItems.SUIT_OF_THE_BLACK_SILENCE.get())
 				|| !(((entity instanceof LivingEntity) ? ((LivingEntity) entity).getItemBySlot(EquipmentSlotType.HEAD) : ItemStack.EMPTY)
-						.getItem() == SuitItem.helmet)) {
+						.getItem() == TCorpItems.PERCEPTION_BLOCKING_MASK.get())) {
 			if (world instanceof World && !((World) world).isClientSide) {
 				((World) world).playSound(null, new BlockPos(x, y, z),
 						(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.armor.equip_leather")),

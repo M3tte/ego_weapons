@@ -3,6 +3,7 @@ package net.m3tte.tcorp.item.redmist;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.m3tte.tcorp.TCorpItems;
 import net.m3tte.tcorp.TcorpModElements;
 import net.m3tte.tcorp.item.NoArmorToughnessMaterial;
 import net.m3tte.tcorp.item.SuitItem;
@@ -31,200 +32,163 @@ import net.minecraftforge.registries.ObjectHolder;
 import javax.annotation.Nullable;
 import java.util.List;
 
-@TcorpModElements.ModElement.Tag
-public class RedMistEGOSuit extends TcorpModElements.ModElement {
+public class RedMistEGOSuit extends ArmorItem {
 
-	@ObjectHolder("tcorp:red_mist_ego_helmet")
-	public static final Item helmet = null;
+	static IArmorMaterial armormaterial = new IArmorMaterial() {
 
-	@ObjectHolder("tcorp:red_mist_ego_chestplate")
-	public static final Item body = null;
-	@ObjectHolder("tcorp:red_mist_ego_leggings")
-	public static final Item leggings = null;
+		@Override
+		public int getDurabilityForSlot(EquipmentSlotType p_200896_1_) {
+			return Integer.MAX_VALUE;
+		}
 
-	static String texture = "tcorp:textures/entities/red_mist_ego.png";
+		@Override
+		public int getDefenseForSlot(EquipmentSlotType slot)  {
+			return new int[]{0, 0, 24, 0}[slot.getIndex()];
+		}
 
-	//@ObjectHolder("tcorp:cigarette")
-	//public static final Item head = null;
-	public RedMistEGOSuit(TcorpModElements instance) {
-		super(instance, 69);
+		@Override
+		public int getEnchantmentValue() {
+			return 0;
+		}
+
+
+
+		@Override
+		public SoundEvent getEquipSound() {
+			return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.armor.equip_leather"));
+		}
+
+		@Override
+		public Ingredient getRepairIngredient() {
+			return Ingredient.EMPTY;
+		}
+
+
+		@OnlyIn(Dist.CLIENT)
+		@Override
+		public String getName() {
+			return "kali_ego";
+		}
+
+		@Override
+		public float getToughness() {
+			return 16f;
+		}
+
+
+
+		@Override
+		public float getKnockbackResistance() {
+			return 0.3f;
+		}
+	};
+
+	public RedMistEGOSuit(IArmorMaterial p_i48534_1_, EquipmentSlotType p_i48534_2_, Properties p_i48534_3_) {
+		super(p_i48534_1_, p_i48534_2_, p_i48534_3_);
 	}
 
 	@Override
-	public void initElements() {
-		IArmorMaterial armormaterial = new IArmorMaterial() {
-
-			@Override
-			public int getDurabilityForSlot(EquipmentSlotType p_200896_1_) {
-				return Integer.MAX_VALUE;
-			}
-
-			@Override
-			public int getDefenseForSlot(EquipmentSlotType slot)  {
-				return new int[]{0, 0, 24, 0}[slot.getIndex()];
-			}
-
-			@Override
-			public int getEnchantmentValue() {
-				return 0;
-			}
-
-
-
-			@Override
-			public SoundEvent getEquipSound() {
-				return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.armor.equip_leather"));
-			}
-
-			@Override
-			public Ingredient getRepairIngredient() {
-				return Ingredient.EMPTY;
-			}
-
-
-			@OnlyIn(Dist.CLIENT)
-			@Override
-			public String getName() {
-				return "kali_ego";
-			}
-
-			@Override
-			public float getToughness() {
-				return 16f;
-			}
-
-
-
-			@Override
-			public float getKnockbackResistance() {
-				return 0.3f;
-			}
-		};
-
-
-		elements.items.add(() -> new ArmorItem(armormaterial, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT)) {
-			@Override
-			@OnlyIn(Dist.CLIENT)
-			public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
-				BipedModel armorModel = new BipedModel(1);
-
-				RedMistEGOModel m = new RedMistEGOModel();
-
-				armorModel.head = m.Head;
-				armorModel.body = m.Body;
-				armorModel.leftArm = m.LeftArm;
-				armorModel.rightArm = m.RightArm;
-				armorModel.rightLeg = m.RightLeg;
-				armorModel.leftLeg = m.LeftLeg;
-				armorModel.crouching = living.isCrouching();
-				armorModel.riding = defaultModel.riding;
-				armorModel.young = living.isBaby();
-				return armorModel;
-			}
-
-			@Override
-			public void onArmorTick(ItemStack itemstack, World world, PlayerEntity entity) {
-				if (!entity.hasEffect(ManifestEgoPotionEffect.potion) && entity.getItemBySlot(EquipmentSlotType.CHEST).equals(itemstack)) {
-					entity.setItemSlot(EquipmentSlotType.CHEST, RedMistJacket.body.getDefaultInstance());
-				}
-			}
-
-			@Override
-			public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> list, ITooltipFlag p_77624_4_) {
-				super.appendHoverText(p_77624_1_, p_77624_2_, list, p_77624_4_);
-				list.add(new StringTextComponent("...to Protect"));
-				list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent(" Manifest E.G.O -").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 10E").withStyle(TextFormatting.AQUA)));
-				list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent(" Onrush -").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 3E").withStyle(TextFormatting.AQUA)));
-				list.add(new StringTextComponent("[Passive] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent(" Augment MIMICRY moveset")));
-			}
-
-
-
-			@Override
-			public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-				return texture;
-			}
-		}.setRegistryName("red_mist_ego_chestplate"));
-
-
-		elements.items.add(() -> new ArmorItem(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.LEGS, new Item.Properties().tab(ItemGroup.TAB_COMBAT)) {
-			@Override
-			@OnlyIn(Dist.CLIENT)
-			public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
-				BipedModel armorModel = new BipedModel(1);
-
-				RedMistEGOModel m = new RedMistEGOModel();
-
-				armorModel.body = m.EMPTY;
-				armorModel.rightLeg = m.RightLeg;
-				armorModel.leftLeg = m.LeftLeg;
-				armorModel.crouching = living.isCrouching();
-				armorModel.riding = defaultModel.riding;
-				armorModel.young = living.isBaby();
-				return armorModel;
-			}
-
-			@Override
-			public void onArmorTick(ItemStack itemstack, World world, PlayerEntity entity) {
-				if (!entity.hasEffect(ManifestEgoPotionEffect.potion) && entity.getItemBySlot(EquipmentSlotType.LEGS).equals(itemstack)) {
-					entity.setItemSlot(EquipmentSlotType.LEGS, SuitItem.legs.getDefaultInstance());
-				}
-			}
-
-
-			@Override
-			public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> list, ITooltipFlag p_77624_4_) {
-				super.appendHoverText(p_77624_1_, p_77624_2_, list, p_77624_4_);
-			}
-
-			@Override
-			public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-				return texture;
-			}
-			@Override
-			public float getToughness() {
-				return 0;
-			}
-
-			@Override
-			public int getDefense() {
-				return 0;
-			}
-		}.setRegistryName("red_mist_ego_leggings"));
-		elements.items.add(() -> new ArmorItem(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Item.Properties().tab(ItemGroup.TAB_COMBAT)) {
-			@Override
-			@OnlyIn(Dist.CLIENT)
-			public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
-				BipedModel armorModel = new BipedModel(1);
-				RedMistEGOModel m = new RedMistEGOModel();
-				armorModel.head = m.Head;
-				armorModel.hat = m.Head;
-				armorModel.body = m.Body;
-				return armorModel;
-			}
-
-			@Override
-			public void onArmorTick(ItemStack itemstack, World world, PlayerEntity entity) {
-				if (!entity.hasEffect(ManifestEgoPotionEffect.potion) && entity.getItemBySlot(EquipmentSlotType.HEAD).equals(itemstack)) {
-					entity.inventory.removeItem(itemstack);
-				}
-			}
-
-			@Override
-			public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-				return texture;
-			}
-			@Override
-			public float getToughness() {
-				return 0;
-			}
-
-			@Override
-			public int getDefense() {
-				return 0;
-			}
-		}.setRegistryName("red_mist_ego_helmet"));
+	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
+		return "tcorp:textures/entities/red_mist_ego.png";
 	}
+
+	public static Item getArmorForSlot(EquipmentSlotType slot) {
+		switch (slot) {
+			default: return null;
+			case HEAD: return head;
+			case CHEST: return chest;
+			case LEGS: return legs;
+		}
+	}
+
+	static Item head = new RedMistEGOSuit(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Item.Properties().tab(ItemGroup.TAB_COMBAT)) {
+		@Override
+		@OnlyIn(Dist.CLIENT)
+		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
+			BipedModel armorModel = new BipedModel(1);
+			RedMistEGOModel m = new RedMistEGOModel();
+			armorModel.head = m.Head;
+			armorModel.hat = m.Head;
+			armorModel.body = m.Body;
+			return armorModel;
+		}
+
+		@Override
+		public void onArmorTick(ItemStack itemstack, World world, PlayerEntity entity) {
+			if (!entity.hasEffect(ManifestEgoPotionEffect.potion) && entity.getItemBySlot(EquipmentSlotType.HEAD).equals(itemstack)) {
+				entity.inventory.removeItem(itemstack);
+			}
+		}
+	};
+
+	static Item chest = new RedMistEGOSuit(armormaterial, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT)) {
+		@Override
+		@OnlyIn(Dist.CLIENT)
+		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
+			BipedModel armorModel = new BipedModel(1);
+
+			RedMistEGOModel m = new RedMistEGOModel();
+
+			armorModel.head = m.Head;
+			armorModel.body = m.Body;
+			armorModel.leftArm = m.LeftArm;
+			armorModel.rightArm = m.RightArm;
+			armorModel.rightLeg = m.RightLeg;
+			armorModel.leftLeg = m.LeftLeg;
+			armorModel.crouching = living.isCrouching();
+			armorModel.riding = defaultModel.riding;
+			armorModel.young = living.isBaby();
+			return armorModel;
+		}
+
+		@Override
+		public void onArmorTick(ItemStack itemstack, World world, PlayerEntity entity) {
+			if (!entity.hasEffect(ManifestEgoPotionEffect.potion) && entity.getItemBySlot(EquipmentSlotType.CHEST).equals(itemstack)) {
+				entity.setItemSlot(EquipmentSlotType.CHEST, TCorpItems.JACKET_OF_THE_RED_MIST.get().getDefaultInstance());
+			}
+		}
+
+		@Override
+		public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> list, ITooltipFlag p_77624_4_) {
+			super.appendHoverText(p_77624_1_, p_77624_2_, list, p_77624_4_);
+			list.add(new StringTextComponent("...to Protect"));
+			list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent(" Manifest E.G.O -").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 10E").withStyle(TextFormatting.AQUA)));
+			list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent(" Onrush -").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 3E").withStyle(TextFormatting.AQUA)));
+			list.add(new StringTextComponent("[Passive] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent(" Augment MIMICRY moveset")));
+		}
+	};
+
+	static Item legs = new RedMistEGOSuit(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.LEGS, new Item.Properties().tab(ItemGroup.TAB_COMBAT)) {
+		@Override
+		@OnlyIn(Dist.CLIENT)
+		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
+			BipedModel armorModel = new BipedModel(1);
+
+			RedMistEGOModel m = new RedMistEGOModel();
+
+			armorModel.body = m.EMPTY;
+			armorModel.rightLeg = m.RightLeg;
+			armorModel.leftLeg = m.LeftLeg;
+			armorModel.crouching = living.isCrouching();
+			armorModel.riding = defaultModel.riding;
+			armorModel.young = living.isBaby();
+			return armorModel;
+		}
+
+		@Override
+		public void onArmorTick(ItemStack itemstack, World world, PlayerEntity entity) {
+			if (!entity.hasEffect(ManifestEgoPotionEffect.potion) && entity.getItemBySlot(EquipmentSlotType.LEGS).equals(itemstack)) {
+				entity.setItemSlot(EquipmentSlotType.LEGS, TCorpItems.SUIT_LEGGINGS.get().getDefaultInstance());
+			}
+		}
+
+		@Override
+		public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> list, ITooltipFlag p_77624_4_) {
+			super.appendHoverText(p_77624_1_, p_77624_2_, list, p_77624_4_);
+		}
+	};
+	//@ObjectHolder("tcorp:cigarette")
+	//public static final Item head = null;
 
 	public static class RedMistEGOModel extends EntityModel<Entity> {
 		private final ModelRenderer Head;

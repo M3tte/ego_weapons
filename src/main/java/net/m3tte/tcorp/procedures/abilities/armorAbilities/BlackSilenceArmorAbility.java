@@ -1,5 +1,6 @@
 package net.m3tte.tcorp.procedures.abilities.armorAbilities;
 
+import net.m3tte.tcorp.TCorpItems;
 import net.m3tte.tcorp.TCorpSounds;
 import net.m3tte.tcorp.TcorpModVariables.PlayerVariables;
 import net.m3tte.tcorp.gameasset.TCorpAnimations;
@@ -76,7 +77,7 @@ public class BlackSilenceArmorAbility extends ItemAbility {
         double y = player.getY();
         double z = player.getZ();
 
-        player.inventory.armor.set((int) 3, new ItemStack(SuitItem.helmet));
+        player.inventory.armor.set((int) 3, TCorpItems.PERCEPTION_BLOCKING_MASK.get().getDefaultInstance());
         player.inventory.setChanged();
         if (player.level instanceof ServerWorld) {
             ((ServerWorld) player.level).sendParticles(BlipeffectParticle.particle, x, (y + 1), z, (int) 8, 0.4, 0.6, 0.4, 0);

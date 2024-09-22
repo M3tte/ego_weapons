@@ -54,6 +54,9 @@ public class TcorpModElements {
 		}
 		Collections.sort(elements);
 		elements.forEach(ModElement::initElements);
+		//items.addAll(TCorpItems.items);
+
+
 		MinecraftForge.EVENT_BUS.register(new TcorpModVariables(this));
 	}
 
@@ -76,10 +79,6 @@ public class TcorpModElements {
 
 	public List<Supplier<Block>> getBlocks() {
 		return blocks;
-	}
-
-	public List<Supplier<Item>> getItems() {
-		return items;
 	}
 
 	public List<Supplier<Enchantment>> getEnchantments() {

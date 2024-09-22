@@ -1,5 +1,6 @@
 package net.m3tte.tcorp.procedures.legacy;
 
+import net.m3tte.tcorp.TCorpItems;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -18,7 +19,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.Entity;
 
-import net.m3tte.tcorp.item.blackSilence.AteliershotgunItem;
+import net.m3tte.tcorp.item.blackSilence.AtelierShotgunBullet;
 import net.m3tte.tcorp.TcorpModVariables;
 import net.m3tte.tcorp.TcorpMod;
 
@@ -100,7 +101,7 @@ public class AteliershotguncooldownProcedure {
 				});
 			}
 			if (entity instanceof PlayerEntity)
-				((PlayerEntity) entity).getCooldowns().addCooldown(AteliershotgunItem.block, (int) 40);
+				((PlayerEntity) entity).getCooldowns().addCooldown(TCorpItems.ATELIER_LOGIC_SHOTGUN.get(), (int) 40);
 			new Object() {
 				private int ticks = 0;
 				private float waitTicks;
