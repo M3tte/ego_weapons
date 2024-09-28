@@ -19,13 +19,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.HashMap;
 
 @OnlyIn(Dist.CLIENT)
-public class BlacksilenceswapuiGuiWindow extends ContainerScreen<BlacksilenceswapuiGui.GuiContainerMod> {
+public class BlackSilenceSwapWindow extends ContainerScreen<BlackSilenceSwapGUI.GuiContainerMod> {
 	private World world;
 	private int x, y, z;
 	private PlayerEntity entity;
-	private final static HashMap guistate = BlacksilenceswapuiGui.guistate;
+	private final static HashMap guistate = BlackSilenceSwapGUI.guistate;
 
-	public BlacksilenceswapuiGuiWindow(BlacksilenceswapuiGui.GuiContainerMod container, PlayerInventory inventory, ITextComponent text) {
+	public BlackSilenceSwapWindow(BlackSilenceSwapGUI.GuiContainerMod container, PlayerInventory inventory, ITextComponent text) {
 		super(container, inventory, text);
 		this.world = container.world;
 		this.x = container.x;
@@ -135,8 +135,8 @@ public class BlacksilenceswapuiGuiWindow extends ContainerScreen<Blacksilenceswa
 		// Bottom  ( Durandal )
 		this.addButton(new BlackSilenceButton(this.leftPos + (int)(this.getXSize()/1.95) - 24, this.topPos + (int)(this.getYSize()/1.3), 47, 47, new StringTextComponent(""), e -> {
 			if (true) {
-				TcorpMod.PACKET_HANDLER.sendToServer(new BlacksilenceswapuiGui.ButtonPressedMessage(0, x, y, z));
-				BlacksilenceswapuiGui.handleWeaponSwap(entity, 0);
+				TcorpMod.PACKET_HANDLER.sendToServer(new BlackSilenceSwapGUI.ButtonPressedMessage(0, x, y, z));
+				BlackSilenceSwapGUI.handleWeaponSwap(entity, 0);
 			}
 		}));
 
@@ -144,64 +144,64 @@ public class BlacksilenceswapuiGuiWindow extends ContainerScreen<Blacksilenceswa
 		// Bottom Right ( Atelier Pistol )
 		this.addButton(new BlackSilenceButton(this.leftPos + (int)((this.getXSize()/2)*1.52f)-24, this.topPos + (int)((this.getYSize()/2)*1.83f)-40, 47, 47, new StringTextComponent(""), e -> {
 			if (true) {
-				TcorpMod.PACKET_HANDLER.sendToServer(new BlacksilenceswapuiGui.ButtonPressedMessage(1, x, y, z));
-				BlacksilenceswapuiGui.handleWeaponSwap(entity, 1);
+				TcorpMod.PACKET_HANDLER.sendToServer(new BlackSilenceSwapGUI.ButtonPressedMessage(1, x, y, z));
+				BlackSilenceSwapGUI.handleWeaponSwap(entity, 1);
 			}
 		}));
 
 		// Bottom Left ( Atelier Shotgun )
 		this.addButton(new BlackSilenceButton(this.leftPos + (int)((this.getXSize()/2)*0.55f)-25, this.topPos + (int)((this.getYSize()/2)*1.83f)-40, 47, 47, new StringTextComponent(""), e -> {
 			if (true) {
-				TcorpMod.PACKET_HANDLER.sendToServer(new BlacksilenceswapuiGui.ButtonPressedMessage(9, x, y, z));
-				BlacksilenceswapuiGui.handleWeaponSwap(entity, 9);
+				TcorpMod.PACKET_HANDLER.sendToServer(new BlackSilenceSwapGUI.ButtonPressedMessage(9, x, y, z));
+				BlackSilenceSwapGUI.handleWeaponSwap(entity, 9);
 			}
 		}));
 
 		// Lower Middle Right ( Allas Workshop )
 		this.addButton(new BlackSilenceButton(this.leftPos + (int)((this.getXSize()/2)*1.75f)-24, this.topPos + (int)((this.getYSize()/2)*1.4f)-40, 47, 47, new StringTextComponent(""), e -> {
 			if (true) {
-				TcorpMod.PACKET_HANDLER.sendToServer(new BlacksilenceswapuiGui.ButtonPressedMessage(2, x, y, z));
-				BlacksilenceswapuiGui.handleWeaponSwap(entity, 2);
+				TcorpMod.PACKET_HANDLER.sendToServer(new BlackSilenceSwapGUI.ButtonPressedMessage(2, x, y, z));
+				BlackSilenceSwapGUI.handleWeaponSwap(entity, 2);
 			}
 		}));
 
 		// Upper Middle Right ( Old Boys Workshop )
 		this.addButton(new BlackSilenceButton(this.leftPos + (int)((this.getXSize()/2)*1.75f)-24, this.topPos + (int)((this.getYSize()/2)*0.85f)-40, 47, 47, new StringTextComponent(""), e -> {
 			if (true) {
-				TcorpMod.PACKET_HANDLER.sendToServer(new BlacksilenceswapuiGui.ButtonPressedMessage(3, x, y, z));
-				BlacksilenceswapuiGui.handleWeaponSwap(entity, 3);
+				TcorpMod.PACKET_HANDLER.sendToServer(new BlackSilenceSwapGUI.ButtonPressedMessage(3, x, y, z));
+				BlackSilenceSwapGUI.handleWeaponSwap(entity, 3);
 			}
 		}));
 
 		// Top Right ( Mook Workshop )
 		this.addButton(new BlackSilenceButton(this.leftPos + (int)((this.getXSize()/2)*1.52f)-24, this.topPos + (int)((this.getYSize()/2)*0.42f)-40, 47, 47, new StringTextComponent(""), e -> {
 			if (true) {
-				TcorpMod.PACKET_HANDLER.sendToServer(new BlacksilenceswapuiGui.ButtonPressedMessage(4, x, y, z));
-				BlacksilenceswapuiGui.handleWeaponSwap(entity, 4);
+				TcorpMod.PACKET_HANDLER.sendToServer(new BlackSilenceSwapGUI.ButtonPressedMessage(4, x, y, z));
+				BlackSilenceSwapGUI.handleWeaponSwap(entity, 4);
 			}
 		}));
 
 		// Top ( Ranga Workshop )
 		this.addButton(new BlackSilenceButton(this.leftPos + (int)(this.getXSize()/1.95) - 24, this.topPos - 17, 47, 47, new StringTextComponent(""), e -> {
 			if (true) {
-				TcorpMod.PACKET_HANDLER.sendToServer(new BlacksilenceswapuiGui.ButtonPressedMessage(5, x, y, z));
-				BlacksilenceswapuiGui.handleWeaponSwap(entity, 5);
+				TcorpMod.PACKET_HANDLER.sendToServer(new BlackSilenceSwapGUI.ButtonPressedMessage(5, x, y, z));
+				BlackSilenceSwapGUI.handleWeaponSwap(entity, 5);
 			}
 		}));
 
 		// Top Left ( Zelkova ) (int)((this.getXSize()/2)*0.55f)-16, (int)((this.getYSize()/2)*0.42f)-32,
 		this.addButton(new BlackSilenceButton(this.leftPos + (int)((this.getXSize()/2)*0.55f)-25, this.topPos + (int)((this.getYSize()/2)*0.42f)-40, 47, 47, new StringTextComponent(""), e -> {
 			if (true) {
-				TcorpMod.PACKET_HANDLER.sendToServer(new BlacksilenceswapuiGui.ButtonPressedMessage(6, x, y, z));
-				BlacksilenceswapuiGui.handleWeaponSwap(entity, 6);
+				TcorpMod.PACKET_HANDLER.sendToServer(new BlackSilenceSwapGUI.ButtonPressedMessage(6, x, y, z));
+				BlackSilenceSwapGUI.handleWeaponSwap(entity, 6);
 			}
 		}));
 
 		// Upper Middle Left ( Wheels ) (int)((this.getXSize()/2)*0.55f)-16, (int)((this.getYSize()/2)*0.42f)-32,
 		this.addButton(new BlackSilenceButton(this.leftPos + (int)((this.getXSize()/2)*0.31f)-25, this.topPos + (int)((this.getYSize()/2)*0.85f)-40, 47, 47, new StringTextComponent(""), e -> {
 			if (true) {
-				TcorpMod.PACKET_HANDLER.sendToServer(new BlacksilenceswapuiGui.ButtonPressedMessage(7, x, y, z));
-				BlacksilenceswapuiGui.handleWeaponSwap(entity, 7);
+				TcorpMod.PACKET_HANDLER.sendToServer(new BlackSilenceSwapGUI.ButtonPressedMessage(7, x, y, z));
+				BlackSilenceSwapGUI.handleWeaponSwap(entity, 7);
 			}
 		}));
 
@@ -209,8 +209,8 @@ public class BlacksilenceswapuiGuiWindow extends ContainerScreen<Blacksilenceswa
 		// (int)((this.getXSize()/2)*1.75f)-23, this.topPos + (int)((this.getYSize()/2)*1.4f)-40,
 		this.addButton(new BlackSilenceButton(this.leftPos + (int)((this.getXSize()/2)*0.31f)-25, this.topPos + (int)((this.getYSize()/2)*1.4f)-40, 47, 47, new StringTextComponent(""), e -> {
 			if (true) {
-				TcorpMod.PACKET_HANDLER.sendToServer(new BlacksilenceswapuiGui.ButtonPressedMessage(8, x, y, z));
-				BlacksilenceswapuiGui.handleWeaponSwap(entity, 8);
+				TcorpMod.PACKET_HANDLER.sendToServer(new BlackSilenceSwapGUI.ButtonPressedMessage(8, x, y, z));
+				BlackSilenceSwapGUI.handleWeaponSwap(entity, 8);
 			}
 		}));
 	}

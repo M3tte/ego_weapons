@@ -35,8 +35,6 @@ public class SwapFiringModeKeyBinding extends TcorpModElements.ModElement {
 
 	public SwapFiringModeKeyBinding(TcorpModElements instance) {
 		super(instance, 200);
-		elements.addNetworkMessage(KeyBindingPressedMessage.class, KeyBindingPressedMessage::buffer, KeyBindingPressedMessage::new,
-				KeyBindingPressedMessage::handler);
 	}
 
 	@Override

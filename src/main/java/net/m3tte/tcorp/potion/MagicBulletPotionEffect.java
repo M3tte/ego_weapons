@@ -23,7 +23,7 @@ public class MagicBulletPotionEffect {
 	public static final Effect potion = null;
 
 	public static Effect get() {
-		Objects.requireNonNull(potion, () -> "Registry Object not present: ILOVEYOU");
+		Objects.requireNonNull(potion, () -> "Registry Object not present: MAGIC BULLET");
 		return potion;
 	}
 

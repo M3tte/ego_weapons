@@ -45,8 +45,11 @@ public class TcorpModElements {
 			for (ModFileScanData.AnnotationData annotationData : annotations) {
 				if (annotationData.getAnnotationType().getClassName().equals(ModElement.Tag.class.getName())) {
 					Class<?> clazz = Class.forName(annotationData.getClassType().getClassName());
-					if (clazz.getSuperclass() == ModElement.class)
+					if (clazz.getSuperclass() == ModElement.class) {
+						System.out.println("Added mod element: "+clazz);
 						elements.add((ModElement) clazz.getConstructor(this.getClass()).newInstance(this));
+					}
+
 				}
 			}
 		} catch (Exception e) {
@@ -57,7 +60,7 @@ public class TcorpModElements {
 		//items.addAll(TCorpItems.items);
 
 
-		MinecraftForge.EVENT_BUS.register(new TcorpModVariables(this));
+		//MinecraftForge.EVENT_BUS.register(new TcorpModVariables(this));
 	}
 
 	public void registerSounds(RegistryEvent.Register<net.minecraft.util.SoundEvent> event) {
@@ -67,7 +70,7 @@ public class TcorpModElements {
 
 	private int messageID = 0;
 
-	public <T> void addNetworkMessage(Class<T> messageType, BiConsumer<T, PacketBuffer> encoder, Function<PacketBuffer, T> decoder,
+	private <T> void addNetworkMessage(Class<T> messageType, BiConsumer<T, PacketBuffer> encoder, Function<PacketBuffer, T> decoder,
 			BiConsumer<T, Supplier<NetworkEvent.Context>> messageConsumer) {
 		TcorpMod.PACKET_HANDLER.registerMessage(messageID, messageType, encoder, decoder, messageConsumer);
 		messageID++;

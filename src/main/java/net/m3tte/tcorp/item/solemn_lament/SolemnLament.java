@@ -17,6 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
@@ -86,6 +87,8 @@ public class SolemnLament extends SwordItem {
 			}
 
 			if (currentanim.getId() == TCorpAnimations.SOLEMN_LAMENT_SPECIAL_ATTACK.getId()) {
+
+
 				if (!sourceentity.getPersistentData().contains("solemnLamentChargeHit")) {
 					sourceentity.getPersistentData().putBoolean("solemnLamentChargeHit", true);
 					entity.level.playSound((PlayerEntity) null, entity.getX(), entity.getY(), entity.getZ(),
@@ -101,6 +104,13 @@ public class SolemnLament extends SwordItem {
 
 				if (livingCount > 0) {
 					StaggerSystem.reduceStagger(entity, 2f * livingCount, sourceentity, false);
+					if (sourceentity.getEffect(SolemnLamentEffects.getLiving()).getDuration() > 3) {
+						sourceentity.removeEffect(SolemnLamentEffects.getLiving());
+						sourceentity.addEffect(new EffectInstance(SolemnLamentEffects.getLiving(), 3, livingCount-1));
+					}
+
+
+
 					if (entity instanceof PlayerEntity) {
 						SanitySystem.damageSanity((PlayerEntity) entity, 1f * livingCount);
 					}
@@ -108,7 +118,12 @@ public class SolemnLament extends SwordItem {
 
 				if (departedCount > 0) {
 					entity.hurt(DamageSource.OUT_OF_WORLD, 2f * departedCount);
+					if (sourceentity.getEffect(SolemnLamentEffects.getDeparted()).getDuration() > 3) {
+						sourceentity.removeEffect(SolemnLamentEffects.getDeparted());
+						sourceentity.addEffect(new EffectInstance(SolemnLamentEffects.getDeparted(), 3, departedCount - 1));
+					}
 				}
+
 				if (!sourceentity.getPersistentData().contains("solemnLamentChargeStaggered") && (StaggerSystem.isStaggered(entity) || !entity.isAlive())) {
 					sourceentity.getPersistentData().putBoolean("solemnLamentChargeStaggered", true);
 					entity.level.playSound((PlayerEntity) null, entity.getX(), entity.getY(), entity.getZ(),

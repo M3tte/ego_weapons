@@ -17,12 +17,13 @@
  */
 package net.m3tte.tcorp;
 
-import net.m3tte.tcorp.entity.renderer.AtelierpistolsRenderer;
 import net.m3tte.tcorp.event.ModelRegisterHandler;
+import net.m3tte.tcorp.network.packages.PackageRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -32,11 +33,14 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 @Mod("tcorp")
@@ -56,8 +60,10 @@ public class TcorpMod {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::init);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientLoad);
 		TCorpEpicFightLoader.registerStuffs(FMLJavaModLoadingContext.get().getModEventBus());
-		MinecraftForge.EVENT_BUS.register(new TcorpModFMLBusEvents(this));
-
+		TCorpGuiElements.register(FMLJavaModLoadingContext.get().getModEventBus());
+		MinecraftForge.EVENT_BUS.register(new TcorpModFMLBusEvents(this)); // Modbusevents
+		MinecraftForge.EVENT_BUS.register(new TcorpModVariables()); // Dynamic variable registry
+		MinecraftForge.EVENT_BUS.register(new PackageRegistry()); // Network packages
 	}
 
 	private void init(FMLCommonSetupEvent event) {
@@ -66,6 +72,7 @@ public class TcorpMod {
 
 	public void clientLoad(FMLClientSetupEvent event) {
 		elements.getElements().forEach(element -> element.clientLoad(event));
+		TCorpGuiElements.registerClient();
 	}
 
 	@SubscribeEvent
@@ -82,6 +89,7 @@ public class TcorpMod {
 	public void registerSounds(RegistryEvent.Register<net.minecraft.util.SoundEvent> event) {
 		elements.registerSounds(event);
 	}
+
 
 	private static class TcorpModFMLBusEvents {
 		private final TcorpMod parent;

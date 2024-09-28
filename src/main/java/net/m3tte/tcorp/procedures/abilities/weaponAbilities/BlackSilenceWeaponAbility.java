@@ -3,7 +3,7 @@ package net.m3tte.tcorp.procedures.abilities.weaponAbilities;
 import io.netty.buffer.Unpooled;
 import net.m3tte.tcorp.TcorpModVariables.PlayerVariables;
 import net.m3tte.tcorp.execFunctions.SwapWeapon;
-import net.m3tte.tcorp.gui.BlacksilenceswapuiGui;
+import net.m3tte.tcorp.gui.BlackSilenceSwapGUI;
 import net.m3tte.tcorp.procedures.abilities.AbilityTier;
 import net.m3tte.tcorp.procedures.abilities.AbilityUtils;
 import net.m3tte.tcorp.procedures.abilities.ItemAbility;
@@ -61,7 +61,7 @@ public class BlackSilenceWeaponAbility extends ItemAbility {
 
                         @Override
                         public Container createMenu(int id, PlayerInventory inventory, PlayerEntity player) {
-                            return new BlacksilenceswapuiGui.GuiContainerMod(id, inventory, new PacketBuffer(Unpooled.buffer()).writeBlockPos(_bpos));
+                            return new BlackSilenceSwapGUI.GuiContainerMod(id, inventory, new PacketBuffer(Unpooled.buffer()).writeBlockPos(_bpos));
                         }
                     }, _bpos);
                 }

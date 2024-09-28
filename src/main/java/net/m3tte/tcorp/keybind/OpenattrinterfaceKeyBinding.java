@@ -35,8 +35,6 @@ public class OpenattrinterfaceKeyBinding extends TcorpModElements.ModElement {
 
 	public OpenattrinterfaceKeyBinding(TcorpModElements instance) {
 		super(instance, 105);
-		elements.addNetworkMessage(KeyBindingPressedMessage.class, KeyBindingPressedMessage::buffer, KeyBindingPressedMessage::new,
-				KeyBindingPressedMessage::handler);
 	}
 
 	@Override

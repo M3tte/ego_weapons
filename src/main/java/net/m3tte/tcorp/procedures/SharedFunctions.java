@@ -1,14 +1,17 @@
 package net.m3tte.tcorp.procedures;
 
 import jdk.nashorn.internal.codegen.CompilerConstants;
+import net.m3tte.tcorp.TCorpItems;
+import net.m3tte.tcorp.TCorpParticleRegistry;
 import net.m3tte.tcorp.TCorpSounds;
 import net.m3tte.tcorp.TcorpMod;
 import net.m3tte.tcorp.gameasset.TCorpAnimations;
 import net.m3tte.tcorp.network.packages.AbilityPackages;
-import net.m3tte.tcorp.potion.ILoveYou;
-import net.m3tte.tcorp.potion.Shell;
-import net.m3tte.tcorp.potion.Terror;
+import net.m3tte.tcorp.potion.*;
 import net.m3tte.tcorp.world.capabilities.EmotionSystem;
+import net.m3tte.tcorp.world.capabilities.SanitySystem;
+import net.m3tte.tcorp.world.capabilities.StaggerSystem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -131,6 +134,17 @@ public class SharedFunctions {
         if (src == null)
             return;
 
+        if (src.getEntity() instanceof LivingEntity) {
+            if (((LivingEntity) src.getEntity()).hasEffect(EthernalRestPotionEffect.get()) && !(TCorpItems.SOLEMN_LAMENT_WHITE.get().equals(((LivingEntity) src.getEntity()).getMainHandItem().getItem()))) {
+
+                self.hurt(DamageSource.OUT_OF_WORLD, 2);
+                StaggerSystem.reduceStagger(self, 5, false);
+                if (self instanceof PlayerEntity)
+                    SanitySystem.damageSanity((PlayerEntity) self, 2.5f);
+
+            }
+        }
+
         if (self.isAlive() && self.getHealth() > amount) {
 
             if (isStaggered(self)) {
@@ -144,8 +158,10 @@ public class SharedFunctions {
             onKilled(src, self);
         }
 
-
+        
     }
+
+
 
     public static void increaseSkillResource(DamageSource src, PlayerEntity plr, float amount) {
 

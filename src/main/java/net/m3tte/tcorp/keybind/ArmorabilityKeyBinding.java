@@ -35,8 +35,7 @@ public class ArmorabilityKeyBinding extends TcorpModElements.ModElement {
 
 	public ArmorabilityKeyBinding(TcorpModElements instance) {
 		super(instance, 23);
-		elements.addNetworkMessage(KeyBindingPressedMessage.class, KeyBindingPressedMessage::buffer, KeyBindingPressedMessage::new,
-				KeyBindingPressedMessage::handler);
+
 	}
 
 	@Override

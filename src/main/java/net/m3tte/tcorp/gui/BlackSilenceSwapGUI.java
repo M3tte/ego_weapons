@@ -1,9 +1,7 @@
 
 package net.m3tte.tcorp.gui;
 
-import net.m3tte.tcorp.TcorpModElements;
 import net.m3tte.tcorp.execFunctions.SwapWeapon;
-import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -12,12 +10,9 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DeferredWorkQueue;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.network.IContainerFactory;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.items.IItemHandler;
@@ -27,19 +22,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-@TcorpModElements.ModElement.Tag
-public class BlacksilenceswapuiGui extends TcorpModElements.ModElement {
+public class BlackSilenceSwapGUI {
 	public static HashMap guistate = new HashMap();
 	private static ContainerType<GuiContainerMod> containerType = null;
 
-	public BlacksilenceswapuiGui(TcorpModElements instance) {
-		super(instance, 208);
-		elements.addNetworkMessage(ButtonPressedMessage.class, ButtonPressedMessage::buffer, ButtonPressedMessage::new,
-				ButtonPressedMessage::handler);
-		elements.addNetworkMessage(GUISlotChangedMessage.class, GUISlotChangedMessage::buffer, GUISlotChangedMessage::new,
-				GUISlotChangedMessage::handler);
+	public static void register(IEventBus bus) {
 		containerType = new ContainerType<>(new GuiContainerModFactory());
-		FMLJavaModLoadingContext.get().getModEventBus().register(new ContainerRegisterHandler());
+		bus.register(new ContainerRegisterHandler());
 	}
 
 	private static class ContainerRegisterHandler {
@@ -49,9 +38,8 @@ public class BlacksilenceswapuiGui extends TcorpModElements.ModElement {
 		}
 	}
 
-	@OnlyIn(Dist.CLIENT)
-	public void initElements() {
-		DeferredWorkQueue.runLater(() -> ScreenManager.register(containerType, BlacksilenceswapuiGuiWindow::new));
+	public static ContainerType<GuiContainerMod> getContainerType() {
+		return containerType;
 	}
 
 	public static class GuiContainerModFactory implements IContainerFactory {

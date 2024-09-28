@@ -1630,8 +1630,8 @@ public class TCorpAnimations {
 
         events[1] = StaticAnimation.Event.create(timeEnd, (entitypatch) -> {
             if (entitypatch.getOriginal().getPersistentData().contains("solemnLamentChargeHit")) {
-                entitypatch.getOriginal().removeEffect(SolemnLamentEffects.getDeparted());
-                entitypatch.getOriginal().removeEffect(SolemnLamentEffects.getLiving());
+                //entitypatch.getOriginal().removeEffect(SolemnLamentEffects.getDeparted());
+                //entitypatch.getOriginal().removeEffect(SolemnLamentEffects.getLiving());
             }
 
             if (entitypatch.getOriginal().getPersistentData().contains("solemnLamentChargeStaggered"))
@@ -2523,13 +2523,15 @@ public class TCorpAnimations {
                     SanitySystem.damageSanity((PlayerEntity) entity, ampl * 1.5f);
                     MagicBulletProjectile.shoot(entity, ampl-1, false);
                 } else {
-                    ampl--;
-                    MagicBulletProjectile.shoot(entity, ampl-1, true);
+                    if (ampl > 1) {
+                        MagicBulletProjectile.shoot(entity, ampl-2, true);
+                    }
+
                     if (world instanceof ServerWorld) {
                         ((ServerWorld) world).sendParticles(TCorpParticleRegistry.MAGIC_BULLET_IMPACT_HIT.get(), (entity.getX()), (entity.getY()),
                                 (entity.getZ()), (int) 1, (entity.getBbWidth() / 7), (entity.getBbHeight() / 7), (entity.getBbWidth() / 7), 0);
                     }
-                    entity.hurt(DamageSource.playerAttack((PlayerEntity) entity).setMagic(), (7 + ampl) * 1.8f);
+                    entity.hurt(DamageSource.playerAttack((PlayerEntity) entity).setMagic(), (7 + ampl) * 1.4f);
                 }
             } else {
                 MagicBulletProjectile.shoot(entity, ampl-1, false);
@@ -2588,19 +2590,22 @@ public class TCorpAnimations {
                     SanitySystem.damageSanity((PlayerEntity) entity, ampl * 1.5f);
                     MagicBulletProjectile.shoot(entity, ampl-1, false);
                 } else {
-                    ampl--;
-                    MagicBulletProjectile.shoot(entity, ampl-1, true);
+                    if (ampl > 1) {
+                        MagicBulletProjectile.shoot(entity, ampl-2, true);
+                    }
+
                     if (world instanceof ServerWorld) {
                         ((ServerWorld) world).sendParticles(TCorpParticleRegistry.MAGIC_BULLET_IMPACT_HIT.get(), (entity.getX()), (entity.getY()),
                                 (entity.getZ()), (int) 1, (entity.getBbWidth() / 7), (entity.getBbHeight() / 7), (entity.getBbWidth() / 7), 0);
                     }
-                    entity.hurt(DamageSource.playerAttack((PlayerEntity) entity).setMagic(), (7 + ampl) * 1.8f);
+                    entity.hurt(DamageSource.playerAttack((PlayerEntity) entity).setMagic(), (7 + ampl) * 1.4f);
                 }
             } else {
                 MagicBulletProjectile.shoot(entity, ampl-1, false);
             }
-
+            System.out.println("Amplifier is: "+ampl);
             if (ampl >= 7) {
+                System.out.println("Resetting ampl");
                 entity.removeEffect(MagicBulletPotionEffect.get());
 
                 if (entitypatch instanceof PlayerPatch<?>) {

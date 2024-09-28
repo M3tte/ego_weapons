@@ -34,8 +34,8 @@ import net.minecraft.client.Minecraft;
 import java.util.function.Supplier;
 
 public class TcorpModVariables {
-	public TcorpModVariables(TcorpModElements elements) {
-		elements.addNetworkMessage(WorldSavedDataSyncMessage.class, WorldSavedDataSyncMessage::buffer, WorldSavedDataSyncMessage::new,
+	public TcorpModVariables() {
+		/*elements.addNetworkMessage(WorldSavedDataSyncMessage.class, WorldSavedDataSyncMessage::buffer, WorldSavedDataSyncMessage::new,
 				WorldSavedDataSyncMessage::handler);
 		elements.addNetworkMessage(PlayerVariablesSyncMessage.class, PlayerVariablesSyncMessage::buffer, PlayerVariablesSyncMessage::new,
 				PlayerVariablesSyncMessage::handler);
@@ -46,7 +46,7 @@ public class TcorpModVariables {
 		elements.addNetworkMessage(SendStaggerMessage.class, SendStaggerMessage::buffer, SendStaggerMessage::new,
 				SendStaggerMessage::handler);
 		elements.addNetworkMessage(AbilityPackages.SyncOnrushData.class, AbilityPackages.SyncOnrushData::buffer, AbilityPackages.SyncOnrushData::new,
-				AbilityPackages.SyncOnrushData::handler);
+				AbilityPackages.SyncOnrushData::handler);*/
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::init);
 	}
 

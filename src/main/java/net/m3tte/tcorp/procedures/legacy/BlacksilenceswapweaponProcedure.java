@@ -4,7 +4,7 @@ import io.netty.buffer.Unpooled;
 import net.m3tte.tcorp.TcorpMod;
 import net.m3tte.tcorp.TcorpModVariables;
 import net.m3tte.tcorp.execFunctions.SwapWeapon;
-import net.m3tte.tcorp.gui.BlacksilenceswapuiGui;
+import net.m3tte.tcorp.gui.BlackSilenceSwapGUI;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -68,7 +68,7 @@ public class BlacksilenceswapweaponProcedure {
 
 						@Override
 						public Container createMenu(int id, PlayerInventory inventory, PlayerEntity player) {
-							return new BlacksilenceswapuiGui.GuiContainerMod(id, inventory, new PacketBuffer(Unpooled.buffer()).writeBlockPos(_bpos));
+							return new BlackSilenceSwapGUI.GuiContainerMod(id, inventory, new PacketBuffer(Unpooled.buffer()).writeBlockPos(_bpos));
 						}
 					}, _bpos);
 				}
