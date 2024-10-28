@@ -24,6 +24,9 @@ import net.m3tte.tcorp.skill.red_mist.RedMistActiveGuard;
 import net.m3tte.tcorp.skill.red_mist.RedMistBlockable;
 import net.m3tte.tcorp.skill.solemnLament.SolemnLamentActiveGuard;
 import net.m3tte.tcorp.skill.solemnLament.SolemnLamentPassive;
+import net.m3tte.tcorp.skill.sunshower.SunshowerActiveGuard;
+import net.m3tte.tcorp.skill.sunshower.SunshowerPassive;
+import net.m3tte.tcorp.skill.sunshower.SunshowerPuddleStomp;
 import net.minecraft.util.ResourceLocation;
 import yesman.epicfight.api.animation.property.AnimationProperty.AttackPhaseProperty;
 import yesman.epicfight.api.forgeevent.SkillRegistryEvent;
@@ -83,6 +86,10 @@ public class TCorpSkills {
 
     public static Skill SOLEMN_LAMENT_PASSIVE;
     public static Skill SOLEMN_LAMENT_GUARD;
+
+    public static Skill SUNSHOWER_PASSIVE;
+    public static Skill SUNSHOWER_GUARD;
+    public static Skill SUNSHOWER_PUDDLE_STOMP;
     public TCorpSkills() {
     }
 
@@ -194,6 +201,12 @@ public class TCorpSkills {
         SOLEMN_LAMENT_GUARD =event.registerSkill(new SolemnLamentActiveGuard(SolemnLamentActiveGuard.createBuilder(new ResourceLocation(TcorpMod.MODID, "solemn_lament_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
 
         SOLEMN_LAMENT_PASSIVE = event.registerSkill(new SolemnLamentPassive(Skill.createBuilder(new ResourceLocation(TcorpMod.MODID, "solemn_lament_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
+
+        SUNSHOWER_GUARD =event.registerSkill(new SunshowerActiveGuard(SunshowerActiveGuard.createBuilder(new ResourceLocation(TcorpMod.MODID, "sunshower_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
+
+        SUNSHOWER_PASSIVE = event.registerSkill(new SunshowerPassive(Skill.createBuilder(new ResourceLocation(TcorpMod.MODID, "sunshower_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
+        SUNSHOWER_PUDDLE_STOMP = event.registerSkill(new SunshowerPuddleStomp(SpecialAttackSkill.createBuilder(new ResourceLocation(TcorpMod.MODID, "puddle_stomp")).setConsumption(40.0F)), false);
+
 
     }
 }

@@ -1,4 +1,103 @@
 {
+  "sunshower.counter.1": {
+    "category": "player",
+    "subtitle": "sunshower.counter",
+    "sounds": [
+      {
+        "name": "tcorp:sunshower/counter_1"
+      }
+    ]
+  },
+  "sunshower.counter.2": {
+    "category": "player",
+    "subtitle": "sunshower.counter",
+    "sounds": [
+      {
+        "name": "tcorp:sunshower/counter_2"
+      }
+    ]
+  },
+  "sunshower.spread_out.1": {
+    "category": "player",
+    "subtitle": "sunshower.spread_out",
+    "sounds": [
+      {
+        "name": "tcorp:sunshower/spread_out_1"
+      }
+    ]
+  },
+  "sunshower.spread_out.2": {
+    "category": "player",
+    "subtitle": "sunshower.spread_out",
+    "sounds": [
+      {
+        "name": "tcorp:sunshower/spread_out_2"
+      }
+    ]
+  },
+  "sunshower.spread_out.3": {
+    "category": "player",
+    "subtitle": "sunshower.spread_out",
+    "sounds": [
+      {
+        "name": "tcorp:sunshower/spread_out_3"
+      }
+    ]
+  },
+  "sunshower.puddle_stomp.1": {
+    "category": "player",
+    "subtitle": "sunshower.puddle_stomp",
+    "sounds": [
+      {
+        "name": "tcorp:sunshower/puddle_stomp_1"
+      }
+    ]
+  },
+  "sunshower.puddle_stomp.2": {
+    "category": "player",
+    "subtitle": "sunshower.puddle_stomp",
+    "sounds": [
+      {
+        "name": "tcorp:sunshower/puddle_stomp_2"
+      }
+    ]
+  },
+  "sunshower.puddle_stomp.3": {
+    "category": "player",
+    "subtitle": "sunshower.puddle_stomp",
+    "sounds": [
+      {
+        "name": "tcorp:sunshower/puddle_stomp_3"
+      }
+    ]
+  },
+  "sunshower.auto.1": {
+    "category": "player",
+    "subtitle": "sunshower.attack",
+    "sounds": [
+      {
+        "name": "tcorp:sunshower/auto_1"
+      }
+    ]
+  },
+  "sunshower.auto.2": {
+    "category": "player",
+    "subtitle": "sunshower.attack",
+    "sounds": [
+      {
+        "name": "tcorp:sunshower/auto_2"
+      }
+    ]
+  },
+  "sunshower.auto.4": {
+    "category": "player",
+    "subtitle": "sunshower.attack",
+    "sounds": [
+      {
+        "name": "tcorp:sunshower/auto_4"
+      }
+    ]
+  },
   "first_warning": {
     "category": "music",
     "subtitle": "subtitles.first_warning",
@@ -36,6 +135,204 @@
       {
         "name": "tcorp:music/fourth_warning",
         "stream": true
+      }
+    ]
+  },
+  "nothing_there.slash.1": {
+    "category": "player",
+    "subtitle": "nothing_there.slash",
+    "sounds": [
+      {
+        "name": "tcorp:nothingthere/entity/slash"
+      }
+    ]
+  },
+  "nothing_there.blunt.1": {
+    "category": "player",
+    "subtitle": "nothing_there.blunt",
+    "sounds": [
+      {
+        "name": "tcorp:nothingthere/entity/blunt"
+      }
+    ]
+  },
+  "nothing_there.screech.flesh": {
+    "category": "player",
+    "subtitle": "nothing_there.screech.flesh",
+    "sounds": [
+      {
+        "name": "tcorp:nothingthere/entity/screech_flesh"
+      }
+    ]
+  },
+  "nothing_there.goodbye.kill": {
+    "category": "player",
+    "subtitle": "nothing_there.goodbye.kill",
+    "sounds": [
+      {
+        "name": "tcorp:nothingthere/entity/goodbye_kill"
+      }
+    ]
+  },
+  "nothing_there.screech.high": {
+    "category": "player",
+    "subtitle": "nothing_there.screech.high",
+    "sounds": [
+      {
+        "name": "tcorp:nothingthere/entity/screech_high"
+      }
+    ]
+  },
+  "nothing_there.screech.low": {
+    "category": "player",
+    "subtitle": "nothing_there.screech.low",
+    "sounds": [
+      {
+        "name": "tcorp:nothingthere/entity/screech_low"
+      }
+    ]
+  },
+  "nothing_there.screech.windup": {
+    "category": "player",
+    "subtitle": "nothing_there.screech.windup",
+    "sounds": [
+      {
+        "name": "tcorp:nothingthere/entity/screech_windup"
+      }
+    ]
+  },
+  "nothing_there.stomp": {
+    "category": "player",
+    "subtitle": "nothing_there.stomp",
+    "sounds": [
+      {
+        "name": "tcorp:nothingthere/entity/stomp"
+      }
+    ]
+  },
+  "nothing_there.hi_man": {
+    "category": "player",
+    "subtitle": "nothing_there.hi",
+    "sounds": [
+      {
+        "name": "tcorp:nothingthere/entity/hi_man"
+      }
+    ]
+  },
+  "nothing_there.heavy_slash": {
+    "category": "player",
+    "subtitle": "nothing_there.heavy_slash",
+    "sounds": [
+      {
+        "name": "tcorp:nothingthere/entity/heavy_slash"
+      }
+    ]
+  },
+  "nothing_there.voice.1": {
+    "category": "player",
+    "subtitle": "nothing_there.voice",
+    "sounds": [
+      {
+        "name": "tcorp:nothingthere/entity/ambient_1"
+      }
+    ]
+  },
+  "nothing_there.voice.2": {
+    "category": "player",
+    "subtitle": "nothing_there.voice",
+    "sounds": [
+      {
+        "name": "tcorp:nothingthere/entity/ambient_2"
+      }
+    ]
+  },
+  "nothing_there.voice.3": {
+    "category": "player",
+    "subtitle": "nothing_there.voice",
+    "sounds": [
+      {
+        "name": "tcorp:nothingthere/entity/ambient_3"
+      }
+    ]
+  },
+  "nothing_there.voice.4": {
+    "category": "player",
+    "subtitle": "nothing_there.voice",
+    "sounds": [
+      {
+        "name": "tcorp:nothingthere/entity/ambient_4"
+      }
+    ]
+  },
+  "nothing_there.walk": {
+    "category": "player",
+    "subtitle": "nothing_there.walk",
+    "sounds": [
+      {
+        "name": "tcorp:nothingthere/entity/step"
+      }
+    ]
+  },
+  "nothing_there.idle.1": {
+    "category": "player",
+    "subtitle": "nothing_there.idle.1",
+    "sounds": [
+      {
+        "name": "tcorp:nothingthere/entity/idle1"
+      }
+    ]
+  },
+  "nothing_there.idle.2": {
+    "category": "player",
+    "subtitle": "nothing_there.idle.2",
+    "sounds": [
+      {
+        "name": "tcorp:nothingthere/entity/idle2"
+      }
+    ]
+  },
+  "doubt.hit.vertical.second": {
+    "category": "player",
+    "subtitle": "doubt.hit.vertical.second",
+    "sounds": [
+      {
+        "name": "tcorp:doubt/vertical_second"
+      }
+    ]
+  },
+  "doubt.hit.vertical.first": {
+    "category": "player",
+    "subtitle": "doubt.hit.vertical.first",
+    "sounds": [
+      {
+        "name": "tcorp:doubt/vertical_first"
+      }
+    ]
+  },
+  "doubt.hit.light": {
+    "category": "player",
+    "subtitle": "doubt.hit.light",
+    "sounds": [
+      {
+        "name": "tcorp:doubt/light_hit"
+      }
+    ]
+  },
+  "doubt.death": {
+    "category": "player",
+    "subtitle": "doubt.death",
+    "sounds": [
+      {
+        "name": "tcorp:doubt/death"
+      }
+    ]
+  },
+  "doubt.charge": {
+    "category": "player",
+    "subtitle": "doubt.charge",
+    "sounds": [
+      {
+        "name": "tcorp:doubt/charge"
       }
     ]
   },

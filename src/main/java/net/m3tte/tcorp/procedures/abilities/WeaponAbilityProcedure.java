@@ -3,10 +3,7 @@ package net.m3tte.tcorp.procedures.abilities;
 import net.m3tte.tcorp.TCorpItems;
 import net.m3tte.tcorp.TcorpModVariables;
 import net.m3tte.tcorp.item.blackSilence.weapons.*;
-import net.m3tte.tcorp.procedures.abilities.weaponAbilities.BlackSilenceWeaponAbility;
-import net.m3tte.tcorp.procedures.abilities.weaponAbilities.MagicBulletWeaponAbility;
-import net.m3tte.tcorp.procedures.abilities.weaponAbilities.MimicryWeaponAbility;
-import net.m3tte.tcorp.procedures.abilities.weaponAbilities.SolemnLamentWeaponAbility;
+import net.m3tte.tcorp.procedures.abilities.weaponAbilities.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
@@ -51,6 +48,7 @@ public class WeaponAbilityProcedure {
 		weaponAbilities.put(TCorpItems.MAGIC_BULLET.get(), new MagicBulletWeaponAbility());
 		weaponAbilities.put(TCorpItems.SOLEMN_LAMENT_WHITE.get(), new SolemnLamentWeaponAbility());
 		weaponAbilities.put(TCorpItems.SOLEMN_LAMENT_BLACK.get(), new SolemnLamentWeaponAbility());
+		weaponAbilities.put(TCorpItems.SUNSHOWER.get(), new SunshowerWeaponAbility());
 	}
 
 	public static void executeProcedure(Map<String, Object> dependencies) {

@@ -30,7 +30,9 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
+import java.util.UUID;
 import java.util.function.Supplier;
 
 public class TcorpModVariables {
@@ -322,13 +324,27 @@ public class TcorpModVariables {
 		}
 
 		public void syncStagger(Entity entity) {
-			if (entity instanceof ServerPlayerEntity)
-				TcorpMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) entity), new SyncStaggerMessage(this));
+			if (entity instanceof ServerPlayerEntity) {
+				for (ServerPlayerEntity p : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers()) {
+					TcorpMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> p), new SyncStaggerMessage(this, (ServerPlayerEntity)entity));
+				}
+			}
 		}
 
 		public void syncEmotionLevel(Entity entity) {
-			if (entity instanceof ServerPlayerEntity)
-				TcorpMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) entity), new SyncEmotionMessage(this.emotionLevel, this.emotionLevelProgress));
+			if (entity instanceof ServerPlayerEntity) {
+				for (ServerPlayerEntity p : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers()) {
+					TcorpMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> p), new SyncEmotionLevelMSG(this, (ServerPlayerEntity)entity));
+				}
+			}
+		}
+
+		public void syncSanity(Entity entity) {
+			if (entity instanceof ServerPlayerEntity) {
+				for (ServerPlayerEntity p : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers()) {
+					TcorpMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> p), new SyncSanityMessage(this, (ServerPlayerEntity)entity));
+				}
+			}
 		}
 	}
 
@@ -443,31 +459,38 @@ public class TcorpModVariables {
 	public static class SyncStaggerMessage {
 		public double maxStagger;
 		public double stagger;
+		public UUID targetUUID;
 
 		public SyncStaggerMessage(PacketBuffer buffer) {
 			this.maxStagger = buffer.readDouble();
 			this.stagger = buffer.readDouble();
+			this.targetUUID = buffer.readUUID();
 		}
 
-		public SyncStaggerMessage(PlayerVariables data) {
+		public SyncStaggerMessage(PlayerVariables data, PlayerEntity target) {
 			this.maxStagger = data.maxStagger;
 			this.stagger = data.stagger;
+			this.targetUUID = target.getUUID();
 		}
 
 		public static void buffer(SyncStaggerMessage message, PacketBuffer buffer) {
 			buffer.writeDouble(message.maxStagger);
 			buffer.writeDouble(message.stagger);
+			buffer.writeUUID(message.targetUUID);
 		}
 
 		public static void handler(SyncStaggerMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
 			NetworkEvent.Context context = contextSupplier.get();
 			context.enqueueWork(() -> {
 				if (!context.getDirection().getReceptionSide().isServer()) {
-					PlayerVariables variables = ((PlayerVariables) Minecraft.getInstance().player.getCapability(PLAYER_VARIABLES_CAPABILITY, null)
-							.orElse(new PlayerVariables()));
+					if (Minecraft.getInstance().level.getPlayerByUUID(message.targetUUID) == null) {
+						System.out.println("TARGET NULL");
+						return;
+					}
+					PlayerVariables variables = Minecraft.getInstance().level.getPlayerByUUID(message.targetUUID).getCapability(PLAYER_VARIABLES_CAPABILITY, null)
+							.orElse(new PlayerVariables());
 					variables.maxStagger = message.maxStagger;
 					variables.stagger = message.stagger;
-
 					/*if (variables.stagger <= 0) {
 						StaggerSystem.stagger(Minecraft.getInstance().player);
 					}*/
@@ -477,33 +500,85 @@ public class TcorpModVariables {
 		}
 	}
 
-	public static class SyncEmotionMessage {
-		public int emotionLevel;
-		public double emotionLevelProgress;
+	public static class SyncEmotionLevelMSG {
+		public double emotionLevel;
+		public double emotionPoints;
+		public UUID targetUUID;
 
-		public SyncEmotionMessage(PacketBuffer buffer) {
-			this.emotionLevel = buffer.readInt();
-			this.emotionLevelProgress = buffer.readInt();
+		public SyncEmotionLevelMSG(PacketBuffer buffer) {
+			this.emotionLevel = buffer.readDouble();
+			this.emotionPoints = buffer.readDouble();
+			this.targetUUID = buffer.readUUID();
 		}
 
-		public SyncEmotionMessage(int level, double progress) {
-			this.emotionLevel = level;
-			this.emotionLevelProgress = progress;
+		public SyncEmotionLevelMSG(PlayerVariables data, PlayerEntity target) {
+			this.emotionLevel = data.maxStagger;
+			this.emotionPoints = data.stagger;
+			this.targetUUID = target.getUUID();
 		}
 
-		public static void buffer(SyncEmotionMessage message, PacketBuffer buffer) {
-			buffer.writeInt(message.emotionLevel);
-			buffer.writeDouble(message.emotionLevelProgress);
+		public static void buffer(SyncEmotionLevelMSG message, PacketBuffer buffer) {
+			buffer.writeDouble(message.emotionLevel);
+			buffer.writeDouble(message.emotionPoints);
+			buffer.writeUUID(message.targetUUID);
 		}
 
-		public static void handler(SyncEmotionMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
+		public static void handler(SyncEmotionLevelMSG message, Supplier<NetworkEvent.Context> contextSupplier) {
 			NetworkEvent.Context context = contextSupplier.get();
 			context.enqueueWork(() -> {
 				if (!context.getDirection().getReceptionSide().isServer()) {
-					PlayerVariables variables = ((PlayerVariables) Minecraft.getInstance().player.getCapability(PLAYER_VARIABLES_CAPABILITY, null)
-							.orElse(new PlayerVariables()));
-					variables.emotionLevel = message.emotionLevel;
-					variables.emotionLevelProgress = message.emotionLevelProgress;
+					if (Minecraft.getInstance().level.getPlayerByUUID(message.targetUUID) == null) {
+						System.out.println("TARGET NULL");
+						return;
+					}
+					PlayerVariables variables = Minecraft.getInstance().level.getPlayerByUUID(message.targetUUID).getCapability(PLAYER_VARIABLES_CAPABILITY, null)
+							.orElse(new PlayerVariables());
+					variables.emotionLevel = (int) message.emotionLevel;
+					variables.emotionLevelProgress = message.emotionPoints;
+					/*if (variables.stagger <= 0) {
+						StaggerSystem.stagger(Minecraft.getInstance().player);
+					}*/
+				}
+			});
+			context.setPacketHandled(true);
+		}
+	}
+
+
+
+	public static class SyncSanityMessage {
+		public double sanity;
+		public double maxSanity;
+		public UUID targetUUID;
+
+		public SyncSanityMessage(PacketBuffer buffer) {
+			this.sanity = buffer.readDouble();
+			this.maxSanity = buffer.readDouble();
+			this.targetUUID = buffer.readUUID();
+		}
+
+		public SyncSanityMessage(PlayerVariables vars, PlayerEntity player) {
+			this.sanity = vars.sanity;
+			this.maxSanity = vars.maxSanity;
+			this.targetUUID = player.getUUID();
+		}
+
+		public static void buffer(SyncSanityMessage message, PacketBuffer buffer) {
+			buffer.writeDouble(message.sanity);
+			buffer.writeDouble(message.maxSanity);
+			buffer.writeUUID(message.targetUUID);
+		}
+
+		public static void handler(SyncSanityMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
+			NetworkEvent.Context context = contextSupplier.get();
+			context.enqueueWork(() -> {
+				if (!context.getDirection().getReceptionSide().isServer()) {
+					if (Minecraft.getInstance().level == null)
+						return;
+					PlayerVariables variables = Minecraft.getInstance().level.getPlayerByUUID(message.targetUUID).getCapability(PLAYER_VARIABLES_CAPABILITY, null)
+							.orElse(new PlayerVariables());
+					variables.sanity = message.sanity;
+					variables.maxSanity = message.maxSanity;
 				}
 			});
 			context.setPacketHandled(true);

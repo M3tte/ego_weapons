@@ -66,10 +66,10 @@ public class EmotionSystem {
             increaseEmotionLevel(player);
 
             levelChange = true;
+            playerVariables.syncPlayerVariables(player);
         }
 
         playerVariables.syncEmotionLevel(player);
-
         return levelChange;
     }
 
@@ -95,6 +95,7 @@ public class EmotionSystem {
             decreaseEmotionLevel(player, playerVariables.emotionLevel);
 
             levelChange = true;
+            playerVariables.syncPlayerVariables(player);
         }
 
         playerVariables.syncEmotionLevel(player);

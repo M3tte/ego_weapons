@@ -114,7 +114,7 @@ public class CrimsonfanheavyprojProcedure {
 						if (!projectileLevel.isClientSide) {
 							ProjectileEntity _entityToSpawn = new Object() {
 								public ProjectileEntity getArrow(World world, float damage, int knockback) {
-									AbstractArrowEntity entityToSpawn = new CrimsonfanprojItem.ArrowCustomEntity(CrimsonfanprojItem.crimson_wind, world);
+									AbstractArrowEntity entityToSpawn = new CrimsonfanprojItem.CrimsonWindProj(CrimsonfanprojItem.crimson_wind, world);
 
 									entityToSpawn.setBaseDamage(damage);
 									entityToSpawn.setKnockback(knockback);

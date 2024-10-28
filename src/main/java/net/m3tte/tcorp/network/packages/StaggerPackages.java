@@ -45,6 +45,5 @@ public class StaggerPackages {
             context.setPacketHandled(true);
         }
     }
-
-
+    
 }

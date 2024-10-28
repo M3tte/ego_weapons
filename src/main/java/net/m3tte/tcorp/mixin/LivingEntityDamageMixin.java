@@ -16,7 +16,6 @@ public class LivingEntityDamageMixin {
 
 
 
-
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraftforge/common/ForgeHooks;onLivingDamage(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/util/DamageSource;F)F"), method = "actuallyHurt(Lnet/minecraft/util/DamageSource;F)V")
     public void applyStaggerDamage(DamageSource src, float amount, CallbackInfo ci) {
         LivingEntity self = ((LivingEntity) (Object)this);

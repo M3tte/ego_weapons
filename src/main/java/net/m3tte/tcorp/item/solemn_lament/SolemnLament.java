@@ -51,8 +51,8 @@ public class SolemnLament extends SwordItem {
 	@Override
 	public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> list, ITooltipFlag p_77624_4_) {
 		super.appendHoverText(p_77624_1_, p_77624_2_, list, p_77624_4_);
-		list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Reload. ")));
-		list.add(new StringTextComponent("[Passive] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Store the LIVING and the DEPARTED")));
+		list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Reload. ").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 4E").withStyle(TextFormatting.AQUA)));
+		list.add(new StringTextComponent("[Passive] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Store the LIVING and the DEPARTED").withStyle(TextFormatting.GRAY)));
 	}
 
 	private static List<Integer> departedAnimations;

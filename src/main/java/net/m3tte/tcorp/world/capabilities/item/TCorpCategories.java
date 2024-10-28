@@ -22,6 +22,7 @@ public enum TCorpCategories implements WeaponCategory {
     CRYSTAL_ATELIER,
     MIMICRY,
     SOLEMN_LAMENT,
+    SUNSHOWER,
     MAGIC_BULLET;
 
     final int id;

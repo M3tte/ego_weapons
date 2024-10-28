@@ -70,4 +70,24 @@ public class TCorpParticleRegistry {
     public static final RegistryObject<BasicParticleType> SOLEMN_LAMENT_LIVING_BUTTERFLY = PARTICLES.register("solemn_lament_living_butterflies", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> SOLEMN_LAMENT_DEPARTED_BUTTERFLY = PARTICLES.register("solemn_lament_departed_butterflies", () -> new BasicParticleType(true));
 
+    public static final RegistryObject<BasicParticleType> DOUBT_GROUNDSLAM_STRIKE = PARTICLES.register("doubt_vertical_strike", () -> new BasicParticleType(true));
+    public static final RegistryObject<HitParticleType> DOUBT_GROUNDSLAM_HIT = PARTICLES.register("doubt_vertical_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
+
+    public static final RegistryObject<BasicParticleType> DOUBT_EXPLOSION_EFFECT = PARTICLES.register("doubt_explosion", () -> new BasicParticleType(true));
+    public static final RegistryObject<HitParticleType> DOUBT_EXPLODE = PARTICLES.register("doubt_death_explosion", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
+    public static final RegistryObject<HitParticleType> MEAT_CHUNK_EXPLOSION = PARTICLES.register("meat_explosion", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
+
+    public static final RegistryObject<BasicParticleType> SUNSHOWER_AUTO1_STRIKE = PARTICLES.register("sunshower_auto1_strike", () -> new BasicParticleType(true));
+    public static final RegistryObject<HitParticleType> SUNSHOWER_AUTO1_HIT = PARTICLES.register("sunshower_auto1_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
+
+    public static final RegistryObject<BasicParticleType> SUNSHOWER_OPEN = PARTICLES.register("sunshower_openumbrella", () -> new BasicParticleType(true));
+
+    public static final RegistryObject<BasicParticleType> SUNSHOWER_AUTO3_STRIKE = PARTICLES.register("sunshower_auto3_strike", () -> new BasicParticleType(true));
+    public static final RegistryObject<HitParticleType> SUNSHOWER_AUTO3_HIT = PARTICLES.register("sunshower_auto3_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
+    public static final RegistryObject<BasicParticleType> PUDDLE_STOMP_IMPACT = PARTICLES.register("puddle_stomp_impact", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> PUDDLE_STOMP_RIPPLE = PARTICLES.register("puddle_stomp_ripple", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> SUNSHOWER_DRIFT = PARTICLES.register("sunshower_drift", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> SUNSHOWER_DRIFT_B = PARTICLES.register("sunshower_drift_b", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> GREAT_SPLIT_HORIZONTAL = PARTICLES.register("great_split_horizontal", () -> new BasicParticleType(true));
+
 }

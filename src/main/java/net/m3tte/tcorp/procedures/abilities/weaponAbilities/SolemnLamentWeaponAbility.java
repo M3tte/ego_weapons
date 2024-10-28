@@ -31,7 +31,7 @@ public class SolemnLamentWeaponAbility extends ItemAbility {
     public int getBlipCost(PlayerEntity player, PlayerVariables playerVars) {
         int extra = 0;
 
-        return 3;
+        return 4;
     }
 
     @Override

@@ -2,6 +2,7 @@ package net.m3tte.tcorp.skill.magic_bullet;
 
 import net.m3tte.tcorp.TcorpModElements;
 import net.m3tte.tcorp.gameasset.TCorpAnimations;
+import net.m3tte.tcorp.potion.MagicBulletPotionEffect;
 import net.m3tte.tcorp.world.capabilities.EmotionSystem;
 import net.m3tte.tcorp.world.capabilities.SanitySystem;
 import net.m3tte.tcorp.world.capabilities.item.TCorpCategories;
@@ -96,7 +97,7 @@ public class MagicBulletGuard extends EnergizingGuardSkill {
             ServerPlayerEntity serverPlayer = event.getPlayerPatch().getOriginal();
 
             event.getPlayerPatch().playSound(EpicFightSounds.CLASH, -0.05F, 0.1F);
-            SanitySystem.healSanity(serverPlayer, 0.4f);
+            SanitySystem.healSanity(serverPlayer, 0.6f);
 
 
             EpicFightParticles.HIT_BLUNT.get().spawnParticleWithArgument(((ServerWorld)serverPlayer.level), HitParticleType.FRONT_OF_EYES, HitParticleType.ZERO, serverPlayer, damageSource.getDirectEntity());
@@ -104,11 +105,15 @@ public class MagicBulletGuard extends EnergizingGuardSkill {
             if (damageSource.getEntity() instanceof LivingEntity) {
                 knockback += EnchantmentHelper.getKnockbackBonus((LivingEntity)damageSource.getEntity()) * 0.1F;
             }
+            int magicBulletLevel = 0;
 
+            if (serverPlayer.hasEffect(MagicBulletPotionEffect.get())) {
+                magicBulletLevel = 1 + serverPlayer.getEffect(MagicBulletPotionEffect.get()).getAmplifier();
+            }
 
             event.getPlayerPatch().knockBackEntity(damageSource.getEntity().position(), knockback);
 
-            float stamina = event.getPlayerPatch().getStamina() - penalty * impact;
+            float stamina = event.getPlayerPatch().getStamina() - penalty * impact * (0.8f-0.06f*magicBulletLevel);
             event.getPlayerPatch().setStamina(stamina);
             StaticAnimation animation;
             BlockType blockType = (stamina >= 0.0F) ? BlockType.GUARD : BlockType.GUARD_BREAK;
@@ -126,7 +131,7 @@ public class MagicBulletGuard extends EnergizingGuardSkill {
                 event.getPlayerPatch().playSound(EpicFightSounds.NEUTRALIZE_MOBS, 3.0F, 0.0F, 0.1F);
             }
 
-            EmotionSystem.handleGuard(serverPlayer, event.getAmount(), impact, false, 0.5f);
+            EmotionSystem.handleGuard(serverPlayer, event.getAmount(), impact, false, 0.8f-0.06f*magicBulletLevel);
 
             this.dealEvent(event.getPlayerPatch(), event);
         }

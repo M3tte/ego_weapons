@@ -9,7 +9,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Entity;
 
 import net.m3tte.tcorp.potion.FuriosoPotionEffect;
-import net.m3tte.tcorp.item.blackSilence.AtelierPistolsBullet;
 import net.m3tte.tcorp.TcorpMod;
 
 import java.util.Map;

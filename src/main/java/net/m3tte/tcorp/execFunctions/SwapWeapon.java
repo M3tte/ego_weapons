@@ -134,8 +134,8 @@ public class SwapWeapon {
 				break;
 
 			case 5: // Ranga
-				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(TCorpItems.RANGA_CLAW_L.get()));
-				entity.setItemInHand(Hand.OFF_HAND, new ItemStack(TCorpItems.RANGA_CLAW.get()));
+				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(TCorpItems.RANGA_CLAW.get()));
+				entity.setItemInHand(Hand.OFF_HAND, new ItemStack(TCorpItems.RANGA_CLAW_L.get()));
 				animation = TCorpAnimations.DUAL_EQUIP;
 
 				break;

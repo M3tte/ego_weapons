@@ -2,9 +2,11 @@ package net.m3tte.tcorp.world.capabilities;
 
 import net.m3tte.tcorp.*;
 import net.m3tte.tcorp.gameasset.TCorpAnimations;
+import net.m3tte.tcorp.gameasset.TCorpMobAnimations;
 import net.m3tte.tcorp.network.packages.StaggerPackages;
 import net.m3tte.tcorp.particle.StaggerShardParticle;
 import net.m3tte.tcorp.potion.Staggered;
+import net.m3tte.tcorp.world.capabilities.entitypatch.StaggerableEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,8 +15,10 @@ import net.minecraft.util.CombatRules;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.PacketDistributor;
+import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.api.utils.ExtendedDamageSource;
 import yesman.epicfight.gameasset.Animations;
+import yesman.epicfight.gameasset.Models;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import yesman.epicfight.world.effect.EpicFightMobEffects;
@@ -90,6 +94,11 @@ public class StaggerSystem {
     }
 
     public static void stagger(LivingEntity entity, Consumer<?> onStagger) {
+
+        if (!entity.isAlive() && entity.getHealth() < 0)
+            return;
+
+
         if (entity instanceof PlayerEntity) {
             System.out.println("Executing stagger");
         }
@@ -109,16 +118,31 @@ public class StaggerSystem {
             LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) entity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
             if (entitypatch != null && !entity.level.isClientSide()) {
-                if (Animations.BIPED_HIT_LONG.equals(entitypatch.getHitAnimation(ExtendedDamageSource.StunType.LONG))) {
-                    entitypatch.playAnimationSynchronized(TCorpAnimations.STAGGER, 0);
-                } else {
-                    if (entitypatch.getHitAnimation(ExtendedDamageSource.StunType.LONG) != null)
-                        entitypatch.playAnimationSynchronized(entitypatch.getHitAnimation(ExtendedDamageSource.StunType.LONG), 0.25f);
-                }
+                StaticAnimation staggerAnim = getStaggerAnimation(entitypatch);
+
+                if (staggerAnim != null)
+                    entitypatch.playAnimationSynchronized(staggerAnim, 0.1f);
             }
+        }
+    }
 
+    public static StaticAnimation getStaggerAnimation(LivingEntityPatch<?> patch) {
 
+        // If the entity is currently knocked down, continue playing that animation.
+        if (patch instanceof StaggerableEntity) {
+            if (((StaggerableEntity) patch).getGroundAnimation(99).getId() == patch.getServerAnimator().animationPlayer.getAnimation().getId())
+                return ((StaggerableEntity) patch).getGroundAnimation(99);
+        }
 
+        if (Animations.BIPED_HIT_LONG.equals(patch.getHitAnimation(ExtendedDamageSource.StunType.LONG))) { // Is a biped like entity
+            if (TCorpAnimations.PUMMEL_DOWN.getId() == patch.getServerAnimator().animationPlayer.getAnimation().getId())
+                return TCorpAnimations.PUMMEL_DOWN;
+
+            return TCorpAnimations.STAGGER;
+        } else if (patch instanceof StaggerableEntity) { // Has a designated stagger animation
+            return ((StaggerableEntity) patch).getStaggerAnimation();
+        } else {
+            return patch.getHitAnimation(ExtendedDamageSource.StunType.LONG);
         }
     }
 }

@@ -37,6 +37,7 @@ import java.util.stream.Stream;
 import static net.m3tte.tcorp.TcorpModVariables.PLAYER_VARIABLES_CAPABILITY;
 import static net.m3tte.tcorp.TcorpModVariables.PlayerVariables;
 import static net.m3tte.tcorp.execFunctions.HitProcedure.hitStunEffect;
+import static net.m3tte.tcorp.procedures.SharedFunctions.pummelDownEntity;
 
 public class MimicryItem extends SwordItem {
 
@@ -124,9 +125,7 @@ public class MimicryItem extends SwordItem {
 				LivingEntityPatch<?> targetentitypatch = (LivingEntityPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 				if (targetentitypatch != null) {
-					if (Animations.BIPED_HIT_LONG.equals(targetentitypatch.getHitAnimation(ExtendedDamageSource.StunType.LONG))) {
-						targetentitypatch.playAnimationSynchronized(TCorpAnimations.PUMMEL_DOWN, 0);
-					}
+					pummelDownEntity(entitypatch, 2);
 				}
 
 				entitypatch.playSound(TCorpSounds.SWORD_STAB, 1, 1, 1);

@@ -8,13 +8,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static net.m3tte.tcorp.procedures.SharedFunctions.applyStaggerDamageGeneric;
-import static net.m3tte.tcorp.procedures.SharedFunctions.modifyDamageGeneric;
+import static net.m3tte.tcorp.procedures.SharedFunctions.*;
 
 @Mixin(PlayerEntity.class)
 public class PlayerEntityDamageMixin {
-
 
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;setHealth(F)V"), method = "actuallyHurt(Lnet/minecraft/util/DamageSource;F)V")
     public void applyStaggerDamage(DamageSource src, float amount, CallbackInfo ci) {

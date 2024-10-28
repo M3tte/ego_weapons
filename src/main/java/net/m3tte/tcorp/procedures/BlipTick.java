@@ -1,9 +1,6 @@
 package net.m3tte.tcorp.procedures;
 
-import net.m3tte.tcorp.TCorpItems;
-import net.m3tte.tcorp.TCorpSounds;
-import net.m3tte.tcorp.TcorpMod;
-import net.m3tte.tcorp.TcorpModVariables;
+import net.m3tte.tcorp.*;
 import net.m3tte.tcorp.item.magic_bullet.MagicBulletArmor;
 import net.m3tte.tcorp.network.packages.AbilityPackages;
 import net.m3tte.tcorp.potion.EnergyboostPotionEffect;
@@ -11,7 +8,9 @@ import net.m3tte.tcorp.potion.EnergyfatiguePotionEffect;
 import net.m3tte.tcorp.potion.Terror;
 import net.m3tte.tcorp.world.capabilities.EmotionSystem;
 import net.m3tte.tcorp.world.capabilities.SanitySystem;
+import net.m3tte.tcorp.world.capabilities.StaggerSystem;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -28,6 +27,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
 import static net.m3tte.tcorp.TcorpModVariables.PLAYER_VARIABLES_CAPABILITY;
@@ -112,19 +112,38 @@ public class BlipTick {
 			return;
 
 
+		if (entity.tickCount % 20 == 0) {
 
+
+			if (entityData.stagger < entityData.maxStagger) {
+				StaggerSystem.healStagger(entity, 0.1f);
+			}
+
+			if (entity.hasEffect(Terror.get())) {
+				SanitySystem.damageSanity(entity, 0.1f);
+			} else {
+				if (entityData.sanity < entityData.maxSanity) {
+					float sanityHeal = 0.1f;
+
+					if (entity.getItemBySlot(EquipmentSlotType.CHEST).equals(TCorpItems.SUNSHOWER_CLOAK.get())) {
+						if (EntityType.byString(entity.getShoulderEntityRight().getString("id")).filter((p_215344_0_) -> p_215344_0_ == TCorpModEntities.SUNSHOWER_FOX.get()).isPresent()) {
+							sanityHeal += 0.1f;
+						} else if (EntityType.byString(entity.getShoulderEntityLeft().getString("id")).filter((p_215344_0_) -> p_215344_0_ == TCorpModEntities.SUNSHOWER_FOX.get()).isPresent()) {
+							sanityHeal += 0.1f;
+						}
+					}
+
+
+
+					SanitySystem.healSanity(entity, sanityHeal);
+				}
+			}
+		}
 
 		if (entity.tickCount % 10 == 0) {
 
 
-			if (entityData.sanity < entityData.maxSanity) {
-				entityData.sanity = Math.min(entityData.sanity + 0.05f, entityData.maxSanity);
 
-			}
-
-			if (entityData.stagger < entityData.maxStagger) {
-				entityData.stagger = Math.min(entityData.stagger + 0.05f, entityData.maxStagger);
-			}
 
 			EmotionSystem.decreaseEmotionPoints(entity, 0.6f);
 

@@ -1,0 +1,33 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "0": "tcorp:items/sunshower",
+    "particle": "tcorp:items/sunshower"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "open": 0
+      },
+      "model": "tcorp:item/sunshower_closed"
+    },
+    {
+      "predicate": {
+        "open": 1
+      },
+      "model": "tcorp:item/sunshower_open"
+    },
+    {
+      "predicate": {
+        "open": 2
+      },
+      "model": "tcorp:item/sunshower_crunched"
+    },
+    {
+      "predicate": {
+        "open": 3
+      },
+      "model": "tcorp:item/sunshower_spiked"
+    }
+  ]
+}

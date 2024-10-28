@@ -19,7 +19,6 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.Entity;
 
-import net.m3tte.tcorp.item.blackSilence.AtelierShotgunBullet;
 import net.m3tte.tcorp.TcorpModVariables;
 import net.m3tte.tcorp.TcorpMod;
 

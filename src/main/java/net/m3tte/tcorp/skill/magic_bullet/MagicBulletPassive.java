@@ -2,6 +2,7 @@ package net.m3tte.tcorp.skill.magic_bullet;
 
 import net.m3tte.tcorp.gameasset.TCorpSkills;
 import net.m3tte.tcorp.skill.GenericSkill;
+import yesman.epicfight.gameasset.Skills;
 import yesman.epicfight.skill.Skill;
 import yesman.epicfight.skill.SkillCategories;
 import yesman.epicfight.skill.SkillContainer;
@@ -40,9 +41,14 @@ public class MagicBulletPassive extends Skill {
 
         SkillContainer dodgeskill = executer.getSkillCapability().skillContainers[SkillCategories.DODGE.universalOrdinal()];
 
-        if (dodgeskill.hasSkill(TCorpSkills.MAGIC_BULLET_EVADE) && savedEvade != null) {
-            dodgeskill.setSkill(savedEvade);
+        if (dodgeskill.hasSkill(TCorpSkills.MAGIC_BULLET_EVADE)) {
+            if (savedEvade != null) {
+                dodgeskill.setSkill(savedEvade);
+            } else {
+                dodgeskill.setSkill(Skills.STEP);
+            }
             dodgeskill.getSkill().onInitiate(dodgeskill);
+
         }
     }
 

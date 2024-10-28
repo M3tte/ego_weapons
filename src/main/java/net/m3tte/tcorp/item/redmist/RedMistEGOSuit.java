@@ -122,6 +122,9 @@ public class RedMistEGOSuit extends ArmorItem {
 	};
 
 	static Item chest = new RedMistEGOSuit(armormaterial, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT)) {
+
+
+
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -138,6 +141,7 @@ public class RedMistEGOSuit extends ArmorItem {
 			armorModel.crouching = living.isCrouching();
 			armorModel.riding = defaultModel.riding;
 			armorModel.young = living.isBaby();
+			armorModel.setAllVisible(true);
 			return armorModel;
 		}
 

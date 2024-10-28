@@ -26,6 +26,17 @@ public class Shell {
 		return potion;
 	}
 
+	public static void incrementShell(LivingEntity entity, int amount) {
+		if (!entity.hasEffect(get())) {
+			entity.addEffect(new EffectInstance(get(), 200, amount-1));
+			return;
+		}
+
+
+		int amplifier = Math.min(Objects.requireNonNull(entity.getEffect(get())).getAmplifier(), 4);
+		entity.removeEffect(get());
+		entity.addEffect(new EffectInstance(get(), 200, amplifier+amount));
+	}
 
 	@SubscribeEvent
 	public static void registerEffect(RegistryEvent.Register<Effect> event) {

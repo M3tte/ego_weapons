@@ -40,6 +40,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 import static net.m3tte.tcorp.TcorpModVariables.PLAYER_VARIABLES_CAPABILITY;
+import static net.m3tte.tcorp.skill.BlackSilenceActiveGuard.canParryHeavy;
 
 
 public class RedMistActiveGuard extends GuardSkill {
@@ -110,7 +111,6 @@ public class RedMistActiveGuard extends GuardSkill {
                             event.getPlayerPatch().playAnimationSynchronized(TCorpAnimations.KALI_PARRY_EVADE, 0);
                             event.getPlayerPatch().playSound(TCorpSounds.BLACK_SILENCE_EVADE, 1, 1);
 
-
                             BlipTick.chargeBlips(playerentity, 1, true);
 
                             event.getPlayerPatch().getOriginal().getCooldowns().addCooldown(TCorpItems.MIMICRY.get(), 100);
@@ -132,14 +132,17 @@ public class RedMistActiveGuard extends GuardSkill {
 
                 event.getPlayerPatch().setStamina(stamina);
                 BlockType blockType = successParrying ? BlockType.ADVANCED_GUARD : (stamina >= 0.0F ? BlockType.GUARD : BlockType.GUARD_BREAK);
+
+                // Part condition. Strong attacks cannot be parried if stamina were to reach 0
+                blockType = canParryHeavy(successParrying, event.getPlayerPatch(), blockType, stamina, impact, event);
+                if (blockType.equals(BlockType.GUARD_BREAK))
+                    successParrying = false;
+
                 StaticAnimation animation = this.getGuardMotion(event.getPlayerPatch(), itemCapability, blockType);
                 if (animation != null) {
                     event.getPlayerPatch().playAnimationSynchronized(animation, 0.0F);
                 }
 
-                if (blockType == BlockType.GUARD_BREAK) {
-                    event.getPlayerPatch().playSound(TCorpSounds.STAGGER, 3.0F, 0.0F, 0.1F);
-                }
                 EmotionSystem.handleGuard(playerentity, event.getAmount(), impact, successParrying);
                 this.dealEvent(event.getPlayerPatch(), event);
                 return;

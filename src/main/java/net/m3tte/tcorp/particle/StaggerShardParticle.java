@@ -45,7 +45,7 @@ public class StaggerShardParticle {
 			this.quadSize *= (float) 1;
 			this.lifetime = 30;
 			this.gravity = (float) 0.2;
-			this.hasPhysics = false;
+			this.hasPhysics = true;
 			this.xd = vx * 0.7;
 			this.yd = vy * 0.4 + Math.abs(vy * 0.8);
 			this.zd = vz * 0.7;

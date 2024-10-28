@@ -1,0 +1,10 @@
+{
+  "textures": [
+    "tcorp:entity/nothing_there/meat_ch_0",
+    "tcorp:entity/nothing_there/meat_ch_1",
+    "tcorp:entity/nothing_there/meat_ch_2",
+    "tcorp:entity/nothing_there/meat_ch_3",
+    "tcorp:entity/nothing_there/meat_ch_4",
+    "tcorp:entity/nothing_there/meat_ch_5"
+  ]
+}

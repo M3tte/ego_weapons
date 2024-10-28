@@ -6,6 +6,7 @@ import net.m3tte.tcorp.client.renderer.patched.item.RenderMook;
 import net.m3tte.tcorp.specialParticles.*;
 import net.m3tte.tcorp.specialParticles.WheelsSmashParticle;
 import net.m3tte.tcorp.specialParticles.hit.*;
+import net.m3tte.tcorp.specialParticles.modelParticles.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.util.ResourceLocation;
@@ -78,6 +79,21 @@ public class ClientModBusEvent {
         particleEngine.register(TCorpParticleRegistry.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get(), SolemnLamentButterfly.Provider::new);
         particleEngine.register(TCorpParticleRegistry.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), SolemnLamentButterfly.Provider::new);
         particleEngine.register(TCorpParticleRegistry.SOLEMN_LAMENT_BURST_HIT.get(), new SolemnLamentBurstHit.Provider());
+        particleEngine.register(TCorpParticleRegistry.DOUBT_GROUNDSLAM_STRIKE.get(), DoubtGroundslamParticle.Provider::new);
+        particleEngine.register(TCorpParticleRegistry.DOUBT_GROUNDSLAM_HIT.get(), new DoubtGroundslamHit.Provider());
+        particleEngine.register(TCorpParticleRegistry.DOUBT_EXPLOSION_EFFECT.get(), DoubtExplosionParticle.Provider::new);
+        particleEngine.register(TCorpParticleRegistry.DOUBT_EXPLODE.get(), new DoubtDeathExplosion.Provider());
+        particleEngine.register(TCorpParticleRegistry.MEAT_CHUNK_EXPLOSION.get(), new MeatExplosion.Provider());
+        particleEngine.register(TCorpParticleRegistry.SUNSHOWER_AUTO1_STRIKE.get(), SunshowerStrike.Provider::new);
+        particleEngine.register(TCorpParticleRegistry.SUNSHOWER_AUTO1_HIT.get(), new Sunshower1Hit.Provider());
+        particleEngine.register(TCorpParticleRegistry.SUNSHOWER_OPEN.get(), SunshowerOpenUmbrella.Provider::new);
+        particleEngine.register(TCorpParticleRegistry.SUNSHOWER_AUTO3_STRIKE.get(), SunshowerStrike.Provider::new);
+        particleEngine.register(TCorpParticleRegistry.SUNSHOWER_AUTO3_HIT.get(), new Sunshower3Hit.Provider());
+        particleEngine.register(TCorpParticleRegistry.PUDDLE_STOMP_IMPACT.get(), PuddleStompSplashParticle.Provider::new);
+        particleEngine.register(TCorpParticleRegistry.PUDDLE_STOMP_RIPPLE.get(), PuddleStompRipple.Provider::new);
+        particleEngine.register(TCorpParticleRegistry.SUNSHOWER_DRIFT.get(), RotationBoundParticle.Provider::new);
+        particleEngine.register(TCorpParticleRegistry.SUNSHOWER_DRIFT_B.get(), SunshowerDashB.Provider::new);
+        particleEngine.register(TCorpParticleRegistry.GREAT_SPLIT_HORIZONTAL.get(), GreatSplitHorizontal.Provider::new);
     }
 
 }

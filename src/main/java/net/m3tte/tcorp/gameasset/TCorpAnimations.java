@@ -6,11 +6,13 @@
 package net.m3tte.tcorp.gameasset;
 
 import net.m3tte.tcorp.*;
+import net.m3tte.tcorp.entities.AtelierPistolsBullet;
+import net.m3tte.tcorp.entities.AtelierShotgunBullet;
 import net.m3tte.tcorp.execFunctions.AtelierCooldownHandler;
 import net.m3tte.tcorp.execFunctions.BlackSilenceEvaluator;
-import net.m3tte.tcorp.item.blackSilence.*;
 import net.m3tte.tcorp.item.blackSilence.weapons.RangaclawItem;
-import net.m3tte.tcorp.item.magic_bullet.MagicBulletProjectile;
+import net.m3tte.tcorp.entities.MagicBulletProjectile;
+import net.m3tte.tcorp.item.sunshower.Sunshower;
 import net.m3tte.tcorp.particle.MagicBulletAimParticle;
 import net.m3tte.tcorp.particle.BlacksilenceshadowParticle;
 import net.m3tte.tcorp.particle.MagicBulletShell;
@@ -21,8 +23,6 @@ import net.m3tte.tcorp.procedures.BlipTick;
 import net.m3tte.tcorp.world.capabilities.SanitySystem;
 import net.m3tte.tcorp.world.capabilities.StaggerSystem;
 import net.m3tte.tcorp.world.capabilities.item.TCorpCapabilityPresets;
-import net.m3tte.tcorp.world.capabilities.item.TCorpStyles;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
@@ -71,11 +71,13 @@ import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static net.m3tte.tcorp.procedures.SharedFunctions.onStaggered;
+import static net.m3tte.tcorp.item.sunshower.Sunshower.setOpenstate;
+import static net.m3tte.tcorp.procedures.SharedFunctions.pummelDownEntity;
+import static net.m3tte.tcorp.world.capabilities.item.TCorpCapabilityPresets.SUNSHOWER_COL;
+import static net.m3tte.tcorp.world.capabilities.item.TCorpCapabilityPresets.SUNSHOWER_COL_LARGE;
 import static yesman.epicfight.api.animation.property.AnimationProperty.StaticAnimationProperty;
 import static yesman.epicfight.api.utils.ExtendedDamageSource.StunType;
 
@@ -332,6 +334,35 @@ public class TCorpAnimations {
     public static StaticAnimation SOLEMN_LAMENT_GUARD_RELOAD;
     public static StaticAnimation SOLEMN_LAMENT_SPECIAL_ATTACK;
     public static StaticAnimation SOLEMN_LAMENT_SPECIAL_ATTACK_RELOAD;
+
+    public static StaticAnimation SUNSHOWER_IDLE;
+    public static StaticAnimation SUNSHOWER_WALK;
+    public static StaticAnimation SUNSHOWER_SNEAK;
+    public static StaticAnimation SUNSHOWER_GUARD;
+    public static StaticAnimation SUNSHOWER_GUARD_HIT;
+    public static StaticAnimation SUNSHOWER_PARRY_HIT;
+    public static StaticAnimation SUNSHOWER_PARRY_HIT_2;
+    public static StaticAnimation SUNSHOWER_PARRY_HIT_3;
+    public static StaticAnimation SUNSHOWER_COUNTER_EVADE;
+    public static StaticAnimation SUNSHOWER_COUNTER_ATTACK;
+    public static StaticAnimation SUNSHOWER_RUN;
+    public static StaticAnimation SUNSHOWER_JUMP;
+    public static StaticAnimation SUNSHOWER_JUMP_ATTACK;
+    public static StaticAnimation SUNSHOWER_JUMP_ATTACK_F;
+    public static StaticAnimation SUNSHOWER_KNEEL;
+    public static StaticAnimation SUNSHOWER_AUTO_1;
+    public static StaticAnimation SUNSHOWER_AUTO_2;
+    public static StaticAnimation SUNSHOWER_AUTO_3;
+    public static StaticAnimation SUNSHOWER_AUTO_4;
+    public static StaticAnimation SUNSHOWER_PUDDLE_STOMP_1;
+    public static StaticAnimation SUNSHOWER_PUDDLE_STOMP_2;
+    public static StaticAnimation SUNSHOWER_PUDDLE_STOMP_3;
+    public static StaticAnimation SUNSHOWER_SPREAD_OUT_1;
+    public static StaticAnimation SUNSHOWER_SPREAD_OUT_2;
+    public static StaticAnimation SUNSHOWER_SPREAD_OUT_3;
+    public static StaticAnimation SUNSHOWER_DASH;
+    public static StaticAnimation LIFT_UP;
+
     public TCorpAnimations() {
     }
 
@@ -340,9 +371,13 @@ public class TCorpAnimations {
         event.getRegistryMap().put("tcorp", TCorpAnimations::build);
     }
 
+
     private static void build() {
         Models<?> models = FMLEnvironment.dist == Dist.CLIENT ? ClientModels.LOGICAL_CLIENT : Models.LOGICAL_SERVER;
         Model biped = models.biped;
+
+        TCorpMobAnimations.build();
+
         DURANDAL_IDLE = new StaticAnimation(true, "biped/durandal/idle", biped);
         DURANDAL_RUN = new MovementAnimation(true, "biped/durandal/run", biped);
         DURANDAL_DRAW = (new SpecialAttackAnimation(0.16F, 0.1F, 1.0F, 1.4F, 2.0F, null, "Tool_R", "biped/durandal/draw", biped))
@@ -502,7 +537,7 @@ public class TCorpAnimations {
         RANGA_GUARD_HIT = new GuardAnimation(0.05f,0.4f, "biped/ranga/guard_hit", biped);
         RANGA_GUARD_STAGGER = new LongHitAnimation(0.05f, "biped/ranga/guard_stagger", biped);
         STAGGER = new LongHitAnimation(0.05f, "biped/generic/stagger", biped);
-        PUMMEL_DOWN = new LongHitAnimation(0.05f, "biped/generic/pummel_down", biped);
+        PUMMEL_DOWN = new PushDownAnimation(0.05f, "biped/generic/pummel_down", biped).addProperty(StaticAnimationProperty.PLAY_SPEED, 0.7f);
 
         RANGA_ATTACK_1 = (new DashAttackAnimation(0.1F, 0.05F, 0.25F, 0.6F, 0.7F, ColliderPreset.SWORD, "Tool_R", "biped/ranga/attack_1", biped))
                 .addProperty(AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AttackAnimationProperty.ROTATE_X, true)
@@ -1021,7 +1056,8 @@ public class TCorpAnimations {
                         .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.SHORT))
                 .addProperty(AttackAnimationProperty.ROTATE_X, false)
                 .addProperty(AttackAnimationProperty.LOCK_ROTATION, true)
-                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.8f));
+                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.8f)
+                .addProperty(StaticAnimationProperty.EVENTS, greatSplitHorizontalEvent()));
 
         GREAT_SPLIT_VERTICAL = (new SpecialAttackAnimation(0.1F, "biped/kali/kali_vertical", biped,
                 new AttackAnimation.Phase(0.0F, 0.3F, 0.4F, 0.9F, 0.91F, 0.91F, "Tool_R", TCorpCapabilityPresets.LONGER_BLADE).addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(1)).addProperty(AttackPhaseProperty.STUN_TYPE, StunType.HOLD).addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(1.2f)).addProperty(AttackPhaseProperty.HIT_SOUND, TCorpSounds.KALI_SPLIT_VERTICAL_HIT).addProperty(AttackPhaseProperty.PARTICLE, EpicFightParticles.EVISCERATE),
@@ -1082,7 +1118,7 @@ public class TCorpAnimations {
                 .addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(1f))
                 .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.6f);
 
-        MIMICRY_DASH = (new DashAttackAnimation(0.02F, 0.03F, 0.36F, 0.85F, 1.3F, TCorpCapabilityPresets.LONGER_BLADE, "Tool_R", "biped/mimicry/dash", biped))
+        MIMICRY_DASH = (new DashAttackAnimation(0.02F, 0.03F, 0.36F, 0.85F, 1.8F, TCorpCapabilityPresets.LONGER_BLADE, "Tool_R", "biped/mimicry/dash", biped))
                 .addProperty(AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AttackAnimationProperty.ROTATE_X, true)
                 .addProperty(AttackPhaseProperty.HIT_SOUND, TCorpSounds.KALI_STAB)
                 .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.MIMICRY_DASH_HIT)
@@ -1488,11 +1524,218 @@ public class TCorpAnimations {
         SOLEMN_LAMENT_GUARD_RELOAD = new DodgeAnimation(0.1f, "biped/solemn_lament/parryreload",0.5f, 0.7f, biped).addProperty(StaticAnimationProperty.PLAY_SPEED, 1.15f)
                 .addProperty(StaticAnimationProperty.EVENTS, solemnLamentDodgeReloadEvent());
 
+
+
+        SUNSHOWER_IDLE = new StaticAnimation(0.3f,true, "biped/sunshower/idle", biped).addProperty(StaticAnimationProperty.EVENTS, setOpenstate(0));
+        SUNSHOWER_KNEEL = new StaticAnimation(0.3f,true, "biped/sunshower/kneel", biped).addProperty(StaticAnimationProperty.EVENTS, setOpenstate(0));
+        SUNSHOWER_WALK = new MovementAnimation(0.3f,true, "biped/sunshower/walk", biped).addProperty(StaticAnimationProperty.EVENTS, setOpenstate(0));
+        SUNSHOWER_SNEAK = new MovementAnimation(0.3f,true, "biped/sunshower/sneak", biped).addProperty(StaticAnimationProperty.EVENTS, setOpenstate(0));
+        SUNSHOWER_RUN = new MovementAnimation(0.3f,true, "biped/sunshower/run", biped).addProperty(StaticAnimationProperty.EVENTS, setOpenstate(0)).addProperty(StaticAnimationProperty.PLAY_SPEED, 2f);
+        SUNSHOWER_JUMP = new MovementAnimation(0.3f,true, "biped/sunshower/jump", biped);
+        SUNSHOWER_AUTO_1 = new BasicAttackAnimation(0.08F, 0.05F, 0.55F, 0.83F, 1F, null, "Tool_R", "biped/sunshower/auto_1", biped)
+                .addProperty(AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLADE_HIT)
+                .addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(2))
+                .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
+                .addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.adder(2f))
+                .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.SUNSHOWER_AUTO1_HIT)
+                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 1F)
+                .addProperty(StaticAnimationProperty.EVENTS, attackSound(TCorpSounds.SUNSHOWER_AUTO_1, 0f));
+
+        SUNSHOWER_AUTO_2 = new BasicAttackAnimation(0.08F, 0.05F, 0.12F, 0.25F, 0.35F, null, "Tool_R", "biped/sunshower/auto_2", biped)
+                .addProperty(AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT_HARD)
+                .addProperty(AttackPhaseProperty.SWING_SOUND, TCorpSounds.WOOSH)
+                .addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(1))
+                .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
+                .addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.adder(1f))
+                .addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.4f))
+                .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.SUNSHOWER_AUTO1_HIT)
+                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 1F)
+                .addProperty(StaticAnimationProperty.EVENTS, Sunshower.auto2Event());
+
+        SUNSHOWER_AUTO_3 = new BasicAttackAnimation(0.08F, 0.05F, 0.08F, 0.33F, 0.6F, null, "Tool_R", "biped/sunshower/auto_3", biped)
+                .addProperty(AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT)
+                .addProperty(AttackPhaseProperty.SWING_SOUND, TCorpSounds.WOOSH)
+                .addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(1))
+                .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
+                .addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.adder(1f))
+                .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.SUNSHOWER_AUTO3_HIT)
+                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 1F)
+                .addProperty(StaticAnimationProperty.EVENTS, Sunshower.auto3Event());
+
+        SUNSHOWER_AUTO_4 = new BasicAttackAnimation(0.01F, 0.05F, 0.16F, 0.5F, 0.75F, null, "Tool_R", "biped/sunshower/auto_4", biped)
+                .addProperty(AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT_HARD)
+                .addProperty(AttackPhaseProperty.SWING_SOUND, TCorpSounds.WOOSH)
+                .addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(3))
+                .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.LONG)
+                .addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1.5f))
+                .addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.adder(-4.5f))
+                .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.SUNSHOWER_AUTO3_HIT)
+                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 1F)
+                .addProperty(StaticAnimationProperty.EVENTS, attackSound(TCorpSounds.SUNSHOWER_AUTO_4, 0f));
+
+        SUNSHOWER_GUARD = new StaticAnimation( true, "biped/sunshower/guard", biped).addProperty(StaticAnimationProperty.EVENTS, setOpenstate(1, 0.08f));
+        SUNSHOWER_GUARD_HIT = new GuardAnimation(0.05f, 0.4f,"biped/sunshower/guard_hit", biped).addProperty(StaticAnimationProperty.EVENTS, setOpenstate(1, 0.09f));
+        SUNSHOWER_PARRY_HIT = new GuardAnimation(0.05f, "biped/sunshower/parry_hit", biped).addProperty(StaticAnimationProperty.EVENTS, setOpenstate(0, 0.09f));
+        SUNSHOWER_PARRY_HIT_2 = new GuardAnimation(0.05f, "biped/sunshower/parry_hit2", biped).addProperty(StaticAnimationProperty.EVENTS, setOpenstate(0, 0.09f));
+        SUNSHOWER_PARRY_HIT_3 = new GuardAnimation(0.05f, "biped/sunshower/parry_hit3", biped).addProperty(StaticAnimationProperty.EVENTS, setOpenstate(0, 0.09f));
+
+
+        SUNSHOWER_COUNTER_EVADE = new DodgeAnimation(0.01F, "biped/sunshower/counter_evade", 0.5f, 1f,  biped)
+                .addProperty(StaticAnimationProperty.PLAY_SPEED, 1.5f)
+                .addProperty(StaticAnimationProperty.EVENTS, Sunshower.counterEvent1());
+
+        SUNSHOWER_COUNTER_ATTACK = (new SpecialAttackAnimation(0.1F, "biped/sunshower/counter_attack", biped,
+                new AttackAnimation.Phase(0.0F, 0.2F, 0.33F, 0.83f, 0.9F, 0.9F, "Tool_R", SUNSHOWER_COL).addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(1)).addProperty(AttackPhaseProperty.STUN_TYPE, StunType.HOLD).addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(1.2f)).addProperty(AttackPhaseProperty.HIT_SOUND, TCorpSounds.SWORD_STAB).addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.SUNSHOWER_AUTO1_HIT),
+                new AttackAnimation.Phase(0.9F, 0.9F, 1.25f, 1.4f, 2F, 2f, "Tool_R", SUNSHOWER_COL).addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.5f)).addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(3)).addProperty(AttackPhaseProperty.STUN_TYPE, StunType.LONG).addProperty(AttackPhaseProperty.HIT_SOUND,  EpicFightSounds.BLADE_RUSH_FINISHER).addProperty(AttackPhaseProperty.PARTICLE, EpicFightParticles.EVISCERATE)))
+                .addProperty(AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AttackAnimationProperty.ROTATE_X, true)
+                .addProperty(AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH_BIG)
+                .addProperty(AttackAnimationProperty.COLLIDER_ADDER, 1)
+                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.9f)
+                .addProperty(StaticAnimationProperty.EVENTS, Sunshower.counterEvent2());
+
+        SUNSHOWER_JUMP_ATTACK = (new BasicAttackAnimation(0.3F, 0.35F, 0.4F, 0.75F, 1F, SUNSHOWER_COL, "Tool_R", "biped/sunshower/jump_attack", biped))
+                .addProperty(AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AttackAnimationProperty.ROTATE_X, true)
+                .addProperty(AttackPhaseProperty.HIT_SOUND, TCorpSounds.SWORD_STAB)
+                .addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1f))
+                .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.SUNSHOWER_AUTO1_HIT)
+                .addProperty(AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
+                .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
+                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.8f)
+                .addProperty(AnimationProperty.ActionAnimationProperty.STOP_MOVEMENT, true)
+                .addProperty(AnimationProperty.ActionAnimationProperty.MOVE_VERTICAL, true)
+                .addProperty(StaticAnimationProperty.EVENTS, attackSound(TCorpSounds.SUNSHOWER_AUTO_1, 0f));
+
+        SUNSHOWER_JUMP_ATTACK_F = (new DashAttackAnimation(0.1F, 0.35F, 0.75F, 1F, 1.2F, null, "Tool_R", "biped/sunshower/jump_attack_f", biped))
+                .addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.6f))
+                .addProperty(AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT_HARD)
+                .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.SUNSHOWER_AUTO3_HIT)
+                .addProperty(AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
+                .addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(2))
+                .addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(1.5f))
+                .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.SHORT)
+                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.9f)
+                .addProperty(StaticAnimationProperty.EVENTS, attackSound(TCorpSounds.SUNSHOWER_AUTO_4, 0f));
+
+        SUNSHOWER_PUDDLE_STOMP_1 = new BasicAttackAnimation(0.08F, 0.05F, 0.4F, 0.8F, 1.1F, null, "Tool_R", "biped/sunshower/puddle_stomp_1", biped)
+                .addProperty(AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT)
+                .addProperty(AttackPhaseProperty.SWING_SOUND, TCorpSounds.WOOSH)
+                .addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(3))
+                .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
+                .addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.adder(1f))
+                .addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.3f))
+                .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.SUNSHOWER_AUTO3_HIT)
+                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.9F)
+                .addProperty(StaticAnimationProperty.EVENTS, Sunshower.auto3Event());
+
+        SUNSHOWER_PUDDLE_STOMP_2 = (new SpecialAttackAnimation(0.0F, "biped/sunshower/puddle_stomp_2", biped,
+                new AttackAnimation.Phase(0.0F, 0.2F, 0.4F, 0.83f, 0.9F, 0.9F, "Tool_R", SUNSHOWER_COL).addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(1)).addProperty(AttackPhaseProperty.STUN_TYPE, StunType.HOLD).addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(1.2f)).addProperty(AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT_HARD).addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.SUNSHOWER_AUTO3_HIT),
+                new AttackAnimation.Phase(0.9F, 0.9F, 1.1f, 1.2f, 1.8F, 1.8f, "Tool_R", SUNSHOWER_COL_LARGE).addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1.2f)).addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(3)).addProperty(AttackPhaseProperty.STUN_TYPE, StunType.HOLD).addProperty(AttackPhaseProperty.HIT_SOUND,  EpicFightSounds.BLUNT_HIT_HARD).addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.SUNSHOWER_AUTO1_HIT)))
+                .addProperty(AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AttackAnimationProperty.ROTATE_X, false)
+                .addProperty(AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH_BIG)
+                .addProperty(AttackAnimationProperty.COLLIDER_ADDER, 1)
+                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.8f)
+                .addProperty(StaticAnimationProperty.EVENTS, Sunshower.puddleStomp2Event());
+
+        SUNSHOWER_PUDDLE_STOMP_3 = new DashAttackAnimation(0.00F, 0.4F, 1.45F, 1.55F, 2.5F, SUNSHOWER_COL_LARGE, "Tool_R", "biped/sunshower/puddle_stomp_3", biped)
+                .addProperty(AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AttackAnimationProperty.ROTATE_X, false)
+                .addProperty(AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT_HARD)
+                .addProperty(AttackPhaseProperty.SWING_SOUND, TCorpSounds.WOOSH)
+                .addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(3))
+                .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.KNOCKDOWN)
+                .addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.adder(1f))
+                .addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1.5f))
+                .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.SUNSHOWER_AUTO3_HIT)
+                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.9F)
+                .addProperty(StaticAnimationProperty.EVENTS, Sunshower.puddleStomp3Event());
+
+        SUNSHOWER_SPREAD_OUT_1 = new DashAttackAnimation(0.08F, 0.05F, 0.33F, 0.75F, 1.1F, null, "Chest", "biped/sunshower/spread_out_1", biped)
+                .addProperty(AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AttackPhaseProperty.HIT_SOUND, TCorpSounds.SWORD_STAB)
+                .addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(10))
+                .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.SHORT)
+                .addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.adder(2f))
+                .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.SUNSHOWER_AUTO3_HIT)
+                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 1F)
+                .addProperty(StaticAnimationProperty.EVENTS, Sunshower.spreadout1Event());
+
+        SUNSHOWER_SPREAD_OUT_2 = new AttackAnimation(0.08F, 0.05F, 0.33F, 0.75F, 1.1F, null, "Tool_R", "biped/sunshower/spread_out_2", biped)
+                .addProperty(AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AttackPhaseProperty.HIT_SOUND, TCorpSounds.SUNSHOWER_SPREAD_OUT_2)
+                .addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(1))
+                .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.HOLD)
+                .addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.adder(2f))
+                .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.SUNSHOWER_AUTO1_HIT)
+                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.8F)
+                .addProperty(StaticAnimationProperty.EVENTS, Sunshower.spreadout2Event());
+
+        SUNSHOWER_SPREAD_OUT_3 = new AttackAnimation(0.08F, 0.05F, 0.5F, 0.6F, 1.1F, SUNSHOWER_COL_LARGE, "Tool_R", "biped/sunshower/spread_out_3", biped)
+                .addProperty(AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AttackPhaseProperty.HIT_SOUND, TCorpSounds.SWORD_STAB)
+                .addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(3))
+                .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.KNOCKDOWN)
+                .addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.adder(2f))
+                .addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(2f))
+                .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.SUNSHOWER_AUTO3_HIT)
+                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.5F)
+                .addProperty(StaticAnimationProperty.EVENTS, Sunshower.spreadout3Event());
+
+        SUNSHOWER_DASH = new AttackAnimation(0.08F, 0.05F, 0.33F, 0.75F, 1.1F, null, "Tool_R", "biped/sunshower/dash", biped)
+                .addProperty(AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AttackPhaseProperty.HIT_SOUND, TCorpSounds.SUNSHOWER_SPREAD_OUT_2)
+                .addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(2))
+                .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.SHORT)
+                .addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.adder(2f))
+                .addProperty(AttackPhaseProperty.PARTICLE, TCorpParticleRegistry.SUNSHOWER_AUTO1_HIT)
+                .addProperty(AttackAnimationProperty.BASIS_ATTACK_SPEED, 1F)
+                .addProperty(StaticAnimationProperty.EVENTS, Sunshower.dashAttackEvent());
+
+        LIFT_UP = new PushDownAnimation(0.05f, "biped/sunshower/lift_up", biped).addProperty(StaticAnimationProperty.PLAY_SPEED, 0.7f);
+
     }
 
-    private static void spawnArmatureParticle(LivingEntityPatch<?> entityPatch, int partialTicks, Vector3d offsets, int amount, IParticleData particle, float speedmult, String jointName) {
+    public static void spawnArmatureParticle(LivingEntityPatch<?> entityPatch, int partialTicks, Vector3d offsets, int amount, IParticleData particle, float speedmult, String jointName) {
         spawnArmatureParticle(entityPatch,partialTicks,offsets,amount,particle,speedmult, jointName,false);
     }
+
+    public static StaticAnimation.Event[] greatSplitHorizontalEvent() {
+        StaticAnimation.Event[] events = new StaticAnimation.Event[1];
+
+        events[0] = StaticAnimation.Event.create(1.5f, (entitypatch) -> {
+            LivingEntity ent = entitypatch.getOriginal();
+            ent.level.addParticle(TCorpParticleRegistry.GREAT_SPLIT_HORIZONTAL.get(), ent.getX(), ent.getY()+0.9f, ent.getZ(), 0, ent.getId(), 0);
+        }, StaticAnimation.Event.Side.CLIENT);
+        return events;
+    }
+
+    public static void playArmatureSound(LivingEntityPatch<?> entityPatch, int partialTicks, SoundEvent sound, SoundCategory cat, String jointName) {
+        Pose currentPose = entityPatch.getAnimator().getPose(partialTicks);
+        World l = entityPatch.getOriginal().level;
+        Random r = l.random;
+        Vector3d posMid = entityPatch.getOriginal().position();
+
+        OpenMatrix4f middleModelTf = OpenMatrix4f.createTranslation((float)posMid.x, (float)posMid.y, (float)posMid.z)
+                .mulBack(OpenMatrix4f.createRotatorDeg(180.0F, Vec3f.Y_AXIS)
+                        .mulBack(entityPatch.getModelMatrix(partialTicks)));
+        OpenMatrix4f middleJointTf;
+        if (l.isClientSide)
+            middleJointTf = Animator.getBindedJointTransformByName(currentPose,entityPatch.getEntityModel(ClientModels.LOGICAL_CLIENT).getArmature(), jointName).mulFront(middleModelTf);
+        else
+            middleJointTf = Animator.getBindedJointTransformByName(currentPose,entityPatch.getEntityModel(ClientModels.LOGICAL_SERVER).getArmature(), jointName).mulFront(middleModelTf);
+
+        //entityPatch.getAnimator().getPose((float) (i + r.nextInt(3) - 1) / 10F).getJointTransformData().get("Tool_R").toMatrix().mulFront(middleModelTf);
+
+        Vector3d particlePos = OpenMatrix4f.transform(middleJointTf, new Vector3d(0,0,0));
+        l.playSound(null, new BlockPos(particlePos.x, particlePos.y, particlePos.z), sound, cat, 1, 1);
+        System.out.println("PLAYING SOUND AT: "+particlePos);
+    }
+
     public static void spawnArmatureParticle(LivingEntityPatch<?> entityPatch, int partialTicks, Vector3d offsets, int amount, IParticleData particle, float speedmult, String jointName, boolean acceptServerSide) {
         Pose currentPose = entityPatch.getAnimator().getPose(partialTicks);
         float speedMultHalf = speedmult / 2;
@@ -1526,7 +1769,7 @@ public class TCorpAnimations {
 
 
 
-    private static Vector3d getArmaturePosition(LivingEntityPatch<?> entityPatch, int partialTicks, Vector3d offsets, float speedmult, String jointName) {
+    public static Vector3d getArmaturePosition(LivingEntityPatch<?> entityPatch, int partialTicks, Vector3d offsets, float speedmult, String jointName) {
         Pose currentPose = entityPatch.getAnimator().getPose(partialTicks);
         float speedMultHalf = speedmult / 2;
         World l = entityPatch.getOriginal().level;
@@ -1590,6 +1833,15 @@ public class TCorpAnimations {
         }
     }
 
+    private static StaticAnimation.Event[] attackSound(SoundEvent e, float timeStamp) {
+        StaticAnimation.Event[] events = new StaticAnimation.Event[1];
+
+        events[0] = StaticAnimation.Event.create(timeStamp, (entitypatch) -> {
+            entitypatch.playSound(e, 1, 1);
+        }, StaticAnimation.Event.Side.BOTH);
+
+        return events;
+    }
 
         // Adds furioso attack stacks in a generic manner.
     private static StaticAnimation.Event[] genericFuriosoEvent(int amount) {
@@ -1643,28 +1895,28 @@ public class TCorpAnimations {
         return events;
     }
 
-    private static StaticAnimation.Event[] solemnLamentEvent(float time, boolean black, float timeEnd) {
+    private static StaticAnimation.Event[] solemnLamentEvent(float time, boolean departedGun, float timeEnd) {
         StaticAnimation.Event[] events = new StaticAnimation.Event[2];
         events[0] = StaticAnimation.Event.create(time, (entitypatch) -> {
 
             boolean fast = time < 0.2f;
 
-            entitypatch.playSound(black ? (fast ? TCorpSounds.SOLEMN_LAMENT_FAST_BLACK : TCorpSounds.SOLEMN_LAMENT_AUTO_BLACK) : (fast ? TCorpSounds.SOLEMN_LAMENT_FAST_WHITE : TCorpSounds.SOLEMN_LAMENT_AUTO_WHITE), 1, 1);
-            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-0.2,-0.4), 1, black ? TCorpParticleRegistry.SOLEMN_LAMENT_FIRE_DEPARTED.get() : TCorpParticleRegistry.SOLEMN_LAMENT_FIRE_LIVING.get(), 0, black ? "Tool_L" : "Tool_R", false);
-            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-0.5,-0.4), 2, black ? TCorpParticleRegistry.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get() : TCorpParticleRegistry.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, black ? "Tool_L" : "Tool_R", false);
-            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1,-0.4), 2, black ? TCorpParticleRegistry.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get() : TCorpParticleRegistry.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, black ? "Tool_L" : "Tool_R", false);
-            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-2,-0.4), 2, black ? TCorpParticleRegistry.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get() : TCorpParticleRegistry.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, black ? "Tool_L" : "Tool_R", false);
-            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-2.5,-0.4), 2, black ? TCorpParticleRegistry.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get() : TCorpParticleRegistry.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, black ? "Tool_L" : "Tool_R", false);
-            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-3.2,-0.4), 2, black ? TCorpParticleRegistry.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get() : TCorpParticleRegistry.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, black ? "Tool_L" : "Tool_R", false);
+            entitypatch.playSound(departedGun ? (fast ? TCorpSounds.SOLEMN_LAMENT_FAST_BLACK : TCorpSounds.SOLEMN_LAMENT_AUTO_BLACK) : (fast ? TCorpSounds.SOLEMN_LAMENT_FAST_WHITE : TCorpSounds.SOLEMN_LAMENT_AUTO_WHITE), 1, 1);
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-0.2,-0.4), 1, departedGun ? TCorpParticleRegistry.SOLEMN_LAMENT_FIRE_DEPARTED.get() : TCorpParticleRegistry.SOLEMN_LAMENT_FIRE_LIVING.get(), 0, departedGun ? "Tool_L" : "Tool_R", false);
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-0.5,-0.4), 2, departedGun ? TCorpParticleRegistry.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get() : TCorpParticleRegistry.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, departedGun ? "Tool_L" : "Tool_R", false);
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1,-0.4), 2, departedGun ? TCorpParticleRegistry.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get() : TCorpParticleRegistry.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, departedGun ? "Tool_L" : "Tool_R", false);
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-2,-0.4), 2, departedGun ? TCorpParticleRegistry.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get() : TCorpParticleRegistry.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, departedGun ? "Tool_L" : "Tool_R", false);
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-2.5,-0.4), 2, departedGun ? TCorpParticleRegistry.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get() : TCorpParticleRegistry.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, departedGun ? "Tool_L" : "Tool_R", false);
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-3.2,-0.4), 2, departedGun ? TCorpParticleRegistry.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get() : TCorpParticleRegistry.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, departedGun ? "Tool_L" : "Tool_R", false);
 
             if (!entitypatch.getOriginal().level.isClientSide()) {
-                SolemnLamentEffects.decrementEffect(entitypatch.getOriginal(), black ? SolemnLamentEffects.getDeparted() : SolemnLamentEffects.getLiving());
+                SolemnLamentEffects.decrementEffect(entitypatch.getOriginal(), departedGun ? SolemnLamentEffects.getDeparted() : SolemnLamentEffects.getLiving());
             }
             }, StaticAnimation.Event.Side.BOTH);
         events[1] = StaticAnimation.Event.create(timeEnd, (entitypatch) -> {
-            if (SolemnLamentEffects.getAmmoCount(entitypatch.getOriginal(), black ? SolemnLamentEffects.getDeparted() : SolemnLamentEffects.getLiving()) == 0) {
-                if (SolemnLamentEffects.getAmmoCount(entitypatch.getOriginal(), black ? SolemnLamentEffects.getLiving() : SolemnLamentEffects.getDeparted()) > 0) {
-                    entitypatch.reserveAnimation(black ? TCorpAnimations.SOLEMN_LAMENT_AUTO_R1 : TCorpAnimations.SOLEMN_LAMENT_AUTO_L1);
+            if (SolemnLamentEffects.getAmmoCount(entitypatch.getOriginal(), departedGun ? SolemnLamentEffects.getDeparted() : SolemnLamentEffects.getLiving()) == 0) {
+                if (SolemnLamentEffects.getAmmoCount(entitypatch.getOriginal(), departedGun ? SolemnLamentEffects.getLiving() : SolemnLamentEffects.getDeparted()) > 0) {
+                    entitypatch.reserveAnimation(departedGun ? TCorpAnimations.SOLEMN_LAMENT_AUTO_R1 : TCorpAnimations.SOLEMN_LAMENT_AUTO_L1);
                 }
             }
         }, StaticAnimation.Event.Side.BOTH);
@@ -1818,11 +2070,6 @@ public class TCorpAnimations {
                     }
                 }
             }
-
-
-
-
-
             //spawnBlockImpactParticle(entitypatch, 0, new Vector3d(0, -1, -1.8), 20, TCorpParticleRegistry.WHEELS_IMPACT.get(), 0.5f, new Vector3i(0,2.3f,0));
         }, StaticAnimation.Event.Side.BOTH);
 
@@ -1830,7 +2077,7 @@ public class TCorpAnimations {
     }
 
     static Random r = new Random();
-    private static float ranBetween(float min, float max) {
+    public static float ranBetween(float min, float max) {
         return r.nextFloat()*(max-min) + min;
     }
 
@@ -1886,9 +2133,7 @@ public class TCorpAnimations {
                                         living.hurt(DamageSource.mobAttack(entity), (float) 12);
                                     if (entity.hasEffect(FuriosoPotionEffect.potion.getEffect())) {
                                         System.out.println("Furioso active, doing minor attack.");
-                                        if (targetPatch.getHitAnimation(StunType.LONG) == Animations.BIPED_HIT_LONG) {
-                                            targetPatch.playAnimationSynchronized(TCorpAnimations.PUMMEL_DOWN, 0.0F);
-                                        }
+                                        pummelDownEntity(targetPatch, 2);
                                     } else {
                                         if (targetPatch.getHitAnimation(StunType.KNOCKDOWN) != null) {
                                             targetPatch.playAnimationSynchronized(targetPatch.getHitAnimation(StunType.KNOCKDOWN), 0f);
@@ -2300,7 +2545,7 @@ public class TCorpAnimations {
             if (!projectileLevel.isClientSide()) {
                 ProjectileEntity _entityToSpawn = new Object() {
                     public ProjectileEntity getArrow(World world, Entity shooter, float damage, int knockback) {
-                        AbstractArrowEntity entityToSpawn = new AtelierPistolsBullet.ArrowCustomEntity(AtelierPistolsBullet.pistol_bullet, world);
+                        AbstractArrowEntity entityToSpawn = new AtelierPistolsBullet.AtelierPistolBulletProj(TCorpModEntities.ATELIER_PISTOL_BULLET.get(), world);
                         entityToSpawn.setOwner(shooter);
                         entityToSpawn.setBaseDamage(damage);
                         entityToSpawn.setKnockback(knockback);
@@ -2342,7 +2587,7 @@ public class TCorpAnimations {
             if (!projectileLevel.isClientSide()) {
                 ProjectileEntity _entityToSpawn = new Object() {
                     public ProjectileEntity getArrow(World world, Entity shooter, float damage, int knockback) {
-                        AbstractArrowEntity entityToSpawn = new AtelierPistolsBullet.ArrowCustomEntity(AtelierPistolsBullet.pistol_bullet, world);
+                        AbstractArrowEntity entityToSpawn = new AtelierPistolsBullet.AtelierPistolBulletProj(TCorpModEntities.ATELIER_PISTOL_BULLET.get(), world);
                         entityToSpawn.setOwner(shooter);
                         entityToSpawn.setBaseDamage(damage);
                         entityToSpawn.setKnockback(knockback);
@@ -2385,7 +2630,7 @@ public class TCorpAnimations {
             if (!projectileLevel.isClientSide()) {
                 ProjectileEntity _entityToSpawn = new Object() {
                     public ProjectileEntity getArrow(World world, Entity shooter, float damage, int knockback) {
-                        AbstractArrowEntity entityToSpawn = new AtelierShotgunBullet.ArrowCustomEntity(AtelierShotgunBullet.shotgun_slug, world);
+                        AbstractArrowEntity entityToSpawn = new AtelierShotgunBullet.AtelierShotgunSlugProj(TCorpModEntities.ATELIER_SHOTGUN_BULLET.get(), world);
                         entityToSpawn.setOwner(shooter);
                         entityToSpawn.setBaseDamage(damage);
                         entityToSpawn.setKnockback(knockback);
@@ -2522,6 +2767,7 @@ public class TCorpAnimations {
                 if (SanitySystem.getSanity((PlayerEntity) entity) > ampl * 1.5f) {
                     SanitySystem.damageSanity((PlayerEntity) entity, ampl * 1.5f);
                     MagicBulletProjectile.shoot(entity, ampl-1, false);
+
                 } else {
                     if (ampl > 1) {
                         MagicBulletProjectile.shoot(entity, ampl-2, true);
@@ -2531,7 +2777,7 @@ public class TCorpAnimations {
                         ((ServerWorld) world).sendParticles(TCorpParticleRegistry.MAGIC_BULLET_IMPACT_HIT.get(), (entity.getX()), (entity.getY()),
                                 (entity.getZ()), (int) 1, (entity.getBbWidth() / 7), (entity.getBbHeight() / 7), (entity.getBbWidth() / 7), 0);
                     }
-                    entity.hurt(DamageSource.playerAttack((PlayerEntity) entity).setMagic(), (7 + ampl) * 1.4f);
+                    entity.hurt(DamageSource.playerAttack((PlayerEntity) entity).setMagic(), (7 + ampl) * 0.7f);
                 }
             } else {
                 MagicBulletProjectile.shoot(entity, ampl-1, false);
@@ -2598,7 +2844,7 @@ public class TCorpAnimations {
                         ((ServerWorld) world).sendParticles(TCorpParticleRegistry.MAGIC_BULLET_IMPACT_HIT.get(), (entity.getX()), (entity.getY()),
                                 (entity.getZ()), (int) 1, (entity.getBbWidth() / 7), (entity.getBbHeight() / 7), (entity.getBbWidth() / 7), 0);
                     }
-                    entity.hurt(DamageSource.playerAttack((PlayerEntity) entity).setMagic(), (7 + ampl) * 1.4f);
+                    entity.hurt(DamageSource.playerAttack((PlayerEntity) entity).setMagic(), (7 + ampl) * 0.7f);
                 }
             } else {
                 MagicBulletProjectile.shoot(entity, ampl-1, false);

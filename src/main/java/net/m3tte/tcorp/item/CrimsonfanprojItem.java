@@ -36,8 +36,8 @@ import java.util.Random;
 public class CrimsonfanprojItem extends TcorpModElements.ModElement {
 	@ObjectHolder("tcorp:crimsonfanproj")
 	public static final Item block = null;
-	public static final EntityType<ArrowCustomEntity> crimson_wind = (EntityType<ArrowCustomEntity>) (EntityType.Builder.<ArrowCustomEntity>of(ArrowCustomEntity::new, EntityClassification.MISC)
-			.setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).setCustomClientFactory(ArrowCustomEntity::new)
+	public static final EntityType<CrimsonWindProj> crimson_wind = (EntityType<CrimsonWindProj>) (EntityType.Builder.<CrimsonWindProj>of(CrimsonWindProj::new, EntityClassification.MISC)
+			.setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).setCustomClientFactory(CrimsonWindProj::new)
 			.sized(0.5f, 0.5f)).build("projectile_crimsonfanproj");
 
 	public CrimsonfanprojItem(TcorpModElements instance) {
@@ -83,7 +83,7 @@ public class CrimsonfanprojItem extends TcorpModElements.ModElement {
 				double y = entity.getY();
 				double z = entity.getZ();
 				if (true) {
-					ArrowCustomEntity entityarrow = shoot(world, entity, random, 1f, 4, 5);
+					CrimsonWindProj entityarrow = shoot(world, entity, random, 1f, 4, 5);
 					itemstack.hurt(1, random ,entity);
 					entityarrow.pickup = AbstractArrowEntity.PickupStatus.DISALLOWED;
 				}
@@ -92,20 +92,20 @@ public class CrimsonfanprojItem extends TcorpModElements.ModElement {
 	}
 
 	@OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem.class)
-	public static class ArrowCustomEntity extends AbstractArrowEntity implements IRendersAsItem {
-		public ArrowCustomEntity(FMLPlayMessages.SpawnEntity packet, World world) {
+	public static class CrimsonWindProj extends AbstractArrowEntity implements IRendersAsItem {
+		public CrimsonWindProj(FMLPlayMessages.SpawnEntity packet, World world) {
 			super(crimson_wind, world);
 		}
 
-		public ArrowCustomEntity(EntityType<? extends ArrowCustomEntity> type, World world) {
+		public CrimsonWindProj(EntityType<? extends CrimsonWindProj> type, World world) {
 			super(type, world);
 		}
 
-		public ArrowCustomEntity(EntityType<? extends ArrowCustomEntity> type, double x, double y, double z, World world) {
+		public CrimsonWindProj(EntityType<? extends CrimsonWindProj> type, double x, double y, double z, World world) {
 			super(type, x, y, z, world);
 		}
 
-		public ArrowCustomEntity(EntityType<? extends ArrowCustomEntity> type, LivingEntity entity, World world) {
+		public CrimsonWindProj(EntityType<? extends CrimsonWindProj> type, LivingEntity entity, World world) {
 			super(type, entity, world);
 		}
 
@@ -141,8 +141,8 @@ public class CrimsonfanprojItem extends TcorpModElements.ModElement {
 		}
 	}
 
-	public static ArrowCustomEntity shoot(World world, LivingEntity entity, Random random, float power, double damage, int knockback) {
-		ArrowCustomEntity entityarrow = new ArrowCustomEntity(crimson_wind, entity, world);
+	public static CrimsonWindProj shoot(World world, LivingEntity entity, Random random, float power, double damage, int knockback) {
+		CrimsonWindProj entityarrow = new CrimsonWindProj(crimson_wind, entity, world);
 		entityarrow.shoot(entity.getLookAngle().x, entity.getLookAngle().y, entity.getLookAngle().z, power * 2, 0);
 		entityarrow.setSilent(true);
 		entityarrow.setBaseDamage(damage);
@@ -157,8 +157,8 @@ public class CrimsonfanprojItem extends TcorpModElements.ModElement {
 		return entityarrow;
 	}
 
-	public static ArrowCustomEntity shoot(LivingEntity entity, LivingEntity target) {
-		ArrowCustomEntity entityarrow = new ArrowCustomEntity(crimson_wind, entity, entity.level);
+	public static CrimsonWindProj shoot(LivingEntity entity, LivingEntity target) {
+		CrimsonWindProj entityarrow = new CrimsonWindProj(crimson_wind, entity, entity.level);
 		double d0 = target.getY() + (double) target.getEyeHeight() - 1.1;
 		double d1 = target.getX() - entity.getX();
 		double d3 = target.getZ() - entity.getZ();

@@ -151,7 +151,6 @@ public class GenericOverlay extends ModIngameGui {
 
 		MatrixStack matStack = event.getMatrixStack();
 
-
 		// Blip UI
 
 			/*matStack.pushPose();
@@ -370,8 +369,11 @@ public class GenericOverlay extends ModIngameGui {
 		if (emotionBarProgress > 1)
 			emotionBarProgress = 1;
 
-		if (playerVariables.emotionLevel >= 5)
+		if (playerVariables.emotionLevel >= 5) {
 			emotionBarProgress = 1;
+			playerVariables.emotionLevel = 5;
+		}
+
 
 		int offsets = (int)(35 * emotionBarProgress);
 		if (emotionBarProgress > 0) {

@@ -11,7 +11,7 @@ public class SanitySystem {
 
         playerVariables.sanity -= amnt;
 
-        playerVariables.syncPlayerVariables(player);
+        playerVariables.syncSanity(player);
     }
 
     public static void healSanity(PlayerEntity player, float amnt) {
@@ -19,7 +19,7 @@ public class SanitySystem {
 
         playerVariables.sanity = Math.min(amnt + playerVariables.sanity, playerVariables.maxSanity);
 
-        playerVariables.syncPlayerVariables(player);
+        playerVariables.syncSanity(player);
     }
 
     public static double getSanity(PlayerEntity player) {

@@ -39,8 +39,14 @@ public class TCorpCapabilityPresets {
     public static final Collider LONGER_BLADE = new MultiOBBCollider(4, 0.4, 0.6, 0.9, 0.0, 0.0, -0.8);
     public static final Collider SPLIT_HORIZONTAL = new MultiOBBCollider(4, 0.4, 0.6, 1.1, 0.0, 0.0, -0.8);
 
+    public static final Collider SUNSHOWER_COL = new MultiOBBCollider(4, 0.4, 0.6, 1, 0.0, 0.0, -1);
+    public static final Collider SUNSHOWER_COL_LARGE = new MultiOBBCollider(4, 0.8, 0.8, 0.6, 0.0, 0.0, -0.6);
 
     public static final Collider RIFLE = new MultiOBBCollider(4, 0.2, 1, 0.2, 0, 0.0, -0.4);
+
+    public static final Collider DoubtBlade = new MultiOBBCollider(4, 0.2, 1.3, 0.2, 0, 0.3, 0);
+    public static final Collider NTBlade = new MultiOBBCollider(4, 0.7, 1.5, 1.3, 0, 0.3, 0);
+
 
     public static final Collider SOLEMN_LAMENT_HITBOX = new MultiOBBCollider(4, 0.6, 2.8, 0.6, 0, -2.5, 0);
     public static final Collider SOLEMN_LAMENT_HITBOX_EXT = new MultiOBBCollider(4, 0.6, 3.3, 0.6, 0, -3.3, 0);
@@ -498,6 +504,28 @@ public class TCorpCapabilityPresets {
             .newStyleCombo(Styles.TWO_HAND, TCorpAnimations.MAGIC_BULLET_AUTO_1, TCorpAnimations.MAGIC_BULLET_AUTO_2, TCorpAnimations.MAGIC_BULLET_AUTO_3, TCorpAnimations.MAGIC_BULLET_DASH, TCorpAnimations.MAGIC_BULLET_JUMP_ATTACK)
 
             .canBePlacedOffhand(false);
+
+    public static final Function<Item, CapabilityItem.Builder> SUNSHOWER = (item) -> WeaponCapability.builder()
+            .category(TCorpCategories.SUNSHOWER)
+            .styleProvider((playerpatch) -> {
+                return Styles.TWO_HAND;
+            })
+            .collider(SUNSHOWER_COL)
+            .hitSound(EpicFightSounds.BLUNT_HIT)
+
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.IDLE, TCorpAnimations.SUNSHOWER_IDLE)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.WALK, TCorpAnimations.SUNSHOWER_WALK)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.SNEAK, TCorpAnimations.SUNSHOWER_SNEAK)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.KNEEL, TCorpAnimations.SUNSHOWER_KNEEL)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.RUN, TCorpAnimations.SUNSHOWER_RUN)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.JUMP, TCorpAnimations.SUNSHOWER_JUMP)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.BLOCK, TCorpAnimations.SUNSHOWER_GUARD)
+            .passiveSkill(TCorpSkills.SUNSHOWER_PASSIVE)
+            .specialAttack(Styles.TWO_HAND, TCorpSkills.SUNSHOWER_PUDDLE_STOMP)
+
+            .newStyleCombo(Styles.TWO_HAND, TCorpAnimations.SUNSHOWER_AUTO_1, TCorpAnimations.SUNSHOWER_AUTO_2, TCorpAnimations.SUNSHOWER_AUTO_3, TCorpAnimations.SUNSHOWER_AUTO_4, TCorpAnimations.SUNSHOWER_DASH, TCorpAnimations.SUNSHOWER_JUMP_ATTACK)
+
+            .canBePlacedOffhand(false);
     public TCorpCapabilityPresets() {
     }
 
@@ -517,6 +545,7 @@ public class TCorpCapabilityPresets {
         event.getTypeEntry().put("old_boys_workshop", OLD_BOYS);
         event.getTypeEntry().put("wheels_industry", WHEELS_INDUSTRY);
         event.getTypeEntry().put("magic_bullet", MAGIC_BULLET);
+        event.getTypeEntry().put("sunshower", SUNSHOWER);
         event.getTypeEntry().put("solemn_lament", SOLEMN_LAMENT);
     }
 }

@@ -23,8 +23,10 @@ public class PackageRegistry {
                 TcorpModVariables.PlayerVariablesSyncMessage::handler);
         addNetworkMessage(TcorpModVariables.SyncStaggerMessage.class, TcorpModVariables.SyncStaggerMessage::buffer, TcorpModVariables.SyncStaggerMessage::new,
                 TcorpModVariables.SyncStaggerMessage::handler);
-        addNetworkMessage(TcorpModVariables.SyncEmotionMessage.class, TcorpModVariables.SyncEmotionMessage::buffer, TcorpModVariables.SyncEmotionMessage::new,
-                TcorpModVariables.SyncEmotionMessage::handler);
+        addNetworkMessage(TcorpModVariables.SyncEmotionLevelMSG.class, TcorpModVariables.SyncEmotionLevelMSG::buffer, TcorpModVariables.SyncEmotionLevelMSG::new,
+                TcorpModVariables.SyncEmotionLevelMSG::handler);
+        addNetworkMessage(TcorpModVariables.SyncSanityMessage.class, TcorpModVariables.SyncSanityMessage::buffer, TcorpModVariables.SyncSanityMessage::new,
+                TcorpModVariables.SyncSanityMessage::handler);
         addNetworkMessage(StaggerPackages.SendStaggerMessage.class, StaggerPackages.SendStaggerMessage::buffer, StaggerPackages.SendStaggerMessage::new,
                 StaggerPackages.SendStaggerMessage::handler);
         addNetworkMessage(AbilityPackages.SyncOnrushData.class, AbilityPackages.SyncOnrushData::buffer, AbilityPackages.SyncOnrushData::new,

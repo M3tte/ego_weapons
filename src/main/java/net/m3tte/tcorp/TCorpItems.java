@@ -12,11 +12,15 @@ import net.m3tte.tcorp.item.redmist.RedMistEGOSuit;
 import net.m3tte.tcorp.item.redmist.RedMistJacket;
 import net.m3tte.tcorp.item.solemn_lament.SolemnLament;
 import net.m3tte.tcorp.item.solemn_lament.SolemnLamentArmor;
+import net.m3tte.tcorp.item.sunshower.Sunshower;
+import net.m3tte.tcorp.item.sunshower.SunshowerArmor;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.particles.ParticleType;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -73,8 +77,13 @@ public class TCorpItems {
     public static RegistryObject<Item> SOLEMN_LAMENT_WHITE = registerItem("solemn_lament_living", new SolemnLament( 4, -2.3f, new Item.Properties().tab(ItemGroup.TAB_COMBAT), false));
     public static RegistryObject<Item> SOLEMN_LAMENT_BLACK = registerItem("solemn_lament_departed", new SolemnLament( 5, -2.3f, new Item.Properties().tab(ItemGroup.TAB_COMBAT), true));
 
+    public static RegistryObject<Item> DOUBT_SPAWN_EGG = registerItem("doubt_spawn_egg", new ForgeSpawnEggItem(TCorpModEntities.DAWN_OF_GREEN_DOUBT, 16777215, 16777215, new Item.Properties().tab(ItemGroup.TAB_MISC)));
+    public static RegistryObject<Item> NOTHING_THERE_SPAWN_EGG = registerItem("nothing_there_spawn_egg", new ForgeSpawnEggItem(TCorpModEntities.NOTHING_THERE, 16777215, 16777215, new Item.Properties().tab(ItemGroup.TAB_MISC)));
 
+    public static RegistryObject<Item> SUNSHOWER = registerItem("sunshower", new Sunshower( 3, -2.65f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
 
+    public static RegistryObject<Item> SUNSHOWER_CLOAK = registerItem("sunshower_cloak", SunshowerArmor.getArmorForSlot(EquipmentSlotType.CHEST));
+    public static RegistryObject<Item> SUNSHOWER_HOOD = registerItem("sunshower_hood", SunshowerArmor.getArmorForSlot(EquipmentSlotType.HEAD));
 
     private static RegistryObject<Item> registerItem(String registryName, Item i) {
         return ITEMS.register(registryName, () -> i);

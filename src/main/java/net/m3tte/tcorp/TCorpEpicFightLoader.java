@@ -6,6 +6,7 @@
 package net.m3tte.tcorp;
 
 import net.m3tte.tcorp.gameasset.TCorpAnimations;
+import net.m3tte.tcorp.gameasset.TCorpMobAnimations;
 import net.m3tte.tcorp.gameasset.TCorpSkills;
 import net.m3tte.tcorp.world.capabilities.item.TCorpCapabilityPresets;
 import net.m3tte.tcorp.world.capabilities.item.TCorpCategories;

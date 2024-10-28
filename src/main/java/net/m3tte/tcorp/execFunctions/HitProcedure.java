@@ -40,7 +40,7 @@ import java.util.Map;
 public class HitProcedure {
 	@Mod.EventBusSubscriber
 	private static class GlobalTrigger {
-		@SubscribeEvent
+		//@SubscribeEvent
 		public static void onEntityAttacked(LivingAttackEvent event) {
 			if (event != null && event.getEntity() != null) {
 				Entity entity = event.getEntity();
@@ -133,31 +133,7 @@ public class HitProcedure {
 						}
 					}
 
-					if (living.hasEffect(OrlandoPotionEffect.potion) && living instanceof PlayerEntity) {
-						PlayerEntity player = (PlayerEntity) living;
 
-						PlayerPatch<?> entitypatch = (PlayerPatch<?>) entity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-
-						// Blacksilence Auto Dodge, has a 30% Chance
-						if (!world.isClientSide() && !player.getCooldowns().isOnCooldown(TCorpItems.PERCEPTION_BLOCKING_MASK.get()) && entitypatch.getStamina() > entitypatch.getMaxStamina() * 0.2f) {
-							if (amount > 6 && living.getRandom().nextFloat() > 0.7) {
-								entitypatch.setStamina(entitypatch.getStamina() - entitypatch.getMaxStamina() * 0.4f);
-								player.getCooldowns().addCooldown(TCorpItems.PERCEPTION_BLOCKING_MASK.get(), 240);
-								entitypatch.playAnimationSynchronized(TCorpAnimations.BS_DODGE, 0);
-
-								if (dependencies.get("event") != null) {
-									Object _obj = dependencies.get("event");
-									if (_obj instanceof Event) {
-										Event _evt = (Event) _obj;
-										if (_evt.isCancelable())
-											_evt.setCanceled(true);
-									}
-								}
-							} else if (amount > 6) {
-								player.getCooldowns().addCooldown(TCorpItems.PERCEPTION_BLOCKING_MASK.get(), 60);
-							}
-						}
-					}
 
 				}
 			}

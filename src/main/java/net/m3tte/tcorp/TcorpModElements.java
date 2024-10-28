@@ -6,16 +6,13 @@
  */
 package net.m3tte.tcorp;
 
-import net.m3tte.tcorp.item.magic_bullet.MagicBulletProjectile;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;

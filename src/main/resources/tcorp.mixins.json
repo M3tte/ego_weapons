@@ -7,11 +7,14 @@
   ],
   "mixins": [
     "LivingEntityDamageMixin",
-    "PlayerEntityDamageMixin"
+    "PlayerEntityDamageMixin",
+    "PlayerRenderLayerMixin"
   ],
   "client": [
     "HotbarRenderMixin",
-    "MusicTickerMixin"
+    "MusicTickerMixin",
+    "epicfight.EntityIndicatorMixin",
+    "epicfight.HealthbarIndicatorMixin"
   ],
   "minVersion": "0.8"
 }

@@ -16,6 +16,7 @@ import net.m3tte.tcorp.procedures.abilities.ItemAbility;
 import net.m3tte.tcorp.world.capabilities.SanitySystem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -24,6 +25,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.registries.ForgeRegistries;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
+import yesman.epicfight.world.effect.EpicFightMobEffects;
 
 import static net.m3tte.tcorp.procedures.abilities.AbilityUtils.applyBlipCooldown;
 
@@ -111,7 +113,7 @@ public class MagicBulletWeaponAbility extends ItemAbility {
             LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
             player.getCooldowns().addCooldown(TCorpItems.MIMICRY.get(), (int) 20);
             playerVars.globalcooldown = 100;
-
+            entitypatch.getOriginal().addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 60, 0));
 
             entitypatch.playAnimationSynchronized((potency >= 6) ? TCorpAnimations.MAGIC_BULLET_AIM_2 : TCorpAnimations.MAGIC_BULLET_AIM_1, 0.1f);
             if (world instanceof ServerWorld) {

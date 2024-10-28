@@ -1,6 +1,7 @@
 package net.m3tte.tcorp.skill;
 
 import com.google.common.collect.Lists;
+import net.m3tte.tcorp.TCorpSounds;
 import net.m3tte.tcorp.TcorpModElements;
 import net.m3tte.tcorp.gameasset.TCorpAnimations;
 import net.m3tte.tcorp.world.capabilities.EmotionSystem;
@@ -8,6 +9,7 @@ import net.m3tte.tcorp.world.capabilities.item.TCorpCategories;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
@@ -26,6 +28,7 @@ import yesman.epicfight.skill.GuardSkill;
 import yesman.epicfight.skill.Skill;
 import yesman.epicfight.skill.SkillContainer;
 import yesman.epicfight.skill.SkillDataManager;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 import yesman.epicfight.world.capabilities.item.CapabilityItem;
 import yesman.epicfight.world.entity.eventlistener.HurtEvent;
@@ -124,14 +127,17 @@ public class BlackSilenceActiveGuard extends GuardSkill {
 
                 event.getPlayerPatch().setStamina(stamina);
                 BlockType blockType = successParrying ? BlockType.ADVANCED_GUARD : (stamina >= 0.0F ? BlockType.GUARD : BlockType.GUARD_BREAK);
+
+                // Part condition. Strong attacks cannot be parried if stamina were to reach 0
+                blockType = canParryHeavy(successParrying, event.getPlayerPatch(), blockType, stamina, impact, event);
+                if (blockType.equals(BlockType.GUARD_BREAK))
+                    successParrying = false;
                 StaticAnimation animation = this.getGuardMotion(event.getPlayerPatch(), itemCapability, blockType);
                 if (animation != null) {
                     event.getPlayerPatch().playAnimationSynchronized(animation, 0.0F);
                 }
 
-                if (blockType == BlockType.GUARD_BREAK) {
-                    event.getPlayerPatch().playSound(TcorpModElements.sounds.get(ResourceLocation.of("tcorp:stagger", ':')), 3.0F, 0.0F, 0.1F);
-                }
+
                 EmotionSystem.handleGuard(playerentity, event.getAmount(), impact, successParrying);
                 this.dealEvent(event.getPlayerPatch(), event);
                 return;
@@ -139,6 +145,17 @@ public class BlackSilenceActiveGuard extends GuardSkill {
         }
 
         super.guard(container, itemCapability, event, knockback, impact, false);
+    }
+
+
+    public static BlockType canParryHeavy(boolean successParry, LivingEntityPatch<?> target, BlockType blockType, float stamina, float impact, HurtEvent.Pre event) {
+        // Part condition. Strong attacks cannot be parried if stamina were to reach 0.
+        // Strong attacks are attacks with more impact than the targets.
+        if (blockType == GuardSkill.BlockType.GUARD_BREAK || (stamina <= 0.001 && impact > target.getImpact(Hand.MAIN_HAND) + 0.5f)) {
+            event.getPlayerPatch().playSound(TCorpSounds.STAGGER, 3.0F, 0.0F, 0.1F);
+            return BlockType.GUARD_BREAK;
+        }
+        return blockType;
     }
 
     protected boolean isBlockableSource(DamageSource damageSource, boolean advanced) {

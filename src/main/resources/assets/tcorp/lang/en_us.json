@@ -167,5 +167,14 @@
   "item.tcorp.solemn_lament_living": "The Living",
   "item.tcorp.solemn_lament_departed": "The Departed",
   "item.tcorp.solemn_lament_cloak": "Cloak of the Undertaker",
-  "item.tcorp.solemn_lament_butterfly": "A living butterfly"
+  "item.tcorp.solemn_lament_butterfly": "A living butterfly",
+  "item.tcorp.doubt_spawn_egg": "Doubt Spawn Egg",
+  "item.tcorp.nothing_there_spawn_egg": "Nothing There Spawn Egg",
+
+  "entity.tcorp.doubt": "Doubt",
+  "entity.tcorp.nothing_there": "Nothing There",
+
+  "item.tcorp.sunshower": "Sunshower",
+  "item.tcorp.sunshower_cloak": "Sunshower Cloak",
+  "item.tcorp.sunshower_hood": "Sunshower Hood"
 }

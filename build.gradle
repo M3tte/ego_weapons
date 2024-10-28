@@ -32,7 +32,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
-            args '-mixin.config=tcorp.mixins.json'
+            args '-mixin.config=tcorp.mixins.json', '--username', 'Dev2'
 
             mods {
                 tcorp {
@@ -101,6 +101,4 @@ jar {
         ])
     }
 }
-
-apply from: 'mcreator.gradle'
 

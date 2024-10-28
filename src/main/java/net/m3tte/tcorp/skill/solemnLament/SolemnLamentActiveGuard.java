@@ -41,6 +41,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 import static net.m3tte.tcorp.TcorpModVariables.PLAYER_VARIABLES_CAPABILITY;
+import static net.m3tte.tcorp.skill.BlackSilenceActiveGuard.canParryHeavy;
 
 
 public class SolemnLamentActiveGuard extends GuardSkill {
@@ -100,17 +101,20 @@ public class SolemnLamentActiveGuard extends GuardSkill {
 
                 event.getPlayerPatch().knockBackEntity(damageSource.getDirectEntity().position(), knockback);
                 float stamina = event.getPlayerPatch().getStamina();
-
+                stamina -= penalty * impact;
                 event.getPlayerPatch().setStamina(stamina);
                 BlockType blockType = successParrying ? BlockType.ADVANCED_GUARD : (stamina >= 0.0F ? BlockType.GUARD : BlockType.GUARD_BREAK);
+
+                // Part condition. Strong attacks cannot be parried if stamina were to reach 0
+                blockType = canParryHeavy(successParrying, event.getPlayerPatch(), blockType, stamina, impact, event);
+                if (blockType.equals(BlockType.GUARD_BREAK))
+                    successParrying = false;
+
                 StaticAnimation animation = this.getGuardMotion(event.getPlayerPatch(), itemCapability, blockType);
                 if (animation != null) {
                     event.getPlayerPatch().playAnimationSynchronized(animation, 0.0F);
                 }
 
-                if (blockType == BlockType.GUARD_BREAK) {
-                    event.getPlayerPatch().playSound(TCorpSounds.STAGGER, 3.0F, 0.0F, 0.1F);
-                }
                 EmotionSystem.handleGuard(playerentity, event.getAmount(), impact, successParrying);
                 this.dealEvent(event.getPlayerPatch(), event);
                 return;
@@ -143,7 +147,7 @@ public class SolemnLamentActiveGuard extends GuardSkill {
                 if (motionCounter == motions.length) {
                     PlayerEntity player = playerpatch.getOriginal();
 
-                    int theLivingCount = SolemnLamentEffects.getAmmoCount(player, SolemnLamentEffects.getDeparted());
+                    int theLivingCount = SolemnLamentEffects.getAmmoCount(player, SolemnLamentEffects.getLiving());
                     int theDepartedCount = SolemnLamentEffects.getAmmoCount(player, SolemnLamentEffects.getDeparted());
 
                     if (theLivingCount >=2 && theDepartedCount >= 2) {
@@ -173,7 +177,7 @@ public class SolemnLamentActiveGuard extends GuardSkill {
     @OnlyIn(Dist.CLIENT)
     public List<Object> getTooltipArgs() {
         List<Object> list = Lists.newArrayList();
-        list.add(String.format("%s, %s, %s, %s", TCorpCategories.MIMICRY).toLowerCase());
+        list.add(String.format("%s, %s, %s, %s", TCorpCategories.SOLEMN_LAMENT).toLowerCase());
         return list;
     }
 

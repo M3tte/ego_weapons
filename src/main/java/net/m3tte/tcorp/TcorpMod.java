@@ -18,12 +18,16 @@
 package net.m3tte.tcorp;
 
 import net.m3tte.tcorp.event.ModelRegisterHandler;
+import net.m3tte.tcorp.gameasset.TCorpClientModels;
+import net.m3tte.tcorp.gameasset.TCorpModels;
 import net.m3tte.tcorp.network.packages.PackageRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -38,6 +42,7 @@ import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import yesman.epicfight.api.client.model.ClientModels;
 
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -71,7 +76,11 @@ public class TcorpMod {
 	}
 
 	public void clientLoad(FMLClientSetupEvent event) {
+
 		elements.getElements().forEach(element -> element.clientLoad(event));
+		IResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
+		TCorpClientModels.LOGICAL_CLIENT.loadArmatures(resourceManager);
+		TCorpModels.LOGICAL_SERVER.loadArmatures(resourceManager);
 		TCorpGuiElements.registerClient();
 	}
 
@@ -87,7 +96,7 @@ public class TcorpMod {
 
 	@SubscribeEvent
 	public void registerSounds(RegistryEvent.Register<net.minecraft.util.SoundEvent> event) {
-		elements.registerSounds(event);
+		TCorpSounds.registerSounds(event);
 	}
 
 

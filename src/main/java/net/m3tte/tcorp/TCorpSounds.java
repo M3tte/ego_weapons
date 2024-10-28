@@ -3,6 +3,7 @@ package net.m3tte.tcorp;
 import net.minecraft.client.audio.Sound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraftforge.event.RegistryEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,10 +22,53 @@ public class TCorpSounds {
         return event;
     }
 
+    public static void registerSounds(RegistryEvent.Register<net.minecraft.util.SoundEvent> event) {
+        for (Map.Entry<ResourceLocation, net.minecraft.util.SoundEvent> sound : SOUNDS.entrySet())
+            event.getRegistry().register(sound.getValue().setRegistryName(sound.getKey()));
+    }
+
     public static SoundEvent FIRST_WARNING = generateSoundEvent(locationFrom("first_warning"));
     public static SoundEvent SECOND_WARNING = generateSoundEvent(locationFrom("second_warning"));
     public static SoundEvent THIRD_WARNING = generateSoundEvent(locationFrom("third_warning"));
     public static SoundEvent FOURTH_WARNING = generateSoundEvent(locationFrom("fourth_warning"));
+
+    public static SoundEvent SUNSHOWER_AUTO_1 = generateSoundEvent(locationFrom("sunshower.auto.1"));
+    public static SoundEvent SUNSHOWER_AUTO_2 = generateSoundEvent(locationFrom("sunshower.auto.2"));
+    public static SoundEvent SUNSHOWER_AUTO_4 = generateSoundEvent(locationFrom("sunshower.auto.4"));
+
+    public static SoundEvent SUNSHOWER_SPREAD_OUT_1 = generateSoundEvent(locationFrom("sunshower.spread_out.1"));
+    public static SoundEvent SUNSHOWER_SPREAD_OUT_2 = generateSoundEvent(locationFrom("sunshower.spread_out.2"));
+    public static SoundEvent SUNSHOWER_SPREAD_OUT_3 = generateSoundEvent(locationFrom("sunshower.spread_out.3"));
+    public static SoundEvent SUNSHOWER_PUDDLE_STOMP_1 = generateSoundEvent(locationFrom("sunshower.puddle_stomp.1"));
+    public static SoundEvent SUNSHOWER_PUDDLE_STOMP_2 = generateSoundEvent(locationFrom("sunshower.puddle_stomp.2"));
+    public static SoundEvent SUNSHOWER_PUDDLE_STOMP_3 = generateSoundEvent(locationFrom("sunshower.puddle_stomp.3"));
+    public static SoundEvent SUNSHOWER_COUNTER_1 = generateSoundEvent(locationFrom("sunshower.counter.1"));
+    public static SoundEvent SUNSHOWER_COUNTER_2 = generateSoundEvent(locationFrom("sunshower.counter.2"));
+
+    public static SoundEvent NOTHING_THERE_WALK = generateSoundEvent(locationFrom("nothing_there.walk"));
+    public static SoundEvent NOTHING_THERE_IDLE_1 = generateSoundEvent(locationFrom("nothing_there.idle.1"));
+    public static SoundEvent NOTHING_THERE_IDLE_2 = generateSoundEvent(locationFrom("nothing_there.idle.2"));
+
+    public static SoundEvent NOTHING_THERE_STOMP = generateSoundEvent(locationFrom("nothing_there.stomp"));
+    public static SoundEvent NOTHING_THERE_SCREECH_WINDUP = generateSoundEvent(locationFrom("nothing_there.screech.windup"));
+    public static SoundEvent NOTHING_THERE_SCREECH_FLESH = generateSoundEvent(locationFrom("nothing_there.screech.flesh"));
+    public static SoundEvent NOTHING_THERE_SCREECH_LOW = generateSoundEvent(locationFrom("nothing_there.screech.low"));
+    public static SoundEvent NOTHING_THERE_SCREECH_HIGH = generateSoundEvent(locationFrom("nothing_there.screech.high"));
+
+    public static SoundEvent NOTHING_THERE_VOICE_1 = generateSoundEvent(locationFrom("nothing_there.voice.1"));
+    public static SoundEvent NOTHING_THERE_VOICE_2 = generateSoundEvent(locationFrom("nothing_there.voice.2"));
+    public static SoundEvent NOTHING_THERE_VOICE_3 = generateSoundEvent(locationFrom("nothing_there.voice.3"));
+    public static SoundEvent NOTHING_THERE_VOICE_4 = generateSoundEvent(locationFrom("nothing_there.voice.4"));
+    public static SoundEvent NOTHING_THERE_GOODBYE_KILL = generateSoundEvent(locationFrom("nothing_there.goodbye.kill"));
+    public static SoundEvent NOTHING_THERE_HI = generateSoundEvent(locationFrom("nothing_there.hi_man"));
+    public static SoundEvent NOTHING_THERE_HEAVY_SLASH = generateSoundEvent(locationFrom("nothing_there.heavy_slash"));
+    public static SoundEvent NOTHING_THERE_SLASH_ALT = generateSoundEvent(locationFrom("nothing_there.slash.1"));
+    public static SoundEvent NOTHING_THERE_BLUNT_ALT = generateSoundEvent(locationFrom("nothing_there.blunt.1"));
+    public static SoundEvent DOUBT_DEATH = generateSoundEvent(locationFrom("doubt.death"));
+    public static SoundEvent DOUBT_HIT_LIGHT = generateSoundEvent(locationFrom("doubt.hit.light"));
+    public static SoundEvent DOUBT_CHARGE = generateSoundEvent(locationFrom("doubt.charge"));
+    public static SoundEvent DOUBT_HIT_VERTICAL_FIRST = generateSoundEvent(locationFrom("doubt.hit.vertical.first"));
+    public static SoundEvent DOUBT_HIT_VERTICAL_SECOND = generateSoundEvent(locationFrom("doubt.hit.vertical.second"));
 
     public static SoundEvent MAGIC_BULLET_SPIN_SWING = generateSoundEvent(locationFrom("magic_bullet.spin.swing"));
     public static SoundEvent MAGIC_BULLET_SPIN_HIT = generateSoundEvent(locationFrom("magic_bullet.spin.hit"));
@@ -32,7 +76,7 @@ public class TCorpSounds {
     public static SoundEvent MAGIC_BULLET_SPIN_DETONATE = generateSoundEvent(locationFrom("magic_bullet.spin.detonate"));
 
     public static SoundEvent SOLEMN_LAMENT_SPECIAL_RELOAD = generateSoundEvent(locationFrom("solemn_lament.special.reload"));
-    public static SoundEvent SOLEMN_LAMENT_SPECIAL_READY = generateSoundEvent(locationFrom("solemn_lament.special.ready"));
+    public static SoundEvent SOLEMN_LAMENT_SPECIAL_READY = generateSoundEvent(locationFrom("solemn_lament.special.spin"));
     public static SoundEvent SOLEMN_LAMENT_SPECIAL_IMPACT = generateSoundEvent(locationFrom("solemn_lament.special.impact"));
 
     public static SoundEvent SOLEMN_LAMENT_RELOAD = generateSoundEvent(locationFrom("solemn_lament.reload"));
