@@ -2,24 +2,38 @@
   "providers": [
     {
       "type": "bitmap",
-      "file": "tcorp:mob_effect/bleed.png",
+      "file": "ego_weapons:mob_effect/bleed.png",
       "ascent": 8,
       "height": 8,
       "chars": ["\uE001"]
     },
     {
       "type": "bitmap",
-      "file": "tcorp:mob_effect/burn.png",
+      "file": "ego_weapons:mob_effect/burn.png",
       "ascent": 8,
       "height": 8,
       "chars": ["\uE002"]
     },
     {
       "type": "bitmap",
-      "file": "tcorp:mob_effect/sinking.png",
+      "file": "ego_weapons:mob_effect/sinking.png",
       "ascent": 8,
       "height": 8,
       "chars": ["\uE003"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/light.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": ["\uE004"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/rupture.png",
+      "ascent": 8,
+      "height": 8,
+      "chars": ["\uE005"]
     }
   ]
 }

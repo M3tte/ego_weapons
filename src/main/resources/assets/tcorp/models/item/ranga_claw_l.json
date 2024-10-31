@@ -1,7 +1,0 @@
-{
-  "parent": "tcorp:custom/ranga_workshop_l",
-  "textures": {
-    "0": "tcorp:blocks/ranga_workshop",
-    "particle": "tcorp:items/defiled_cutter"
-  }
-}

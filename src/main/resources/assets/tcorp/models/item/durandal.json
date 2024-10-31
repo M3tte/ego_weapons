@@ -1,8 +1,0 @@
-{
-  "parent": "tcorp:custom/durandal",
-  "textures": {
-    "0": "tcorp:blocks/durandal",
-    "missing": "tcorp:blocks/durandal",
-    "particle": "tcorp:items/katana"
-  }
-}

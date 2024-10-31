@@ -1,0 +1,8 @@
+{
+  "textures": [
+    "ego_weapons:magic_bullet/magic_bullet_hit_0",
+    "ego_weapons:magic_bullet/magic_bullet_hit_1",
+    "ego_weapons:magic_bullet/magic_bullet_hit_2",
+    "ego_weapons:magic_bullet/magic_bullet_hit_3"
+  ]
+}

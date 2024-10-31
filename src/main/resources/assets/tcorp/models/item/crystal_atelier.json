@@ -1,7 +1,0 @@
-{
-  "parent": "tcorp:custom/crystal_atelier",
-  "textures": {
-    "0": "tcorp:blocks/crystal_atelier",
-    "particle": "tcorp:items/defiled_cutter"
-  }
-}

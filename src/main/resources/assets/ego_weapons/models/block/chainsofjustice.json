@@ -1,0 +1,9 @@
+{
+  "parent": "ego_weapons:custom/justicechaineffect",
+  "textures": {
+    "all": "ego_weapons:blocks/justicechains",
+    "particle": "ego_weapons:blocks/justicechains",
+    "0": "ego_weapons:blocks/justicechains",
+    "missing": "ego_weapons:blocks/justicechains"
+  }
+}

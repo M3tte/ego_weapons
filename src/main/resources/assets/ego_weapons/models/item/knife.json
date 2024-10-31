@@ -1,0 +1,7 @@
+{
+  "parent": "ego_weapons:custom/knife",
+  "textures": {
+    "0": "ego_weapons:blocks/knife",
+    "particle": "ego_weapons:items/katana"
+  }
+}

@@ -1,7 +1,0 @@
-{
-  "parent": "tcorp:custom/atelier_logic_pistol",
-  "textures": {
-    "0": "tcorp:blocks/atelier_logic_pistol",
-    "particle": "tcorp:items/defiled_cutter"
-  }
-}

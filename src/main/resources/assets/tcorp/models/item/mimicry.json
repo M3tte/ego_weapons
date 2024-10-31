@@ -1,7 +1,0 @@
-{
-  "parent": "tcorp:custom/mimicry",
-  "textures": {
-    "0": "tcorp:blocks/mimicry",
-    "particle": "tcorp:items/katana"
-  }
-}

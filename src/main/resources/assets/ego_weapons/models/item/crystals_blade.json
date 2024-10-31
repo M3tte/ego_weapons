@@ -1,0 +1,6 @@
+{
+  "parent": "ego_weapons:custom/crystal_atelier",
+  "textures": {
+    "particle": "ego_weapons:items/katana"
+  }
+}

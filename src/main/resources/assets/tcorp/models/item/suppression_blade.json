@@ -1,7 +1,0 @@
-{
-  "parent": "tcorp:custom/suppressionblade",
-  "textures": {
-    "0": "tcorp:blocks/katana",
-    "particle": "tcorp:items/katana"
-  }
-}

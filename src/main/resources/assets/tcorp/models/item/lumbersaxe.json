@@ -1,8 +1,0 @@
-{
-  "parent": "tcorp:custom/lumbersaxe",
-  "textures": {
-    "0": "tcorp:blocks/lumberaxe",
-    "missing": "tcorp:blocks/lumberaxe",
-    "particle": "tcorp:items/disposal_cutter"
-  }
-}

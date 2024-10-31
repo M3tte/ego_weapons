@@ -1,0 +1,14 @@
+{
+  "textures": [
+    "ego_weapons:effects/poisonapply_1",
+    "ego_weapons:effects/poisonapply_2",
+    "ego_weapons:effects/poisonapply_3",
+    "ego_weapons:effects/poisonapply_4",
+    "ego_weapons:effects/poisonapply_5",
+    "ego_weapons:effects/poisonapply_6",
+    "ego_weapons:effects/poisonapply_7",
+    "ego_weapons:effects/poisonapply_8",
+    "ego_weapons:effects/poisonapply_9",
+    "ego_weapons:effects/poisonapply_10"
+  ]
+}

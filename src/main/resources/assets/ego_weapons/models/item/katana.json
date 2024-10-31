@@ -1,0 +1,7 @@
+{
+  "parent": "ego_weapons:custom/katana",
+  "textures": {
+    "0": "ego_weapons:blocks/normalkatana",
+    "particle": "ego_weapons:items/disposal_cutter"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "parent": "ego_weapons:custom/clock_sigil",
+  "textures": {
+    "all": "ego_weapons:blocks/clocksigil",
+    "particle": "ego_weapons:blocks/clocksigil",
+    "0": "ego_weapons:blocks/clocksigil",
+    "1": "ego_weapons:blocks/clocksigil2",
+    "missing": "ego_weapons:blocks/clocksigil"
+  }
+}

@@ -1,8 +1,0 @@
-{
-  "parent": "tcorp:custom/heavens_watcher",
-  "textures": {
-    "0": "tcorp:blocks/heavens_watcher",
-    "missing": "tcorp:blocks/heavens_watcher",
-    "particle": "tcorp:items/heavens_watcher"
-  }
-}

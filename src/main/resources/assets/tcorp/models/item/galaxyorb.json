@@ -1,8 +1,0 @@
-{
-  "parent": "tcorp:custom/globe_baton",
-  "textures": {
-    "0": "tcorp:blocks/globe_baton",
-    "missing": "tcorp:blocks/globe_baton",
-    "particle": "tcorp:items/disposal_cutter"
-  }
-}

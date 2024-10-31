@@ -1,0 +1,6 @@
+{
+  "parent": "ego_weapons:custom/solemn_lament",
+  "textures": {
+    "1": "ego_weapons:items/solemn_lament_white"
+  }
+}

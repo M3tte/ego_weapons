@@ -1,7 +1,0 @@
-{
-  "parent": "tcorp:custom/disposal_cutter",
-  "textures": {
-    "0": "tcorp:blocks/disposal_cutter",
-    "particle": "tcorp:items/disposal_cutter"
-  }
-}

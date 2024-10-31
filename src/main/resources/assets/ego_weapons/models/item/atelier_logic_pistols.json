@@ -1,0 +1,7 @@
+{
+  "parent": "ego_weapons:custom/atelier_logic_pistol",
+  "textures": {
+    "0": "ego_weapons:blocks/atelier_logic_pistol",
+    "particle": "ego_weapons:items/defiled_cutter"
+  }
+}

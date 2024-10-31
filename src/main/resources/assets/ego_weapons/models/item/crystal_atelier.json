@@ -1,0 +1,7 @@
+{
+  "parent": "ego_weapons:custom/crystal_atelier",
+  "textures": {
+    "0": "ego_weapons:blocks/crystal_atelier",
+    "particle": "ego_weapons:items/defiled_cutter"
+  }
+}

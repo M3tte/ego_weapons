@@ -1,8 +1,0 @@
-{
-  "parent": "tcorp:custom/mace",
-  "textures": {
-    "0": "tcorp:blocks/mace",
-    "missing": "tcorp:blocks/mace",
-    "particle": "tcorp:items/disposal_cutter"
-  }
-}

@@ -1,8 +1,0 @@
-{
-  "parent": "tcorp:custom/zwei_longsword",
-  "textures": {
-    "0": "tcorp:blocks/zwei_longsword",
-    "missing": "tcorp:blocks/zwei_longsword",
-    "particle": "tcorp:items/katana"
-  }
-}

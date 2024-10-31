@@ -1,0 +1,10 @@
+{
+  "textures": [
+    "ego_weapons:entity/nothing_there/meat_ch_0",
+    "ego_weapons:entity/nothing_there/meat_ch_1",
+    "ego_weapons:entity/nothing_there/meat_ch_2",
+    "ego_weapons:entity/nothing_there/meat_ch_3",
+    "ego_weapons:entity/nothing_there/meat_ch_4",
+    "ego_weapons:entity/nothing_there/meat_ch_5"
+  ]
+}

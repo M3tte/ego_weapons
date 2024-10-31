@@ -1,0 +1,10 @@
+{
+  "textures": [
+    "ego_weapons:effects/sinking/sink_0",
+    "ego_weapons:effects/sinking/sink_1",
+    "ego_weapons:effects/sinking/sink_2",
+    "ego_weapons:effects/sinking/sink_3",
+    "ego_weapons:effects/sinking/sink_4",
+    "ego_weapons:effects/sinking/sink_5"
+  ]
+}

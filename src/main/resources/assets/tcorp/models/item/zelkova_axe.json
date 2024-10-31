@@ -1,7 +1,0 @@
-{
-  "parent": "tcorp:custom/zelkova_axe",
-  "textures": {
-    "0": "tcorp:blocks/zelkova_axe",
-    "particle": "tcorp:items/defiled_cutter"
-  }
-}

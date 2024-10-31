@@ -1,0 +1,10 @@
+{
+  "textures": [
+    "ego_weapons:effects/burn/dark_burn0",
+    "ego_weapons:effects/burn/dark_burn1",
+    "ego_weapons:effects/burn/dark_burn2",
+    "ego_weapons:effects/burn/dark_burn3",
+    "ego_weapons:effects/burn/dark_burn4",
+    "ego_weapons:effects/burn/dark_burn5"
+  ]
+}

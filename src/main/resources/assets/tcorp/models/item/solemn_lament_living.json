@@ -1,6 +1,0 @@
-{
-  "parent": "tcorp:custom/solemn_lament",
-  "textures": {
-    "1": "tcorp:items/solemn_lament_white"
-  }
-}

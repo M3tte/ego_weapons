@@ -1,0 +1,15 @@
+{
+  "textures": [
+    "ego_weapons:effects/powerdown_1",
+    "ego_weapons:effects/powerdown_2",
+    "ego_weapons:effects/powerdown_3",
+    "ego_weapons:effects/powerdown_4",
+    "ego_weapons:effects/powerdown_5",
+    "ego_weapons:effects/powerdown_6",
+    "ego_weapons:effects/powerdown_7",
+    "ego_weapons:effects/powerdown_8",
+    "ego_weapons:effects/powerdown_9",
+    "ego_weapons:effects/powerdown_10",
+    "ego_weapons:effects/powerdown_11"
+  ]
+}

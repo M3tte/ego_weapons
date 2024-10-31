@@ -1,0 +1,8 @@
+{
+  "parent": "ego_weapons:custom/globe_baton",
+  "textures": {
+    "0": "ego_weapons:blocks/globe_baton",
+    "missing": "ego_weapons:blocks/globe_baton",
+    "particle": "ego_weapons:items/disposal_cutter"
+  }
+}

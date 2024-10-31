@@ -1,7 +1,0 @@
-{
-  "parent": "tcorp:custom/zelkova_mace",
-  "textures": {
-    "0": "tcorp:blocks/zelkova_mace",
-    "particle": "tcorp:items/defiled_cutter"
-  }
-}

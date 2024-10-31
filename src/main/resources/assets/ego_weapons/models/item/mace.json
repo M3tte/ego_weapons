@@ -1,0 +1,8 @@
+{
+  "parent": "ego_weapons:custom/mace",
+  "textures": {
+    "0": "ego_weapons:blocks/mace",
+    "missing": "ego_weapons:blocks/mace",
+    "particle": "ego_weapons:items/disposal_cutter"
+  }
+}

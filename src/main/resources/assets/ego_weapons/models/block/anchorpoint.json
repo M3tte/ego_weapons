@@ -1,0 +1,10 @@
+{
+  "parent": "ego_weapons:custom/galaxy_savepoint",
+  "textures": {
+    "all": "ego_weapons:blocks/recallpointbottom",
+    "particle": "ego_weapons:blocks/recallpointbottom",
+    "0": "ego_weapons:blocks/recallpointarrow",
+    "1": "ego_weapons:blocks/recallpointbottom",
+    "missing": "ego_weapons:blocks/recallpointbottom"
+  }
+}

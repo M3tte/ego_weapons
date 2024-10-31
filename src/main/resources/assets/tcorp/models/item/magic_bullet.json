@@ -1,7 +1,0 @@
-{
-  "parent": "tcorp:custom/magic_bullet",
-  "textures": {
-    "0": "tcorp:blocks/magic_bullet",
-    "particle": "tcorp:blocks/magic_bullet"
-  }
-}

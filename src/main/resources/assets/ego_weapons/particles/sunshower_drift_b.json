@@ -1,0 +1,10 @@
+{
+  "textures": [
+    "ego_weapons:sunshower/puddle_stomp/dash_0",
+    "ego_weapons:sunshower/puddle_stomp/dash_1",
+    "ego_weapons:sunshower/puddle_stomp/dash_2",
+    "ego_weapons:sunshower/puddle_stomp/dash_3",
+    "ego_weapons:sunshower/puddle_stomp/dash_4",
+    "ego_weapons:sunshower/puddle_stomp/dash_5"
+  ]
+}

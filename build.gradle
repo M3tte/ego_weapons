@@ -15,8 +15,8 @@ apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 
 version = '1.0'
-group = 'net.m3tte.tcorp'
-archivesBaseName = 'tcorp'
+group = 'net.m3tte.ego_weapons'
+archivesBaseName = 'ego_weapons'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
@@ -32,10 +32,10 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
-            args '-mixin.config=tcorp.mixins.json', '--username', 'Dev2'
+            args '-mixin.config=ego_weapons.mixins.json', '--username', 'Dev2'
 
             mods {
-                tcorp {
+                ego_weapons {
                     source sourceSets.main
                 }
             }
@@ -48,11 +48,11 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
-            args '-mixin.config=tcorp.mixins.json'
+            args '-mixin.config=ego_weapons.mixins.json'
 
 
             mods {
-                tcorp {
+                ego_weapons {
                     source sourceSets.main
                 }
             }
@@ -74,10 +74,10 @@ repositories {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 mixin {
-    add sourceSets.main, "tcorp.mixins.refmap.json"
+    add sourceSets.main, "ego_weapons.mixins.refmap.json"
     showMessageTypes = true
 
-    config 'tcorp.mixins.json'
+    config 'ego_weapons.mixins.json'
 }
 
 dependencies {
@@ -90,14 +90,14 @@ dependencies {
 jar {
     manifest {
         attributes([
-                "Specification-Title": "tcorp",
-                "Specification-Vendor": "tcorp",
+                "Specification-Title": "ego_weapons",
+                "Specification-Vendor": "ego_weapons",
                 "Specification-Version": "1", // We are version 1 of ourselves
                 "Implementation-Title": project.name,
                 "Implementation-Version": "${version}",
-                "Implementation-Vendor" :"tcorp",
+                "Implementation-Vendor" :"ego_weapons",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs": "tcorp.mixins.json"
+                "MixinConfigs": "ego_weapons.mixins.json"
         ])
     }
 }

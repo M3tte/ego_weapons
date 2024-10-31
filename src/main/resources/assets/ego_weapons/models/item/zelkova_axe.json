@@ -1,0 +1,7 @@
+{
+  "parent": "ego_weapons:custom/zelkova_axe",
+  "textures": {
+    "0": "ego_weapons:blocks/zelkova_axe",
+    "particle": "ego_weapons:items/defiled_cutter"
+  }
+}

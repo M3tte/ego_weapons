@@ -1,7 +1,0 @@
-{
-  "parent": "tcorp:custom/defiled_blade",
-  "textures": {
-    "0": "tcorp:blocks/defiled_cutter",
-    "particle": "tcorp:items/defiled_cutter"
-  }
-}

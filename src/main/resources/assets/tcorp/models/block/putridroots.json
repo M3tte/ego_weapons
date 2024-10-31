@@ -1,9 +1,0 @@
-{
-  "parent": "tcorp:custom/putridroots",
-  "textures": {
-    "all": "tcorp:blocks/putridroots",
-    "particle": "tcorp:blocks/putridroots",
-    "0": "tcorp:blocks/putridroots",
-    "missing": "tcorp:blocks/putridroots"
-  }
-}

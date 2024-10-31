@@ -1,0 +1,8 @@
+{
+  "parent": "ego_weapons:custom/atelier_pistol",
+  "textures": {
+    "0": "ego_weapons:blocks/atelier_pistol",
+    "missing": "ego_weapons:blocks/atelier_pistol",
+    "particle": "ego_weapons:items/disposal_cutter"
+  }
+}

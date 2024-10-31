@@ -1,7 +1,0 @@
-{
-  "parent": "tcorp:custom/fairy_spear",
-  "textures": {
-    "0": "tcorp:blocks/fairy_spear",
-    "particle": "tcorp:items/fairy_spear"
-  }
-}

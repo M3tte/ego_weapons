@@ -1,0 +1,9 @@
+{
+  "parent": "ego_weapons:custom/putridroots",
+  "textures": {
+    "all": "ego_weapons:blocks/putridroots",
+    "particle": "ego_weapons:blocks/putridroots",
+    "0": "ego_weapons:blocks/putridroots",
+    "missing": "ego_weapons:blocks/putridroots"
+  }
+}

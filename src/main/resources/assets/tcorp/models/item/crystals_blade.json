@@ -1,6 +1,0 @@
-{
-  "parent": "tcorp:custom/crystal_atelier",
-  "textures": {
-    "particle": "tcorp:items/katana"
-  }
-}

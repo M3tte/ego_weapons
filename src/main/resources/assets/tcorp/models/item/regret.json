@@ -1,8 +1,0 @@
-{
-  "parent": "tcorp:custom/regret",
-  "textures": {
-    "0": "tcorp:blocks/regret",
-    "missing": "tcorp:blocks/regret",
-    "particle": "tcorp:items/regret"
-  }
-}
