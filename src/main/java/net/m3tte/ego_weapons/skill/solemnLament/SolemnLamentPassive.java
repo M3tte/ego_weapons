@@ -1,9 +1,9 @@
 package net.m3tte.ego_weapons.skill.solemnLament;
 
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsSkills;
-import net.m3tte.ego_weapons.potion.EthernalRestPotionEffect;
+import net.m3tte.ego_weapons.potion.EternalRestPotionEffect;
 import net.m3tte.ego_weapons.skill.GenericSkill;
-import net.m3tte.ego_weapons.world.capabilities.item.TCorpCategories;
+import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCategories;
 import yesman.epicfight.skill.Skill;
 import yesman.epicfight.skill.SkillCategories;
 import yesman.epicfight.skill.SkillContainer;
@@ -33,7 +33,7 @@ public class SolemnLamentPassive extends Skill {
         container.getExecuter().getEventListener().addEventListener(ATTACK_SPEED_MODIFY_EVENT, EVENT_UUID, (event) -> {
             WeaponCategory heldWeaponCategory = event.getItemCapability().getWeaponCategory();
 
-            if (TCorpCategories.SOLEMN_LAMENT == heldWeaponCategory && event.getPlayerPatch().getOriginal().hasEffect(EthernalRestPotionEffect.get())) {
+            if (EgoWeaponsCategories.SOLEMN_LAMENT == heldWeaponCategory && event.getPlayerPatch().getOriginal().hasEffect(EternalRestPotionEffect.get())) {
                 float attackSpeed = event.getAttackSpeed();
                 event.setAttackSpeed(attackSpeed * 1.4F);
             }

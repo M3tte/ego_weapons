@@ -4,6 +4,7 @@ package net.m3tte.ego_weapons.item.solemn_lament;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
+import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -24,6 +25,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
+
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
 public class SolemnLamentArmor extends ArmorItem {
 
@@ -109,8 +113,25 @@ public class SolemnLamentArmor extends ArmorItem {
 		@Override
 		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.appendHoverText(itemstack, world, list, flag);
-			list.add(new StringTextComponent("The undertaker's outfit belongs to those who pay tribute to the dead.").withStyle(TextFormatting.BLUE));
-			list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent(" Ethernal Rest -").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 7E").withStyle(TextFormatting.AQUA)));
+			list.add(new StringTextComponent("Could the small wings... of a butterfly have... fluttered away from this... place...?").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+
+			// Temporary Ineffeciency, Will be resolved once damage efficiencies exist
+			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 1) + 1) + "/1] - - - - - - - =").withStyle(TextFormatting.GRAY));
+
+			switch (EgoWeaponsKeybinds.getUiPage() % 1) {
+				case 0:
+					if (EgoWeaponsKeybinds.isHoldingShift())
+						generateStatusDescription(list, new String[]{"eternal_rest","living_departed", "sinking"});
+					else
+						generateDescription(list,"solemn_lament_armor", "ability", 2);
+					break;
+			}
+
+			list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+
+
+
 		}
 
 	};

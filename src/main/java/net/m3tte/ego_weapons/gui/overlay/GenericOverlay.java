@@ -3,21 +3,23 @@ package net.m3tte.ego_weapons.gui.overlay;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.m3tte.ego_weapons.EgoWeaponsItems;
-import net.m3tte.ego_weapons.EgoWeaponsSounds;
-import net.m3tte.ego_weapons.EgoWeaponsMod;
-import net.m3tte.ego_weapons.EgoWeaponsModVars;
+import net.m3tte.ego_weapons.*;
+import net.m3tte.ego_weapons.item.guns.GunItem;
 import net.m3tte.ego_weapons.potion.MagicBulletPotionEffect;
-import net.m3tte.ego_weapons.potion.Shell;
+import net.m3tte.ego_weapons.potion.countEffects.Shell;
 import net.m3tte.ego_weapons.potion.SolemnLamentEffects;
 import net.m3tte.ego_weapons.procedures.legacy.BlipwarninghandlerProcedure;
 import net.m3tte.ego_weapons.procedures.abilities.AbilityTier;
 import net.m3tte.ego_weapons.procedures.abilities.WeaponAbilityProcedure;
 import net.m3tte.ego_weapons.procedures.abilities.ItemAbility;
 import net.m3tte.ego_weapons.procedures.abilities.ArmorAbilityProcedure;
+import net.m3tte.ego_weapons.world.capabilities.AmmoSystem;
+import net.m3tte.ego_weapons.world.capabilities.AmmoType;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -29,12 +31,13 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.system.CallbackI;
 import yesman.epicfight.client.gui.ModIngameGui;
 
-import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
@@ -53,19 +56,22 @@ public class GenericOverlay extends ModIngameGui {
 	static double currentSanityPercent = -1;
 	static double currentBrightSanityPercent = -1;
 	static long latestWeaponUnready = 0;
-
-	static ResourceLocation DEPARTED_BULLET = new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/gui/solemn_lament/the_departed_bullet.png");
-	static ResourceLocation LIVING_BULLET = new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/gui/solemn_lament/the_living_bullet.png");
+	static ResourceLocation EMPTY_BULLET = new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/gui/bullets/empty_handgun.png");
+	static ResourceLocation EMPTY_RIFLE_BULLET = new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/gui/bullets/empty_rifle.png");
+	static ResourceLocation DEPARTED_BULLET = new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/gui/bullets/the_departed_bullet.png");
+	static ResourceLocation LIVING_BULLET = new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/gui/bullets/the_living_bullet.png");
 	static long lastRenderedTick = 0;
 	static boolean hasPlayedWeaponUnready = false;
 
 
 	final static ResourceLocation base_ui = new ResourceLocation("ego_weapons:textures/screens/gui/base_ui.png");
 	final static ResourceLocation healthbar = new ResourceLocation("ego_weapons:textures/screens/gui/healthbar.png");
+	final static ResourceLocation shieldbar = new ResourceLocation("ego_weapons:textures/screens/gui/shieldbar_anim.png");
 	final static ResourceLocation healthbar_b = new ResourceLocation("ego_weapons:textures/screens/gui/healthbar_bright.png");
 	final static ResourceLocation staggerbar = new ResourceLocation("ego_weapons:textures/screens/gui/staggerbar.png");
 	final static ResourceLocation staggerbar_b = new ResourceLocation("ego_weapons:textures/screens/gui/staggerbar_bright.png");
 	final static ResourceLocation magic_bullet = new ResourceLocation("ego_weapons:textures/screens/gui/magic_bullet_icon.png");
+	final static ResourceLocation defense_level = new ResourceLocation("ego_weapons:textures/screens/gui/defense_level.png");
 	final static ResourceLocation sanity = new ResourceLocation("ego_weapons:textures/screens/gui/sanitybar.png");
 	final static ResourceLocation sanity_b = new ResourceLocation("ego_weapons:textures/screens/gui/sanitybar_bright.png");
 	final static ResourceLocation emotion_bar = new ResourceLocation("ego_weapons:textures/screens/gui/emotion_bar.png");
@@ -162,15 +168,15 @@ public class GenericOverlay extends ModIngameGui {
 		//Minecraft.getInstance().font.draw(event.getMatrixStack(), "TCorp - Indev - Bugs are to be expected", 30, 20, -1);
 
 		Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("ego_weapons:textures/screens/blip_background.png"));
-		blit(event.getMatrixStack(), posX + 94, posY + 98, 0, 0, 64, 20, 64, 20);
+		blit(event.getMatrixStack(), w - (posX / 3) - 30, posY + 98, 0, 0, 64, 20, 64, 20);
 		Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("ego_weapons:textures/screens/power_blip.png"));
 		for (int sc = 0; sc < Math.min(energy, 10); sc++) {
-			blit(event.getMatrixStack(), posX + 98 + sc * 6, posY + 102, 0, 0, 3, 9, 3, 9);
+			blit(event.getMatrixStack(), w - (posX / 3) + 4 - 30 + sc * 6, posY + 102, 0, 0, 3, 9, 3, 9);
 		}
 		if (energy > 10) {
 			Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("ego_weapons:textures/screens/golden_blip.png"));
 			for (int sc = 10; sc < Math.min(energy, 20); sc++) {
-				blit(event.getMatrixStack(), posX + 97 + (sc - 10) * 6, posY + 101, 0, 0, 5, 11, 5, 11);
+				blit(event.getMatrixStack(), w - (posX / 3) + 3 - 30 + (sc - 10) * 6, posY + 101, 0, 0, 5, 11, 5, 11);
 			}
 		}
 		ItemStack equippedArmor = entity.getItemBySlot(EquipmentSlotType.CHEST);
@@ -184,7 +190,13 @@ public class GenericOverlay extends ModIngameGui {
 
 		renderEmotionLevel(h-70, 2, entity, playerVariables, event);
 
-		renderSolemnLament(100, h-100, entity, event);
+		renderSolemnLament(w - 50, posY+ 78, entity, event);
+
+		if (entity.getItemInHand(Hand.MAIN_HAND).getItem() instanceof GunItem)
+			renderGunAmmo(w - 40, posY+ 78, entity, event, entity.getItemInHand(Hand.MAIN_HAND));
+
+		if (entity.getItemInHand(Hand.MAIN_HAND).getItem() instanceof GunItem)
+			renderGunAmmo(w- 60, posY+ 78, entity, event, entity.getItemInHand(Hand.OFF_HAND));
 
 		if (!equippedArmor.isEmpty()) { // Calculate Ability Widget
 			ItemAbility ability = ArmorAbilityProcedure.getForItem(equippedArmor.getItem());
@@ -211,7 +223,16 @@ public class GenericOverlay extends ModIngameGui {
 		}
 
 		if (!equippedItem.isEmpty()) { // Calculate Ability Widget
-			ItemAbility ability = WeaponAbilityProcedure.getForItem(equippedItem.getItem());
+
+			ItemAbility ability = null;
+
+			if (entity.hasEffect(EgoWeaponsEffects.ASSIST_FIRE.get())) {
+				ability = WeaponAbilityProcedure.getAssistForItem(equippedItem.getItem());
+			}
+
+			if (ability == null)
+				ability = WeaponAbilityProcedure.getForItem(equippedItem.getItem());
+
 			ResourceLocation icon = ability.getIconLocation(entity, playerVariables);
 			ResourceLocation overlay = ability.getOverlay(entity, playerVariables);
 
@@ -238,13 +259,15 @@ public class GenericOverlay extends ModIngameGui {
 		if (BlipwarninghandlerProcedure.executeProcedure(Stream.of(new AbstractMap.SimpleEntry<>("entity", entity)).collect(HashMap::new,
 				(_m, _e) -> _m.put(_e.getKey(), _e.getValue()), Map::putAll))) {
 			Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("ego_weapons:textures/screens/blip_warning.png"));
-			blit(event.getMatrixStack(), posX + 94, posY + 98, 0, 0, 64, 20, 64, 20);
+			blit(event.getMatrixStack(), w - (posX / 3) - 30, posY + 98, 0, 0, 64, 20, 64, 20);
 		}
 		//
 
 		if (entity.getItemInHand(Hand.MAIN_HAND).getItem().equals(EgoWeaponsItems.MAGIC_BULLET.get())) {
 			renderMagicBullet(h / 2 - 10, 100, entity, event);
 		}
+
+		renderArmor(h - 32, 30, entity, event);
 
 		// Overlays
 
@@ -348,8 +371,8 @@ public class GenericOverlay extends ModIngameGui {
 	private static void renderMagicBullet(int offsetY, int offsetX, PlayerEntity player, RenderGameOverlayEvent.Pre event) {
 		int magicBullet = 0;
 
-		if (player.hasEffect(MagicBulletPotionEffect.get())) {
-			magicBullet = player.getEffect(MagicBulletPotionEffect.get()).getAmplifier() + 1;
+		if (player.hasEffect(EgoWeaponsEffects.MAGIC_BULLET.get())) {
+			magicBullet = EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(player);
 		}
 
 		GL11.glPushMatrix();
@@ -358,6 +381,21 @@ public class GenericOverlay extends ModIngameGui {
 		Minecraft.getInstance().getTextureManager().bind(magic_bullet);
 		blit(event.getMatrixStack(), 0, 0, 0, 0, 16, 16, 16, 16);
 		Minecraft.getInstance().font.draw(event.getMatrixStack(), magicBullet+"", 6, 6,  (16773613));
+		RenderSystem.enableBlend();
+		GL11.glPopMatrix();
+	}
+
+	private static void renderArmor(int offsetY, int offsetX, PlayerEntity player, RenderGameOverlayEvent.Pre event) {
+		double armor = 0;
+
+		armor = player.getAttributeValue(Attributes.ARMOR);
+
+		GL11.glPushMatrix();
+		GL11.glTranslated(offsetX, offsetY,0); // -265,245
+		GL11.glRotated(7,0,0,1);
+		Minecraft.getInstance().getTextureManager().bind(defense_level);
+		blit(event.getMatrixStack(), 0, 0, 0, 0, 26, 26, 26, 26);
+		Minecraft.getInstance().font.draw(event.getMatrixStack(), ""+((armor % 1) == 0 ? ((int) armor) : (armor)), 16, 12,  (16773613));
 		RenderSystem.enableBlend();
 		GL11.glPopMatrix();
 	}
@@ -475,6 +513,8 @@ public class GenericOverlay extends ModIngameGui {
 		Minecraft.getInstance().getTextureManager().bind(base_ui);
 		blit(event.getMatrixStack(), offsetX, offsetY, 0, 0, 200, 48, 200, 48);
 
+
+
 		if (targetPercent != -1) {
 			if (currentHealthPercent <= currentBrightHealthPercent) {
 				Minecraft.getInstance().getTextureManager().bind(healthbar_b);
@@ -482,6 +522,16 @@ public class GenericOverlay extends ModIngameGui {
 			}
 			Minecraft.getInstance().getTextureManager().bind(healthbar);
 			blit(event.getMatrixStack(), offsetX+ 31, offsetY + 8, 0, 0, (int)(154 * currentHealthPercent), 11, 154, 11);
+		}
+
+		if (player.getAbsorptionAmount() > 0) {
+			float ratio = (player.getAbsorptionAmount() / (player.getMaxHealth() + player.getAbsorptionAmount()));
+
+			int time = (player.tickCount / 10) % 5;
+
+			Minecraft.getInstance().getTextureManager().bind(shieldbar);
+			blit(event.getMatrixStack(), offsetX+ 31, offsetY + 8, 0, 11 * time, (int)(154 * ratio * currentBrightHealthPercent), 11, 154, 55);
+
 		}
 
 		if (targetStagger != -1) {
@@ -513,18 +563,50 @@ public class GenericOverlay extends ModIngameGui {
 	}
 
 
+	private static void renderGunAmmo(int offsetX, int offsetY, PlayerEntity player, RenderGameOverlayEvent.Pre event, ItemStack item) {
+
+		if (!(item.getItem() instanceof GunItem))
+			return;
+
+		List<AmmoType> ammoList = Arrays.stream(item.getOrCreateTag().getIntArray("loadedAmmo")).mapToObj((i) -> AmmoType.values()[i]).collect(Collectors.toList());
+		int maxAmmo = ((GunItem) item.getItem()).getMaxAmmo();
+
+		int ammoIdx = 0;
+
+		for (AmmoType ammo : ammoList) {
+			Minecraft.getInstance().getTextureManager().bind(ammo.getAmmoTexture());
+			AbstractGui.blit(event.getMatrixStack(), offsetX, offsetY - 10 * ammoIdx, 0, 0, 24, 24, 24, 24);
+
+			ammoIdx++;
+		}
+		switch (((GunItem)item.getItem()).getCaliber()) {
+			default:
+				Minecraft.getInstance().getTextureManager().bind(EMPTY_BULLET);
+				break;
+			case SNIPER:
+				Minecraft.getInstance().getTextureManager().bind(EMPTY_RIFLE_BULLET);
+				break;
+		}
+
+
+		while (ammoIdx < maxAmmo) {
+			AbstractGui.blit(event.getMatrixStack(), offsetX, offsetY - 10 * ammoIdx, 0, 0, 24, 24, 24, 24);
+			ammoIdx++;
+		}
+	}
+
 	private static void renderSolemnLament(int offsetX, int offsetY, PlayerEntity player, RenderGameOverlayEvent.Pre event) {
 
 
 		Minecraft.getInstance().getTextureManager().bind(DEPARTED_BULLET);
 		int departedcount = SolemnLamentEffects.getAmmoCount(player, SolemnLamentEffects.getDeparted());
 		for (int x = 0; x < departedcount; x++) {
-			AbstractGui.blit(event.getMatrixStack(), offsetX + 10 * x, offsetY + 20, 0, 0, 16, 16, 16, 16);
+			AbstractGui.blit(event.getMatrixStack(), offsetX + 10, offsetY - 10 * x, 0, 0, 16, 16, 16, 16);
 		}
 		Minecraft.getInstance().getTextureManager().bind(LIVING_BULLET);
 		int livingCount = SolemnLamentEffects.getAmmoCount(player, SolemnLamentEffects.getLiving());
 		for (int x = 0; x < livingCount; x++) {
-			AbstractGui.blit(event.getMatrixStack(), offsetX + 10 * x, offsetY, 0, 0, 16, 16, 16, 16);
+			AbstractGui.blit(event.getMatrixStack(), offsetX + 30, offsetY - 10 * x, 0, 0, 16, 16, 16, 16);
 		}
 	}
 
@@ -576,14 +658,62 @@ public class GenericOverlay extends ModIngameGui {
 			GL11.glTranslated(26,  h * 1.7-131,0); // -265,245
 			GL11.glRotated(-67,0,0,1);
 			int cost = ability.getBlipCost(entity, playerVariables);
-			Minecraft.getInstance().font.draw(event.getMatrixStack(), ability.getName(entity, playerVariables), 0, 0, 0);
+
+			int missing = (int) Math.ceil(Math.max(0,cost - playerVariables.blips));
+			int present = (int) Math.min(playerVariables.blips, cost);
+			GL11.glPushMatrix();
+
+				String abilityName = ability.getName(entity, playerVariables);
+				String[] lines = null;
+				float subTractor = Math.min(0.6f,abilityName.length() * 0.04f);
+				GL11.glScaled(1.4f - subTractor,1.4f - subTractor,1.4f - subTractor);
+				lines = abilityName.split("\\n");
+				int position = (lines.length - 1) * -2;
+
+				for (String line : lines) {
+					Minecraft.getInstance().font.draw(event.getMatrixStack(), line, 0, position, 0);
+					position += 8;
+				}
+
+			GL11.glPopMatrix();
 			GL11.glPushMatrix();
 			GL11.glScaled(0.8f,0.8f,0.8f);
 			GL11.glTranslated(30,  120,0); // -265,245
 			GL11.glRotated(-13,0,0,1);
+			GL11.glPushMatrix();
+			float mult = 1.4f - 0.06f * cost;
 
-			Minecraft.getInstance().font.draw(event.getMatrixStack(), cost + " Energy", 0, 0,  (cost == 0) ? 50944 : 16773613);
+			GL11.glScaled(mult,mult,mult);
+
+			int breakpoint = 6;
+
+			if (cost == 0) {
+				Minecraft.getInstance().font.draw(event.getMatrixStack(), "\uE004", 0, 0,   50944);
+
+			} else { // 4341827
+				Minecraft.getInstance().font.draw(event.getMatrixStack(), StringUtils.repeat("\uE004",Math.min(breakpoint,present)), 0, 0,  16773613);
+
+				if (present > breakpoint) {
+					Minecraft.getInstance().font.draw(event.getMatrixStack(), StringUtils.repeat("\uE004",present - breakpoint), 0, 10,  16773613);
+				}
+
+				if (missing > 0) {
+
+					int startPosX = present % (breakpoint);
+					int startPosY = present / breakpoint;
+
+					int charsLine1 = Math.min(breakpoint - startPosX, missing);
+
+					Minecraft.getInstance().font.draw(event.getMatrixStack(), StringUtils.repeat("\uE004", charsLine1), startPosX * 9, startPosY * 10,  4341827);
+
+					if (missing > charsLine1) {
+						Minecraft.getInstance().font.draw(event.getMatrixStack(), StringUtils.repeat("\uE004",missing - charsLine1), 0, 10,  4341827);
+					}
+				}
+
+			}
 			RenderSystem.enableBlend();
+			GL11.glPopMatrix();
 			GL11.glPopMatrix();
 			GL11.glPopMatrix();
 
@@ -591,4 +721,5 @@ public class GenericOverlay extends ModIngameGui {
 			GL11.glPopMatrix();
 		}
 	}
+
 }

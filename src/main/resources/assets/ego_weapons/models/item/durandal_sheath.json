@@ -1,0 +1,18 @@
+{
+  "parent": "item/generated",
+  "overrides": [
+    {
+      "predicate": {
+        "unsheathed": 0
+      },
+      "model": "ego_weapons:custom/durandal_sheathed"
+    },
+    {
+      "predicate": {
+        "unsheathed": 1
+      },
+      "model": "ego_weapons:custom/durandal_sheath"
+    }
+  ]
+}
+

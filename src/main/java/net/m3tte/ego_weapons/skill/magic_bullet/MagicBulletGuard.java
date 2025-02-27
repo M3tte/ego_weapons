@@ -1,11 +1,14 @@
 package net.m3tte.ego_weapons.skill.magic_bullet;
 
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsModElements;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
+import net.m3tte.ego_weapons.gameasset.movesets.MagicBulletMovesetAnims;
 import net.m3tte.ego_weapons.potion.MagicBulletPotionEffect;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
-import net.m3tte.ego_weapons.world.capabilities.item.TCorpCategories;
+import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCategories;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -44,9 +47,9 @@ public class MagicBulletGuard extends EnergizingGuardSkill {
     private static final SkillDataKey<Integer> LAST_ACTIVE = SkillDataKey.createDataKey(SkillDataManager.ValueType.INTEGER);
     public static Builder createBuilder(ResourceLocation resourceLocation) {
         return GuardSkill.createBuilder(resourceLocation)
-                .addAdvancedGuardMotion(TCorpCategories.MAGIC_BULLET, (item, player) -> EgoWeaponsAnimations.MAGIC_BULLET_GUARD_HIT)
-                .addGuardMotion(TCorpCategories.MAGIC_BULLET, (item, player) -> EgoWeaponsAnimations.MAGIC_BULLET_GUARD_HIT)
-                .addGuardBreakMotion(TCorpCategories.MAGIC_BULLET, (item, player) -> EgoWeaponsAnimations.RANGA_GUARD_STAGGER);
+                .addAdvancedGuardMotion(EgoWeaponsCategories.MAGIC_BULLET, (item, player) -> MagicBulletMovesetAnims.MAGIC_BULLET_GUARD_HIT)
+                .addGuardMotion(EgoWeaponsCategories.MAGIC_BULLET, (item, player) -> MagicBulletMovesetAnims.MAGIC_BULLET_GUARD_HIT)
+                .addGuardBreakMotion(EgoWeaponsCategories.MAGIC_BULLET, (item, player) -> BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER);
     }
 
     @Override
@@ -105,11 +108,7 @@ public class MagicBulletGuard extends EnergizingGuardSkill {
             if (damageSource.getEntity() instanceof LivingEntity) {
                 knockback += EnchantmentHelper.getKnockbackBonus((LivingEntity)damageSource.getEntity()) * 0.1F;
             }
-            int magicBulletLevel = 0;
-
-            if (serverPlayer.hasEffect(MagicBulletPotionEffect.get())) {
-                magicBulletLevel = 1 + serverPlayer.getEffect(MagicBulletPotionEffect.get()).getAmplifier();
-            }
+            int magicBulletLevel = EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(serverPlayer);
 
             event.getPlayerPatch().knockBackEntity(damageSource.getEntity().position(), knockback);
 
@@ -131,7 +130,7 @@ public class MagicBulletGuard extends EnergizingGuardSkill {
                 event.getPlayerPatch().playSound(EpicFightSounds.NEUTRALIZE_MOBS, 3.0F, 0.0F, 0.1F);
             }
 
-            EmotionSystem.handleGuard(serverPlayer, event.getAmount(), impact, false, 0.8f-0.06f*magicBulletLevel);
+            EmotionSystem.handleGuard(serverPlayer, event.getAmount(), impact, false, 0.8f-0.04f*magicBulletLevel);
 
             this.dealEvent(event.getPlayerPatch(), event);
         }
@@ -170,7 +169,7 @@ public class MagicBulletGuard extends EnergizingGuardSkill {
 
     @OnlyIn(Dist.CLIENT)
     public boolean shouldDraw(SkillContainer container) {
-        return container.getExecuter().getHoldingItemCapability(Hand.MAIN_HAND).getWeaponCategory() == TCorpCategories.MAGIC_BULLET && (Float)container.getDataManager().getDataValue(PENALTY) > 0.0F;
+        return container.getExecuter().getHoldingItemCapability(Hand.MAIN_HAND).getWeaponCategory() == EgoWeaponsCategories.MAGIC_BULLET && (Float)container.getDataManager().getDataValue(PENALTY) > 0.0F;
     }
 
     protected boolean isAdvancedGuard() {

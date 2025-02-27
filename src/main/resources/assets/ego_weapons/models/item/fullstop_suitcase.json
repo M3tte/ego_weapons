@@ -1,0 +1,17 @@
+{
+  "parent": "item/generated",
+  "overrides": [
+    {
+      "predicate": {
+        "dropped": 0
+      },
+      "model": "ego_weapons:item/fullstop_suitcase_up"
+    },
+    {
+      "predicate": {
+        "dropped": 1
+      },
+      "model": "ego_weapons:item/fullstop_suitcase_down"
+    }
+  ]
+}

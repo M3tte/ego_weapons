@@ -1,14 +1,18 @@
 package net.m3tte.ego_weapons.skill.red_mist;
 
 import com.google.common.collect.Lists;
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
+import net.m3tte.ego_weapons.gameasset.movesets.DurandalMovesetAnims;
+import net.m3tte.ego_weapons.gameasset.movesets.MimicryMovesetAnims;
 import net.m3tte.ego_weapons.procedures.BlipTick;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
-import net.m3tte.ego_weapons.world.capabilities.item.TCorpCategories;
-import net.m3tte.ego_weapons.world.capabilities.item.TCorpStyles;
+import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCategories;
+import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsStyles;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -50,12 +54,12 @@ public class RedMistActiveGuard extends GuardSkill {
     private static final SkillDataManager.SkillDataKey<Integer> LAST_ACTIVE;
     private static final SkillDataManager.SkillDataKey<Integer> PARRY_MOTION_COUNTER;
 
-    private static final StaticAnimation[] MIMICRY_GUARDS = {EgoWeaponsAnimations.KALI_PARRY_1, EgoWeaponsAnimations.KALI_PARRY_2};
+    private static final StaticAnimation[] MIMICRY_GUARDS = {MimicryMovesetAnims.KALI_PARRY_1, MimicryMovesetAnims.KALI_PARRY_2};
     public static Builder createBuilder(ResourceLocation resourceLocation) {
         return GuardSkill.createBuilder(resourceLocation)
-                .addGuardMotion(TCorpCategories.MIMICRY, (item, player) -> EgoWeaponsAnimations.KALI_GUARD_HIT)
-                .addGuardBreakMotion(TCorpCategories.MIMICRY, (item, player) -> EgoWeaponsAnimations.RANGA_GUARD_STAGGER)
-                .addAdvancedGuardMotion(TCorpCategories.MIMICRY, (item, player) ->   MIMICRY_GUARDS[player.getOriginal().getRandom().nextInt(2)]);
+                .addGuardMotion(EgoWeaponsCategories.MIMICRY, (item, player) -> MimicryMovesetAnims.KALI_GUARD_HIT)
+                .addGuardBreakMotion(EgoWeaponsCategories.MIMICRY, (item, player) -> BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER)
+                .addAdvancedGuardMotion(EgoWeaponsCategories.MIMICRY, (item, player) ->   MIMICRY_GUARDS[player.getOriginal().getRandom().nextInt(2)]);
     }
 
     // Ensures the last active is actually applied
@@ -100,15 +104,19 @@ public class RedMistActiveGuard extends GuardSkill {
                 event.getPlayerPatch().knockBackEntity(damageSource.getDirectEntity().position(), knockback);
                 float stamina = event.getPlayerPatch().getStamina();
 
-                if ((itemCapability.getStyle(event.getPlayerPatch()).equals(TCorpStyles.KALI_EGO) || itemCapability.getStyle(event.getPlayerPatch()).equals(TCorpStyles.KALI)) && successParrying) {
+                if ((itemCapability.getStyle(event.getPlayerPatch()).equals(EgoWeaponsStyles.KALI_EGO) || itemCapability.getStyle(event.getPlayerPatch()).equals(EgoWeaponsStyles.KALI)) && successParrying) {
                     stamina += 0.1f + 1.5f / (1 + penalty * penalty * penalty);
 
                     if (stamina > event.getPlayerPatch().getMaxStamina()) {
                         stamina = event.getPlayerPatch().getMaxStamina();
                         EgoWeaponsModVars.PlayerVariables entityData = event.getPlayerPatch().getOriginal().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
                         if (!event.getPlayerPatch().getOriginal().getCooldowns().isOnCooldown(EgoWeaponsItems.MIMICRY.get()) && entityData != null && entityData.globalcooldown <= 0) {
-                            event.getPlayerPatch().playAnimationSynchronized(EgoWeaponsAnimations.KALI_PARRY_EVADE, 0);
+                            event.getPlayerPatch().playAnimationSynchronized(MimicryMovesetAnims.KALI_PARRY_EVADE, 0);
                             event.getPlayerPatch().playSound(EgoWeaponsSounds.BLACK_SILENCE_EVADE, 1, 1);
+
+                            if (damageSource.getEntity() instanceof LivingEntity) {
+                                EgoWeaponsEffects.OFFENSE_LEVEL_DOWN.get().decrement((LivingEntity) damageSource.getEntity(), 0, 1);
+                            }
 
                             BlipTick.chargeBlips(playerentity, 1, true);
 
@@ -157,15 +165,15 @@ public class RedMistActiveGuard extends GuardSkill {
 
     @Override
     protected float getPenaltyMultiplier(CapabilityItem itemCapapbility) {
-        return itemCapapbility.getWeaponCategory().equals(TCorpCategories.MOOK_WORKSHOP) ? 1 : 0.6F;
+        return itemCapapbility.getWeaponCategory().equals(EgoWeaponsCategories.MOOK_WORKSHOP) ? 1 : 0.6F;
     }
 
     @Nullable
     protected StaticAnimation getGuardMotion(PlayerPatch<?> playerpatch, CapabilityItem itemCapability, BlockType blockType) {
         if (blockType == BlockType.ADVANCED_GUARD) {
-            if (itemCapability.getWeaponCategory() == TCorpCategories.DURANDAL) {
-                return EgoWeaponsAnimations.DURANDAL_GUARD_COUNTER;
-            } else if (itemCapability.getWeaponCategory() == TCorpCategories.CRYSTAL_ATELIER) {
+            if (itemCapability.getWeaponCategory() == EgoWeaponsCategories.DURANDAL) {
+                return DurandalMovesetAnims.DURANDAL_GUARD_COUNTER;
+            } else if (itemCapability.getWeaponCategory() == EgoWeaponsCategories.CRYSTAL_ATELIER) {
                 return Animations.SWORD_GUARD_ACTIVE_HIT1;
             }
 
@@ -185,7 +193,7 @@ public class RedMistActiveGuard extends GuardSkill {
     @OnlyIn(Dist.CLIENT)
     public List<Object> getTooltipArgs() {
         List<Object> list = Lists.newArrayList();
-        list.add(String.format("%s, %s, %s, %s", TCorpCategories.MIMICRY).toLowerCase());
+        list.add(String.format("%s, %s, %s, %s", EgoWeaponsCategories.MIMICRY).toLowerCase());
         return list;
     }
 

@@ -19,6 +19,8 @@ import net.minecraftforge.fml.common.Mod;
 public class AmmoOverlay {
 
 
+	private static ResourceLocation BULLET = new ResourceLocation("ego_weapons:textures/screens/bullet.png");
+	private static ResourceLocation EMPTY_BULLET = new ResourceLocation("ego_weapons:textures/screens/bullet_empty.png");
 
 	@SubscribeEvent(priority = EventPriority.NORMAL)
 	public static void eventHandler(RenderGameOverlayEvent.Post event) {
@@ -39,33 +41,20 @@ public class AmmoOverlay {
 
 			if (EgoWeaponsItems.ATELIER_LOGIC_PISTOLS.get().equals(entity.getMainHandItem().getItem())) {
 				if (world.isClientSide) {
-					double capacity = ((entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null)
-							.orElse(new EgoWeaponsModVars.PlayerVariables())).gunMagSize);
-					System.out.println("Halfsize: "+posX);
-					if (capacity < 2) {
-						Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("ego_weapons:textures/screens/bullet.png"));
-						AbstractGui.blit(event.getMatrixStack(), posX - 15, posY + -20, 0, 0, 16, 16, 16, 16);
-					} else {
-						Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("ego_weapons:textures/screens/bullet_empty.png"));
-						AbstractGui.blit(event.getMatrixStack(), posX - 15, posY + -20, 0, 0, 16, 16, 16, 16);
-					}
-					if (capacity < 1) {
-						Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("ego_weapons:textures/screens/bullet.png"));
-						AbstractGui.blit(event.getMatrixStack(), posX, posY + -20, 0, 0, 16, 16, 16, 16);
-					} else {
-						Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("ego_weapons:textures/screens/bullet_empty.png"));
-						AbstractGui.blit(event.getMatrixStack(), posX, posY + -20, 0, 0, 16, 16, 16, 16);
-					}
+					double ammo = entity.getMainHandItem().getOrCreateTag().getInt("ammo");
+
+					Minecraft.getInstance().getTextureManager().bind(ammo >= 1 ? BULLET : EMPTY_BULLET);
+					AbstractGui.blit(event.getMatrixStack(), posX - 15, posY + -20, 0, 0, 16, 16, 16, 16);
+
+					Minecraft.getInstance().getTextureManager().bind(ammo >= 2 ? BULLET : EMPTY_BULLET);
+					AbstractGui.blit(event.getMatrixStack(), posX, posY + -20, 0, 0, 16, 16, 16, 16);
 
 					if (!((entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null)
 							.orElse(new EgoWeaponsModVars.PlayerVariables())).firingMode)) {
 						Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("ego_weapons:textures/screens/fire_off.png"));
 						AbstractGui.blit(event.getMatrixStack(), posX - 15, posY + -20, 0, 0, 16, 16, 16, 16);
-					}
-					if (!((entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null)
-							.orElse(new EgoWeaponsModVars.PlayerVariables())).firingMode)) {
-						Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("ego_weapons:textures/screens/fire_off.png"));
 						AbstractGui.blit(event.getMatrixStack(), posX, posY + -20, 0, 0, 16, 16, 16, 16);
+
 					}
 				}
 			}
@@ -74,13 +63,8 @@ public class AmmoOverlay {
 				double capacity = ((entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null)
 						.orElse(new EgoWeaponsModVars.PlayerVariables())).gunMagSize);
 
-				if (capacity == 0) {
-					Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("ego_weapons:textures/screens/bullet.png"));
-					AbstractGui.blit(event.getMatrixStack(), posX, posY, 0, -10, 16, 16, 16, 16);
-				} else {
-					Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("ego_weapons:textures/screens/bullet_empty.png"));
-					AbstractGui.blit(event.getMatrixStack(), posX, posY, 0, -10, 16, 16, 16, 16);
-				}
+				Minecraft.getInstance().getTextureManager().bind(capacity == 0 ? BULLET : EMPTY_BULLET);
+				AbstractGui.blit(event.getMatrixStack(), posX, posY, 0, -10, 16, 16, 16, 16);
 
 				if (!((entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null)
 						.orElse(new EgoWeaponsModVars.PlayerVariables())).firingMode)) {

@@ -32,7 +32,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
-            args '-mixin.config=ego_weapons.mixins.json', '--username', 'Dev2'
+            args '-mixin.config=ego_weapons.mixins.json', '--username', 'Dev1'
 
             mods {
                 ego_weapons {

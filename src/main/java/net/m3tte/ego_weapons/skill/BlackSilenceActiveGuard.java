@@ -3,8 +3,11 @@ package net.m3tte.ego_weapons.skill;
 import com.google.common.collect.Lists;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
+import net.m3tte.ego_weapons.gameasset.movesets.DurandalMovesetAnims;
+import net.m3tte.ego_weapons.gameasset.movesets.MimicryMovesetAnims;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
-import net.m3tte.ego_weapons.world.capabilities.item.TCorpCategories;
+import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCategories;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -44,21 +47,21 @@ public class BlackSilenceActiveGuard extends GuardSkill {
     private static final SkillDataManager.SkillDataKey<Integer> LAST_ACTIVE;
     private static final SkillDataManager.SkillDataKey<Integer> PARRY_MOTION_COUNTER;
 
-    private static final StaticAnimation[] MIMICRY_GUARDS = {EgoWeaponsAnimations.KALI_PARRY_1, EgoWeaponsAnimations.KALI_PARRY_2};
+    private static final StaticAnimation[] MIMICRY_GUARDS = {MimicryMovesetAnims.KALI_PARRY_1, MimicryMovesetAnims.KALI_PARRY_2};
     public static Builder createBuilder(ResourceLocation resourceLocation) {
         return GuardSkill.createBuilder(resourceLocation)
-                .addAdvancedGuardMotion(TCorpCategories.DURANDAL, (item, player) -> EgoWeaponsAnimations.DURANDAL_GUARD_COUNTER)
-                .addGuardMotion(TCorpCategories.DURANDAL, (item, player) -> EgoWeaponsAnimations.DURANDAL_GUARD_HIT)
-                .addGuardBreakMotion(TCorpCategories.DURANDAL, (item, player) -> EgoWeaponsAnimations.RANGA_GUARD_STAGGER)
-                .addAdvancedGuardMotion(TCorpCategories.MOOK_WORKSHOP, (item, player) -> EgoWeaponsAnimations.MOOK_GUARD_HIT_PARRY)
-                .addGuardMotion(TCorpCategories.MOOK_WORKSHOP, (item, player) -> EgoWeaponsAnimations.MOOK_GUARD_HIT)
-                .addGuardBreakMotion(TCorpCategories.MOOK_WORKSHOP, (item, player) -> EgoWeaponsAnimations.RANGA_GUARD_STAGGER)
-                .addGuardMotion(TCorpCategories.MIMICRY, (item, player) -> EgoWeaponsAnimations.KALI_GUARD_HIT)
-                .addGuardBreakMotion(TCorpCategories.MIMICRY, (item, player) -> EgoWeaponsAnimations.RANGA_GUARD_STAGGER)
-                .addAdvancedGuardMotion(TCorpCategories.MIMICRY, (item, player) ->   MIMICRY_GUARDS[player.getOriginal().getRandom().nextInt(2)])
-                .addAdvancedGuardMotion(TCorpCategories.CRYSTAL_ATELIER, (item, player) -> Animations.SWORD_GUARD_ACTIVE_HIT1)
-                .addGuardMotion(TCorpCategories.CRYSTAL_ATELIER, (item, player) -> Animations.SWORD_DUAL_GUARD_HIT)
-                .addGuardBreakMotion(TCorpCategories.CRYSTAL_ATELIER, (item, player) -> EgoWeaponsAnimations.RANGA_GUARD_STAGGER);
+                .addAdvancedGuardMotion(EgoWeaponsCategories.DURANDAL, (item, player) -> DurandalMovesetAnims.DURANDAL_GUARD_COUNTER)
+                .addGuardMotion(EgoWeaponsCategories.DURANDAL, (item, player) -> DurandalMovesetAnims.DURANDAL_GUARD_HIT)
+                .addGuardBreakMotion(EgoWeaponsCategories.DURANDAL, (item, player) -> BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER)
+                .addAdvancedGuardMotion(EgoWeaponsCategories.MOOK_WORKSHOP, (item, player) -> BlackSilenceMovesetAnims.MOOK_GUARD_HIT_PARRY)
+                .addGuardMotion(EgoWeaponsCategories.MOOK_WORKSHOP, (item, player) -> BlackSilenceMovesetAnims.MOOK_GUARD_HIT)
+                .addGuardBreakMotion(EgoWeaponsCategories.MOOK_WORKSHOP, (item, player) -> BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER)
+                .addGuardMotion(EgoWeaponsCategories.MIMICRY, (item, player) -> MimicryMovesetAnims.KALI_GUARD_HIT)
+                .addGuardBreakMotion(EgoWeaponsCategories.MIMICRY, (item, player) -> BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER)
+                .addAdvancedGuardMotion(EgoWeaponsCategories.MIMICRY, (item, player) ->   MIMICRY_GUARDS[player.getOriginal().getRandom().nextInt(2)])
+                .addAdvancedGuardMotion(EgoWeaponsCategories.CRYSTAL_ATELIER, (item, player) -> Animations.SWORD_GUARD_ACTIVE_HIT1)
+                .addGuardMotion(EgoWeaponsCategories.CRYSTAL_ATELIER, (item, player) -> Animations.SWORD_DUAL_GUARD_HIT)
+                .addGuardBreakMotion(EgoWeaponsCategories.CRYSTAL_ATELIER, (item, player) -> BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER);
     }
 
     // Ensures the last active is actually applied
@@ -89,7 +92,7 @@ public class BlackSilenceActiveGuard extends GuardSkill {
                 if (successParrying) {
                     knockback *= 0.4F;
 
-                    if (itemCapability.getWeaponCategory().equals(TCorpCategories.MOOK_WORKSHOP)) {
+                    if (itemCapability.getWeaponCategory().equals(EgoWeaponsCategories.MOOK_WORKSHOP)) {
                         if (penalty >= 1)
                             penalty -= 0.1f;
                         else
@@ -109,7 +112,7 @@ public class BlackSilenceActiveGuard extends GuardSkill {
                 event.getPlayerPatch().knockBackEntity(damageSource.getDirectEntity().position(), knockback);
                 float stamina = event.getPlayerPatch().getStamina();
 
-                if (itemCapability.getWeaponCategory().equals(TCorpCategories.MOOK_WORKSHOP) && successParrying) {
+                if (itemCapability.getWeaponCategory().equals(EgoWeaponsCategories.MOOK_WORKSHOP) && successParrying) {
                     stamina += 0.1f + 1.5f / (1 + penalty * penalty * penalty);
 
                     if (stamina > event.getPlayerPatch().getMaxStamina()) {
@@ -117,7 +120,7 @@ public class BlackSilenceActiveGuard extends GuardSkill {
                         event.getPlayerPatch().getOriginal().addEffect(new EffectInstance(Effects.DIG_SPEED, 30, 0));
                     }
                 } else {
-                    if (itemCapability.getWeaponCategory().equals(TCorpCategories.MOOK_WORKSHOP))
+                    if (itemCapability.getWeaponCategory().equals(EgoWeaponsCategories.MOOK_WORKSHOP))
                         stamina -= 0.3f * penalty;
 
                     stamina -= penalty * impact;
@@ -162,15 +165,15 @@ public class BlackSilenceActiveGuard extends GuardSkill {
 
     @Override
     protected float getPenaltyMultiplier(CapabilityItem itemCapapbility) {
-        return itemCapapbility.getWeaponCategory().equals(TCorpCategories.MOOK_WORKSHOP) ? 1 : 0.6F;
+        return itemCapapbility.getWeaponCategory().equals(EgoWeaponsCategories.MOOK_WORKSHOP) ? 1 : 0.6F;
     }
 
     @Nullable
     protected StaticAnimation getGuardMotion(PlayerPatch<?> playerpatch, CapabilityItem itemCapability, BlockType blockType) {
         if (blockType == BlockType.ADVANCED_GUARD) {
-            if (itemCapability.getWeaponCategory() == TCorpCategories.DURANDAL) {
-                return EgoWeaponsAnimations.DURANDAL_GUARD_COUNTER;
-            } else if (itemCapability.getWeaponCategory() == TCorpCategories.CRYSTAL_ATELIER) {
+            if (itemCapability.getWeaponCategory() == EgoWeaponsCategories.DURANDAL) {
+                return DurandalMovesetAnims.DURANDAL_GUARD_COUNTER;
+            } else if (itemCapability.getWeaponCategory() == EgoWeaponsCategories.CRYSTAL_ATELIER) {
                 return Animations.SWORD_GUARD_ACTIVE_HIT1;
             }
 
@@ -190,7 +193,7 @@ public class BlackSilenceActiveGuard extends GuardSkill {
     @OnlyIn(Dist.CLIENT)
     public List<Object> getTooltipArgs() {
         List<Object> list = Lists.newArrayList();
-        list.add(String.format("%s, %s, %s, %s", TCorpCategories.DURANDAL, TCorpCategories.CRYSTAL_ATELIER).toLowerCase());
+        list.add(String.format("%s, %s, %s, %s", EgoWeaponsCategories.DURANDAL, EgoWeaponsCategories.CRYSTAL_ATELIER).toLowerCase());
         return list;
     }
 

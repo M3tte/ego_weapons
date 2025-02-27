@@ -4,6 +4,7 @@ package net.m3tte.ego_weapons.item.blackSilence;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
+import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.potion.OrlandoPotionEffect;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
@@ -27,6 +28,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.List;
+
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
 public class BlackSilenceArmor  extends ArmorItem {
 
@@ -110,11 +114,47 @@ public class BlackSilenceArmor  extends ArmorItem {
 		}
 
 		@Override
-		public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> list, ITooltipFlag p_77624_4_) {
-			super.appendHoverText(p_77624_1_, p_77624_2_, list, p_77624_4_);
-			list.add(new StringTextComponent("Thats that... and this is this..."));
-			list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Orlando").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 10 E").withStyle(TextFormatting.AQUA)));
-			list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Furioso").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 6 E").withStyle(TextFormatting.AQUA)));
+		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+			super.appendHoverText(itemstack, world, list, flag);
+			list.add(new StringTextComponent("Thats that. And this is this.").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+
+			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
+
+			switch (EgoWeaponsKeybinds.getUiPage() % 5) {
+				case 0:
+					if (EgoWeaponsKeybinds.isHoldingShift())
+						generateStatusDescription(list, new String[]{"poise"});
+					else
+						generateDescription(list, "black_silence_suit", "passive", 4);
+					break;
+				case 1:
+					if (EgoWeaponsKeybinds.isHoldingShift())
+						generateStatusDescription(list, new String[]{"offense_up", "orlando"});
+					else
+						generateDescription(list, "black_silence_suit", "passive1", 4);
+					break;
+				case 2:
+					if (EgoWeaponsKeybinds.isHoldingShift())
+						generateStatusDescription(list, new String[]{"offense_up", "power_up"});
+					else
+						generateDescription(list, "black_silence_suit", "passive2", 3);
+					break;
+				case 3:
+					if (EgoWeaponsKeybinds.isHoldingShift())
+						generateStatusDescription(list, new String[]{"orlando"});
+					else
+						generateDescription(list, "black_silence_suit", "ability", 1);
+					break;
+				case 4:
+					if (EgoWeaponsKeybinds.isHoldingShift())
+						generateStatusDescription(list, new String[]{"furioso"});
+					else
+						generateDescription(list, "black_silence_suit", "ability1", 1);
+					break;
+			}
+
+			list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
 		}
 	};
 	static Item mask = new ArmorItem(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Item.Properties().tab(ItemGroup.TAB_COMBAT)) {

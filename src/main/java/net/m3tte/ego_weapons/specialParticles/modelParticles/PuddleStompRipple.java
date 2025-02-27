@@ -27,7 +27,7 @@ public class PuddleStompRipple extends SpriteTexturedParticle {
         this.spriteProvider = spriteProvider;
 
         int scaleAgeModifier = 1 + new Random().nextInt(10);
-        this.quadSize *= 12f;
+        this.quadSize *= 18f;
         this.lifetime = 10;
     }
 

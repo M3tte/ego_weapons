@@ -4,6 +4,7 @@ import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsModElements;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.item.CrimsonkimonoItem;
 import net.m3tte.ego_weapons.particle.ArmourupparticleParticle;
 import net.m3tte.ego_weapons.particle.CrimsonfanparticleParticle;
@@ -144,7 +145,7 @@ public class HitProcedure {
 		public static void hitStunEffect(LivingEntityPatch<?> patch, float timeMod) {
 			LivingEntity living = patch.getOriginal();
 			if (patch.getHitAnimation(ExtendedDamageSource.StunType.LONG) == Animations.BIPED_HIT_LONG) {
-				patch.playAnimationSynchronized(EgoWeaponsAnimations.RANGA_GUARD_STAGGER, timeMod);
+				patch.playAnimationSynchronized(BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER, timeMod);
 				living.addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), (int) (20 * (timeMod * 2 + 1)), (int) 0, (false), (false)));
 			} else {
 				living.addEffect(new EffectInstance(Effects.WEAKNESS, (int) 15, (int) 4, (false), (false)));

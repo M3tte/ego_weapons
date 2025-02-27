@@ -513,8 +513,8 @@ public class EgoWeaponsModVars {
 		}
 
 		public SyncEmotionLevelMSG(PlayerVariables data, PlayerEntity target) {
-			this.emotionLevel = data.maxStagger;
-			this.emotionPoints = data.stagger;
+			this.emotionLevel = data.emotionLevel;
+			this.emotionPoints = data.emotionLevelProgress;
 			this.targetUUID = target.getUUID();
 		}
 
@@ -532,6 +532,7 @@ public class EgoWeaponsModVars {
 						System.out.println("TARGET NULL");
 						return;
 					}
+
 					PlayerVariables variables = Minecraft.getInstance().level.getPlayerByUUID(message.targetUUID).getCapability(PLAYER_VARIABLES_CAPABILITY, null)
 							.orElse(new PlayerVariables());
 					variables.emotionLevel = (int) message.emotionLevel;
@@ -625,14 +626,10 @@ public class EgoWeaponsModVars {
 					if (entity != null) {
 						if (ForgeRegistries.POTIONS.getValue(message.effect) != null) {
 							if (entity instanceof LivingEntity) {
+								((LivingEntity) entity).removeEffect(ForgeRegistries.POTIONS.getValue(message.effect));
 								((LivingEntity) entity).addEffect(new EffectInstance(ForgeRegistries.POTIONS.getValue(message.effect), message.effectDuration, message.effectPotency));
-								System.out.println("SYNCED EFFECT FOR ENTITY "+message.effect);
 							}
-						} else {
-							System.out.println("SYNCABLE EFFECT NOT FOUND");
 						}
-					} else {
-						System.out.println("ENTITY NOT FOUND.");
 					}
 				}
 			});

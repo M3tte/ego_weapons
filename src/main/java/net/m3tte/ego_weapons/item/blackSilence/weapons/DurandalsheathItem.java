@@ -1,6 +1,7 @@
 
 package net.m3tte.ego_weapons.item.blackSilence.weapons;
 
+
 import net.minecraft.item.Rarity;
 import net.minecraft.item.Item;
 

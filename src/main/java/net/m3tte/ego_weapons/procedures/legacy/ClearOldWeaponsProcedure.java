@@ -17,7 +17,7 @@ public class ClearOldWeaponsProcedure {
 		if (_iitemhandlerref.get() != null) {
 			for (int _idx = 0; _idx < _iitemhandlerref.get().getSlots(); _idx++) {
 				ItemStack itemstackiterator = _iitemhandlerref.get().getStackInSlot(_idx);
-				if (ItemTags.getAllTags().getTag(new ResourceLocation("tcorp:blacksilenceweapons"))
+				if (ItemTags.getAllTags().getTag(new ResourceLocation("ego_weapons:blacksilenceweapons"))
 						.contains(itemstackiterator.getItem())) {
                     ItemStack _stktoremove = itemstackiterator;
                     entity.inventory.removeItem(_stktoremove);

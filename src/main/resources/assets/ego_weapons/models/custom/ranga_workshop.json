@@ -1,5 +1,9 @@
 {
   "credit": "Made with Blockbench",
+  "textures": {
+    "0": "ego_weapons:blocks/ranga_workshop",
+    "particle": "ego_weapons:items/defiled_cutter"
+  },
   "texture_size": [
     21,
     17

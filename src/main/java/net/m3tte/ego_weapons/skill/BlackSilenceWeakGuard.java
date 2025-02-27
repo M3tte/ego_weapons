@@ -1,8 +1,10 @@
 package net.m3tte.ego_weapons.skill;
 
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.movesets.AtelierLogicMovesetAnims;
+import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
-import net.m3tte.ego_weapons.world.capabilities.item.TCorpCategories;
+import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCategories;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -22,15 +24,15 @@ public class BlackSilenceWeakGuard extends EnergizingGuardSkill {
 
     public static Builder createBuilder(ResourceLocation resourceLocation) {
         return GuardSkill.createBuilder(resourceLocation)
-                .addAdvancedGuardMotion(TCorpCategories.RANGA, (item, player) -> EgoWeaponsAnimations.RANGA_GUARD_HIT)
-                .addGuardMotion(TCorpCategories.RANGA, (item, player) -> EgoWeaponsAnimations.RANGA_GUARD_HIT)
-                .addGuardBreakMotion(TCorpCategories.RANGA, (item, player) -> EgoWeaponsAnimations.RANGA_GUARD_STAGGER)
-                .addAdvancedGuardMotion(TCorpCategories.WHEELS_INDUSTRY, (item, player) -> Animations.GREATSWORD_GUARD_HIT)
-                .addGuardMotion(TCorpCategories.WHEELS_INDUSTRY, (item, player) -> Animations.GREATSWORD_GUARD_HIT)
-                .addGuardBreakMotion(TCorpCategories.WHEELS_INDUSTRY, (item, player) -> Animations.GREATSWORD_GUARD_BREAK)
-                .addAdvancedGuardMotion(TCorpCategories.ATELIER_SHOTGUN, (item, player) -> EgoWeaponsAnimations.ATELIER_REVOLVER_GUARD_HIT)
-                .addGuardMotion(TCorpCategories.ATELIER_SHOTGUN, (item, player) -> EgoWeaponsAnimations.ATELIER_SHOTGUN_GUARD)
-                .addGuardBreakMotion(TCorpCategories.ATELIER_SHOTGUN, (item, player) -> EgoWeaponsAnimations.RANGA_GUARD_STAGGER);
+                .addAdvancedGuardMotion(EgoWeaponsCategories.RANGA, (item, player) -> BlackSilenceMovesetAnims.RANGA_GUARD_HIT)
+                .addGuardMotion(EgoWeaponsCategories.RANGA, (item, player) -> BlackSilenceMovesetAnims.RANGA_GUARD_HIT)
+                .addGuardBreakMotion(EgoWeaponsCategories.RANGA, (item, player) -> BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER)
+                .addAdvancedGuardMotion(EgoWeaponsCategories.WHEELS_INDUSTRY, (item, player) -> Animations.GREATSWORD_GUARD_HIT)
+                .addGuardMotion(EgoWeaponsCategories.WHEELS_INDUSTRY, (item, player) -> Animations.GREATSWORD_GUARD_HIT)
+                .addGuardBreakMotion(EgoWeaponsCategories.WHEELS_INDUSTRY, (item, player) -> Animations.GREATSWORD_GUARD_BREAK)
+                .addAdvancedGuardMotion(EgoWeaponsCategories.ATELIER_SHOTGUN, (item, player) -> AtelierLogicMovesetAnims.ATELIER_REVOLVER_GUARD_HIT)
+                .addGuardMotion(EgoWeaponsCategories.ATELIER_SHOTGUN, (item, player) -> AtelierLogicMovesetAnims.ATELIER_SHOTGUN_GUARD)
+                .addGuardBreakMotion(EgoWeaponsCategories.ATELIER_SHOTGUN, (item, player) -> BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER);
     }
 
     public void onInitiate(SkillContainer container) {
@@ -50,7 +52,7 @@ public class BlackSilenceWeakGuard extends EnergizingGuardSkill {
     @OnlyIn(Dist.CLIENT)
     public boolean shouldDraw(SkillContainer container) {
 
-        WeaponCategory[] cat = {TCorpCategories.ATELIER_SHOTGUN, TCorpCategories.WHEELS_INDUSTRY, TCorpCategories.RANGA};
+        WeaponCategory[] cat = {EgoWeaponsCategories.ATELIER_SHOTGUN, EgoWeaponsCategories.WHEELS_INDUSTRY, EgoWeaponsCategories.RANGA};
 
         if (!((Float)container.getDataManager().getDataValue(PENALTY) > 0.0F))
             return false;

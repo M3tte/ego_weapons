@@ -7,8 +7,8 @@ package net.m3tte.ego_weapons;
 
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsSkills;
-import net.m3tte.ego_weapons.world.capabilities.item.TCorpCapabilityPresets;
-import net.m3tte.ego_weapons.world.capabilities.item.TCorpCategories;
+import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets;
+import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCategories;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 public class EgoWeaponsEFLoader {
@@ -18,12 +18,12 @@ public class EgoWeaponsEFLoader {
     public static void registerStuffs(IEventBus bus) {
         bus.addListener(EgoWeaponsAnimations::registerAnimations);
         bus.addListener(EgoWeaponsSkills::registerSkills);
-        bus.addListener(TCorpCapabilityPresets::register);
+        bus.addListener(EgoWeaponsCapabilityPresets::register);
 
-        TCorpCategories.ENUM_MANAGER.loadPreemptive(TCorpCategories.class);
+        EgoWeaponsCategories.ENUM_MANAGER.loadPreemptive(EgoWeaponsCategories.class);
 
-        EgoWeaponsItems.ITEMS.register(bus);
         EgoWeaponsParticles.PARTICLES.register(bus);
+        EgoWeaponsItems.ITEMS.register(bus);
         EgoWeaponsEntities.ENTITIES.register(bus);
 
 

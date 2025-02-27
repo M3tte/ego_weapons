@@ -159,6 +159,11 @@ public class DoubtAPatch extends MobPatch<DawnOfGreenDoubtEntity> implements Sta
     }
 
     @Override
+    public StaticAnimation getStunAnimation(int strength) {
+        return EgoWeaponsMobAnimations.DOUBT_STUN_STAGGER;
+    }
+
+    @Override
     public StaticAnimation getLiftAnimation(int strength) {
         return EgoWeaponsMobAnimations.DOUBT_LIFTUP;
     }

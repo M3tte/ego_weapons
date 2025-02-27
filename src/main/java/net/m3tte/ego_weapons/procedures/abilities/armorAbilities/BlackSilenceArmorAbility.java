@@ -4,6 +4,7 @@ import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.particle.BlacksilenceshadowParticle;
 import net.m3tte.ego_weapons.particle.BlipeffectParticle;
 import net.m3tte.ego_weapons.potion.FuriosoPotionEffect;
@@ -95,7 +96,7 @@ public class BlackSilenceArmorAbility extends ItemAbility {
         LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 
-        entitypatch.playAnimationSynchronized(EgoWeaponsAnimations.ORLANDO_TRIGGER, 0.2f);
+        entitypatch.playAnimationSynchronized(BlackSilenceMovesetAnims.ORLANDO_TRIGGER, 0.2f);
 
     }
 

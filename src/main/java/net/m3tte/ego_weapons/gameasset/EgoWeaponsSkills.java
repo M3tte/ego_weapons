@@ -7,7 +7,9 @@ package net.m3tte.ego_weapons.gameasset;
 
 import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.EgoWeaponsModElements;
+import net.m3tte.ego_weapons.gameasset.movesets.*;
 import net.m3tte.ego_weapons.skill.AtelierPistol.AtelierPassive;
+import net.m3tte.ego_weapons.skill.AtelierPistol.AtelierPistolSpecial;
 import net.m3tte.ego_weapons.skill.AtelierPistol.BlacksilenceAtelierGuard;
 import net.m3tte.ego_weapons.skill.AtelierShotgun.AtelierShotgunGuard;
 import net.m3tte.ego_weapons.skill.AtelierShotgun.AtelierShotgunPassive;
@@ -15,9 +17,17 @@ import net.m3tte.ego_weapons.skill.*;
 import net.m3tte.ego_weapons.skill.allas.AllasPassive;
 import net.m3tte.ego_weapons.skill.allas.BlackSilenceAllasGuard;
 import net.m3tte.ego_weapons.skill.durandal.BasicBlockablePassive;
+import net.m3tte.ego_weapons.skill.durandal.DurandalCleave;
+import net.m3tte.ego_weapons.skill.fullstop_rep.FullstopRepCounterGuard;
+import net.m3tte.ego_weapons.skill.fullstop_rep.FullstopRepPassive;
+import net.m3tte.ego_weapons.skill.fullstop_sniper.FullstopCounterGuard;
+import net.m3tte.ego_weapons.skill.fullstop_sniper.FullstopSniperPassive;
 import net.m3tte.ego_weapons.skill.magic_bullet.MagicBulletDetonate;
 import net.m3tte.ego_weapons.skill.magic_bullet.MagicBulletGuard;
 import net.m3tte.ego_weapons.skill.magic_bullet.MagicBulletPassive;
+import net.m3tte.ego_weapons.skill.oeufi.OeufiActiveGuard;
+import net.m3tte.ego_weapons.skill.oeufi.OeufiInnate;
+import net.m3tte.ego_weapons.skill.oeufi.OeufiPassive;
 import net.m3tte.ego_weapons.skill.oldBoys.OldBoysGuard;
 import net.m3tte.ego_weapons.skill.oldBoys.OldBoysPassive;
 import net.m3tte.ego_weapons.skill.red_mist.RedMistActiveGuard;
@@ -27,16 +37,19 @@ import net.m3tte.ego_weapons.skill.solemnLament.SolemnLamentPassive;
 import net.m3tte.ego_weapons.skill.sunshower.SunshowerActiveGuard;
 import net.m3tte.ego_weapons.skill.sunshower.SunshowerPassive;
 import net.m3tte.ego_weapons.skill.sunshower.SunshowerPuddleStomp;
+import net.m3tte.ego_weapons.skill.wheels.WheelsCounterGuard;
+import net.m3tte.ego_weapons.skill.wheels.WheelsPassive;
 import net.minecraft.util.ResourceLocation;
 import yesman.epicfight.api.animation.property.AnimationProperty.AttackPhaseProperty;
 import yesman.epicfight.api.forgeevent.SkillRegistryEvent;
 import yesman.epicfight.api.utils.ExtendedDamageSource.StunType;
 import yesman.epicfight.api.utils.math.ExtraDamageType;
 import yesman.epicfight.api.utils.math.ValueCorrector;
+import yesman.epicfight.gameasset.Skills;
 import yesman.epicfight.skill.*;
 
 public class EgoWeaponsSkills {
-    public static Skill LESSER_SPLIT_VERTICAL;
+    public static Skill DURANDAL_CLEAVE;
     public static Skill GREATER_SPLIT_VERTICAL;
     public static Skill HELLO;
 
@@ -53,9 +66,14 @@ public class EgoWeaponsSkills {
 
     public static Skill RANGA_EVISCERATE;
 
+    public static Skill ATELIER_PISTOLS_FRENZY;
+
     public static Skill ALLAS_GUARD;
 
     public static Skill ALLAS_PASSIVE;
+
+    public static Skill WHEELS_PASSIVE;
+    public static Skill WHEELS_GUARD;
 
     public static Skill ATELIER_GUARD;
 
@@ -90,56 +108,57 @@ public class EgoWeaponsSkills {
     public static Skill SUNSHOWER_PASSIVE;
     public static Skill SUNSHOWER_GUARD;
     public static Skill SUNSHOWER_PUDDLE_STOMP;
+    public static Skill ZELKOVA_SHATTERING_SPIN;
+
+    public static Skill OEUFI_SLAM;
+    public static Skill OEUFI_GUARD;
+    public static Skill OEUFI_PASSIVE;
+    public static Skill FULLSTOP_REP_INNATE;
+    public static Skill FULLSTOP_REP_GUARD;
+    public static Skill FULLSTOP_REP_PASSIVE;
+    public static Skill FULLSTOP_SNIPER_INNATE;
+    public static Skill FULLSTOP_SNIPER_GUARD;
+    public static Skill FULLSTOP_SNIPER_PASSIVE;
     public EgoWeaponsSkills() {
     }
 
     public static void registerSkills(SkillRegistryEvent event) {
-        LESSER_SPLIT_VERTICAL = event.registerSkill((
-                new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "lesser_split_vertical"))
-                    .setConsumption(50.0F).setAnimations(EgoWeaponsAnimations.DURANDAL_DRAW)))
-                    .newPropertyLine().addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.adder(2.0F))
-                    .addProperty(AttackPhaseProperty.HIT_SOUND, EgoWeaponsModElements.sounds.get(ResourceLocation.of("ego_weapons:blacksilence.durandal.strong", ':')))
-                    .addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(2.0F))
-                    .addProperty(AttackPhaseProperty.ARMOR_NEGATION, ValueCorrector.adder(20.0F))
-                    .addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.adder(3.0F))
-                    .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.LONG).registerPropertiesToAnimation(), false);
+        DURANDAL_CLEAVE = event.registerSkill(new DurandalCleave(SpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "durandal_cleave")).setConsumption(55.0F)), false);
 
         GREATER_SPLIT_VERTICAL = event.registerSkill((
                 new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "greater_split_vertical"))
-                        .setConsumption(70.0F).setAnimations(EgoWeaponsAnimations.GREAT_SPLIT_VERTICAL)))
+                        .setConsumption(100.0F).setAnimations(MimicryMovesetAnims.GREAT_SPLIT_VERTICAL)))
                 .newPropertyLine().addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.adder(2.0F))
                 .addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.8F))
-                .addProperty(AttackPhaseProperty.ARMOR_NEGATION, ValueCorrector.adder(60.0F))
+                .addProperty(AttackPhaseProperty.ARMOR_NEGATION, ValueCorrector.adder(50.0F))
                 .addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.adder(6.0F)), false);
 
         HELLO = event.registerSkill((
                 new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "hello"))
-                        .setConsumption(70.0F).setAnimations(EgoWeaponsAnimations.MIMICRY_HELLO)))
+                        .setConsumption(70.0F).setAnimations(MimicryMovesetAnims.MIMICRY_HELLO)))
                 .newPropertyLine().addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.adder(6.0F)), false);
 
 
         SOLEMN_LAMENT_BURST = event.registerSkill((
                 new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "solemn_burst"))
-                        .setConsumption(65.0F).setAnimations(EgoWeaponsAnimations.SOLEMN_LAMENT_SPECIAL_ATTACK)))
+                        .setConsumption(65.0F).setAnimations(SolemnLamentMovesetAnims.SOLEMN_LAMENT_SPECIAL_ATTACK)))
                 .newPropertyLine(), false);
 
 
         WHEELS_SMASH = event.registerSkill((
                 new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "wheels_smash"))
-                        .setConsumption(80.0F).setAnimations(EgoWeaponsAnimations.WHEELS_HEAVY)))
+                        .setConsumption(80.0F).setAnimations(BlackSilenceMovesetAnims.WHEELS_HEAVY)))
                 .newPropertyLine().addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.adder(2.0F))
-                .addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(2.0F))
-                .addProperty(AttackPhaseProperty.ARMOR_NEGATION, ValueCorrector.adder(40.0F))
                 .addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.adder(3.0F))
-                .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.LONG).registerPropertiesToAnimation(), false);
+                .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.HOLD).registerPropertiesToAnimation(), false);
 
         MOOK_CUT = event.registerSkill((
                 new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "mook_cut"))
-                        .setConsumption(40.0F).setMaxStack(2).setAnimations(EgoWeaponsAnimations.MOOK_CUT))), false);
+                        .setConsumption(40.0F).setMaxStack(2).setAnimations(BlackSilenceMovesetAnims.MOOK_CUT))), false);
         CRYSTAL_ATELIER = event.registerSkill((
                 new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "crystal_atelier"))
                     .setConsumption(50.0F)
-                    .setAnimations(EgoWeaponsAnimations.CRYSTAL_ATELIER_SKILL))).newPropertyLine()
+                    .setAnimations(BlackSilenceMovesetAnims.CRYSTAL_ATELIER_SKILL))).newPropertyLine()
                     .addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.adder(3.0F))
                     .addProperty(AttackPhaseProperty.ARMOR_NEGATION, ValueCorrector.adder(20.0F))
                     .addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(2.0F))
@@ -155,6 +174,10 @@ public class EgoWeaponsSkills {
         ALLAS_GUARD =event.registerSkill(new BlackSilenceAllasGuard(BlackSilenceAllasGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "allas_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
 
         ALLAS_PASSIVE = event.registerSkill(new AllasPassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "allas_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
+
+        WHEELS_GUARD =event.registerSkill(new WheelsCounterGuard(WheelsCounterGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "wheels_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
+
+        WHEELS_PASSIVE = event.registerSkill(new WheelsPassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "wheels_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
 
         ATELIER_GUARD =event.registerSkill(new BlacksilenceAtelierGuard(BlacksilenceAtelierGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "atelier_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
 
@@ -196,7 +219,7 @@ public class EgoWeaponsSkills {
 
         MAGIC_BULLET_PASSIVE = event.registerSkill(new MagicBulletPassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "magic_bullet_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
 
-        MAGIC_BULLET_EVADE = event.registerSkill(new StepSkill(DodgeSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "magic_bullet_evade")).setConsumption(3.0F).setAnimations(EgoWeaponsAnimations.MAGIC_BULLET_EVADE_FORWARD, EgoWeaponsAnimations.MAGIC_BULLET_EVADE_BACKWARD, EgoWeaponsAnimations.MAGIC_BULLET_EVADE_LEFT, EgoWeaponsAnimations.MAGIC_BULLET_EVADE_RIGHT)), false);
+        MAGIC_BULLET_EVADE = event.registerSkill(new StepSkill(DodgeSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "magic_bullet_evade")).setConsumption(3.0F).setAnimations(MagicBulletMovesetAnims.MAGIC_BULLET_EVADE_FORWARD, MagicBulletMovesetAnims.MAGIC_BULLET_EVADE_BACKWARD, MagicBulletMovesetAnims.MAGIC_BULLET_EVADE_LEFT, MagicBulletMovesetAnims.MAGIC_BULLET_EVADE_RIGHT)), false);
 
         SOLEMN_LAMENT_GUARD =event.registerSkill(new SolemnLamentActiveGuard(SolemnLamentActiveGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "solemn_lament_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
 
@@ -207,6 +230,27 @@ public class EgoWeaponsSkills {
         SUNSHOWER_PASSIVE = event.registerSkill(new SunshowerPassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "sunshower_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
         SUNSHOWER_PUDDLE_STOMP = event.registerSkill(new SunshowerPuddleStomp(SpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "puddle_stomp")).setConsumption(40.0F)), false);
 
+        ATELIER_PISTOLS_FRENZY = event.registerSkill(new AtelierPistolSpecial(SpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "atelier_frenzy")).setConsumption(35.0F)), false);
+        ZELKOVA_SHATTERING_SPIN = event.registerSkill(new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "shattering_spin"))
+                .setConsumption(70.0F).setAnimations(BlackSilenceMovesetAnims.ZELKOVA_SPECIAL_1)), false);
+
+        OEUFI_SLAM = event.registerSkill(new OeufiInnate(SpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "oeufi_slam")).setConsumption(60.0F)), false);
+        OEUFI_GUARD =event.registerSkill(new OeufiActiveGuard(OeufiActiveGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "oeufi_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
+
+        OEUFI_PASSIVE = event.registerSkill(new OeufiPassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "oeufi_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
+
+        FULLSTOP_REP_INNATE = event.registerSkill(new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "target_marked"))
+                .setConsumption(70.0F).setAnimations(FullstopOfficeRepMovesetAnims.FULLSTOP_INNATE)), false);
+
+        FULLSTOP_REP_GUARD =event.registerSkill(new FullstopRepCounterGuard(FullstopRepCounterGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "fullstop_rep_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
+
+        FULLSTOP_REP_PASSIVE = event.registerSkill(new FullstopRepPassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "fullstop_rep_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
+        FULLSTOP_SNIPER_INNATE = event.registerSkill(new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "fs_headshot"))
+                .setResource(Skill.Resource.STAMINA).setConsumption(8.0F).setAnimations(FullstopOfficeSniperMovesetAnims.FULLSTOP_SNIPER_INNATE)), false);
+
+        FULLSTOP_SNIPER_GUARD =event.registerSkill(new FullstopCounterGuard(FullstopCounterGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "fullstop_sniper_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
+
+        FULLSTOP_SNIPER_PASSIVE = event.registerSkill(new FullstopSniperPassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "fullstop_sniper_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
 
     }
 }

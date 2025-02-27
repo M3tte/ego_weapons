@@ -1,9 +1,11 @@
 package net.m3tte.ego_weapons.procedures.abilities.weaponAbilities;
 
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.movesets.MagicBulletMovesetAnims;
 import net.m3tte.ego_weapons.particle.BlipeffectParticle;
 import net.m3tte.ego_weapons.particle.DamagefxParticle;
 import net.m3tte.ego_weapons.potion.MagicBulletPotionEffect;
@@ -32,9 +34,7 @@ public class MagicBulletWeaponAbility extends ItemAbility {
     public int getBlipCost(PlayerEntity player, PlayerVariables playerVars) {
         int extra = 0;
 
-        if (player.hasEffect(MagicBulletPotionEffect.get())) {
-            extra = (player.getEffect(MagicBulletPotionEffect.get()).getAmplifier()) / 2;
-        }
+        extra = EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(player) / 2;
         return 6 + extra;
     }
 
@@ -46,11 +46,7 @@ public class MagicBulletWeaponAbility extends ItemAbility {
 
     @Override
     public ResourceLocation getOverlay(PlayerEntity player, PlayerVariables playerVars) {
-        int ampl = 1;
-
-        if (player.hasEffect(MagicBulletPotionEffect.get())) {
-            ampl = player.getEffect(MagicBulletPotionEffect.get()).getAmplifier() + 2;
-        }
+        int ampl = EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(player) + 1;
 
         if (playerVars.sanity <= ampl * 1.5f) {
             return AbilityUtils.getOverlay("warning");
@@ -66,7 +62,7 @@ public class MagicBulletWeaponAbility extends ItemAbility {
 
     @Override
     public String getName(PlayerEntity player, PlayerVariables playerVars) {
-        return "Fire Bullet";
+        return "Fire Magic\nBullet";
     }
 
     @Override
@@ -88,10 +84,7 @@ public class MagicBulletWeaponAbility extends ItemAbility {
             double x = player.getX();
             double y = player.getY();
             double z = player.getZ();
-            int potency = 1;
-            if (player.hasEffect(MagicBulletPotionEffect.get())) {
-                potency = player.getEffect(MagicBulletPotionEffect.get()).getAmplifier() + 2;
-            }
+            int potency = EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(player) + 1;
             if (world instanceof ServerWorld) {
                 ((ServerWorld) world).sendParticles(BlipeffectParticle.particle, x, (y + 1), z, (int) 4, 0.4, 0.6, 0.4, 0);
             }
@@ -106,11 +99,11 @@ public class MagicBulletWeaponAbility extends ItemAbility {
 
 
             LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-            player.getCooldowns().addCooldown(EgoWeaponsItems.MIMICRY.get(), (int) 20);
+            player.getCooldowns().addCooldown(EgoWeaponsItems.MAGIC_BULLET.get(), (int) 20);
             playerVars.globalcooldown = 100;
             entitypatch.getOriginal().addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 60, 0));
 
-            entitypatch.playAnimationSynchronized((potency >= 6) ? EgoWeaponsAnimations.MAGIC_BULLET_AIM_2 : EgoWeaponsAnimations.MAGIC_BULLET_AIM_1, 0.1f);
+            entitypatch.playAnimationSynchronized((potency >= 6) ? MagicBulletMovesetAnims.MAGIC_BULLET_AIM_2 : MagicBulletMovesetAnims.MAGIC_BULLET_AIM_1, 0.1f);
             if (world instanceof ServerWorld) {
                 ((ServerWorld) world).sendParticles(DamagefxParticle.particle, x, (y + 1), z, (int) 4, 0.4, 0.6, 0.4, 0);
             }

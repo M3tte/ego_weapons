@@ -1,6 +1,7 @@
 package net.m3tte.ego_weapons.skill;
 
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
@@ -25,15 +26,15 @@ public class BlacksilenceEviscerate extends SpecialAttackSkill {
 
     public BlacksilenceEviscerate(Builder<? extends Skill> builder) {
         super(builder);
-        this.first = EgoWeaponsAnimations.RANGA_EVISCERATE_1;
-        this.second = EgoWeaponsAnimations.RANGA_EVISCERATE_2;
+        this.first = BlackSilenceMovesetAnims.RANGA_EVISCERATE_1;
+        this.second = BlackSilenceMovesetAnims.RANGA_EVISCERATE_2;
     }
 
     @Override
     public void onInitiate(SkillContainer container) {
         super.onInitiate(container);
         container.getExecuter().getEventListener().addEventListener(EventType.ATTACK_ANIMATION_END_EVENT, EVENT_UUID, (event) -> {
-            if (event.getAnimationId() == EgoWeaponsAnimations.RANGA_EVISCERATE_1.getId()) {
+            if (event.getAnimationId() == BlackSilenceMovesetAnims.RANGA_EVISCERATE_1.getId()) {
                 List<LivingEntity> hitEnemies = event.getHitEntity();
 
                 if (!hitEnemies.isEmpty() && hitEnemies.get(0).isAlive()) {

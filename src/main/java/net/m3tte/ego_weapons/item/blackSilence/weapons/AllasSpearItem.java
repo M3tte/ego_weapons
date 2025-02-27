@@ -2,6 +2,7 @@
 package net.m3tte.ego_weapons.item.blackSilence.weapons;
 
 import net.m3tte.ego_weapons.execFunctions.BlackSilenceEvaluator;
+import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.*;
@@ -13,6 +14,9 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.List;
+
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
 // allas_spear
 public class AllasSpearItem extends SwordItem {
@@ -31,12 +35,35 @@ public class AllasSpearItem extends SwordItem {
 	}*/
 
 	@Override
-	public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> list, ITooltipFlag p_77624_4_) {
-		super.appendHoverText(p_77624_1_, p_77624_2_, list, p_77624_4_);
-		list.add(new StringTextComponent("A spear"));
-		list.add(new StringTextComponent("belonging to a friend."));
-		list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Swap to next weapon. ").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 1 E").withStyle(TextFormatting.AQUA)));
-		list.add(new StringTextComponent("[Passive] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Parries stun enemy ").withStyle(TextFormatting.GRAY)));
+	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+		super.appendHoverText(itemstack, world, list, flag);
+		list.add(new StringTextComponent("Manufactured by Crystal Atelier").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+
+		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 3) + 1) + "/3] - - - - - - - =").withStyle(TextFormatting.GRAY));
+
+		switch (EgoWeaponsKeybinds.getUiPage() % 3) {
+			case 0:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{});
+				else
+					generateDescription(list, "blacksilenceweapon", "ability", 1);
+				break;
+			case 1:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"black"});
+				else
+					generateDescription(list,"allas_workshop", "auto", 1);
+				break;
+			case 2:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"black"});
+				else
+					generateDescription(list,"allas_workshop", "guard", 1);
+				break;
+		}
+
+		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
 	}
 
 	@Override

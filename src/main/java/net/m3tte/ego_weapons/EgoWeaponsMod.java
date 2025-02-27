@@ -20,6 +20,7 @@ package net.m3tte.ego_weapons;
 import net.m3tte.ego_weapons.event.ModelRegisterHandler;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsClientModels;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsModels;
+import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.network.packages.PackageRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -60,9 +61,12 @@ public class EgoWeaponsMod {
 		EgoWeaponsEFLoader.registerStuffs(FMLJavaModLoadingContext.get().getModEventBus());
 		EgoWeaponsGUIElements.register(FMLJavaModLoadingContext.get().getModEventBus());
 		EgoWeaponsEffects.register(FMLJavaModLoadingContext.get().getModEventBus());
+		IResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
 		MinecraftForge.EVENT_BUS.register(new TcorpModFMLBusEvents(this)); // Modbusevents
 		MinecraftForge.EVENT_BUS.register(new EgoWeaponsModVars()); // Dynamic variable registry
 		MinecraftForge.EVENT_BUS.register(new PackageRegistry()); // Network packages
+
+
 	}
 
 	private void init(FMLCommonSetupEvent event) {
@@ -73,9 +77,10 @@ public class EgoWeaponsMod {
 
 		elements.getElements().forEach(element -> element.clientLoad(event));
 		IResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
-		EgoWeaponsClientModels.LOGICAL_CLIENT.loadArmatures(resourceManager);
 		EgoWeaponsModels.LOGICAL_SERVER.loadArmatures(resourceManager);
+		EgoWeaponsClientModels.LOGICAL_CLIENT.loadArmatures(resourceManager);
 		EgoWeaponsGUIElements.registerClient();
+		MinecraftForge.EVENT_BUS.register(new EgoWeaponsKeybinds()); // Custom Keybinds
 	}
 
 	@SubscribeEvent

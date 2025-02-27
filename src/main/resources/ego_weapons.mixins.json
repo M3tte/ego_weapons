@@ -8,13 +8,17 @@
   "mixins": [
     "LivingEntityDamageMixin",
     "PlayerEntityDamageMixin",
-    "PlayerRenderLayerMixin"
+    "PlayerRenderLayerMixin",
+    "epicfight.AttackAnimationMixin",
+    "epicfight.LivingEntityPatchMixin",
+    "epicfight.PlayerPatchMixin"
   ],
   "client": [
     "HotbarRenderMixin",
     "MusicTickerMixin",
     "epicfight.EntityIndicatorMixin",
-    "epicfight.HealthbarIndicatorMixin"
+    "epicfight.HealthbarIndicatorMixin",
+    "epicfight.PatchedEntityRendererMixin"
   ],
   "minVersion": "0.8"
 }

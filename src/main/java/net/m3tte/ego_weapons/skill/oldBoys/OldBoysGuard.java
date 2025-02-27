@@ -3,9 +3,10 @@ package net.m3tte.ego_weapons.skill.oldBoys;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.EgoWeaponsModElements;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
-import net.m3tte.ego_weapons.world.capabilities.item.TCorpCategories;
+import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCategories;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -45,9 +46,9 @@ public class OldBoysGuard extends EnergizingGuardSkill {
     private static final SkillDataKey<Integer> LAST_ACTIVE = SkillDataKey.createDataKey(SkillDataManager.ValueType.INTEGER);
     public static Builder createBuilder(ResourceLocation resourceLocation) {
         return GuardSkill.createBuilder(resourceLocation)
-                .addAdvancedGuardMotion(TCorpCategories.OLD_BOYS, (item, player) -> EgoWeaponsAnimations.OLD_BOYS_PARRY)
-                .addGuardMotion(TCorpCategories.OLD_BOYS, (item, player) -> EgoWeaponsAnimations.OLD_BOYS_PARRY)
-                .addGuardBreakMotion(TCorpCategories.OLD_BOYS, (item, player) -> EgoWeaponsAnimations.RANGA_GUARD_STAGGER);
+                .addAdvancedGuardMotion(EgoWeaponsCategories.OLD_BOYS, (item, player) -> BlackSilenceMovesetAnims.OLD_BOYS_PARRY)
+                .addGuardMotion(EgoWeaponsCategories.OLD_BOYS, (item, player) -> BlackSilenceMovesetAnims.OLD_BOYS_PARRY)
+                .addGuardBreakMotion(EgoWeaponsCategories.OLD_BOYS, (item, player) -> BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER);
     }
 
     @Override
@@ -140,7 +141,7 @@ public class OldBoysGuard extends EnergizingGuardSkill {
 
 
             if (blockType == BlockType.GUARD && successParrying) {
-                animation = EgoWeaponsAnimations.OLD_BOYS_PARRY;
+                animation = BlackSilenceMovesetAnims.OLD_BOYS_PARRY;
             } else if (blockType == BlockType.GUARD_BREAK) {
                 animation = this.getGuardMotion(event.getPlayerPatch(), itemCapapbility, blockType);
             }
@@ -190,7 +191,7 @@ public class OldBoysGuard extends EnergizingGuardSkill {
 
     @OnlyIn(Dist.CLIENT)
     public boolean shouldDraw(SkillContainer container) {
-        return container.getExecuter().getHoldingItemCapability(Hand.MAIN_HAND).getWeaponCategory() == TCorpCategories.OLD_BOYS && (Float)container.getDataManager().getDataValue(PENALTY) > 0.0F;
+        return container.getExecuter().getHoldingItemCapability(Hand.MAIN_HAND).getWeaponCategory() == EgoWeaponsCategories.OLD_BOYS && (Float)container.getDataManager().getDataValue(PENALTY) > 0.0F;
     }
 
     protected boolean isAdvancedGuard() {

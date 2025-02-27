@@ -3,7 +3,11 @@ package net.m3tte.ego_weapons.item.magic_bullet;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
+import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
+import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -13,6 +17,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
@@ -24,6 +29,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
+
+import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
 public class MagicBulletArmor extends ArmorItem {
 
@@ -106,9 +115,27 @@ public class MagicBulletArmor extends ArmorItem {
 		@Override
 		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.appendHoverText(itemstack, world, list, flag);
-			list.add(new StringTextComponent("The cloak of a marksman ever unmatched").withStyle(TextFormatting.BLUE));
-			list.add(new StringTextComponent("[Passive] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent(" Chance to regenerate extra energy").withStyle(TextFormatting.GRAY)));
-			list.add(new StringTextComponent("[Passive] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent(" Increase MAGIC BULLET damage").withStyle(TextFormatting.GRAY)));
+			list.add(new StringTextComponent("...The contract won't end here...").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+
+			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 2) + 1) + "/2] - - - - - - - =").withStyle(TextFormatting.GRAY));
+
+			switch (EgoWeaponsKeybinds.getUiPage() % 2) {
+				case 0:
+					if (EgoWeaponsKeybinds.isHoldingShift())
+						generateStatusDescription(list, new String[]{"dark_flame", "poise"});
+					else
+						generateDescription(list, "magic_bullet_armor", "passive", 4);
+					break;
+				case 1:
+					if (EgoWeaponsKeybinds.isHoldingShift())
+						generateStatusDescription(list, new String[]{"magic_bullet", "poise", "power_up"});
+					else
+						generateDescription(list, "magic_bullet_armor", "ability", 3);
+					break;
+			}
+
+			list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
 		}
 
 	};
@@ -216,6 +243,24 @@ public class MagicBulletArmor extends ArmorItem {
 			modelRenderer.xRot = x;
 			modelRenderer.yRot = y;
 			modelRenderer.zRot = z;
+		}
+	}
+
+	public static void poiseEffect(LivingEntity target, LivingEntity source, float amount, DamageSource damageSource) {
+		EgoWeaponsModVars.PlayerVariables entityData = source.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
+
+
+
+		// Applies cooldown after. Locks all other on hit effects from triggering as well.
+		if (entityData != null) {
+			if (entityData.globalcooldown <= 0) {
+
+				if (SharedFunctions.hasDefenseDown(target))
+					EgoWeaponsEffects.POISE.get().increment(source, 0, target.hasEffect(EgoWeaponsEffects.DARK_BURN.get()) ? 2 : 1);
+
+				entityData.globalcooldown = 10;
+				entityData.syncPlayerVariables(source);
+			}
 		}
 	}
 

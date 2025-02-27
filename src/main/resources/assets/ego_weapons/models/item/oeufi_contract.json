@@ -1,0 +1,60 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [23, 23],
+	"textures": {
+		"0": "ego_weapons:items/oeufi_contract",
+		"particle": "ego_weapons:items/oeufi_contract"
+	},
+	"elements": [
+		{
+			"from": [2, 0, 7],
+			"to": [12, 14, 7],
+			"rotation": {"angle": 0, "axis": "y", "origin": [9, 0, 5]},
+			"faces": {
+				"north": {"uv": [0, 0, 6.95652, 9.73913], "texture": "#0"},
+				"east": {"uv": [0, 0, 0, 9.73913], "texture": "#0"},
+				"south": {"uv": [6.95652, 0, 13.91304, 9.73913], "texture": "#0"},
+				"west": {"uv": [0, 0, 0, 9.73913], "texture": "#0"},
+				"up": {"uv": [6.95652, 0, 0, 0], "texture": "#0"},
+				"down": {"uv": [6.95652, 0, 0, 0], "texture": "#0"}
+			}
+		},
+		{
+			"from": [9.75, 11.475, 6.475],
+			"to": [11.75, 13.475, 6.975],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [9.75, 11.475, 4.975]},
+			"faces": {
+				"north": {"uv": [0, 9.73913, 2.08696, 11.82609], "texture": "#0"},
+				"east": {"uv": [0, 9.73913, 0.69565, 11.82609], "texture": "#0"},
+				"south": {"uv": [0, 9.73913, 2.08696, 11.82609], "texture": "#0"},
+				"west": {"uv": [1.3913, 9.73913, 2.08696, 11.82609], "texture": "#0"},
+				"up": {"uv": [1.3913, 10.43478, 0, 9.73913], "texture": "#0"},
+				"down": {"uv": [1.3913, 10.43478, 0, 9.73913], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [5, 180, 0],
+			"translation": [-0.25, 2.5, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [5, 180, 0],
+			"translation": [0.5, 2.5, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_righthand": {
+			"rotation": [-14, 180, 0],
+			"translation": [4.75, 0, -9.5]
+		},
+		"firstperson_lefthand": {
+			"rotation": [-14, 180, 0],
+			"translation": [4.75, 0, -9.5]
+		},
+		"gui": {
+			"rotation": [27, 142, 0],
+			"translation": [-0.75, 1.25, 0]
+		}
+	}
+}

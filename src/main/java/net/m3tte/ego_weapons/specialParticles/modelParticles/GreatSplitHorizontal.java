@@ -14,6 +14,9 @@ public class GreatSplitHorizontal extends RotationBoundParticle {
     public GreatSplitHorizontal(ClientWorld world, double x, double y, double z, double xSpeed, double entityUUID, double zSpeed, IAnimatedSprite spriteProvider) {
         super(world, x, y, z, xSpeed, entityUUID, zSpeed, spriteProvider);
 
+        this.invertX = true;
+        this.invertY = false;
+
         this.rotation.add(0,180,0);
         //this.rotationOffs.set(180,0,0);
         this.quadSize = 4f;
@@ -24,9 +27,14 @@ public class GreatSplitHorizontal extends RotationBoundParticle {
 
     @Override
     protected Vector3f[] generateVectorArray(boolean inv) {
-        int invVar = inv ? -1 : 1;
+        //int invVar = inv ? -1 : 1;
+        // return new Vector3f[]{new Vector3f(1.0F * invVar, 0, 1.0F * invVar), new Vector3f(1.0F * invVar, 0, -1.0F * invVar), new Vector3f(-1.0F * invVar, 0, -1.0F * invVar), new Vector3f(-1.0F * invVar, 0, 1.0F * invVar)};
+        if (inv) {
+            return new Vector3f[]{new Vector3f(1.0F, 0, -1.0F), new Vector3f(1.0F, 0, 1.0F), new Vector3f(-1.0F, 0, 1.0F), new Vector3f(-1.0F, 0, -1.0F)};
+        } else {
+            return new Vector3f[]{new Vector3f(1.0F, 0, 1.0F), new Vector3f(1.0F, 0, -1.0F), new Vector3f(-1.0F, 0, -1.0F), new Vector3f(-1.0F, 0, 1.0F)};
+        }
 
-        return new Vector3f[]{new Vector3f(1.0F * invVar, 0, 1.0F * invVar), new Vector3f(1.0F * invVar, 0, -1.0F * invVar), new Vector3f(-1.0F * invVar, 0, -1.0F * invVar), new Vector3f(-1.0F * invVar, 0, 1.0F * invVar)};
     }
 
 
@@ -39,8 +47,8 @@ public class GreatSplitHorizontal extends RotationBoundParticle {
         }
 
         @Override
-        public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double targetID, double zSpeed) {
-            GreatSplitHorizontal particle = new GreatSplitHorizontal(worldIn, x, y, z, 0, Minecraft.getInstance().player.getId(), 0, spriteSet);
+        public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double targetID, double sourceID) {
+            GreatSplitHorizontal particle = new GreatSplitHorizontal(worldIn, x, y, z, 0, targetID, sourceID, spriteSet);
             return particle;
         }
 

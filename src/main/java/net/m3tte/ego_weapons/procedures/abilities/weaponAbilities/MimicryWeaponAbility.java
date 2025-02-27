@@ -1,9 +1,11 @@
 package net.m3tte.ego_weapons.procedures.abilities.weaponAbilities;
 
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.movesets.MimicryMovesetAnims;
 import net.m3tte.ego_weapons.particle.BlipeffectParticle;
 import net.m3tte.ego_weapons.particle.DamagefxParticle;
 import net.m3tte.ego_weapons.particle.RedflashParticle;
@@ -92,9 +94,10 @@ public class MimicryWeaponAbility extends ItemAbility {
                 player.getCooldowns().addCooldown(EgoWeaponsItems.MIMICRY.get(), (int) 20);
                 playerVars.globalcooldown = 200;
                 player.addEffect(new EffectInstance(Effects.DIG_SLOWDOWN, (int) 80, (int) 4, (false), (false)));
+                player.addEffect(new EffectInstance(EgoWeaponsEffects.PROTECTION.get(), (int) 60, (int) 4, (false), (false)));
                 player.addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 75, 1));
                 entitypatch.playSound(EgoWeaponsSounds.KALI_SPLIT_HORIZONTAL_RING, 1, 1);
-                entitypatch.playAnimationSynchronized(EgoWeaponsAnimations.GREAT_SPLIT_HORIZONTAL, 0.1f);
+                entitypatch.playAnimationSynchronized(MimicryMovesetAnims.GREAT_SPLIT_HORIZONTAL, 0.1f);
                 if (world instanceof ServerWorld) {
                     ((ServerWorld) world).sendParticles(DamagefxParticle.particle, x, (y + 1), z, (int) 4, 0.4, 0.6, 0.4, 0);
                     EgoWeaponsAnimations.spawnArmatureParticle(entitypatch, 0, new Vector3d(0.2,0.2f,-0.4f),1, RedflashParticle.particle,0,"Head",true);
@@ -118,7 +121,7 @@ public class MimicryWeaponAbility extends ItemAbility {
                 player.addEffect(new EffectInstance(Effects.DIG_SLOWDOWN, (int) 80, (int) 4, (false), (false)));
                 player.addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 75, 1));
                 entitypatch.playSound(EgoWeaponsSounds.NOTHING_THERE_GOODBYE, 1, 1);
-                entitypatch.playAnimationSynchronized(EgoWeaponsAnimations.MIMICRY_GOODBYE, 0.1f);
+                entitypatch.playAnimationSynchronized(MimicryMovesetAnims.MIMICRY_GOODBYE, 0.1f);
                 if (world instanceof ServerWorld) {
                     ((ServerWorld) world).sendParticles(DamagefxParticle.particle, x, (y + 1), z, (int) 4, 0.4, 0.6, 0.4, 0);
                     EgoWeaponsAnimations.spawnArmatureParticle(entitypatch, 0, new Vector3d(0.2,0.2f,-0.4f),1, RedflashParticle.particle,0,"Head",true);

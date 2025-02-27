@@ -19,6 +19,12 @@ public class PlayerEntityDamageMixin {
         LivingEntity self = ((LivingEntity) (Object)this);
         applyStaggerDamageGeneric(src, amount, ci, self);
     }
+
+    @ModifyVariable(method = "actuallyHurt(Lnet/minecraft/util/DamageSource;F)V", at = @At("HEAD"), ordinal =0, argsOnly = true)
+    private DamageSource damageSourceModifier(DamageSource value) {
+        return evaluateDamageSource(value);
+    }
+
     @ModifyVariable(at = @At(value = "HEAD"), method = "actuallyHurt(Lnet/minecraft/util/DamageSource;F)V", ordinal = 0, argsOnly = true)
     public float modifyDamageMixin(float amount, DamageSource source) {
 

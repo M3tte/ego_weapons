@@ -31,7 +31,7 @@ public class SunshowerDashB extends RotationBoundParticle {
 
         @Override
         public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double targetID, double zSpeed) {
-            SunshowerDashB particle = new SunshowerDashB(worldIn, x, y, z, 0, Minecraft.getInstance().player.getId(), 0, spriteSet);
+            SunshowerDashB particle = new SunshowerDashB(worldIn, x, y, z, 0, targetID, 0, spriteSet);
             return particle;
         }
 

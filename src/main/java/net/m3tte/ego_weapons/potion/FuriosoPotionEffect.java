@@ -19,6 +19,7 @@ import net.minecraftforge.registries.ObjectHolder;
 import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -26,7 +27,7 @@ public class FuriosoPotionEffect {
 	@ObjectHolder("ego_weapons:furioso")
 	public static final Effect potion = null;
 
-	static AttributeModifier atkSpeedMod = new AttributeModifier("furiosoAtkSpeed", 0.2, AttributeModifier.Operation.ADDITION);
+	static AttributeModifier atkSpeedMod = new AttributeModifier(UUID.fromString("6cf3c7c3-9cce-438f-a273-e1b4d28947fe"),"furiosoAtkSpeed", 0.2, AttributeModifier.Operation.ADDITION);
 
 	@SubscribeEvent
 	public static void registerEffect(RegistryEvent.Register<Effect> event) {
@@ -75,7 +76,8 @@ public class FuriosoPotionEffect {
 
 			ModifiableAttributeInstance atkSpeedInstance = attributeMapIn.getInstance(Attributes.ATTACK_SPEED);
 
-			atkSpeedInstance.removeModifier(atkSpeedMod);
+			if (atkSpeedInstance != null)
+				atkSpeedInstance.removeModifier(atkSpeedMod);
 
 			World world = entity.level;
 			double x = entity.getX();
@@ -93,12 +95,13 @@ public class FuriosoPotionEffect {
 		public void addAttributeModifiers(LivingEntity living, AttributeModifierManager attrman, int amplifier) {
 			super.addAttributeModifiers(living, attrman, amplifier);
 
-			ModifiableAttributeInstance speedInstance = attrman.getInstance(Attributes.MOVEMENT_SPEED);
 			ModifiableAttributeInstance atkSpeedInstance = attrman.getInstance(Attributes.ATTACK_SPEED);
-			ModifiableAttributeInstance armorInstance = attrman.getInstance(Attributes.ARMOR);
 
-			atkSpeedInstance.removeModifier(atkSpeedMod);
-			atkSpeedInstance.addPermanentModifier(new AttributeModifier(atkSpeedMod.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue(0, atkSpeedMod), atkSpeedMod.getOperation()));
+			if (atkSpeedInstance != null) {
+				atkSpeedInstance.removeModifier(atkSpeedMod);
+				atkSpeedInstance.addPermanentModifier(new AttributeModifier(atkSpeedMod.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue(0, atkSpeedMod), atkSpeedMod.getOperation()));
+
+			}
 
 			attrman.save();
 		}

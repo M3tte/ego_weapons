@@ -1,6 +1,7 @@
 package net.m3tte.ego_weapons.skill.sunshower;
 
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.movesets.SunshowerMovesetAnims;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
@@ -25,8 +26,8 @@ public class SunshowerPuddleStomp extends SpecialAttackSkill {
 
     public SunshowerPuddleStomp(Builder<? extends Skill> builder) {
         super(builder);
-        this.first = EgoWeaponsAnimations.SUNSHOWER_PUDDLE_STOMP_1;
-        this.second = EgoWeaponsAnimations.SUNSHOWER_PUDDLE_STOMP_2;
+        this.first = SunshowerMovesetAnims.SUNSHOWER_PUDDLE_STOMP_1;
+        this.second = SunshowerMovesetAnims.SUNSHOWER_PUDDLE_STOMP_2;
     }
 
     @Override

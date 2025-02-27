@@ -6,6 +6,7 @@ import net.m3tte.ego_weapons.entities.AtelierShotgunBullet.AtelierShotgunSlugPro
 import net.m3tte.ego_weapons.entities.MagicBulletProjectile.MagicBulletProj;
 import net.m3tte.ego_weapons.entities.NothingThere2Entity;
 import net.m3tte.ego_weapons.entities.SunshowerFoxEntity;
+import net.m3tte.ego_weapons.entities.SunshowerUmbrellaEntity;
 import net.m3tte.ego_weapons.world.capabilities.entitypatch.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
@@ -51,6 +52,7 @@ public class EgoWeaponsEntities {
     public static final RegistryObject<EntityType<NothingThere2Entity>> NOTHING_THERE = register("nothing_there", EntityType.Builder.of(NothingThere2Entity::new, EntityClassification.MONSTER).sized(1F, 4F).clientTrackingRange(8));
     public static final RegistryObject<EntityType<SunshowerFoxEntity>> SUNSHOWER_FOX = register("sunshower_fox", EntityType.Builder.of(SunshowerFoxEntity::new, EntityClassification.CREATURE).sized(0.5F, 0.5F).clientTrackingRange(8));
 
+    public static final RegistryObject<EntityType<SunshowerUmbrellaEntity>> SUNSHOWER_UMBRELLA = register("sunshower_umbrella", EntityType.Builder.of(SunshowerUmbrellaEntity::new, EntityClassification.MISC).sized(0.5F, 0.5F).clientTrackingRange(8));
 
 
     @SubscribeEvent
@@ -59,6 +61,7 @@ public class EgoWeaponsEntities {
         event.put(DAWN_OF_GREEN_DOUBT.get(), DawnOfGreenDoubtEntity.createMonsterAttributes().build());
         event.put(NOTHING_THERE.get(), NothingThere2Entity.createMonsterAttributes().build());
         event.put(SUNSHOWER_FOX.get(), SunshowerFoxEntity.createMonsterAttributes().build());
+        event.put(SUNSHOWER_UMBRELLA.get(), SunshowerUmbrellaEntity.createMonsterAttributes().build());
     }
 
     @SubscribeEvent

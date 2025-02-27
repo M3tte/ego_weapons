@@ -4,36 +4,355 @@
       "type": "bitmap",
       "file": "ego_weapons:mob_effect/bleed.png",
       "ascent": 8,
-      "height": 8,
+      "height": 9,
       "chars": ["\uE001"]
     },
     {
       "type": "bitmap",
       "file": "ego_weapons:mob_effect/burn.png",
       "ascent": 8,
-      "height": 8,
+      "height": 9,
       "chars": ["\uE002"]
     },
     {
       "type": "bitmap",
       "file": "ego_weapons:mob_effect/sinking.png",
       "ascent": 8,
-      "height": 8,
+      "height": 9,
       "chars": ["\uE003"]
     },
     {
       "type": "bitmap",
       "file": "ego_weapons:mob_effect/light.png",
       "ascent": 8,
-      "height": 8,
+      "height": 9,
       "chars": ["\uE004"]
     },
     {
       "type": "bitmap",
       "file": "ego_weapons:mob_effect/rupture.png",
       "ascent": 8,
-      "height": 8,
+      "height": 9,
       "chars": ["\uE005"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/tremor_burst.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE006"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/protection.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE007"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/tremor.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE008"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/dark_burn.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE009"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/amplitude_conversion.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE010"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/tremor_decay.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE011"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/ammo.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE012"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/poise.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE013"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/target_spotted.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE014"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/assist_fire.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE015"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/magic_bullet.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE016"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/living_departed.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE017"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/the_living.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE018"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/the_departed.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE019"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/obligation_fullfillment.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE020"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/resilience.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE021"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/offense_up.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE022"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/offense_down.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE023"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/defense_up.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE024"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/defense_down.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE025"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/ethernal_rest.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE026"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/terror.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE027"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/shell.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE028"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/manifest_ego.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE029"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/power_up.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE030"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/power_down.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE031"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/orlando.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE032"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/furioso.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE033"]
+    },
+
+
+
+
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/red.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uED01"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/white.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uED02"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/black.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uED03"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/pale.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uED04"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/icons/red.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uED11"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/icons/white.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uED12"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/icons/black.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uED13"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/icons/pale.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uED14"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/icons/pierce.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uED21"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/icons/slash.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uED22"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/icons/blunt.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uED23"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/coins/pierce.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uED31"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/coins/slash.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uED32"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/coins/blunt.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uED33"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/coins/red_pierce.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uED41"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/coins/red_slash.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uED42"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/coins/red_blunt.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uED43"]
     }
   ]
 }

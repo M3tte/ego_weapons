@@ -2,9 +2,11 @@ package net.m3tte.ego_weapons.skill.solemnLament;
 
 import com.google.common.collect.Lists;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
+import net.m3tte.ego_weapons.gameasset.movesets.SolemnLamentMovesetAnims;
 import net.m3tte.ego_weapons.potion.SolemnLamentEffects;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
-import net.m3tte.ego_weapons.world.capabilities.item.TCorpCategories;
+import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCategories;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -45,10 +47,10 @@ public class SolemnLamentActiveGuard extends GuardSkill {
 
     public static Builder createBuilder(ResourceLocation resourceLocation) {
         return GuardSkill.createBuilder(resourceLocation)
-                .addGuardMotion(TCorpCategories.SOLEMN_LAMENT, (item, player) -> EgoWeaponsAnimations.SOLEMN_LAMENT_GUARD_HIT)
-                .addGuardBreakMotion(TCorpCategories.SOLEMN_LAMENT, (item, player) -> EgoWeaponsAnimations.RANGA_GUARD_STAGGER)
-                .addAdvancedGuardMotion(TCorpCategories.SOLEMN_LAMENT, (itemCap, playerpatch) ->
-                        new StaticAnimation[] { EgoWeaponsAnimations.SOLEMN_LAMENT_GUARD_PARRY1, EgoWeaponsAnimations.SOLEMN_LAMENT_GUARD_PARRY2, EgoWeaponsAnimations.SOLEMN_LAMENT_GUARD_PARRY1, EgoWeaponsAnimations.SOLEMN_LAMENT_GUARD_PARRY2 });
+                .addGuardMotion(EgoWeaponsCategories.SOLEMN_LAMENT, (item, player) -> SolemnLamentMovesetAnims.SOLEMN_LAMENT_GUARD_HIT)
+                .addGuardBreakMotion(EgoWeaponsCategories.SOLEMN_LAMENT, (item, player) -> BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER)
+                .addAdvancedGuardMotion(EgoWeaponsCategories.SOLEMN_LAMENT, (itemCap, playerpatch) ->
+                        new StaticAnimation[] { SolemnLamentMovesetAnims.SOLEMN_LAMENT_GUARD_PARRY1, SolemnLamentMovesetAnims.SOLEMN_LAMENT_GUARD_PARRY2, SolemnLamentMovesetAnims.SOLEMN_LAMENT_GUARD_PARRY1, SolemnLamentMovesetAnims.SOLEMN_LAMENT_GUARD_PARRY2 });
     }
 
     // Ensures the last active is actually applied
@@ -121,7 +123,7 @@ public class SolemnLamentActiveGuard extends GuardSkill {
 
     @Override
     protected float getPenaltyMultiplier(CapabilityItem itemCapapbility) {
-        return itemCapapbility.getWeaponCategory().equals(TCorpCategories.SOLEMN_LAMENT) ? 1 : 0.6F;
+        return itemCapapbility.getWeaponCategory().equals(EgoWeaponsCategories.SOLEMN_LAMENT) ? 1 : 0.6F;
     }
 
     @Nullable
@@ -142,9 +144,9 @@ public class SolemnLamentActiveGuard extends GuardSkill {
                     int theDepartedCount = SolemnLamentEffects.getAmmoCount(player, SolemnLamentEffects.getDeparted());
 
                     if (theLivingCount >=2 && theDepartedCount >= 2) {
-                        return EgoWeaponsAnimations.SOLEMN_LAMENT_GUARD_COUNTERATTACK;
+                        return SolemnLamentMovesetAnims.SOLEMN_LAMENT_GUARD_COUNTERATTACK;
                     } else {
-                        return EgoWeaponsAnimations.SOLEMN_LAMENT_GUARD_RELOAD;
+                        return SolemnLamentMovesetAnims.SOLEMN_LAMENT_GUARD_RELOAD;
                     }
                 } else {
                     return motions[motionCounter];
@@ -168,7 +170,7 @@ public class SolemnLamentActiveGuard extends GuardSkill {
     @OnlyIn(Dist.CLIENT)
     public List<Object> getTooltipArgs() {
         List<Object> list = Lists.newArrayList();
-        list.add(String.format("%s, %s, %s, %s", TCorpCategories.SOLEMN_LAMENT).toLowerCase());
+        list.add(String.format("%s, %s, %s, %s", EgoWeaponsCategories.SOLEMN_LAMENT).toLowerCase());
         return list;
     }
 

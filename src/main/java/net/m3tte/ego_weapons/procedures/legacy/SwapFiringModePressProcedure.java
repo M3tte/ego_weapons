@@ -1,6 +1,7 @@
 package net.m3tte.ego_weapons.procedures.legacy;
 
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
+import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -33,17 +34,13 @@ public class SwapFiringModePressProcedure {
 			}
 			if ((entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null)
 					.orElse(new EgoWeaponsModVars.PlayerVariables())).firingMode) {
-				if (world instanceof World && !((World) world).isClientSide) {
-					((World) world).playSound(null, new BlockPos(x, y, z),
-							(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("tcorp:click")),
-							SoundCategory.NEUTRAL, (float) 1, (float) 1.5);
-				}
+				((World) world).playSound(null, new BlockPos(x, y, z),
+						EgoWeaponsSounds.CLICK,
+						SoundCategory.NEUTRAL, (float) 1, (float) 1.5);
 			} else {
-				if (world instanceof World && !world.isClientSide()) {
-					((World) world).playSound(null, new BlockPos(x, y, z),
-							(net.minecraft.util.SoundEvent) ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("tcorp:click")),
-							SoundCategory.NEUTRAL, (float) 1, (float) 0.5);
-				}
+				((World) world).playSound(null, new BlockPos(x, y, z),
+						EgoWeaponsSounds.CLICK,
+						SoundCategory.NEUTRAL, (float) 1, (float) 0.5);
 			}
 		}
 	}

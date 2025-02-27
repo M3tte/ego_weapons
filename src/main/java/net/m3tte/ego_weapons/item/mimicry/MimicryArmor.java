@@ -3,7 +3,11 @@ package net.m3tte.ego_weapons.item.mimicry;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
+import net.m3tte.ego_weapons.EgoWeaponsItems;
+import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
+import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -13,6 +17,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
@@ -25,6 +30,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 
+import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+
 public class MimicryArmor extends ArmorItem {
 
 	static IArmorMaterial armormaterial = new IArmorMaterial() {
@@ -35,7 +44,7 @@ public class MimicryArmor extends ArmorItem {
 
 		@Override
 		public int getDefenseForSlot(EquipmentSlotType slot) {
-			return new int[]{0, 0, 29, 0}[slot.getIndex()];
+			return new int[]{0, 0, 22, 0}[slot.getIndex()];
 		}
 
 		@Override
@@ -107,10 +116,33 @@ public class MimicryArmor extends ArmorItem {
 		@Override
 		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.appendHoverText(itemstack, world, list, flag);
-			list.add(new StringTextComponent("The many shells cried out one word, \"Manager\"."));
-			list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent(" Terror -").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 10E").withStyle(TextFormatting.AQUA)));
-			list.add(new StringTextComponent("[Passive] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent(" Increase Mimicry life leech.")));
-			list.add(new StringTextComponent("[Passive] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent(" \"HELLO\" recovers energy.")));
+			list.add(new StringTextComponent("It periodically devours employees and wears their shell.").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+
+			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 3) + 1) + "/3] - - - - - - - =").withStyle(TextFormatting.GRAY));
+
+			switch (EgoWeaponsKeybinds.getUiPage() % 3) {
+				case 0:
+					if (EgoWeaponsKeybinds.isHoldingShift())
+						generateStatusDescription(list, new String[]{});
+					else
+						generateDescription(list, "mimicry_armor", "passive", 2);
+					break;
+				case 1:
+					if (EgoWeaponsKeybinds.isHoldingShift())
+						generateStatusDescription(list, new String[]{"defense_up", "offense_up"});
+					else
+						generateDescription(list, "mimicry_armor", "passive2", 6);
+					break;
+				case 2:
+					if (EgoWeaponsKeybinds.isHoldingShift())
+						generateStatusDescription(list, new String[]{"terror","shell"});
+					else
+						generateDescription(list,"mimicry_armor", "ability", 6);
+					break;
+			}
+
+			list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
 		}
 	};
 
@@ -317,6 +349,18 @@ public class MimicryArmor extends ArmorItem {
 			modelRenderer.zRot = z;
 		}
 
+	}
+
+	public static void getDamageReceivedBuff(LivingEntity target, float amount) {
+
+		if (amount >= 16) {
+			EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(target, 0, 2);
+			EgoWeaponsEffects.DEFENSE_LEVEL_UP.get().increment(target, 0, 2);
+		}
+		else if (amount >= 8) {
+			EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(target, 0, 1);
+			EgoWeaponsEffects.DEFENSE_LEVEL_UP.get().increment(target, 0, 1);
+		}
 	}
 
 }

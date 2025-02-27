@@ -26,6 +26,7 @@ import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 import java.util.Random;
+import java.util.UUID;
 
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
 
@@ -34,9 +35,9 @@ public class ManifestEgoPotionEffect {
 	@ObjectHolder("ego_weapons:manifest_ego")
 	public static final Effect potion = null;
 
-	static AttributeModifier speedMod = new AttributeModifier("kaliSpeed", 0.02, AttributeModifier.Operation.ADDITION);
-	static AttributeModifier atkSpeedMod = new AttributeModifier("kaliAtkSpeed", 0.2, AttributeModifier.Operation.ADDITION);
-	static AttributeModifier dmgMod = new AttributeModifier("kaliDMG", 0.15, AttributeModifier.Operation.MULTIPLY_TOTAL);
+	static AttributeModifier speedMod = new AttributeModifier(UUID.fromString("c1804411-ffcb-4b72-a4d7-ea21ba0828b4"),"kaliSpeed", 0.02, AttributeModifier.Operation.ADDITION);
+	static AttributeModifier atkSpeedMod = new AttributeModifier(UUID.fromString("c1804411-ffcb-4b72-a4d7-ea21ba0828b4"),"kaliAtkSpeed", 0.2, AttributeModifier.Operation.ADDITION);
+	static AttributeModifier dmgMod = new AttributeModifier(UUID.fromString("c1804411-ffcb-4b72-a4d7-ea21ba0828b4"),"kaliDMG", 0.15, AttributeModifier.Operation.MULTIPLY_TOTAL);
 	@SubscribeEvent
 	public static void registerEffect(RegistryEvent.Register<Effect> event) {
 		event.getRegistry().register(new EffectCustom());
@@ -86,12 +87,20 @@ public class ManifestEgoPotionEffect {
 			ModifiableAttributeInstance atkSpeedInstance = attrman.getInstance(Attributes.ATTACK_SPEED);
 			ModifiableAttributeInstance armorInstance = attrman.getInstance(Attributes.ATTACK_DAMAGE);
 
-			speedInstance.removeModifier(speedMod);
-			speedInstance.addPermanentModifier(new AttributeModifier(speedMod.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue(0, speedMod), speedMod.getOperation()));
-			atkSpeedInstance.removeModifier(atkSpeedMod);
-			atkSpeedInstance.addPermanentModifier(new AttributeModifier(atkSpeedMod.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue(0, atkSpeedMod), atkSpeedMod.getOperation()));
-			armorInstance.removeModifier(dmgMod);
-			armorInstance.addPermanentModifier(new AttributeModifier(dmgMod.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue(0, dmgMod), dmgMod.getOperation()));
+			if (speedInstance != null) {
+				speedInstance.removeModifier(speedMod);
+				speedInstance.addPermanentModifier(new AttributeModifier(speedMod.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue(0, speedMod), speedMod.getOperation()));
+			}
+
+			if (atkSpeedInstance != null) {
+				atkSpeedInstance.removeModifier(atkSpeedMod);
+				atkSpeedInstance.addPermanentModifier(new AttributeModifier(atkSpeedMod.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue(0, atkSpeedMod), atkSpeedMod.getOperation()));
+			}
+
+			if (armorInstance != null) {
+				armorInstance.removeModifier(dmgMod);
+				armorInstance.addPermanentModifier(new AttributeModifier(dmgMod.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue(0, dmgMod), dmgMod.getOperation()));
+			}
 
 			attrman.save();
 		}
@@ -103,9 +112,14 @@ public class ManifestEgoPotionEffect {
 			ModifiableAttributeInstance atkSpeedInstance = attrman.getInstance(Attributes.ATTACK_SPEED);
 			ModifiableAttributeInstance armorInstance = attrman.getInstance(Attributes.ATTACK_DAMAGE);
 
-			speedInstance.removeModifier(speedMod);
-			atkSpeedInstance.removeModifier(atkSpeedMod);
-			armorInstance.removeModifier(dmgMod);
+			if (speedInstance != null)
+				speedInstance.removeModifier(speedMod);
+
+			if (atkSpeedInstance != null)
+				atkSpeedInstance.removeModifier(atkSpeedMod);
+
+			if (armorInstance != null)
+				armorInstance.removeModifier(dmgMod);
 
 			if (living instanceof PlayerEntity) {
 

@@ -1,0 +1,9 @@
+{
+  "textures": [
+    "ego_weapons:fullstop/machete_hit_0",
+    "ego_weapons:fullstop/machete_hit_1",
+    "ego_weapons:fullstop/machete_hit_2",
+    "ego_weapons:fullstop/machete_hit_3",
+    "ego_weapons:fullstop/machete_hit_4"
+  ]
+}

@@ -3,10 +3,7 @@ package net.m3tte.ego_weapons.network.packages;
 import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.gui.BlackSilenceSwapGUI;
-import net.m3tte.ego_weapons.keybind.ArmorabilityKeyBinding;
 import net.m3tte.ego_weapons.keybind.OpenattrinterfaceKeyBinding;
-import net.m3tte.ego_weapons.keybind.SwapFiringModeKeyBinding;
-import net.m3tte.ego_weapons.keybind.WeaponabilityKeyBinding;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -27,23 +24,36 @@ public class PackageRegistry {
                 EgoWeaponsModVars.SyncEmotionLevelMSG::handler);
         addNetworkMessage(EgoWeaponsModVars.SyncSanityMessage.class, EgoWeaponsModVars.SyncSanityMessage::buffer, EgoWeaponsModVars.SyncSanityMessage::new,
                 EgoWeaponsModVars.SyncSanityMessage::handler);
-        addNetworkMessage(StaggerPackages.SendStaggerMessage.class, StaggerPackages.SendStaggerMessage::buffer, StaggerPackages.SendStaggerMessage::new,
-                StaggerPackages.SendStaggerMessage::handler);
+
+        addNetworkMessage(ParticlePackages.SendStaggerMessage.class, ParticlePackages.SendStaggerMessage::buffer, ParticlePackages.SendStaggerMessage::new,
+                ParticlePackages.SendStaggerMessage::handler);
+
+        addNetworkMessage(ParticlePackages.SendTakeAimParticle.class, ParticlePackages.SendTakeAimParticle::buffer, ParticlePackages.SendTakeAimParticle::new,
+                ParticlePackages.SendTakeAimParticle::handler);
+
+        addNetworkMessage(ParticlePackages.DirectionalAttackParticle.class, ParticlePackages.DirectionalAttackParticle::buffer, ParticlePackages.DirectionalAttackParticle::new,
+                ParticlePackages.DirectionalAttackParticle::handler);
+        addNetworkMessage(ParticlePackages.NumberLabelParticle.class, ParticlePackages.NumberLabelParticle::buffer, ParticlePackages.NumberLabelParticle::new,
+                ParticlePackages.NumberLabelParticle::handler);
+        addNetworkMessage(ParticlePackages.DamageLabelParticle.class, ParticlePackages.DamageLabelParticle::buffer, ParticlePackages.DamageLabelParticle::new,
+                ParticlePackages.DamageLabelParticle::handler);
+
         addNetworkMessage(AbilityPackages.SyncOnrushData.class, AbilityPackages.SyncOnrushData::buffer, AbilityPackages.SyncOnrushData::new,
                 AbilityPackages.SyncOnrushData::handler);
         addNetworkMessage(EgoWeaponsModVars.SyncCountEffectMessage.class, EgoWeaponsModVars.SyncCountEffectMessage::buffer, EgoWeaponsModVars.SyncCountEffectMessage::new,
                 EgoWeaponsModVars.SyncCountEffectMessage::handler);
+
+        // Message for entity shake
+        addNetworkMessage(ParticlePackages.SendShakeMessage.class, ParticlePackages.SendShakeMessage::buffer, ParticlePackages.SendShakeMessage::new,
+                ParticlePackages.SendShakeMessage::handler);
         // Binding Messages
+        addNetworkMessage(KeybindPackages.GenericKeybindingPressedMessage.class, KeybindPackages.GenericKeybindingPressedMessage::buffer, KeybindPackages.GenericKeybindingPressedMessage::new,
+                KeybindPackages.GenericKeybindingPressedMessage::handler);
         addNetworkMessage(BlackSilenceSwapGUI.ButtonPressedMessage.class, BlackSilenceSwapGUI.ButtonPressedMessage::buffer, BlackSilenceSwapGUI.ButtonPressedMessage::new,
                 BlackSilenceSwapGUI.ButtonPressedMessage::handler);
         addNetworkMessage(BlackSilenceSwapGUI.GUISlotChangedMessage.class, BlackSilenceSwapGUI.GUISlotChangedMessage::buffer, BlackSilenceSwapGUI.GUISlotChangedMessage::new,
                 BlackSilenceSwapGUI.GUISlotChangedMessage::handler);
-        addNetworkMessage(ArmorabilityKeyBinding.KeyBindingPressedMessage.class, ArmorabilityKeyBinding.KeyBindingPressedMessage::buffer, ArmorabilityKeyBinding.KeyBindingPressedMessage::new,
-                ArmorabilityKeyBinding.KeyBindingPressedMessage::handler);
-        addNetworkMessage(WeaponabilityKeyBinding.KeyBindingPressedMessage.class, WeaponabilityKeyBinding.KeyBindingPressedMessage::buffer, WeaponabilityKeyBinding.KeyBindingPressedMessage::new,
-                WeaponabilityKeyBinding.KeyBindingPressedMessage::handler);
-        addNetworkMessage(SwapFiringModeKeyBinding.KeyBindingPressedMessage.class, SwapFiringModeKeyBinding.KeyBindingPressedMessage::buffer, SwapFiringModeKeyBinding.KeyBindingPressedMessage::new,
-                SwapFiringModeKeyBinding.KeyBindingPressedMessage::handler);
+
         addNetworkMessage(OpenattrinterfaceKeyBinding.KeyBindingPressedMessage.class, OpenattrinterfaceKeyBinding.KeyBindingPressedMessage::buffer, OpenattrinterfaceKeyBinding.KeyBindingPressedMessage::new,
                 OpenattrinterfaceKeyBinding.KeyBindingPressedMessage::handler);
     }

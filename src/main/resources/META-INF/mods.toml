@@ -4,10 +4,10 @@ license="Academic Free License v3.0"
 
 [[mods]]
 modId="ego_weapons"
-version="1.0.0"
+version="0.18.15"
 displayName="ego_weapons"
-credits="Created using mod maker MCreator - https://mcreator.net/about"
-displayURL="https://mcreator.net"
+credits="Adds a variety of weapons from the project moon franchise."
+displayURL=""
 authors="M3tte"
 
 [[dependencies.ego_weapons]]

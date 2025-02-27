@@ -3,6 +3,7 @@ package net.m3tte.ego_weapons.procedures.abilities.weaponAbilities;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.movesets.SunshowerMovesetAnims;
 import net.m3tte.ego_weapons.particle.BlipeffectParticle;
 import net.m3tte.ego_weapons.procedures.abilities.AbilityTier;
 import net.m3tte.ego_weapons.procedures.abilities.AbilityUtils;
@@ -80,7 +81,7 @@ public class SunshowerWeaponAbility extends ItemAbility {
             playerVars.globalcooldown = 100;
 
 
-            entitypatch.playAnimationSynchronized(EgoWeaponsAnimations.SUNSHOWER_SPREAD_OUT_1, 0.1f);
+            entitypatch.playAnimationSynchronized(SunshowerMovesetAnims.SUNSHOWER_SPREAD_OUT_1, 0.1f);
             /*if (world instanceof ServerWorld) {
                 ((ServerWorld) world).sendParticles(DamagefxParticle.particle, x, (y + 1), z, (int) 4, 0.4, 0.6, 0.4, 0);
             }*/

@@ -1,0 +1,11 @@
+{
+	"attributes":
+	{
+		"common":
+		{
+			"impact":1,
+			"max_strikes":2
+		}
+	},
+	"type":"fullstop_office_sniper"
+}

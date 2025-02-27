@@ -14,7 +14,7 @@ public class SuitItem extends ArmorItem {
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-		return "tcorp:textures/entities/suppression_unit_pants.png";
+		return "ego_weapons:textures/entities/suppression_unit_pants.png";
 	}
 
 	public static Item getArmorForSlot(EquipmentSlotType slot) {

@@ -1,6 +1,7 @@
 package net.m3tte.ego_weapons.skill.magic_bullet;
 
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.movesets.MagicBulletMovesetAnims;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
@@ -25,15 +26,15 @@ public class MagicBulletDetonate extends SpecialAttackSkill {
 
     public MagicBulletDetonate(Builder<? extends Skill> builder) {
         super(builder);
-        this.first = EgoWeaponsAnimations.MAGIC_BULLET_SPIN_1;
-        this.second = EgoWeaponsAnimations.MAGIC_BULLET_SPIN_2;
+        this.first = MagicBulletMovesetAnims.MAGIC_BULLET_SPIN_1;
+        this.second = MagicBulletMovesetAnims.MAGIC_BULLET_SPIN_2;
     }
 
     @Override
     public void onInitiate(SkillContainer container) {
         super.onInitiate(container);
         container.getExecuter().getEventListener().addEventListener(EventType.ATTACK_ANIMATION_END_EVENT, EVENT_UUID, (event) -> {
-            if (event.getAnimationId() == EgoWeaponsAnimations.MAGIC_BULLET_SPIN_1.getId()) {
+            if (event.getAnimationId() == MagicBulletMovesetAnims.MAGIC_BULLET_SPIN_1.getId()) {
                 List<LivingEntity> hitEnemies = event.getHitEntity();
 
                 if (!hitEnemies.isEmpty() && hitEnemies.get(0).isAlive()) {

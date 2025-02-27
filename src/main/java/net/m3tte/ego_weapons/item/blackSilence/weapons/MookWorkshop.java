@@ -2,6 +2,7 @@
 package net.m3tte.ego_weapons.item.blackSilence.weapons;
 
 import net.m3tte.ego_weapons.execFunctions.BlackSilenceEvaluator;
+import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.*;
@@ -14,6 +15,9 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+
 public class MookWorkshop extends SwordItem {
 	public MookWorkshop(int p_i48460_2_, float p_i48460_3_, Properties p_i48460_4_) {
 		super(mookTier, p_i48460_2_, p_i48460_3_, p_i48460_4_);
@@ -21,13 +25,47 @@ public class MookWorkshop extends SwordItem {
 	//@ObjectHolder("tcorp:mook_workshop")
 
 	@Override
-	public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> list, ITooltipFlag p_77624_4_) {
-		super.appendHoverText(p_77624_1_, p_77624_2_, list, p_77624_4_);
-		list.add(new StringTextComponent("Strikes of lightning"));
-		list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Swap to next weapon. ").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 1 E").withStyle(TextFormatting.AQUA)));
-		list.add(new StringTextComponent("[Parry] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Recover Stamina and penalty").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" +0.1 - 1.7 Stamina").withStyle(TextFormatting.GOLD)));
-		list.add(new StringTextComponent("[Guard] ").withStyle(TextFormatting.DARK_RED).append(new StringTextComponent("Gain more penalty").withStyle(TextFormatting.RED)));
-		list.add(new StringTextComponent("[Sheath] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Recover stamina and energy. ").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" + 8% Stamina / Hitstack").withStyle(TextFormatting.GOLD)));
+	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+		super.appendHoverText(itemstack, world, list, flag);
+		list.add(new StringTextComponent("Manufactured by Mook Workshop").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+
+		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
+
+		switch (EgoWeaponsKeybinds.getUiPage() % 5) {
+			case 0:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{});
+				else
+					generateDescription(list, "blacksilenceweapon", "ability", 1);
+				break;
+			case 1:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"black"});
+				else
+					generateDescription(list,"mook_workshop", "auto", 3);
+				break;
+			case 2:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"black", "bleed"});
+				else
+					generateDescription(list,"mook_workshop", "innate", 2);
+				break;
+			case 3:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"black"});
+				else
+					generateDescription(list,"mook_workshop", "jump", 2);
+				break;
+			case 4:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"black"});
+				else
+					generateDescription(list,"mook_workshop", "guard", 1);
+				break;
+		}
+
+		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
 	}
 
 	@Override

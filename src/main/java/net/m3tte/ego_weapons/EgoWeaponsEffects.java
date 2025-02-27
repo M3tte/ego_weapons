@@ -28,4 +28,19 @@ public class EgoWeaponsEffects {
     public static final RegistryObject<CountPotencyStatus> SINKING = registerEffect("sinking", new SinkingEffect());
     public static final RegistryObject<CountPotencyStatus> RUPTURE = registerEffect("rupture", new RuptureEffect());
     public static final RegistryObject<CountPotencyStatus> PROTECTION = registerEffect("protection", new ProtectionEffect());
+    public static final RegistryObject<CountPotencyStatus> TREMOR = registerEffect("tremor", new TremorEffect());
+    public static final RegistryObject<CountPotencyStatus> TREMOR_DECAY = registerEffect("tremor_decay", new TremorDecayEffect());
+    public static final RegistryObject<CountPotencyStatus> OBLIGATION_FULLFILLMENT = registerEffect("obligation_fullfillment", new ObligationFullfillmentEffect());
+    public static final RegistryObject<CountPotencyStatus> RESILIENCE = registerEffect("resilience", new ResilienceEffect());
+    public static final RegistryObject<CountPotencyStatus> MAGIC_BULLET = registerEffect("magic_bullet", new MagicBulletEffect());
+    public static final RegistryObject<CountPotencyStatus> POISE = registerEffect("poise", new PoiseEffect());
+    public static final RegistryObject<CountPotencyStatus> TARGET_SPOTTED = registerEffect("target_spotted", new TargetSpottedEffect());
+    public static final RegistryObject<CountPotencyStatus> ASSIST_FIRE = registerEffect("assist_fire", new AssistFireEffect());
+
+    public static final RegistryObject<CountPotencyStatus> OFFENSE_LEVEL_DOWN = registerEffect("offense_down", new OffenseDownEffect());
+    public static final RegistryObject<CountPotencyStatus> DEFENSE_LEVEL_DOWN = registerEffect("defense_down", new DefenseDownEffect());
+    public static final RegistryObject<CountPotencyStatus> OFFENSE_LEVEL_UP = registerEffect("offense_up", new OffenseUpEffect());
+    public static final RegistryObject<CountPotencyStatus> DEFENSE_LEVEL_UP = registerEffect("defense_up", new DefenseUpEffect());
+    public static final RegistryObject<CountPotencyStatus> POWER_UP = registerEffect("power_up", new PowerUp());
+    public static final RegistryObject<CountPotencyStatus> POWER_DOWN = registerEffect("power_down", new PowerDown());
 }

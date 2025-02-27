@@ -42,7 +42,7 @@ public class MagicBulletPassive extends Skill {
         SkillContainer dodgeskill = executer.getSkillCapability().skillContainers[SkillCategories.DODGE.universalOrdinal()];
 
         if (dodgeskill.hasSkill(EgoWeaponsSkills.MAGIC_BULLET_EVADE)) {
-            if (savedEvade != null) {
+            if (savedEvade != null && savedEvade != EgoWeaponsSkills.MAGIC_BULLET_EVADE) {
                 dodgeskill.setSkill(savedEvade);
             } else {
                 dodgeskill.setSkill(Skills.STEP);

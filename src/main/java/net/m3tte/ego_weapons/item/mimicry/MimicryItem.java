@@ -4,22 +4,27 @@ package net.m3tte.ego_weapons.item.mimicry;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
-import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
+import net.m3tte.ego_weapons.gameasset.movesets.MimicryMovesetAnims;
+import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.procedures.BlipTick;
+import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.legacy.MimicryhitentityProcedure;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import yesman.epicfight.api.animation.types.AttackAnimation;
 import yesman.epicfight.api.animation.types.DynamicAnimation;
+import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
@@ -34,6 +39,8 @@ import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILIT
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 import static net.m3tte.ego_weapons.execFunctions.HitProcedure.hitStunEffect;
 import static net.m3tte.ego_weapons.procedures.SharedFunctions.pummelDownEntity;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
 public class MimicryItem extends SwordItem {
 
@@ -75,13 +82,115 @@ public class MimicryItem extends SwordItem {
 		super(mimicryTier, p_i48460_2_, p_i48460_3_, p_i48460_4_);
 	}
 
+	public void appendHoverTextALT(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+		list.add(new StringTextComponent("I can't stop here...").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+
+		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 7) + 1) + "/8] - - - - - - - =").withStyle(TextFormatting.GRAY));
+
+
+		switch (EgoWeaponsKeybinds.getUiPage() % 7) {
+			case 0:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{});
+				else
+					generateDescription(list, "mimicry", "passive", 1);
+				break;
+			case 1:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"red", "bleed", "offense_down", "defense_down"});
+				else
+					generateDescription(list,"kali_mimicry", "auto", 6);
+				break;
+			case 2:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"red", "bleed", "defense_down", "offense_down"});
+				else
+					generateDescription(list,"kali_mimicry", "innate", 8);
+				break;
+			case 3:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"red", "bleed", "defense_down"});
+				else
+					generateDescription(list,"kali_mimicry", "ability", 6);
+				break;
+			case 4:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"red", "bleed", "rupture"});
+				else {
+					generateDescription(list,"kali_mimicry", "dash", 5);
+				}
+				break;
+			case 5:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"red", "offense_down"});
+				else {
+					generateDescription(list,"kali_mimicry", "guard", 3);
+				}
+				break;
+			case 6:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"red", "bleed", "rupture", "offense_down"});
+				else {
+					generateDescription(list,"kali_mimicry", "jump", 7);
+				}
+				break;
+		}
+		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+	}
+
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
-		list.add(new StringTextComponent("A disgusting reminder to what shall not be."));
-		list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Horizontal Split").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 7 E").withStyle(TextFormatting.AQUA)));
-		list.add(new StringTextComponent("[Passive] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Heal when dealing damage").withStyle(TextFormatting.GRAY)));
 
+		if (Minecraft.getInstance().player != null) {
+			Item chestItem = Minecraft.getInstance().player.getItemBySlot(EquipmentSlotType.CHEST).getItem();
+			if (chestItem.equals(EgoWeaponsItems.JACKET_OF_THE_RED_MIST.get()) || chestItem.equals(EgoWeaponsItems.RED_MIST_EGO_CHESTPLATE.get())) {
+				appendHoverTextALT(itemstack, world, list, flag);
+				return;
+			}
+		}
+
+		list.add(new StringTextComponent("And the many shells cried out one word...").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+
+		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
+
+
+		switch (EgoWeaponsKeybinds.getUiPage() % 5) {
+			case 0:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{});
+				else
+					generateDescription(list, "mimicry", "passive", 1);
+				break;
+			case 1:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"red", "bleed", "offense_up"});
+				else
+					generateDescription(list,"mimicry", "auto", 5);
+				break;
+			case 2:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"red", "defense_up", "bleed"});
+				else
+					generateDescription(list,"mimicry", "innate", 5);
+				break;
+			case 3:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"red", "bleed"});
+				else
+					generateDescription(list,"mimicry", "jump", 2);
+				break;
+			case 4:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"red", "bleed", "defense_down"});
+				else {
+					generateDescription(list,"mimicry", "ability", 4);
+				}
+				break;
+		}
+		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
 	}
 
 	@Override
@@ -99,104 +208,152 @@ public class MimicryItem extends SwordItem {
 		PlayerPatch<?> entitypatch = (PlayerPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
+		if (currentanim instanceof StaticAnimation) {
+			String weaponIdentifier = currentanim.getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
+			String secondIdentifier = "";
+			if (currentanim instanceof AttackAnimation) {
+				AttackAnimation.Phase phase = ((AttackAnimation)currentanim).getPhaseByTime(entitypatch.getAnimator().getPlayerFor(currentanim).getElapsedTime());
 
-		final int anim_id = currentanim.getId();
+				if (phase instanceof EgoAttackAnimation.EgoAttackPhase) {
+					EgoAttackAnimation.EgoAttackPhase modPhase = (EgoAttackAnimation.EgoAttackPhase) phase;
+
+					secondIdentifier = modPhase.getProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER).orElse("");
+				}
+			}
+
+
+
+			switch (weaponIdentifier) {
+				case "kali_dash":
+					EgoWeaponsEffects.BLEED.get().increment(target, 0, 1);
+					if (entityData != null) {
+						if (entityData.blips > 2) {
+							entityData.blips -= 2;
+							entitypatch.playAnimationSynchronized(MimicryMovesetAnims.KALI_REND, 0);
+
+							entitypatch.playSound(EgoWeaponsSounds.SWORD_STAB, 1, 1, 1);
+						}
+					}
+					break;
+				case "kali_rend":
+					EgoWeaponsEffects.BLEED.get().increment(target, 1, 1);
+					EgoWeaponsEffects.RUPTURE.get().increment(target, 1, 1);
+
+					break;
+				case "kali_jump":
+					if (target.hasEffect(EgoWeaponsEffects.OFFENSE_LEVEL_DOWN.get())) {
+						entitypatch.playAnimationSynchronized(MimicryMovesetAnims.KALI_IMPACT, 0);
+					}
+
+					LivingEntityPatch<?> targetentitypatch = (LivingEntityPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+
+					if (targetentitypatch != null) {
+						pummelDownEntity(targetentitypatch, 2);
+					}
+
+					EgoWeaponsEffects.BLEED.get().increment(target, 0, 1);
+					entitypatch.playSound(EgoWeaponsSounds.SWORD_STAB, 1, 1, 1);
+					break;
+				case "kali_impact":
+					BlipTick.chargeBlips((PlayerEntity) sourceentity, entityData, 1, true);
+					EgoWeaponsEffects.BLEED.get().increment(target, 1, 1);
+					EgoWeaponsEffects.RUPTURE.get().increment(target, 1, 1);
+					EgoWeaponsEffects.OFFENSE_LEVEL_DOWN.get().decrement(target, 0, 1);
+
+					break;
+				case "kali_auto_1":
+				case "kali_ego_auto_1":
+					EgoWeaponsEffects.OFFENSE_LEVEL_DOWN.get().increment(target, 0, 1);
+					break;
+				case "kali_auto_2":
+				case "kali_ego_auto_2":
+				case "kali_auto_3":
+					EgoWeaponsEffects.BLEED.get().increment(target, 0, 1);
+					break;
+				case "kali_auto_4":
+					entitypatch.setStamina(Math.min(entitypatch.getStamina() + 1f, entitypatch.getMaxStamina()));
+					sourceentity.heal(1);
+					EgoWeaponsEffects.BLEED.get().increment(target, 1, 1);
+					EgoWeaponsEffects.DEFENSE_LEVEL_DOWN.get().increment(target, 0, 1);
+					break;
+				case "kali_great_split_horizontal":
+					if (sourceentity instanceof PlayerEntity) {
+						if (!((PlayerEntity) sourceentity).getCooldowns().isOnCooldown(this.getItem()) && entityData.globalcooldown <= 0) {
+							entitypatch.playSound(EgoWeaponsSounds.KALI_SPLIT_HORIZONTAL_HIT, 1,1);
+						}
+					}
+					entitypatch.setStamina(Math.min(entitypatch.getStamina() + 0.8f, entitypatch.getMaxStamina()));
+
+					if (secondIdentifier.equals("kali_great_split_horizontal_1")) {
+						EgoWeaponsEffects.DEFENSE_LEVEL_DOWN.get().increment(target, 0, 1);
+						if (entityData.globalcooldown <= 0) {
+							EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(sourceentity, 0, 1);
+						}
+					} else {
+						EgoWeaponsEffects.BLEED.get().increment(target, 3, 5);
+					}
+					break;
+
+				case "kali_great_split_vertical":
+						switch (secondIdentifier) {
+							case "kali_great_split_vertical_1":
+							case "kali_great_split_vertical_2":
+								EgoWeaponsEffects.BLEED.get().increment(target, 0, 1);
+								EgoWeaponsEffects.DEFENSE_LEVEL_DOWN.get().increment(target, 0, 2);
+								break;
+							case "kali_great_split_vertical_3":
+								EgoWeaponsEffects.BLEED.get().increment(target, 1, 1);
+								EgoWeaponsEffects.OFFENSE_LEVEL_DOWN.get().increment(target, 0, 2);
+								break;
+						}
+					break;
+				case "mimicry_auto_1":
+				case "mimicry_auto_2":
+					EgoWeaponsEffects.BLEED.get().increment(target, 0, 1);
+					break;
+				case "mimicry_auto_3":
+					EgoWeaponsEffects.BLEED.get().increment(target, 1, 1);
+					break;
+				case "mimicry_hello":
+					if (entityData.globalcooldown <= 0) {
+						entitypatch.playSound(EgoWeaponsSounds.NOTHING_THERE_BLUNT, 1,1);
+					}
+					LivingEntityPatch<?> patch = (LivingEntityPatch)target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+					if (patch != null) {
+						hitStunEffect(patch, 0f);
+					}
+
+					break;
+				case "mimicry_goodbye":
+					EgoWeaponsEffects.BLEED.get().increment(target, 3, 3);
+
+					int potency = Math.min(EgoWeaponsEffects.BLEED.get().getPotency(target) / 3,5);
+
+					if (potency > 0) {
+						EgoWeaponsEffects.DEFENSE_LEVEL_DOWN.get().increment(target, 0, potency);
+					}
+					break;
+			}
+
+
+
+
+		}
+
+		/*
+		Migrated to damage calculation
+		int healFactor = EgoWeaponsItems.MIMICRY_CHESTPLATE.get().equals(sourceentity.getItemBySlot(EquipmentSlotType.CHEST).getItem()) ? 2 : 1;
+
+		if (!((PlayerEntity) sourceentity).getCooldowns().isOnCooldown(this.getItem()) && entityData.globalcooldown <= 0) {
+			sourceentity.heal(1);
+			((PlayerEntity) sourceentity).getCooldowns().addCooldown(itemstack.getItem(), (int) 5);
+			entityData.globalcooldown = 5;
+		}
 
 		if ((chestItem.equals(EgoWeaponsItems.JACKET_OF_THE_RED_MIST.get()) || chestItem.equals(EgoWeaponsItems.RED_MIST_EGO_CHESTPLATE.get())) && entityData != null) {
 
+		 */
 
-			if (anim_id == EgoWeaponsAnimations.KALI_DASH.getId()) {
-				if (sourceentity instanceof PlayerEntity) {
-					if (entityData.blips > 2) {
-						entityData.blips -= 2;
-						entitypatch.playAnimationSynchronized(EgoWeaponsAnimations.KALI_REND, 0);
-
-						entitypatch.playSound(EgoWeaponsSounds.SWORD_STAB, 1, 1, 1);
-					}
-				}
-			}
-
-			if (anim_id == EgoWeaponsAnimations.KALI_JUMP.getId()) {
-				entitypatch.playAnimationSynchronized(EgoWeaponsAnimations.KALI_IMPACT, 0);
-				LivingEntityPatch<?> targetentitypatch = (LivingEntityPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-
-				if (targetentitypatch != null) {
-					pummelDownEntity(entitypatch, 2);
-				}
-
-				entitypatch.playSound(EgoWeaponsSounds.SWORD_STAB, 1, 1, 1);
-			}
-
-			if (anim_id == EgoWeaponsAnimations.KALI_AUTO_4.getId()) {
-				entitypatch.setStamina(Math.min(entitypatch.getStamina() + 1f, entitypatch.getMaxStamina()));
-				sourceentity.heal(1);
-			}
-
-			if (anim_id == EgoWeaponsAnimations.GREAT_SPLIT_HORIZONTAL.getId()) {
-				if (sourceentity instanceof PlayerEntity) {
-					if (!((PlayerEntity) sourceentity).getCooldowns().isOnCooldown(this.getItem()) && entityData.globalcooldown <= 0) {
-						sourceentity.heal(2);
-						((PlayerEntity) sourceentity).getCooldowns().addCooldown(itemstack.getItem(), (int) 15);
-						entitypatch.playSound(EgoWeaponsSounds.KALI_SPLIT_HORIZONTAL_HIT, 1,1);
-						entityData.globalcooldown = 15;
-					}
-				}
-
-				entitypatch.setStamina(Math.min(entitypatch.getStamina() + 0.8f, entitypatch.getMaxStamina()));
-				sourceentity.heal(1);
-			}
-
-			if (anim_id == EgoWeaponsAnimations.KALI_IMPACT.getId()) {
-				BlipTick.chargeBlips((PlayerEntity) sourceentity, entityData, 1, true);
-			}
-		} else {
-			if (anim_id == EgoWeaponsAnimations.MIMICRY_HELLO.getId()) {
-				if (entityData.globalcooldown <= 0) {
-					entitypatch.playSound(EgoWeaponsSounds.NOTHING_THERE_BLUNT, 1,1);
-					entityData.globalcooldown = 1;
-				}
-				LivingEntityPatch<?> patch = (LivingEntityPatch)target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-				if (patch != null) {
-					hitStunEffect(patch, 0f);
-				}
-			}
-			else if (anim_id == EgoWeaponsAnimations.MIMICRY_GOODBYE.getId()) {
-				entitypatch.playSound(EgoWeaponsSounds.NOTHING_THERE_SLASH, 1,1);
-
-			}
-		}
-
-		if (chestItem.equals(EgoWeaponsItems.MIMICRY_CHESTPLATE.get())){
-			if (anim_id == EgoWeaponsAnimations.MIMICRY_HELLO.getId()) {
-				if (entityData.globalcooldown == 1) {
-					BlipTick.chargeBlips((PlayerEntity) sourceentity, entityData, 1, true);
-
-					sourceentity.heal(4);
-					((PlayerEntity) sourceentity).getCooldowns().addCooldown(itemstack.getItem(), (int) 5);
-					entityData.globalcooldown = 5;
-				}
-
-			}
-
-			if (anim_id == EgoWeaponsAnimations.MIMICRY_AUTO_3.getId()) {
-				target.level.playSound(null,target.blockPosition(), EgoWeaponsSounds.KALI_SPLIT_VERTICAL_SLASH, SoundCategory.PLAYERS, 1, 1);
-				target.addEffect(new EffectInstance(EgoWeaponsEffects.BLEED.get(), 40, 1));
-			}
-
-			if (!((PlayerEntity) sourceentity).getCooldowns().isOnCooldown(this.getItem()) && entityData.globalcooldown <= 0) {
-				sourceentity.heal(2);
-				((PlayerEntity) sourceentity).getCooldowns().addCooldown(itemstack.getItem(), (int) 5);
-				entityData.globalcooldown = 5;
-			}
-		} else {
-			if (sourceentity instanceof PlayerEntity) {
-				if (!((PlayerEntity) sourceentity).getCooldowns().isOnCooldown(this.getItem()) && entityData.globalcooldown <= 0) {
-					sourceentity.heal(1);
-					((PlayerEntity) sourceentity).getCooldowns().addCooldown(itemstack.getItem(), (int) 5);
-					entityData.globalcooldown = 5;
-				}
-			}
-		}
 
 
 		entityData.syncPlayerVariables(sourceentity);
@@ -208,6 +365,80 @@ public class MimicryItem extends SwordItem {
 				.collect(HashMap::new, (_m, _e) -> _m.put(_e.getKey(), _e.getValue()), Map::putAll));
 		return retval;
 	}
+
+	public static float modifyDamageNormal(LivingEntity target, LivingEntity source, float amount, DamageSource damageSource) {
+
+		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) source.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+
+		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
+
+		PlayerVariables entityData = source.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
+
+		if (currentanim != null && entityData != null) {
+			String weaponIdentifier = currentanim.getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
+
+			switch (weaponIdentifier) {
+				case "mimicry_hello":
+					float potency = Math.min(EgoWeaponsEffects.BLEED.get().getPotency(target) / 2f,4);
+					EgoWeaponsEffects.DEFENSE_LEVEL_UP.get().increment(source, 4, 4);
+					if (potency > 0) {
+						if (entityData.globalcooldown <= 0) {
+							source.heal(potency);
+
+						}
+					}
+					break;
+				case "mimicry_goodbye":
+
+					float potencyv = Math.min(EgoWeaponsEffects.BLEED.get().getPotency(target) * 0.02f,0.4f);
+
+					if (potencyv > 0) {
+						SharedFunctions.incrementBonusDamage(damageSource, potencyv);
+						amount *= 1 + potencyv;
+					}
+					break;
+				case "kali_great_split_vertical":
+
+					float gsvPot = Math.min(EgoWeaponsEffects.OFFENSE_LEVEL_DOWN.get().getPotency(target) * 0.1f,0.5f);
+
+					if (gsvPot > 0) {
+						SharedFunctions.incrementBonusDamage(damageSource, gsvPot);
+						amount *= 1 + gsvPot;
+					}
+					break;
+				case "kali_great_split_horizontal":
+
+					float gshPot = Math.min(EgoWeaponsEffects.OFFENSE_LEVEL_DOWN.get().getPotency(target) * 0.05f,0.3f);
+
+					if (gshPot > 0) {
+						SharedFunctions.incrementBonusDamage(damageSource, gshPot);
+						amount *= 1 + gshPot;
+					}
+					break;
+			}
+		}
+
+		return amount;
+	}
+
+	public static void getDamageHeal(LivingEntity target, LivingEntity source, float amount, DamageSource damageSource) {
+		// Heal Calc is here now.
+		int healFactor = EgoWeaponsItems.MIMICRY_CHESTPLATE.get().equals(source.getItemBySlot(EquipmentSlotType.CHEST).getItem()) ? 2 : 1;
+		PlayerVariables entityData = source.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
+
+
+
+		// Applies cooldown after. Locks all other on hit effects from triggering as well.
+		if (entityData != null) {
+			if (entityData.globalcooldown <= 0) {
+				source.heal(Math.min(1.5f, amount * 0.07f) * healFactor);
+				entityData.globalcooldown = 5;
+				entityData.syncPlayerVariables(source);
+			}
+		}
+	}
+
+
 
 
 

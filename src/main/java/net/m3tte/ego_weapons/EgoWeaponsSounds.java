@@ -31,10 +31,53 @@ public class EgoWeaponsSounds {
     public static SoundEvent THIRD_WARNING = generateSoundEvent(locationFrom("third_warning"));
     public static SoundEvent FOURTH_WARNING = generateSoundEvent(locationFrom("fourth_warning"));
 
+    public static SoundEvent POISE_CRIT = generateSoundEvent(locationFrom("effects.poise.crit"));
     public static SoundEvent SUNSHOWER_AUTO_1 = generateSoundEvent(locationFrom("sunshower.auto.1"));
     public static SoundEvent SUNSHOWER_AUTO_2 = generateSoundEvent(locationFrom("sunshower.auto.2"));
     public static SoundEvent SUNSHOWER_AUTO_4 = generateSoundEvent(locationFrom("sunshower.auto.4"));
 
+    public static SoundEvent OUFI_IMPACT_1 = generateSoundEvent(locationFrom("oufi.impact.1"));
+    public static SoundEvent OUFI_IMPACT_2 = generateSoundEvent(locationFrom("oufi.impact.2"));
+    public static SoundEvent OUFI_IMPACT_UP = generateSoundEvent(locationFrom("oufi.impact.up"));
+    public static SoundEvent OUFI_IMPACT_DOWN = generateSoundEvent(locationFrom("oufi.impact.down"));
+    public static SoundEvent OUFI_PIERCE = generateSoundEvent(locationFrom("oufi.pierce.normal"));
+    public static SoundEvent OUFI_PIERCE_HEAVY = generateSoundEvent(locationFrom("oufi.pierce.heavy"));
+    public static SoundEvent OUFI_SWING = generateSoundEvent(locationFrom("oufi.swing"));
+    public static SoundEvent OUFI_SWING_PIERCE = generateSoundEvent(locationFrom("oufi.swing.pierce"));
+    public static SoundEvent OUFI_CONTRACT_OPEN = generateSoundEvent(locationFrom("oufi.contract.open"));
+    public static SoundEvent OUFI_CONTRACT_INTERRUPT = generateSoundEvent(locationFrom("oufi.contract.interrupted"));
+    public static SoundEvent OUFI_CONTRACT_COUNTER = generateSoundEvent(locationFrom("oufi.contract.counter"));
+    public static SoundEvent OUFI_CONTRACT_FINISH = generateSoundEvent(locationFrom("oufi.contract.finish"));
+    public static SoundEvent FULLSTOP_REP_FIRE = generateSoundEvent(locationFrom("full_stop_rep.fire"));
+    public static SoundEvent FULLSTOP_REP_HEAVY_FIRE = generateSoundEvent(locationFrom("full_stop_rep.fire_heavy"));
+    public static SoundEvent FULLSTOP_REP_RELOAD = generateSoundEvent(locationFrom("full_stop_rep.reload"));
+    public static SoundEvent FULLSTOP_REP_SLICE = generateSoundEvent(locationFrom("full_stop_rep.slice"));
+    public static SoundEvent FULLSTOP_REP_HEAVY_SLICE = generateSoundEvent(locationFrom("full_stop_rep.heavy_slice"));
+    public static SoundEvent FULLSTOP_REP_JUMP_SLICE = generateSoundEvent(locationFrom("full_stop_rep.jump_slice"));
+    public static SoundEvent FULLSTOP_REP_SLIDE = generateSoundEvent(locationFrom("full_stop_rep.slide"));
+    public static SoundEvent FULLSTOP_FULL_STOP_TO_LIFE = generateSoundEvent(locationFrom("full_stop_rep.dialogue.full_stop_to_life"));
+    public static SoundEvent FULLSTOP_FULL_STOP_TO_LIFE_G = generateSoundEvent(locationFrom("full_stop_rep.dialogue.full_stop_to_life_g"));
+    public static SoundEvent FULLSTOP_REP_TAKE_CARE_OF_THEM = generateSoundEvent(locationFrom("full_stop_rep.dialogue.take_care_of_them"));
+    public static SoundEvent FULLSTOP_REP_FINISH_THEM_OFF = generateSoundEvent(locationFrom("full_stop_rep.dialogue.finish_them_off"));
+
+    public static SoundEvent FULLSTOP_SNIPER_AUTO_FIRE = generateSoundEvent(locationFrom("full_stop_sniper.auto.fire"));
+    public static SoundEvent FULLSTOP_SNIPER_MOVE_ASIDE = generateSoundEvent(locationFrom("full_stop_sniper.dialogue.move_aside"));
+    public static SoundEvent FULLSTOP_SNIPER_OKAY_SEE_EM = generateSoundEvent(locationFrom("full_stop_sniper.dialogue.okay_see_em"));
+    public static SoundEvent FULLSTOP_SNIPER_TARGET_CONFIRMED = generateSoundEvent(locationFrom("full_stop_sniper.dialogue.alright_target_confirmed"));
+    public static SoundEvent FULLSTOP_SNIPER_AUTO_HIT = generateSoundEvent(locationFrom("full_stop_sniper.auto.hit"));
+    public static SoundEvent FULLSTOP_SNIPER_AUTO_START = generateSoundEvent(locationFrom("full_stop_sniper.auto.start"));
+    public static SoundEvent FULLSTOP_SNIPER_INNATE_START = generateSoundEvent(locationFrom("full_stop_sniper.innate.start"));
+    public static SoundEvent FULLSTOP_SNIPER_INNATE_FLIP = generateSoundEvent(locationFrom("full_stop_sniper.innate.flip"));
+    public static SoundEvent FULLSTOP_SNIPER_INNATE_HIT = generateSoundEvent(locationFrom("full_stop_sniper.innate.hit"));
+    public static SoundEvent FULLSTOP_SNIPER_INNATE_FIRE = generateSoundEvent(locationFrom("full_stop_sniper.innate.fire"));
+    public static SoundEvent FULLSTOP_SNIPER_INNATE_CHARGE = generateSoundEvent(locationFrom("full_stop_sniper.innate.charge"));
+    public static SoundEvent FULLSTOP_SNIPER_INNATE_AFTER = generateSoundEvent(locationFrom("full_stop_sniper.innate.after"));
+    public static SoundEvent FULLSTOP_SNIPER_SPECIAL_START = generateSoundEvent(locationFrom("full_stop_sniper.special.start"));
+    public static SoundEvent FULLSTOP_SNIPER_SPECIAL_HIT = generateSoundEvent(locationFrom("full_stop_sniper.special.hit"));
+    public static SoundEvent FULLSTOP_SNIPER_SPECIAL_FIRE = generateSoundEvent(locationFrom("full_stop_sniper.special.fire"));
+    public static SoundEvent FULLSTOP_SNIPER_SPECIAL_CHARGE = generateSoundEvent(locationFrom("full_stop_sniper.special.charge"));
+    public static SoundEvent FULLSTOP_SNIPER_RELOAD = generateSoundEvent(locationFrom("full_stop_sniper.reload"));
+    public static SoundEvent TARGET_SPOTTED = generateSoundEvent(locationFrom("full_stop_rep.target_spotted"));
     public static SoundEvent SUNSHOWER_SPREAD_OUT_1 = generateSoundEvent(locationFrom("sunshower.spread_out.1"));
     public static SoundEvent SUNSHOWER_SPREAD_OUT_2 = generateSoundEvent(locationFrom("sunshower.spread_out.2"));
     public static SoundEvent SUNSHOWER_SPREAD_OUT_3 = generateSoundEvent(locationFrom("sunshower.spread_out.3"));
@@ -69,6 +112,8 @@ public class EgoWeaponsSounds {
     public static SoundEvent DOUBT_HIT_VERTICAL_FIRST = generateSoundEvent(locationFrom("doubt.hit.vertical.first"));
     public static SoundEvent DOUBT_HIT_VERTICAL_SECOND = generateSoundEvent(locationFrom("doubt.hit.vertical.second"));
 
+    public static SoundEvent MAGIC_BULLET_DIALOGUE_ASSIST = generateSoundEvent(locationFrom("magic_bullet.dialogue.assist"));
+    public static SoundEvent MAGIC_BULLET_DIALOGUE_FIRE = generateSoundEvent(locationFrom("magic_bullet.dialogue.fire"));
     public static SoundEvent MAGIC_BULLET_SPIN_SWING = generateSoundEvent(locationFrom("magic_bullet.spin.swing"));
     public static SoundEvent MAGIC_BULLET_SPIN_HIT = generateSoundEvent(locationFrom("magic_bullet.spin.hit"));
     public static SoundEvent MAGIC_BULLET_SPIN_SPAM = generateSoundEvent(locationFrom("magic_bullet.spin.spam"));
@@ -144,4 +189,5 @@ public class EgoWeaponsSounds {
     public static SoundEvent BLACK_SILENCE_SHOTGUN = generateSoundEvent(locationFrom("blacksilence.atelier.shotgun"));
     public static SoundEvent BLACK_SILENCE_DURANDAL_DOWN = generateSoundEvent(locationFrom("blacksilence.durandal.down"));
     public static SoundEvent BLACK_SILENCE_DURANDAL_UP = generateSoundEvent(locationFrom("blacksilence.durandal.up"));
+    public static SoundEvent TREMOR_BURST = generateSoundEvent(locationFrom("tremor_burst"));
 }

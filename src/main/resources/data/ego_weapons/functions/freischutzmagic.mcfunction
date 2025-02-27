@@ -1,1 +1,0 @@
-execute at @s positioned ~ ~1.5 ~ positioned ^ ^ ^1.5 run particle tcorp:aimparticle

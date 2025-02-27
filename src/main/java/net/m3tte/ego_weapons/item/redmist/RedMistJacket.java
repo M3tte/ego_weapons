@@ -5,6 +5,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.EgoWeaponsModElements;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
+import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -26,6 +27,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.List;
+
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
 @EgoWeaponsModElements.ModElement.Tag
 public class RedMistJacket extends ArmorItem {
@@ -116,12 +120,41 @@ public class RedMistJacket extends ArmorItem {
 		}
 
 		@Override
-		public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> list, ITooltipFlag p_77624_4_) {
-			super.appendHoverText(p_77624_1_, p_77624_2_, list, p_77624_4_);
-			list.add(new StringTextComponent("The courage..."));
-			list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent(" Manifest E.G.O -").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 10E").withStyle(TextFormatting.AQUA)));
-			list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent(" Onrush -").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 3E").withStyle(TextFormatting.AQUA)));
-			list.add(new StringTextComponent("[Passive] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent(" Augment MIMICRY moveset")));
+		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+			super.appendHoverText(itemstack, world, list, flag);
+			list.add(new StringTextComponent("The Red Mist of the past... Who knew that we’d be facing her in person..").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+
+			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
+
+			switch (EgoWeaponsKeybinds.getUiPage() % 4) {
+				case 0:
+					if (EgoWeaponsKeybinds.isHoldingShift())
+						generateStatusDescription(list, new String[]{});
+					else
+						generateDescription(list, "red_mist_armor", "passive", 1);
+					break;
+				case 1:
+					if (EgoWeaponsKeybinds.isHoldingShift())
+						generateStatusDescription(list, new String[]{"defense_up", "offense_up", "power_up", "manifest_ego"});
+					else
+						generateDescription(list, "red_mist_armor", "passive2", 3);
+					break;
+				case 2:
+					if (EgoWeaponsKeybinds.isHoldingShift())
+						generateStatusDescription(list, new String[]{"manifest_ego"});
+					else
+						generateDescription(list,"red_mist_armor", "ability", 1);
+					break;
+				case 3:
+					if (EgoWeaponsKeybinds.isHoldingShift())
+						generateStatusDescription(list, new String[]{"resilience","protection"});
+					else
+						generateDescription(list,"red_mist_armor", "ability2", 4);
+					break;
+			}
+
+			list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
 		}
 	};
 	static Item cig = new RedMistJacket(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Item.Properties().tab(ItemGroup.TAB_COMBAT)) {

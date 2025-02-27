@@ -8,6 +8,7 @@ import net.m3tte.ego_weapons.client.renderer.entities.MagicBulletRenderer;
 import net.m3tte.ego_weapons.client.renderer.entities.mobs.DawnOfGreenDoubtRenderer;
 import net.m3tte.ego_weapons.client.renderer.entities.mobs.NothingThereRenderer;
 import net.m3tte.ego_weapons.client.renderer.entities.mobs.SunshowerFoxRenderer;
+import net.m3tte.ego_weapons.client.renderer.entities.mobs.SunshowerUmbrellaRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -27,6 +28,7 @@ public class ModelRegisterHandler {
         RenderingRegistry.registerEntityRenderingHandler(DAWN_OF_GREEN_DOUBT.get(), DawnOfGreenDoubtRenderer.GreenDoubtRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(NOTHING_THERE.get(), NothingThereRenderer.NothingThereRender::new);
         RenderingRegistry.registerEntityRenderingHandler(SUNSHOWER_FOX.get(), SunshowerFoxRenderer.SFoxRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(SUNSHOWER_UMBRELLA.get(), SunshowerUmbrellaRenderer.SURenderer::new);
     }
 
 

@@ -20,6 +20,8 @@
   "subtitles.blacksilence.shotgun.fire": "",
   "effect.shadowincarnate": "Shadow Incarnate",
   "key.ego_weapons.openattrinterface": "Openattrinterface",
+  "key.ego_weapons.next_page": "Next Page",
+  "key.ego_weapons.previous_page": "Previous Page",
   "item.ego_weapons.labcoat_helmet": "Cursedlabcoat Helmet",
   "item.ego_weapons.galaxygarb_helmet": "Galaxygarb Helmet",
   "block.ego_weapons.anchorpoint": "Teleportation Anchor",
@@ -29,7 +31,6 @@
   "key.ego_weapons.swap_firing_mode": "Swap Firing Mode",
   "item.ego_weapons.defiled_blade": "Defiled Blade",
   "effect.wroughtwindup": "Wrought Windup",
-  "key.ego_weapons.weaponability": "Weapon Ability",
   "item.ego_weapons.betasuppressionsuit_chestplate": "Beta Suppression Suit",
   "item.ego_weapons.suit_of_the_black_silence": "Suit of the Black Silence",
   "item.ego_weapons.crimsonkimono_boots": "Crimsonkimono Boots",
@@ -140,6 +141,8 @@
   "effect.burn": "Burn",
   "effect.dark_burn": "Dark Flame",
   "effect.sinking": "Sinking",
+  "effect.obligation_fullfillment": "Obligation",
+  "effect.resilience": "Resilience",
   "effect.fractaldistortion": "Fractal Distortion",
   "item.ego_weapons.disposal_cutter": "Disposal Cutter",
   "block.ego_weapons.clocksigil": "Clock Sigil",
@@ -165,7 +168,9 @@
   "item.ego_weapons.red_mist_ego_chestplate": "Red Mist Chestplate",
   "item.ego_weapons.red_mist_ego_leggings": "Red Mist Leggings",
   "effect.manifest_ego": "EGO Manifested",
-  "effect.ethernal_rest": "Ethernal Rest",
+  "effect.ethernal_rest": "Eternal Rest",
+  "effect.poise": "Poise",
+  "effect.magic_bullet": "Magic Bullet",
   "item.ego_weapons.red_mist_ego_helmet": "Red Mist Helmet",
   "item.ego_weapons.solemn_lament_living": "The Living",
   "item.ego_weapons.solemn_lament_departed": "The Departed",
@@ -174,6 +179,13 @@
   "item.ego_weapons.doubt_spawn_egg": "Doubt Spawn Egg",
   "item.ego_weapons.nothing_there_spawn_egg": "Nothing There Spawn Egg",
 
+  "key.categories.ego_weapons": "\uE004 E.G.O Weapons \uE004",
+  "key.ego_weapons.weapon_ability": "Weapon E.G.O Card",
+  "key.ego_weapons.armor_ability": "Armor E.G.O Card",
+  "key.ego_weapons.reload_ability": "Weapon RELOAD Card",
+  "key.ego_weapons.fire_mode": "Toggle Firearm",
+  "key.ego_weapons.status_detail": "Status Effect Details",
+
   "entity.ego_weapons.doubt": "Doubt",
   "entity.ego_weapons.nothing_there": "Nothing There",
 
@@ -181,5 +193,694 @@
   "item.ego_weapons.sunshower_cloak": "Sunshower Cloak",
   "item.ego_weapons.sunshower_hood": "Sunshower Hood",
 
-  "desc.ego_weapons.sunshower.1": "[I] Gain 5 \uE003 §cSinking §r Potency. Gain 1 \uE003 §cSinking §r Count."
+  "desc.ego_weapons.sunshower.ability.title": "§b[Ability] §fSpread Out! - \uED02 - \uE004\uE004\uE004\uE004\uE004",
+  "desc.ego_weapons.sunshower.ability.1": "    - = | \uED33 \uED31 \uED31 | = -",
+  "desc.ego_weapons.sunshower.ability.2": "[I] §7Gain §f5 \uE003 §cSinking §7Potency. Gain §f1 \uE003 §cSinking §7 Count.",
+  "desc.ego_weapons.sunshower.ability.3": "[I] §7Inflict 3 §f\uE003 §cSinking §7Count.",
+  "desc.ego_weapons.sunshower.ability.4": "[III] §7Inflict 4 §f\uE005 §cRupture §7Potency.",
+
+  "desc.ego_weapons.sunshower.innate.title": "§b[Innate] §fPuddle Stomp - \uED02",
+  "desc.ego_weapons.sunshower.innate.1": "    - = | \uED33 \uED33 \uED33 \uED33 | = -",
+  "desc.ego_weapons.sunshower.innate.2": "[III] §7Spend 5 §f\uE003 §cSinking §7Potency: Cast §f[IV]",
+  "desc.ego_weapons.sunshower.innate.3": "[IV] §7Inflict 5 §f\uE005 §cRupture",
+  "desc.ego_weapons.sunshower.innate.4": "[IV] §7Trigger §f\uE006 §cTremor Burst",
+
+  "desc.ego_weapons.sunshower.auto.title": "§7[Auto] §fUmbrella Thwack - \uED02",
+  "desc.ego_weapons.sunshower.auto.1": "    - = | \uED31 \uED33 \uED33 \uED33 | = -",
+  "desc.ego_weapons.sunshower.auto.2": "[Use] §7Gain §f1 \uE003 §cSinking §7Count",
+  "desc.ego_weapons.sunshower.auto.3": "§c[Interrupted] §7Gain §f2 \uE003 §cSinking §7Potency",
+  "desc.ego_weapons.sunshower.auto.4": "[IV] §7Inflict 3 §f\uE003 §cSinking §7Count. Inflict 1 §f\uE003 §cSinking §7Potency.",
+
+  "desc.ego_weapons.sunshower.guard.title": "§c[Counter] §fWarning",
+  "desc.ego_weapons.sunshower.guard.1": "    - = | \uED31 \uED31 | = -",
+  "desc.ego_weapons.sunshower.guard.2": "[I] §7Gain §f2 \uE003 §cSinking §7 Potency",
+  "desc.ego_weapons.sunshower.guard.3": "[Hit] §7Inflict 2 §f\uE003 §cSinking §7 Potency. Inflict 1 §f\uE003 §cSinking §7 Count",
+
+  "desc.ego_weapons.sunshower_cloak.passive.title": "§a[Passive] §fShielding Sorrow",
+  "desc.ego_weapons.sunshower_cloak.passive.1": "§bSanity§7 Damage from all sources is reduced by §a50%",
+  "desc.ego_weapons.sunshower_cloak.passive.2": "§c[Before Hit] §7Gain §f\uE007 §bProtection §7equal to a third of §f\uE003§c Sinking §7Potency §8[Max 5]",
+
+  "desc.ego_weapons.sunshower_cloak.ability.title": "§a[Ability] §fSpreading Sorrow - \uE004\uE004\uE004\uE004\uE004\uE004",
+  "desc.ego_weapons.sunshower_cloak.ability.1": "[Use] §7Inflict 2 §f\uE001§c Bleed §7Potency and 1 §f\uE001§c Bleed §7Count §7on self",
+  "desc.ego_weapons.sunshower_cloak.ability.2": "[Use] §7Spawn an §cUmbrella §7, Consume 5 §f\uE003§c Sinking §7Potency to empower umbrella §8 [Max 3].",
+  "desc.ego_weapons.sunshower_cloak.ability.3": "[Umbrella] §7Periodically inflict 1 §f\uE003§c Sinking §7to foes.",
+  "desc.ego_weapons.sunshower_cloak.ability.4": "[Umbrella] §7Apply §f(Sinking Consumed / 5)§7 shield to user. §8[Max: §fSinking Consumed§8]",
+
+  "desc.ego_weapons.blacksilenceweapon.ability.title": "§b[Ability] §fPocket Dimension - \uE004",
+  "desc.ego_weapons.blacksilenceweapon.ability.1": "§7Swap Weapon",
+
+  "desc.ego_weapons.zelkova.innate.title": "§b[Innate] §fShattering Spin \uED03",
+  "desc.ego_weapons.zelkova.innate.1": "    - = | \uED32  \uED33 | = -",
+  "desc.ego_weapons.zelkova.innate.2": "[I] §7Inflict 2 §f\uE008 §cTremor §7Potency.",
+  "desc.ego_weapons.zelkova.innate.3": "[II] §7Inflict 1 §f\uE008 §cTremor §7Count. Inflict 2 §f\uE008 §cTremor §7Potency.",
+  "desc.ego_weapons.zelkova.innate.4": "[II] §7Trigger §f\uE006 §cTremor Burst",
+
+  "desc.ego_weapons.zelkova.jump.title": "§b[Jump Attack] §fTrembling Downcast \uED03",
+  "desc.ego_weapons.zelkova.jump.1": "    - = | \uED33 | = -",
+  "desc.ego_weapons.zelkova.jump.2": "[I] §7Inflict 2 §f\uE008 §cTremor §7Potency.",
+  "desc.ego_weapons.zelkova.jump.3": "[I] §7Trigger §f\uE006 §cTremor Burst",
+
+  "desc.ego_weapons.zelkova.auto.title": "§b[Auto] §fZelkova Workshop \uED03",
+  "desc.ego_weapons.zelkova.auto.1": "    - = | \uED32  \uED33 | = -",
+  "desc.ego_weapons.zelkova.auto.2": "[II] §7Inflict 1 §f\uE008 §cTremor §7Count. Inflict 1 §f\uE008 §cTremor §7Potency.",
+
+  "desc.ego_weapons.wheels_industry.auto.title": "§b[Auto] §fWheels Industry \uED03",
+  "desc.ego_weapons.wheels_industry.auto.1": "    - = | \uED32  \uED32  \uED32 | = -",
+  "desc.ego_weapons.wheels_industry.auto.2": "[I] §7Inflict 2 §f\uE008 §cTremor §7Potency.",
+  "desc.ego_weapons.wheels_industry.auto.3": "[II] §7Inflict 1 §f\uE008 §cTremor §7Count. Inflict 2 §f\uE008 §cTremor §7Potency.",
+  "desc.ego_weapons.wheels_industry.auto.4": "[III] §7Inflict 1 §f\uE008 §cTremor §7Count. Inflict 2 §f\uE008 §cTremor §7Potency.",
+
+  "desc.ego_weapons.wheels_industry.innate.title": "§b[Auto] §fShatterquake \uED03",
+  "desc.ego_weapons.wheels_industry.innate.1": "    - = | \uED33 | = -",
+  "desc.ego_weapons.wheels_industry.innate.2": "[I] §7Inflict 5 §f\uE008 §cTremor §7Potency.",
+  "desc.ego_weapons.wheels_industry.innate.3": "[I] §7Trigger §f\uE006 §cTremor Burst.",
+
+  "desc.ego_weapons.wheels_industry.guard.title": "§b[Guard] §fShield Wall",
+  "desc.ego_weapons.wheels_industry.guard.1": "[On Parry] §7If Target has §f5 §7or more §f\uE008 §cTremor §7Potency.",
+  "desc.ego_weapons.wheels_industry.guard.2": "[On Parry]   §7Trigger §f\uE006 §cTremor Burst\".",
+
+  "desc.ego_weapons.durandal.auto.title": "§b[Auto] §fDurandal \uED03",
+  "desc.ego_weapons.durandal.auto.1": "    - = | \uED32  \uED32  \uED32  \uED31 | = -",
+  "desc.ego_weapons.durandal.auto.2": "[After Combo] §7If §f[IV] §7hit:",
+  "desc.ego_weapons.durandal.auto.3": " §7Gain §f1 \uE030 §cPower Up§7.",
+
+  "desc.ego_weapons.durandal.dash.title": "§b[Dash] §fPiercing Thrust \uED03",
+  "desc.ego_weapons.durandal.dash.1": "    - = | \uED31 | = -",
+  "desc.ego_weapons.durandal.dash.2": "[After Combo] §7If §f[I] §7hit:",
+  "desc.ego_weapons.durandal.dash.3": " §7Gain §f1 \uE030 §cPower Up§7. §8[Max 3]",
+
+  "desc.ego_weapons.durandal.innate.title": "§b[Innate] §fGrieving Slashes \uED03",
+  "desc.ego_weapons.durandal.innate.1": "    - = | \uED32  \uED32  \uED33 | = -",
+  "desc.ego_weapons.durandal.innate.2": "[III] §7Gain §f3 \uE022 §cOffense Level Up§7.",
+
+  "desc.ego_weapons.crystal_atelier.auto.title": "§b[Auto] §fCrystal Atelier \uED03",
+  "desc.ego_weapons.crystal_atelier.auto.1": "    - = | \uED32  \uED32 | = -",
+
+  "desc.ego_weapons.crystal_atelier.innate.title": "§b[Innate] §fCrystal Dash \uED03",
+  "desc.ego_weapons.crystal_atelier.innate.1": "    - = | \uED32 | = -",
+
+  "desc.ego_weapons.allas_workshop.auto.title": "§b[Auto] §fAllas Workshop \uED03",
+  "desc.ego_weapons.allas_workshop.auto.1": "    - = | \uED31  \uED31 | = -",
+
+  "desc.ego_weapons.allas_workshop.guard.title": "§b[Guard] §fAllas Parry",
+  "desc.ego_weapons.allas_workshop.guard.1": "[On Parry] §7Stun Attacker§7.",
+
+  "desc.ego_weapons.atelier_logic_pistols.auto.title": "§b[No Ammo Auto] §fPistol Bashes \uED03",
+  "desc.ego_weapons.atelier_logic_pistols.auto.1": "    - = | \uED33  \uED33  \uED33 | = -",
+
+  "desc.ego_weapons.atelier_logic_pistols.auto2.title": "§b[Auto] §fAtelier Logic: Fire \uED03",
+  "desc.ego_weapons.atelier_logic_pistols.auto2.1": "    - = | \uED31  \uED31 | = -",
+  "desc.ego_weapons.atelier_logic_pistols.auto2.2": "[I] §7Consume §f1 \uE012 §cAmmo§7.",
+  "desc.ego_weapons.atelier_logic_pistols.auto2.3": "[II] §7Consume §f1 \uE012 §cAmmo§7.",
+
+  "desc.ego_weapons.atelier_logic_pistols.dash.title": "§b[Auto] §fSwap Mag \uED03",
+  "desc.ego_weapons.atelier_logic_pistols.dash.1": "[On Use] §7Consume §f3 \uE004 §6Light§7.",
+  "desc.ego_weapons.atelier_logic_pistols.dash.2": "[On Use] §7Recover §f2 \uE012 §cAmmo§7.",
+
+  "desc.ego_weapons.atelier_logic_pistols.innate.title": "§b[Innate] §fAtelier Logic: Barrage \uED03",
+  "desc.ego_weapons.atelier_logic_pistols.innate.1": "    - = | \uED31  \uED31 | = -",
+  "desc.ego_weapons.atelier_logic_pistols.innate.2": "[I] §7Consume §f1 \uE012 §cAmmo§7.",
+  "desc.ego_weapons.atelier_logic_pistols.innate.3": "[II] §7Consume §f1 \uE012 §cAmmo§7.",
+
+  "desc.ego_weapons.atelier_logic_pistols.innate2.title": "§b[No Ammo Innate] §fBash Magazine \uED03",
+  "desc.ego_weapons.atelier_logic_pistols.innate2.1": "    - = | \uED31  \uED31 | = -",
+  "desc.ego_weapons.atelier_logic_pistols.innate2.2": "[On Use] §7Consume §f1 \uE004 §6Light§7.",
+  "desc.ego_weapons.atelier_logic_pistols.innate2.3": "[On Use] §7Recover §f2 \uE012 §cAmmo§7.",
+
+  "desc.ego_weapons.atelier_logic_pistols.guard.title": "§b[Clashable Counter] §fGut Bullet \uED03",
+  "desc.ego_weapons.atelier_logic_pistols.guard.1": "    - = | \uED31 | = -",
+  "desc.ego_weapons.atelier_logic_pistols.guard.2": "[I] §7Consume §f1 \uE012 §cAmmo§7.",
+
+  "desc.ego_weapons.atelier_logic_pistols.guard2.title": "§b[Clashable Counter] §fPistol Weave \uED03",
+  "desc.ego_weapons.atelier_logic_pistols.guard2.1": "    - = | \uED31 | = -",
+  "desc.ego_weapons.atelier_logic_pistols.guard2.2": "[On Use] §7Consume §f1 \uE004 §6Light§7.",
+  "desc.ego_weapons.atelier_logic_pistols.guard2.3": "[On Use] §7Recover §f2 \uE012 §cAmmo§7.",
+
+  "desc.ego_weapons.atelier_logic_shotgun.auto.title": "§b[Auto] §fShotgun Bashes \uED03",
+  "desc.ego_weapons.atelier_logic_shotgun.auto.1": "    - = | \uED33  \uED33  \uED33 | = -",
+
+  "desc.ego_weapons.atelier_logic_shotgun.auto2.title": "§b[Right Click] §fAtelier Logic Shotgun: Fire \uED03",
+  "desc.ego_weapons.atelier_logic_shotgun.auto2.1": "    - = | \uED33 | = -",
+  "desc.ego_weapons.atelier_logic_shotgun.auto2.2": "[On Use] §7Consume §f2 \uE004 §6Light§7.",
+  "desc.ego_weapons.atelier_logic_shotgun.auto2.3": "[I] §7Inflict §f3 \uE005 §cRupture §7Potency.",
+
+  "desc.ego_weapons.old_boys.auto.title": "§b[Auto] §fOld Boys Workshop \uED03",
+  "desc.ego_weapons.old_boys.auto.1": "    - = | \uED33  \uED33  \uED33 | = -",
+
+  "desc.ego_weapons.old_boys.passive.title": "§b[Passive] §fLight Reserves",
+  "desc.ego_weapons.old_boys.passive.1": "[Hit] §7Regenerate §f1 \uE004 §6Light§7. §8[Has Cooldown]",
+
+  "desc.ego_weapons.old_boys.guard.title": "§b[Guard] §fShattering Parry",
+  "desc.ego_weapons.old_boys.guard.1": "[On Parry] §7Deal §6Stagger Damage§7.",
+  "desc.ego_weapons.old_boys.guard.2": "[Guard] §7Do not block attack§7.",
+
+  "desc.ego_weapons.mook_workshop.auto.title": "§b[Auto] §fMook Workshop \uED03",
+  "desc.ego_weapons.mook_workshop.auto.1": "    - = | \uED32  \uED32  \uED32  \uED32 | = -",
+  "desc.ego_weapons.mook_workshop.auto.2": "[After Combo] §7Regenerate §f1 \uE004 §6Light §7for every §f2 §7Combo Hits.",
+  "desc.ego_weapons.mook_workshop.auto.3": "[After Combo] §7Regenerate §6Stamina §7for every Combo Hit.",
+
+  "desc.ego_weapons.mook_workshop.jump.title": "§b[Jump] §fDownwards Cut \uED03",
+  "desc.ego_weapons.mook_workshop.jump.1": "    - = | \uED32 | = -",
+  "desc.ego_weapons.mook_workshop.jump.2": "§7Trigger §f[After Combo] §7effects.",
+
+  "desc.ego_weapons.mook_workshop.innate.title": "§b[Innate] §fLightning Slashes \uED03",
+  "desc.ego_weapons.mook_workshop.innate.1": "    - = | \uED32 | = -",
+  "desc.ego_weapons.mook_workshop.innate.2": "[I] §7Inflict §f2 \uE001 §cBleed §7Count. §7Inflict §f2 \uE001 §cBleed §7Potency.",
+
+  "desc.ego_weapons.mook_workshop.guard.title": "§b[Guard] §fPoised Guard \uED03",
+  "desc.ego_weapons.mook_workshop.guard.1": "[On Parry] §7Regenerate §6Stamina§7.",
+
+  "desc.ego_weapons.ranga_workshop.auto.title": "§b[Auto] §fRanga Workshop \uED03",
+  "desc.ego_weapons.ranga_workshop.auto.1": "    - = | \uED31  \uED31  \uED32 | = -",
+  "desc.ego_weapons.ranga_workshop.auto.2": "[I]   §7Inflict §f1 \uE001 §cBleed §7Count. §7Inflict §f1 \uE001 §cBleed §7Potency.",
+  "desc.ego_weapons.ranga_workshop.auto.3": "[II]  §7Inflict §f1 \uE001 §cBleed §7Count. §7Inflict §f1 \uE001 §cBleed §7Potency.",
+  "desc.ego_weapons.ranga_workshop.auto.4": "[III] §7Inflict §f1 \uE001 §cBleed §7Count. §7Inflict §f1 \uE001 §cBleed §7Potency.",
+
+  "desc.ego_weapons.ranga_workshop.innate.title": "§b[Innate] §fEviscerate \uED03",
+  "desc.ego_weapons.ranga_workshop.innate.1": "    - = | \uED31  \uED31 | = -",
+  "desc.ego_weapons.ranga_workshop.innate.2": "[I]  §7Inflict §f3 \uE005 §cRupture §7Potency.",
+  "desc.ego_weapons.ranga_workshop.innate.3": "[II] §7Inflict §f1 \uE001 §cBleed §7Count. §7Inflict §f4 \uE001 §cBleed §7Potency.",
+
+  "item.ego_weapons.oeufi_association_halberd": "Öufi Assoc. Halberd",
+  "item.ego_weapons.oeufi_association_hat": "Öufi Assoc. Hat",
+  "item.ego_weapons.oeufi_association_vest": "Öufi Assoc. Vest",
+  "item.ego_weapons.oeufi_association_pants": "Öufi Assoc. Pants",
+
+  "desc.ego_weapons.solemn_lament.auto.title": "§b[Auto] §fCelebration for the Departed \uED02 \uED03",
+  "desc.ego_weapons.solemn_lament.auto.1": "    - = | \uED31  \uED31 | = -",
+  "desc.ego_weapons.solemn_lament.auto.2": "[I] §7If §f\uE017 §cThe Living and The Departed§7 is not depleted:",
+  "desc.ego_weapons.solemn_lament.auto.3": "    §7Spend §f1 \uE018 §cThe Living§7 or",
+  "desc.ego_weapons.solemn_lament.auto.4": "    §7Spend §f1 \uE019 §cThe Departed§7.",
+  "desc.ego_weapons.solemn_lament.auto.5": "[II] §7If §f\uE017 §cThe Living and The Departed§7 is not depleted:",
+  "desc.ego_weapons.solemn_lament.auto.6": "     §7Spend §f1 \uE019 §cThe Departed§7 or",
+  "desc.ego_weapons.solemn_lament.auto.7": "     §7Spend §f1 \uE018 §cThe Living§7.",
+  "desc.ego_weapons.solemn_lament.auto.8": "[III] §7Reuse while §f\uE017 §cThe Living and The Departed§7 is not depleted.",
+
+  "desc.ego_weapons.solemn_lament.innate.title": "§b[Innate] §fA Sorrow In You \uED02 \uED03",
+  "desc.ego_weapons.solemn_lament.innate.1": "    - = | \uED33 | = -",
+  "desc.ego_weapons.solemn_lament.innate.2": "[I] §7Consume all §f\uE017 §cThe Living and The Departed§7.",
+  "desc.ego_weapons.solemn_lament.innate.3": "[I] §7Inflict §f2 \uE003 §cSinking §7Potency per §f3 §7consumed §f\uE018 §cThe Living§7.",
+  "desc.ego_weapons.solemn_lament.innate.4": "[I] §7Inflict §f2 \uE003 §cSinking §7Count per §f3 §7consumed §f\uE019 §cThe Departed§7.",
+  "desc.ego_weapons.solemn_lament.innate.5": "[On Stagger or Kill] §6[Reload]§7 §f12 \uE017 §cThe Living and The Departed§7.",
+
+  "desc.ego_weapons.solemn_lament.ability.title": "§b[Ability] §fGather Lamentations - \uE004\uE004\uE004\uE004",
+  "desc.ego_weapons.solemn_lament.ability.1": "[I] §6[Reload]§7 §f18 \uE017 §cThe Living and The Departed§7.",
+
+  "desc.ego_weapons.solemn_lament_armor.ability.title": "§b[Ability] §fEternal Rest - \uE004\uE004\uE004\uE004\uE004\uE004\uE004",
+  "desc.ego_weapons.solemn_lament_armor.ability.1": "Apply §f\uE026 §cEternal Rest §7to self.",
+  "desc.ego_weapons.solemn_lament_armor.ability.2": "Restore §f10 §bSanity§7.",
+
+  "desc.ego_weapons.solemn_lament.guard.title": "§c[Clashable Counter] §fFromTheCoffinAButterflyTakesFlight \uED02 \uED03",
+  "desc.ego_weapons.solemn_lament.guard.1": "    - = | \uED31 | = -",
+  "desc.ego_weapons.solemn_lament.guard.2": "Triggers after 4 parries",
+  "desc.ego_weapons.solemn_lament.guard.3": "§7At §f> 2\uE018 §cThe Living §7and §f> 2\uE019 §cThe Departed§7:",
+  "desc.ego_weapons.solemn_lament.guard.4": "[I] §7Spend §f1 \uE018 §cThe Living§7 and §f1 \uE019 §cThe Departed§f.",
+  "desc.ego_weapons.solemn_lament.guard.5": "§7 otherwise §6[Reload]§7 §f6 \uE017 §cThe Living and The Departed§7.",
+
+  "desc.ego_weapons.mimicry_armor.passive.title": "§b[Passive] §fResonance",
+  "desc.ego_weapons.mimicry_armor.passive.1": "§7Enhances §4[ALEPH] §cMimicry §7Passive: double Regeneration.",
+  "desc.ego_weapons.mimicry_armor.passive.2": "§7Enhances §4[ALEPH] §cMimicry §7Innate: §f[I] §7Regenerate §f1 \uE004 §6Light§7.",
+
+  "desc.ego_weapons.red_mist_armor.passive.title": "§b[Passive] §fKali",
+  "desc.ego_weapons.red_mist_armor.passive.1": "§7Augments §4[ALEPH] §cMimicry §7Moveset.",
+
+  "desc.ego_weapons.red_mist_armor.passive2.title": "§b[Passive] §fThe Strongest",
+  "desc.ego_weapons.red_mist_armor.passive2.1": "§c[On Kill] §7Gain §f1 \uE022 §cOffense Level Up§7. §8[Max 4]",
+  "desc.ego_weapons.red_mist_armor.passive2.2": "If §f\uE029 §cRed Mist E.G.O§7 is active: ",
+  "desc.ego_weapons.red_mist_armor.passive2.3": " §c[On Kill] §7Gain §f1 \uE030 §cPower Up§7. §8[Max 3]",
+
+  "desc.ego_weapons.red_mist_armor.ability.title": "§b[Ability] §fManifest E.G.O \uE004\uE004\uE004\uE004\uE004\uE004\uE004\uE004\uE004\uE004",
+  "desc.ego_weapons.red_mist_armor.ability.1": "§7Manifest §f\uE029 §cRed Mist E.G.O§7.",
+
+  "desc.ego_weapons.red_mist_armor.ability2.title": "§b[E.G.O Ability] §fOnrush \uED01 \uE004\uE004\uE004\uE004",
+  "desc.ego_weapons.red_mist_armor.ability2.1": "    - = | \uED33 | = -",
+  "desc.ego_weapons.red_mist_armor.ability2.2": "[On Use] §7Gain §f1 \uE021 §cResilience§7.",
+  "desc.ego_weapons.red_mist_armor.ability2.3": "[On Use] §7Gain §f1 \uE007 §cProtection§7.",
+  "desc.ego_weapons.red_mist_armor.ability2.4": "§6[On Stagger / Kill] §7Reuse Ability for Free.",
+
+  "desc.ego_weapons.mimicry_armor.passive2.title": "§b[Passive] §fMimic",
+  "desc.ego_weapons.mimicry_armor.passive2.1": "§7When taking 8 or more Damage:",
+  "desc.ego_weapons.mimicry_armor.passive2.2": " §7Gain §f1 \uE022 §cOffense Level Up§7.",
+  "desc.ego_weapons.mimicry_armor.passive2.3": " §7Gain §f1 \uE024 §cDefense Level Up§7.",
+  "desc.ego_weapons.mimicry_armor.passive2.4": "§7When taking 16 or more Damage:",
+  "desc.ego_weapons.mimicry_armor.passive2.5": " §7Gain another §f1 \uE022 §cOffense Level Up§7.",
+  "desc.ego_weapons.mimicry_armor.passive2.6": " §7Gain another §f1 \uE024 §cDefense Level Up§7.",
+
+  "desc.ego_weapons.mimicry_armor.ability.title": "§b[Ability] §fI lOve yOu! - \uE004\uE004\uE004\uE004\uE004\uE004\uE004\uE004",
+  "desc.ego_weapons.mimicry_armor.ability.1": "§8§oIf hit within the next §7§o15 Seconds:",
+  "desc.ego_weapons.mimicry_armor.ability.2": " §7Restore §aHealth§7 by §f25% §7of Attackers Max HP. §8[Max 35% of Users Max HP]",
+  "desc.ego_weapons.mimicry_armor.ability.3": " §7Restore §bSanity§7",
+  "desc.ego_weapons.mimicry_armor.ability.4": " §7Take §f30% §7Less §cDamage§7.",
+  "desc.ego_weapons.mimicry_armor.ability.5": " §7Inflict §f\uE027 §cTerror §7on Attacker.",
+  "desc.ego_weapons.mimicry_armor.ability.6": " §7Gain §f1 \uE028 §cShell §7for every §f6 §cAttack Power §7of Attacker. §8[Max 5]",
+
+  "desc.ego_weapons.mimicry.auto.title": "§b[Auto] §fSlashes of a Husk \uED01",
+  "desc.ego_weapons.mimicry.auto.1": "    - = | \uED32  \uED32  \uED32 | = -",
+  "desc.ego_weapons.mimicry.auto.2": "[I]  §7Inflict §f1 \uE001 §cBleed §7Potency.",
+  "desc.ego_weapons.mimicry.auto.3": "[II] §7Inflict §f1 \uE001 §cBleed §7Potency.",
+  "desc.ego_weapons.mimicry.auto.4": "[III] §7Inflict §f1 \uE001 §cBleed §7Count. §7Inflict §f1 \uE001 §cBleed §7Potency.",
+  "desc.ego_weapons.mimicry.auto.5": "[III] §7Gain §f1 \uE022 §cOffense Level Up§7.",
+
+  "desc.ego_weapons.kali_mimicry.auto.title": "§b[Auto] §fLevel Slashes \uED01",
+  "desc.ego_weapons.kali_mimicry.auto.1": "    - = | \uED33  \uED32  \uED32  \uED32 | = -",
+  "desc.ego_weapons.kali_mimicry.auto.2": "[I]   §7Inflict §f1 \uE023 §cOffense Level Down§7.",
+  "desc.ego_weapons.kali_mimicry.auto.3": "[II]  §7Inflict §f1 \uE001 §cBleed §7Potency.",
+  "desc.ego_weapons.kali_mimicry.auto.4": "[III] §7Inflict §f1 \uE001 §cBleed §7Potency.",
+  "desc.ego_weapons.kali_mimicry.auto.5": "[IV]  §7Inflict §f1 \uE001 §cBleed §7Count. §7Inflict §f1 \uE001 §cBleed §7Potency.",
+  "desc.ego_weapons.kali_mimicry.auto.6": "[IV]  §7Inflict §f1 \uE025 §cDefense Level Down§7.",
+
+  "desc.ego_weapons.kali_mimicry.ability.title": "§b[Ability] §fGreater Split: Horizontal - \uED01 - \uE004\uE004\uE004\uE004\uE004\uE004\uE004",
+  "desc.ego_weapons.kali_mimicry.ability.1": "    - = | \uED43  \uED42 | = -",
+  "desc.ego_weapons.kali_mimicry.ability.2": "§8§oUndodgeable | Unblockable",
+  "desc.ego_weapons.kali_mimicry.ability.3": "[On Use] §7Gain §f5 §f\uE007 §cProtection§7.",
+  "desc.ego_weapons.kali_mimicry.ability.4": "[I] §7Inflict §f3 \uE025 §cDefense Level Down§7.",
+  "desc.ego_weapons.kali_mimicry.ability.5": "[I] §7Gain §f2 \uE022 §cOffense Level Up§7.",
+  "desc.ego_weapons.kali_mimicry.ability.6": "[II] §7Inflict §f3 \uE001 §cBleed §7Count. §7Inflict §f5 \uE001 §cBleed §7Potency.",
+  "desc.ego_weapons.kali_mimicry.ability.7": "[II] §7Deal §f+5% §7Damage per §f\uE023 §cOffense Level Down §7on Target §8[Max 30%]",
+
+  "desc.ego_weapons.kali_mimicry.innate.title": "§b[Innate] §fGreater Split: Vertical - \uED01",
+  "desc.ego_weapons.kali_mimicry.innate.1": "    - = | \uED32  \uED32  \uED32 | = -",
+  "desc.ego_weapons.kali_mimicry.innate.2": "[I] §7Inflict §f2 \uE025 §cDefense Level Down§7.",
+  "desc.ego_weapons.kali_mimicry.innate.3": "[I] §7Inflict §f1 \uE001 §cBleed §7Potency.",
+  "desc.ego_weapons.kali_mimicry.innate.4": "[II] §7Inflict §f2 \uE025 §cDefense Level Down§7.",
+  "desc.ego_weapons.kali_mimicry.innate.5": "[II] §7Inflict §f1 \uE001 §cBleed §7Potency.",
+  "desc.ego_weapons.kali_mimicry.innate.6": "[III] §7Inflict §f2 \uE023 §cOffense Level Down§7.",
+  "desc.ego_weapons.kali_mimicry.innate.7": "[III] §7Inflict §f1 \uE001 §cBleed §7Count. §7Inflict §f1 \uE001 §cBleed §7Potency.",
+  "desc.ego_weapons.kali_mimicry.innate.8": "[III] §7Deal §f+10% §7Damage per §f\uE023 §cOffense Level Down §7on Target §8[Max 50%]",
+
+  "desc.ego_weapons.kali_mimicry.dash.title": "§b[Dash] §fSpear \uED01",
+  "desc.ego_weapons.kali_mimicry.dash.1": "    - = | \uED31  \uED31 | = -",
+  "desc.ego_weapons.kali_mimicry.dash.2": "[I] §7Inflict §f1 \uE001 §cBleed §7Potency.",
+  "desc.ego_weapons.kali_mimicry.dash.3": "[I] §7Consume §f1 \uE004 §6Light§7 to cast §f[II]",
+  "desc.ego_weapons.kali_mimicry.dash.4": "[II] §7Inflict §f1 \uE001 §cBleed §7Count. §7Inflict §f1 \uE001 §cBleed §7Potency.",
+  "desc.ego_weapons.kali_mimicry.dash.5": "[II] §7Inflict §f1 \uE005 §cRupture §7Count. §7Inflict §f1 \uE005 §cRupture §7Potency.",
+
+  "desc.ego_weapons.kali_mimicry.jump.title": "§b[Jump] §fDownwards Spear \uED01",
+  "desc.ego_weapons.kali_mimicry.jump.1": "    - = | \uED31  \uED31 | = -",
+  "desc.ego_weapons.kali_mimicry.jump.2": "[I] §7Inflict §f1 \uE001 §cBleed §7Potency.",
+  "desc.ego_weapons.kali_mimicry.jump.3": "§7If target has §f §cOffense Level Down§7: Cast §f[II]",
+  "desc.ego_weapons.kali_mimicry.jump.4": "[II] §7Inflict §f1 \uE001 §cBleed §7Count. §7Inflict §f1 \uE001 §cBleed §7Potency.",
+  "desc.ego_weapons.kali_mimicry.jump.5": "[II] §7Inflict §f1 \uE005 §cRupture §7Count. §7Inflict §f1 \uE005 §cRupture §7Potency.",
+  "desc.ego_weapons.kali_mimicry.jump.6": "[II] §7Regenerate §f1 \uE004 §6Light§7.",
+  "desc.ego_weapons.kali_mimicry.jump.7": "[II] §7Consume §f1 \uE023 §cOffense Level Down §7on Target.",
+
+  "desc.ego_weapons.kali_mimicry.guard.title": "§c[Clashable Counter] §fFocus Spirit",
+  "desc.ego_weapons.kali_mimicry.guard.1": "[On Parry] §7Recover §6Stamina§7.",
+  "desc.ego_weapons.kali_mimicry.guard.2": "[Max Stamina] §7Regenerate §f1 \uE004 §6Light§7.",
+  "desc.ego_weapons.kali_mimicry.guard.3": "[Max Stamina] §7Inflict §f1 \uE023 §cOffense Level Down§7.",
+
+  "desc.ego_weapons.mimicry.passive.title": "§b[Passive] §fRegenerating Cocoon",
+  "desc.ego_weapons.mimicry.passive.1": "§c[On Hit] §7Heal by §f7% §7of Damage Dealt §8[Max 1.5 HP]",
+
+  "desc.ego_weapons.mimicry.jump.title": "§b[Jump] §fFlail Skin \uED01",
+  "desc.ego_weapons.mimicry.jump.1": "    - = | \uED32 | = -",
+  "desc.ego_weapons.mimicry.jump.2": "[I] §7Inflict §f1 \uE001 §cBleed §7Count. §7Inflict §f1 \uE001 §cBleed §7Potency.",
+
+  "desc.ego_weapons.mimicry.innate.title": "§b[Innate] §fHelLo? - \uED01",
+  "desc.ego_weapons.mimicry.innate.1": "    - = | \uED33 | = -",
+  "desc.ego_weapons.mimicry.innate.2": "[I] §7Gain §f3 \uE024 §cDefense Level Up§7.",
+  "desc.ego_weapons.mimicry.innate.3": "[I] §7If target has §f\uE001 §cBleed:",
+  "desc.ego_weapons.mimicry.innate.4": "    §7Heal §f1 §aHealth§7.",
+  "desc.ego_weapons.mimicry.innate.5": "    §7Heal §f0.5 §7additional §aHealth §7for every §f\uE001 §cBleed §7Potency on Target §8[Max 4]",
+
+  "desc.ego_weapons.mimicry.ability.title": "§b[Ability] §fGoOdbYe - \uED01 - \uE004\uE004\uE004\uE004\uE004\uE004",
+  "desc.ego_weapons.mimicry.ability.1": "    - = | \uED42 | = -",
+  "desc.ego_weapons.mimicry.ability.2": "[I] §7Inflict §f3 \uE001 §cBleed §7Count. §7Inflict §f3 \uE001 §cBleed §7Potency.",
+  "desc.ego_weapons.mimicry.ability.3": "[I] §7Deal §f+2% §7Damage per §f\uE001 §cBleed §7Potency on Target §8[Max 40%]",
+  "desc.ego_weapons.mimicry.ability.4": "[I] §7Inflict §f1 \uE025 §cDefense Level Down §7per §f3 \uE001 §cBleed §7Potency on Target §8[Max 5]",
+
+  "desc.ego_weapons.oufi_halberd.auto.title": "§b[Auto] §fExecution Advised \uED03",
+  "desc.ego_weapons.oufi_halberd.auto.1": "    - = | \uED32  \uED32  \uED31 | = -",
+  "desc.ego_weapons.oufi_halberd.auto.2": "[I]  §7Inflict §f1 \uE008 §cTremor §7Potency.",
+  "desc.ego_weapons.oufi_halberd.auto.3": "[II] §7Inflict §f1 \uE008 §cTremor §7Count. §7Inflict §f1 \uE008 §cTremor §7Potency.",
+  "desc.ego_weapons.oufi_halberd.auto.4": "[III] §7Inflict §f1 \uE008 §cTremor §7Count. §7Inflict §f1 \uE008 §cTremor §7Potency.",
+
+  "desc.ego_weapons.oufi_armor.passive.title": "§b[Passive] §fFine Print",
+  "desc.ego_weapons.oufi_armor.passive.1": "[On Hit] §7Deal §f+1% §7Damage per §f\uE008 §cTremor §7Potency on Target §8[Max 40%]",
+
+  "desc.ego_weapons.oufi_armor.ability.title": "§b[Ability] §fVerify Obligation Fulfillment. - \uE004\uE004\uE004\uE004\uE004\uE004\uE004\uE004",
+  "desc.ego_weapons.oufi_armor.ability.1": "    - = | \uED42 | = -",
+  "desc.ego_weapons.oufi_armor.ability.2": "[On Use] §7Gain §f20 \uE020 §cObligation Fulfillment§7.",
+  "desc.ego_weapons.oufi_armor.ability.3": "[On Use] §7Gain §f2 \uE021 §cResilience§7.",
+  "desc.ego_weapons.oufi_armor.ability.4": "[On Use] §7Deal §f50% §cStagger Damage §7to self §8(Does not stagger).",
+  "desc.ego_weapons.oufi_armor.ability.5": "[On Use] §7Deal §f50% §bSanity Damage §7to self §8(Does not panic).",
+  "desc.ego_weapons.oufi_armor.ability.6": "§c[When Interrupted] §7Counterattack with [I]",
+  "desc.ego_weapons.oufi_armor.ability.7": "[I] §7Trigger §f\uE006 §cTremor Burst",
+
+  "desc.ego_weapons.oufi_halberd.innate.title": "§b[Innate] §fFinal Warning \uED03",
+  "desc.ego_weapons.oufi_halberd.innate.1": "    - = | \uED32  \uED31 | = -",
+  "desc.ego_weapons.oufi_halberd.innate.2": "[I] §7Inflict §f1 \uE008 §cTremor §7Potency.",
+  "desc.ego_weapons.oufi_halberd.innate.3": "[II] §7Trigger §f\uE006 §cTremor Burst",
+  "desc.ego_weapons.oufi_halberd.innate.4": "[II] §7If Target has: §f\uE011 §cTremor: Decay §7Recover \uE004",
+
+  "desc.ego_weapons.oufi_halberd.ability.title": "§b[Ability] §fExecution Sentencing - \uED03 - \uE004\uE004\uE004\uE004\uE004",
+  "desc.ego_weapons.oufi_halberd.ability.1": "    - = | \uED42  \uED32  \uED31 | = -",
+  "desc.ego_weapons.oufi_halberd.ability.2": "[I] §7Inflict §f3 \uE008 §cTremor §7Potency.",
+  "desc.ego_weapons.oufi_halberd.ability.3": "[II] §7Inflict §f1 \uE008 §cTremor §7Count. §7Inflict §f1 \uE008 §cTremor §7Potency.",
+  "desc.ego_weapons.oufi_halberd.ability.4": "[III] §7If Target has: §f\uE011 §cTremor: Decay §7Trigger §f\uE006 §cTremor Burst",
+  "desc.ego_weapons.oufi_halberd.ability.5": "[III] §7(At 15+ Tremor Potency) Trigger §f\uE010 §cAmplitude Conversion §7to §f\uE011 §cTremor: Decay,",
+
+  "desc.ego_weapons.oufi_halberd.guard.title": "§c[Clashable Counter] §fDo Not Obstruct \uED03",
+  "desc.ego_weapons.oufi_halberd.guard.1": "    - = | \uED33 | = -",
+  "desc.ego_weapons.oufi_halberd.guard.2": "Triggers after 4 parries",
+  "desc.ego_weapons.oufi_halberd.guard.3": "[I] §7Inflict §f2 \uE008 §cTremor §7Count. §7Inflict §f1 \uE008 §cTremor §7Potency.",
+
+  "desc.ego_weapons.fullstop_rep.passive.title": "§b[Passive] §fConcentration",
+  "desc.ego_weapons.fullstop_rep.passive.1": "§7When consuming §f\uE012 §cAmmo §7without an affiliated status:",
+  "desc.ego_weapons.fullstop_rep.passive.2": "§7Gain §f1 \uE013 §cPoise §7Count. §7Gain §f1 \uE013 §cPoise §7Potency.",
+  "desc.ego_weapons.fullstop_rep.passive.3": "[Out of Ammo] §7Turn §f[Auto] §7into §f\"[Auto] Beyond the Shadows\"",
+
+  "desc.ego_weapons.fullstop_rep.auto.title": "§b[Auto] §fTake the Shot",
+  "desc.ego_weapons.fullstop_rep.auto.1": "    - = | \uED31 \uED31 \uED31 \uED31 | = -",
+  "desc.ego_weapons.fullstop_rep.auto.2": "[I] §7Spend §f1 \uE012 §cAmmo.",
+  "desc.ego_weapons.fullstop_rep.auto.3": "[II] §7Spend §f1 \uE012 §cAmmo.",
+  "desc.ego_weapons.fullstop_rep.auto.4": "[III] §7Spend §f1 \uE012 §cAmmo.",
+  "desc.ego_weapons.fullstop_rep.auto.5": "[IV] §7Spend §f1 \uE012 §cAmmo.",
+  "desc.ego_weapons.fullstop_rep.auto.6": "[IV] §c[On Crit] §7Deal §f+20% Damage.",
+
+  "desc.ego_weapons.fullstop_rep.auto_alt.title": "§b[Auto] §fBeyond the Shadows",
+  "desc.ego_weapons.fullstop_rep.auto_alt.1": "    - = | \uED32 \uED32 \uED32 | = -",
+  "desc.ego_weapons.fullstop_rep.auto_alt.2": "[III] §c[On Crit] §7Deal §f+10% Damage.",
+
+  "desc.ego_weapons.fullstop_rep.innate.title": "§b[Innate] §fTarget Marked",
+  "desc.ego_weapons.fullstop_rep.innate.1": "    - = | \uED31 | = -",
+  "desc.ego_weapons.fullstop_rep.innate.2": "[Use] §7Gain §f2 \uE013 §cPoise §7Count.",
+  "desc.ego_weapons.fullstop_rep.innate.3": "[I] §7Inflict 1 §cSlowness§7.",
+  "desc.ego_weapons.fullstop_rep.innate.4": "[I] §7Inflict 1 §cWeakness§7.",
+  "desc.ego_weapons.fullstop_rep.innate.5": "[I] §c[On Crit] §7Deal §f+30% Damage.",
+  "desc.ego_weapons.fullstop_rep.innate.6": "[I] §c[On Crit] §7Consume §f5 \uE013 §cPoise Potency",
+  "desc.ego_weapons.fullstop_rep.innate.7": "    §7Inflict §f\uE014 §cTarget Marked",
+
+  "desc.ego_weapons.fullstop_rep.ability.title": "§b[Ability] §fFull Stop to Life - \uE004\uE004\uE004\uE004\uE004",
+  "desc.ego_weapons.fullstop_rep.ability.1": "    - = | \uED41 \uED41 \uED41 \uED32 | = -",
+  "desc.ego_weapons.fullstop_rep.ability.2": "[Before] §7If at less than 3 §f\uE012 §cAmmo §7use §f\"[Ammoless] Full Stop to Life\" instead.",
+  "desc.ego_weapons.fullstop_rep.ability.3": "[Use] §7Gain §f2 \uE013 §cPoise §7Count. Gain §f1 \uE013 §cPoise §7Potency.",
+  "desc.ego_weapons.fullstop_rep.ability.4": "[I] §7Spend §f1 \uE012 §cAmmo.",
+  "desc.ego_weapons.fullstop_rep.ability.5": "[II] §7Spend §f1 \uE012 §cAmmo.",
+  "desc.ego_weapons.fullstop_rep.ability.6": "[III] §7Spend §f1 \uE012 §cAmmo.",
+  "desc.ego_weapons.fullstop_rep.ability.7": "[IV] §7Inflict §f\uE014 §cTarget Marked",
+  "desc.ego_weapons.fullstop_rep.ability.8": "[IV] §c[On Crit] §7Deal §f+30% Damage.",
+
+  "desc.ego_weapons.fullstop_rep.ability_alt.title": "§b[Ammoless] §fFull Stop to Life - \uE004\uE004\uE004\uE004\uE004",
+  "desc.ego_weapons.fullstop_rep.ability_alt.1": "    - = | \uED42 \uED42 \uED42 | = -",
+  "desc.ego_weapons.fullstop_rep.ability_alt.2": "[Use] §7Gain §f2 \uE013 §cPoise §7Count. Gain §f1 \uE013 §cPoise §7Potency.",
+  "desc.ego_weapons.fullstop_rep.ability_alt.3": "[III] §7Inflict §f\uE014 §cTarget Marked",
+  "desc.ego_weapons.fullstop_rep.ability_alt.4": "[III] §c[On Crit] §7Deal §f+30% Damage.",
+
+  "desc.ego_weapons.fullstop_rep_armor.passive.title": "§b[Passive] §fWeaving Dashes",
+  "desc.ego_weapons.fullstop_rep_armor.passive.1": "[Before Hit] §7If at §f27 §7or more §f\uE013 §cPoise §7Potency:",
+  "desc.ego_weapons.fullstop_rep_armor.passive.2": "§7Consume §f7 \uE013 §cPoise §7Potency. §cEvade §7the attack.",
+
+  "desc.ego_weapons.fullstop_rep_armor.ability.title": "§b[Ability] §fFinish 'em off. - \uE004\uE004\uE004\uE004",
+  "desc.ego_weapons.fullstop_rep_armor.ability.1": "§7Targets last entity inflicted with §f\uE014 §cTarget Marked§7.",
+  "desc.ego_weapons.fullstop_rep_armor.ability.2": "[Use] §7Apply §f\uE015 §cAssist Fire §7to nearby allies.",
+  "desc.ego_weapons.fullstop_rep_armor.ability.3": "[Use] §7If at §f20 §7or more §f\uE013 §cPoise §7Potency:",
+  "desc.ego_weapons.fullstop_rep_armor.ability.4": "§7Consume all §f\uE013 §cPoise §7Potency over §f20.",
+  "desc.ego_weapons.fullstop_rep_armor.ability.5": "§7Distribute consumed §f\uE013 §cPoise §7Potency evenly among allies.",
+
+  "desc.ego_weapons.fullstop_sniper.passive.title": "§b[Passive] §fPrecision Aim",
+  "desc.ego_weapons.fullstop_sniper.passive.1": "§7Gain §f75% §7more §6Emotion Points §7from combat actions.",
+  "desc.ego_weapons.fullstop_sniper.passive.2": "§7When consuming §f\uE012 §cAmmo §7without an affiliated status:",
+  "desc.ego_weapons.fullstop_sniper.passive.3": " §7Gain §f1 \uE013 §cPoise §7Potency.",
+  "desc.ego_weapons.fullstop_sniper.passive.4": "§7When attacking target with §f\uE014 §cTarget Marked§7:",
+  "desc.ego_weapons.fullstop_sniper.passive.5": " §7Regenerate §f1 \uE004 §6Light§7.",
+  "desc.ego_weapons.fullstop_sniper.passive.6": " §7Gain §f1 \uE013 §cPoise §7Count. §7Gain §f2 \uE013 §cPoise §7Potency.",
+
+  "desc.ego_weapons.fullstop_sniper.auto.title": "§b[Auto] §fReturn Fire",
+  "desc.ego_weapons.fullstop_sniper.auto.1": "    - = | \uED31 \uED31 \uED31 | = -",
+  "desc.ego_weapons.fullstop_sniper.auto.2": "[I] §7Spend §f1 \uE012 §cAmmo.",
+  "desc.ego_weapons.fullstop_sniper.auto.3": "[II] §7Spend §f1 \uE012 §cAmmo.",
+  "desc.ego_weapons.fullstop_sniper.auto.4": "[II] §7Gain §f1 \uE013 §cPoise §7Count",
+  "desc.ego_weapons.fullstop_sniper.auto.5": "[III] §7Spend §f1 \uE012 §cAmmo.",
+  "desc.ego_weapons.fullstop_sniper.auto.6": "[III] §7Gain §f1 \uE013 §cPoise §7Count and §f1 \uE013 §cPoise §7Potency",
+
+  "desc.ego_weapons.fullstop_sniper.innate.title": "§b[Innate] §fHeadshot",
+  "desc.ego_weapons.fullstop_sniper.innate.1": "    - = | \uED31 | = -",
+  "desc.ego_weapons.fullstop_sniper.innate.2": "[Use] §7Gain §f2 §f\uE013 §cPoise §7Potency",
+  "desc.ego_weapons.fullstop_sniper.innate.3": "[I] §7If Target has §f\uE014 §cTarget Marked §7regenerate §f1 \uE004 §6Light§7.",
+  "desc.ego_weapons.fullstop_sniper.innate.4": "§c[On Crit] §7Deal §f+40% Damage.",
+
+  "desc.ego_weapons.fullstop_sniper.ability.title": "§b[Ability] §fGoin' for the Bullseye - \uE004\uE004\uE004\uE004\uE004",
+  "desc.ego_weapons.fullstop_sniper.ability.1": "    - = | \uED41 | = -",
+  "desc.ego_weapons.fullstop_sniper.ability.2": "[Use] §7Gain §f5 §f\uE013 §cPoise §7Potency",
+  "desc.ego_weapons.fullstop_sniper.ability.3": "[Use] §7Gain §f4 §f\uE021 §cResilience",
+  "desc.ego_weapons.fullstop_sniper.ability.4": "[Use] §7Gain §f3 §f\uE007 §cProtection",
+  "desc.ego_weapons.fullstop_sniper.ability.5": "[I] §7Spend §f1 \uE012 §cAmmo.",
+  "desc.ego_weapons.fullstop_sniper.ability.6": "[I] §c[On Crit] §7Deal §f+60% Damage.",
+  "desc.ego_weapons.fullstop_sniper.ability.7": "[I] §c[On Crit] §7Consume §f\uE013 §cPoise §7Potency over §f20 §8[Max 25]",
+  "desc.ego_weapons.fullstop_sniper.ability.8": "    §7Deal §f+3% Damage §7for every §f\uE013 §cPoise §7Potency consumed.",
+
+  "desc.ego_weapons.fullstop_sniper_armor.passive.title": "§b[Passive] §fSharpshooter Focus",
+  "desc.ego_weapons.fullstop_sniper_armor.passive.1": "§7Deal §f+10% §6Ranged Damage",
+  "desc.ego_weapons.fullstop_sniper_armor.passive.2": "When §6Emotion Level §fincreases:",
+  "desc.ego_weapons.fullstop_sniper_armor.passive.3": " §7Gain §f2x Emotion Level \uE013 §cPoise §7Potency.",
+  "desc.ego_weapons.fullstop_sniper_armor.passive.4": " §7Gain §fEmotion Level \uE013 §cPoise §7Count.",
+
+  "desc.ego_weapons.fullstop_sniper_armor.ability.title": "§b[Ability] §fChannel Focus - \uE004\uE004",
+  "desc.ego_weapons.fullstop_sniper_armor.ability.1": "[Use] §7Gain §f2 \uE013 §cPoise §7Potency.",
+  "desc.ego_weapons.fullstop_sniper_armor.ability.2": "[Use] §7Gain §f1 \uE013 §cPoise §7Count.",
+  "desc.ego_weapons.fullstop_sniper_armor.ability.3": "[Use] §7Consume up to §f8 \uE004 §6Light§7.",
+  "desc.ego_weapons.fullstop_sniper_armor.ability.4": " §7Gain §f1 \uE013 §cPoise §7Potency per consumed §f\uE004 §6Light§7.",
+  "desc.ego_weapons.fullstop_sniper_armor.ability.5": " §7Gain §f1 \uE013 §cPoise §7Count every 2 consumed §f\uE004 §6Light§7.",
+  "desc.ego_weapons.fullstop_sniper_armor.ability.6": " §7Gain §6Emotion Points §7per consumed §f\uE004 §6Light§7.",
+
+  "desc.ego_weapons.magic_bullet.auto.title": "§b[Auto] §fIgnition",
+  "desc.ego_weapons.magic_bullet.auto.1": "[I] §7Inflict §f1 \uE002 §cBurn §7Potency.",
+  "desc.ego_weapons.magic_bullet.auto.2": "[II] §7Inflict §f1 \uE002 §cBurn §7Potency.",
+  "desc.ego_weapons.magic_bullet.auto.3": "[III] §7Inflict §f1 \uE009 §cDark Flame§7.",
+  "desc.ego_weapons.magic_bullet.auto.4": "[III] §7Recover §6Stagger§7. Recover §6Stamina§7.",
+
+  "desc.ego_weapons.magic_bullet.innate.title": "§b[Innate] §fDetonate Magic Bullet",
+  "desc.ego_weapons.magic_bullet.innate.1": "[I] §7Gain §f1 \uE016 §cMagic Bullet. §8[Max 4]",
+  "desc.ego_weapons.magic_bullet.innate.2": "[I] §7Inflict §f[Magic Bullet] §f\uE009 §cDark Flame. §8[Max 4]",
+  "desc.ego_weapons.magic_bullet.innate.3": "[I] §7Inflict §f\uE002 §cBurn §7Potency by §f\uE009 §cDark Flame§7.",
+
+  "desc.ego_weapons.magic_bullet.ability.title": "§b[Ability] §fMagic Bullet Fire - \uE004\uE004\uE004\uE004\uE004\uE004",
+  "desc.ego_weapons.magic_bullet.ability.1": "[Use] §7Consume §bSanity §7depending on §f\uE016 §cMagic Bullet §7Count.",
+  "desc.ego_weapons.magic_bullet.ability.2": "[Use] §7If this would cause panic, consume no sanity. Bullet also hits user.",
+  "desc.ego_weapons.magic_bullet.ability.3": "[I] §7Gain additional §cDamage §7by §f\uE016 §cMagic Bullet §7Count.",
+  "desc.ego_weapons.magic_bullet.ability.4": "[I] §7Gain attack weight by §f\uE016 §cMagic Bullet §7Count.",
+  "desc.ego_weapons.magic_bullet.ability.5": "[I] §7Inflict §f\uE009 §cDark Flame§7 equal to §f\uE016 §cMagic Bullet §7Count.",
+
+  "desc.ego_weapons.magic_bullet.guard.title": "§c[Simple Guard] §fThe Price of a Bullet",
+  "desc.ego_weapons.magic_bullet.guard.1": "§cCannot Parry",
+  "desc.ego_weapons.magic_bullet.guard.2": "[Guard] §7Recover §bSanity Damage§7, Consume less §6Stamina §7by §f\uE016 §cMagic Bullet §7Count.",
+
+  "desc.ego_weapons.magic_bullet_armor.passive.title": "§b[Passive] §fDark Haze",
+  "desc.ego_weapons.magic_bullet_armor.passive.1": "§7When hitting a target with §cReduced Defense Level§7:",
+  "desc.ego_weapons.magic_bullet_armor.passive.2": "  §7Gain §f1 \uE013 §cPoise §7Potency",
+  "desc.ego_weapons.magic_bullet_armor.passive.3": "§7If Target has §f\uE009 §cDark Flame§7:",
+  "desc.ego_weapons.magic_bullet_armor.passive.4": "  §7Gain §f1 §7additional §f\uE013 §cPoise §7Potency",
+
+  "desc.ego_weapons.magic_bullet_armor.ability.title": "§b[Ability] §fMarksmans Smoking Pipe \uE004\uE004\uE004\uE004\uE004",
+  "desc.ego_weapons.magic_bullet_armor.ability.1": "§7Gain §f5 \uE013 §cPoise §7Potency and §f1 \uE013 §cPoise §7Count.",
+  "desc.ego_weapons.magic_bullet_armor.ability.2": "§7Gain §f+1 \uE013 §cPoise §7Potency for every §f\uE016 §cMagic Bullet §7on self.",
+  "desc.ego_weapons.magic_bullet_armor.ability.3": "§7Gain §f1 \uE030 §cPower Up §7for every §f2 \uE016 §cMagic Bullet §7on self. §8[Max 3]",
+
+  "desc.ego_weapons.black_silence_suit.passive.title": "§b[Passive] §fPerception Blocking Mask",
+  "desc.ego_weapons.black_silence_suit.passive.1": "§fFinal Attacks §7of Combos gain the following effects:",
+  "desc.ego_weapons.black_silence_suit.passive.2": "  §7Attack becomes §cUnblockable & Undodgeable",
+  "desc.ego_weapons.black_silence_suit.passive.3": "  §c[On Hit] §7Gain §f3 \uE013 §cPoise §7Potency",
+  "desc.ego_weapons.black_silence_suit.passive.4": "  §c[On Stagger] §7All resistances change to §c[Weak] §7instead of §4[Fatal]",
+
+  "desc.ego_weapons.black_silence_suit.passive1.title": "§b[Passive] §fGloves of the Black Silence",
+  "desc.ego_weapons.black_silence_suit.passive1.1": "§7When using Weapon Ability: §fPocket Dimension§:",
+  "desc.ego_weapons.black_silence_suit.passive1.2": "  §7Gain §f1 \uE022 §cOffense Level Up§7. §8[Max 1]",
+  "desc.ego_weapons.black_silence_suit.passive1.3": "§7If §f\uE032 §cOrlando §7is active:",
+  "desc.ego_weapons.black_silence_suit.passive1.4": "  §7Gain §f1 §7additional §f\uE022 §cOffense Level Up§7. §8[Max 2]",
+
+  "desc.ego_weapons.black_silence_suit.passive2.title": "§b[Passive] §fClenched Grudge",
+  "desc.ego_weapons.black_silence_suit.passive2.1": "§7When recovering from §6Stagger§7: ",
+  "desc.ego_weapons.black_silence_suit.passive2.2": "  §7Gain §f2 \uE022 §cOffense Level Up§7.",
+  "desc.ego_weapons.black_silence_suit.passive2.3": "  §7Gain §f2 \uE030 §cPower Up§7.",
+
+  "desc.ego_weapons.black_silence_suit.ability.title": "§b[Ability] §fOrlando \uE004\uE004\uE004\uE004\uE004\uE004\uE004\uE004\uE004",
+  "desc.ego_weapons.black_silence_suit.ability.1": "§7Gain §f\uE032 §cOrlando§7.",
+
+  "desc.ego_weapons.black_silence_suit.ability1.title": "§b[Orlando Ability] §fFurioso \uE004\uE004\uE004\uE004\uE004\uE004",
+  "desc.ego_weapons.black_silence_suit.ability1.1": "§7Gain §f\uE033 §cFurioso§7.",
+
+  "desc.ego_weapons.statuses.title": "Relevant Keywords:",
+
+  "desc.ego_weapons.statuses.sinking.title": "\uE003 §cSinking ",
+  "desc.ego_weapons.statuses.sinking.1": "§c[On Hit]: §7Take §bSanity Damage §7by §fPotency. §7Remove 1 Count.",
+  "desc.ego_weapons.statuses.sinking.2": "§c[No Sanity Target]: §7Take §f\uED02 White Damage §7by §fPotency §7instead.",
+
+  "desc.ego_weapons.statuses.rupture.title": "\uE005 §cBleed ",
+  "desc.ego_weapons.statuses.rupture.1": "§c[On Hit]: §7Take §5True Damage §7by §fPotency. §7Remove 1 Count.",
+
+  "desc.ego_weapons.statuses.protection.title": "\uE007 §cProtection ",
+  "desc.ego_weapons.statuses.protection.1": "§7Reduce damage taken by (§f10 x Potency§7)%.",
+
+  "desc.ego_weapons.statuses.resilience.title": "\uE021 §cResilience ",
+  "desc.ego_weapons.statuses.resilience.1": "§c[On Hit]: §7Decrement by 1",
+  "desc.ego_weapons.statuses.resilience.2": "§c[On Hit]: §7Resist Stuns",
+
+  "desc.ego_weapons.statuses.offense_up.title": "\uE022 §cOffense Level Up",
+  "desc.ego_weapons.statuses.offense_up.1": "§8§oExpires after 15 seconds ",
+  "desc.ego_weapons.statuses.offense_up.2": "Increases Attack Speed, Damage and Impact",
+
+  "desc.ego_weapons.statuses.offense_down.title": "\uE023 §cOffense Level Down",
+  "desc.ego_weapons.statuses.offense_down.1": "§8§oExpires after 15 seconds ",
+  "desc.ego_weapons.statuses.offense_down.2": "Decreases Attack Speed, Damage and Impact",
+
+  "desc.ego_weapons.statuses.defense_up.title": "\uE024 §cDefense Level Up",
+  "desc.ego_weapons.statuses.defense_up.1": "§8§oExpires after 15 seconds ",
+  "desc.ego_weapons.statuses.defense_up.2": "Increases Armor and Stun Resistance",
+
+  "desc.ego_weapons.statuses.power_up.title": "\uE030 §cPower Up",
+  "desc.ego_weapons.statuses.power_up.1": "§8§oExpires after 15 seconds ",
+  "desc.ego_weapons.statuses.power_up.2": "Increases Damage and Impact",
+
+  "desc.ego_weapons.statuses.power_down.title": "\uE031 §cPower Down",
+  "desc.ego_weapons.statuses.power_down.1": "§8§oExpires after 15 seconds ",
+  "desc.ego_weapons.statuses.power_down.2": "Decreases Damage and Impact",
+
+  "desc.ego_weapons.statuses.defense_down.title": "\uE025 §cDefense Level Down",
+  "desc.ego_weapons.statuses.defense_down.1": "§8§oExpires after 15 seconds ",
+  "desc.ego_weapons.statuses.defense_down.2": "Decreases Armor and Stun Resistance",
+
+  "desc.ego_weapons.statuses.bleed.title": "\uE001 §cBleed ",
+  "desc.ego_weapons.statuses.bleed.1": "§c[On Attack]: §7Take §5True Damage §7by §fPotency. §7Remove 1 Count.",
+
+  "desc.ego_weapons.statuses.manifest_ego.title": "\uE029 §cRed Mist E.G.O ",
+  "desc.ego_weapons.statuses.manifest_ego.1": "§7Augments §4[ALEPH] §cMimicry §7Moveset.",
+  "desc.ego_weapons.statuses.manifest_ego.2": "§7Increases Combat Capabilities.",
+
+  "desc.ego_weapons.statuses.orlando.title": "\uE032 §cOrlando",
+  "desc.ego_weapons.statuses.orlando.1": "§7Gain a chance to automatically dodge attacks.",
+  "desc.ego_weapons.statuses.orlando.2": "§7Increases Combat Capabilities.",
+
+  "desc.ego_weapons.statuses.furioso.title": "\uE033 §cFurioso",
+  "desc.ego_weapons.statuses.furioso.1": "§7Greatly increases attack speed.",
+  "desc.ego_weapons.statuses.furioso.2": "§7Augments §4[ALEPH] §cBlack Silence §7Moveset.",
+  "desc.ego_weapons.statuses.furioso.3": "§7When using §fPocket Dimension §7after a full §6Combo§7:",
+  "desc.ego_weapons.statuses.furioso.4": "  §7Consume no §f\uE004 §6Light§7.",
+  "desc.ego_weapons.statuses.furioso.5": "  §7Gain Regeneration",
+  "desc.ego_weapons.statuses.furioso.6": "  §7Augment the next Combo to be more powerful",
+
+  "desc.ego_weapons.statuses.obligation.title": "\uE020 §cObligation Fulfillment ",
+  "desc.ego_weapons.statuses.obligation.1": "§7Decrements by 1 per second.",
+  "desc.ego_weapons.statuses.obligation.2": "§bSanity §7cannot go below 1.",
+  "desc.ego_weapons.statuses.obligation.3": "§6Stagger §7cannot go below 1.",
+  "desc.ego_weapons.statuses.obligation.4": "[On Hit] §7Deal §f+25% §7Damage to Targets with \uE011 §cTremor: Decay§7.",
+  "desc.ego_weapons.statuses.obligation.5": "[Final Coins] §7Trigger §f\uE006 §cTremor Burst.",
+
+  "desc.ego_weapons.statuses.shell.title": "\uE028 §cShell",
+  "desc.ego_weapons.statuses.shell.1": "§7Gradually decrements in §fPotency.",
+  "desc.ego_weapons.statuses.shell.2": "§7Take §f10% x Potency §7less Damage. §8(Max 50%)",
+
+  "desc.ego_weapons.statuses.terror.title": "\uE027 §cTerror",
+  "desc.ego_weapons.statuses.terror.1": "§7Deal §f20% §7less Damage against targets with §f\uE028 §cShell§7.",
+  "desc.ego_weapons.statuses.terror.2": "§7Passively lose §bSanity §7instead of regenerating it.",
+  "desc.ego_weapons.statuses.terror.3": "§7Disable the use of E.G.O Abilities.",
+
+  "desc.ego_weapons.statuses.burn.title": "\uE002 §cBurn ",
+  "desc.ego_weapons.statuses.burn.1": "§7Gradually decrements in §fCount.",
+  "desc.ego_weapons.statuses.burn.2": "§c[On Decrement]: §7Take §6Burn Damage §7by §fPotency.",
+
+  "desc.ego_weapons.statuses.dark_flame.title": "\uE009 §cDark Flame ",
+  "desc.ego_weapons.statuses.dark_flame.1": "§8§o[Max 7]",
+  "desc.ego_weapons.statuses.dark_flame.2": "§7Gradually decrements in §fPotency.",
+  "desc.ego_weapons.statuses.dark_flame.3": "§c[On Decrement]: §7Take §f\uE002 §cBurn §fx \uE009 §cDark Flame §5Black Damage§7.",
+
+  "desc.ego_weapons.statuses.magic_bullet.title": "\uE016 §cMagic Bullet ",
+  "desc.ego_weapons.statuses.magic_bullet.1": "  §8§o[Max 7]",
+  "desc.ego_weapons.statuses.magic_bullet.2": "  §8[Special §f\uE012 §6Ammo§8]",
+  "desc.ego_weapons.statuses.magic_bullet.3": "§7Amplifies §5[WAW] §cMagic Bullet §7Moveset.",
+
+  "desc.ego_weapons.statuses.red_damage.title": "Deals \uED01 §4Red Damage §f\uED01",
+  "desc.ego_weapons.statuses.white_damage.title": "Deals \uED02 §fWhite Damage §f\uED02",
+  "desc.ego_weapons.statuses.black_damage.title": "Deals \uED03 §5Black Damage §f\uED03",
+  "desc.ego_weapons.statuses.pale_damage.title": "Deals \uED04 §bPale Damage §f\uED04",
+
+  "desc.ego_weapons.statuses.living_departed.title": "\uE017 §cThe Living and The Departed ",
+  "desc.ego_weapons.statuses.living_departed.1": "  §8[Special §f\uE012 §6Ammo§8]",
+  "desc.ego_weapons.statuses.living_departed.2": "§7Potency represents §f\uE018 §cThe Living",
+  "desc.ego_weapons.statuses.living_departed.3": "§7Count represents §f\uE019 §cThe Departed",
+  "desc.ego_weapons.statuses.living_departed.4": "§7Used by §5[WAW] §cSolemn Lament §7Moveset.",
+
+  "desc.ego_weapons.statuses.the_living.title": "\uE018 §cThe Living ",
+  "desc.ego_weapons.statuses.the_living.1": "§c[On Attack]§7: Deal §f\uED02 §fWhite Damage§7.",
+  "desc.ego_weapons.statuses.the_living.2": "§c[On Attack]§7: Inflict §f1 \uE003 §cSinking §7Potency.",
+
+  "desc.ego_weapons.statuses.the_departed.title": "\uE019 §cThe Departed ",
+  "desc.ego_weapons.statuses.the_departed.1": "§c[On Attack]§7: Deal §f\uED03 §5Black Damage§7.",
+  "desc.ego_weapons.statuses.the_departed.2": "§c[On Attack]§7: Inflict §f1 §5True Damage§7.",
+
+
+
+  "desc.ego_weapons.statuses.tremor.title": "\uE008 §cTremor ",
+  "desc.ego_weapons.statuses.tremor.1": "§7Gradually decrements in §fCount.",
+  "desc.ego_weapons.statuses.tremor.2": "§c[On §f\uE006 §cTremor Burst]: §7Take §6Stagger Damage §7by §fPotency.",
+
+  "desc.ego_weapons.statuses.poise.title": "\uE013 §cPoise ",
+  "desc.ego_weapons.statuses.poise.1": "[On Attack] x * 5% §7Chance to §c[Crit]",
+  "desc.ego_weapons.statuses.poise.2": "§c[On Crit]: §7Deal §f+20% Damage. §7Consume 1 Count",
+
+  "desc.ego_weapons.statuses.eternal_rest.title": "\uE026 §cEternal Rest",
+  "desc.ego_weapons.statuses.eternal_rest.1": "§5[WAW] §cSolemn Lament§7: 25% §7chance not to consume §f\uE017 §cThe Living and The Departed.",
+  "desc.ego_weapons.statuses.eternal_rest.2": "§5[WAW] §cSolemn Lament§7: §f[On Hit] §7Inflict §f+1 \uE003 §cSinking §7Count.",
+  "desc.ego_weapons.statuses.eternal_rest.3": "§7Increases attack speed.",
+  "desc.ego_weapons.statuses.eternal_rest.4": "§7If Weapon is not §5[WAW] §cSolemn Lament§7:",
+  "desc.ego_weapons.statuses.eternal_rest.5": "[On Hit] §7Inflict §f+2 \uE003 §cSinking §7Potency.",
+  "desc.ego_weapons.statuses.eternal_rest.6": "[On Hit] §7Deal additional §6Stagger §7and \uED03 §5Black Damage §f\uED03",
+
+  "desc.ego_weapons.statuses.ammo.title": "\uE012 §cAmmo ",
+  "desc.ego_weapons.statuses.ammo.1": "Used by certain Attack Skills",
+  "desc.ego_weapons.statuses.ammo.2": "[On Attack]: §7Apply bullet effect.",
+
+  "desc.ego_weapons.statuses.target_marked.title": "\uE014 §cTarget Marked",
+  "desc.ego_weapons.statuses.target_marked.1": "[On Ranged Attack]: §7Target takes §f20% §7more damage.",
+
+  "desc.ego_weapons.statuses.assist_fire.title": "\uE015 §cAssist Fire",
+  "desc.ego_weapons.statuses.assist_fire.1": "§7Augments Weapon Ability of §6Ranged Weapons§7.",
+  "desc.ego_weapons.statuses.assist_fire.2": "\uE014 §cTarget Marked §7Is not consumed upon hit.",
+
+  "desc.ego_weapons.statuses.tremor_burst.title": "\uE006 §cTremor Burst",
+  "desc.ego_weapons.statuses.tremor_burst.1": "§7Trigger on burst tremor effects.",
+
+  "desc.ego_weapons.statuses.tremor_conversion.title": "\uE010 §cAmplitude Conversion",
+  "desc.ego_weapons.statuses.tremor_conversion.1": "§7Convert all tremor into the given type.",
+
+  "desc.ego_weapons.statuses.tremor_decay.title": "\uE011 §cTremor: Decay ",
+  "desc.ego_weapons.statuses.tremor_decay.1": "§7Gradually decrements in §fCount.",
+  "desc.ego_weapons.statuses.tremor_decay.2": "§7Apply 1 §cDefense Down §7every §f4 Potency",
+  "desc.ego_weapons.statuses.tremor_decay.3": "§c[On §f\uE006 §cTremor Burst]: §7Take §6Stagger Damage §7by §fPotency.",
+
+  "desc.ego_weapons.bullets.incendiary.1": "On Hit",
+  "desc.ego_weapons.bullets.incendiary.2": "§7Inflict 1 §f\uE002 §cBurn §7Potency.",
+  "desc.ego_weapons.bullets.incendiary.3": "On Combo Finisher Hit",
+  "desc.ego_weapons.bullets.incendiary.4": "§7Additionally inflict 1 §f\uE002 §cBurn §7Count.",
+
+  "desc.ego_weapons.bullets.moonstone.1": "On Hit",
+  "desc.ego_weapons.bullets.moonstone.2": "§7Inflict 1 §f\uE003 §cSinking §7Potency.",
+  "desc.ego_weapons.bullets.moonstone.3": "On Combo Finisher Hit",
+  "desc.ego_weapons.bullets.moonstone.4": "§7Additionally Inflict 1 §f\uE003 §cSinking §7Count.",
+
+  "desc.ego_weapons.bullets.al_hv_pulv.1": "On Hit",
+  "desc.ego_weapons.bullets.al_hv_pulv.2": "§7Inflict partial §5True Damage§7.",
+  "desc.ego_weapons.bullets.al_hv_pulv.3": "§c[On Crit]: §7Deal §f+30% Damage.",
+  "desc.ego_weapons.bullets.al_hv_pulv.4": "§7[At §f20+ \uE013 §cPoise §7Potency]",
+  "desc.ego_weapons.bullets.al_hv_pulv.5": "§7Deal §f+2% Damage §7for every §f\uE013 §cPoise §7Potency over §f20. §8[Max 30%]",
+
+  "desc.ego_weapons.bullets.no_status": "§7This Bullet has no affiliated §cStatus",
+
+
+  "item.ego_weapons.fullstop_atelier_pistol": "Atelier Logic Handgun",
+  "item.ego_weapons.fullstop_machete": "Fullstop Combat Machete",
+  "item.ego_weapons.fullstop_office_rep_cloak": "Fullstop Office Rep. Coat",
+  "item.ego_weapons.fullstop_office_rep_pants": "Fullstop Office Rep. Pants",
+  "item.ego_weapons.fullstop_office_earpiece": "Fullstop Office Earpiece",
+
+  "item.ego_weapons.basic_light_bullet": "Pistol Round: Basic",
+  "item.ego_weapons.incendiary_light_bullet": "Pistol Round: Incendiary",
+  "item.ego_weapons.moonstone_light_bullet": "Pistol Round: Moonstone",
+  "item.ego_weapons.basic_rifle_bullet": "Rifle Round: Basic",
+  "item.ego_weapons.al_hv_pulverization_rifle_round": "A.L. H.V. Pulverization Round",
+
+  "item.ego_weapons.fullstop_office_sniper_suit": "Fullstop Office Sniper Coat",
+  "item.ego_weapons.fullstop_office_sniper_pants": "Fullstop Office Sniper Pants",
+
+  "item.ego_weapons.fullstop_office_railgun": "Atelier Logic Railgun"
 }

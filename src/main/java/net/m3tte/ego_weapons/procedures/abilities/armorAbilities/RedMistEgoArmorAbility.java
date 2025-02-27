@@ -1,13 +1,16 @@
 package net.m3tte.ego_weapons.procedures.abilities.armorAbilities;
 
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.movesets.MimicryMovesetAnims;
 import net.m3tte.ego_weapons.particle.BlipeffectParticle;
 import net.m3tte.ego_weapons.procedures.abilities.AbilityTier;
 import net.m3tte.ego_weapons.procedures.abilities.AbilityUtils;
 import net.m3tte.ego_weapons.procedures.abilities.ItemAbility;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -22,7 +25,7 @@ public class RedMistEgoArmorAbility extends ItemAbility {
 
     @Override
     public int getBlipCost(PlayerEntity player, PlayerVariables playerVars) {
-        return player.getPersistentData().contains("onrushChain") ? 0 : 6;
+        return player.getPersistentData().contains("onrushChain") ? 0 : 4;
     }
 
     @Override
@@ -76,7 +79,9 @@ public class RedMistEgoArmorAbility extends ItemAbility {
             LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
             playerVars.globalcooldown = 20;
 
-            entitypatch.playAnimationSynchronized(EgoWeaponsAnimations.KALI_ONRUSH, 0.1f);
+            entitypatch.playAnimationSynchronized(MimicryMovesetAnims.KALI_ONRUSH, 0.1f);
+            player.addEffect(new EffectInstance(EgoWeaponsEffects.RESILIENCE.get(), 100, 0));
+            player.addEffect(new EffectInstance(EgoWeaponsEffects.PROTECTION.get(), 100, 0));
 
             if (player.getPersistentData().contains("onrushChain")) {
                 player.getPersistentData().remove("onrushChain");

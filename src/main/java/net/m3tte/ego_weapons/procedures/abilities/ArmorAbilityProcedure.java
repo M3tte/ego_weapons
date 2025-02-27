@@ -52,10 +52,19 @@ public class ArmorAbilityProcedure {
 
 		armorAbilities.put(EgoWeaponsItems.SOLEMN_LAMENT_CLOAK.get(), new SolemnLamentArmorAbility());
 
+		armorAbilities.put(EgoWeaponsItems.SUNSHOWER_CLOAK.get(), new SunshowerArmorAbility());
+
+		armorAbilities.put(EgoWeaponsItems.OEUFI_CHESTPLATE.get(), new ObligationFullfillment());
+
+		armorAbilities.put(EgoWeaponsItems.FULLSTOP_REP_CLOAK.get(), new FullstopAssistFire());
+
+		armorAbilities.put(EgoWeaponsItems.FULLSTOP_SNIPER_SUIT.get(), new FullstopSniperFocus());
+
+		armorAbilities.put(EgoWeaponsItems.MAGIC_BULLET_CLOAK.get(), new MagicBulletPipe());
+
 	}
 
-	public static void executeArmorAbility(Map<String, Object> dependencies) {
-		PlayerEntity entity = (PlayerEntity) dependencies.get("entity");
+	public static void runArmorAbility(PlayerEntity entity) {
 		EgoWeaponsModVars.PlayerVariables playerVars = entity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
 		if (playerVars.globalcooldown > 0)

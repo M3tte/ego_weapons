@@ -3,8 +3,10 @@ package net.m3tte.ego_weapons.skill.AtelierPistol;
 import net.m3tte.ego_weapons.EgoWeaponsModElements;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.movesets.AtelierLogicMovesetAnims;
+import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
-import net.m3tte.ego_weapons.world.capabilities.item.TCorpCategories;
+import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCategories;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -34,6 +36,7 @@ import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 import yesman.epicfight.world.capabilities.item.CapabilityItem;
 import yesman.epicfight.world.entity.eventlistener.HurtEvent;
 
+import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
 import static yesman.epicfight.world.entity.eventlistener.PlayerEventListener.EventType;
 
 public class BlacksilenceAtelierGuard extends EnergizingGuardSkill {
@@ -44,9 +47,9 @@ public class BlacksilenceAtelierGuard extends EnergizingGuardSkill {
     private static final SkillDataKey<Integer> LAST_ACTIVE = SkillDataKey.createDataKey(SkillDataManager.ValueType.INTEGER);
     public static Builder createBuilder(ResourceLocation resourceLocation) {
         return GuardSkill.createBuilder(resourceLocation)
-                .addAdvancedGuardMotion(TCorpCategories.ATELIER_REVOLVER, (item, player) -> EgoWeaponsAnimations.ATELIER_REVOLVER_GUARD_HIT)
-                .addGuardMotion(TCorpCategories.ATELIER_REVOLVER, (item, player) -> EgoWeaponsAnimations.ATELIER_REVOLVER_GUARD_HIT)
-                .addGuardBreakMotion(TCorpCategories.ATELIER_REVOLVER, (item, player) -> EgoWeaponsAnimations.RANGA_GUARD_STAGGER);
+                .addAdvancedGuardMotion(EgoWeaponsCategories.ATELIER_REVOLVER, (item, player) -> AtelierLogicMovesetAnims.ATELIER_REVOLVER_GUARD_HIT)
+                .addGuardMotion(EgoWeaponsCategories.ATELIER_REVOLVER, (item, player) -> AtelierLogicMovesetAnims.ATELIER_REVOLVER_GUARD_HIT)
+                .addGuardBreakMotion(EgoWeaponsCategories.ATELIER_REVOLVER, (item, player) -> BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER);
     }
 
     @Override
@@ -64,8 +67,7 @@ public class BlacksilenceAtelierGuard extends EnergizingGuardSkill {
 
 
             if (0 >= (player.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null)
-                    .orElse(new EgoWeaponsModVars.PlayerVariables())).globalcooldown && !((player.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null)
-                    .orElse(new EgoWeaponsModVars.PlayerVariables())).firingMode)) {
+                    .orElse(new EgoWeaponsModVars.PlayerVariables())).globalcooldown) {
                 container.getDataManager().setData(LAST_ACTIVE, player.tickCount);
             }
 
@@ -123,8 +125,7 @@ public class BlacksilenceAtelierGuard extends EnergizingGuardSkill {
         }
 
         ServerPlayerEntity serverPlayer = event.getPlayerPatch().getOriginal();
-        if (this.isBlockableSource(damageSource, advanced) && (serverPlayer.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null)
-                .orElse(new EgoWeaponsModVars.PlayerVariables())).gunMagSize < 2)  {
+        if (this.isBlockableSource(damageSource, advanced))  {
 
 
             float penalty = container.getDataManager().getDataValue(PENALTY) + this.getPenaltyMultiplier(itemCapapbility);
@@ -178,9 +179,29 @@ public class BlacksilenceAtelierGuard extends EnergizingGuardSkill {
             StaticAnimation animation;
             BlockType blockType = (stamina >= 0.0F) ? BlockType.GUARD : BlockType.GUARD_BREAK;
 
+            int ammo = event.getPlayerPatch().getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().getInt("ammo");
 
             if (container.getDataManager().getDataValue(PENALTY) < 0.2 && successParrying) {
-                animation = EgoWeaponsAnimations.ATELIER_REVOLVER_COUNTER;
+                if (ammo < 2) {
+                    animation = AtelierLogicMovesetAnims.ATELIER_REVOLVER_COUNTER_EMPTY;
+                } else {
+                    animation = AtelierLogicMovesetAnims.ATELIER_REVOLVER_COUNTER_FULL;
+                    EgoWeaponsModVars.PlayerVariables entityData = serverPlayer.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
+                    if (entityData.iFrames <= 20) {
+                        entityData.iFrames = 20;
+                        entityData.syncPlayerVariables(serverPlayer);
+                    }
+
+                    LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) damageSource.getEntity().getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+
+                    if (entitypatch != null) {
+                        if (entitypatch.getHitAnimation(ExtendedDamageSource.StunType.SHORT) != null) {
+                            entitypatch.playAnimationSynchronized(entitypatch.getHitAnimation(ExtendedDamageSource.StunType.SHORT), 1f);
+                        }
+                        entitypatch.knockBackEntity(event.getPlayerPatch().getOriginal().position(), 0.1f);
+                    }
+                }
+
             } else {
                 animation = this.getGuardMotion(event.getPlayerPatch(), itemCapapbility, blockType);
             }
@@ -210,7 +231,7 @@ public class BlacksilenceAtelierGuard extends EnergizingGuardSkill {
 
     @OnlyIn(Dist.CLIENT)
     public boolean shouldDraw(SkillContainer container) {
-        return container.getExecuter().getHoldingItemCapability(Hand.MAIN_HAND).getWeaponCategory() == TCorpCategories.ATELIER_REVOLVER && (Float)container.getDataManager().getDataValue(PENALTY) > 0.0F;
+        return container.getExecuter().getHoldingItemCapability(Hand.MAIN_HAND).getWeaponCategory() == EgoWeaponsCategories.ATELIER_REVOLVER && (Float)container.getDataManager().getDataValue(PENALTY) > 0.0F;
     }
 
     protected boolean isAdvancedGuard() {

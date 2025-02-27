@@ -1,10 +1,412 @@
 {
+  "effects.poise.crit": {
+    "category": "player",
+    "subtitle": "poise_crit",
+    "sounds": [
+      {
+        "name": "ego_weapons:poise_crit"
+      }
+    ]
+  },
+  "full_stop_sniper.auto.fire": {
+    "category": "player",
+    "subtitle": "full_stop_sniper.auto",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_sniper/auto_fire"
+      }
+    ]
+  },
+  "full_stop_sniper.auto.hit": {
+    "category": "player",
+    "subtitle": "full_stop_sniper.auto",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_sniper/auto_hit"
+      }
+    ]
+  },
+  "full_stop_sniper.auto.start": {
+    "category": "player",
+    "subtitle": "full_stop_sniper.start",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_sniper/auto_start"
+      }
+    ]
+  },
+  "full_stop_sniper.special.start": {
+    "category": "player",
+    "subtitle": "full_stop_sniper.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_sniper/special_start"
+      }
+    ]
+  },
+  "full_stop_sniper.special.charge": {
+    "category": "player",
+    "subtitle": "full_stop_sniper.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_sniper/special_charge"
+      }
+    ]
+  },
+  "full_stop_sniper.special.fire": {
+    "category": "player",
+    "subtitle": "full_stop_sniper.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_sniper/special_fire"
+      }
+    ]
+  },
+  "full_stop_sniper.special.hit": {
+    "category": "player",
+    "subtitle": "full_stop_sniper.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_sniper/special_hit"
+      }
+    ]
+  },
+  "full_stop_sniper.reload": {
+    "category": "player",
+    "subtitle": "full_stop_sniper.reload",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_sniper/reload"
+      }
+    ]
+  },
+  "full_stop_sniper.innate.start": {
+    "category": "player",
+    "subtitle": "full_stop_sniper.innate",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_sniper/innate_start"
+      }
+    ]
+  },
+  "full_stop_sniper.innate.flip": {
+    "category": "player",
+    "subtitle": "full_stop_sniper.innate",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_sniper/innate_flip"
+      }
+    ]
+  },
+  "full_stop_sniper.innate.hit": {
+    "category": "player",
+    "subtitle": "full_stop_sniper.innate",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_sniper/innate_hit"
+      }
+    ]
+  },
+  "full_stop_sniper.innate.fire": {
+    "category": "player",
+    "subtitle": "full_stop_sniper.innate",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_sniper/innate_fire"
+      }
+    ]
+  },
+  "full_stop_sniper.innate.charge": {
+    "category": "player",
+    "subtitle": "full_stop_sniper.innate",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_sniper/innate_charge"
+      }
+    ]
+  },
+  "full_stop_sniper.innate.after": {
+    "category": "player",
+    "subtitle": "full_stop_sniper.innate",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_sniper/innate_after"
+      }
+    ]
+  },
   "sunshower.counter.1": {
     "category": "player",
     "subtitle": "sunshower.counter",
     "sounds": [
       {
         "name": "ego_weapons:sunshower/counter_1"
+      }
+    ]
+  },
+  "full_stop_rep.fire": {
+    "category": "player",
+    "subtitle": "gunfire",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_rep/fire_1"
+      },
+      {
+        "name": "ego_weapons:full_stop_rep/fire_2"
+      },
+      {
+        "name": "ego_weapons:full_stop_rep/fire_3"
+      }
+    ]
+  },
+  "full_stop_rep.dialogue.take_care_of_them": {
+    "category": "player",
+    "subtitle": "take_care_of_them",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_rep/take_care_of_them"
+      }
+    ]
+  },
+  "full_stop_sniper.dialogue.move_aside": {
+    "category": "player",
+    "subtitle": "move_aside",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_sniper/move_aside"
+      }
+    ]
+  },
+  "full_stop_sniper.dialogue.okay_see_em": {
+    "category": "player",
+    "subtitle": "okay_see_em",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_sniper/okay_see_em"
+      }
+    ]
+  },
+  "full_stop_sniper.dialogue.alright_target_confirmed": {
+    "category": "player",
+    "subtitle": "okay_see_em",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_sniper/alright_target_confirmed"
+      }
+    ]
+  },
+  "full_stop_rep.dialogue.finish_them_off": {
+    "category": "player",
+    "subtitle": "finish_them_off",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_rep/finish_em_off"
+      }
+    ]
+  },
+  "full_stop_rep.target_spotted": {
+    "category": "player",
+    "subtitle": "target_spotted",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_rep/target_spotted"
+      }
+    ]
+  },
+  "full_stop_rep.fire_heavy": {
+    "category": "player",
+    "subtitle": "gunfire",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_rep/fire_heavy_1"
+      }
+    ]
+  },
+  "full_stop_rep.reload": {
+    "category": "player",
+    "subtitle": "reload",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_rep/reload"
+      }
+    ]
+  },
+  "full_stop_rep.slice": {
+    "category": "player",
+    "subtitle": "sword_slice",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_rep/slice_1"
+      },
+      {
+        "name": "ego_weapons:full_stop_rep/slice_2"
+      }
+    ]
+  },
+  "full_stop_rep.jump_slice": {
+    "category": "player",
+    "subtitle": "sword_slice",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_rep/jump_slice_1"
+      },
+      {
+        "name": "ego_weapons:full_stop_rep/jump_slice_2"
+      },
+      {
+        "name": "ego_weapons:full_stop_rep/jump_slice_3"
+      }
+    ]
+  },
+  "full_stop_rep.heavy_slice": {
+    "category": "player",
+    "subtitle": "sword_slice",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_rep/heavy_slice_1"
+      }
+    ]
+  },
+  "full_stop_rep.slide": {
+    "category": "player",
+    "subtitle": "fullstop_slide",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_rep/slide"
+      }
+    ]
+  },
+  "full_stop_rep.dialogue.full_stop_to_life": {
+    "category": "player",
+    "subtitle": "fullstoptolife",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_rep/full_stop_to_life"
+      }
+    ]
+  },
+  "full_stop_rep.dialogue.full_stop_to_life_g": {
+    "category": "player",
+    "subtitle": "fullstoptolife",
+    "sounds": [
+      {
+        "name": "ego_weapons:full_stop_rep/full_stop_to_life_g"
+      }
+    ]
+  },
+  "oufi.contract.open": {
+    "category": "player",
+    "subtitle": "oufi.contract",
+    "sounds": [
+      {
+        "name": "ego_weapons:oufi/contract_open"
+      }
+    ]
+  },
+  "oufi.contract.interrupted": {
+    "category": "player",
+    "subtitle": "oufi.interrupted",
+    "sounds": [
+      {
+        "name": "ego_weapons:oufi/contract_interrupt"
+      }
+    ]
+  },
+  "oufi.contract.counter": {
+    "category": "player",
+    "subtitle": "oufi.counter",
+    "sounds": [
+      {
+        "name": "ego_weapons:oufi/contract_counter"
+      }
+    ]
+  },
+  "oufi.contract.finish": {
+    "category": "player",
+    "subtitle": "oufi.finish",
+    "sounds": [
+      {
+        "name": "ego_weapons:oufi/contract_finish"
+      }
+    ]
+  },
+  "oufi.impact.1": {
+    "category": "player",
+    "subtitle": "oufi.hit",
+    "sounds": [
+      {
+        "name": "ego_weapons:oufi/impact_1"
+      }
+    ]
+  },
+  "oufi.impact.2": {
+    "category": "player",
+    "subtitle": "oufi.hit",
+    "sounds": [
+      {
+        "name": "ego_weapons:oufi/impact_1"
+      }
+    ]
+  },
+  "oufi.pierce.normal": {
+    "category": "player",
+    "subtitle": "oufi.pierce",
+    "sounds": [
+      {
+        "name": "ego_weapons:oufi/pierce"
+      }
+    ]
+  },
+  "oufi.pierce.heavy": {
+    "category": "player",
+    "subtitle": "oufi.pierce",
+    "sounds": [
+      {
+        "name": "ego_weapons:oufi/heavy_pierce"
+      }
+    ]
+  },
+  "oufi.swing": {
+    "category": "player",
+    "subtitle": "oufi.swing",
+    "sounds": [
+      {
+        "name": "ego_weapons:oufi/swing"
+      }
+    ]
+  },
+  "oufi.swing.pierce": {
+    "category": "player",
+    "subtitle": "oufi.swing",
+    "sounds": [
+      {
+        "name": "ego_weapons:oufi/swing_pierce"
+      }
+    ]
+  },
+  "oufi.impact.up": {
+    "category": "player",
+    "subtitle": "oufi.hit",
+    "sounds": [
+      {
+        "name": "ego_weapons:oufi/impact_up"
+      }
+    ]
+  },
+  "oufi.impact.down": {
+    "category": "player",
+    "subtitle": "oufi.hit",
+    "sounds": [
+      {
+        "name": "ego_weapons:oufi/impact_down"
+      }
+    ]
+  },
+  "tremor_burst": {
+    "category": "player",
+    "subtitle": "tremor.burst",
+    "sounds": [
+      {
+        "name": "ego_weapons:generic/tremor_burst"
       }
     ]
   },
@@ -432,6 +834,24 @@
     "sounds": [
       {
         "name": "ego_weapons:magic_bullet/swing_1"
+      }
+    ]
+  },
+  "magic_bullet.dialogue.fire": {
+    "category": "player",
+    "subtitle": "subtitles.magic_bullet.dialogue.fire",
+    "sounds": [
+      {
+        "name": "ego_weapons:magic_bullet/fire_bullet"
+      }
+    ]
+  },
+  "magic_bullet.dialogue.assist": {
+    "category": "player",
+    "subtitle": "subtitles.magic_bullet.dialogue.assist",
+    "sounds": [
+      {
+        "name": "ego_weapons:magic_bullet/perfect_shot"
       }
     ]
   },

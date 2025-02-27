@@ -4,6 +4,12 @@
     16,
     32
   ],
+  "textures": {
+    "0": "ego_weapons:blocks/durandal_sheath",
+    "2": "ego_weapons:blocks/durandal_sheath",
+    "1": "ego_weapons:blocks/durandal",
+    "particle": "ego_weapons:blocks/durandal"
+  },
   "elements": [
     {
       "from": [

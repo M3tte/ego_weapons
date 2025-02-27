@@ -2,9 +2,11 @@ package net.m3tte.ego_weapons.execFunctions;
 
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.particle.BlackdamageParticle;
 import net.m3tte.ego_weapons.particle.SparkparticleParticle;
 import net.m3tte.ego_weapons.potion.FuriosoPotionEffect;
+import net.m3tte.ego_weapons.potion.countEffects.BleedEffect;
 import net.m3tte.ego_weapons.procedures.BlipTick;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -63,12 +65,38 @@ public class BlackSilenceEvaluator {
             }
         }
 
+    public static void onHitAtelierPistol(IWorld world, Entity entity, LivingEntity sourceentity) {
+        if (entity instanceof LivingEntity) {
+            LivingEntity targetEntity = (LivingEntity) entity;
+            targetEntity.setHealth(targetEntity.getHealth() - 2);
+            if (sourceentity.hasEffect(FuriosoPotionEffect.potion) && entity instanceof LivingEntity) {
+                if (sourceentity.getPersistentData().getDouble("furiosohits") <= 10) {
+                    addToStatistic(sourceentity, 6, "furiosohits");
+                    if (sourceentity.getPersistentData().getDouble("furiosohits") > 10) {
+                        if (world instanceof ServerWorld) {
+                            ((ServerWorld) world).sendParticles(SparkparticleParticle.particle, (sourceentity.getX()),
+                                    (sourceentity.getY() + sourceentity.getBbHeight() / 1.5), (sourceentity.getZ()), (int) 10, 0, 0, 0, 0.1);
+                        }
+                        targetEntity.setHealth(targetEntity.getHealth() - 2);
+                        targetEntity.addEffect(new EffectInstance(Effects.WEAKNESS, (int) 60, (int) 1, (false), (false)));
+                        targetEntity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, (int) 60, (int) 1, (false), (false)));
+                    }
+                }
+            } else {
+
+
+                ((ServerWorld) world).sendParticles(BlackdamageParticle.particle, (entity.getX()), (entity.getY() + entity.getBbHeight() / 1.5),
+                        (entity.getZ()), (int) 1, (entity.getBbWidth() / 1.4), (entity.getBbHeight() / 3), (entity.getBbWidth() / 1.4), 0);
+            }
+        }
+    }
+
     public static void onHitMook(IWorld world, Entity entity, LivingEntity sourceentity) {
         if (entity instanceof LivingEntity) {
             LivingEntity targetEntity = (LivingEntity) entity;
             addToStatistic(sourceentity, 1, "mookStacks");
             if (sourceentity.getPersistentData().getDouble("mookstacks") == 3) {
-                targetEntity.setHealth(targetEntity.getHealth() - 6);
+                targetEntity.setHealth(targetEntity.getHealth() - 4);
                 for (int x = 0; x < 3; x++)
                     ((ServerWorld) world).sendParticles(BlackdamageParticle.particle, (entity.getX()), (entity.getY() + entity.getBbHeight() / 1.5),
                             (entity.getZ()), (int) 1, (entity.getBbWidth() / 1.4), (entity.getBbHeight() / 3), (entity.getBbWidth() / 1.4), 0);
@@ -79,19 +107,17 @@ public class BlackSilenceEvaluator {
     public static void onHitStrong(IWorld world, Entity entity, LivingEntity sourceentity) {
         if (entity instanceof LivingEntity) {
             LivingEntity targetEntity = (LivingEntity) entity;
+            targetEntity.setHealth(targetEntity.getHealth() - 4);
             if (sourceentity.hasEffect(FuriosoPotionEffect.potion) && entity instanceof LivingEntity) {
                 if (sourceentity.getPersistentData().getDouble("furiosohits") <= 10) {
                     addToStatistic(sourceentity, 10, "furiosohits");
                     if (sourceentity.getPersistentData().getDouble("furiosohits") > 10) {
-                        targetEntity.setHealth(targetEntity.getHealth() - 6);
                         targetEntity.addEffect(new EffectInstance(Effects.WEAKNESS, (int) 60, (int) 1, (false), (false)));
                         targetEntity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, (int) 60, (int) 1, (false), (false)));
                     }
-                } else {
-                    targetEntity.setHealth(targetEntity.getHealth() - 6);
                 }
             } else {
-                targetEntity.setHealth(targetEntity.getHealth() - 4);
+
 
                 ((ServerWorld) world).sendParticles(BlackdamageParticle.particle, (entity.getX()), (entity.getY() + entity.getBbHeight() / 1.5),
                         (entity.getZ()), (int) 1, (entity.getBbWidth() / 1.4), (entity.getBbHeight() / 3), (entity.getBbWidth() / 1.4), 0);
@@ -104,20 +130,17 @@ public class BlackSilenceEvaluator {
             LivingEntity targetEntity = (LivingEntity) entity;
 
 
-
+            targetEntity.setHealth(targetEntity.getHealth() - 4);
             if (sourceentity.hasEffect(FuriosoPotionEffect.potion)) {
                 if (sourceentity.getPersistentData().getDouble("furiosohits") <= 10) {
                     addToStatistic(sourceentity, 10, "furiosohits");
                     if (sourceentity.getPersistentData().getDouble("furiosohits") > 10) {
-                        targetEntity.setHealth(targetEntity.getHealth() - 6);
                         targetEntity.addEffect(new EffectInstance(Effects.WEAKNESS, (int) 60, (int) 2, (false), (false)));
                         targetEntity.addEffect(new EffectInstance(Effects.DIG_SLOWDOWN, (int) 60, (int) 2, (false), (false)));
                     }
-                } else {
-                    targetEntity.setHealth(targetEntity.getHealth() - 6);
                 }
             } else {
-                targetEntity.setHealth(targetEntity.getHealth() - 4);
+
 
                 ((ServerWorld) world).sendParticles(BlackdamageParticle.particle, (entity.getX()), (entity.getY() + entity.getBbHeight() / 1.5),
                         (entity.getZ()), (int) 1, (entity.getBbWidth() / 1.4), (entity.getBbHeight() / 3), (entity.getBbWidth() / 1.4), 0);
@@ -130,6 +153,7 @@ public class BlackSilenceEvaluator {
         if (entity instanceof LivingEntity) {
             PlayerEntity player;
             LivingEntity targetEntity = (LivingEntity) entity;
+            targetEntity.setHealth(targetEntity.getHealth() - 3);
             if (sourceentity.hasEffect(FuriosoPotionEffect.potion)) {
 
 
@@ -137,7 +161,7 @@ public class BlackSilenceEvaluator {
                 if (sourceentity.getPersistentData().getDouble("furiosohits") <= 10) {
                     addToStatistic(sourceentity, 5, "furiosohits");
                     if (sourceentity.getPersistentData().getDouble("furiosohits") > 10) {
-                        targetEntity.setHealth(targetEntity.getHealth() - 5);
+
                         targetEntity.addEffect(new EffectInstance(Effects.WEAKNESS, (int) 60, (int) 1, (false), (false)));
                         targetEntity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, (int) 60, (int) 1, (false), (false)));
 
@@ -145,11 +169,8 @@ public class BlackSilenceEvaluator {
                             ((ServerWorld)world).sendParticles(SparkparticleParticle.particle, sourceentity.getX(), sourceentity.getY() + (double)sourceentity.getBbHeight() / 1.5, sourceentity.getZ(), 10, 0.0, 0.0, 0.0, 0.1);
                         }
                     }
-                } else {
-                    targetEntity.setHealth(targetEntity.getHealth() - 3.0F);
                 }
             } else {
-                targetEntity.setHealth(targetEntity.getHealth() - 2.0F);
                 ((ServerWorld)world).sendParticles(BlackdamageParticle.particle, entity.getX(), entity.getY() + (double)entity.getBbHeight() / 1.5, entity.getZ(), 1, (double)entity.getBbWidth() / 1.4, (double)(entity.getBbHeight() / 3.0F), (double)entity.getBbWidth() / 1.4, 0.0);
             }
 
@@ -181,13 +202,13 @@ public class BlackSilenceEvaluator {
             if (sourceentity.hasEffect(FuriosoPotionEffect.potion) && entity instanceof LivingEntity) {
                 if (sourceentity.getPersistentData().getDouble("furiosohits") <= 10) {
                     addToStatistic(sourceentity, 10, "furiosohits");
-                    targetEntity.setHealth(targetEntity.getHealth() - 10);
+                    targetEntity.setHealth(targetEntity.getHealth() - 2);
                     targetEntity.addEffect(new EffectInstance(Effects.WEAKNESS, (int) 60, (int) 1, (false), (false)));
                     targetEntity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, (int) 60, (int) 1, (false), (false)));
                     LivingEntityPatch<?> entitypatch = (LivingEntityPatch)entity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, (Direction)null).orElse((EntityPatch) null);
                     if (entitypatch != null) {
                         if (entitypatch.getHitAnimation(ExtendedDamageSource.StunType.LONG) == Animations.BIPED_HIT_LONG) {
-                            entitypatch.playAnimationSynchronized(EgoWeaponsAnimations.RANGA_GUARD_STAGGER, 0.0F);
+                            entitypatch.playAnimationSynchronized(BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER, 0.0F);
                         }
                     }
                     if (world instanceof ServerWorld) {
@@ -201,6 +222,7 @@ public class BlackSilenceEvaluator {
                 if (!player.getCooldowns().isOnCooldown(player.getItemInHand(Hand.MAIN_HAND).getItem())) {
                     PlayerPatch<?> entitypatch = (PlayerPatch)player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, (Direction)null).orElse((EntityPatch) null);
                     entitypatch.setStamina(Math.min(entitypatch.getMaxStamina(), entitypatch.getStamina() + entitypatch.getMaxStamina() * 0.3F));
+                    player.getCooldowns().addCooldown(player.getItemInHand(Hand.MAIN_HAND).getItem(), 60);
                     BlipTick.chargeBlips(player, 1, true);
                 }
             }
@@ -211,7 +233,8 @@ public class BlackSilenceEvaluator {
     public static void onHitRanga(IWorld world, Entity entity, LivingEntity sourceentity) {
         if (entity instanceof LivingEntity) {
             LivingEntity targetEntity = (LivingEntity)entity;
-            addBleedIfViable(1, targetEntity, 5);
+            EgoWeaponsEffects.BLEED.get().increment(targetEntity, 1, 1);
+
             if (sourceentity.hasEffect(FuriosoPotionEffect.potion)) {
                 if (sourceentity.getPersistentData().getDouble("furiosohits") < 10.0) {
                     addToStatistic(sourceentity, 4, "furiosohits");
@@ -219,15 +242,15 @@ public class BlackSilenceEvaluator {
                         if (world instanceof ServerWorld) {
                             ((ServerWorld)world).sendParticles(SparkparticleParticle.particle, sourceentity.getX(), sourceentity.getY() + (double)sourceentity.getBbHeight() / 1.5, sourceentity.getZ(), 10, 0.0, 0.0, 0.0, 0.1);
                         }
-                        addBleedIfViable(1, targetEntity, 5);
-                        targetEntity.setHealth(targetEntity.getHealth() - 5.0F);
+                        EgoWeaponsEffects.BLEED.get().increment(targetEntity, 2, 2);
+                        targetEntity.setHealth(targetEntity.getHealth() - 2.0F);
                         targetEntity.addEffect(new EffectInstance(Effects.WEAKNESS, (int) 60, (int) 1, (false), (false)));
                         targetEntity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, (int) 60, (int) 1, (false), (false)));
                         targetEntity.addEffect(new EffectInstance(Effects.WITHER, (int) 60, (int) 1, (false), (false)));
                         LivingEntityPatch<?> entitypatch = (LivingEntityPatch)entity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, (Direction)null).orElse((EntityPatch) null);
                         if (entitypatch != null) {
                             if (entitypatch.getHitAnimation(ExtendedDamageSource.StunType.LONG) == Animations.BIPED_HIT_LONG) {
-                                entitypatch.playAnimationSynchronized(EgoWeaponsAnimations.RANGA_GUARD_STAGGER, 0.0F);
+                                entitypatch.playAnimationSynchronized(BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER, 0.0F);
                             }
                         }
                     }

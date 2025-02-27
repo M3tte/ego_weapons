@@ -1,0 +1,8 @@
+{
+  "textures": [
+    "ego_weapons:ammo/standard/impact_0",
+    "ego_weapons:ammo/standard/impact_1",
+    "ego_weapons:ammo/standard/impact_2",
+    "ego_weapons:ammo/standard/impact_3"
+  ]
+}

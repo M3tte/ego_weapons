@@ -1,0 +1,57 @@
+{
+  "parent": "ego_weapons:item/fullstop_railgun/fullstop_office_railgun_model",
+  "textures": {
+    "0": "ego_weapons:items/fullstop_railgun/fullstop_office_railgun_0",
+    "particle": "ego_weapons:items/fullstop_railgun/fullstop_office_railgun_0"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "charge": 0
+      },
+      "model": "ego_weapons:item/fullstop_railgun/fullstop_office_railgun_model_0"
+    },
+    {
+      "predicate": {
+        "charge": 1
+      },
+      "model": "ego_weapons:item/fullstop_railgun/fullstop_office_railgun_model_1"
+    },
+    {
+      "predicate": {
+        "charge": 2
+      },
+      "model": "ego_weapons:item/fullstop_railgun/fullstop_office_railgun_model_2"
+    },
+    {
+      "predicate": {
+        "charge": 3
+      },
+      "model": "ego_weapons:item/fullstop_railgun/fullstop_office_railgun_model_3"
+    },
+    {
+      "predicate": {
+        "charge": 4
+      },
+      "model": "ego_weapons:item/fullstop_railgun/fullstop_office_railgun_model_4"
+    },
+    {
+      "predicate": {
+        "charge": 5
+      },
+      "model": "ego_weapons:item/fullstop_railgun/fullstop_office_railgun_model_5"
+    },
+    {
+      "predicate": {
+        "charge": 6
+      },
+      "model": "ego_weapons:item/fullstop_railgun/fullstop_office_railgun_model_6"
+    },
+    {
+      "predicate": {
+        "charge": 7
+      },
+      "model": "ego_weapons:item/fullstop_railgun/fullstop_office_railgun_model_7"
+    }
+  ]
+}

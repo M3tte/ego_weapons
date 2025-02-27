@@ -107,7 +107,7 @@ public class SolemnLamentEffects {
 	public static void decrementEffect(LivingEntity entity, SolemnLamentAmmoEffect targetEffect) {
 		if (entity.hasEffect(targetEffect)) {
 
-			if (entity.hasEffect(EthernalRestPotionEffect.get()) && entity.getRandom().nextFloat() < 0.25f)
+			if (entity.hasEffect(EternalRestPotionEffect.get()) && entity.getRandom().nextFloat() < 0.25f)
 				return;
 
 			EffectInstance effect = entity.getEffect(targetEffect);

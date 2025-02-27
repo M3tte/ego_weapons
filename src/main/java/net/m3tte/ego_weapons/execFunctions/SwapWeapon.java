@@ -1,8 +1,10 @@
 package net.m3tte.ego_weapons.execFunctions;
 
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.particle.BlacksilenceshadowParticle;
 import net.m3tte.ego_weapons.particle.ShadowpuffParticle;
 import net.m3tte.ego_weapons.potion.OrlandoPotionEffect;
@@ -15,6 +17,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IWorld;
@@ -65,6 +68,7 @@ public class SwapWeapon {
 				}
 			}
 		}
+		EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(entity, entity.hasEffect(OrlandoPotionEffect.potion.getEffect()) ? 2 : 1, entity.hasEffect(OrlandoPotionEffect.potion.getEffect()) ? 2 : 1);
 		entity.getPersistentData().putDouble("furiosohits", 0);
 		entity.getPersistentData().putDouble("furiosoattacks", 0);
 		if (world instanceof ServerWorld) {
@@ -85,8 +89,17 @@ public class SwapWeapon {
 			}
 		}
 
-		ClearOldWeaponsProcedure.executeProcedure((PlayerEntity) entity);
 
+		if (entity instanceof PlayerEntity) {
+			if (ItemTags.getAllTags().getTag(new ResourceLocation("ego_weapons:blacksilenceweapons"))
+					.contains(entity.getItemInHand(Hand.MAIN_HAND).getItem())) {
+				ItemStack _stktoremove = entity.getItemInHand(Hand.MAIN_HAND);
+				((PlayerEntity)entity).inventory.removeItem(_stktoremove);
+			}
+		}
+
+
+		ClearOldWeaponsProcedure.executeProcedure((PlayerEntity) entity);
 		weaponIndex = weaponIndex % 10;
 
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) entity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
@@ -104,12 +117,13 @@ public class SwapWeapon {
 				break;
 			case 1: // Pistols
 				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(EgoWeaponsItems.ATELIER_LOGIC_PISTOLS.get()));
-				entity.setItemInHand(Hand.OFF_HAND, new ItemStack(EgoWeaponsItems.ATELIER_LOGIC_PISTOLS.get()));
-
+				entity.getItemInHand(Hand.MAIN_HAND).getOrCreateTag().putInt("ammo", 2);
 				entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-					capability.gunMagSize = 0;
+					capability.blips -= 1;
 					capability.syncPlayerVariables(entity);
 				});
+				entity.setItemInHand(Hand.OFF_HAND, new ItemStack(EgoWeaponsItems.ATELIER_LOGIC_PISTOLS.get()));
+
 				animation = EgoWeaponsAnimations.DUAL_EQUIP;
 
 
@@ -117,13 +131,13 @@ public class SwapWeapon {
 			case 2: // Allas
 				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(EgoWeaponsItems.ALLAS_SPEAR.get()));
 
-				animation = EgoWeaponsAnimations.ALLAS_SPEAR_EQUIP;
+				animation = BlackSilenceMovesetAnims.ALLAS_SPEAR_EQUIP;
 
 				break;
 
 			case 3: // Old Boys
 				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(EgoWeaponsItems.OLD_BOYS_WORKSHOP.get()));
-				animation = EgoWeaponsAnimations.OLD_BOYS_EQUIP;
+				animation = BlackSilenceMovesetAnims.OLD_BOYS_EQUIP;
 				break;
 
 			case 4: // Mook
@@ -147,7 +161,7 @@ public class SwapWeapon {
 
 			case 7: // Wheels Industry
 				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(EgoWeaponsItems.WHEELS_INDUSTRY.get()));
-				animation = EgoWeaponsAnimations.ATELIER_SHOTGUN_EQUIP;
+				animation = BlackSilenceMovesetAnims.ATELIER_SHOTGUN_EQUIP;
 				break;
 			case 8: // Crystal Atelier
 				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(EgoWeaponsItems.CRYSTAL_ATELIER.get()));
@@ -156,7 +170,7 @@ public class SwapWeapon {
 				break;
 			case 9: // Atelier Logic Shotgun
 				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(EgoWeaponsItems.ATELIER_LOGIC_SHOTGUN.get()));
-				animation = EgoWeaponsAnimations.ATELIER_SHOTGUN_EQUIP;
+				animation = BlackSilenceMovesetAnims.ATELIER_SHOTGUN_EQUIP;
 
 				break;
 		}

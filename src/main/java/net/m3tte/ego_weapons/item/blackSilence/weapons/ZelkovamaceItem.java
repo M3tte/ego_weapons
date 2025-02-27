@@ -2,6 +2,7 @@
 package net.m3tte.ego_weapons.item.blackSilence.weapons;
 
 import net.m3tte.ego_weapons.execFunctions.BlackSilenceEvaluator;
+import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.*;
 import net.minecraft.util.text.TextFormatting;
@@ -15,6 +16,9 @@ import net.minecraft.client.util.ITooltipFlag;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+
 public class ZelkovamaceItem extends SwordItem {
 	//@ObjectHolder("tcorp:zelkova_mace")
 
@@ -23,13 +27,40 @@ public class ZelkovamaceItem extends SwordItem {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> list, ITooltipFlag p_77624_4_) {
-		super.appendHoverText(p_77624_1_, p_77624_2_, list, p_77624_4_);
-		list.add(new StringTextComponent("A mace."));
-		list.add(new StringTextComponent("Formerly the weapon of a popular fixer."));
-		list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Swap to next weapon. ").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 1 E").withStyle(TextFormatting.AQUA)));
-		list.add(new StringTextComponent("[Passive] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Regain stamina and energy on hit. ").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" +15% Stamina").withStyle(TextFormatting.GOLD)));
+	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+		super.appendHoverText(itemstack, world, list, flag);
+		list.add(new StringTextComponent("Manufactured by Zelkova Workshop").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
+		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
+
+		switch (EgoWeaponsKeybinds.getUiPage() % 4) {
+			case 0:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{});
+				else
+					generateDescription(list, "blacksilenceweapon", "ability", 1);
+				break;
+			case 1:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"black", "tremor"});
+				else
+					generateDescription(list,"zelkova", "auto", 2);
+				break;
+			case 2:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"black", "tremor", "tremor_burst", "tremor_decay"});
+				else
+					generateDescription(list,"zelkova", "innate", 4);
+				break;
+			case 3:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"black", "tremor"});
+				else
+					generateDescription(list,"zelkova", "jump", 3);
+		}
+
+		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
 	}
 
 	@Override

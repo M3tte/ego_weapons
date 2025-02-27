@@ -32,6 +32,9 @@ public class Sunshower3Hit extends MetaParticle {
 
     @OnlyIn(Dist.CLIENT)
     public static class Provider implements IParticleFactory<BasicParticleType> {
+
+
+
         @Override
         public Particle createParticle(BasicParticleType typeIn, ClientWorld levelIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             Sunshower3Hit particle = new Sunshower3Hit(levelIn, x, y, z, xSpeed, ySpeed, zSpeed);

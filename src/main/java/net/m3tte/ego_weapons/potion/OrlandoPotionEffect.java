@@ -19,6 +19,7 @@ import net.minecraftforge.registries.ObjectHolder;
 import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -26,9 +27,9 @@ public class OrlandoPotionEffect {
 	@ObjectHolder("ego_weapons:orlando")
 	public static final Effect potion = null;
 
-	static AttributeModifier speedMod = new AttributeModifier("orlandoSpeed", 0.015, AttributeModifier.Operation.ADDITION);
-	static AttributeModifier atkSpeedMod = new AttributeModifier("orlandoAtkSpeed", 0.2, AttributeModifier.Operation.ADDITION);
-	static AttributeModifier armorMod = new AttributeModifier("orlandoArmor", 6, AttributeModifier.Operation.ADDITION);
+	static AttributeModifier speedMod = new AttributeModifier(UUID.fromString("c1804411-ffcb-4b72-a3c7-ea21ba0828b4"),"orlandoSpeed", 0.015, AttributeModifier.Operation.ADDITION);
+	static AttributeModifier atkSpeedMod = new AttributeModifier(UUID.fromString("c1804411-ffcb-4b72-a3c7-ea21ba0828b4"),"orlandoAtkSpeed", 0.2, AttributeModifier.Operation.ADDITION);
+	static AttributeModifier armorMod = new AttributeModifier(UUID.fromString("c1804411-ffcb-4b72-a3c7-ea21ba0828b4"),"orlandoArmor", 6, AttributeModifier.Operation.ADDITION);
 	@SubscribeEvent
 	public static void registerEffect(RegistryEvent.Register<Effect> event) {
 		event.getRegistry().register(new EffectCustom());
@@ -78,12 +79,20 @@ public class OrlandoPotionEffect {
 			ModifiableAttributeInstance atkSpeedInstance = attrman.getInstance(Attributes.ATTACK_SPEED);
 			ModifiableAttributeInstance armorInstance = attrman.getInstance(Attributes.ARMOR);
 
-			speedInstance.removeModifier(speedMod);
-			speedInstance.addPermanentModifier(new AttributeModifier(speedMod.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue(0, speedMod), speedMod.getOperation()));
-			atkSpeedInstance.removeModifier(atkSpeedMod);
-			atkSpeedInstance.addPermanentModifier(new AttributeModifier(atkSpeedMod.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue(0, atkSpeedMod), atkSpeedMod.getOperation()));
-			armorInstance.removeModifier(armorMod);
-			armorInstance.addPermanentModifier(new AttributeModifier(armorMod.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue(0, armorMod), armorMod.getOperation()));
+			if (speedInstance != null) {
+				speedInstance.removeModifier(speedMod);
+				speedInstance.addPermanentModifier(new AttributeModifier(speedMod.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue(0, speedMod), speedMod.getOperation()));
+			}
+
+			if (atkSpeedInstance != null) {
+				atkSpeedInstance.removeModifier(atkSpeedMod);
+				atkSpeedInstance.addPermanentModifier(new AttributeModifier(atkSpeedMod.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue(0, atkSpeedMod), atkSpeedMod.getOperation()));
+			}
+
+			if (armorInstance != null) {
+				armorInstance.removeModifier(armorMod);
+				armorInstance.addPermanentModifier(new AttributeModifier(armorMod.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue(0, armorMod), armorMod.getOperation()));
+			}
 
 			attrman.save();
 		}
@@ -95,9 +104,15 @@ public class OrlandoPotionEffect {
 			ModifiableAttributeInstance atkSpeedInstance = attrman.getInstance(Attributes.ATTACK_SPEED);
 			ModifiableAttributeInstance armorInstance = attrman.getInstance(Attributes.ARMOR);
 
-			speedInstance.removeModifier(speedMod);
-			atkSpeedInstance.removeModifier(atkSpeedMod);
-			armorInstance.removeModifier(armorMod);
+
+			if (speedInstance != null)
+				speedInstance.removeModifier(speedMod);
+
+			if (atkSpeedInstance != null)
+				atkSpeedInstance.removeModifier(atkSpeedMod);
+
+			if (armorInstance != null)
+				armorInstance.removeModifier(armorMod);
 
 			attrman.save();
 		}

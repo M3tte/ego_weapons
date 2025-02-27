@@ -3,13 +3,13 @@ package net.m3tte.ego_weapons.procedures.abilities.armorAbilities;
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
-import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
-import net.m3tte.ego_weapons.potion.EthernalRestPotionEffect;
+import net.m3tte.ego_weapons.gameasset.movesets.SolemnLamentMovesetAnims;
+import net.m3tte.ego_weapons.potion.EternalRestPotionEffect;
 import net.m3tte.ego_weapons.procedures.abilities.AbilityTier;
 import net.m3tte.ego_weapons.procedures.abilities.AbilityUtils;
 import net.m3tte.ego_weapons.procedures.abilities.ItemAbility;
 import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
-import net.m3tte.ego_weapons.world.capabilities.item.TCorpStyles;
+import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsStyles;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.Hand;
@@ -22,7 +22,7 @@ public class SolemnLamentArmorAbility extends ItemAbility {
 
     @Override
     public int getBlipCost(PlayerEntity player, PlayerVariables playerVars) {
-        return 8;
+        return 7;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class SolemnLamentArmorAbility extends ItemAbility {
 
     @Override
     public String getName(PlayerEntity player, PlayerVariables playerVars) {
-        return "Lament";
+        return "Eternal Rest";
     }
 
     @Override
@@ -71,13 +71,13 @@ public class SolemnLamentArmorAbility extends ItemAbility {
 
         LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
-        if (entitypatch.getHoldingItemCapability(Hand.MAIN_HAND).getStyle(entitypatch).equals(TCorpStyles.DUAL_WIELDED))
-            entitypatch.playAnimationSynchronized(EgoWeaponsAnimations.SOLEMN_LAMENT_AUTO_D2, 0f);
+        if (entitypatch.getHoldingItemCapability(Hand.MAIN_HAND).getStyle(entitypatch).equals(EgoWeaponsStyles.DUAL_WIELDED))
+            entitypatch.playAnimationSynchronized(SolemnLamentMovesetAnims.SOLEMN_LAMENT_AUTO_D2, 0f);
 
         SanitySystem.healSanity(player, 10);
 
         player.playSound(EgoWeaponsSounds.SOLEMN_LAMENT_SPECIAL_RELOAD, 1, 1);
-        player.addEffect(new EffectInstance(EthernalRestPotionEffect.get(), (int) 160, (int) 0, (false), (false)));
+        player.addEffect(new EffectInstance(EternalRestPotionEffect.get(), (int) 160, (int) 0, (false), (false)));
 
     }
 }

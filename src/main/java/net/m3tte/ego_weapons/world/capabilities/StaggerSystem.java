@@ -2,7 +2,7 @@ package net.m3tte.ego_weapons.world.capabilities;
 
 import net.m3tte.ego_weapons.*;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
-import net.m3tte.ego_weapons.network.packages.StaggerPackages;
+import net.m3tte.ego_weapons.network.packages.ParticlePackages;
 import net.m3tte.ego_weapons.particle.StaggerShardParticle;
 import net.m3tte.ego_weapons.potion.Staggered;
 import net.m3tte.ego_weapons.world.capabilities.entitypatch.StaggerableEntity;
@@ -58,7 +58,8 @@ public class StaggerSystem {
 
             entityData.stagger -= amnt;
 
-
+            if (entity.hasEffect(EgoWeaponsEffects.OBLIGATION_FULLFILLMENT.get()) && entityData.stagger < 1)
+                entityData.stagger = 1;
 
             if (entityData.stagger <= 0) {
                 entityData.stagger = 0;
@@ -108,7 +109,7 @@ public class StaggerSystem {
                 ServerWorld serverWorld = (ServerWorld) entity.level;
                 serverWorld.playSound(null,  entity.getX(), entity.getY(), entity.getZ(), EgoWeaponsSounds.STAGGER, SoundCategory.PLAYERS, 1, 1);
                 serverWorld.sendParticles(StaggerShardParticle.particle, entity.getX(), entity.getY()+entity.getBbHeight() * 0.1f, entity.getZ(), 15, 0, 0, 0, 0.3f);
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new StaggerPackages.SendStaggerMessage(entity.getId()));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendStaggerMessage(entity.getId()));
             }
             onStagger.accept(null);
             entity.playSound(EgoWeaponsSounds.STAGGER, 1,1);

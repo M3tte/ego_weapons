@@ -1,9 +1,14 @@
 
 package net.m3tte.ego_weapons.potion;
 
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
+import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifierManager;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
@@ -104,5 +109,23 @@ public class Staggered {
 			}
 
 		}
+
+		@Override
+		public void removeAttributeModifiers(LivingEntity entity, AttributeModifierManager p_111187_2_, int p_111187_3_) {
+			super.removeAttributeModifiers(entity, p_111187_2_, p_111187_3_);
+
+			if (!entity.hasEffect(this)) {
+				if (entity.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.SUIT_OF_THE_BLACK_SILENCE.get())) {
+					EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(entity, 0, 2);
+					EgoWeaponsEffects.POWER_UP.get().increment(entity, 0, 2);
+				}
+			}
+
+
+		}
 	}
+
+
+
+
 }

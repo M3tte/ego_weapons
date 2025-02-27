@@ -2,7 +2,7 @@ package net.m3tte.ego_weapons.gui.ingame;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.m3tte.ego_weapons.EgoWeaponsMod;
-import net.m3tte.ego_weapons.client.renderer.TCorpRenderTypes;
+import net.m3tte.ego_weapons.client.renderer.EgoWeaponsRenderTypes;
 import net.m3tte.ego_weapons.world.capabilities.threatlevel.ThreatLevelSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -37,7 +37,7 @@ public class ThreatLevelGUI extends EntityIndicator {
     public void drawIndicator(LivingEntity entityIn, MatrixStack matStackIn, IRenderTypeBuffer bufferIn, float partialTicks) {
         Matrix4f mvMatrix = super.getMVMatrix(matStackIn, entityIn, 0.0F, entityIn.getBbHeight() + 0.25F, 0.0F, true, partialTicks);
         int index = ThreatLevelSystem.getThreatRegistry().get(entityIn.getType()).ordinal();
-        this.drawTexturedModalRect2DPlane(mvMatrix, bufferIn.getBuffer(TCorpRenderTypes.overlayTextures(OVERLAY_TEXTURES)), -1F, 0.2F, 1F, 0.7F, 0, 16 * index, 64, 16 + 16 * index);
+        this.drawTexturedModalRect2DPlane(mvMatrix, bufferIn.getBuffer(EgoWeaponsRenderTypes.overlayTextures(OVERLAY_TEXTURES)), -1F, 0.2F, 1F, 0.7F, 0, 16 * index, 64, 16 + 16 * index);
     }
 }
 

@@ -28,7 +28,6 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.AbstractMap;
 
-@EgoWeaponsModElements.ModElement.Tag
 public class OpenattrinterfaceKeyBinding extends EgoWeaponsModElements.ModElement {
 	@OnlyIn(Dist.CLIENT)
 	private KeyBinding keys;

@@ -2,8 +2,10 @@ package net.m3tte.ego_weapons.skill.sunshower;
 
 import com.google.common.collect.Lists;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
+import net.m3tte.ego_weapons.gameasset.movesets.SunshowerMovesetAnims;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
-import net.m3tte.ego_weapons.world.capabilities.item.TCorpCategories;
+import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCategories;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -43,10 +45,10 @@ public class SunshowerActiveGuard extends GuardSkill {
 
     public static Builder createBuilder(ResourceLocation resourceLocation) {
         return GuardSkill.createBuilder(resourceLocation)
-                .addGuardMotion(TCorpCategories.SUNSHOWER, (item, player) -> EgoWeaponsAnimations.SUNSHOWER_GUARD_HIT)
-                .addGuardBreakMotion(TCorpCategories.SUNSHOWER, (item, player) -> EgoWeaponsAnimations.RANGA_GUARD_STAGGER)
-                .addAdvancedGuardMotion(TCorpCategories.SUNSHOWER, (itemCap, playerpatch) ->
-                        new StaticAnimation[] { EgoWeaponsAnimations.SUNSHOWER_PARRY_HIT, EgoWeaponsAnimations.SUNSHOWER_PARRY_HIT_2, EgoWeaponsAnimations.SUNSHOWER_PARRY_HIT_3});
+                .addGuardMotion(EgoWeaponsCategories.SUNSHOWER, (item, player) -> SunshowerMovesetAnims.SUNSHOWER_GUARD_HIT)
+                .addGuardBreakMotion(EgoWeaponsCategories.SUNSHOWER, (item, player) -> BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER)
+                .addAdvancedGuardMotion(EgoWeaponsCategories.SUNSHOWER, (itemCap, playerpatch) ->
+                        new StaticAnimation[] { SunshowerMovesetAnims.SUNSHOWER_PARRY_HIT, SunshowerMovesetAnims.SUNSHOWER_PARRY_HIT_2, SunshowerMovesetAnims.SUNSHOWER_PARRY_HIT_3});
     }
 
     // Ensures the last active is actually applied
@@ -102,7 +104,7 @@ public class SunshowerActiveGuard extends GuardSkill {
                 StaticAnimation animation = this.getGuardMotion(event.getPlayerPatch(), itemCapability, blockType);
 
                 if (blockType == BlockType.ADVANCED_GUARD && (event.getPlayerPatch().getOriginal().tickCount - event.getPlayerPatch().getOriginal().getLastHurtByMobTimestamp() < 30))
-                    animation = EgoWeaponsAnimations.SUNSHOWER_COUNTER_EVADE;
+                    animation = SunshowerMovesetAnims.SUNSHOWER_COUNTER_EVADE;
 
                 if (animation != null) {
                     event.getPlayerPatch().playAnimationSynchronized(animation, 0.0F);
@@ -123,7 +125,7 @@ public class SunshowerActiveGuard extends GuardSkill {
 
     @Override
     protected float getPenaltyMultiplier(CapabilityItem itemCapapbility) {
-        return itemCapapbility.getWeaponCategory().equals(TCorpCategories.SUNSHOWER) ? 0.4f : 0.2F;
+        return itemCapapbility.getWeaponCategory().equals(EgoWeaponsCategories.SUNSHOWER) ? 0.4f : 0.2F;
     }
 
     @Nullable
@@ -155,7 +157,7 @@ public class SunshowerActiveGuard extends GuardSkill {
     @OnlyIn(Dist.CLIENT)
     public List<Object> getTooltipArgs() {
         List<Object> list = Lists.newArrayList();
-        list.add(String.format("%s, %s, %s, %s", TCorpCategories.SUNSHOWER).toLowerCase());
+        list.add(String.format("%s, %s, %s, %s", EgoWeaponsCategories.SUNSHOWER).toLowerCase());
         return list;
     }
 

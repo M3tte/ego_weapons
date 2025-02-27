@@ -1,0 +1,10 @@
+{
+  "textures": [
+    "ego_weapons:ammo/rifle_standard/fire_side_0",
+    "ego_weapons:ammo/rifle_standard/fire_side_1",
+    "ego_weapons:ammo/rifle_standard/fire_side_2",
+    "ego_weapons:ammo/rifle_standard/fire_side_3",
+    "ego_weapons:ammo/rifle_standard/fire_side_4",
+    "ego_weapons:ammo/rifle_standard/fire_side_5"
+  ]
+}

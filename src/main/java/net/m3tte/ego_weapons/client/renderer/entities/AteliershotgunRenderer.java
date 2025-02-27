@@ -25,7 +25,7 @@ public class AteliershotgunRenderer {
 
 	@OnlyIn(Dist.CLIENT)
 	public static class CustomRender extends EntityRenderer<AtelierShotgunBullet.AtelierShotgunSlugProj> {
-		private static final ResourceLocation texture = new ResourceLocation("tcorp:textures/entities/bullet.png");
+		private static final ResourceLocation texture = new ResourceLocation("ego_weapons:textures/entities/bullet.png");
 
 		public CustomRender(EntityRendererManager renderManager) {
 			super(renderManager);

@@ -3,9 +3,10 @@ package net.m3tte.ego_weapons.gameasset;
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.execFunctions.BlackSilenceEvaluator;
+import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.potion.Terror;
 import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
-import net.m3tte.ego_weapons.world.capabilities.item.TCorpCapabilityPresets;
+import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
@@ -47,7 +48,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations.*;
-import static net.m3tte.ego_weapons.potion.Shell.incrementShell;
+import static net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER;
+import static net.m3tte.ego_weapons.potion.countEffects.Shell.incrementShell;
 
 public class EgoWeaponsMobAnimations {
 
@@ -100,20 +102,20 @@ public class EgoWeaponsMobAnimations {
         DOUBT_A_WALK = new MovementAnimation(true, "doubt/walk", doubt)
                 .addProperty(StaticAnimationProperty.PLAY_SPEED, 1.7f);
 
-        DOUBT_DASH = (new BasicAttackAnimation(0.02F, 0.03F, 0.5F, 1F, 2F, TCorpCapabilityPresets.DoubtBlade, "Blade", "doubt/dash", doubt))
+        DOUBT_DASH = (new BasicAttackAnimation(0.02F, 0.03F, 0.5F, 1F, 2F, EgoWeaponsCapabilityPresets.DoubtBlade, "Blade", "doubt/dash", doubt))
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.EVISCERATE)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.EVISCERATE)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
                 .addProperty(StaticAnimationProperty.PLAY_SPEED, 1.4f);
 
-        DOUBT_AUTO_1 = (new BasicAttackAnimation(0.02F, 0.03F, 0.32F, 0.6F, 1F, TCorpCapabilityPresets.DoubtBlade, "Blade", "doubt/auto_1", doubt))
+        DOUBT_AUTO_1 = (new BasicAttackAnimation(0.02F, 0.03F, 0.32F, 0.6F, 1F, EgoWeaponsCapabilityPresets.DoubtBlade, "Blade", "doubt/auto_1", doubt))
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.DOUBT_HIT_LIGHT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLADE)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
                 .addProperty(StaticAnimationProperty.PLAY_SPEED, 1.4f);
 
-        DOUBT_AUTO_2 = (new BasicAttackAnimation(0.02F, 0.03F, 0.32F, 0.6F, 1F, TCorpCapabilityPresets.DoubtBlade, "Blade", "doubt/auto_2", doubt))
+        DOUBT_AUTO_2 = (new BasicAttackAnimation(0.02F, 0.03F, 0.32F, 0.6F, 1F, EgoWeaponsCapabilityPresets.DoubtBlade, "Blade", "doubt/auto_2", doubt))
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.DOUBT_HIT_LIGHT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLADE)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
@@ -127,7 +129,7 @@ public class EgoWeaponsMobAnimations {
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.LONG)
                 .addProperty(StaticAnimationProperty.PLAY_SPEED, 1.4f);
 
-        DOUBT_AUTO_B1 = (new AttackAnimation(0.02F, 0.03F, 1.2F, 2.6F, 3F, TCorpCapabilityPresets.DoubtBlade, "Blade", "doubt/auto_c1", doubt))
+        DOUBT_AUTO_B1 = (new AttackAnimation(0.02F, 0.03F, 1.2F, 2.6F, 3F, EgoWeaponsCapabilityPresets.DoubtBlade, "Blade", "doubt/auto_c1", doubt))
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.DOUBT_HIT_VERTICAL_FIRST)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLADE)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
@@ -135,7 +137,7 @@ public class EgoWeaponsMobAnimations {
                 .addProperty(StaticAnimationProperty.EVENTS, chargeSound(EgoWeaponsSounds.DOUBT_CHARGE))
                 .addProperty(StaticAnimationProperty.PLAY_SPEED, 1.4f);
 
-        DOUBT_AUTO_B2 = (new AttackAnimation(0.02F, 0.03F, 0.4F, 2F, 2.2F, TCorpCapabilityPresets.DoubtBlade, "Blade", "doubt/auto_c2", doubt))
+        DOUBT_AUTO_B2 = (new AttackAnimation(0.02F, 0.03F, 0.4F, 2F, 2.2F, EgoWeaponsCapabilityPresets.DoubtBlade, "Blade", "doubt/auto_c2", doubt))
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.DOUBT_HIT_VERTICAL_SECOND)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.DOUBT_GROUNDSLAM_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
@@ -177,7 +179,7 @@ public class EgoWeaponsMobAnimations {
         NT_WALK = new MovementAnimation(true, "nothing_there/walk", nothing_there)
                 .addProperty(StaticAnimationProperty.PLAY_SPEED, 1.7f);
 
-        NT_AUTO_1 = (new BasicAttackAnimation(0.02F, 0.03F, 0.2F, 0.6F, 1.2F, TCorpCapabilityPresets.DoubtBlade, "Left_Forearm", "nothing_there/attack_1", nothing_there))
+        NT_AUTO_1 = (new BasicAttackAnimation(0.02F, 0.03F, 0.2F, 0.6F, 1.2F, EgoWeaponsCapabilityPresets.DoubtBlade, "Left_Forearm", "nothing_there/attack_1", nothing_there))
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.NOTHING_THERE_SLASH)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MIMICRY_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.NOTHING_THERE_SLASH_ALT)
@@ -185,7 +187,7 @@ public class EgoWeaponsMobAnimations {
                 .addProperty(AnimationProperty.AttackAnimationProperty.COLLIDER_ADDER, 6)
                 .addProperty(StaticAnimationProperty.PLAY_SPEED, 0.6f);
 
-        NT_AUTO_2 = (new BasicAttackAnimation(0.02F, 0.06F, 0.08F, 0.4F, 2.5F, TCorpCapabilityPresets.DoubtBlade, "Left_Forearm", "nothing_there/attack_2", nothing_there))
+        NT_AUTO_2 = (new BasicAttackAnimation(0.02F, 0.06F, 0.08F, 0.4F, 2.5F, EgoWeaponsCapabilityPresets.DoubtBlade, "Left_Forearm", "nothing_there/attack_2", nothing_there))
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.NOTHING_THERE_BLUNT_ALT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLADE)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
@@ -196,7 +198,7 @@ public class EgoWeaponsMobAnimations {
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.LONG)
                 .addProperty(StaticAnimationProperty.PLAY_SPEED, 0.6f);
 
-        NT_AUTO_B1 = (new BasicAttackAnimation(0.02F, 0.03F, 0.26F, 0.5F, 0.6F, TCorpCapabilityPresets.DoubtBlade, "Right_Forearm", "nothing_there/attack_b1", nothing_there))
+        NT_AUTO_B1 = (new BasicAttackAnimation(0.02F, 0.03F, 0.26F, 0.5F, 0.6F, EgoWeaponsCapabilityPresets.DoubtBlade, "Right_Forearm", "nothing_there/attack_b1", nothing_there))
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.NOTHING_THERE_BLUNT_ALT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MIMICRY_DASH_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
@@ -206,7 +208,7 @@ public class EgoWeaponsMobAnimations {
                 .addProperty(AnimationProperty.AttackAnimationProperty.COLLIDER_ADDER, 6)
                 .addProperty(StaticAnimationProperty.PLAY_SPEED, 0.9f);
 
-        NT_AUTO_B2 = (new BasicAttackAnimation(0.02F, 0.03F, 0.26F, 0.5F, 2.5F, TCorpCapabilityPresets.DoubtBlade, "Right_Forearm", "nothing_there/attack_b2", nothing_there))
+        NT_AUTO_B2 = (new BasicAttackAnimation(0.02F, 0.03F, 0.26F, 0.5F, 2.5F, EgoWeaponsCapabilityPresets.DoubtBlade, "Right_Forearm", "nothing_there/attack_b2", nothing_there))
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT_HARD)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MIMICRY_DASH_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
@@ -217,7 +219,7 @@ public class EgoWeaponsMobAnimations {
                 .addProperty(AnimationProperty.AttackAnimationProperty.COLLIDER_ADDER, 8)
                 .addProperty(StaticAnimationProperty.PLAY_SPEED, 0.9f);
 
-        NT_AUTO_STAB = (new BasicAttackAnimation(0.02F, 0.03F, 0.26F, 0.5F, 2F, TCorpCapabilityPresets.LONGER_BLADE, "Left_Claw", "nothing_there/attack_stab", nothing_there))
+        NT_AUTO_STAB = (new BasicAttackAnimation(0.02F, 0.03F, 0.26F, 0.5F, 2F, EgoWeaponsCapabilityPresets.LONGER_BLADE, "Left_Claw", "nothing_there/attack_stab", nothing_there))
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.NOTHING_THERE_BLUNT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MIMICRY_DASH_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.NOTHING_THERE_SLASH_ALT)
@@ -229,7 +231,7 @@ public class EgoWeaponsMobAnimations {
                 .addProperty(StaticAnimationProperty.EVENTS, chargeSound(EgoWeaponsSounds.NOTHING_THERE_HELLO))
                 .addProperty(StaticAnimationProperty.PLAY_SPEED, 0.8f);
 
-        NT_DASH_C = (new AttackAnimation(0.02F, 0.03F, 0.5F, 0.8F, 1.0F, TCorpCapabilityPresets.DoubtBlade, "Left_Forearm", "nothing_there/dash_claw", nothing_there))
+        NT_DASH_C = (new AttackAnimation(0.02F, 0.03F, 0.5F, 0.8F, 1.0F, EgoWeaponsCapabilityPresets.DoubtBlade, "Left_Forearm", "nothing_there/dash_claw", nothing_there))
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.NOTHING_THERE_SLASH)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MIMICRY_VERTICAL_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.NOTHING_THERE_SLASH_ALT)
@@ -239,7 +241,7 @@ public class EgoWeaponsMobAnimations {
                 .addProperty(AnimationProperty.AttackAnimationProperty.COLLIDER_ADDER, 6)
                 .addProperty(StaticAnimationProperty.PLAY_SPEED, 1f);
 
-        NT_DASH_C_F = (new AttackAnimation(0.02F, 0.35F, 0.2F, 1F, 1.5F, TCorpCapabilityPresets.DoubtBlade, "Left_Claw", "nothing_there/dash_claw_f", nothing_there))
+        NT_DASH_C_F = (new AttackAnimation(0.02F, 0.35F, 0.2F, 1F, 1.5F, EgoWeaponsCapabilityPresets.DoubtBlade, "Left_Claw", "nothing_there/dash_claw_f", nothing_there))
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.EVISCERATE)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MIMICRY_VERTICAL_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
@@ -248,7 +250,7 @@ public class EgoWeaponsMobAnimations {
                 .addProperty(AnimationProperty.AttackAnimationProperty.COLLIDER_ADDER, 6)
                 .addProperty(StaticAnimationProperty.PLAY_SPEED, 1.4f);
 
-        NT_DASH_B = (new AttackAnimation(0.1F, 0.11F, 0.5F, 1.2F, 1.5F, TCorpCapabilityPresets.DoubtBlade, "Right_Bulb", "nothing_there/dash_blunt", nothing_there))
+        NT_DASH_B = (new AttackAnimation(0.1F, 0.11F, 0.5F, 1.2F, 1.5F, EgoWeaponsCapabilityPresets.DoubtBlade, "Right_Bulb", "nothing_there/dash_blunt", nothing_there))
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT_HARD)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MIMICRY_DASH_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
@@ -258,7 +260,7 @@ public class EgoWeaponsMobAnimations {
                 .addProperty(StaticAnimationProperty.EVENTS, chargeSound(EgoWeaponsSounds.NOTHING_THERE_HI))
                 .addProperty(StaticAnimationProperty.PLAY_SPEED, 1f);
 
-        NT_DASH_B_F = (new AttackAnimation(0.1F, 0.11F, 0.75F, 1.5F, 1.6F, TCorpCapabilityPresets.DoubtBlade, "Right_Bulb", "nothing_there/dash_blunt_f", nothing_there))
+        NT_DASH_B_F = (new AttackAnimation(0.1F, 0.11F, 0.75F, 1.5F, 1.6F, EgoWeaponsCapabilityPresets.DoubtBlade, "Right_Bulb", "nothing_there/dash_blunt_f", nothing_there))
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT_HARD)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MIMICRY_DASH_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
@@ -266,7 +268,7 @@ public class EgoWeaponsMobAnimations {
                 .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.5f))
                 .addProperty(StaticAnimationProperty.PLAY_SPEED, 1.4f);
 
-        NT_GOODBYE = (new BasicAttackAnimation(0.02F, 0.03F, 0.6F, 1F, 2F, TCorpCapabilityPresets.NTBlade, "Right_Blade", "nothing_there/goodbye", nothing_there))
+        NT_GOODBYE = (new BasicAttackAnimation(0.02F, 0.03F, 0.6F, 1F, 2F, EgoWeaponsCapabilityPresets.NTBlade, "Right_Blade", "nothing_there/goodbye", nothing_there))
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.NOTHING_THERE_HEAVY_SLASH)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MIMICRY_VERTICAL_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.NOTHING_THERE_SLASH_ALT)
@@ -465,7 +467,7 @@ public class EgoWeaponsMobAnimations {
                                     }
 
                                     if (targetPatch.getHitAnimation(ExtendedDamageSource.StunType.LONG) == Animations.BIPED_HIT_LONG) {
-                                        targetPatch.playAnimationSynchronized(EgoWeaponsAnimations.RANGA_GUARD_STAGGER, 0.0F);
+                                        targetPatch.playAnimationSynchronized(RANGA_GUARD_STAGGER, 0.0F);
                                     }
                                 } else {
                                     if (entity instanceof PlayerEntity)

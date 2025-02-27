@@ -1,7 +1,9 @@
 
 package net.m3tte.ego_weapons.entities;
 
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsEntities;
+import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.fml.network.FMLPlayMessages;
 
@@ -61,6 +63,10 @@ public class AtelierShotgunBullet {
 			double y = this.getY();
 			double z = this.getZ();
 			World world = this.level;
+			if (entity instanceof LivingEntity) {
+				EgoWeaponsEffects.RUPTURE.get().increment((LivingEntity) entity, 0, 3);
+				TremorEffect.burstTremor((LivingEntity) entity, true);
+			}
 
 			AteliershotgunhitProcedure.executeProcedure(Stream
 					.of(new AbstractMap.SimpleEntry<>("world", world), new AbstractMap.SimpleEntry<>("x", x), new AbstractMap.SimpleEntry<>("y", y),

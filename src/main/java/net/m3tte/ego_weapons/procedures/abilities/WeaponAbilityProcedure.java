@@ -1,7 +1,12 @@
 package net.m3tte.ego_weapons.procedures.abilities;
 
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
+import net.m3tte.ego_weapons.procedures.abilities.assistAttacks.FullstopRifleWeaponAssistAttack;
+import net.m3tte.ego_weapons.procedures.abilities.assistAttacks.MagicBulletAssistAttack;
+import net.m3tte.ego_weapons.procedures.abilities.reloadAbilities.FullstopReloadAbility;
+import net.m3tte.ego_weapons.procedures.abilities.reloadAbilities.SolemnLamentReloadAbility;
 import net.m3tte.ego_weapons.procedures.abilities.weaponAbilities.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -15,7 +20,7 @@ import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILIT
 public class WeaponAbilityProcedure {
 
 	private static Map<Item, ItemAbility> weaponAbilities;
-
+	private static Map<Item, ItemAbility> assistAttacks;
 	private static Map<Item, ItemAbility> getWeaponAbilities() {
 		if (weaponAbilities == null) {
 			setupWeaponAbilities();
@@ -23,10 +28,26 @@ public class WeaponAbilityProcedure {
 		return weaponAbilities;
 	}
 
+	public static Map<Item, ItemAbility> getAssistAttacks() {
+		if (assistAttacks == null) {
+			setupWeaponAssists();
+		}
+		return assistAttacks;
+	}
+
+	public static ItemAbility getAssistForItem(Item item) {
+		return getAssistAttacks().getOrDefault(item, null);
+	}
 	public static ItemAbility getForItem(Item item) {
 		return getWeaponAbilities().getOrDefault(item, new ItemAbility());
 	}
 
+	public static void setupWeaponAssists() {
+		assistAttacks = new HashMap<>();
+
+		assistAttacks.put(EgoWeaponsItems.FULLSTOP_SNIPER_RAILGUN.get(), new FullstopRifleWeaponAssistAttack());
+		assistAttacks.put(EgoWeaponsItems.MAGIC_BULLET.get(), new MagicBulletAssistAttack());
+	}
 	public static void setupWeaponAbilities() {
 		weaponAbilities = new HashMap<>();
 		BlackSilenceWeaponAbility bsWeaponAb = new BlackSilenceWeaponAbility();
@@ -37,7 +58,6 @@ public class WeaponAbilityProcedure {
 		weaponAbilities.put(EgoWeaponsItems.ATELIER_LOGIC_SHOTGUN.get(), bsWeaponAb);
 		weaponAbilities.put(EgoWeaponsItems.WHEELS_INDUSTRY.get(), bsWeaponAb);
 		weaponAbilities.put(EgoWeaponsItems.CRYSTAL_ATELIER.get(), bsWeaponAb);
-		weaponAbilities.put(EgoWeaponsItems.RANGA_DAGGER.get(), bsWeaponAb);
 		weaponAbilities.put(EgoWeaponsItems.RANGA_CLAW.get(), bsWeaponAb);
 		weaponAbilities.put(EgoWeaponsItems.OLD_BOYS_WORKSHOP.get(), bsWeaponAb);
 		weaponAbilities.put(EgoWeaponsItems.ALLAS_SPEAR.get(), bsWeaponAb);
@@ -45,21 +65,34 @@ public class WeaponAbilityProcedure {
 
 		weaponAbilities.put(EgoWeaponsItems.MIMICRY.get(), new MimicryWeaponAbility());
 		weaponAbilities.put(EgoWeaponsItems.MAGIC_BULLET.get(), new MagicBulletWeaponAbility());
-		weaponAbilities.put(EgoWeaponsItems.SOLEMN_LAMENT_WHITE.get(), new SolemnLamentWeaponAbility());
-		weaponAbilities.put(EgoWeaponsItems.SOLEMN_LAMENT_BLACK.get(), new SolemnLamentWeaponAbility());
 		weaponAbilities.put(EgoWeaponsItems.SUNSHOWER.get(), new SunshowerWeaponAbility());
+		weaponAbilities.put(EgoWeaponsItems.OEUFI_HALBERD.get(), new OeufiHalberdWeaponAbility());
+		weaponAbilities.put(EgoWeaponsItems.FULLSTOP_REP_MACHETE.get(), new FullstopWeaponAbility());
+		weaponAbilities.put(EgoWeaponsItems.SOLEMN_LAMENT_BLACK.get(), new SolemnLamentReloadAbility());
+		weaponAbilities.put(EgoWeaponsItems.SOLEMN_LAMENT_WHITE.get(), new SolemnLamentReloadAbility());
+		weaponAbilities.put(EgoWeaponsItems.FULLSTOP_SNIPER_RAILGUN.get(), new FullstopRifleWeaponAbility());
 	}
 
-	public static void executeProcedure(Map<String, Object> dependencies) {
-		PlayerEntity entity = (PlayerEntity) dependencies.get("entity");
+	public static void runWeaponAbility(PlayerEntity entity) {
 		EgoWeaponsModVars.PlayerVariables playerVars = entity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
 		if (playerVars.globalcooldown > 0)
 			return;
 
-		Item chestItem = entity.getItemBySlot(EquipmentSlotType.MAINHAND).getItem();
+		Item handItem = entity.getItemBySlot(EquipmentSlotType.MAINHAND).getItem();
 
-		getForItem(chestItem).trigger(entity,playerVars);
+
+		ItemAbility ability = null;
+
+		if (entity.hasEffect(EgoWeaponsEffects.ASSIST_FIRE.get())) {
+			ability = getAssistForItem(handItem);
+		}
+
+		if (ability == null) {
+			ability = getForItem(handItem);
+		}
+
+		ability.trigger(entity, playerVars);
 
 		/*if (DefiledbladeItem.block == ((entity instanceof LivingEntity) ? ((LivingEntity) entity).getMainHandItem().getItem() : ItemStack.EMPTY.getItem())
 				&& (entity.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, null)

@@ -4,7 +4,7 @@ import io.netty.buffer.ByteBuf;
 import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.entities.NothingThere2Entity;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsMobAnimations;
-import net.m3tte.ego_weapons.potion.Shell;
+import net.m3tte.ego_weapons.potion.countEffects.Shell;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import yesman.epicfight.api.animation.LivingMotions;
@@ -158,6 +158,11 @@ public class NothingTherePatch extends MobPatch<NothingThere2Entity> implements 
 
     @Override
     public StaticAnimation getGroundAnimation(int strength) {
+        return null;
+    }
+
+    @Override
+    public StaticAnimation getStunAnimation(int strength) {
         return null;
     }
 

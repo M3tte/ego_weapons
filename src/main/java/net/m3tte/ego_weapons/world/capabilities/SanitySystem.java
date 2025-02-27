@@ -1,5 +1,6 @@
 package net.m3tte.ego_weapons.world.capabilities;
 
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,6 +18,9 @@ public class SanitySystem {
         }
 
         playerVariables.sanity -= amnt;
+
+        if (player.hasEffect(EgoWeaponsEffects.OBLIGATION_FULLFILLMENT.get()) && playerVariables.sanity < 1)
+            playerVariables.sanity = 1;
 
         playerVariables.syncSanity(player);
     }

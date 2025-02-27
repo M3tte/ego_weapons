@@ -32,11 +32,15 @@ public class RenderMook extends RenderItemBase {
 
     public void renderItemInHand(ItemStack stack, LivingEntityPatch<?> entitypatch, Hand hand, IRenderTypeBuffer buffer, MatrixStack poseStack, int packedLight) {
         OpenMatrix4f modelMatrix = new OpenMatrix4f(this.mainhandcorrectionMatrix);
-        modelMatrix.mulFront(((ClientModel)entitypatch.getEntityModel(ClientModels.LOGICAL_CLIENT)).getArmature().searchJointByName("Tool_R").getAnimatedTransform());
-        poseStack.pushPose();
-        this.mulPoseStack(poseStack, modelMatrix);
-        Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.THIRD_PERSON_RIGHT_HAND, packedLight, OverlayTexture.NO_OVERLAY, poseStack, buffer);
-        poseStack.popPose();
+        this.sheathStack.getOrCreateTag().putInt("unsheathed", Math.min(stack.getOrCreateTag().getInt("unsheathed"),1));
+        if (stack.getOrCreateTag().getInt("unsheathed") >= 1) {
+            modelMatrix.mulFront(((ClientModel)entitypatch.getEntityModel(ClientModels.LOGICAL_CLIENT)).getArmature().searchJointByName("Tool_R").getAnimatedTransform());
+            poseStack.pushPose();
+            this.mulPoseStack(poseStack, modelMatrix);
+            Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.THIRD_PERSON_RIGHT_HAND, packedLight, OverlayTexture.NO_OVERLAY, poseStack, buffer);
+            poseStack.popPose();
+        }
+
         modelMatrix = new OpenMatrix4f(this.mainhandcorrectionMatrix);
         modelMatrix.mulFront(((ClientModel)entitypatch.getEntityModel(ClientModels.LOGICAL_CLIENT)).getArmature().searchJointByName("Tool_L").getAnimatedTransform());
         poseStack.pushPose();

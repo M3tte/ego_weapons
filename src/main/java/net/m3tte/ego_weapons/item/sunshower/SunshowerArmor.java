@@ -4,6 +4,7 @@ package net.m3tte.ego_weapons.item.sunshower;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
+import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -17,6 +18,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -24,6 +27,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.List;
+
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
 public class SunshowerArmor extends ArmorItem {
 
@@ -36,7 +42,7 @@ public class SunshowerArmor extends ArmorItem {
 
 		@Override
 		public int getDefenseForSlot(EquipmentSlotType slot)  {
-			return new int[]{0, 0, 20, 0}[slot.getIndex()];
+			return new int[]{0, 0, 16, 0}[slot.getIndex()];
 		}
 
 		@Override
@@ -65,7 +71,7 @@ public class SunshowerArmor extends ArmorItem {
 
 		@Override
 		public float getToughness() {
-			return 16f;
+			return 6f;
 		}
 
 
@@ -130,14 +136,36 @@ public class SunshowerArmor extends ArmorItem {
 			return armorModel;
 		}
 
+
 		@Override
-		public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> list, ITooltipFlag p_77624_4_) {
-			super.appendHoverText(p_77624_1_, p_77624_2_, list, p_77624_4_);
-			list.add(new StringTextComponent("Abandonment"));
-			//list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent(" Manifest E.G.O -").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 10E").withStyle(TextFormatting.AQUA)));
-			//list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent(" Onrush -").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 3E").withStyle(TextFormatting.AQUA)));
-			//list.add(new StringTextComponent("[Passive] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent(" Augment MIMICRY moveset")));
+		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+			super.appendHoverText(itemstack, world, list, flag);
+			list.add(new StringTextComponent("...Go away. Don't bother poking at me.").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+
+			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 2) + 1) + "/2] - - - - - - - =").withStyle(TextFormatting.GRAY));
+
+			switch (EgoWeaponsKeybinds.getUiPage() % 2) {
+				case 0:
+					if (EgoWeaponsKeybinds.isHoldingShift())
+						generateStatusDescription(list, new String[]{"protection", "sinking"});
+					else
+						generateDescription(list, "sunshower_cloak", "passive", 2);
+					break;
+				case 1:
+					if (EgoWeaponsKeybinds.isHoldingShift())
+						generateStatusDescription(list, new String[]{"bleed", "sinking"});
+					else
+						generateDescription(list,"sunshower_cloak", "ability", 4);
+					break;
+			}
+
+			list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+
+
+
 		}
+
 	};
 	//@ObjectHolder("ego_weapons:cigarette")
 	//public static final Item head = null;

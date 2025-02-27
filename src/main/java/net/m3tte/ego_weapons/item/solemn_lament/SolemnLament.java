@@ -4,9 +4,9 @@ package net.m3tte.ego_weapons.item.solemn_lament;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
-import net.m3tte.ego_weapons.EgoWeaponsModVars;
-import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
-import net.m3tte.ego_weapons.potion.EthernalRestPotionEffect;
+import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
+import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.potion.EternalRestPotionEffect;
 import net.m3tte.ego_weapons.potion.SolemnLamentEffects;
 import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
 import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
@@ -27,16 +27,13 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import yesman.epicfight.api.animation.types.DynamicAnimation;
-import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 
-import javax.annotation.Nullable;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
 
 public class SolemnLament extends SwordItem {
@@ -48,87 +45,128 @@ public class SolemnLament extends SwordItem {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> list, ITooltipFlag p_77624_4_) {
-		super.appendHoverText(p_77624_1_, p_77624_2_, list, p_77624_4_);
-		list.add(new StringTextComponent("[Ability] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Reload. ").withStyle(TextFormatting.GRAY)).append(new StringTextComponent(" 4E").withStyle(TextFormatting.AQUA)));
-		list.add(new StringTextComponent("[Passive] ").withStyle(TextFormatting.GREEN).append(new StringTextComponent("Store the LIVING and the DEPARTED").withStyle(TextFormatting.GRAY)));
+	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+		super.appendHoverText(itemstack, world, list, flag);
+		list.add(new StringTextComponent("It is merely that butterflies, both living and dead, bloom from where the gun points.").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+
+		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
+
+		switch (EgoWeaponsKeybinds.getUiPage() % 4) {
+			case 0:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"living_departed", "the_living", "the_departed", "sinking"});
+				else
+					generateDescription(list,"solemn_lament", "auto", 8);
+				break;
+			case 1:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"living_departed", "the_living", "the_departed", "sinking"});
+				else
+					generateDescription(list,"solemn_lament", "innate", 5);
+
+				break;
+			case 2:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"living_departed", "the_living", "the_departed", "sinking"});
+				else
+					generateDescription(list, "solemn_lament", "ability", 1);
+				break;
+			case 3:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"living_departed", "the_living", "the_departed", "sinking"});
+				else
+					generateDescription(list,"solemn_lament", "guard", 5);
+		}
+
+		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+
+
+
 	}
-
-	private static List<Integer> departedAnimations;
-	private static List<Integer> livingAnimations;
-
 
 	@Override
 	public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {
 		boolean retval = super.hurtEnemy(itemstack, entity, sourceentity);
 
-		if (livingAnimations == null) {
-			livingAnimations = Arrays.stream(new StaticAnimation[]{EgoWeaponsAnimations.SOLEMN_LAMENT_AUTO_D0, EgoWeaponsAnimations.SOLEMN_LAMENT_AUTO_D3, EgoWeaponsAnimations.SOLEMN_LAMENT_AUTO_D5, EgoWeaponsAnimations.SOLEMN_LAMENT_AUTO_R0, EgoWeaponsAnimations.SOLEMN_LAMENT_AUTO_R1, EgoWeaponsAnimations.SOLEMN_LAMENT_AUTO_R2, EgoWeaponsAnimations.SOLEMN_LAMENT_DASH_R, EgoWeaponsAnimations.SOLEMN_LAMENT_GUARD_COUNTERATTACK, EgoWeaponsAnimations.SOLEMN_LAMENT_SPECIAL_ATTACK}).map(StaticAnimation::getId).collect(Collectors.toList());
-			departedAnimations = Arrays.stream(new StaticAnimation[] {EgoWeaponsAnimations.SOLEMN_LAMENT_AUTO_D1, EgoWeaponsAnimations.SOLEMN_LAMENT_AUTO_D4, EgoWeaponsAnimations.SOLEMN_LAMENT_AUTO_L0, EgoWeaponsAnimations.SOLEMN_LAMENT_AUTO_L1, EgoWeaponsAnimations.SOLEMN_LAMENT_AUTO_L2, EgoWeaponsAnimations.SOLEMN_LAMENT_DASH_L, EgoWeaponsAnimations.SOLEMN_LAMENT_GUARD_COUNTERATTACK, EgoWeaponsAnimations.SOLEMN_LAMENT_SPECIAL_ATTACK}).map(StaticAnimation::getId).collect(Collectors.toList());
-		}
-
-		EgoWeaponsModVars.PlayerVariables entityData = sourceentity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
-
 		PlayerPatch<?> entitypatch = (PlayerPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
 
+
 		if (currentanim != null) {
-			if (livingAnimations.contains(currentanim.getId())) {
-				StaggerSystem.reduceStagger(entity, 4, sourceentity, false);
-				EgoWeaponsEffects.SINKING.get().increment(entity, sourceentity.hasEffect(EthernalRestPotionEffect.get()) ? 1 : 0, 1);
+
+			String animTag = currentanim.getRealAnimation().getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
+
+			switch (animTag) {
+				case "solemn_lament_dual":
+					StaggerSystem.reduceStagger(entity, 4, sourceentity, false);
+					EgoWeaponsEffects.SINKING.get().increment(entity, sourceentity.hasEffect(EternalRestPotionEffect.get()) ? 1 : 0, 1);
+					entity.hurt(DamageSource.OUT_OF_WORLD, 1);
+					if (sourceentity.hasEffect(EternalRestPotionEffect.get())) {
+						EgoWeaponsEffects.SINKING.get().increment(entity, 1, 0);
+					}
+					break;
+				case "solemn_lament_living":
+					StaggerSystem.reduceStagger(entity, 1, sourceentity, false);
+					EgoWeaponsEffects.SINKING.get().increment(entity, sourceentity.hasEffect(EternalRestPotionEffect.get()) ? 1 : 0, 1);
+					break;
+				case "solemn_lament_departed":
+					entity.hurt(DamageSource.OUT_OF_WORLD, 1);
+					if (sourceentity.hasEffect(EternalRestPotionEffect.get())) {
+						EgoWeaponsEffects.SINKING.get().increment(entity, 1, 0);
+					}
+					break;
+
+				case "solemn_lament_special":
+					if (!sourceentity.getPersistentData().contains("solemnLamentChargeHit")) {
+						sourceentity.getPersistentData().putBoolean("solemnLamentChargeHit", true);
+						entity.level.playSound((PlayerEntity) null, entity.getX(), entity.getY(), entity.getZ(),
+								EgoWeaponsSounds.SOLEMN_LAMENT_SPECIAL_IMPACT,
+								SoundCategory.PLAYERS, 1, 1.4f);
+
+						if (entity.level instanceof ServerWorld) {
+							((ServerWorld) entity.level).sendParticles(EgoWeaponsParticles.SOLEMN_LAMENT_BURST_HIT.get(), entity.getX(), entity.getY(), entity.getZ(), (int) 1, 0, 0, 0, 0);
+						}
+					}
+					int livingCount = SolemnLamentEffects.getAmmoCount(sourceentity, SolemnLamentEffects.getLiving());
+					int departedCount = SolemnLamentEffects.getAmmoCount(sourceentity, SolemnLamentEffects.getDeparted());
+
+					EgoWeaponsEffects.SINKING.get().increment(entity, (int) (departedCount/1.5f), (int) (livingCount/1.5f));
+
+					if (livingCount > 0) {
+						StaggerSystem.reduceStagger(entity, 2f * livingCount, sourceentity, false);
+						if (sourceentity.getEffect(SolemnLamentEffects.getLiving()).getDuration() > 3) {
+							sourceentity.removeEffect(SolemnLamentEffects.getLiving());
+							sourceentity.addEffect(new EffectInstance(SolemnLamentEffects.getLiving(), 3, livingCount-1));
+						}
+
+
+
+						if (entity instanceof PlayerEntity) {
+							SanitySystem.damageSanity((PlayerEntity) entity, 1f * livingCount);
+						}
+					}
+
+					if (departedCount > 0) {
+						entity.hurt(DamageSource.OUT_OF_WORLD, 2f * departedCount);
+						if (sourceentity.getEffect(SolemnLamentEffects.getDeparted()).getDuration() > 3) {
+							sourceentity.removeEffect(SolemnLamentEffects.getDeparted());
+							sourceentity.addEffect(new EffectInstance(SolemnLamentEffects.getDeparted(), 3, departedCount - 1));
+						}
+					}
+
+					if (!sourceentity.getPersistentData().contains("solemnLamentChargeStaggered") && (StaggerSystem.isStaggered(entity) || !entity.isAlive())) {
+						sourceentity.getPersistentData().putBoolean("solemnLamentChargeStaggered", true);
+						entity.level.playSound((PlayerEntity) null, entity.getX(), entity.getY(), entity.getZ(),
+								EgoWeaponsSounds.SOLEMN_LAMENT_SPECIAL_RELOAD,
+								SoundCategory.PLAYERS, 1, 1.4f);
+					}
+
+					break;
 			}
-			if (departedAnimations.contains(currentanim.getId())) {
-				entity.hurt(DamageSource.OUT_OF_WORLD, 1);
-			}
-
-			if (currentanim.getId() == EgoWeaponsAnimations.SOLEMN_LAMENT_SPECIAL_ATTACK.getId()) {
 
 
-				if (!sourceentity.getPersistentData().contains("solemnLamentChargeHit")) {
-					sourceentity.getPersistentData().putBoolean("solemnLamentChargeHit", true);
-					entity.level.playSound((PlayerEntity) null, entity.getX(), entity.getY(), entity.getZ(),
-							EgoWeaponsSounds.SOLEMN_LAMENT_SPECIAL_IMPACT,
-							SoundCategory.PLAYERS, 1, 1.4f);
-
-					if (entity.level instanceof ServerWorld) {
-						((ServerWorld) entity.level).sendParticles(EgoWeaponsParticles.SOLEMN_LAMENT_BURST_HIT.get(), entity.getX(), entity.getY(), entity.getZ(), (int) 1, 0, 0, 0, 0);
-					}
-				}
-				int livingCount = SolemnLamentEffects.getAmmoCount(sourceentity, SolemnLamentEffects.getLiving());
-				int departedCount = SolemnLamentEffects.getAmmoCount(sourceentity, SolemnLamentEffects.getDeparted());
-
-				EgoWeaponsEffects.SINKING.get().increment(entity, (int) (departedCount/2f), (int) (livingCount/2f));
-
-				if (livingCount > 0) {
-					StaggerSystem.reduceStagger(entity, 2f * livingCount, sourceentity, false);
-					if (sourceentity.getEffect(SolemnLamentEffects.getLiving()).getDuration() > 3) {
-						sourceentity.removeEffect(SolemnLamentEffects.getLiving());
-						sourceentity.addEffect(new EffectInstance(SolemnLamentEffects.getLiving(), 3, livingCount-1));
-					}
-
-
-
-					if (entity instanceof PlayerEntity) {
-						SanitySystem.damageSanity((PlayerEntity) entity, 1f * livingCount);
-					}
-				}
-
-				if (departedCount > 0) {
-					entity.hurt(DamageSource.OUT_OF_WORLD, 2f * departedCount);
-					if (sourceentity.getEffect(SolemnLamentEffects.getDeparted()).getDuration() > 3) {
-						sourceentity.removeEffect(SolemnLamentEffects.getDeparted());
-						sourceentity.addEffect(new EffectInstance(SolemnLamentEffects.getDeparted(), 3, departedCount - 1));
-					}
-				}
-
-				if (!sourceentity.getPersistentData().contains("solemnLamentChargeStaggered") && (StaggerSystem.isStaggered(entity) || !entity.isAlive())) {
-					sourceentity.getPersistentData().putBoolean("solemnLamentChargeStaggered", true);
-					entity.level.playSound((PlayerEntity) null, entity.getX(), entity.getY(), entity.getZ(),
-							EgoWeaponsSounds.SOLEMN_LAMENT_SPECIAL_RELOAD,
-							SoundCategory.PLAYERS, 1, 1.4f);
-				}
-			}
 		}
 
 

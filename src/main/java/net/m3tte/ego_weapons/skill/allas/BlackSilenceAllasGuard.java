@@ -2,8 +2,9 @@ package net.m3tte.ego_weapons.skill.allas;
 
 import net.m3tte.ego_weapons.EgoWeaponsModElements;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
-import net.m3tte.ego_weapons.world.capabilities.item.TCorpCategories;
+import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCategories;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -41,9 +42,9 @@ public class BlackSilenceAllasGuard extends EnergizingGuardSkill {
     private static final SkillDataKey<Integer> LAST_ACTIVE = SkillDataKey.createDataKey(SkillDataManager.ValueType.INTEGER);
     public static Builder createBuilder(ResourceLocation resourceLocation) {
         return GuardSkill.createBuilder(resourceLocation)
-                .addAdvancedGuardMotion(TCorpCategories.ALLAS_WORKSHOP, (item, player) -> EgoWeaponsAnimations.ALLAS_GUARD_HIT)
-                .addGuardMotion(TCorpCategories.ALLAS_WORKSHOP, (item, player) -> EgoWeaponsAnimations.ALLAS_GUARD_HIT)
-                .addGuardBreakMotion(TCorpCategories.ALLAS_WORKSHOP, (item, player) -> EgoWeaponsAnimations.RANGA_GUARD_STAGGER);
+                .addAdvancedGuardMotion(EgoWeaponsCategories.ALLAS_WORKSHOP, (item, player) -> BlackSilenceMovesetAnims.ALLAS_GUARD_HIT)
+                .addGuardMotion(EgoWeaponsCategories.ALLAS_WORKSHOP, (item, player) -> BlackSilenceMovesetAnims.ALLAS_GUARD_HIT)
+                .addGuardBreakMotion(EgoWeaponsCategories.ALLAS_WORKSHOP, (item, player) -> BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER);
     }
 
     @Override
@@ -143,7 +144,7 @@ public class BlackSilenceAllasGuard extends EnergizingGuardSkill {
 
 
             if (container.getDataManager().getDataValue(PENALTY) < 0.2 && successParrying) {
-                animation = EgoWeaponsAnimations.ALLAS_GUARD_COUNTER;
+                animation = BlackSilenceMovesetAnims.ALLAS_GUARD_COUNTER;
             } else {
                 animation = this.getGuardMotion(event.getPlayerPatch(), itemCapapbility, blockType);
             }
@@ -175,7 +176,7 @@ public class BlackSilenceAllasGuard extends EnergizingGuardSkill {
 
     @OnlyIn(Dist.CLIENT)
     public boolean shouldDraw(SkillContainer container) {
-        return container.getExecuter().getHoldingItemCapability(Hand.MAIN_HAND).getWeaponCategory() == TCorpCategories.ALLAS_WORKSHOP && (Float)container.getDataManager().getDataValue(PENALTY) > 0.0F;
+        return container.getExecuter().getHoldingItemCapability(Hand.MAIN_HAND).getWeaponCategory() == EgoWeaponsCategories.ALLAS_WORKSHOP && (Float)container.getDataManager().getDataValue(PENALTY) > 0.0F;
     }
 
     protected boolean isAdvancedGuard() {

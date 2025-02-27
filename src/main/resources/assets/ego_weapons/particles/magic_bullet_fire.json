@@ -1,0 +1,8 @@
+{
+  "textures": [
+    "ego_weapons:ammo/magic_bullet/fire_0",
+    "ego_weapons:ammo/magic_bullet/fire_1",
+    "ego_weapons:ammo/magic_bullet/fire_2",
+    "ego_weapons:ammo/magic_bullet/fire_3"
+  ]
+}

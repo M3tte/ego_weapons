@@ -1,6 +1,8 @@
 
 package net.m3tte.ego_weapons.item.blackSilence.weapons;
 
+import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.ITextComponent;
@@ -27,6 +29,9 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.AbstractMap;
 
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+
 // atelier_logic_shotgun
 public class AtelierlogicshotgunItem extends SwordItem {
 
@@ -36,10 +41,35 @@ public class AtelierlogicshotgunItem extends SwordItem {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> list, ITooltipFlag p_77624_4_) {
-		super.appendHoverText(p_77624_1_, p_77624_2_, list, p_77624_4_);
-		list.add(new StringTextComponent("A shotgun. Radiating vengeance."));
-		list.add(new StringTextComponent("[Ability] Swap Weapon Type - 1E"));
+	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+		super.appendHoverText(itemstack, world, list, flag);
+		list.add(new StringTextComponent("Manufactured by Old Boys Workshop").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+
+		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 3) + 1) + "/3] - - - - - - - =").withStyle(TextFormatting.GRAY));
+
+		switch (EgoWeaponsKeybinds.getUiPage() % 3) {
+			case 0:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{});
+				else
+					generateDescription(list, "blacksilenceweapon", "ability", 1);
+				break;
+			case 1:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"black"});
+				else
+					generateDescription(list,"atelier_logic_shotgun", "auto", 1);
+				break;
+			case 2:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"black"});
+				else
+					generateDescription(list,"atelier_logic_shotgun", "auto2", 3);
+				break;
+		}
+
+		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
 	}
 
 	@Override

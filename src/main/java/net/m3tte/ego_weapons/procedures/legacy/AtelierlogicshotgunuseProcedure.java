@@ -3,6 +3,7 @@ package net.m3tte.ego_weapons.procedures.legacy;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.execFunctions.AtelierCooldownHandler;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.movesets.AtelierLogicMovesetAnims;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -33,7 +34,7 @@ public class AtelierlogicshotgunuseProcedure {
 					LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 
-					entitypatch.playAnimationSynchronized(EgoWeaponsAnimations.ATELIER_SHOTGUN_FIRE, 0);
+					entitypatch.playAnimationSynchronized(AtelierLogicMovesetAnims.ATELIER_SHOTGUN_FIRE, 0);
 
 
 				}

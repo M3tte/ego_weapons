@@ -58,6 +58,7 @@ public class EgoWeaponsParticles {
     public static final RegistryObject<HitParticleType> MAGIC_BULLET_HIT = PARTICLES.register("magic_bullet_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
 
     public static final RegistryObject<BasicParticleType> STAGGER = PARTICLES.register("stagger", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> TAKE_AIM = PARTICLES.register("aim_taken", () -> new BasicParticleType(true));
 
     public static final RegistryObject<BasicParticleType> SOLEMN_LAMENT_FIRE_DEPARTED = PARTICLES.register("solemn_lament_fire_departed", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> SOLEMN_LAMENT_FIRE_LIVING = PARTICLES.register("solemn_lament_fire_living", () -> new BasicParticleType(true));
@@ -92,5 +93,46 @@ public class EgoWeaponsParticles {
     public static final RegistryObject<BasicParticleType> BURN_APPLY = PARTICLES.register("burn_apply", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> DARK_BURN_APPLY = PARTICLES.register("dark_burn_apply", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> SINKING_APPLY = PARTICLES.register("sinking_apply", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> DURANDAL_SWIPE_DOWN = PARTICLES.register("durandal_swipe_down", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> DURANDAL_SWIPE_UP = PARTICLES.register("durandal_swipe_up", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> DURANDAL_SWIPE_HORIZONTAL = PARTICLES.register("durandal_swipe_horizontal", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> EFFECT_NUMBER = PARTICLES.register("stagger_number", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> DAMAGE_NUMBER = PARTICLES.register("damage_number", () -> new BasicParticleType(true));
+
+    public static final RegistryObject<BasicParticleType> OUFI_AUTO_STRIKE = PARTICLES.register("oufi_auto_strike", () -> new BasicParticleType(true));
+    public static final RegistryObject<HitParticleType> OUFI_AUTO_HIT = PARTICLES.register("oufi_auto_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
+
+    public static final RegistryObject<BasicParticleType> OUFI_DASH_STRIKE = PARTICLES.register("oufi_dash_strike", () -> new BasicParticleType(true));
+    public static final RegistryObject<HitParticleType> OUFI_DASH_HIT = PARTICLES.register("oufi_dash_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
+    public static final RegistryObject<BasicParticleType> OUFI_SWIPE_DOWN = PARTICLES.register("oufi_swipe_down", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> OUFI_PIERCE = PARTICLES.register("oufi_pierce", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> BASIC_BULLET_IMPACT = PARTICLES.register("basic_bullet_strike", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> BASIC_BULLET_FIRE = PARTICLES.register("basic_bullet_fire", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> BASIC_BULLET_FIRE_SIDE = PARTICLES.register("basic_bullet_fire_side", () -> new BasicParticleType(true));
+
+    public static final RegistryObject<BasicParticleType> INCENDIARY_BULLET_IMPACT = PARTICLES.register("incendiary_bullet_strike", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> INCENDIARY_BULLET_FIRE = PARTICLES.register("incendiary_bullet_fire", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> INCENDIARY_BULLET_FIRE_SIDE = PARTICLES.register("incendiary_bullet_fire_side", () -> new BasicParticleType(true));
+
+    public static final RegistryObject<BasicParticleType> MOONSTONE_BULLET_IMPACT = PARTICLES.register("moonstone_bullet_strike", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> MOONSTONE_BULLET_FIRE = PARTICLES.register("moonstone_bullet_fire", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> MOONSTONE_BULLET_FIRE_SIDE = PARTICLES.register("moonstone_bullet_fire_side", () -> new BasicParticleType(true));
+
+    public static final RegistryObject<BasicParticleType> RIFLE_BASIC_BULLET_FIRE_SIDE = PARTICLES.register("rifle_standard_bullet_fire_side", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> RIFLE_SHOCKWAVE = PARTICLES.register("rifle_fire_shockwave", () -> new BasicParticleType(true));
+
+    public static final RegistryObject<BasicParticleType> RIFLE_ALHV_BULLET_FIRE_SIDE = PARTICLES.register("alhv_bullet_fire_side", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> RIFLE_ALHV_SHOCKWAVE = PARTICLES.register("rifle_fire_alhv_shockwave", () -> new BasicParticleType(true));
+
+    public static final RegistryObject<BasicParticleType> FULLSTOP_MACHETE_STRIKE = PARTICLES.register("fullstop_machete_strike", () -> new BasicParticleType(true));
+    public static final RegistryObject<HitParticleType> FULLSTOP_MACHETE_HIT = PARTICLES.register("fullstop_machete_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
+
+    public static final RegistryObject<BasicParticleType> CRIT = PARTICLES.register("crit_strike", () -> new BasicParticleType(true));
+
+    public static final RegistryObject<BasicParticleType> TEXTURED_AFTER_IMAGE = PARTICLES.register("textured_after_image", () -> new BasicParticleType(true));
+
+    public static final RegistryObject<BasicParticleType> MAGIC_BULLET_FIRE = PARTICLES.register("magic_bullet_fire", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> MAGIC_BULLET_FIRE_SIDE = PARTICLES.register("magic_bullet_fire_side", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> MAGIC_BULLET_SHOCKWAVE = PARTICLES.register("magic_bullet_shockwave", () -> new BasicParticleType(true));
 
 }

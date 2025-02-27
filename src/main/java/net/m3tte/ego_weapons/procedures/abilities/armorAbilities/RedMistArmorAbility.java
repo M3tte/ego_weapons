@@ -39,7 +39,7 @@ public class RedMistArmorAbility extends ItemAbility {
 
     @Override
     public String getName(PlayerEntity player, PlayerVariables playerVars) {
-        return "Courage";
+        return "Manifest E.G.O";
     }
 
     @Override

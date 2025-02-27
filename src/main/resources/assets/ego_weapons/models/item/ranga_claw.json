@@ -1,7 +1,19 @@
+
 {
-  "parent": "ego_weapons:custom/ranga_workshop",
-  "textures": {
-    "0": "ego_weapons:blocks/ranga_workshop",
-    "particle": "ego_weapons:items/defiled_cutter"
-  }
+  "parent": "item/generated",
+  "overrides": [
+    {
+      "predicate": {
+        "dagger": 0
+      },
+      "model": "ego_weapons:custom/ranga_workshop"
+
+    },
+    {
+      "predicate": {
+        "dagger": 1
+      },
+      "model": "ego_weapons:custom/ranga_workshop_dagger"
+    }
+  ]
 }

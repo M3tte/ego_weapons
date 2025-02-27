@@ -17,17 +17,9 @@ import net.minecraftforge.registries.ObjectHolder;
 
 import java.util.Objects;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class MagicBulletPotionEffect {
-	@ObjectHolder("ego_weapons:magic_bullet")
-	public static final Effect potion = null;
 
-	public static Effect get() {
-		Objects.requireNonNull(potion, () -> "Registry Object not present: MAGIC BULLET");
-		return potion;
-	}
-
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public static void registerEffect(RegistryEvent.Register<Effect> event) {
 		event.getRegistry().register(new EffectCustom());
 	}
@@ -107,5 +99,5 @@ public class MagicBulletPotionEffect {
 		} else {
 			entity.addEffect(new EffectInstance(MagicBulletPotionEffect.get(), 2000, 0));
 		}
-	}
+	}*/
 }

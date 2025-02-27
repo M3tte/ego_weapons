@@ -17,7 +17,7 @@ public class MimicryArmorAbility extends ItemAbility {
 
     @Override
     public int getBlipCost(PlayerEntity player, PlayerVariables playerVars) {
-        return 10;
+        return 8;
     }
 
     @Override

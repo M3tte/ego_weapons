@@ -127,6 +127,11 @@ public class SunshowerFoxPatch extends MobPatch<SunshowerFoxEntity> implements S
     }
 
     @Override
+    public StaticAnimation getStunAnimation(int strength) {
+        return null;
+    }
+
+    @Override
     public StaticAnimation getLiftAnimation(int strength) {
         return null;
     }

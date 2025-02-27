@@ -1,18 +1,17 @@
 {
   "replace": false,
   "values": [
-    "tcorp:atelier_logic_shotgun",
-    "tcorp:crystal_atelier",
-    "tcorp:allas_spear",
-    "tcorp:zelkova_mace",
-    "tcorp:ranga_claw_l",
-    "tcorp:atelier_logic_pistols",
-    "tcorp:zelkova_axe",
-    "tcorp:durandal",
-    "tcorp:ranga_dagger",
-    "tcorp:ranga_claw",
-    "tcorp:mook_workshop",
-    "tcorp:wheels_industry",
-    "tcorp:old_boys_workshop"
+    "ego_weapons:atelier_logic_shotgun",
+    "ego_weapons:crystal_atelier",
+    "ego_weapons:allas_spear",
+    "ego_weapons:zelkova_mace",
+    "ego_weapons:ranga_claw_l",
+    "ego_weapons:atelier_logic_pistols",
+    "ego_weapons:zelkova_axe",
+    "ego_weapons:durandal",
+    "ego_weapons:ranga_claw",
+    "ego_weapons:mook_workshop",
+    "ego_weapons:wheels_industry",
+    "ego_weapons:old_boys_workshop"
   ]
 }

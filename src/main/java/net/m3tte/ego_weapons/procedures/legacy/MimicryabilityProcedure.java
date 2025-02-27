@@ -4,6 +4,7 @@ import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.movesets.MimicryMovesetAnims;
 import net.m3tte.ego_weapons.particle.BlipeffectParticle;
 import net.m3tte.ego_weapons.particle.DamagefxParticle;
 import net.m3tte.ego_weapons.particle.RedflashParticle;
@@ -64,7 +65,7 @@ public class MimicryabilityProcedure {
 
 		entity.addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 75, 1));
 		entitypatch.playSound(EgoWeaponsSounds.KALI_SPLIT_HORIZONTAL_RING, 1, 1);
-		entitypatch.playAnimationSynchronized(EgoWeaponsAnimations.GREAT_SPLIT_HORIZONTAL, 0.1f);
+		entitypatch.playAnimationSynchronized(MimicryMovesetAnims.GREAT_SPLIT_HORIZONTAL, 0.1f);
 		if (world instanceof ServerWorld) {
 			((ServerWorld) world).sendParticles(DamagefxParticle.particle, x, (y + 1), z, (int) 4, 0.4, 0.6, 0.4, 0);
 			EgoWeaponsAnimations.spawnArmatureParticle(entitypatch, 0, new Vector3d(0.2,0.2f,-0.4f),1,RedflashParticle.particle,0,"Head",true);

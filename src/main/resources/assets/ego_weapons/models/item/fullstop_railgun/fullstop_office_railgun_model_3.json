@@ -1,0 +1,9 @@
+{
+	"parent": "ego_weapons:item/fullstop_railgun/fullstop_office_railgun_model",
+	"texture_size": [48, 24],
+	"textures": {
+		"0": "ego_weapons:items/fullstop_railgun/fullstop_office_railgun_3",
+		"particle": "ego_weapons:items/fullstop_railgun/fullstop_office_railgun_3"
+	}
+
+}

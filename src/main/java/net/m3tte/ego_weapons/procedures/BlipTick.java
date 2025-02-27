@@ -5,6 +5,7 @@ import net.m3tte.ego_weapons.network.packages.AbilityPackages;
 import net.m3tte.ego_weapons.potion.EnergyboostPotionEffect;
 import net.m3tte.ego_weapons.potion.EnergyfatiguePotionEffect;
 import net.m3tte.ego_weapons.potion.Terror;
+import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
 import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
@@ -17,6 +18,7 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -29,6 +31,7 @@ import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILIT
 public class BlipTick {
 	@Mod.EventBusSubscriber
 	private static class GlobalTrigger {
+
 		@SubscribeEvent
 		public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
 			if (event.phase == TickEvent.Phase.END) {
@@ -121,9 +124,9 @@ public class BlipTick {
 
 					if (entity.getItemBySlot(EquipmentSlotType.CHEST).equals(EgoWeaponsItems.SUNSHOWER_CLOAK.get())) {
 						if (EntityType.byString(entity.getShoulderEntityRight().getString("id")).filter((p_215344_0_) -> p_215344_0_ == EgoWeaponsEntities.SUNSHOWER_FOX.get()).isPresent()) {
-							sanityHeal += 0.1f;
+							sanityHeal += 0.3f;
 						} else if (EntityType.byString(entity.getShoulderEntityLeft().getString("id")).filter((p_215344_0_) -> p_215344_0_ == EgoWeaponsEntities.SUNSHOWER_FOX.get()).isPresent()) {
-							sanityHeal += 0.1f;
+							sanityHeal += 0.3f;
 						}
 					}
 
@@ -143,7 +146,7 @@ public class BlipTick {
 
 			entityData.maxblips = EmotionSystem.getMaxEnergy(entityData);
 
-			if (SanitySystem.getSanity(entity)<=1) {
+			if (SanitySystem.getSanity(entity)<=0.1f) {
 				entity.addEffect(new EffectInstance(Effects.BLINDNESS, 300, 0));
 				entity.addEffect(new EffectInstance(Effects.WEAKNESS, 300, 1));
 				entity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 300, 1));

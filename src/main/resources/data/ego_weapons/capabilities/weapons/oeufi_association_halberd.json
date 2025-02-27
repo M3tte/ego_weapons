@@ -1,0 +1,11 @@
+{
+	"attributes":
+	{
+		"common":
+		{
+			"impact":2.8,
+			"max_strikes":2
+		}
+	},
+	"type":"oeufi_association"
+}

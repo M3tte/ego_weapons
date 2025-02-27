@@ -3,6 +3,7 @@ package net.m3tte.ego_weapons.procedures.legacy;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.particle.BlacksilenceshadowParticle;
 import net.m3tte.ego_weapons.particle.BlipeffectParticle;
 import net.m3tte.ego_weapons.potion.OrlandoPotionEffect;
@@ -91,7 +92,7 @@ public class BlacksilencerushProcedure {
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) entity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 
-		entitypatch.playAnimationSynchronized(EgoWeaponsAnimations.ORLANDO_TRIGGER, 0.2f);
+		entitypatch.playAnimationSynchronized(BlackSilenceMovesetAnims.ORLANDO_TRIGGER, 0.2f);
 
 
 

@@ -3,6 +3,7 @@ package net.m3tte.ego_weapons.procedures.legacy;
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.particle.BlackdamageParticle;
 import net.m3tte.ego_weapons.particle.RedpowerupParticle;
 import net.m3tte.ego_weapons.particle.SparkparticleParticle;
@@ -113,7 +114,7 @@ public class AteliershotgunhitProcedure {
 					LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) entity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 					if (entitypatch != null) {
 						if (entitypatch.getHitAnimation(ExtendedDamageSource.StunType.LONG) == Animations.BIPED_HIT_LONG)
-							entitypatch.playAnimationSynchronized(EgoWeaponsAnimations.RANGA_GUARD_STAGGER, 0);
+							entitypatch.playAnimationSynchronized(BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER, 0);
 					}
 				}
 			}
@@ -123,7 +124,7 @@ public class AteliershotgunhitProcedure {
 						(entity.getZ()), (int) 1, (entity.getBbWidth() / 1.4), (entity.getBbHeight() / 3), (entity.getBbWidth() / 1.4), 0);
 			}
 			if (entity instanceof LivingEntity)
-				((LivingEntity) entity).setHealth((float) (((entity instanceof LivingEntity) ? ((LivingEntity) entity).getHealth() : -1) - 6));
+				((LivingEntity) entity).setHealth((float) (((entity instanceof LivingEntity) ? ((LivingEntity) entity).getHealth() : -1) - 5));
 		}
 	}
 }
