@@ -45,7 +45,7 @@ public class BlackSilenceWeakGuard extends EnergizingGuardSkill {
 
     @Override
     public void guard(SkillContainer container, CapabilityItem itemCapapbility, HurtEvent.Pre event, float knockback, float impact, boolean advanced) {
-        EmotionSystem.handleGuard(event.getPlayerPatch().getOriginal(), event.getAmount(), impact, false);
+        EmotionSystem.handleGuard(event.getPlayerPatch().getOriginal(), event.getAmount(), impact, false, event.getDamageSource().getEntity());
         super.guard(container, itemCapapbility, event, knockback, impact, advanced);
     }
 

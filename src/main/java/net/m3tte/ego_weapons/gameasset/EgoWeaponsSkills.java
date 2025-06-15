@@ -6,7 +6,6 @@
 package net.m3tte.ego_weapons.gameasset;
 
 import net.m3tte.ego_weapons.EgoWeaponsMod;
-import net.m3tte.ego_weapons.EgoWeaponsModElements;
 import net.m3tte.ego_weapons.gameasset.movesets.*;
 import net.m3tte.ego_weapons.skill.AtelierPistol.AtelierPassive;
 import net.m3tte.ego_weapons.skill.AtelierPistol.AtelierPistolSpecial;
@@ -18,10 +17,17 @@ import net.m3tte.ego_weapons.skill.allas.AllasPassive;
 import net.m3tte.ego_weapons.skill.allas.BlackSilenceAllasGuard;
 import net.m3tte.ego_weapons.skill.durandal.BasicBlockablePassive;
 import net.m3tte.ego_weapons.skill.durandal.DurandalCleave;
+import net.m3tte.ego_weapons.skill.firefist.FirefistActiveGuard;
+import net.m3tte.ego_weapons.skill.firefist.FirefistPassive;
 import net.m3tte.ego_weapons.skill.fullstop_rep.FullstopRepCounterGuard;
 import net.m3tte.ego_weapons.skill.fullstop_rep.FullstopRepPassive;
 import net.m3tte.ego_weapons.skill.fullstop_sniper.FullstopCounterGuard;
 import net.m3tte.ego_weapons.skill.fullstop_sniper.FullstopSniperPassive;
+import net.m3tte.ego_weapons.skill.heishou_mao.HeishouMaoActiveGuard;
+import net.m3tte.ego_weapons.skill.heishou_mao.HeishouMaoBlinkstep;
+import net.m3tte.ego_weapons.skill.heishou_mao.HeishouMaoPassive;
+import net.m3tte.ego_weapons.skill.liu_s6.LiuS6Passive;
+import net.m3tte.ego_weapons.skill.liu_s6.LiuS6WeakGuard;
 import net.m3tte.ego_weapons.skill.magic_bullet.MagicBulletDetonate;
 import net.m3tte.ego_weapons.skill.magic_bullet.MagicBulletGuard;
 import net.m3tte.ego_weapons.skill.magic_bullet.MagicBulletPassive;
@@ -34,6 +40,7 @@ import net.m3tte.ego_weapons.skill.red_mist.RedMistActiveGuard;
 import net.m3tte.ego_weapons.skill.red_mist.RedMistBlockable;
 import net.m3tte.ego_weapons.skill.solemnLament.SolemnLamentActiveGuard;
 import net.m3tte.ego_weapons.skill.solemnLament.SolemnLamentPassive;
+import net.m3tte.ego_weapons.skill.stigmaSword.SunsetBladeSkill;
 import net.m3tte.ego_weapons.skill.sunshower.SunshowerActiveGuard;
 import net.m3tte.ego_weapons.skill.sunshower.SunshowerPassive;
 import net.m3tte.ego_weapons.skill.sunshower.SunshowerPuddleStomp;
@@ -45,7 +52,6 @@ import yesman.epicfight.api.forgeevent.SkillRegistryEvent;
 import yesman.epicfight.api.utils.ExtendedDamageSource.StunType;
 import yesman.epicfight.api.utils.math.ExtraDamageType;
 import yesman.epicfight.api.utils.math.ValueCorrector;
-import yesman.epicfight.gameasset.Skills;
 import yesman.epicfight.skill.*;
 
 public class EgoWeaponsSkills {
@@ -119,6 +125,17 @@ public class EgoWeaponsSkills {
     public static Skill FULLSTOP_SNIPER_INNATE;
     public static Skill FULLSTOP_SNIPER_GUARD;
     public static Skill FULLSTOP_SNIPER_PASSIVE;
+    public static Skill LIU_S6_GUARD;
+    public static Skill LIU_S6_PASSIVE;
+
+    public static Skill LIU_S6_INNATE;
+    public static Skill FIREFIST_INNATE;
+    public static Skill FIREFIST_GUARD;
+    public static Skill FIREFIST_PASSIVE;
+    public static Skill SUNSET_BLADE;
+    public static Skill BLINKSTEP;
+    public static Skill HEISHOU_MAO_GUARD;
+    public static Skill HEISHOU_MAO_PASSIVE;
     public EgoWeaponsSkills() {
     }
 
@@ -130,7 +147,7 @@ public class EgoWeaponsSkills {
                         .setConsumption(100.0F).setAnimations(MimicryMovesetAnims.GREAT_SPLIT_VERTICAL)))
                 .newPropertyLine().addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.adder(2.0F))
                 .addProperty(AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.8F))
-                .addProperty(AttackPhaseProperty.ARMOR_NEGATION, ValueCorrector.adder(50.0F))
+                .addProperty(AttackPhaseProperty.ARMOR_NEGATION, ValueCorrector.adder(30.0F))
                 .addProperty(AttackPhaseProperty.IMPACT, ValueCorrector.adder(6.0F)), false);
 
         HELLO = event.registerSkill((
@@ -195,17 +212,17 @@ public class EgoWeaponsSkills {
                 .newPropertyLine()
                 .addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(1))
                 .addProperty(AttackPhaseProperty.EXTRA_DAMAGE, ExtraDamageType.get(ExtraDamageType.PERCENT_OF_TARGET_LOST_HEALTH, 0.35F))
-                .addProperty(AttackPhaseProperty.ARMOR_NEGATION, ValueCorrector.adder(50.0F))
+                .addProperty(AttackPhaseProperty.ARMOR_NEGATION, ValueCorrector.adder(30.0F))
                 .addProperty(AttackPhaseProperty.STUN_TYPE, StunType.LONG)
                 .registerPropertiesToAnimation(), false);
 
         MAGIC_BULLET_DETONATE = event.registerSkill(new MagicBulletDetonate(SpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "magic_bullet_detonate")).setConsumption(45.0F)), false);
 
-        GENERIC_ACTIVE_GUARD = event.registerSkill(new BlackSilenceActiveGuard(BlackSilenceActiveGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "blacksilence_active_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
+        GENERIC_ACTIVE_GUARD = event.registerSkill(new GenericActiveGuard(GenericActiveGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "blacksilence_active_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
 
         BASIC_BLOCKABLE_PASSIVE = event.registerSkill(new BasicBlockablePassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "basic_blockable_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
 
-        KALI_GUARD = event.registerSkill(new RedMistActiveGuard(BlackSilenceActiveGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "redmist_active_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
+        KALI_GUARD = event.registerSkill(new RedMistActiveGuard(GenericActiveGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "redmist_active_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
 
         KALI_PASSIVE = event.registerSkill(new RedMistBlockable(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "redmist_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
 
@@ -251,6 +268,22 @@ public class EgoWeaponsSkills {
         FULLSTOP_SNIPER_GUARD =event.registerSkill(new FullstopCounterGuard(FullstopCounterGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "fullstop_sniper_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
 
         FULLSTOP_SNIPER_PASSIVE = event.registerSkill(new FullstopSniperPassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "fullstop_sniper_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
+
+        LIU_S6_GUARD =event.registerSkill(new LiuS6WeakGuard(LiuS6WeakGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "liu_s6_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
+
+        LIU_S6_PASSIVE = event.registerSkill(new LiuS6Passive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "liu_s6_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
+        LIU_S6_INNATE = event.registerSkill(new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "liu_s6_innate"))
+                .setConsumption(30.0F).setAnimations(LiuSouth6MovesetAnims.LIU_S6_INNATE_1)), false);
+
+        FIREFIST_INNATE = event.registerSkill(new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "spew_fire"))
+                .setConsumption(30.0F).setMaxStack(2).setAnimations(FirefistMovesetAnims.FIREFIST_INNATE)), false);
+
+        FIREFIST_PASSIVE = event.registerSkill(new FirefistPassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "firefist_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
+        FIREFIST_GUARD =event.registerSkill(new FirefistActiveGuard(FirefistActiveGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "firefist_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
+        SUNSET_BLADE = event.registerSkill(new SunsetBladeSkill(SpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "sunset_blade")).setConsumption(20.0F).setMaxStack(3)), false);
+        BLINKSTEP = event.registerSkill(new HeishouMaoBlinkstep(SpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "blinkstep")).setConsumption(20.0F).setMaxStack(2)), false);
+        HEISHOU_MAO_PASSIVE = event.registerSkill(new HeishouMaoPassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "heishou_mao_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
+        HEISHOU_MAO_GUARD =event.registerSkill(new HeishouMaoActiveGuard(HeishouMaoActiveGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "heishou_mao_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
 
     }
 }

@@ -3,8 +3,10 @@ package net.m3tte.ego_weapons.gui.ingame;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
+import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.client.renderer.EgoWeaponsRenderTypes;
+import net.m3tte.ego_weapons.item.firefist.FirefistGauntlet;
 import net.m3tte.ego_weapons.item.guns.GunItem;
 import net.m3tte.ego_weapons.potion.SolemnLamentEffects;
 import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
@@ -13,6 +15,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Effect;
@@ -46,6 +49,8 @@ public class StatusEffectGUI extends EntityIndicator {
 
     private ResourceLocation solemnLamentEffectRL = new ResourceLocation(EgoWeaponsMod.MODID, "textures/mob_effect/living_departed.png");
     private ResourceLocation ammoRL = new ResourceLocation(EgoWeaponsMod.MODID, "textures/mob_effect/ammo.png");
+    private ResourceLocation d10fuelRL = new ResourceLocation(EgoWeaponsMod.MODID, "textures/mob_effect/district_10_fuel.png");
+    private ResourceLocation ov_d10fuelRL = new ResourceLocation(EgoWeaponsMod.MODID, "textures/mob_effect/overheated_district_10_fuel.png");
 
     @Override
     public void drawIndicator(LivingEntity entityIn, MatrixStack matStackIn, IRenderTypeBuffer bufferIn, float partialTicks) {
@@ -62,6 +67,11 @@ public class StatusEffectGUI extends EntityIndicator {
 
         if (entityIn.getItemInHand(Hand.MAIN_HAND).getItem() instanceof GunItem || entityIn.getItemInHand(Hand.OFF_HAND).getItem() instanceof GunItem)
             additionalRenders++;
+
+        int fuel = FirefistGauntlet.getFuel(entityIn);
+        if (fuel > 0 || entityIn.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.FIREFIST_SUIT.get())) {
+            additionalRenders++;
+        }
 
         if (!activeEffects.isEmpty() || additionalRenders > 0) {
             Iterator<EffectInstance> iter = activeEffects.iterator();
@@ -81,6 +91,11 @@ public class StatusEffectGUI extends EntityIndicator {
 
                 renderEffect(solemnLamentEffectRL, prevActives, startX, startY, slCount, slPotency, bufferIn, mvMatrix, true, true);
 
+                prevActives++;
+            }
+
+            if (fuel > 0 || entityIn.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.FIREFIST_SUIT.get())) {
+                renderEffect((fuel > 50 || fuel <= 0) && !(entityIn.hasEffect(EgoWeaponsEffects.FUEL_IGNITION.get()) && fuel > 0) ? d10fuelRL : ov_d10fuelRL, prevActives, startX, startY, 0, fuel, bufferIn, mvMatrix, true, false);
                 prevActives++;
             }
 

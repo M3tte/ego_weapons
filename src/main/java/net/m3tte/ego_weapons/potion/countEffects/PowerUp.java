@@ -18,7 +18,7 @@ import java.util.UUID;
 
 public class PowerUp extends CountPotencyStatus {
     public PowerUp() {
-        super(EffectType.HARMFUL, "power_up",-16777216);
+        super(EffectType.BENEFICIAL, "power_up",-16777216);
     }
 
     @Override

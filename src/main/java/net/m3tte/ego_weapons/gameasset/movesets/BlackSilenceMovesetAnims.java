@@ -5,7 +5,6 @@ import net.m3tte.ego_weapons.entities.AtelierPistolsBullet;
 import net.m3tte.ego_weapons.execFunctions.AtelierCooldownHandler;
 import net.m3tte.ego_weapons.execFunctions.BlackSilenceEvaluator;
 import net.m3tte.ego_weapons.gameasset.*;
-import net.m3tte.ego_weapons.item.blackSilence.weapons.AtelierLogicRevolver;
 import net.m3tte.ego_weapons.particle.BlacksilenceshadowParticle;
 import net.m3tte.ego_weapons.potion.FuriosoPotionEffect;
 import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
@@ -835,8 +834,8 @@ public class BlackSilenceMovesetAnims {
                 if (mookStacks > 0) {
                     playerPatch.setStamina(playerPatch.getStamina() + playerPatch.getMaxStamina() * 0.08f * mookStacks);
 
-                    if (mookStacks > 1 && entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, (Direction)null).orElse(new EgoWeaponsModVars.PlayerVariables()).blips < 10) {
-                        double _setval = Math.min(entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, (Direction)null).orElse(new EgoWeaponsModVars.PlayerVariables()).blips + (double) (mookStacks - mookStacks % 2) / 2, 10.0);
+                    if (mookStacks > 1 && entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, (Direction)null).orElse(new EgoWeaponsModVars.PlayerVariables()).light < 10) {
+                        double _setval = Math.min(entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, (Direction)null).orElse(new EgoWeaponsModVars.PlayerVariables()).light + (double) (mookStacks - mookStacks % 2) / 2, 10.0);
 
                         //if (playerPatch.getOriginal().getCooldowns().isOnCooldown(SuitItem.helmet.getItem()))
                         //    playerPatch.getOriginal().getCooldowns().removeCooldown(SuitItem.helmet.getItem());
@@ -1178,9 +1177,9 @@ public class BlackSilenceMovesetAnims {
                                 15, chosenEntity.getBbWidth()/2, chosenEntity.getBbHeight()/2, chosenEntity.getBbWidth()/2, 0.3);
                         EgoWeaponsEffects.BLEED.get().increment((LivingEntity) chosenEntity, 2, 2);
                         if (entity instanceof PlayerEntity)
-                            chosenEntity.hurt(new SimpleEgoDamageSource((EntityDamageSource) DamageSource.playerAttack((PlayerEntity) entity), GenericEgoDamage.AttackTypes.SLASH, GenericEgoDamage.DamageTypes.BLACK, true), (float) 20);
+                            chosenEntity.hurt(new SimpleEgoDamageSource((EntityDamageSource) DamageSource.playerAttack((PlayerEntity) entity), GenericEgoDamage.AttackTypes.SLASH, GenericEgoDamage.DamageTypes.BLACK, true, "mook_workshop_cut"), (float) 20);
                         else
-                            chosenEntity.hurt(new SimpleEgoDamageSource((EntityDamageSource) DamageSource.mobAttack(entity), GenericEgoDamage.AttackTypes.SLASH, GenericEgoDamage.DamageTypes.BLACK, true), (float) 20);
+                            chosenEntity.hurt(new SimpleEgoDamageSource((EntityDamageSource) DamageSource.mobAttack(entity), GenericEgoDamage.AttackTypes.SLASH, GenericEgoDamage.DamageTypes.BLACK, true, "mook_workshop_cut"), (float) 20);
                         chosenEntity.playSound(EgoWeaponsSounds.BLACK_SILENCE_MOOK_HIT, 1, 1f);
                         LivingEntityPatch<?> targetPatch = (LivingEntityPatch<?>) chosenEntity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
                         if (targetPatch != null) {

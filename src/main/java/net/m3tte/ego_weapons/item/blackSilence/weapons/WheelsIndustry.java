@@ -4,6 +4,7 @@ package net.m3tte.ego_weapons.item.blackSilence.weapons;
 import net.m3tte.ego_weapons.execFunctions.BlackSilenceEvaluator;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
+import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
 import net.minecraft.client.util.ITooltipFlag;
@@ -13,6 +14,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.core.pattern.AbstractStyleNameConverter;
 import yesman.epicfight.api.animation.types.DynamicAnimation;
@@ -25,7 +27,7 @@ import java.util.List;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
-public class WheelsIndustry extends SwordItem {
+public class WheelsIndustry extends EgoWeaponsWeapon {
 	public WheelsIndustry(int p_i48460_2_, float p_i48460_3_, Properties p_i48460_4_) {
 		super(wheelsTier, p_i48460_2_, p_i48460_3_, p_i48460_4_);
 	}
@@ -38,7 +40,8 @@ public class WheelsIndustry extends SwordItem {
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
-
+		list.add(new TranslationTextComponent("desc.ego_weapons.risk.aleph"));
+		list.add(new StringTextComponent(" "));
 		switch (EgoWeaponsKeybinds.getUiPage() % 4) {
 			case 0:
 				if (EgoWeaponsKeybinds.isHoldingShift())

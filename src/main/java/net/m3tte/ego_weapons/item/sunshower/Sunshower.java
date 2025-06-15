@@ -10,8 +10,10 @@ import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.gameasset.movesets.SunshowerMovesetAnims;
+import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
+import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
@@ -51,7 +53,7 @@ import static net.m3tte.ego_weapons.procedures.SharedFunctions.*;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
-public class Sunshower extends SwordItem {
+public class Sunshower extends EgoWeaponsWeapon {
 
 	private static IItemTier sunshowerTier = new IItemTier() {
 
@@ -91,7 +93,10 @@ public class Sunshower extends SwordItem {
 		super(sunshowerTier, p_i48460_2_, p_i48460_3_, p_i48460_4_);
 	}
 
-
+	@Override
+	public String getDefaultKillIdentifier() {
+		return "sunshower";
+	}
 
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
@@ -100,19 +105,20 @@ public class Sunshower extends SwordItem {
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
-
+		list.add(new TranslationTextComponent("desc.ego_weapons.risk.he"));
+		list.add(new StringTextComponent(" "));
 		switch (EgoWeaponsKeybinds.getUiPage() % 4) {
 			case 0:
 				if (EgoWeaponsKeybinds.isHoldingShift())
 					generateStatusDescription(list, new String[]{"white", "sinking"});
 				else
-					generateDescription(list, "sunshower", "auto", 4);
+					generateDescription(list, "sunshower", "auto", 7);
 				break;
 			case 1:
 				if (EgoWeaponsKeybinds.isHoldingShift())
 					generateStatusDescription(list, new String[]{"white", "sinking", "tremor_burst", "rupture"});
 				else
-					generateDescription(list,"sunshower", "innate", 4);
+					generateDescription(list,"sunshower", "innate", 6);
 				break;
 			case 2:
 				if (EgoWeaponsKeybinds.isHoldingShift())
@@ -181,11 +187,16 @@ public class Sunshower extends SwordItem {
 
 		switch (animIdentifier) {
 			case "sunshower_auto_1":
-				EgoWeaponsEffects.SINKING.get().increment(target, 0, 2);
+				EgoWeaponsEffects.SINKING.get().increment(target, 1, 1);
 				EgoWeaponsEffects.SINKING.get().increment(sourceentity, 0, 2);
 				break;
 
+			case "sunshower_auto_2":
 			case "sunshower_auto_3":
+				EgoWeaponsEffects.SINKING.get().increment(target, 1, 1);
+				break;
+
+			case "sunshower_auto_4":
 				EgoWeaponsEffects.SINKING.get().increment(target, 3, 1);
 				break;
 
@@ -203,7 +214,7 @@ public class Sunshower extends SwordItem {
 
 			case "sunshower_spread_out_1":
 				entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().putInt("spreadoutcounter",1);
-				EgoWeaponsEffects.SINKING.get().increment(target, 3, 0);
+				EgoWeaponsEffects.SINKING.get().increment(target, 4, 0);
 				break;
 
 			case "sunshower_spread_out_2":
@@ -220,7 +231,7 @@ public class Sunshower extends SwordItem {
 
 			case "sunshower_spread_out_3":
 				entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().remove("spreadoutcounter");
-				EgoWeaponsEffects.RUPTURE.get().increment(target, 0, 4);
+				EgoWeaponsEffects.RUPTURE.get().increment(target, 2, 4);
 				break;
 
 			case "sunshower_counter":
@@ -228,7 +239,7 @@ public class Sunshower extends SwordItem {
 				break;
 
 			case "sunshower_puddle_stomp_3":
-				EgoWeaponsEffects.RUPTURE.get().increment(target, 0, 5);
+				EgoWeaponsEffects.RUPTURE.get().increment(target, 2, 5);
 				TremorEffect.burstTremor(target, true);
 				EgoWeaponsEffects.SINKING.get().increment(target, 1, 2);
 				break;
@@ -247,6 +258,39 @@ public class Sunshower extends SwordItem {
 		}
 
 		return retval;
+	}
+
+	public static float modifyDamageAmount(LivingEntity target, LivingEntity source, float mult, DamageSource damageSource) {
+
+		PlayerPatch<?> entitypatch = (PlayerPatch<?>) source.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+
+		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
+
+		String weaponIdentifier = (currentanim.getRealAnimation()).getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
+
+		PlayerVariables entityData = source.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
+
+
+		int selfSinkingPotency = EgoWeaponsEffects.SINKING.get().getPotency(source);
+		int targetSinkingPotency = EgoWeaponsEffects.SINKING.get().getPotency(source);
+
+
+
+		switch (weaponIdentifier) {
+			case "sunshower_puddle_stomp_3":
+				SharedFunctions.incrementBonusDamage(damageSource, 0.5f);
+				mult += 0.5f;
+				break;
+
+			case "sunshower_spread_out_3":
+				SharedFunctions.incrementBonusDamage(damageSource, 1f);
+				mult += 1f;
+				break;
+		}
+
+
+
+		return mult;
 	}
 
 	public static StaticAnimation.Event[] setOpenstate(int state) {
@@ -359,6 +403,8 @@ public class Sunshower extends SwordItem {
 		events[0] = StaticAnimation.Event.create(1.45F, (entitypatch) -> {
 			entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().putInt("open", 2);
 			entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().remove("changestateblock");
+			if (entitypatch.getOriginal() instanceof PlayerEntity)
+				SanitySystem.healSanity((PlayerEntity) entitypatch.getOriginal(), 5);
 			entitypatch.playSound(EgoWeaponsSounds.SUNSHOWER_PUDDLE_STOMP_3, 1, 1, 1);
 			EgoWeaponsAnimations.spawnArmatureParticle(entitypatch, 0, new Vector3d(0,0,-1.5f), 1, EgoWeaponsParticles.SUNSHOWER_OPEN.get(), 0, "Tool_R");
 			EgoWeaponsAnimations.spawnArmatureParticle(entitypatch, 0, new Vector3d(0,0,-1.05f), 1, EgoWeaponsParticles.PUDDLE_STOMP_IMPACT.get(), 0, "Tool_R");
@@ -406,7 +452,8 @@ public class Sunshower extends SwordItem {
 
 		events[0] = StaticAnimation.Event.create(0f, (entitypatch) -> {
 			if (entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().getInt("spreadoutcounter") >= 1) {
-				entitypatch.playAnimationSynchronized(SunshowerMovesetAnims.SUNSHOWER_SPREAD_OUT_2, 0);
+				if (!entitypatch.getOriginal().level.isClientSide())
+					entitypatch.playAnimationSynchronized(SunshowerMovesetAnims.SUNSHOWER_SPREAD_OUT_2, 0);
 				entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().putInt("open", 0);
 				entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().remove("spreadoutcounter");
 				entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().remove("changestateblock");

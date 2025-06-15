@@ -25,9 +25,13 @@ public enum EgoWeaponsCategories implements WeaponCategory {
     MIMICRY,
     SOLEMN_LAMENT,
     SUNSHOWER,
+    LIU_FIRE_GAUNTLET,
+    FIREFIST_GAUNTLET,
     OEUFI,
     FULLSTOP_REP,
     FULLSTOP_SNIPER,
+    STIGMA_WORKSHOP_SWORD,
+    HEISHOU_MAO_SWORD,
     MAGIC_BULLET;
 
     final int id;

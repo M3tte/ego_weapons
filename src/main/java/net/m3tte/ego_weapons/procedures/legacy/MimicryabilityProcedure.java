@@ -51,9 +51,9 @@ public class MimicryabilityProcedure {
 			((LivingEntity) entity).addEffect(new EffectInstance(Effects.DIG_SLOWDOWN, (int) 80, (int) 4, (false), (false)));
 		{
 			double _setval = ((entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null)
-					.orElse(new EgoWeaponsModVars.PlayerVariables())).blips - 7);
+					.orElse(new EgoWeaponsModVars.PlayerVariables())).light - 7);
 			entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-				capability.blips = _setval;
+				capability.light = _setval;
 				capability.syncPlayerVariables(entity);
 			});
 		}

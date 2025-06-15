@@ -6,6 +6,7 @@ import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.movesets.MimicryMovesetAnims;
+import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.procedures.BlipTick;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
@@ -21,6 +22,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import yesman.epicfight.api.animation.types.AttackAnimation;
 import yesman.epicfight.api.animation.types.DynamicAnimation;
@@ -42,7 +44,7 @@ import static net.m3tte.ego_weapons.procedures.SharedFunctions.pummelDownEntity;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
-public class MimicryItem extends SwordItem {
+public class MimicryItem extends EgoWeaponsWeapon {
 
 	private static IItemTier mimicryTier = new IItemTier() {
 
@@ -86,8 +88,9 @@ public class MimicryItem extends SwordItem {
 		list.add(new StringTextComponent("I can't stop here...").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
-		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 7) + 1) + "/8] - - - - - - - =").withStyle(TextFormatting.GRAY));
-
+		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 7) + 1) + "/7] - - - - - - - =").withStyle(TextFormatting.GRAY));
+		list.add(new TranslationTextComponent("desc.ego_weapons.risk.aleph"));
+		list.add(new StringTextComponent(" "));
 
 		switch (EgoWeaponsKeybinds.getUiPage() % 7) {
 			case 0:
@@ -227,8 +230,8 @@ public class MimicryItem extends SwordItem {
 				case "kali_dash":
 					EgoWeaponsEffects.BLEED.get().increment(target, 0, 1);
 					if (entityData != null) {
-						if (entityData.blips > 2) {
-							entityData.blips -= 2;
+						if (entityData.light > 2) {
+							entityData.light -= 2;
 							entitypatch.playAnimationSynchronized(MimicryMovesetAnims.KALI_REND, 0);
 
 							entitypatch.playSound(EgoWeaponsSounds.SWORD_STAB, 1, 1, 1);
@@ -394,7 +397,7 @@ public class MimicryItem extends SwordItem {
 
 					if (potencyv > 0) {
 						SharedFunctions.incrementBonusDamage(damageSource, potencyv);
-						amount *= 1 + potencyv;
+						amount += potencyv;
 					}
 					break;
 				case "kali_great_split_vertical":
@@ -403,7 +406,7 @@ public class MimicryItem extends SwordItem {
 
 					if (gsvPot > 0) {
 						SharedFunctions.incrementBonusDamage(damageSource, gsvPot);
-						amount *= 1 + gsvPot;
+						amount += gsvPot;
 					}
 					break;
 				case "kali_great_split_horizontal":
@@ -412,7 +415,7 @@ public class MimicryItem extends SwordItem {
 
 					if (gshPot > 0) {
 						SharedFunctions.incrementBonusDamage(damageSource, gshPot);
-						amount *= 1 + gshPot;
+						amount += gshPot;
 					}
 					break;
 			}

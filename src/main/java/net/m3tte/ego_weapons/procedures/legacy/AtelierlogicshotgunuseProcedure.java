@@ -2,7 +2,6 @@ package net.m3tte.ego_weapons.procedures.legacy;
 
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.execFunctions.AtelierCooldownHandler;
-import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.gameasset.movesets.AtelierLogicMovesetAnims;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -22,7 +21,7 @@ public class AtelierlogicshotgunuseProcedure {
 		double y = dependencies.get("y") instanceof Integer ? (int) dependencies.get("y") : (double) dependencies.get("y");
 		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
 		Entity entity = (Entity) dependencies.get("entity");
-		if ((3 <= (entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).orElse(new EgoWeaponsModVars.PlayerVariables())).blips || AtelierCooldownHandler.hasFuriosoBonus((LivingEntity) entity))
+		if ((3 <= (entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).orElse(new EgoWeaponsModVars.PlayerVariables())).light || AtelierCooldownHandler.hasFuriosoBonus((LivingEntity) entity))
 				&& 0 >= (entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null)
 						.orElse(new EgoWeaponsModVars.PlayerVariables())).globalcooldown && ((entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null)
 				.orElse(new EgoWeaponsModVars.PlayerVariables())).firingMode)) {

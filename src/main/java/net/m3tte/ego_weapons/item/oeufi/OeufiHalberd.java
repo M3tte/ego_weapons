@@ -7,6 +7,7 @@ import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.gameasset.movesets.OeufiAssocMovesetAnims;
+import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.network.packages.ParticlePackages;
 import net.m3tte.ego_weapons.potion.countEffects.TremorDecayEffect;
@@ -45,7 +46,7 @@ import static net.m3tte.ego_weapons.procedures.SharedFunctions.*;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
-public class OeufiHalberd extends SwordItem {
+public class OeufiHalberd extends EgoWeaponsWeapon {
 
 	private static IItemTier oeufiTier = new IItemTier() {
 
@@ -85,8 +86,10 @@ public class OeufiHalberd extends SwordItem {
 		super(oeufiTier, p_i48460_2_, p_i48460_3_, p_i48460_4_);
 	}
 
-
-
+	@Override
+	public String getDefaultKillIdentifier() {
+		return "oeufi_halberd";
+	}
 
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
@@ -95,13 +98,14 @@ public class OeufiHalberd extends SwordItem {
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
-
+		list.add(new TranslationTextComponent("desc.ego_weapons.risk.he"));
+		list.add(new StringTextComponent(" "));
 		switch (EgoWeaponsKeybinds.getUiPage() % 4) {
 			case 0:
                 if (EgoWeaponsKeybinds.isHoldingShift())
                     generateStatusDescription(list, new String[]{"black", "tremor", "tremor_decay", "tremor_burst", "tremor_conversion"});
                 else
-                    generateDescription(list, "oufi_halberd", "ability", 5);
+                    generateDescription(list, "oufi_halberd", "ability", 6);
                 break;
 			case 1:
 				if (EgoWeaponsKeybinds.isHoldingShift())
@@ -147,27 +151,28 @@ public class OeufiHalberd extends SwordItem {
 
 		PlayerVariables entityData = sourceentity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
-		PlayerPatch<?> entitypatch = (PlayerPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
 
 		final int anim_id = currentanim.getId();
 
+		LivingEntityPatch<?> targetPatch = (LivingEntityPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+
 		if (currentanim.getRealAnimation() instanceof BasicEgoAttackAnimation) {
 			//System.out.println("IS BASIC EGO ATTACK ANIM" + (currentanim.getRealAnimation()).getProperty(BasicEgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER));
 
-			String weaponIdentifier = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
+			String attackIdentifier = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
 
 			// Different animation effects
-			switch (weaponIdentifier) {
+			switch (attackIdentifier) {
 				case "oeufi_contract_counter":
-					TremorEffect tr = TremorEffect.incrementTremor(target, 2, 1);
+					TremorEffect tr = TremorEffect.incrementTremor(target, 3, 2);
 					TremorEffect.burstTremor(target, true);
 					break;
 				case "oeufi_counter_2":
-					TremorEffect ef = TremorEffect.incrementTremor(target, 2, 1);
+					TremorEffect ef = TremorEffect.incrementTremor(target, 2, 2);
 					if (!StaggerSystem.isStaggered(target)) {
-						LivingEntityPatch<?> targetPatch = (LivingEntityPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 						if (targetPatch != null && ef.getPotency(target) > 10)
 							staggerEntity(targetPatch, 2, false);
@@ -175,6 +180,8 @@ public class OeufiHalberd extends SwordItem {
 					break;
 				case "oeufi_auto1":
                 case "oeufi_innate":
+					if (targetPatch != null)
+						SharedFunctions.hitstunEntity(targetPatch, 3, false, 0);
                     TremorEffect.incrementTremor(target, 0, 1);
 					break;
 				case "oeufi_auto2":
@@ -188,12 +195,11 @@ public class OeufiHalberd extends SwordItem {
                 case "oeufi_innate_2":
 					TremorEffect.burstTremor(target, true);
 					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.OUFI_SWIPE_DOWN.get().getRegistryName()));
-					LivingEntityPatch<?> targetPatch = (LivingEntityPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 					if (TremorEffect.detectTremorType(target) instanceof TremorDecayEffect) {
 
 						if (sourceentity instanceof PlayerEntity) {
 							PlayerEntity player = (PlayerEntity)sourceentity;
-							entitypatch.setStamina(Math.min(entitypatch.getMaxStamina(), entitypatch.getStamina() + entitypatch.getMaxStamina() * 0.3F));
+							((PlayerPatch)entitypatch).setStamina(Math.min(((PlayerPatch)entitypatch).getMaxStamina(), ((PlayerPatch)entitypatch).getStamina() + ((PlayerPatch)entitypatch).getMaxStamina() * 0.3F));
 							BlipTick.chargeBlips(player, 1, true);
 						}
 					}
@@ -205,24 +211,27 @@ public class OeufiHalberd extends SwordItem {
 				case "special1":
 					TremorEffect.incrementTremor(target, 0, 3);
 					entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().putBoolean("specialHit", true);
-
+					if (targetPatch != null)
+						SharedFunctions.hitstunEntity(targetPatch, 3, false, 0);
 					break;
 				case "special2":
 					TremorEffect.incrementTremor(target, 1, 1);
 					entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().putBoolean("specialHit", true);
-
+					if (targetPatch != null)
+						SharedFunctions.hitstunEntity(targetPatch, 3, false, 0);
 					break;
 				case "special3":
 
 					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.OUFI_PIERCE.get().getRegistryName()));
 					TremorEffect tremor = TremorEffect.detectTremorType(target);
+
 					if (tremor != null) {
 						if (tremor instanceof TremorDecayEffect) {
 							TremorEffect.burstTremor(target, true);
 
 							if (sourceentity instanceof PlayerEntity) {
 								PlayerEntity player = (PlayerEntity)sourceentity;
-								entitypatch.setStamina(Math.min(entitypatch.getMaxStamina(), entitypatch.getStamina() + entitypatch.getMaxStamina() * 0.3F));
+								((PlayerPatch)entitypatch).setStamina(Math.min(((PlayerPatch)entitypatch).getMaxStamina(), ((PlayerPatch)entitypatch).getStamina() + ((PlayerPatch)entitypatch).getMaxStamina() * 0.3F));
 								BlipTick.chargeBlips(player, 1, true);
 							}
 
@@ -236,18 +245,14 @@ public class OeufiHalberd extends SwordItem {
 					break;
 			}
 
-			boolean finale = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO).orElse(false);
 
-			if (finale && sourceentity.hasEffect(EgoWeaponsEffects.OBLIGATION_FULLFILLMENT.get())) {
-				TremorEffect.burstTremor(target, true);
-			}
 		}
 
 		return true;
 	}
 
 
-	public static float modifyDamageAmount(LivingEntity target, LivingEntity source, float amount, DamageSource damageSource) {
+	public static float modifyDamageAmount(LivingEntity target, LivingEntity source, float dmgMult, DamageSource damageSource) {
 
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) source.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
@@ -258,7 +263,7 @@ public class OeufiHalberd extends SwordItem {
 		if (source.hasEffect(EgoWeaponsEffects.OBLIGATION_FULLFILLMENT.get())) {
 			if (target.hasEffect(EgoWeaponsEffects.TREMOR_DECAY.get()) && finale) {
 				SharedFunctions.incrementBonusDamage(damageSource, 0.25f);
-				amount *= 1.25f;
+				dmgMult += 0.25f;
 			}
 		}
 
@@ -267,14 +272,13 @@ public class OeufiHalberd extends SwordItem {
 			if (tremor != null) {
 				int potency = tremor.getPotency(target);
 
-				float multiplier = Math.min(1 + potency*0.01f,1.4f);
 				SharedFunctions.incrementBonusDamage(damageSource, Math.min(potency*0.01f,0.4f));
-				amount *= multiplier;
+				dmgMult += Math.min(potency*0.01f,0.4f);
 			}
 		}
 
 
-		return amount;
+		return dmgMult;
 	}
 
 	public static StaticAnimation.Event[] contractOpen() {
@@ -365,7 +369,6 @@ public class OeufiHalberd extends SwordItem {
 
 		return events;
 	}
-
 	public static StaticAnimation.Event[] special2Event(float timeStamp) {
 		StaticAnimation.Event[] events = new StaticAnimation.Event[2];
 

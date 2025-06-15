@@ -14,7 +14,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class SlashDown extends RotationAttackParticle {
 
     private Entity sourceEntity;
-    public SlashDown(ClientWorld world, double x, double y, double z, double xSpeed, double targetEntityID, double sourceID, IAnimatedSprite spriteProvider, float quadsize, int lifetime, Vector3f offset, Vector3f offsetRate) {
+    public SlashDown(ClientWorld world, double x, double y, double z, double xSpeed, double targetEntityID, double sourceID, IAnimatedSprite spriteProvider, float quadsize, int lifetime, Vector3f offset, Vector3f offsetRate, boolean glow) {
         super(world, x, y, z, xSpeed, targetEntityID, sourceID, spriteProvider);
         this.flipY = false;
         this.invertY = true;
@@ -23,7 +23,7 @@ public class SlashDown extends RotationAttackParticle {
         this.lifetime = lifetime;
         this.offset = offset;
         this.offsetRate = offsetRate;
-
+        this.glowRenderType = glow;
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -34,14 +34,16 @@ public class SlashDown extends RotationAttackParticle {
         private Vector3f offsetRate;
         private int lifetime;
         private float quadSize;
+        private boolean glow;
 
 
-        public Provider(IAnimatedSprite spriteSet) {
+        public Provider(IAnimatedSprite spriteSet, float quadSize, int lifeTime, Vector3f offsets, boolean glow) {
             this.spriteSet = spriteSet;
-            this.quadSize = 2.5f;
-            this.lifetime = 5;
-            this.offset = new Vector3f(0.3f,1f,0);
+            this.quadSize = quadSize; //2.5f;
+            this.lifetime = lifeTime; // 5;
+            this.offset = offsets; // new Vector3f(0.3f,1f,0);
             this.offsetRate = new Vector3f(0.1f,0,0);
+            this.glow = glow;
         }
 
         public Provider(IAnimatedSprite spriteSet, float quadsize, int lifetime, Vector3f offset, Vector3f offsetRate) {
@@ -54,7 +56,7 @@ public class SlashDown extends RotationAttackParticle {
 
         @Override
         public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double targetID, double sourceID) {
-            SlashDown particle = new SlashDown(worldIn, x, y, z, 0, targetID, sourceID, spriteSet, this.quadSize, this.lifetime, this.offset, this.offsetRate);
+            SlashDown particle = new SlashDown(worldIn, x, y, z, 0, targetID, sourceID, spriteSet, this.quadSize, this.lifetime, this.offset, this.offsetRate, this.glow);
             return particle;
         }
     }

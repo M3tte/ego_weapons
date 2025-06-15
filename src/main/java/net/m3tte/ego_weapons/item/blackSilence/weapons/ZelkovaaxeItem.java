@@ -4,6 +4,7 @@ package net.m3tte.ego_weapons.item.blackSilence.weapons;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.execFunctions.BlackSilenceEvaluator;
 import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
+import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
 import net.minecraft.entity.LivingEntity;
@@ -27,7 +28,7 @@ import java.util.List;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
-public class ZelkovaaxeItem extends SwordItem {
+public class ZelkovaaxeItem extends EgoWeaponsWeapon {
 	//@ObjectHolder("tcorp:zelkova_axe")
 
 	public ZelkovaaxeItem(int p_i48460_2_, float p_i48460_3_, Properties p_i48460_4_) {
@@ -43,7 +44,8 @@ public class ZelkovaaxeItem extends SwordItem {
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
-
+		list.add(new TranslationTextComponent("desc.ego_weapons.risk.aleph"));
+		list.add(new StringTextComponent(" "));
 		switch (EgoWeaponsKeybinds.getUiPage() % 4) {
 			case 0:
 				if (EgoWeaponsKeybinds.isHoldingShift())

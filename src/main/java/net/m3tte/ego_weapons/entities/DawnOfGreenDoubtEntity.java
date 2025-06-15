@@ -1,5 +1,6 @@
 package net.m3tte.ego_weapons.entities;
 
+import net.m3tte.ego_weapons.EgoWeaponsAttributes;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -40,8 +41,9 @@ public class DawnOfGreenDoubtEntity extends MonsterEntity {
 
     public static AttributeModifierMap.MutableAttribute createMonsterAttributes() {
         return MobEntity.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 45.0D)
+                .add(Attributes.MAX_HEALTH, 40.0D)
                 .add(Attributes.ARMOR, 10.0D)
+                .add(Attributes.ARMOR_TOUGHNESS, 3.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.26D)
                 .add(Attributes.FOLLOW_RANGE, 40.0D)
                 .add(Attributes.ATTACK_DAMAGE, 5D);

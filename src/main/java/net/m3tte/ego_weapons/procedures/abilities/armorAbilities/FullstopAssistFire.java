@@ -1,31 +1,23 @@
 package net.m3tte.ego_weapons.procedures.abilities.armorAbilities;
 
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
-import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.gameasset.movesets.FullstopOfficeRepMovesetAnims;
-import net.m3tte.ego_weapons.gameasset.movesets.OeufiAssocMovesetAnims;
 import net.m3tte.ego_weapons.particle.BlipeffectParticle;
 import net.m3tte.ego_weapons.procedures.abilities.AbilityTier;
 import net.m3tte.ego_weapons.procedures.abilities.AbilityUtils;
 import net.m3tte.ego_weapons.procedures.abilities.ItemAbility;
-import net.m3tte.ego_weapons.world.capabilities.AmmoSystem;
-import net.m3tte.ego_weapons.world.capabilities.AmmoType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ChatType;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -37,10 +29,7 @@ import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import static net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations.spawnArmatureParticle;
 
@@ -66,7 +55,7 @@ public class FullstopAssistFire extends ItemAbility {
 
     @Override
     public AbilityTier getAbilityTier() {
-        return AbilityTier.BETA;
+        return AbilityTier.WAW;
     }
 
     @Override
@@ -78,7 +67,7 @@ public class FullstopAssistFire extends ItemAbility {
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
         int blipCost = getBlipCost(player, playerVars);
-        if (playerVars.blips >= blipCost) {
+        if (playerVars.light >= blipCost) {
             LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
             int entityId = player.getPersistentData().getInt("lastTargetSpotted");
@@ -98,7 +87,7 @@ public class FullstopAssistFire extends ItemAbility {
 
 
 
-                        playerVars.blips -= blipCost;
+                        playerVars.light -= blipCost;
                         AbilityUtils.applyBlipCooldown(10, playerVars);
                         playerVars.syncPlayerVariables(player);
                     } else {
@@ -201,8 +190,8 @@ public class FullstopAssistFire extends ItemAbility {
 
     @Override
     public float getAvailability(PlayerEntity player, PlayerVariables playerVars) {
-        if (playerVars.blips < getBlipCost(player, playerVars)) {
-            return (float) (playerVars.blips / getBlipCost(player, playerVars));
+        if (playerVars.light < getBlipCost(player, playerVars)) {
+            return (float) (playerVars.light / getBlipCost(player, playerVars));
         }
 
         return 1.0f;

@@ -1,0 +1,17 @@
+{
+  "parent": "item/generated",
+  "overrides": [
+    {
+      "predicate": {
+        "active": 0
+      },
+      "model": "ego_weapons:item/heishou_mao_sword_n"
+    },
+    {
+      "predicate": {
+        "active": 1
+      },
+      "model": "ego_weapons:item/heishou_mao_sword_active"
+    }
+  ]
+}

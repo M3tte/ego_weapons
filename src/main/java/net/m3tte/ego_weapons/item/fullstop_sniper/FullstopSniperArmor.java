@@ -10,6 +10,7 @@ import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProper
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoWeaponsArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -25,6 +26,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -37,7 +39,7 @@ import java.util.List;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
-public class FullstopSniperArmor extends ArmorItem {
+public class FullstopSniperArmor extends GenericEgoWeaponsArmor {
 
 	static IArmorMaterial fullstopSniperArmor = new IArmorMaterial() {
 		@Override
@@ -126,7 +128,11 @@ public class FullstopSniperArmor extends ArmorItem {
 			return 0;
 		}
 	};
-	static Item chest = new FullstopSniperArmor(fullstopSniperArmor, EquipmentSlotType.CHEST, new Properties().tab(ItemGroup.TAB_COMBAT)) {
+
+	public FullstopSniperArmor(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity) {
+		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
+	}
+	static Item chest = new FullstopSniperArmor(fullstopSniperArmor, EquipmentSlotType.CHEST, new Properties().tab(ItemGroup.TAB_COMBAT), 1f, 1.3f, 0.7f ,1.3f, 1f, 0.7f, 1.3f, 0, 0) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -151,16 +157,20 @@ public class FullstopSniperArmor extends ArmorItem {
 			list.add(new StringTextComponent("Manufactured by Atelier Logic").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
-			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 2) + 1) + "/2] - - - - - - - =").withStyle(TextFormatting.GRAY));
-
-			switch (EgoWeaponsKeybinds.getUiPage() % 2) {
+			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 3) + 1) + "/3] - - - - - - - =").withStyle(TextFormatting.GRAY));
+			list.add(new TranslationTextComponent("desc.ego_weapons.risk.waw"));
+			list.add(new StringTextComponent(" "));
+			switch (EgoWeaponsKeybinds.getUiPage() % 3) {
 				case 0:
+					resistanceMods(itemstack, world, list, flag);
+					break;
+				case 1:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"poise"});
 					else
 						generateDescription(list, "fullstop_sniper_armor", "passive", 4);
 					break;
-				case 1:
+				case 2:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"poise"});
 					else {
@@ -173,7 +183,7 @@ public class FullstopSniperArmor extends ArmorItem {
 
 	};
 
-	public static float hitDamageBonus(LivingEntityPatch<?> sourceEntityPatch, float oldDamage, DamageSource source) {
+	public static float hitDamageBonus(LivingEntityPatch<?> sourceEntityPatch, float mult, DamageSource source) {
 
 		DynamicAnimation currentanim = sourceEntityPatch.getServerAnimator().animationPlayer.getAnimation();
 		if (currentanim.getRealAnimation() instanceof BasicEgoAttackAnimation || currentanim.getRealAnimation() instanceof EgoAttackAnimation) {
@@ -187,11 +197,11 @@ public class FullstopSniperArmor extends ArmorItem {
 
 			if (attackType.equals(AttackMoveType.RANGED)) {
 				SharedFunctions.incrementBonusDamage(source, 0.1f);
-				return oldDamage * 1.1f;
+				return mult + 0.1f;
 			}
 		}
 
-		return oldDamage;
+		return mult;
 	}
 
 
@@ -230,13 +240,13 @@ public class FullstopSniperArmor extends ArmorItem {
 			Body.texOffs(14, 43).addBox(-3.1F, 9.8F, -2.6F, 1.0F, 2.0F, 0.0F, 0.3F, false);
 
 			RightArm = new ModelRenderer(this);
-			RightArm.setPos(-5.0F, 2.0F, 0.0F);
+			RightArm.setPos(-5.0F, 2.3F, 0.0F);
 			setRotationAngle(RightArm, -0.1745F, 0.0F, 0.0F);
 			RightArm.texOffs(56, 48).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.26F, false);
 			RightArm.texOffs(48, 16).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.35F, false);
 
 			LeftArm = new ModelRenderer(this);
-			LeftArm.setPos(5.0F, 2.0F, 0.0F);
+			LeftArm.setPos(5.0F, 2.3F, 0.0F);
 			setRotationAngle(LeftArm, 0.2094F, 0.0F, 0.0F);
 			LeftArm.texOffs(56, 48).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.26F, true);
 			LeftArm.texOffs(48, 16).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.35F, true);

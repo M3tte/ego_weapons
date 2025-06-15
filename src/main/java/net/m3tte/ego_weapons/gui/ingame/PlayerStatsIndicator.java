@@ -8,6 +8,7 @@ package net.m3tte.ego_weapons.gui.ingame;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
+import net.m3tte.ego_weapons.EgoWeaponsAttributes;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.client.renderer.EgoWeaponsRenderTypes;
 import net.minecraft.client.Minecraft;
@@ -70,8 +71,8 @@ public class PlayerStatsIndicator extends EntityIndicator {
 
         if (entityIn instanceof PlayerEntity) {
             EgoWeaponsModVars.PlayerVariables playerVariables = entityIn.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).orElse(createNew());
-            sanityPercent = (float) (playerVariables.sanity / playerVariables.maxSanity);
-            staggerPercent = (float) (playerVariables.stagger / playerVariables.maxStagger);
+            sanityPercent = (float) (playerVariables.sanity / EgoWeaponsAttributes.getMaxSanity((PlayerEntity) entityIn));
+            staggerPercent = (float) (playerVariables.stagger / EgoWeaponsAttributes.getMaxStagger(entityIn));
             emotionTier = playerVariables.emotionLevel;
 
         }

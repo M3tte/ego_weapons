@@ -127,7 +127,7 @@ public class AtelierShotgunGuard extends EnergizingGuardSkill {
                 event.getPlayerPatch().playSound(EpicFightSounds.NEUTRALIZE_MOBS, 3.0F, 0.0F, 0.1F);
             }
 
-            EmotionSystem.handleGuard(serverPlayer, event.getAmount(), impact, false);
+            EmotionSystem.handleGuard(serverPlayer, event.getAmount(), impact, false, event.getDamageSource().getEntity());
 
             this.dealEvent(event.getPlayerPatch(), event);
         }

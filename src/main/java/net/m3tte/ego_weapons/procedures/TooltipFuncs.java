@@ -21,6 +21,14 @@ public class TooltipFuncs {
         for (String status : statuses) {
             list.add(new StringTextComponent("  "));
             switch (status) {
+                case "deathrite_haste": generateDescription(list, "statuses", "deathrite_haste", 6); break;
+                case "speed_up": generateDescription(list, "statuses", "speed_up", 2); break;
+                case "speed_down": generateDescription(list, "statuses", "speed_down", 2); break;
+                case "strider_mao": generateDescription(list, "statuses", "strider_mao", 5); break;
+                case "speed": generateDescription(list, "statuses", "speed", 2); break;
+                case "branding_blade": generateDescription(list, "statuses", "branding_blade", 3); break;
+                case "d10fuel": generateDescription(list, "statuses", "d10fuel", 4); break;
+                case "firefist_overdrive": generateDescription(list, "statuses", "firefist_overdrive", 6); break;
                 case "orlando": generateDescription(list, "statuses", "orlando", 2); break;
                 case "furioso": generateDescription(list, "statuses", "furioso", 6); break;
                 case "manifest_ego": generateDescription(list, "statuses", "manifest_ego", 2); break;

@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.EgoWeaponsModElements;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoWeaponsArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -20,19 +21,19 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
 @EgoWeaponsModElements.ModElement.Tag
-public class RedMistJacket extends ArmorItem {
+public class RedMistJacket extends GenericEgoWeaponsArmor {
 	public RedMistJacket(IArmorMaterial p_i48534_1_, EquipmentSlotType p_i48534_2_, Properties p_i48534_3_) {
 		super(p_i48534_1_, p_i48534_2_, p_i48534_3_);
 	}
@@ -101,7 +102,11 @@ public class RedMistJacket extends ArmorItem {
 			case CHEST: return chest;
 		}
 	}
-	static Item chest = new RedMistJacket(armormaterial, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT)) {
+
+	public RedMistJacket(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity) {
+		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
+	}
+	static Item chest = new RedMistJacket(armormaterial, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT), 0.6f, 0.6f, 1.2f ,1.3f, 1f, 0.6f, 1.4f, 6, 0) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -125,28 +130,32 @@ public class RedMistJacket extends ArmorItem {
 			list.add(new StringTextComponent("The Red Mist of the past... Who knew that we’d be facing her in person..").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
-			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
-
-			switch (EgoWeaponsKeybinds.getUiPage() % 4) {
+			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
+			list.add(new TranslationTextComponent("desc.ego_weapons.risk.aleph"));
+			list.add(new StringTextComponent(" "));
+			switch (EgoWeaponsKeybinds.getUiPage() % 5) {
 				case 0:
+					resistanceMods(itemstack, world, list, flag);
+					break;
+				case 1:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{});
 					else
 						generateDescription(list, "red_mist_armor", "passive", 1);
 					break;
-				case 1:
+				case 2:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"defense_up", "offense_up", "power_up", "manifest_ego"});
 					else
 						generateDescription(list, "red_mist_armor", "passive2", 3);
 					break;
-				case 2:
+				case 3:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"manifest_ego"});
 					else
 						generateDescription(list,"red_mist_armor", "ability", 1);
 					break;
-				case 3:
+				case 4:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"resilience","protection"});
 					else

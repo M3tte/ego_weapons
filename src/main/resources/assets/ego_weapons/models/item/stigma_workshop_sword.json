@@ -1,0 +1,17 @@
+{
+  "parent": "item/generated",
+  "overrides": [
+    {
+      "predicate": {
+        "glow": 0
+      },
+      "model": "ego_weapons:item/stigma_sword_n"
+    },
+    {
+      "predicate": {
+        "glow": 1
+      },
+      "model": "ego_weapons:item/stigma_sword_glow"
+    }
+  ]
+}

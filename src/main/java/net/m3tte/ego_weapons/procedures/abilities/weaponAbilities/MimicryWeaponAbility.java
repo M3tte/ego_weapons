@@ -49,7 +49,7 @@ public class MimicryWeaponAbility extends ItemAbility {
 
     @Override
     public AbilityTier getAbilityTier() {
-        return AbilityTier.ALPHA;
+        return AbilityTier.ALEPH;
     }
 
     @Override
@@ -59,8 +59,8 @@ public class MimicryWeaponAbility extends ItemAbility {
 
     @Override
     public float getAvailability(PlayerEntity player, PlayerVariables playerVars) {
-        if (playerVars.blips < getBlipCost(player, playerVars)) {
-            return (float) (playerVars.blips / getBlipCost(player, playerVars));
+        if (playerVars.light < getBlipCost(player, playerVars)) {
+            return (float) (playerVars.light / getBlipCost(player, playerVars));
         }
 
         return 1.0f;
@@ -69,10 +69,10 @@ public class MimicryWeaponAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.blips >= getBlipCost(player, playerVars)) {
+        if (playerVars.light >= getBlipCost(player, playerVars)) {
 
             if (isWearingMimicry(player)) {
-                playerVars.blips-= getBlipCost(player, playerVars);
+                playerVars.light -= getBlipCost(player, playerVars);
                 World world = player.level;
                 double x = player.getX();
                 double y = player.getY();
@@ -105,7 +105,7 @@ public class MimicryWeaponAbility extends ItemAbility {
                 applyBlipCooldown(20, playerVars);
                 playerVars.syncPlayerVariables(player);
             } else {
-                playerVars.blips-= getBlipCost(player, playerVars);
+                playerVars.light -= getBlipCost(player, playerVars);
                 World world = player.level;
                 double x = player.getX();
                 double y = player.getY();

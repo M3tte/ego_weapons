@@ -2,21 +2,20 @@ package net.m3tte.ego_weapons.network.packages;
 
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.specialParticles.numberParticle.NumberParticleTypes;
-import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.AttackTypes;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.DamageTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.IParticleData;
+import net.minecraft.particles.ParticleType;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Objects;
+import java.util.Random;
 import java.util.function.Supplier;
 
 public class ParticlePackages {
@@ -208,6 +207,112 @@ public class ParticlePackages {
         }
     }
 
+    public static class SendParticlesVelocity {
+
+        double x;
+        double y;
+        double z;
+
+        double velX;
+        double velY;
+        double velZ;
+
+        double rangeX;
+        double rangeY;
+        double rangeZ;
+        int count;
+        ResourceLocation type;
+        public SendParticlesVelocity(ParticleType<?> particleType, int count, double x, double y, double z, double velX, double velY, double velZ, double rangeX, double rangeY, double rangeZ) {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+
+            this.velX = velX;
+            this.velY = velY;
+            this.velZ = velZ;
+
+            this.rangeX = rangeX;
+            this.rangeY = rangeY;
+            this.rangeZ = rangeZ;
+
+            this.count = count;
+            this.type = particleType.getRegistryName();
+        }
+
+        public SendParticlesVelocity(PacketBuffer buffer) {
+            this.x = buffer.readDouble();
+            this.y = buffer.readDouble();
+            this.z = buffer.readDouble();
+
+            this.velX = buffer.readDouble();
+            this.velY = buffer.readDouble();
+            this.velZ = buffer.readDouble();
+
+            this.rangeX = buffer.readDouble();
+            this.rangeY = buffer.readDouble();
+            this.rangeZ = buffer.readDouble();
+
+            this.count = buffer.readInt();
+            this.type = buffer.readResourceLocation();
+
+        }
+
+        public static void buffer(SendParticlesVelocity message, PacketBuffer buffer) {
+            buffer.writeDouble(message.x);
+            buffer.writeDouble(message.y);
+            buffer.writeDouble(message.z);
+
+            buffer.writeDouble(message.velX);
+            buffer.writeDouble(message.velY);
+            buffer.writeDouble(message.velZ);
+
+            buffer.writeDouble(message.rangeX);
+            buffer.writeDouble(message.rangeY);
+            buffer.writeDouble(message.rangeZ);
+
+            buffer.writeInt(message.count);
+            buffer.writeResourceLocation(message.type);
+        }
+
+        public static void handler(SendParticlesVelocity message, Supplier<NetworkEvent.Context> contextSupplier) {
+            NetworkEvent.Context context = contextSupplier.get();
+            context.enqueueWork(() -> {
+                if (!context.getDirection().getReceptionSide().isServer() && Minecraft.getInstance().level != null) {
+                    Random r = Minecraft.getInstance().level.random;
+                    //System.out.println("SENDING PARTICLES WITH PARAMS : "+message.toString());
+                    for (int i = 0; i < message.count; i++) {
+                        //System.out.println("TEST SAMPLE : "+(message.x + fetchPositiveNegative(r, message.rangeX)+ " - " + message.y + fetchPositiveNegative(r, message.rangeY) + " - " + ));
+                        Minecraft.getInstance().level.addParticle((IParticleData) Objects.requireNonNull(ForgeRegistries.PARTICLE_TYPES.getValue(message.type)), message.x + fetchPositiveNegative(r, message.rangeX), message.y + fetchPositiveNegative(r, message.rangeY), message.z + fetchPositiveNegative(r, message.rangeZ) ,message.velX, message.velY, message.velZ);
+
+                    }
+
+                }
+            });
+            context.setPacketHandled(true);
+        }
+
+        @Override
+        public String toString() {
+            return "SendParticlesVelocity{" +
+                    "x=" + x +
+                    ", y=" + y +
+                    ", z=" + z +
+                    ", velX=" + velX +
+                    ", velY=" + velY +
+                    ", velZ=" + velZ +
+                    ", rangeX=" + rangeX +
+                    ", rangeY=" + rangeY +
+                    ", rangeZ=" + rangeZ +
+                    ", count=" + count +
+                    ", type=" + type +
+                    '}';
+        }
+
+        private static double fetchPositiveNegative(Random r, double bounds) {
+            return r.nextFloat() * bounds - bounds/2;
+        }
+    }
+
     public static class DamageLabelParticle {
 
         double x;
@@ -215,8 +320,8 @@ public class ParticlePackages {
         double z;
         float number;
         int typeMetadata;
-        float mult;
-        public DamageLabelParticle(Vector3d pos, DamageTypes damageType, AttackTypes attackType, boolean crit, float number, float mult, float bonusMult) {
+        double mult;
+        public DamageLabelParticle(Vector3d pos, DamageTypes damageType, AttackTypes attackType, boolean crit, float number, double mult, double bonusMult) {
             this.x = pos.x();
             this.y = pos.y();
             this.z = pos.z();
@@ -230,8 +335,7 @@ public class ParticlePackages {
                 this.typeMetadata *= -1;
 
             this.mult = Math.abs(mult);
-            System.out.println("BONUSMULT IS : "+bonusMult);
-            bonusMult = ((int)((bonusMult) * 100)) / 100f;
+            bonusMult = (Math.round(bonusMult * 100)) / 100f;
 
             this.mult += Math.abs(bonusMult) * 1000000;
 
@@ -246,7 +350,7 @@ public class ParticlePackages {
 
             this.number = buffer.readFloat();
             this.typeMetadata = buffer.readInt();
-            this.mult = buffer.readFloat();
+            this.mult = buffer.readDouble();
 
         }
 
@@ -257,15 +361,64 @@ public class ParticlePackages {
 
             buffer.writeFloat(message.number);
             buffer.writeInt(message.typeMetadata);
-            buffer.writeFloat(message.mult);
+            buffer.writeDouble(message.mult);
         }
 
         public static void handler(DamageLabelParticle message, Supplier<NetworkEvent.Context> contextSupplier) {
             NetworkEvent.Context context = contextSupplier.get();
-            System.out.println("Handling... "+message.typeMetadata+" - "+message.mult);
             context.enqueueWork(() -> {
                 if (!context.getDirection().getReceptionSide().isServer() && Minecraft.getInstance().level != null) {
                     Minecraft.getInstance().level.addParticle(EgoWeaponsParticles.DAMAGE_NUMBER.get(), message.x, message.y, message.z ,message.number, message.typeMetadata, message.mult);
+                }
+            });
+            context.setPacketHandled(true);
+        }
+    }
+
+    public static class ClashLabelParticle {
+
+        double x;
+        double y;
+        double z;
+        float number;
+        int typeMetadata;
+        boolean cracked;
+        public ClashLabelParticle(Vector3d pos, DamageTypes damageType, boolean cracked, float number) {
+            this.x = pos.x();
+            this.y = pos.y();
+            this.z = pos.z();
+
+            this.number = number;
+            this.typeMetadata = damageType.ordinal();
+            this.cracked = cracked;
+        }
+
+        public ClashLabelParticle(PacketBuffer buffer) {
+            this.x = buffer.readDouble();
+            this.y = buffer.readDouble();
+            this.z = buffer.readDouble();
+
+            this.number = buffer.readFloat();
+            this.typeMetadata = buffer.readInt();
+            this.cracked = buffer.readBoolean();
+
+        }
+
+        public static void buffer(ClashLabelParticle message, PacketBuffer buffer) {
+            buffer.writeDouble(message.x);
+            buffer.writeDouble(message.y);
+            buffer.writeDouble(message.z);
+
+            buffer.writeFloat(message.number);
+            buffer.writeInt(message.typeMetadata);
+            buffer.writeBoolean(message.cracked);
+        }
+
+        public static void handler(ClashLabelParticle message, Supplier<NetworkEvent.Context> contextSupplier) {
+            NetworkEvent.Context context = contextSupplier.get();
+            context.enqueueWork(() -> {
+                if (!context.getDirection().getReceptionSide().isServer() && Minecraft.getInstance().level != null) {
+                    Minecraft.getInstance().level.addParticle(EgoWeaponsParticles.CLASH_NUMBER.get(), message.x, message.y, message.z ,message.number, message.typeMetadata, message.cracked ? 1 : 0);
                 }
             });
             context.setPacketHandled(true);

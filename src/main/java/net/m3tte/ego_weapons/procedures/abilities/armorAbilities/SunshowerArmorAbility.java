@@ -1,8 +1,6 @@
 package net.m3tte.ego_weapons.procedures.abilities.armorAbilities;
 
-import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
-import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.gameasset.movesets.SunshowerMovesetAnims;
 import net.m3tte.ego_weapons.particle.BlipeffectParticle;
 import net.m3tte.ego_weapons.procedures.abilities.AbilityTier;
@@ -42,18 +40,18 @@ public class SunshowerArmorAbility extends ItemAbility {
 
     @Override
     public AbilityTier getAbilityTier() {
-        return AbilityTier.GAMMA;
+        return AbilityTier.HE;
     }
 
     @Override
     public String getName(PlayerEntity player, PlayerVariables playerVars) {
-        return "Spread Sorrow";
+        return "Spreading \nSorrow";
     }
 
     @Override
     public float getAvailability(PlayerEntity player, PlayerVariables playerVars) {
-        if (playerVars.blips < getBlipCost(player, playerVars)) {
-            return (float) (playerVars.blips / getBlipCost(player, playerVars));
+        if (playerVars.light < getBlipCost(player, playerVars)) {
+            return (float) (playerVars.light / getBlipCost(player, playerVars));
         }
 
         return 1.0f;
@@ -62,12 +60,12 @@ public class SunshowerArmorAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.blips >= getBlipCost(player, playerVars)) {
+        if (playerVars.light >= getBlipCost(player, playerVars)) {
 
 
 
 
-            playerVars.blips-= getBlipCost(player, playerVars);
+            playerVars.light -= getBlipCost(player, playerVars);
             World world = player.level;
             double x = player.getX();
             double y = player.getY();

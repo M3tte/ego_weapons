@@ -231,10 +231,69 @@
       "height": 9,
       "chars": ["\uE033"]
     },
-
-
-
-
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/district_10_fuel.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE034"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/overheated_district_10_fuel.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE035"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/fuel_ignition.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE036"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/branding_blade.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE037"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/speed_up.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE038"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/speed_down.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE039"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/strider_mao.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE040"]
+    },
+    {
+      "type": "bitmap",
+      "file": "minecraft:mob_effect/speed.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE041"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/deathrite_haste.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE042"]
+    },
     {
       "type": "bitmap",
       "file": "ego_weapons:damage_types/red.png",
@@ -353,6 +412,118 @@
       "ascent": 8,
       "height": 9,
       "chars": ["\uED43"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:screens/gui/defense_level_icon.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uED44"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/paralysis.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uED45"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/terror.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uED46"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:screens/gui/zayin.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uEC01"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:screens/gui/teth.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uEC02"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:screens/gui/he.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uEC03"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:screens/gui/waw.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uEC04"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:screens/gui/aleph.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uEC05"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/clash/red.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uECD1"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/clash/white.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uECD2"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/clash/black.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uECD3"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/clash/pale.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uECD4"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/clash/red_cracked.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uECC1"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/clash/white_cracked.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uECC2"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/clash/black_cracked.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uECC3"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:damage_types/clash/pale_cracked.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uECC4"]
     }
   ]
 }

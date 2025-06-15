@@ -98,6 +98,7 @@ public class EgoWeaponsParticles {
     public static final RegistryObject<BasicParticleType> DURANDAL_SWIPE_HORIZONTAL = PARTICLES.register("durandal_swipe_horizontal", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> EFFECT_NUMBER = PARTICLES.register("stagger_number", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> DAMAGE_NUMBER = PARTICLES.register("damage_number", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> CLASH_NUMBER = PARTICLES.register("clash_number", () -> new BasicParticleType(true));
 
     public static final RegistryObject<BasicParticleType> OUFI_AUTO_STRIKE = PARTICLES.register("oufi_auto_strike", () -> new BasicParticleType(true));
     public static final RegistryObject<HitParticleType> OUFI_AUTO_HIT = PARTICLES.register("oufi_auto_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
@@ -134,5 +135,35 @@ public class EgoWeaponsParticles {
     public static final RegistryObject<BasicParticleType> MAGIC_BULLET_FIRE = PARTICLES.register("magic_bullet_fire", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> MAGIC_BULLET_FIRE_SIDE = PARTICLES.register("magic_bullet_fire_side", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> MAGIC_BULLET_SHOCKWAVE = PARTICLES.register("magic_bullet_shockwave", () -> new BasicParticleType(true));
+
+    public static final RegistryObject<BasicParticleType> LIU_S6_AUTO_STRIKE = PARTICLES.register("liu_s6_impact", () -> new BasicParticleType(true));
+    public static final RegistryObject<HitParticleType> LIU_S6_AUTO_HIT = PARTICLES.register("liu_s6_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
+    public static final RegistryObject<BasicParticleType> LIU_S6_AUTO_SIDE = PARTICLES.register("liu_s6_sidehit", () -> new BasicParticleType(true));
+
+    public static final RegistryObject<BasicParticleType> LIU_PUNCH_SHOCKWAVE = PARTICLES.register("liu_punch_shockwave", () -> new BasicParticleType(true));
+
+    public static final RegistryObject<BasicParticleType> FIREFIST_STRIKE = PARTICLES.register("firefist_impact", () -> new BasicParticleType(true));
+    public static final RegistryObject<HitParticleType> FIREFIST_HIT = PARTICLES.register("firefist_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
+
+    public static final RegistryObject<BasicParticleType> FIREFIST_FLAME_SPEW = PARTICLES.register("firefist_flame_spew", () -> new BasicParticleType(true));
+
+    public static final RegistryObject<BasicParticleType> STIGMA_WORKSHOP_SWORD_STRIKE = PARTICLES.register("stigma_workshop_strike", () -> new BasicParticleType(true));
+    public static final RegistryObject<HitParticleType> STIGMA_WORKSHOP_SWORD_HIT = PARTICLES.register("stigma_workshop_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
+
+    public static final RegistryObject<BasicParticleType> STIGMA_WORKSHOP_SWORD_DASH_STRIKE = PARTICLES.register("stigma_workshop_dash_strike", () -> new BasicParticleType(true));
+    public static final RegistryObject<HitParticleType> STIGMA_WORKSHOP_SWORD_DASH_HIT = PARTICLES.register("stigma_workshop_dash_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
+
+    public static final RegistryObject<BasicParticleType> STIGMA_WORKSHOP_SWORD_IGNITE = PARTICLES.register("stigma_workshop_ignite", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> STIGMA_WORKSHOP_SWORD_IGNITE_SIDE = PARTICLES.register("stigma_workshop_ignite_side", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> SIMPLE_EMBER = PARTICLES.register("simple_ember", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> MAO_PARTICLE = PARTICLES.register("mao_particle", () -> new BasicParticleType(true));
+
+    public static final RegistryObject<BasicParticleType> STIGMA_WORKSHOP_SLASH_UP = PARTICLES.register("stigma_workshop_slash_up", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> STIGMA_WORKSHOP_SLASH_DOWN = PARTICLES.register("stigma_workshop_slash_down", () -> new BasicParticleType(true));
+
+    public static final RegistryObject<BasicParticleType> MAO_BRANCH_STRIKE = PARTICLES.register("mao_branch_strike", () -> new BasicParticleType(true));
+    public static final RegistryObject<HitParticleType> MAO_BRANCH_HIT = PARTICLES.register("mao_branch_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
+    public static final RegistryObject<BasicParticleType> MAO_BRANCH_CIRCULAR_HIT = PARTICLES.register("mao_branch_circular_hit", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> MAO_BRANCH_REUSE = PARTICLES.register("mao_branch_reuse", () -> new BasicParticleType(true));
 
 }

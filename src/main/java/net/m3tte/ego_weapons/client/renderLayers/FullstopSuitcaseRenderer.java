@@ -2,6 +2,7 @@ package net.m3tte.ego_weapons.client.renderLayers;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsEntities;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.client.models.entities.SunshowerFoxModel;
@@ -23,6 +24,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import yesman.epicfight.client.renderer.patched.layer.PatchedItemInHandLayer;
 
 @OnlyIn(Dist.CLIENT)
 public class FullstopSuitcaseRenderer<T extends LivingEntity, M extends EntityModel<T> & IHasArm> extends LayerRenderer<T, M> {
@@ -30,8 +32,8 @@ public class FullstopSuitcaseRenderer<T extends LivingEntity, M extends EntityMo
         super(p_i50934_1_);
     }
 
-    public void render(MatrixStack p_225628_1_, IRenderTypeBuffer p_225628_2_, int p_225628_3_, T p_225628_4_, float p_225628_5_, float p_225628_6_, float p_225628_7_, float p_225628_8_, float p_225628_9_, float p_225628_10_) {
-        ItemStack itemstack = p_225628_4_.getMainHandItem();
+    public void render(MatrixStack p_225628_1_, IRenderTypeBuffer rtb, int p_225628_3_, T livingEntity, float p_225628_5_, float p_225628_6_, float p_225628_7_, float p_225628_8_, float p_225628_9_, float p_225628_10_) {
+        ItemStack itemstack = livingEntity.getMainHandItem();
         if (EgoWeaponsItems.FULLSTOP_SNIPER_RAILGUN.get().equals(itemstack.getItem())) {
 
             if (itemstack.getOrCreateTag().getInt("dropped") > 0) {
@@ -41,10 +43,12 @@ public class FullstopSuitcaseRenderer<T extends LivingEntity, M extends EntityMo
 
                 p_225628_1_.pushPose();
 
-                this.renderItem(p_225628_4_, suitcaseStack, ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, p_225628_1_, p_225628_2_, p_225628_3_);
+                this.renderItem(livingEntity, suitcaseStack, ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, p_225628_1_, rtb, p_225628_3_);
                 p_225628_1_.popPose();
             }
         }
+
+
     }
 
     private void renderItem(LivingEntity entity, ItemStack item, ItemCameraTransforms.TransformType transformType, MatrixStack matrixStack, IRenderTypeBuffer itemBuffer, int p_229135_7_) {

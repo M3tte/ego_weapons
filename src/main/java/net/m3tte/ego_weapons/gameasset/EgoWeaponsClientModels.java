@@ -7,7 +7,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import yesman.epicfight.api.client.model.ClientModel;
 import yesman.epicfight.api.client.model.ClientModels;
 
-@OnlyIn(Dist.CLIENT)
 public class EgoWeaponsClientModels extends EgoWeaponsModels<ClientModel> {
 
     public static final EgoWeaponsClientModels LOGICAL_CLIENT = new EgoWeaponsClientModels();
@@ -15,6 +14,7 @@ public class EgoWeaponsClientModels extends EgoWeaponsModels<ClientModel> {
         this.doubt = ClientModels.LOGICAL_CLIENT.register(new ResourceLocation(EgoWeaponsMod.MODID, "entity/doubt_a"));
         this.nothing_there = ClientModels.LOGICAL_CLIENT.register(new ResourceLocation(EgoWeaponsMod.MODID, "entity/nothing_there"));
         this.sunshower_fox = ClientModels.LOGICAL_CLIENT.register(new ResourceLocation(EgoWeaponsMod.MODID, "entity/sunshower_fox"));
+        this.craving_bloodbag = ClientModels.LOGICAL_CLIENT.register(new ResourceLocation(EgoWeaponsMod.MODID, "entity/craving_bloodbag"));
     }
 
     public EgoWeaponsModels<?> getModels(boolean isLogicalClient) {

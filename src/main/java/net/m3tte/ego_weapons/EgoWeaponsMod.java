@@ -22,9 +22,11 @@ import net.m3tte.ego_weapons.gameasset.EgoWeaponsClientModels;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsModels;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.network.packages.PackageRegistry;
+import net.m3tte.ego_weapons.world.capabilities.gamerules.EgoWeaponsGamerules;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -33,6 +35,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -58,21 +61,26 @@ public class EgoWeaponsMod {
 		FMLJavaModLoadingContext.get().getModEventBus().register(new ModelRegisterHandler());
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::init);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientLoad);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doServerStuff);
 		EgoWeaponsEFLoader.registerStuffs(FMLJavaModLoadingContext.get().getModEventBus());
 		EgoWeaponsGUIElements.register(FMLJavaModLoadingContext.get().getModEventBus());
 		EgoWeaponsEffects.register(FMLJavaModLoadingContext.get().getModEventBus());
-		IResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
 		MinecraftForge.EVENT_BUS.register(new TcorpModFMLBusEvents(this)); // Modbusevents
 		MinecraftForge.EVENT_BUS.register(new EgoWeaponsModVars()); // Dynamic variable registry
 		MinecraftForge.EVENT_BUS.register(new PackageRegistry()); // Network packages
+
 
 
 	}
 
 	private void init(FMLCommonSetupEvent event) {
 		elements.getElements().forEach(element -> element.init(event));
+		event.enqueueWork(EgoWeaponsGamerules::registerRules);
 	}
 
+	private void doServerStuff(final FMLDedicatedServerSetupEvent event) {
+		EgoWeaponsModels.LOGICAL_SERVER.loadArmatures(null);
+	}
 	public void clientLoad(FMLClientSetupEvent event) {
 
 		elements.getElements().forEach(element -> element.clientLoad(event));
@@ -97,6 +105,7 @@ public class EgoWeaponsMod {
 	public void registerSounds(RegistryEvent.Register<net.minecraft.util.SoundEvent> event) {
 		EgoWeaponsSounds.registerSounds(event);
 	}
+
 
 
 	private static class TcorpModFMLBusEvents {

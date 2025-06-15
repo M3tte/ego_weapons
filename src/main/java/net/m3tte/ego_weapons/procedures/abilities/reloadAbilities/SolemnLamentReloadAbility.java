@@ -1,7 +1,6 @@
 package net.m3tte.ego_weapons.procedures.abilities.reloadAbilities;
 
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
-import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.gameasset.movesets.SolemnLamentMovesetAnims;
 import net.m3tte.ego_weapons.particle.BlipeffectParticle;
 import net.m3tte.ego_weapons.procedures.abilities.AbilityTier;
@@ -41,7 +40,7 @@ public class SolemnLamentReloadAbility extends ItemAbility {
 
     @Override
     public AbilityTier getAbilityTier() {
-        return AbilityTier.BETA;
+        return AbilityTier.WAW;
     }
 
     @Override
@@ -51,8 +50,8 @@ public class SolemnLamentReloadAbility extends ItemAbility {
 
     @Override
     public float getAvailability(PlayerEntity player, PlayerVariables playerVars) {
-        if (playerVars.blips < getBlipCost(player, playerVars)) {
-            return (float) (playerVars.blips / getBlipCost(player, playerVars));
+        if (playerVars.light < getBlipCost(player, playerVars)) {
+            return (float) (playerVars.light / getBlipCost(player, playerVars));
         }
 
         return 1.0f;
@@ -61,9 +60,9 @@ public class SolemnLamentReloadAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.blips >= getBlipCost(player, playerVars)) {
+        if (playerVars.light >= getBlipCost(player, playerVars)) {
 
-            playerVars.blips-= getBlipCost(player, playerVars);
+            playerVars.light -= getBlipCost(player, playerVars);
             World world = player.level;
             double x = player.getX();
             double y = player.getY();

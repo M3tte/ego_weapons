@@ -10,7 +10,7 @@ import static net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 public class ItemAbility {
 
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
-        if (playerVars.blips > getBlipCost(player, playerVars)) {
+        if (playerVars.light > getBlipCost(player, playerVars)) {
             if (!player.level.isClientSide())
                 player.displayClientMessage(new StringTextComponent("No armor ability.").withStyle(TextFormatting.ITALIC), (true));
         }
@@ -27,8 +27,8 @@ public class ItemAbility {
         if (playerVars.globalcooldown > 0) {
             return 0.0f;
         }
-        if (playerVars.blips < getBlipCost(player, playerVars)) {
-            return (float) (playerVars.blips / getBlipCost(player, playerVars));
+        if (playerVars.light < getBlipCost(player, playerVars)) {
+            return (float) (playerVars.light / getBlipCost(player, playerVars));
         }
 
         return 1.0f;

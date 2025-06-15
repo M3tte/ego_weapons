@@ -2,10 +2,10 @@ package net.m3tte.ego_weapons.skill;
 
 import com.google.common.collect.Lists;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
-import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.gameasset.movesets.DurandalMovesetAnims;
 import net.m3tte.ego_weapons.gameasset.movesets.MimicryMovesetAnims;
+import net.m3tte.ego_weapons.gameasset.movesets.StigmaWorkshopMovesetAnims;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCategories;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -16,6 +16,7 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -31,7 +32,9 @@ import yesman.epicfight.skill.SkillContainer;
 import yesman.epicfight.skill.SkillDataManager;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
+import yesman.epicfight.world.capabilities.entitypatch.player.ServerPlayerPatch;
 import yesman.epicfight.world.capabilities.item.CapabilityItem;
+import yesman.epicfight.world.capabilities.item.WeaponCategory;
 import yesman.epicfight.world.entity.eventlistener.HurtEvent;
 import yesman.epicfight.world.entity.eventlistener.PlayerEventListener;
 
@@ -39,14 +42,15 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 
-public class BlackSilenceActiveGuard extends GuardSkill {
-    public BlackSilenceActiveGuard(Builder builder) {
+public class GenericActiveGuard extends GuardSkill {
+    public GenericActiveGuard(Builder builder) {
         super(builder);
     }
 
     private static final SkillDataManager.SkillDataKey<Integer> LAST_ACTIVE;
     private static final SkillDataManager.SkillDataKey<Integer> PARRY_MOTION_COUNTER;
 
+    private static final StaticAnimation[] STIGMA_WORKSHOP_GUARDS = {StigmaWorkshopMovesetAnims.STIGMA_SWORD_PARRY_1, StigmaWorkshopMovesetAnims.STIGMA_SWORD_PARRY_2, StigmaWorkshopMovesetAnims.STIGMA_SWORD_PARRY_1, StigmaWorkshopMovesetAnims.STIGMA_SWORD_PARRY_2, StigmaWorkshopMovesetAnims.STIGMA_SWORD_EVADE};
     private static final StaticAnimation[] MIMICRY_GUARDS = {MimicryMovesetAnims.KALI_PARRY_1, MimicryMovesetAnims.KALI_PARRY_2};
     public static Builder createBuilder(ResourceLocation resourceLocation) {
         return GuardSkill.createBuilder(resourceLocation)
@@ -56,6 +60,9 @@ public class BlackSilenceActiveGuard extends GuardSkill {
                 .addAdvancedGuardMotion(EgoWeaponsCategories.MOOK_WORKSHOP, (item, player) -> BlackSilenceMovesetAnims.MOOK_GUARD_HIT_PARRY)
                 .addGuardMotion(EgoWeaponsCategories.MOOK_WORKSHOP, (item, player) -> BlackSilenceMovesetAnims.MOOK_GUARD_HIT)
                 .addGuardBreakMotion(EgoWeaponsCategories.MOOK_WORKSHOP, (item, player) -> BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER)
+                .addAdvancedGuardMotion(EgoWeaponsCategories.STIGMA_WORKSHOP_SWORD, (item, player) ->  STIGMA_WORKSHOP_GUARDS[player.getOriginal().getRandom().nextInt(5)])
+                .addGuardMotion(EgoWeaponsCategories.STIGMA_WORKSHOP_SWORD, (item, player) -> StigmaWorkshopMovesetAnims.STIGMA_SWORD_GUARD_HIT)
+                .addGuardBreakMotion(EgoWeaponsCategories.STIGMA_WORKSHOP_SWORD, (item, player) -> BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER)
                 .addGuardMotion(EgoWeaponsCategories.MIMICRY, (item, player) -> MimicryMovesetAnims.KALI_GUARD_HIT)
                 .addGuardBreakMotion(EgoWeaponsCategories.MIMICRY, (item, player) -> BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER)
                 .addAdvancedGuardMotion(EgoWeaponsCategories.MIMICRY, (item, player) ->   MIMICRY_GUARDS[player.getOriginal().getRandom().nextInt(2)])
@@ -77,7 +84,11 @@ public class BlackSilenceActiveGuard extends GuardSkill {
 
             container.getDataManager().setData(LAST_ACTIVE, event.getPlayerPatch().getOriginal().tickCount);
         });
+        container.getExecuter().getEventListener().addEventListener(PlayerEventListener.EventType.DEALT_DAMAGE_EVENT_POST, EVENT_UUID, (event) -> {
+            container.getDataManager().setDataSync(PENALTY, Math.max(0, container.getDataManager().getDataValue(PENALTY) / 2 - 0.5f), (ServerPlayerEntity)((ServerPlayerPatch)event.getPlayerPatch()).getOriginal());
+        });
     }
+
 
 
     public void guard(SkillContainer container, CapabilityItem itemCapability, HurtEvent.Pre event, float knockback, float impact, boolean advanced) {
@@ -87,7 +98,13 @@ public class BlackSilenceActiveGuard extends GuardSkill {
                 ServerPlayerEntity playerentity = event.getPlayerPatch().getOriginal();
                 boolean successParrying = playerentity.tickCount     - container.getDataManager().getDataValue(LAST_ACTIVE) < 8;
                 float penalty = container.getDataManager().getDataValue(PENALTY);
-                event.getPlayerPatch().playSound(EpicFightSounds.CLASH, -0.05F, 0.1F);
+
+                WeaponCategory cat = itemCapability.getWeaponCategory();
+                SoundEvent parrySound = EpicFightSounds.CLASH;
+                if (cat.equals(EgoWeaponsCategories.STIGMA_WORKSHOP_SWORD))
+                    parrySound = EgoWeaponsSounds.STIGMA_WORKSHOP_SWORD_PARRY;
+
+                event.getPlayerPatch().playSound(parrySound, -0.05F, 0.1F);
                 EpicFightParticles.HIT_BLUNT.get().spawnParticleWithArgument((ServerWorld)playerentity.level, HitParticleType.FRONT_OF_EYES, HitParticleType.ZERO, playerentity, damageSource.getDirectEntity());
                 if (successParrying) {
                     knockback *= 0.4F;
@@ -130,7 +147,7 @@ public class BlackSilenceActiveGuard extends GuardSkill {
                 BlockType blockType = successParrying ? BlockType.ADVANCED_GUARD : (stamina >= 0.0F ? BlockType.GUARD : BlockType.GUARD_BREAK);
 
                 // Part condition. Strong attacks cannot be parried if stamina were to reach 0
-                blockType = canParryHeavy(successParrying, event.getPlayerPatch(), blockType, stamina, impact, event);
+                blockType = canParryHeavy(successParrying, event.getPlayerPatch(), blockType, stamina, impact, event, penalty);
                 if (blockType.equals(BlockType.GUARD_BREAK))
                     successParrying = false;
                 StaticAnimation animation = this.getGuardMotion(event.getPlayerPatch(), itemCapability, blockType);
@@ -139,7 +156,7 @@ public class BlackSilenceActiveGuard extends GuardSkill {
                 }
 
 
-                EmotionSystem.handleGuard(playerentity, event.getAmount(), impact, successParrying);
+                EmotionSystem.handleGuard(playerentity, event.getAmount(), impact, successParrying, event.getDamageSource().getEntity());
                 this.dealEvent(event.getPlayerPatch(), event);
                 return;
             }
@@ -149,10 +166,13 @@ public class BlackSilenceActiveGuard extends GuardSkill {
     }
 
 
-    public static BlockType canParryHeavy(boolean successParry, LivingEntityPatch<?> target, BlockType blockType, float stamina, float impact, HurtEvent.Pre event) {
+    public static BlockType canParryHeavy(boolean successParry, LivingEntityPatch<?> target, BlockType blockType, float stamina, float impact, HurtEvent.Pre event, float penalty) {
         // Part condition. Strong attacks cannot be parried if stamina were to reach 0.
         // Strong attacks are attacks with more impact than the targets.
-        if (blockType == GuardSkill.BlockType.GUARD_BREAK || (stamina <= 0.001 && impact > target.getImpact(Hand.MAIN_HAND) + 0.5f)) {
+
+
+
+        if (blockType == GuardSkill.BlockType.GUARD_BREAK || (stamina <= 0.001 && impact > target.getImpact(Hand.MAIN_HAND) + 0.5f - penalty / 2.5f)) {
             event.getPlayerPatch().playSound(EgoWeaponsSounds.STAGGER, 3.0F, 0.0F, 0.1F);
             return BlockType.GUARD_BREAK;
         }

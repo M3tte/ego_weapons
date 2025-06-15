@@ -18,7 +18,7 @@ import java.util.UUID;
 
 public class OffenseUpEffect extends CountPotencyStatus {
     public OffenseUpEffect() {
-        super(EffectType.HARMFUL, "offense_up",-16777216);
+        super(EffectType.BENEFICIAL, "offense_up",-16777216);
     }
 
     @Override
@@ -52,9 +52,9 @@ public class OffenseUpEffect extends CountPotencyStatus {
     }
 
 
-    static AttributeModifier damageMod = new AttributeModifier(UUID.fromString("fc414f98-930e-4b92-88d9-6ce88ebff984"), "offenseUpDamage", 0.02, AttributeModifier.Operation.MULTIPLY_BASE);
-    static AttributeModifier attackSpeedMod = new AttributeModifier(UUID.fromString("fc414f98-930e-4b92-88d9-6ce88ebff984"), "offenseUpAttackSpeed", 0.025, AttributeModifier.Operation.ADDITION);
-    static AttributeModifier impactMod = new AttributeModifier(UUID.fromString("fc414f98-930e-4b92-88d9-6ce88ebff984"), "offenseUpImpact", 0.03, AttributeModifier.Operation.ADDITION);
+    static AttributeModifier damageMod = new AttributeModifier(UUID.fromString("fc414f98-930e-4b92-88d9-6ce88ebff984"), "offenseUpDamage", 0.03, AttributeModifier.Operation.MULTIPLY_BASE);
+    static AttributeModifier attackSpeedMod = new AttributeModifier(UUID.fromString("fc414f98-930e-4b92-88d9-6ce88ebff984"), "offenseUpAttackSpeed", 0.045, AttributeModifier.Operation.ADDITION);
+    static AttributeModifier impactMod = new AttributeModifier(UUID.fromString("fc414f98-930e-4b92-88d9-6ce88ebff984"), "offenseUpImpact", 0.05, AttributeModifier.Operation.ADDITION);
 
     @Override
     public void addAttributeModifiers(LivingEntity living, AttributeModifierManager attrman, int amplifier) {

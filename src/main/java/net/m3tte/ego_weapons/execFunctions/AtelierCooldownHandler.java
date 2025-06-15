@@ -38,7 +38,7 @@ public class AtelierCooldownHandler {
 				capability.gunMagSize = 2;
 				capability.globalcooldown = hasFuriosoBonus(living) ? 10 : 30;
 				if (!hasFuriosoBonus(living) && !world.isClientSide())
-					capability.blips -= 2;
+					capability.light -= 2;
 
 
 				new Object() {
@@ -78,7 +78,7 @@ public class AtelierCooldownHandler {
 				{
 					capability.gunMagSize = 1;
 					if (!hasFuriosoBonus(living) && !world.isClientSide())
-						capability.blips--;
+						capability.light--;
 				}
 			}
 			capability.syncPlayerVariables(living);
@@ -107,7 +107,7 @@ public class AtelierCooldownHandler {
 				capability.globalcooldown = 50;
 
 			if (!world.isClientSide() && !hasFuriosoBonus(living)) {
-				capability.blips -= 2;
+				capability.light -= 2;
 			}
 			capability.syncPlayerVariables(entity);
 			if (entity instanceof PlayerEntity)

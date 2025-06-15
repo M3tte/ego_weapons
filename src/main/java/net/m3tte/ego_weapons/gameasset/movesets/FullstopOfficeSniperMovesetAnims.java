@@ -161,7 +161,7 @@ public class FullstopOfficeSniperMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "fs_sn_special")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
-                .addProperty(EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.ALHVFIRE)
+                .addProperty(EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.PIERCE_GUARD_DODGE)
                 .addProperty(EgoWeaponsAttackProperty.CONSUMES_AMMO, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, false)

@@ -38,6 +38,21 @@ public class StaggerSystem {
         }
     }
 
+    public static double getStagger(LivingEntity entity) {
+        if (entity instanceof PlayerEntity) {
+            EgoWeaponsModVars.PlayerVariables entityData = entity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
+            return Math.min(entityData.stagger, EgoWeaponsAttributes.getMaxStagger(entity));
+        } else {
+
+            float maxStagger = EgoWeaponsAttributes.getMaxStagger(entity);
+
+            if (maxStagger <= 0)
+                maxStagger = entity.getMaxHealth();
+
+            return Math.max(0,maxStagger - entity.getPersistentData().getDouble("stagger"));
+        }
+    }
+
     public static void reduceStagger(LivingEntity entity, float amnt, Entity source, boolean bypassArmor) {
         reduceStagger(entity, amnt, (e) -> {
             if (source instanceof PlayerEntity)
@@ -51,7 +66,7 @@ public class StaggerSystem {
     public static void reduceStagger(LivingEntity entity, float amnt, Consumer<?> onStagger, boolean bypassArmor) {
         if (entity instanceof PlayerEntity) {
             EgoWeaponsModVars.PlayerVariables entityData = entity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
-            entityData.stagger = Math.min(entityData.stagger, entityData.maxStagger);
+            entityData.stagger = Math.min(entityData.stagger, EgoWeaponsAttributes.getMaxStagger(entity));
 
             if (!bypassArmor)
                 amnt = CombatRules.getDamageAfterAbsorb(amnt, entity.getArmorValue(), 0);
@@ -71,7 +86,12 @@ public class StaggerSystem {
         } else {
             entity.getPersistentData().putDouble("stagger", entity.getPersistentData().getDouble("stagger")+amnt);
 
-            if (entity.getPersistentData().getDouble("stagger") > entity.getMaxHealth()) {
+            float maxStagger = EgoWeaponsAttributes.getMaxStagger(entity);
+
+            if (maxStagger <= 0)
+                maxStagger = entity.getMaxHealth();
+
+            if (entity.getPersistentData().getDouble("stagger") > maxStagger) {
                 stagger(entity, onStagger);
             }
 
@@ -83,7 +103,7 @@ public class StaggerSystem {
             EgoWeaponsModVars.PlayerVariables entityData = entity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
             entityData.stagger += amnt;
-            entityData.stagger = Math.min(entityData.stagger, entityData.maxStagger);
+            entityData.stagger = Math.min(entityData.stagger, EgoWeaponsAttributes.getMaxStagger(entity));
 
             entityData.syncStagger(entity);
 

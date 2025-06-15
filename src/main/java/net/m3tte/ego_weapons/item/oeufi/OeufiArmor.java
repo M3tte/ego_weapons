@@ -5,6 +5,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoWeaponsArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -19,6 +20,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -29,7 +31,7 @@ import java.util.List;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
-public class OeufiArmor extends ArmorItem {
+public class OeufiArmor extends GenericEgoWeaponsArmor {
 
 	static IArmorMaterial solemnLamentArmor = new IArmorMaterial() {
 		@Override
@@ -92,7 +94,11 @@ public class OeufiArmor extends ArmorItem {
 			case LEGS: return pants;
 		}
 	}
-	static Item chest = new OeufiArmor(solemnLamentArmor, EquipmentSlotType.CHEST, new Properties().tab(ItemGroup.TAB_COMBAT)) {
+
+	public OeufiArmor(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity) {
+		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
+	}
+	static Item chest = new OeufiArmor(solemnLamentArmor, EquipmentSlotType.CHEST, new Properties().tab(ItemGroup.TAB_COMBAT), 0.9f, 1.3f, 0.7f ,1.5f, 1.3f, 0.7f, 1f, 0, 0) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -119,16 +125,20 @@ public class OeufiArmor extends ArmorItem {
 			list.add(new StringTextComponent("Manufactured by Kai Atelier").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
-			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 2) + 1) + "/2] - - - - - - - =").withStyle(TextFormatting.GRAY));
-
-			switch (EgoWeaponsKeybinds.getUiPage() % 2) {
+			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 3) + 1) + "/3] - - - - - - - =").withStyle(TextFormatting.GRAY));
+			list.add(new TranslationTextComponent("desc.ego_weapons.risk.he"));
+			list.add(new StringTextComponent(" "));
+			switch (EgoWeaponsKeybinds.getUiPage() % 3) {
 				case 0:
+					resistanceMods(itemstack, world, list, flag);
+					break;
+				case 1:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"tremor"});
 					else
 						generateDescription(list, "oufi_armor", "passive", 1);
 					break;
-				case 1:
+				case 2:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"obligation", "tremor_burst", "tremor_decay", "resilience"});
 					else
@@ -226,9 +236,9 @@ public class OeufiArmor extends ArmorItem {
 			Body.texOffs(0, 0).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, 0.0F, false);
 
 			RightArm = new ModelRenderer(this);
-			RightArm.setPos(-5.0F, 2.0F, 0.0F);
+			RightArm.setPos(-5.0F, 2.4F, 0.0F);
 			setRotationAngle(RightArm, -0.1745F, 0.0F, 0.0F);
-			RightArm.texOffs(16, 32).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 9.0F, 4.0F, 0.25F, false);
+			RightArm.texOffs(16, 32).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 9.0F, 4.0F, 0.28F, false);
 			RightArm.texOffs(8, 70).addBox(-4.0F, -3.0F, -3.0F, 6.0F, 3.0F, 6.0F, -0.25F, false);
 
 			Armpads = new ModelRenderer(this);
@@ -279,10 +289,10 @@ public class OeufiArmor extends ArmorItem {
 			RightArmLayer_r7.texOffs(65, 74).addBox(-1.3431F, -1.2467F, -0.5912F, 3.0F, 3.0F, 3.0F, -0.3F, false);
 
 			LeftArm = new ModelRenderer(this);
-			LeftArm.setPos(5.0F, 2.0F, 0.0F);
+			LeftArm.setPos(5.0F, 2.4F, 0.0F);
 			setRotationAngle(LeftArm, 0.2094F, 0.0F, 0.0F);
 			LeftArm.texOffs(8, 70).addBox(-2.0F, -3.0F, -3.0F, 6.0F, 3.0F, 6.0F, -0.25F, true);
-			LeftArm.texOffs(16, 32).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 9.0F, 4.0F, 0.25F, true);
+			LeftArm.texOffs(16, 32).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 9.0F, 4.0F, 0.28F, true);
 
 			Armpads2 = new ModelRenderer(this);
 			Armpads2.setPos(-1.175F, 0.6F, -1.55F);

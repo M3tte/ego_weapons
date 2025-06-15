@@ -171,9 +171,9 @@ public class JustiziaarmorabilityProcedure {
 		if (limit > 0) {
 			{
 				double _setval = ((entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null)
-						.orElse(new EgoWeaponsModVars.PlayerVariables())).blips - 3);
+						.orElse(new EgoWeaponsModVars.PlayerVariables())).light - 3);
 				entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-					capability.blips = _setval;
+					capability.light = _setval;
 					capability.syncPlayerVariables(entity);
 				});
 			}
@@ -217,9 +217,9 @@ public class JustiziaarmorabilityProcedure {
 		}
 		{
 			double _setval = ((entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null)
-					.orElse(new EgoWeaponsModVars.PlayerVariables())).blips - 3);
+					.orElse(new EgoWeaponsModVars.PlayerVariables())).light - 3);
 			entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-				capability.blips = _setval;
+				capability.light = _setval;
 				capability.syncPlayerVariables(entity);
 			});
 		}

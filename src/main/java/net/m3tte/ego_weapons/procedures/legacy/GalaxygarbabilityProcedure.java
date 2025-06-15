@@ -54,9 +54,9 @@ public class GalaxygarbabilityProcedure {
 		if (!world.isClientSide()) {
 			{
 				double _setval = ((entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null)
-						.orElse(new EgoWeaponsModVars.PlayerVariables())).blips - 5);
+						.orElse(new EgoWeaponsModVars.PlayerVariables())).light - 5);
 				entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-					capability.blips = _setval;
+					capability.light = _setval;
 					capability.syncPlayerVariables(entity);
 				});
 			}

@@ -61,10 +61,14 @@ public abstract class CountPotencyStatus extends Effect {
 
 
             for (ServerPlayerEntity p : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers()) {
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> p), new EgoWeaponsModVars.SyncCountEffectMessage((LivingEntity) entity, ((LivingEntity) entity).getEffect(this)));
+                if (((LivingEntity) entity).getEffect(this) != null) {
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> p), new EgoWeaponsModVars.SyncCountEffectMessage((LivingEntity) entity, ((LivingEntity) entity).getEffect(this)));
+                }
             }
         }
     }
+
+
 
     public ResourceLocation getIcon() {
         return icon;

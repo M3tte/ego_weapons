@@ -1,6 +1,7 @@
 
 package net.m3tte.ego_weapons.potion;
 
+import net.m3tte.ego_weapons.EgoWeaponsAttributes;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
@@ -97,7 +98,7 @@ public class Staggered {
 					}
 
 					if (entity.getEffect(this).getDuration() < 5) {
-						playerVars.stagger = playerVars.maxStagger;
+						playerVars.stagger = EgoWeaponsAttributes.getMaxStagger(entity);
 						playerVars.syncStagger(entity);
 					}
 				}

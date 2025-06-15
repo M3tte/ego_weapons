@@ -177,7 +177,7 @@ public class WheelsCounterGuard extends EnergizingGuardSkill {
                 event.getPlayerPatch().playSound(EpicFightSounds.NEUTRALIZE_MOBS, 3.0F, 0.0F, 0.1F);
             }
 
-            EmotionSystem.handleGuard(serverPlayer, event.getAmount(), impact, successParrying);
+            EmotionSystem.handleGuard(serverPlayer, event.getAmount(), impact, successParrying, event.getDamageSource().getEntity());
 
             this.dealEvent(event.getPlayerPatch(), event);
         }

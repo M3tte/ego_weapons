@@ -128,7 +128,7 @@ public class DarkFlameEffect extends CountPotencyStatus {
         }
 
 
-        if (entity.tickCount % 100 == 0 && !(entity.level.isClientSide()) && !entity.hasEffect(EgoWeaponsEffects.BURN.get())) {
+        if (entity.tickCount % 100 == 0 && entity.tickCount > 0 && !(entity.level.isClientSide()) && !entity.hasEffect(EgoWeaponsEffects.BURN.get())) {
             duration -= 20;
             shouldUpdate = true;
         }

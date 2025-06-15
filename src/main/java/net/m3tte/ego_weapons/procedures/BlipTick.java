@@ -5,7 +5,6 @@ import net.m3tte.ego_weapons.network.packages.AbilityPackages;
 import net.m3tte.ego_weapons.potion.EnergyboostPotionEffect;
 import net.m3tte.ego_weapons.potion.EnergyfatiguePotionEffect;
 import net.m3tte.ego_weapons.potion.Terror;
-import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
 import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
@@ -18,7 +17,6 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -69,7 +67,7 @@ public class BlipTick {
 			}
 
 		}
-		vars.blips = Math.min(vars.blips + amount * multiplier, vars.maxblips);
+		vars.light = Math.min(vars.light + amount * multiplier, EgoWeaponsAttributes.getMaxLight(player));
 		if (sfx)
 			player.level.playSound((PlayerEntity) null, player.getX(), player.getY(), player.getZ(),
 					EgoWeaponsSounds.RESULT_POSITIVE,
@@ -112,14 +110,16 @@ public class BlipTick {
 		if (entity.tickCount % 20 == 0) {
 
 
-			if (entityData.stagger < entityData.maxStagger) {
+			if (entityData.stagger < EgoWeaponsAttributes.getMaxStagger(entity)) {
 				StaggerSystem.healStagger(entity, 0.1f);
+			} else {
+				entityData.stagger = EgoWeaponsAttributes.getMaxStagger(entity);
 			}
 
 			if (entity.hasEffect(Terror.get())) {
 				SanitySystem.damageSanity(entity, 0.1f);
 			} else {
-				if (entityData.sanity < entityData.maxSanity) {
+				if (entityData.sanity < EgoWeaponsAttributes.getMaxSanity(entity)) {
 					float sanityHeal = 0.1f;
 
 					if (entity.getItemBySlot(EquipmentSlotType.CHEST).equals(EgoWeaponsItems.SUNSHOWER_CLOAK.get())) {
@@ -133,6 +133,8 @@ public class BlipTick {
 
 
 					SanitySystem.healSanity(entity, sanityHeal);
+				} else {
+					entityData.sanity = EgoWeaponsAttributes.getMaxSanity(entity);
 				}
 			}
 		}
@@ -144,7 +146,7 @@ public class BlipTick {
 
 			EmotionSystem.decreaseEmotionPoints(entity, 0.6f);
 
-			entityData.maxblips = EmotionSystem.getMaxEnergy(entityData);
+			int maxEnergy = EgoWeaponsAttributes.getMaxLight(entity);
 
 			if (SanitySystem.getSanity(entity)<=0.1f) {
 				entity.addEffect(new EffectInstance(Effects.BLINDNESS, 300, 0));
@@ -154,7 +156,7 @@ public class BlipTick {
 				SanitySystem.healSanity(entity, 10);
 			}
 
-			if (entityData.blips < entityData.maxblips) {
+			if (entityData.light < maxEnergy) {
 				if (entityData.blipcooldown <= 0 && !entity.hasEffect(Terror.get())) {
 
 					double baseblipregen = 0.07 + 0.32 * entityData.determination / 150;
@@ -166,13 +168,13 @@ public class BlipTick {
 					if (entity.hasEffect(EnergyboostPotionEffect.get())) {
 						baseblipregen *= (1 + 0.5*entity.getEffect(EnergyboostPotionEffect.get()).getAmplifier());
 					}
-					entityData.blips = Math.min(entityData.blips + baseblipregen, entityData.maxblips);
+					entityData.light = Math.min(entityData.light + baseblipregen, maxEnergy);
 
 				} else {
 					entityData.blipcooldown -= 1;
 				}
-			} else if (entityData.blips > entityData.maxblips) {
-				entityData.blips = entityData.maxblips;
+			} else if (entityData.light > maxEnergy) {
+				entityData.light = maxEnergy;
 			}
 
 			if (entity.getPersistentData().contains("onrushChain") && entity.tickCount % 20 == 0) {
@@ -191,7 +193,8 @@ public class BlipTick {
 
 		if (entityData.globalcooldown > 0)
 			entityData.globalcooldown--;
-
+		if (entityData.onHitCounter > 0)
+			entityData.onHitCounter--;
 		entityData.syncPlayerVariables(entity);
 
 	}

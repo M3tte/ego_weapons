@@ -1,7 +1,6 @@
 package net.m3tte.ego_weapons.skill.sunshower;
 
 import com.google.common.collect.Lists;
-import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.gameasset.movesets.SunshowerMovesetAnims;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
@@ -32,7 +31,7 @@ import yesman.epicfight.world.entity.eventlistener.PlayerEventListener;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static net.m3tte.ego_weapons.skill.BlackSilenceActiveGuard.canParryHeavy;
+import static net.m3tte.ego_weapons.skill.GenericActiveGuard.canParryHeavy;
 
 
 public class SunshowerActiveGuard extends GuardSkill {
@@ -97,7 +96,7 @@ public class SunshowerActiveGuard extends GuardSkill {
                 BlockType blockType = successParrying ? BlockType.ADVANCED_GUARD : (stamina >= 0.0F ? BlockType.GUARD : BlockType.GUARD_BREAK);
 
                 // Part condition. Strong attacks cannot be parried if stamina were to reach 0
-                blockType = canParryHeavy(successParrying, event.getPlayerPatch(), blockType, stamina, impact, event);
+                blockType = canParryHeavy(successParrying, event.getPlayerPatch(), blockType, stamina, impact, event, penalty);
                 if (blockType.equals(BlockType.GUARD_BREAK))
                     successParrying = false;
 
@@ -110,7 +109,7 @@ public class SunshowerActiveGuard extends GuardSkill {
                     event.getPlayerPatch().playAnimationSynchronized(animation, 0.0F);
                 }
 
-                EmotionSystem.handleGuard(playerentity, event.getAmount(), impact, successParrying);
+                EmotionSystem.handleGuard(playerentity, event.getAmount(), impact, successParrying, event.getDamageSource().getEntity());
                 this.dealEvent(event.getPlayerPatch(), event);
                 return;
             }

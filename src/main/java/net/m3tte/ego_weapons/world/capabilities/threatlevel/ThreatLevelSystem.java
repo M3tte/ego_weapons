@@ -10,6 +10,7 @@ public class ThreatLevelSystem {
 
     public static void registerThreatLevels() {
         threatLevelRegistry.put(EgoWeaponsEntities.DAWN_OF_GREEN_DOUBT.get(), ThreatLevels.TETH);
+        threatLevelRegistry.put(EgoWeaponsEntities.CRAVING_BLOODBAG.get(), ThreatLevels.TETH);
         threatLevelRegistry.put(EgoWeaponsEntities.NOTHING_THERE.get(), ThreatLevels.ALEPH);
     }
 

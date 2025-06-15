@@ -4,7 +4,7 @@ import yesman.epicfight.skill.SkillCategory;
 
 public enum GenericSkill implements SkillCategory {
     TC_EVADE(false, false, false),
-    TC_GUARD(false, false, false);
+    TC_GUARD(true, true, false);
 
     boolean shouldSaved;
     boolean shouldSyncronized;

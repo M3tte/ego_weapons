@@ -1,0 +1,29 @@
+{
+  "parent": "item/generated",
+  "overrides": [
+    {
+      "predicate": {
+        "ignition": 0
+      },
+      "model": "ego_weapons:item/firefist_gauntlet_base"
+    },
+    {
+      "predicate": {
+        "ignition": 1
+      },
+      "model": "ego_weapons:item/firefist_gauntlet_ignition"
+    },
+    {
+      "predicate": {
+        "ignition": 2
+      },
+      "model": "ego_weapons:item/firefist_gauntlet_overcharged"
+    },
+    {
+      "predicate": {
+        "ignition": 3
+      },
+      "model": "ego_weapons:item/firefist_gauntlet_spewing"
+    }
+  ]
+}

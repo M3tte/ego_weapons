@@ -1,7 +1,9 @@
 package net.m3tte.ego_weapons;
 
 import net.m3tte.ego_weapons.potion.countEffects.*;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
@@ -20,7 +22,9 @@ public class EgoWeaponsEffects {
         return EFFECTS.register(registryName, () -> status);
     }
 
-
+    private static RegistryObject<Effect> registerEffect(String registryName, Effect status) {
+        return EFFECTS.register(registryName, () -> status);
+    }
 
     public static final RegistryObject<CountPotencyStatus> BLEED = registerEffect("bleed", new BleedEffect());
     public static final RegistryObject<CountPotencyStatus> BURN = registerEffect("burn", new BurnEffect());
@@ -43,4 +47,23 @@ public class EgoWeaponsEffects {
     public static final RegistryObject<CountPotencyStatus> DEFENSE_LEVEL_UP = registerEffect("defense_up", new DefenseUpEffect());
     public static final RegistryObject<CountPotencyStatus> POWER_UP = registerEffect("power_up", new PowerUp());
     public static final RegistryObject<CountPotencyStatus> POWER_DOWN = registerEffect("power_down", new PowerDown());
+    public static final RegistryObject<CountPotencyStatus> FUEL_IGNITION = registerEffect("fuel_ignition", new FuelIgnitionEffect());
+    public static final RegistryObject<CountPotencyStatus> BRANDING_BLADE = registerEffect("branding_blade", new BrandingBladeEffect());
+    public static final RegistryObject<CountPotencyStatus> SPEED_UP = registerEffect("speed_up", new SpeedUpEffect());
+    public static final RegistryObject<CountPotencyStatus> SPEED_DOWN = registerEffect("speed_down", new SpeedDownEffect());
+    public static final RegistryObject<CountPotencyStatus> STRIDER_MAO = registerEffect("strider_mao", new StriderMaoEffect());
+    public static final RegistryObject<CountPotencyStatus> DEATHRITE_HASTE = registerEffect("deathrite_haste", new DeathriteHasteEffect());
+    public static final RegistryObject<Effect> CLASH_STUN = registerEffect("clashed", new ClashStunEffect());
+
+
+
+    public static int speedMult(LivingEntity entity) {
+        return SPEED_UP.get().getPotency(entity) - SPEED_DOWN.get().getPotency(entity);
+    }
+
+    public static void extendEffect(LivingEntity target, Effect effect, int time) {
+        if (target.hasEffect(effect)) {
+            target.addEffect(new EffectInstance(effect, time, target.getEffect(effect).getAmplifier()));
+        }
+    }
 }

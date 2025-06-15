@@ -5,6 +5,7 @@ import net.m3tte.ego_weapons.*;
 import net.m3tte.ego_weapons.execFunctions.BlackSilenceEvaluator;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.gameasset.movesets.DurandalMovesetAnims;
+import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.network.packages.ParticlePackages;
 import net.m3tte.ego_weapons.particle.BlacksilenceshadowParticle;
@@ -18,6 +19,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -38,7 +40,7 @@ import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
 // durandal
-public class DurandalItem extends SwordItem {
+public class DurandalItem extends EgoWeaponsWeapon {
 
 
 	public DurandalItem(int p_i48460_2_, float p_i48460_3_, Properties p_i48460_4_) {
@@ -52,7 +54,8 @@ public class DurandalItem extends SwordItem {
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
-
+		list.add(new TranslationTextComponent("desc.ego_weapons.risk.aleph"));
+		list.add(new StringTextComponent(" "));
 		switch (EgoWeaponsKeybinds.getUiPage() % 4) {
 			case 0:
 				if (EgoWeaponsKeybinds.isHoldingShift())
@@ -101,25 +104,28 @@ public class DurandalItem extends SwordItem {
 		if (currentanim != null) {
 			int animID = currentanim.getId();
 
-			if (sourceentity.level instanceof ServerWorld) {
+			/*if (!sourceentity.level.isClientSide()) {
 				sourceentity.level.addParticle(EgoWeaponsParticles.DURANDAL_SWIPE_UP.get(), entity.getX(), entity.getY()+1.1f, entity.getZ(), 0, entity.getId(), sourceentity.getId());
-			}
+			}*/
 			// If animation is part of the ones to register hits.
 			if (Arrays.stream(hitAnimations).anyMatch((i) -> i == animID)) {
 				itemstack.getOrCreateTag().putBoolean("durandalLastHit", true);
 			}
 
 			if (animID == DurandalMovesetAnims.DURANDAL_FURIOSO_3.getId() || animID == DurandalMovesetAnims.DURANDAL_SPECIAL_1.getId() || animID == DurandalMovesetAnims.DURANDAL_JUMP_ATTACK.getId()) {
-				EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entity.getId(), sourceentity.getId(), EgoWeaponsParticles.DURANDAL_SWIPE_DOWN.get().getRegistryName()));
+				if (!sourceentity.level.isClientSide())
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entity.getId(), sourceentity.getId(), EgoWeaponsParticles.DURANDAL_SWIPE_DOWN.get().getRegistryName()));
 				itemstack.getOrCreateTag().putBoolean("durandalLastHit", true);
 			}
 
 			if (animID == DurandalMovesetAnims.DURANDAL_FURIOSO_2.getId() || animID == DurandalMovesetAnims.DURANDAL_SPECIAL_2.getId()) {
-				EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entity.getId(), sourceentity.getId(), EgoWeaponsParticles.DURANDAL_SWIPE_UP.get().getRegistryName()));
+				if (!sourceentity.level.isClientSide())
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entity.getId(), sourceentity.getId(), EgoWeaponsParticles.DURANDAL_SWIPE_UP.get().getRegistryName()));
 				itemstack.getOrCreateTag().putBoolean("durandalLastHit", true);
 			}
 			if (animID == DurandalMovesetAnims.DURANDAL_FURIOSO_1.getId() || animID == DurandalMovesetAnims.DURANDAL_SPECIAL_3.getId() || animID == DurandalMovesetAnims.DURANDAL_AUTO_1.getId()) {
-				EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entity.getId(), sourceentity.getId(), EgoWeaponsParticles.DURANDAL_SWIPE_HORIZONTAL.get().getRegistryName()));
+				if (!sourceentity.level.isClientSide())
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entity.getId(), sourceentity.getId(), EgoWeaponsParticles.DURANDAL_SWIPE_HORIZONTAL.get().getRegistryName()));
 				itemstack.getOrCreateTag().putBoolean("durandalLastHit", true);
 			}
 		}

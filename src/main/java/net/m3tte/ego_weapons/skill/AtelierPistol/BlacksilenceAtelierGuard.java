@@ -215,7 +215,7 @@ public class BlacksilenceAtelierGuard extends EnergizingGuardSkill {
                 event.getPlayerPatch().playSound(EgoWeaponsModElements.sounds.get(ResourceLocation.of("ego_weapons:stagger", ':')),3,  -0.05F, 0.1F);
                 event.getPlayerPatch().playSound(EpicFightSounds.NEUTRALIZE_MOBS, 3.0F, 0.0F, 0.1F);
             }
-            EmotionSystem.handleGuard(serverPlayer, event.getAmount(), impact, successParrying);
+            EmotionSystem.handleGuard(serverPlayer, event.getAmount(), impact, successParrying, event.getDamageSource().getEntity());
             this.dealEvent(event.getPlayerPatch(), event, successParrying);
         }
     }

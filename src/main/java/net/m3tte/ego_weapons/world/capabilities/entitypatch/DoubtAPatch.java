@@ -1,6 +1,7 @@
 package net.m3tte.ego_weapons.world.capabilities.entitypatch;
 
 import io.netty.buffer.ByteBuf;
+import net.m3tte.ego_weapons.EgoWeaponsAttributes;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.entities.DawnOfGreenDoubtEntity;
@@ -42,7 +43,7 @@ public class DoubtAPatch extends MobPatch<DawnOfGreenDoubtEntity> implements Sta
                             .nextBehavior(Behavior.<DoubtAPatch>builder().animationBehavior(EgoWeaponsMobAnimations.DOUBT_AUTO_2).withinEyeHeight().withinDistance(0.0D, 2.25D))
             )
             .newBehaviorSeries(
-                    BehaviorSeries.<DoubtAPatch>builder().weight(10.0F).canBeInterrupted(true).looping(false)
+                    BehaviorSeries.<DoubtAPatch>builder().weight(10.0F).canBeInterrupted(true).looping(false).cooldown(300)
                             .nextBehavior(Behavior.<DoubtAPatch>builder().animationBehavior(EgoWeaponsMobAnimations.DOUBT_AUTO_B1).withinEyeHeight().withinDistance(0.0D, 2.25D))
             )
             .newBehaviorSeries(
@@ -103,7 +104,7 @@ public class DoubtAPatch extends MobPatch<DawnOfGreenDoubtEntity> implements Sta
     @Override
     public AttackResult tryHurt(DamageSource damageSource, float amount) {
 
-        if (this.getServerAnimator().animationPlayer.getAnimation().getId() == EgoWeaponsMobAnimations.DOUBT_GUARD.getId()) {
+        if (this.getServerAnimator().animationPlayer.getAnimation().getId() == EgoWeaponsMobAnimations.DOUBT_GUARD.getId() && !damageSource.isMagic()) {
             boolean isFront = false;
             Vector3d sourceLocation = damageSource.getSourcePosition();
 
@@ -130,8 +131,18 @@ public class DoubtAPatch extends MobPatch<DawnOfGreenDoubtEntity> implements Sta
     @Override
     protected void initAttributes() {
         super.initAttributes();
-        this.original.getAttribute(EpicFightAttributes.IMPACT.get()).setBaseValue(1.0D);
+        this.original.getAttribute(EpicFightAttributes.IMPACT.get()).setBaseValue(3.0D);
         this.original.getAttribute(EpicFightAttributes.WEIGHT.get()).setBaseValue(50.0D);
+        this.original.getAttribute(EgoWeaponsAttributes.MAX_STAGGER.get()).setBaseValue(30.0D);
+
+        this.original.getAttribute(EgoWeaponsAttributes.BLUNT_RESISTANCE.get()).setBaseValue(1.5D);
+        this.original.getAttribute(EgoWeaponsAttributes.PIERCE_RESISTANCE.get()).setBaseValue(1.2D);
+        this.original.getAttribute(EgoWeaponsAttributes.SLASH_RESISTANCE.get()).setBaseValue(1.0D);
+
+        this.original.getAttribute(EgoWeaponsAttributes.RED_RESISTANCE.get()).setBaseValue(0.8D);
+        this.original.getAttribute(EgoWeaponsAttributes.WHITE_RESISTANCE.get()).setBaseValue(1.2D);
+        this.original.getAttribute(EgoWeaponsAttributes.BLACK_RESISTANCE.get()).setBaseValue(1.5D);
+        this.original.getAttribute(EgoWeaponsAttributes.PALE_RESISTANCE.get()).setBaseValue(1.0D);
     }
 
     @Override
@@ -159,8 +170,18 @@ public class DoubtAPatch extends MobPatch<DawnOfGreenDoubtEntity> implements Sta
     }
 
     @Override
+    public StaticAnimation getClashStunAnim(int strength) {
+        return null;
+    }
+
+    @Override
     public StaticAnimation getStunAnimation(int strength) {
         return EgoWeaponsMobAnimations.DOUBT_STUN_STAGGER;
+    }
+
+    @Override
+    public StaticAnimation getHitstunAnimation(int strength) {
+        return EgoWeaponsMobAnimations.DOUBT_HITSTUN;
     }
 
     @Override

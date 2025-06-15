@@ -122,6 +122,30 @@ public class EgoWeaponsSounds {
     public static SoundEvent SOLEMN_LAMENT_SPECIAL_RELOAD = generateSoundEvent(locationFrom("solemn_lament.special.reload"));
     public static SoundEvent SOLEMN_LAMENT_SPECIAL_READY = generateSoundEvent(locationFrom("solemn_lament.special.spin"));
     public static SoundEvent SOLEMN_LAMENT_SPECIAL_IMPACT = generateSoundEvent(locationFrom("solemn_lament.special.impact"));
+    public static SoundEvent FIREFIST_AUTO_HIT = generateSoundEvent(locationFrom("firefist.auto.hit"));
+    public static SoundEvent FIREFIST_SPIT_FIRE = generateSoundEvent(locationFrom("firefist.spit_fire.use"));
+    public static SoundEvent FIREFIST_CLICK = generateSoundEvent(locationFrom("firefist.click"));
+    public static SoundEvent FIREFIST_SPIT_FIRE_2 = generateSoundEvent(locationFrom("firefist.spit_fire.use2"));
+    public static SoundEvent FIREFIST_SPECIAL_START = generateSoundEvent(locationFrom("firefist.special.start"));
+    public static SoundEvent FIREFIST_SPECIAL_FLARE = generateSoundEvent(locationFrom("firefist.special.flare"));
+    public static SoundEvent FIREFIST_SPECIAL_PUNCH_1 = generateSoundEvent(locationFrom("firefist.special.punch.1"));
+    public static SoundEvent FIREFIST_SPECIAL_PUNCH_2 = generateSoundEvent(locationFrom("firefist.special.punch.2"));
+    public static SoundEvent FIREFIST_SPECIAL_PUNCH_3 = generateSoundEvent(locationFrom("firefist.special.punch.3"));
+    public static SoundEvent FIREFIST_AUTO_LIGHT_HIT = generateSoundEvent(locationFrom("firefist.auto.hit.light"));
+    public static SoundEvent FIREFIST_SPECIAL_GROAN_1 = generateSoundEvent(locationFrom("firefist.special.groan.1"));
+    public static SoundEvent FIREFIST_SPECIAL_GROAN_2 = generateSoundEvent(locationFrom("firefist.special.groan.2"));
+    public static SoundEvent FIREFIST_SPECIAL_YELL = generateSoundEvent(locationFrom("firefist.special.yell"));
+    public static SoundEvent FIREFIST_SPECIAL_KILL = generateSoundEvent(locationFrom("firefist.special.kill"));
+
+    public static SoundEvent FIREFIST_IGNITION_TRIGGER = generateSoundEvent(locationFrom("firefist.ignition.trigger"));
+
+    public static SoundEvent STIGMA_WORKSHOP_SWORD_AUTO_HIT = generateSoundEvent(locationFrom("stigma_workshop.sword.auto.hit"));
+    public static SoundEvent STIGMA_WORKSHOP_SWORD_AUTO_SWING = generateSoundEvent(locationFrom("stigma_workshop.sword.auto.swing"));
+    public static SoundEvent STIGMA_WORKSHOP_SWORD_SPECIAL_HIT = generateSoundEvent(locationFrom("stigma_workshop.sword.special.hit"));
+    public static SoundEvent STIGMA_WORKSHOP_SWORD_SPECIAL_BACKPEDAL = generateSoundEvent(locationFrom("stigma_workshop.sword.special.backpedal"));
+    public static SoundEvent STIGMA_WORKSHOP_SWORD_SPECIAL_IGNITE = generateSoundEvent(locationFrom("stigma_workshop.sword.special.ignite"));
+    public static SoundEvent STIGMA_WORKSHOP_SWORD_SPECIAL_CHARGE = generateSoundEvent(locationFrom("stigma_workshop.sword.special.charge"));
+    public static SoundEvent STIGMA_WORKSHOP_SWORD_PARRY = generateSoundEvent(locationFrom("stigma_workshop.sword.parry"));
 
     public static SoundEvent SOLEMN_LAMENT_RELOAD = generateSoundEvent(locationFrom("solemn_lament.reload"));
     public static SoundEvent SOLEMN_LAMENT_SPIN = generateSoundEvent(locationFrom("solemn_lament.spin"));
@@ -190,4 +214,30 @@ public class EgoWeaponsSounds {
     public static SoundEvent BLACK_SILENCE_DURANDAL_DOWN = generateSoundEvent(locationFrom("blacksilence.durandal.down"));
     public static SoundEvent BLACK_SILENCE_DURANDAL_UP = generateSoundEvent(locationFrom("blacksilence.durandal.up"));
     public static SoundEvent TREMOR_BURST = generateSoundEvent(locationFrom("tremor_burst"));
+
+    public static SoundEvent LIU_S6_AUTO_1 = generateSoundEvent(locationFrom("liu.south_6.auto.hit.1"));
+    public static SoundEvent LIU_S6_AUTO_2 = generateSoundEvent(locationFrom("liu.south_6.auto.hit.2"));
+    public static SoundEvent LIU_S6_AUTO_3 = generateSoundEvent(locationFrom("liu.south_6.auto.hit.3"));
+
+    public static SoundEvent LIU_S6_SPECIAL_1 = generateSoundEvent(locationFrom("liu.south_6.special.hit.1"));
+    public static SoundEvent LIU_S6_SPECIAL_2 = generateSoundEvent(locationFrom("liu.south_6.special.hit.2"));
+    public static SoundEvent LIU_S6_SPECIAL_3 = generateSoundEvent(locationFrom("liu.south_6.special.hit.3"));
+    public static SoundEvent LIU_S6_SPECIAL_4 = generateSoundEvent(locationFrom("liu.south_6.special.hit.4"));
+    public static SoundEvent HEISHOU_MAO_PARRY = generateSoundEvent(locationFrom("heishou_mao.sword.parry"));
+    public static SoundEvent HEISHOU_MAO_SWING = generateSoundEvent(locationFrom("heishou_mao.sword.swing"));
+    public static SoundEvent HEISHOU_MAO_CIRC_SWING = generateSoundEvent(locationFrom("heishou_mao.sword.whirl_swing"));
+    public static SoundEvent HEISHOU_MAO_HIT = generateSoundEvent(locationFrom("heishou_mao.sword.hit"));
+    public static SoundEvent HEISHOU_MAO_HEAVY_HIT = generateSoundEvent(locationFrom("heishou_mao.sword.heavy_hit"));
+    public static SoundEvent HEISHOU_MAO_DASH = generateSoundEvent(locationFrom("heishou_mao.sword.dash"));
+    public static SoundEvent HEISHOU_MAO_DASH_SLASH = generateSoundEvent(locationFrom("heishou_mao.sword.dash_slash"));
+    public static SoundEvent HEISHOU_MAO_SPECIAL_JUMP = generateSoundEvent(locationFrom("heishou_mao.special.jump"));
+    public static SoundEvent HEISHOU_MAO_SPECIAL_SPIN = generateSoundEvent(locationFrom("heishou_mao.special.spin"));
+    public static SoundEvent HEISHOU_MAO_SPECIAL_HIT = generateSoundEvent(locationFrom("heishou_mao.special.hit"));
+    public static SoundEvent HEISHOU_MAO_SPECIAL_DASH_HIT = generateSoundEvent(locationFrom("heishou_mao.special.dash.hit"));
+    public static SoundEvent HEISHOU_MAO_SPECIAL_REUSE_HIT = generateSoundEvent(locationFrom("heishou_mao.special.reuse.hit"));
+    public static SoundEvent HEISHOU_MAO_SPECIAL_VOICELINE = generateSoundEvent(locationFrom("heishou_mao.special.voiceline"));
+    public static SoundEvent CLASH = generateSoundEvent(locationFrom("generic.clash"));
+    public static SoundEvent CLASH_WIN = generateSoundEvent(locationFrom("generic.clash_win"));
+    public static SoundEvent CLASH_DRAW = generateSoundEvent(locationFrom("generic.clash_draw"));
+
 }

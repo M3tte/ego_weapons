@@ -4,8 +4,8 @@ package net.m3tte.ego_weapons.gui.overlay;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.m3tte.ego_weapons.*;
+import net.m3tte.ego_weapons.gui.UIBubble;
 import net.m3tte.ego_weapons.item.guns.GunItem;
-import net.m3tte.ego_weapons.potion.MagicBulletPotionEffect;
 import net.m3tte.ego_weapons.potion.countEffects.Shell;
 import net.m3tte.ego_weapons.potion.SolemnLamentEffects;
 import net.m3tte.ego_weapons.procedures.legacy.BlipwarninghandlerProcedure;
@@ -13,12 +13,10 @@ import net.m3tte.ego_weapons.procedures.abilities.AbilityTier;
 import net.m3tte.ego_weapons.procedures.abilities.WeaponAbilityProcedure;
 import net.m3tte.ego_weapons.procedures.abilities.ItemAbility;
 import net.m3tte.ego_weapons.procedures.abilities.ArmorAbilityProcedure;
-import net.m3tte.ego_weapons.world.capabilities.AmmoSystem;
 import net.m3tte.ego_weapons.world.capabilities.AmmoType;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -33,7 +31,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.system.CallbackI;
 import yesman.epicfight.client.gui.ModIngameGui;
 
 import java.util.*;
@@ -75,6 +72,10 @@ public class GenericOverlay extends ModIngameGui {
 	final static ResourceLocation sanity = new ResourceLocation("ego_weapons:textures/screens/gui/sanitybar.png");
 	final static ResourceLocation sanity_b = new ResourceLocation("ego_weapons:textures/screens/gui/sanitybar_bright.png");
 	final static ResourceLocation emotion_bar = new ResourceLocation("ego_weapons:textures/screens/gui/emotion_bar.png");
+
+	final static ResourceLocation d10fuelbg = new ResourceLocation("ego_weapons:textures/screens/gui/firefist/fuel_tank.png");
+	final static ResourceLocation d10fuel = new ResourceLocation("ego_weapons:textures/screens/gui/firefist/district_10_fuel.png");
+	final static ResourceLocation d10fuel_ignited = new ResourceLocation("ego_weapons:textures/screens/gui/firefist/burning_district_10_fuel.png");
 
 
 	static ResourceLocation[] shellLeft = parseMultiStateTexture(1 ,5, "overlay/shell/shell_left");
@@ -146,7 +147,7 @@ public class GenericOverlay extends ModIngameGui {
 		double z = _z;
 
 		EgoWeaponsModVars.PlayerVariables playerVariables = entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).orElse(new EgoWeaponsModVars.PlayerVariables());
-		int energy = (int) playerVariables.blips;
+		int energy = (int) playerVariables.light;
 
 		//Fetch Render System
 
@@ -197,6 +198,10 @@ public class GenericOverlay extends ModIngameGui {
 
 		if (entity.getItemInHand(Hand.MAIN_HAND).getItem() instanceof GunItem)
 			renderGunAmmo(w- 60, posY+ 78, entity, event, entity.getItemInHand(Hand.OFF_HAND));
+
+		// Calculate Widget for D10 Fuel
+		if (entity.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.FIREFIST_SUIT.get()))
+			renderDistrict10Fuel(w - 40, posY, entity, event, entity.getItemInHand(Hand.MAIN_HAND));
 
 		if (!equippedArmor.isEmpty()) { // Calculate Ability Widget
 			ItemAbility ability = ArmorAbilityProcedure.getForItem(equippedArmor.getItem());
@@ -434,11 +439,11 @@ public class GenericOverlay extends ModIngameGui {
 			if (player.getHealth() != 0)
 				targetPercent = player.getHealth() / player.getMaxHealth();
 
-			if (playerVariables.maxStagger != 0)
-				targetStagger = playerVariables.stagger / playerVariables.maxStagger;
+			if (EgoWeaponsAttributes.getMaxStagger(player) != 0)
+				targetStagger = playerVariables.stagger / EgoWeaponsAttributes.getMaxStagger(player);
 
-			if (playerVariables.maxSanity != 0)
-				targetSanity = playerVariables.sanity / playerVariables.maxSanity;
+			if (EgoWeaponsAttributes.getMaxSanity(player) != 0)
+				targetSanity = playerVariables.sanity / EgoWeaponsAttributes.getMaxSanity(player);
 
 			// Calc Health
 			if (currentHealthPercent == -1)
@@ -508,6 +513,14 @@ public class GenericOverlay extends ModIngameGui {
 			lastRenderedTick = player.tickCount;
 		}
 
+		currentBrightSanityPercent = Math.min(1,currentBrightSanityPercent);
+		currentSanityPercent = Math.min(1,currentSanityPercent);
+
+		currentBrightStaggerPercent = Math.min(1,currentBrightStaggerPercent);
+		currentStaggerPercent = Math.min(1,currentStaggerPercent);
+
+		currentBrightHealthPercent = Math.min(1,currentBrightHealthPercent);
+		currentHealthPercent = Math.min(1,currentHealthPercent);
 
 
 		Minecraft.getInstance().getTextureManager().bind(base_ui);
@@ -551,6 +564,7 @@ public class GenericOverlay extends ModIngameGui {
 			Minecraft.getInstance().getTextureManager().bind(sanity);
 			blit(event.getMatrixStack(), offsetX+ 38, offsetY + 20, 0, 0, (int)(149 * currentSanityPercent), 10, 149, 10);
 		}
+
 		renderShellOverlayBar(offsetX, offsetY, player, event);
 	}
 
@@ -560,6 +574,67 @@ public class GenericOverlay extends ModIngameGui {
 			Minecraft.getInstance().getTextureManager().bind(shellHealthbar[Math.max(Math.min(player.getEffect(Shell.get()).getAmplifier(),4),0)]);
 			blit(event.getMatrixStack(), offsetX+ 29, offsetY + 8, 0, 0, 154, 11, 154, 11);
 		}
+
+	}
+
+
+	private static final LinkedList<UIBubble> district10Bubbles = new LinkedList<>();
+	private static float district10Value = 0;
+	private static void renderDistrict10Fuel(int offsetX, int offsetY, PlayerEntity player, RenderGameOverlayEvent.Pre event, ItemStack item) {
+
+		int district10Count = player.getItemBySlot(EquipmentSlotType.CHEST).getOrCreateTag().getInt("d10fuel");
+
+		float targetQuantity = (float) district10Count / 100f;
+
+		if (Math.abs(district10Value - targetQuantity) < 0.01) {
+			district10Value = targetQuantity;
+		} else {
+			district10Value = (district10Value * 8 + targetQuantity) / 9;
+		}
+
+		int offset = (player.tickCount / 2) % (18);
+		int offset2 = ((player.tickCount + 6) / 2) % (18);
+
+
+		ResourceLocation texture = (district10Count > 50 && !player.hasEffect(EgoWeaponsEffects.FUEL_IGNITION.get())) ? d10fuel : d10fuel_ignited;
+
+		Minecraft.getInstance().getTextureManager().bind(d10fuelbg);
+		AbstractGui.blit(event.getMatrixStack(), offsetX, offsetY, 0, 0, 17, 83, 17, 83);
+
+		// Minecraft.getInstance().getTextureManager().bind(d10fuelbg);
+		// AbstractGui.blit(event.getMatrixStack(), offsetX, offsetY, 0, 0, 17, 83, 17, 83);
+
+		if (district10Value > 0.01) {
+			Minecraft.getInstance().getTextureManager().bind(texture);
+			AbstractGui.blit(event.getMatrixStack(), offsetX + 3, offsetY + 9 + (int)(Math.ceil((71 * (1-district10Value)))), offset, 0, 11, (int)(71 * district10Value), 32, 71);
+		}
+
+		// AbstractGui.blit(event.getMatrixStack(), offsetX - 17 + 3, offsetY + 10 + ((int) (71 * (1-district10Value))), offset2, 0, 11, (int)(71 * district10Value), 32, 71);
+
+		Random random = player.getRandom();
+
+		if (player.tickCount % 8 == 0) {
+			int size = 1 + random.nextInt(2);
+			district10Bubbles.addFirst(new UIBubble(random.nextInt(9) + offsetX + 4,offsetY + 78, size, size, random.nextInt(20), random.nextInt(50)));
+			//district10Bubbles.addFirst(new UIBubble(random.nextInt(11) + offsetX + 14,offsetY + 9 + 71, texture, random.nextInt(20), random.nextInt(20)));
+		}
+
+		if (district10Bubbles.size() > 40) {
+			district10Bubbles.removeLast();
+			//district10Bubbles.removeLast();
+		}
+
+		GL11.glPushMatrix();
+		GL11.glTranslated(Math.sin(player.tickCount) * 0.5f, 0, 0);
+		for (UIBubble bubble : district10Bubbles) {
+			if (bubble.getLocationY() > offsetY + 9 + ((int) (71 * (1-district10Value)))) {
+				AbstractGui.blit(event.getMatrixStack(), bubble.getLocationX(), bubble.getLocationY(), bubble.getTexX(), bubble.getTexY(), bubble.getSizeX(), bubble.getSizeY(), 32, 71);
+				if (player.tickCount % 2 == 0)
+					bubble.setLocationY(bubble.getLocationY()-1);
+			}
+		}
+
+		GL11.glPopMatrix();
 	}
 
 
@@ -659,8 +734,8 @@ public class GenericOverlay extends ModIngameGui {
 			GL11.glRotated(-67,0,0,1);
 			int cost = ability.getBlipCost(entity, playerVariables);
 
-			int missing = (int) Math.ceil(Math.max(0,cost - playerVariables.blips));
-			int present = (int) Math.min(playerVariables.blips, cost);
+			int missing = (int) Math.ceil(Math.max(0,cost - playerVariables.light));
+			int present = (int) Math.min(playerVariables.light, cost);
 			GL11.glPushMatrix();
 
 				String abilityName = ability.getName(entity, playerVariables);
@@ -668,11 +743,11 @@ public class GenericOverlay extends ModIngameGui {
 				float subTractor = Math.min(0.6f,abilityName.length() * 0.04f);
 				GL11.glScaled(1.4f - subTractor,1.4f - subTractor,1.4f - subTractor);
 				lines = abilityName.split("\\n");
-				int position = (lines.length - 1) * -2;
+				int position = (lines.length) * -2;
 
 				for (String line : lines) {
 					Minecraft.getInstance().font.draw(event.getMatrixStack(), line, 0, position, 0);
-					position += 8;
+					position += 9;
 				}
 
 			GL11.glPopMatrix();

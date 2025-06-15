@@ -231,8 +231,8 @@ public class EgoWeaponsModVars {
 		@Override
 		public INBT writeNBT(Capability<PlayerVariables> capability, PlayerVariables instance, Direction side) {
 			CompoundNBT nbt = new CompoundNBT();
-			nbt.putDouble("blips", instance.blips);
-			nbt.putDouble("maxblips", instance.maxblips);
+			nbt.putDouble("light", instance.light);
+			//nbt.putDouble("maxblips", instance.maxblips);
 			nbt.putDouble("blipcooldown", instance.blipcooldown);
 			nbt.putDouble("tickslower", instance.tickslower);
 			nbt.putDouble("savedirx", instance.savedirx);
@@ -250,20 +250,21 @@ public class EgoWeaponsModVars {
 			nbt.putBoolean("firingMode", instance.firingMode);
 			nbt.putDouble("blacksilence_ws", instance.blacksilence_ws);
 			nbt.putDouble("iFrames", instance.iFrames);
-			nbt.putDouble("maxStagger", instance.maxStagger);
+			// nbt.putDouble("maxStagger", instance.maxStagger);
 			nbt.putDouble("stagger", instance.stagger);
-			nbt.putDouble("maxSanity", instance.maxSanity);
+			// nbt.putDouble("maxSanity", instance.maxSanity);
 			nbt.putDouble("sanity", instance.sanity);
 			nbt.putInt("emotionLevel", instance.emotionLevel);
 			nbt.putDouble("emotionLevelProgress", instance.emotionLevelProgress);
+			nbt.putInt("onHitCounter", instance.onHitCounter);
 			return nbt;
 		}
 
 		@Override
 		public void readNBT(Capability<PlayerVariables> capability, PlayerVariables instance, Direction side, INBT inbt) {
 			CompoundNBT nbt = (CompoundNBT) inbt;
-			instance.blips = nbt.getDouble("blips");
-			instance.maxblips = nbt.getDouble("maxblips");
+			instance.light = nbt.getDouble("light");
+			// instance.maxblips = nbt.getDouble("maxblips");
 			instance.blipcooldown = nbt.getDouble("blipcooldown");
 			instance.tickslower = nbt.getDouble("tickslower");
 			instance.savedirx = nbt.getDouble("savedirx");
@@ -281,18 +282,19 @@ public class EgoWeaponsModVars {
 			instance.firingMode = nbt.getBoolean("firingMode");
 			instance.blacksilence_ws = nbt.getDouble("blacksilence_ws");
 			instance.iFrames = nbt.getDouble("iFrames");
-			instance.maxStagger = nbt.getDouble("maxStagger");
+			// instance.maxStagger = nbt.getDouble("maxStagger");
 			instance.stagger = nbt.getDouble("stagger");
-			instance.maxSanity = nbt.getDouble("maxSanity");
+			// instance.maxSanity = nbt.getDouble("maxSanity");
 			instance.sanity = nbt.getDouble("sanity");
 			instance.emotionLevel = nbt.getInt("emotionLevel");
 			instance.emotionLevelProgress = nbt.getDouble("emotionLevelProgress");
+			instance.onHitCounter = nbt.getInt("onHitCounter");
 		}
 	}
 
 	public static class PlayerVariables {
-		public double blips = 0;
-		public double maxblips = 10;
+		public double light = 0;
+		// public double maxblips = 10;
 		public double blipcooldown = 0;
 		public double tickslower = 0;
 		public double savedirx = 0;
@@ -305,15 +307,16 @@ public class EgoWeaponsModVars {
 		public double determination = 10.0;
 		public double proficiency = 0.0;
 		public double globalcooldown = 0;
+		public int onHitCounter = 0;
 		public double credits = 500.0;
 		public double gunMagSize = 0;
 		public boolean firingMode = true;
 		public double blacksilence_ws = 0;
 		public double iFrames = 0;
-		public double maxStagger = 20;
+		// public double maxStagger = 20;
 		public double stagger = 20;
 
-		public double maxSanity = 20;
+		// public double maxSanity = 20;
 		public double sanity = 20;
 
 		public int emotionLevel = 0;
@@ -375,8 +378,8 @@ public class EgoWeaponsModVars {
 		PlayerVariables original = ((PlayerVariables) event.getOriginal().getCapability(PLAYER_VARIABLES_CAPABILITY, null)
 				.orElse(new PlayerVariables()));
 		PlayerVariables clone = ((PlayerVariables) event.getEntity().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables()));
-		clone.blips = original.blips;
-		clone.maxblips = original.maxblips;
+		clone.light = original.light;
+		// clone.maxblips = original.maxblips;
 		clone.blipcooldown = original.blipcooldown;
 		clone.tickslower = original.tickslower;
 		clone.savedirx = original.savedirx;
@@ -393,11 +396,12 @@ public class EgoWeaponsModVars {
 		clone.gunMagSize = original.gunMagSize;
 		clone.firingMode = original.firingMode;
 		clone.blacksilence_ws = original.blacksilence_ws;
+		clone.onHitCounter = original.onHitCounter;
 		if (!event.isWasDeath()) {
 			clone.iFrames = original.iFrames;
-			clone.maxStagger = original.maxStagger;
+			// clone.maxStagger = original.maxStagger;
 			clone.stagger = original.stagger;
-			clone.maxSanity = original.maxSanity;
+			// clone.maxSanity = original.maxSanity;
 			clone.sanity = original.sanity;
 			clone.emotionLevel = original.emotionLevel;
 			clone.emotionLevelProgress = original.emotionLevelProgress;
@@ -426,8 +430,8 @@ public class EgoWeaponsModVars {
 				if (!context.getDirection().getReceptionSide().isServer()) {
 					PlayerVariables variables = ((PlayerVariables) Minecraft.getInstance().player.getCapability(PLAYER_VARIABLES_CAPABILITY, null)
 							.orElse(new PlayerVariables()));
-					variables.blips = message.data.blips;
-					variables.maxblips = message.data.maxblips;
+					variables.light = message.data.light;
+					// variables.maxblips = message.data.maxblips;
 					variables.blipcooldown = message.data.blipcooldown;
 					variables.tickslower = message.data.tickslower;
 					variables.savedirx = message.data.savedirx;
@@ -445,12 +449,13 @@ public class EgoWeaponsModVars {
 					variables.firingMode = message.data.firingMode;
 					variables.blacksilence_ws = message.data.blacksilence_ws;
 					variables.iFrames = message.data.iFrames;
-					variables.maxStagger = message.data.maxStagger;
+					// variables.maxStagger = message.data.maxStagger;
 					variables.stagger = message.data.stagger;
-					variables.maxSanity = message.data.maxSanity;
+					// variables.maxSanity = message.data.maxSanity;
 					variables.sanity = message.data.sanity;
 					variables.emotionLevelProgress = message.data.emotionLevelProgress;
 					variables.emotionLevel = message.data.emotionLevel;
+					variables.onHitCounter = message.data.onHitCounter;
 				}
 			});
 			context.setPacketHandled(true);
@@ -469,7 +474,7 @@ public class EgoWeaponsModVars {
 		}
 
 		public SyncStaggerMessage(PlayerVariables data, PlayerEntity target) {
-			this.maxStagger = data.maxStagger;
+			// this.maxStagger = data.maxStagger;
 			this.stagger = data.stagger;
 			this.targetUUID = target.getUUID();
 		}
@@ -490,7 +495,7 @@ public class EgoWeaponsModVars {
 					}
 					PlayerVariables variables = Minecraft.getInstance().level.getPlayerByUUID(message.targetUUID).getCapability(PLAYER_VARIABLES_CAPABILITY, null)
 							.orElse(new PlayerVariables());
-					variables.maxStagger = message.maxStagger;
+					// variables.maxStagger = message.maxStagger;
 					variables.stagger = message.stagger;
 					/*if (variables.stagger <= 0) {
 						StaggerSystem.stagger(Minecraft.getInstance().player);
@@ -561,7 +566,7 @@ public class EgoWeaponsModVars {
 
 		public SyncSanityMessage(PlayerVariables vars, PlayerEntity player) {
 			this.sanity = vars.sanity;
-			this.maxSanity = vars.maxSanity;
+			// this.maxSanity = vars.maxSanity;
 			this.targetUUID = player.getUUID();
 		}
 
@@ -580,7 +585,7 @@ public class EgoWeaponsModVars {
 					PlayerVariables variables = Minecraft.getInstance().level.getPlayerByUUID(message.targetUUID).getCapability(PLAYER_VARIABLES_CAPABILITY, null)
 							.orElse(new PlayerVariables());
 					variables.sanity = message.sanity;
-					variables.maxSanity = message.maxSanity;
+					// variables.maxSanity = message.maxSanity;
 				}
 			});
 			context.setPacketHandled(true);
@@ -601,10 +606,21 @@ public class EgoWeaponsModVars {
 		}
 
 		public SyncCountEffectMessage(LivingEntity entity, EffectInstance instance) {
-			this.effect = instance.getEffect().getRegistryName();
-			this.effectDuration = instance.getDuration();
-			this.effectPotency = instance.getAmplifier();
-			this.targetID = entity.getId();
+
+			if (instance == null) {
+				this.effect = null;
+				this.effectDuration = 0;
+				this.effectPotency = 0;
+			} else {
+				this.effect = instance.getEffect().getRegistryName();
+				this.effectDuration = instance.getDuration();
+				this.effectPotency = instance.getAmplifier();
+			}
+
+
+
+
+			this.targetID = entity != null ? entity.getId() : 0;
 		}
 
 		public static void buffer(SyncCountEffectMessage message, PacketBuffer buffer) {

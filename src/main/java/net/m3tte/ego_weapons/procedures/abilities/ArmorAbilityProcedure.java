@@ -45,22 +45,18 @@ public class ArmorAbilityProcedure {
 		// armorAbilities.put(CrimsonkimonoItem.body.getItem(), new CrimsonKimonoArmorAbility());
 
 		armorAbilities.put(EgoWeaponsItems.JACKET_OF_THE_RED_MIST.get(), new RedMistArmorAbility());
-
 		armorAbilities.put(EgoWeaponsItems.MIMICRY_CHESTPLATE.get(), new MimicryArmorAbility());
-
 		armorAbilities.put(EgoWeaponsItems.RED_MIST_EGO_CHESTPLATE.get(), new RedMistEgoArmorAbility());
-
 		armorAbilities.put(EgoWeaponsItems.SOLEMN_LAMENT_CLOAK.get(), new SolemnLamentArmorAbility());
-
 		armorAbilities.put(EgoWeaponsItems.SUNSHOWER_CLOAK.get(), new SunshowerArmorAbility());
-
 		armorAbilities.put(EgoWeaponsItems.OEUFI_CHESTPLATE.get(), new ObligationFullfillment());
-
 		armorAbilities.put(EgoWeaponsItems.FULLSTOP_REP_CLOAK.get(), new FullstopAssistFire());
-
 		armorAbilities.put(EgoWeaponsItems.FULLSTOP_SNIPER_SUIT.get(), new FullstopSniperFocus());
-
 		armorAbilities.put(EgoWeaponsItems.MAGIC_BULLET_CLOAK.get(), new MagicBulletPipe());
+		armorAbilities.put(EgoWeaponsItems.FIREFIST_SUIT.get(), new FirefistIgniteFuel());
+		armorAbilities.put(EgoWeaponsItems.LIU_SOUTH_6_CHESTPLATE.get(), new FocusEmbers());
+		armorAbilities.put(EgoWeaponsItems.STIGMA_WORKSHOP_SUIT.get(), new RuefulEventide());
+		armorAbilities.put(EgoWeaponsItems.HEISHOU_MAO_ROBE.get(), new TriggerStriderMao());
 
 	}
 

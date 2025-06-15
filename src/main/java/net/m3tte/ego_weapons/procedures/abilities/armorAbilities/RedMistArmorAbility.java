@@ -34,7 +34,7 @@ public class RedMistArmorAbility extends ItemAbility {
 
     @Override
     public AbilityTier getAbilityTier() {
-        return AbilityTier.ALPHA;
+        return AbilityTier.ALEPH;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class RedMistArmorAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.blips >= 10) {
+        if (playerVars.light >= 10) {
             manifestEGO(player);
             playerVars.syncPlayerVariables(player);
         }
@@ -53,8 +53,8 @@ public class RedMistArmorAbility extends ItemAbility {
 
     @Override
     public float getAvailability(PlayerEntity player, PlayerVariables playerVars) {
-        if (playerVars.blips < getBlipCost(player, playerVars)) {
-            return (float) (playerVars.blips / getBlipCost(player, playerVars));
+        if (playerVars.light < getBlipCost(player, playerVars)) {
+            return (float) (playerVars.light / getBlipCost(player, playerVars));
         }
 
         return 1.0f;

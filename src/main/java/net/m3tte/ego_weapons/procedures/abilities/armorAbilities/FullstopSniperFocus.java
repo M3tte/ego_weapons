@@ -3,32 +3,22 @@ package net.m3tte.ego_weapons.procedures.abilities.armorAbilities;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
-import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
-import net.m3tte.ego_weapons.gameasset.movesets.FullstopOfficeRepMovesetAnims;
 import net.m3tte.ego_weapons.gameasset.movesets.FullstopOfficeSniperMovesetAnims;
 import net.m3tte.ego_weapons.particle.BlipeffectParticle;
 import net.m3tte.ego_weapons.procedures.abilities.AbilityTier;
 import net.m3tte.ego_weapons.procedures.abilities.AbilityUtils;
 import net.m3tte.ego_weapons.procedures.abilities.ItemAbility;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityPredicate;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
 
@@ -46,7 +36,7 @@ public class FullstopSniperFocus extends ItemAbility {
 
     @Override
     public AbilityTier getAbilityTier() {
-        return AbilityTier.BETA;
+        return AbilityTier.WAW;
     }
 
     @Override
@@ -58,7 +48,7 @@ public class FullstopSniperFocus extends ItemAbility {
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
         int blipCost = getBlipCost(player, playerVars);
-        if (playerVars.blips >= blipCost) {
+        if (playerVars.light >= blipCost) {
             LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
             entitypatch.playAnimationSynchronized(FullstopOfficeSniperMovesetAnims.FULLSTOP_SNIPER_FOCUS, 0.1f);
@@ -71,7 +61,7 @@ public class FullstopSniperFocus extends ItemAbility {
 
 
 
-            playerVars.blips -= blipCost;
+            playerVars.light -= blipCost;
             AbilityUtils.applyBlipCooldown(10, playerVars);
             playerVars.syncPlayerVariables(player);
 
@@ -93,8 +83,8 @@ public class FullstopSniperFocus extends ItemAbility {
                 }
 
                 EgoWeaponsModVars.PlayerVariables playerVars = player.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
-                int consumedEnergy = (int) Math.min(10,playerVars.blips);
-                playerVars.blips -= consumedEnergy;
+                int consumedEnergy = (int) Math.min(10,playerVars.light);
+                playerVars.light -= consumedEnergy;
                 EgoWeaponsEffects.POISE.get().increment(player, consumedEnergy / 2, consumedEnergy);
                 EmotionSystem.increaseEmotionPoints(player, 9 * consumedEnergy, false);
                 playerVars.syncPlayerVariables(player);
@@ -109,8 +99,8 @@ public class FullstopSniperFocus extends ItemAbility {
 
     @Override
     public float getAvailability(PlayerEntity player, PlayerVariables playerVars) {
-        if (playerVars.blips < getBlipCost(player, playerVars)) {
-            return (float) (playerVars.blips / getBlipCost(player, playerVars));
+        if (playerVars.light < getBlipCost(player, playerVars)) {
+            return (float) (playerVars.light / getBlipCost(player, playerVars));
         }
 
         return 1.0f;

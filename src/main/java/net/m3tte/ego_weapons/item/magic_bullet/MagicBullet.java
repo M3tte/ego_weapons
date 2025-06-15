@@ -4,34 +4,28 @@ package net.m3tte.ego_weapons.item.magic_bullet;
 import net.m3tte.ego_weapons.*;
 import net.m3tte.ego_weapons.gameasset.*;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
+import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
-import net.m3tte.ego_weapons.potion.MagicBulletPotionEffect;
 import net.m3tte.ego_weapons.potion.countEffects.DarkFlameEffect;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
-import net.m3tte.ego_weapons.world.capabilities.AmmoType;
 import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
-import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.TextFormatting;
 
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Item;
 import net.minecraft.item.IItemTier;
 import net.minecraft.client.util.ITooltipFlag;
 
-import net.minecraft.world.server.ServerWorld;
 import yesman.epicfight.api.animation.types.DynamicAnimation;
 import yesman.epicfight.api.utils.EpicFightDamageSource;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
@@ -45,7 +39,7 @@ import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
 
-public class MagicBullet extends SwordItem {
+public class MagicBullet extends EgoWeaponsWeapon {
 
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
@@ -54,7 +48,8 @@ public class MagicBullet extends SwordItem {
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
-
+		list.add(new TranslationTextComponent("desc.ego_weapons.risk.waw"));
+		list.add(new StringTextComponent(" "));
 		switch (EgoWeaponsKeybinds.getUiPage() % 4) {
 			case 0:
 				if (EgoWeaponsKeybinds.isHoldingShift())
@@ -87,7 +82,7 @@ public class MagicBullet extends SwordItem {
 	}
 
 
-	public static float damageMultiplier(LivingEntity sourceentity, LivingEntity target, float amount, DamageSource source) {
+	public static float damageMultiplier(LivingEntity sourceentity, LivingEntity target, float multiplier, DamageSource source) {
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
@@ -98,17 +93,20 @@ public class MagicBullet extends SwordItem {
 
 			if (type.equals(AttackLogicPredicate.MAGIC_BULLET_FIRE)) {
 				if (source instanceof EpicFightDamageSource) {
-					amount += 3.5f * EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(entitypatch.getOriginal());
+
+					SharedFunctions.incrementBonusDamage(source, 0.25f * EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(entitypatch.getOriginal()));
+
+					multiplier += 0.25f * EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(entitypatch.getOriginal());
 
 					float amountPredicate = (0.02f * Math.min(15, EgoWeaponsEffects.BURN.get().getPotency(target)));
 
 					SharedFunctions.incrementBonusDamage(source, amountPredicate);
 
-					amount *= 1 + amountPredicate;
+					multiplier += 1 + amountPredicate;
 				}
 			}
 		}
-		return amount;
+		return multiplier;
 	}
 
 	@Override
@@ -150,7 +148,7 @@ public class MagicBullet extends SwordItem {
 										EgoWeaponsSounds.RESULT_POSITIVE,
 										SoundCategory.PLAYERS, 1, 1.4f);
 								StaggerSystem.healStagger(sourceentity, 2);
-								entityData.blips = Math.min(entityData.blips + 1, entityData.maxblips); // Not affected by multipliers.
+								entityData.light = Math.min(entityData.light + 1, EgoWeaponsAttributes.getMaxLight(sourcePlayer)); // Not affected by multipliers.
 							}
 							((PlayerEntity) sourceentity).getCooldowns().addCooldown(itemstack.getItem(), (int) 2);
 							entityData.globalcooldown = 2;

@@ -1,5 +1,6 @@
 package net.m3tte.ego_weapons.entities;
 
+import net.m3tte.ego_weapons.EgoWeaponsAttributes;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
@@ -43,8 +44,9 @@ public class NothingThere2Entity extends MonsterEntity {
                 .add(Attributes.MAX_HEALTH, 1500.0D)
                 .add(Attributes.ARMOR, 10.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.26D)
-                .add(Attributes.FOLLOW_RANGE, 40.0D)
+                .add(Attributes.FOLLOW_RANGE, 50.0D)
                 .add(Attributes.ATTACK_DAMAGE, 17D);
+
     }
 
     private int stepCounter = 0;

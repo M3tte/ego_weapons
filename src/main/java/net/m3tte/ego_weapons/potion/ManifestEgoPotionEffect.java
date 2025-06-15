@@ -125,7 +125,7 @@ public class ManifestEgoPotionEffect {
 
 				EgoWeaponsModVars.PlayerVariables playerVars = living.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new EgoWeaponsModVars.PlayerVariables());
 
-				playerVars.blips = 0;
+				playerVars.light = 0;
 				playerVars.blipcooldown = 20;
 
 				playerVars.syncPlayerVariables(living);

@@ -5,11 +5,11 @@ import net.minecraft.util.ResourceLocation;
 
 public enum AbilityTier {
     OMEGA(new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/abilities/bg/beta.png")),
-    ZETA(new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/abilities/bg/zeta.png")),
-    DELTA(new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/abilities/bg/delta.png")),
-    GAMMA(new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/abilities/bg/gamma.png")),
-    BETA(new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/abilities/bg/beta.png")),
-    ALPHA(new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/abilities/bg/alpha.png"));
+    ZAYIN(new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/abilities/bg/zeta.png")),
+    TETH(new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/abilities/bg/delta.png")),
+    HE(new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/abilities/bg/gamma.png")),
+    WAW(new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/abilities/bg/beta.png")),
+    ALEPH(new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/abilities/bg/alpha.png"));
 
 
     public static ResourceLocation baseBG = new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/abilities/bg/base.png");

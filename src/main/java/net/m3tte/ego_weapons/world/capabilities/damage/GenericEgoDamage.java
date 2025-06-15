@@ -22,10 +22,24 @@ public interface GenericEgoDamage {
         GENERIC(""),
         SLASH("\uED22"),
         PIERCE("\uED21"),
-        BLUNT("\uED23");
+        BLUNT("\uED23"),
+        HIDDEN("");
 
         String icon;
 
+        public static AttackTypes fromString(String str) {
+            switch (str) {
+                case "generic":
+                    return GENERIC;
+                case "slash":
+                    return SLASH;
+                case "pierce":
+                    return PIERCE;
+                case "blunt":
+                    return BLUNT;
+            }
+            return null;
+        }
         public String getIcon() {
             return icon;
         }
@@ -43,6 +57,21 @@ public interface GenericEgoDamage {
 
         String icon;
         String damageBorder;
+
+
+        public static DamageTypes fromString(String str) {
+            switch (str) {
+                case "red":
+                    return RED;
+                case "white":
+                    return WHITE;
+                case "black":
+                    return BLACK;
+                case "pale":
+                    return PALE;
+            }
+            return null;
+        }
 
         public String getIcon() {
             return icon;

@@ -133,7 +133,7 @@ public class BlackSilenceSwapWindow extends ContainerScreen<BlackSilenceSwapGUI.
 		super.init(minecraft, width, height);
 		minecraft.keyboardHandler.setSendRepeatsToGui(true);
 		// Bottom  ( Durandal )
-		this.addButton(new BlackSilenceButton(this.leftPos + (int)(this.getXSize()/1.95) - 24, this.topPos + (int)(this.getYSize()/1.3), 47, 47, new StringTextComponent(""), e -> {
+		this.addButton(new BlackSilenceButton(this.leftPos + (int)(this.getXSize()/1.95) - 24, this.topPos + (int)(this.getYSize()/1.3), 47, 47, new StringTextComponent("Durandal"), e -> {
 			if (true) {
 				EgoWeaponsMod.PACKET_HANDLER.sendToServer(new BlackSilenceSwapGUI.ButtonPressedMessage(0, x, y, z));
 				BlackSilenceSwapGUI.handleWeaponSwap(entity, 0);
@@ -142,7 +142,7 @@ public class BlackSilenceSwapWindow extends ContainerScreen<BlackSilenceSwapGUI.
 
 
 		// Bottom Right ( Atelier Pistol )
-		this.addButton(new BlackSilenceButton(this.leftPos + (int)((this.getXSize()/2)*1.52f)-24, this.topPos + (int)((this.getYSize()/2)*1.83f)-40, 47, 47, new StringTextComponent(""), e -> {
+		this.addButton(new BlackSilenceButton(this.leftPos + (int)((this.getXSize()/2)*1.52f)-24, this.topPos + (int)((this.getYSize()/2)*1.83f)-40, 47, 47, new StringTextComponent("Atelier Logic: Pistol"), e -> {
 			if (true) {
 				EgoWeaponsMod.PACKET_HANDLER.sendToServer(new BlackSilenceSwapGUI.ButtonPressedMessage(1, x, y, z));
 				BlackSilenceSwapGUI.handleWeaponSwap(entity, 1);
@@ -150,7 +150,7 @@ public class BlackSilenceSwapWindow extends ContainerScreen<BlackSilenceSwapGUI.
 		}));
 
 		// Bottom Left ( Atelier Shotgun )
-		this.addButton(new BlackSilenceButton(this.leftPos + (int)((this.getXSize()/2)*0.55f)-25, this.topPos + (int)((this.getYSize()/2)*1.83f)-40, 47, 47, new StringTextComponent(""), e -> {
+		this.addButton(new BlackSilenceButton(this.leftPos + (int)((this.getXSize()/2)*0.55f)-25, this.topPos + (int)((this.getYSize()/2)*1.83f)-40, 47, 47, new StringTextComponent("Atelier Logic: Shotgun"), e -> {
 			if (true) {
 				EgoWeaponsMod.PACKET_HANDLER.sendToServer(new BlackSilenceSwapGUI.ButtonPressedMessage(9, x, y, z));
 				BlackSilenceSwapGUI.handleWeaponSwap(entity, 9);
@@ -158,7 +158,7 @@ public class BlackSilenceSwapWindow extends ContainerScreen<BlackSilenceSwapGUI.
 		}));
 
 		// Lower Middle Right ( Allas Workshop )
-		this.addButton(new BlackSilenceButton(this.leftPos + (int)((this.getXSize()/2)*1.75f)-24, this.topPos + (int)((this.getYSize()/2)*1.4f)-40, 47, 47, new StringTextComponent(""), e -> {
+		this.addButton(new BlackSilenceButton(this.leftPos + (int)((this.getXSize()/2)*1.75f)-24, this.topPos + (int)((this.getYSize()/2)*1.4f)-40, 47, 47, new StringTextComponent("Allas Workshop"), e -> {
 			if (true) {
 				EgoWeaponsMod.PACKET_HANDLER.sendToServer(new BlackSilenceSwapGUI.ButtonPressedMessage(2, x, y, z));
 				BlackSilenceSwapGUI.handleWeaponSwap(entity, 2);
@@ -166,7 +166,7 @@ public class BlackSilenceSwapWindow extends ContainerScreen<BlackSilenceSwapGUI.
 		}));
 
 		// Upper Middle Right ( Old Boys Workshop )
-		this.addButton(new BlackSilenceButton(this.leftPos + (int)((this.getXSize()/2)*1.75f)-24, this.topPos + (int)((this.getYSize()/2)*0.85f)-40, 47, 47, new StringTextComponent(""), e -> {
+		this.addButton(new BlackSilenceButton(this.leftPos + (int)((this.getXSize()/2)*1.75f)-24, this.topPos + (int)((this.getYSize()/2)*0.85f)-40, 47, 47, new StringTextComponent("Old Boys Workshop"), e -> {
 			if (true) {
 				EgoWeaponsMod.PACKET_HANDLER.sendToServer(new BlackSilenceSwapGUI.ButtonPressedMessage(3, x, y, z));
 				BlackSilenceSwapGUI.handleWeaponSwap(entity, 3);
@@ -174,7 +174,7 @@ public class BlackSilenceSwapWindow extends ContainerScreen<BlackSilenceSwapGUI.
 		}));
 
 		// Top Right ( Mook Workshop )
-		this.addButton(new BlackSilenceButton(this.leftPos + (int)((this.getXSize()/2)*1.52f)-24, this.topPos + (int)((this.getYSize()/2)*0.42f)-40, 47, 47, new StringTextComponent(""), e -> {
+		this.addButton(new BlackSilenceButton(this.leftPos + (int)((this.getXSize()/2)*1.52f)-24, this.topPos + (int)((this.getYSize()/2)*0.42f)-40, 47, 47, new StringTextComponent("Mook Workshop"), e -> {
 			if (true) {
 				EgoWeaponsMod.PACKET_HANDLER.sendToServer(new BlackSilenceSwapGUI.ButtonPressedMessage(4, x, y, z));
 				BlackSilenceSwapGUI.handleWeaponSwap(entity, 4);
@@ -182,7 +182,7 @@ public class BlackSilenceSwapWindow extends ContainerScreen<BlackSilenceSwapGUI.
 		}));
 
 		// Top ( Ranga Workshop )
-		this.addButton(new BlackSilenceButton(this.leftPos + (int)(this.getXSize()/1.95) - 24, this.topPos - 17, 47, 47, new StringTextComponent(""), e -> {
+		this.addButton(new BlackSilenceButton(this.leftPos + (int)(this.getXSize()/1.95) - 24, this.topPos - 17, 47, 47, new StringTextComponent("Ranga Workshop"), e -> {
 			if (true) {
 				EgoWeaponsMod.PACKET_HANDLER.sendToServer(new BlackSilenceSwapGUI.ButtonPressedMessage(5, x, y, z));
 				BlackSilenceSwapGUI.handleWeaponSwap(entity, 5);
@@ -190,7 +190,7 @@ public class BlackSilenceSwapWindow extends ContainerScreen<BlackSilenceSwapGUI.
 		}));
 
 		// Top Left ( Zelkova ) (int)((this.getXSize()/2)*0.55f)-16, (int)((this.getYSize()/2)*0.42f)-32,
-		this.addButton(new BlackSilenceButton(this.leftPos + (int)((this.getXSize()/2)*0.55f)-25, this.topPos + (int)((this.getYSize()/2)*0.42f)-40, 47, 47, new StringTextComponent(""), e -> {
+		this.addButton(new BlackSilenceButton(this.leftPos + (int)((this.getXSize()/2)*0.55f)-25, this.topPos + (int)((this.getYSize()/2)*0.42f)-40, 47, 47, new StringTextComponent("Zelkova Workshop"), e -> {
 			if (true) {
 				EgoWeaponsMod.PACKET_HANDLER.sendToServer(new BlackSilenceSwapGUI.ButtonPressedMessage(6, x, y, z));
 				BlackSilenceSwapGUI.handleWeaponSwap(entity, 6);
@@ -198,7 +198,7 @@ public class BlackSilenceSwapWindow extends ContainerScreen<BlackSilenceSwapGUI.
 		}));
 
 		// Upper Middle Left ( Wheels ) (int)((this.getXSize()/2)*0.55f)-16, (int)((this.getYSize()/2)*0.42f)-32,
-		this.addButton(new BlackSilenceButton(this.leftPos + (int)((this.getXSize()/2)*0.31f)-25, this.topPos + (int)((this.getYSize()/2)*0.85f)-40, 47, 47, new StringTextComponent(""), e -> {
+		this.addButton(new BlackSilenceButton(this.leftPos + (int)((this.getXSize()/2)*0.31f)-25, this.topPos + (int)((this.getYSize()/2)*0.85f)-40, 47, 47, new StringTextComponent("Wheels Industry"), e -> {
 			if (true) {
 				EgoWeaponsMod.PACKET_HANDLER.sendToServer(new BlackSilenceSwapGUI.ButtonPressedMessage(7, x, y, z));
 				BlackSilenceSwapGUI.handleWeaponSwap(entity, 7);
@@ -207,7 +207,7 @@ public class BlackSilenceSwapWindow extends ContainerScreen<BlackSilenceSwapGUI.
 
 		// Lower Middle Left ( Crystal Atelier ) (int)((this.getXSize()/2)*0.55f)-16, (int)((this.getYSize()/2)*0.42f)-32,
 		// (int)((this.getXSize()/2)*1.75f)-23, this.topPos + (int)((this.getYSize()/2)*1.4f)-40,
-		this.addButton(new BlackSilenceButton(this.leftPos + (int)((this.getXSize()/2)*0.31f)-25, this.topPos + (int)((this.getYSize()/2)*1.4f)-40, 47, 47, new StringTextComponent(""), e -> {
+		this.addButton(new BlackSilenceButton(this.leftPos + (int)((this.getXSize()/2)*0.31f)-25, this.topPos + (int)((this.getYSize()/2)*1.4f)-40, 47, 47, new StringTextComponent("Crystal Atelier"), e -> {
 			if (true) {
 				EgoWeaponsMod.PACKET_HANDLER.sendToServer(new BlackSilenceSwapGUI.ButtonPressedMessage(8, x, y, z));
 				BlackSilenceSwapGUI.handleWeaponSwap(entity, 8);

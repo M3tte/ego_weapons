@@ -1,0 +1,11 @@
+{
+	"attributes":
+	{
+		"common":
+		{
+			"impact":3.4,
+			"max_strikes":2
+		}
+	},
+	"type":"firefist_gauntlet"
+}

@@ -7,7 +7,6 @@ package net.m3tte.ego_weapons.world.capabilities.item;
 
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
-import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsSkills;
 import net.m3tte.ego_weapons.gameasset.movesets.*;
 import net.m3tte.ego_weapons.potion.FuriosoPotionEffect;
@@ -40,16 +39,19 @@ public class EgoWeaponsCapabilityPresets {
 
     public static final Collider WHEELS_BLADE = new MultiOBBCollider(4, 0.4, 0.6, 1.1, 0.0, 0.0, -1);
     public static final Collider LONGER_BLADE = new MultiOBBCollider(4, 0.4, 0.6, 1, 0.0, 0.0, -0.9);
+    public static final Collider CURSEWRIT_BUTCHERBLADE = new MultiOBBCollider(4, 0.8, 0.8, 1.5, -0.15, -0.15, -1.1);
     public static final Collider SPLIT_HORIZONTAL = new MultiOBBCollider(4, 0.4, 0.6, 2, 0.0, 0.0, -1.2);
 
     public static final Collider SUNSHOWER_COL = new MultiOBBCollider(4, 0.4, 0.4, 0.75, 0.0, 0.0, -0.75);
     public static final Collider SUNSHOWER_COL_LARGE = new MultiOBBCollider(4, 0.8, 0.8, 0.6, 0.0, 0.0, -0.6);
+    public static final Collider LARGE_CUBE = new MultiOBBCollider(4, 1.4, 1.4, 1.4, 0.0, 0.0, -0.6);
     public static final Collider OEUFI_HALBERD = new MultiOBBCollider(4, 0.4, 0.4, 1.1, 0.0, 0.0, -1.0);
 
     public static final Collider RIFLE = new MultiOBBCollider(4, 0.2, 1, 0.2, 0, 0.0, -0.4);
 
     public static final Collider DoubtBlade = new MultiOBBCollider(4, 0.2, 1.3, 0.2, 0, 0.3, 0);
     public static final Collider NTBlade = new MultiOBBCollider(4, 0.7, 1.5, 1.3, 0, 0.3, 0);
+    public static final Collider FirefistSpew = new MultiOBBCollider(4, 0.3, 2, 0.8, 0, -2, 0);
 
     public static final Collider FSTL_HITBOX = new MultiOBBCollider(4, 1.1, 1.5, 1.1, -0.1, -1.3, -0.1);
 
@@ -598,8 +600,7 @@ public class EgoWeaponsCapabilityPresets {
             })
             .collider(SOLEMN_LAMENT_HITBOX_EXT)
             .hitSound(EpicFightSounds.BLUNT_HIT)
-            .weaponCombinationPredicator((entitypatch) -> EpicFightCapabilities.getItemStackCapability(entitypatch.getOriginal().getOffhandItem()).getWeaponCategory() == EgoWeaponsCategories.FULLSTOP_REP)
-
+           
             .livingMotionModifier(Styles.ONE_HAND, LivingMotions.IDLE, FullstopOfficeSniperMovesetAnims.FULLSTOP_SNIPER_IDLE)
             .livingMotionModifier(Styles.ONE_HAND, LivingMotions.WALK, FullstopOfficeSniperMovesetAnims.FULLSTOP_SNIPER_WALK)
             .livingMotionModifier(Styles.ONE_HAND, LivingMotions.SNEAK, FullstopOfficeSniperMovesetAnims.FULLSTOP_SNIPER_SNEAK)
@@ -643,6 +644,88 @@ public class EgoWeaponsCapabilityPresets {
             .newStyleCombo(Styles.TWO_HAND, SunshowerMovesetAnims.SUNSHOWER_AUTO_1, SunshowerMovesetAnims.SUNSHOWER_AUTO_2, SunshowerMovesetAnims.SUNSHOWER_AUTO_3, SunshowerMovesetAnims.SUNSHOWER_AUTO_4, SunshowerMovesetAnims.SUNSHOWER_DASH, SunshowerMovesetAnims.SUNSHOWER_JUMP_ATTACK)
 
             .canBePlacedOffhand(false);
+
+    public static final Function<Item, CapabilityItem.Builder> LIU_FIRE_GAUNTLET = (item) -> WeaponCapability.builder()
+            .category(EgoWeaponsCategories.LIU_FIRE_GAUNTLET)
+            .styleProvider((playerpatch) -> {
+                return Styles.TWO_HAND;
+            })
+            .collider(ColliderPreset.FIST)
+            .hitSound(EpicFightSounds.BLUNT_HIT)
+            .specialAttack(Styles.TWO_HAND, EgoWeaponsSkills.LIU_S6_INNATE)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.IDLE, LiuSouth6MovesetAnims.LIU_S6_IDLE)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.WALK, LiuSouth6MovesetAnims.LIU_S6_WALK)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.SNEAK, LiuSouth6MovesetAnims.LIU_S6_SNEAK)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.KNEEL, LiuSouth6MovesetAnims.LIU_S6_KNEEL)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.RUN, LiuSouth6MovesetAnims.LIU_S6_RUN)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.JUMP, LiuSouth6MovesetAnims.LIU_S6_JUMP)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.BLOCK, LiuSouth6MovesetAnims.LIU_S6_GUARD)
+            .passiveSkill(EgoWeaponsSkills.LIU_S6_PASSIVE)
+            .newStyleCombo(Styles.TWO_HAND, LiuSouth6MovesetAnims.LIU_S6_AUTO_1, LiuSouth6MovesetAnims.LIU_S6_AUTO_2, LiuSouth6MovesetAnims.LIU_S6_AUTO_3, LiuSouth6MovesetAnims.LIU_S6_DASH, LiuSouth6MovesetAnims.LIU_S6_DASH)
+
+            .canBePlacedOffhand(false);
+
+    public static final Function<Item, CapabilityItem.Builder> STIGMA_WORKSHOP_SWORD = (item) -> WeaponCapability.builder()
+            .category(EgoWeaponsCategories.STIGMA_WORKSHOP_SWORD)
+            .styleProvider((playerpatch) -> {
+                return Styles.TWO_HAND;
+            })
+            .collider(ColliderPreset.SWORD)
+            .hitSound(EpicFightSounds.BLADE_HIT)
+            .specialAttack(Styles.TWO_HAND, EgoWeaponsSkills.SUNSET_BLADE)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.IDLE, StigmaWorkshopMovesetAnims.STIGMA_SWORD_IDLE)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.WALK, StigmaWorkshopMovesetAnims.STIGMA_SWORD_WALK)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.SNEAK, StigmaWorkshopMovesetAnims.STIGMA_SWORD_SNEAK)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.KNEEL, StigmaWorkshopMovesetAnims.STIGMA_SWORD_KNEEL)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.RUN, StigmaWorkshopMovesetAnims.STIGMA_SWORD_RUN)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.JUMP, StigmaWorkshopMovesetAnims.STIGMA_SWORD_JUMP)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.BLOCK, StigmaWorkshopMovesetAnims.STIGMA_SWORD_GUARD)
+            .passiveSkill(EgoWeaponsSkills.BASIC_BLOCKABLE_PASSIVE)
+            .newStyleCombo(Styles.TWO_HAND, StigmaWorkshopMovesetAnims.STIGMA_SWORD_AUTO_1, StigmaWorkshopMovesetAnims.STIGMA_SWORD_AUTO_2, StigmaWorkshopMovesetAnims.STIGMA_SWORD_AUTO_3, StigmaWorkshopMovesetAnims.STIGMA_SWORD_DASH, StigmaWorkshopMovesetAnims.STIGMA_SWORD_AUTO_1)
+
+            .canBePlacedOffhand(false);
+
+    public static final Function<Item, CapabilityItem.Builder> FIREFIST_GAUNTLET = (item) -> WeaponCapability.builder()
+            .category(EgoWeaponsCategories.FIREFIST_GAUNTLET)
+            .styleProvider((playerpatch) -> {
+                return Styles.TWO_HAND;
+            })
+            .collider(ColliderPreset.FIST)
+            .hitSound(EpicFightSounds.BLUNT_HIT)
+            .specialAttack(Styles.TWO_HAND, EgoWeaponsSkills.FIREFIST_INNATE)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.IDLE, FirefistMovesetAnims.FIREFIST_IDLE)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.WALK, FirefistMovesetAnims.FIREFIST_WALK)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.SNEAK, LiuSouth6MovesetAnims.LIU_S6_SNEAK)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.KNEEL, LiuSouth6MovesetAnims.LIU_S6_KNEEL)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.RUN, FirefistMovesetAnims.FIREFIST_RUN)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.JUMP, LiuSouth6MovesetAnims.LIU_S6_JUMP)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.BLOCK, FirefistMovesetAnims.FIREFIST_GUARD)
+            .passiveSkill(EgoWeaponsSkills.FIREFIST_PASSIVE)
+            .newStyleCombo(Styles.TWO_HAND, FirefistMovesetAnims.FIREFIST_AUTO_1, FirefistMovesetAnims.FIREFIST_AUTO_2, FirefistMovesetAnims.FIREFIST_AUTO_3, FirefistMovesetAnims.FIREFIST_DASH, FirefistMovesetAnims.FIREFIST_DASH)
+
+            .canBePlacedOffhand(false);
+
+    public static final Function<Item, CapabilityItem.Builder> HEISHOU_MAO_SWORD = (item) -> WeaponCapability.builder()
+            .category(EgoWeaponsCategories.HEISHOU_MAO_SWORD)
+            .styleProvider((playerpatch) -> {
+                return Styles.TWO_HAND;
+            })
+            .collider(LONGER_BLADE)
+            .hitSound(EpicFightSounds.BLADE_HIT)
+            .specialAttack(Styles.TWO_HAND, EgoWeaponsSkills.BLINKSTEP)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.IDLE, HeishouMaoBranchAnims.HEISHOU_MAO_IDLE)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.WALK, HeishouMaoBranchAnims.HEISHOU_MAO_WALK)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.SNEAK, HeishouMaoBranchAnims.HEISHOU_MAO_SNEAK)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.KNEEL, HeishouMaoBranchAnims.HEISHOU_MAO_KNEEL)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.RUN, HeishouMaoBranchAnims.HEISHOU_MAO_RUN)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.JUMP, HeishouMaoBranchAnims.HEISHOU_MAO_JUMP)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.BLOCK, HeishouMaoBranchAnims.HEISHOU_MAO_GUARD)
+            .passiveSkill(EgoWeaponsSkills.HEISHOU_MAO_PASSIVE)
+            .newStyleCombo(Styles.TWO_HAND, HeishouMaoBranchAnims.HEISHOU_MAO_AUTO_1, HeishouMaoBranchAnims.HEISHOU_MAO_AUTO_2, HeishouMaoBranchAnims.HEISHOU_MAO_AUTO_3, HeishouMaoBranchAnims.HEISHOU_MAO_DASH, HeishouMaoBranchAnims.HEISHOU_MAO_AUTO_JUMP)
+
+            .canBePlacedOffhand(false);
+
+
     public EgoWeaponsCapabilityPresets() {
     }
 
@@ -666,5 +749,9 @@ public class EgoWeaponsCapabilityPresets {
         event.getTypeEntry().put("oeufi_association", OEUFI_ASSOC);
         event.getTypeEntry().put("fullstop_office_rep", FULLSTOP_OFFICE_REP);
         event.getTypeEntry().put("fullstop_office_sniper", FULLSTOP_OFFICE_SNIPER);
+        event.getTypeEntry().put("liu_s6_gauntlet", LIU_FIRE_GAUNTLET);
+        event.getTypeEntry().put("firefist_gauntlet", FIREFIST_GAUNTLET);
+        event.getTypeEntry().put("stigma_workshop_sword", STIGMA_WORKSHOP_SWORD);
+        event.getTypeEntry().put("heishou_mao_sword", HEISHOU_MAO_SWORD);
     }
 }

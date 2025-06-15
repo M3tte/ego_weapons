@@ -1,12 +1,9 @@
 package net.m3tte.ego_weapons;
 
-import net.m3tte.ego_weapons.entities.DawnOfGreenDoubtEntity;
+import net.m3tte.ego_weapons.entities.*;
 import net.m3tte.ego_weapons.entities.AtelierPistolsBullet.AtelierPistolBulletProj;
 import net.m3tte.ego_weapons.entities.AtelierShotgunBullet.AtelierShotgunSlugProj;
 import net.m3tte.ego_weapons.entities.MagicBulletProjectile.MagicBulletProj;
-import net.m3tte.ego_weapons.entities.NothingThere2Entity;
-import net.m3tte.ego_weapons.entities.SunshowerFoxEntity;
-import net.m3tte.ego_weapons.entities.SunshowerUmbrellaEntity;
 import net.m3tte.ego_weapons.world.capabilities.entitypatch.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
@@ -48,6 +45,7 @@ public class EgoWeaponsEntities {
             .setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).setCustomClientFactory(CrimsonWindProj::new)
             .sized(0.5f, 0.5f)));
     public static final RegistryObject<EntityType<DawnOfGreenDoubtEntity>> DAWN_OF_GREEN_DOUBT = register("doubt", EntityType.Builder.of(DawnOfGreenDoubtEntity::new, EntityClassification.MONSTER).sized(0.6F, 2.4F).clientTrackingRange(8));
+    public static final RegistryObject<EntityType<CravingBloodbagEntity>> CRAVING_BLOODBAG = register("craving_bloodbag", EntityType.Builder.of(CravingBloodbagEntity::new, EntityClassification.MONSTER).sized(0.6F, 2F).clientTrackingRange(8));
 
     public static final RegistryObject<EntityType<NothingThere2Entity>> NOTHING_THERE = register("nothing_there", EntityType.Builder.of(NothingThere2Entity::new, EntityClassification.MONSTER).sized(1F, 4F).clientTrackingRange(8));
     public static final RegistryObject<EntityType<SunshowerFoxEntity>> SUNSHOWER_FOX = register("sunshower_fox", EntityType.Builder.of(SunshowerFoxEntity::new, EntityClassification.CREATURE).sized(0.5F, 0.5F).clientTrackingRange(8));
@@ -62,6 +60,7 @@ public class EgoWeaponsEntities {
         event.put(NOTHING_THERE.get(), NothingThere2Entity.createMonsterAttributes().build());
         event.put(SUNSHOWER_FOX.get(), SunshowerFoxEntity.createMonsterAttributes().build());
         event.put(SUNSHOWER_UMBRELLA.get(), SunshowerUmbrellaEntity.createMonsterAttributes().build());
+        event.put(CRAVING_BLOODBAG.get(), CravingBloodbagEntity.createMonsterAttributes().build());
     }
 
     @SubscribeEvent
@@ -70,6 +69,7 @@ public class EgoWeaponsEntities {
         event.getTypeEntry().put(DAWN_OF_GREEN_DOUBT.get(), (e) -> DoubtAPatch::new);
         event.getTypeEntry().put(NOTHING_THERE.get(), (e) -> NothingTherePatch::new);
         event.getTypeEntry().put(SUNSHOWER_FOX.get(), (e) -> SunshowerFoxPatch::new);
+        event.getTypeEntry().put(CRAVING_BLOODBAG.get(), (e) -> CravingBloodbagPatch::new);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -79,5 +79,6 @@ public class EgoWeaponsEntities {
         event.addPatchedEntityRenderer(DAWN_OF_GREEN_DOUBT.get(), DoubtARenderer::new);
         event.addPatchedEntityRenderer(NOTHING_THERE.get(), NothingThereRenderer::new);
         event.addPatchedEntityRenderer(SUNSHOWER_FOX.get(), SunshowerFoxPatchRenderer::new);
+        event.addPatchedEntityRenderer(CRAVING_BLOODBAG.get(), CravingBloodbagRendererPatch::new);
     }
 }

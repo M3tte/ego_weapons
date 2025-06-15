@@ -24,8 +24,8 @@ public class CursedLabCoatArmorAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, EgoWeaponsModVars.PlayerVariables playerVars) {
         if (!player.hasEffect(ShadowIncarnate.potion)) {
-            if (playerVars.blips > 5) {
-                playerVars.blips -= 5;
+            if (playerVars.light > 5) {
+                playerVars.light -= 5;
                 World world = player.level;
                 double x = player.getX();
                 double y = player.getY();

@@ -18,7 +18,7 @@ import java.util.UUID;
 
 public class DefenseUpEffect extends CountPotencyStatus {
     public DefenseUpEffect() {
-        super(EffectType.HARMFUL, "defense_up",-16777216);
+        super(EffectType.BENEFICIAL, "defense_up",-16777216);
     }
 
     @Override

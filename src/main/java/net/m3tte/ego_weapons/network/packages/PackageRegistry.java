@@ -37,6 +37,10 @@ public class PackageRegistry {
                 ParticlePackages.NumberLabelParticle::handler);
         addNetworkMessage(ParticlePackages.DamageLabelParticle.class, ParticlePackages.DamageLabelParticle::buffer, ParticlePackages.DamageLabelParticle::new,
                 ParticlePackages.DamageLabelParticle::handler);
+        addNetworkMessage(ParticlePackages.ClashLabelParticle.class, ParticlePackages.ClashLabelParticle::buffer, ParticlePackages.ClashLabelParticle::new,
+                ParticlePackages.ClashLabelParticle::handler);
+        addNetworkMessage(ParticlePackages.SendParticlesVelocity.class, ParticlePackages.SendParticlesVelocity::buffer, ParticlePackages.SendParticlesVelocity::new,
+                ParticlePackages.SendParticlesVelocity::handler);
 
         addNetworkMessage(AbilityPackages.SyncOnrushData.class, AbilityPackages.SyncOnrushData::buffer, AbilityPackages.SyncOnrushData::new,
                 AbilityPackages.SyncOnrushData::handler);

@@ -7,6 +7,7 @@ import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.potion.ManifestEgoPotionEffect;
+import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoWeaponsArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -22,6 +23,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -33,7 +35,7 @@ import java.util.List;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
-public class RedMistEGOSuit extends ArmorItem {
+public class RedMistEGOSuit extends GenericEgoWeaponsArmor {
 
 	static IArmorMaterial armormaterial = new IArmorMaterial() {
 
@@ -122,7 +124,10 @@ public class RedMistEGOSuit extends ArmorItem {
 		}
 	};
 
-	static Item chest = new RedMistEGOSuit(armormaterial, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT)) {
+	public RedMistEGOSuit(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity) {
+		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
+	}
+	static Item chest = new RedMistEGOSuit(armormaterial, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT), 0.5f, 0.5f, 1.0f ,1.6f, 0.8f, 0.5f, 1.3f, 10, 0) {
 
 
 
@@ -159,28 +164,32 @@ public class RedMistEGOSuit extends ArmorItem {
 			list.add(new StringTextComponent("It was that armor... To protect everyone...").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
-			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
-
-			switch (EgoWeaponsKeybinds.getUiPage() % 4) {
+			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
+			list.add(new TranslationTextComponent("desc.ego_weapons.risk.aleph"));
+			list.add(new StringTextComponent(" "));
+			switch (EgoWeaponsKeybinds.getUiPage() % 5) {
 				case 0:
+					resistanceMods(itemstack, world, list, flag);
+					break;
+				case 1:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{});
 					else
 						generateDescription(list, "red_mist_armor", "passive", 1);
 					break;
-				case 1:
+				case 2:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"defense_up", "offense_up", "power_up", "manifest_ego"});
 					else
 						generateDescription(list, "red_mist_armor", "passive2", 3);
 					break;
-				case 2:
+				case 3:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"manifest_ego"});
 					else
 						generateDescription(list,"red_mist_armor", "ability", 1);
 					break;
-				case 3:
+				case 4:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"resilience","protection"});
 					else
@@ -287,13 +296,13 @@ public class RedMistEGOSuit extends ArmorItem {
 			BodyLayer_r5.texOffs(12, 18).addBox(-4.0F, -9.3F, 5.125F, 8.0F, 7.0F, 0.0F, 0.0F, false);
 
 			RightArm = new ModelRenderer(this);
-			RightArm.setPos(-5.0F, 2.0F, 0.0F);
+			RightArm.setPos(-5.0F, 2.3F, 0.0F);
 			setRotationAngle(RightArm, -0.1745F, 0.0F, 0.0F);
 			RightArm.texOffs(32, 48).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.2F, true);
 			RightArm.texOffs(48, 48).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.3F, false);
 
 			LeftArm = new ModelRenderer(this);
-			LeftArm.setPos(5.0F, 2.0F, 0.0F);
+			LeftArm.setPos(5.0F, 2.3F, 0.0F);
 			setRotationAngle(LeftArm, 0.2094F, 0.0F, 0.0F);
 			LeftArm.texOffs(32, 48).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.2F, false);
 			LeftArm.texOffs(48, 48).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.3F, true);

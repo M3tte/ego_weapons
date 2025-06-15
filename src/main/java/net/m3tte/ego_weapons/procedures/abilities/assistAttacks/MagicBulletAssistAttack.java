@@ -3,9 +3,7 @@ package net.m3tte.ego_weapons.procedures.abilities.assistAttacks;
 import net.m3tte.ego_weapons.*;
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 import net.m3tte.ego_weapons.entities.MagicBulletProjectile;
-import net.m3tte.ego_weapons.gameasset.movesets.FullstopOfficeSniperMovesetAnims;
 import net.m3tte.ego_weapons.gameasset.movesets.MagicBulletMovesetAnims;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
 import net.m3tte.ego_weapons.particle.BlipeffectParticle;
 import net.m3tte.ego_weapons.particle.DamagefxParticle;
 import net.m3tte.ego_weapons.particle.MagicBulletAimParticle;
@@ -14,8 +12,6 @@ import net.m3tte.ego_weapons.potion.countEffects.DarkFlameEffect;
 import net.m3tte.ego_weapons.procedures.abilities.AbilityTier;
 import net.m3tte.ego_weapons.procedures.abilities.AbilityUtils;
 import net.m3tte.ego_weapons.procedures.abilities.ItemAbility;
-import net.m3tte.ego_weapons.world.capabilities.AmmoSystem;
-import net.m3tte.ego_weapons.world.capabilities.AmmoType;
 import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -27,8 +23,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fml.network.PacketDistributor;
-import net.minecraftforge.registries.ForgeRegistries;
 import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.particle.EpicFightParticles;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
@@ -66,7 +60,7 @@ public class MagicBulletAssistAttack extends ItemAbility {
 
     @Override
     public AbilityTier getAbilityTier() {
-        return AbilityTier.BETA;
+        return AbilityTier.WAW;
     }
 
     @Override
@@ -76,8 +70,8 @@ public class MagicBulletAssistAttack extends ItemAbility {
 
     @Override
     public float getAvailability(PlayerEntity player, PlayerVariables playerVars) {
-        if (playerVars.blips < getBlipCost(player, playerVars)) {
-            return (float) (playerVars.blips / getBlipCost(player, playerVars));
+        if (playerVars.light < getBlipCost(player, playerVars)) {
+            return (float) (playerVars.light / getBlipCost(player, playerVars));
         }
 
         return 1.0f;
@@ -88,7 +82,7 @@ public class MagicBulletAssistAttack extends ItemAbility {
 
         int blipCost = getBlipCost(player, playerVars);
 
-        if (playerVars.blips >= blipCost) {
+        if (playerVars.light >= blipCost) {
 
             World world = player.level;
             double x = player.getX();
@@ -121,7 +115,7 @@ public class MagicBulletAssistAttack extends ItemAbility {
             if (world instanceof ServerWorld) {
                 ((ServerWorld) world).sendParticles(DamagefxParticle.particle, x, (y + 1), z, (int) 4, 0.4, 0.6, 0.4, 0);
             }
-            playerVars.blips-= blipCost;
+            playerVars.light -= blipCost;
 
             applyBlipCooldown(10, playerVars);
             playerVars.syncPlayerVariables(player);

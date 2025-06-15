@@ -63,9 +63,9 @@ public class BlacksilencefuriosoProcedure {
 			Entity target = null;
 			entity.getPersistentData().putDouble("furiosohits", 0);
 			entity.getPersistentData().putDouble("furiosoattacks", 0);
-			double _setval = entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).orElse(new EgoWeaponsModVars.PlayerVariables()).blips - 5.0;
+			double _setval = entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).orElse(new EgoWeaponsModVars.PlayerVariables()).light - 5.0;
 			entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).ifPresent((capability) -> {
-				capability.blips = _setval;
+				capability.light = _setval;
 				capability.syncPlayerVariables(entity);
 			});
 			if (!world.isClientSide()) {

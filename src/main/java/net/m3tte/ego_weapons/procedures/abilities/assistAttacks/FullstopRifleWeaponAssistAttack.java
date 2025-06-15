@@ -4,7 +4,6 @@ import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
-import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.movesets.FullstopOfficeSniperMovesetAnims;
 import net.m3tte.ego_weapons.network.packages.ParticlePackages;
 import net.m3tte.ego_weapons.particle.BlipeffectParticle;
@@ -56,7 +55,7 @@ public class FullstopRifleWeaponAssistAttack extends ItemAbility {
 
     @Override
     public AbilityTier getAbilityTier() {
-        return AbilityTier.BETA;
+        return AbilityTier.WAW;
     }
 
     @Override
@@ -66,8 +65,8 @@ public class FullstopRifleWeaponAssistAttack extends ItemAbility {
 
     @Override
     public float getAvailability(PlayerEntity player, PlayerVariables playerVars) {
-        if (playerVars.blips < getBlipCost(player, playerVars)) {
-            return (float) (playerVars.blips / getBlipCost(player, playerVars));
+        if (playerVars.light < getBlipCost(player, playerVars)) {
+            return (float) (playerVars.light / getBlipCost(player, playerVars));
         }
 
         return 1.0f;
@@ -78,7 +77,7 @@ public class FullstopRifleWeaponAssistAttack extends ItemAbility {
 
         int blipCost = getBlipCost(player, playerVars);
 
-        if (playerVars.blips >= blipCost) {
+        if (playerVars.light >= blipCost) {
 
             World world = player.level;
             double x = player.getX();
@@ -99,7 +98,7 @@ public class FullstopRifleWeaponAssistAttack extends ItemAbility {
 
             if (ammoCount >= 1 || validAmmo) {
                 entitypatch.playAnimationSynchronized(FullstopOfficeSniperMovesetAnims.FULLSTOP_SNIPER_ASSIST, 0.01f);
-                playerVars.blips-= blipCost;
+                playerVars.light -= blipCost;
             }
 
             applyBlipCooldown(10, playerVars);

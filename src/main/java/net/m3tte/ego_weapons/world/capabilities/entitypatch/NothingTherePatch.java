@@ -1,6 +1,7 @@
 package net.m3tte.ego_weapons.world.capabilities.entitypatch;
 
 import io.netty.buffer.ByteBuf;
+import net.m3tte.ego_weapons.EgoWeaponsAttributes;
 import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.entities.NothingThere2Entity;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsMobAnimations;
@@ -142,6 +143,15 @@ public class NothingTherePatch extends MobPatch<NothingThere2Entity> implements 
         this.original.getAttribute(EpicFightAttributes.IMPACT.get()).setBaseValue(5.0D);
         this.original.getAttribute(EpicFightAttributes.WEIGHT.get()).setBaseValue(999.0D);
         this.original.getAttribute(EpicFightAttributes.STUN_ARMOR.get()).setBaseValue(6.0D);
+
+        this.original.getAttribute(EgoWeaponsAttributes.BLUNT_RESISTANCE.get()).setBaseValue(0.7D);
+        this.original.getAttribute(EgoWeaponsAttributes.PIERCE_RESISTANCE.get()).setBaseValue(0.9D);
+        this.original.getAttribute(EgoWeaponsAttributes.SLASH_RESISTANCE.get()).setBaseValue(0.8D);
+
+        this.original.getAttribute(EgoWeaponsAttributes.RED_RESISTANCE.get()).setBaseValue(0.1D);
+        this.original.getAttribute(EgoWeaponsAttributes.WHITE_RESISTANCE.get()).setBaseValue(0.5D);
+        this.original.getAttribute(EgoWeaponsAttributes.BLACK_RESISTANCE.get()).setBaseValue(0.5D);
+        this.original.getAttribute(EgoWeaponsAttributes.PALE_RESISTANCE.get()).setBaseValue(1.0D);
     }
 
     @Override
@@ -162,7 +172,17 @@ public class NothingTherePatch extends MobPatch<NothingThere2Entity> implements 
     }
 
     @Override
+    public StaticAnimation getClashStunAnim(int strength) {
+        return null;
+    }
+
+    @Override
     public StaticAnimation getStunAnimation(int strength) {
+        return null;
+    }
+
+    @Override
+    public StaticAnimation getHitstunAnimation(int strength) {
         return null;
     }
 

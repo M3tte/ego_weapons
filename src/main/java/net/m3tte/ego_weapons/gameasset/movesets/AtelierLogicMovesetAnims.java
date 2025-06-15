@@ -145,7 +145,7 @@ public class AtelierLogicMovesetAnims {
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.BLACK_SILENCE_ATELIER_REVOLVER)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.BULLET_CRIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.ATELIER_PISTOL_HIT)
-                .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(1.5f))
+                .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(1.3f))
                 .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(2.5f))
                 .addProperty(AnimationProperty.AttackAnimationProperty.COLLIDER_ADDER, 1)
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.6f)
@@ -159,7 +159,7 @@ public class AtelierLogicMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT_HARD)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
-                .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.setter(8))
+                .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.setter(3))
                 .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(2))
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLUNT)
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1f);
@@ -172,7 +172,7 @@ public class AtelierLogicMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.KNOCKDOWN)
-                .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.setter(3))
+                .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.setter(4))
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLUNT)
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.7f)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, AtelierLogicRevolver.revolverAutoReload());
@@ -193,7 +193,7 @@ public class AtelierLogicMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.9f)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, AtelierLogicRevolver.dualRevolverFire(0.5f, "Tool_L", 0.72f, "Tool_R", 1.5f)));
 
-        ATELIER_REVOLVER_AUTO_1 = (new EgoAttackAnimation(0.1F, 0.05F, 0.4F, 0.75F, 1F, ColliderPreset.FIST, "Tool_L", "biped/atelier_revolver/auto_1", biped))
+        ATELIER_REVOLVER_AUTO_1 = (new BasicEgoAttackAnimation(0.1F, 0.05F, 0.4F, 0.75F, 1F, ColliderPreset.FIST, "Tool_L", "biped/atelier_revolver/auto_1", biped))
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
@@ -201,9 +201,9 @@ public class AtelierLogicMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLUNT)
-                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.8f);
+                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.6f);
 
-        ATELIER_REVOLVER_AUTO_2 = (new EgoAttackAnimation(0.1F, 0.05F, 0.3F, 0.66F, 0.9F, ColliderPreset.FIST, "Tool_L", "biped/atelier_revolver/auto_2", biped))
+        ATELIER_REVOLVER_AUTO_2 = (new BasicEgoAttackAnimation(0.1F, 0.05F, 0.3F, 0.66F, 0.9F, ColliderPreset.FIST, "Tool_L", "biped/atelier_revolver/auto_2", biped))
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
@@ -213,9 +213,9 @@ public class AtelierLogicMovesetAnims {
                 .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(0.5f))
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLUNT)
-                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.8f);
+                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.6f);
 
-        ATELIER_REVOLVER_AUTO_3 = (new EgoAttackAnimation(0.1F, 0.05F, 0.45F, 0.8F, 1.5F, ColliderPreset.FIST, "Tool_R", "biped/atelier_revolver/auto_3", biped))
+        ATELIER_REVOLVER_AUTO_3 = (new BasicEgoAttackAnimation(0.1F, 0.05F, 0.45F, 0.8F, 1.5F, ColliderPreset.FIST, "Tool_R", "biped/atelier_revolver/auto_3", biped))
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.MELEE)
@@ -225,7 +225,7 @@ public class AtelierLogicMovesetAnims {
                 .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(2))
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT_HARD)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLUNT)
-                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.8f);
+                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.6f);
 
         ATELIER_REVOLVER_JUMP_ATTACK = new BasicEgoAttackAnimation(0.08F, 0.05F, 0.25F, 0.55F, 0.9F, ColliderPreset.FIST, "Leg_L", "biped/atelier_revolver/jump_attack", biped)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)

@@ -37,8 +37,8 @@ public class CrimsonKimonoArmorAbility extends ItemAbility {
         double z = player.getZ();
 
 
-        if (playerVars.blips > 4) {
-            playerVars.blips -= 4;
+        if (playerVars.light > 4) {
+            playerVars.light -= 4;
             List<Entity> nearbyEntities = world
                     .getEntities(player,
                             new AxisAlignedBB(x - 6, y - 6, z - 6, x + 6, y + 6, z + 6), null)

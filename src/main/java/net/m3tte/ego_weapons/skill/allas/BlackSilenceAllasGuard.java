@@ -67,9 +67,7 @@ public class BlackSilenceAllasGuard extends EnergizingGuardSkill {
             if (serverplayer.tickCount - container.getDataManager().getDataValue(LAST_ACTIVE) < 30 &&  container.getDataManager().getDataValue(PENALTY) < 0.2f) {
                 container.getDataManager().setDataSync(PENALTY, container.getDataManager().getDataValue(PENALTY) + 0.5f, serverplayer);
                 event.getPlayerPatch().playSound(SoundEvents.ITEM_BREAK, 0.6f, 0.5F, 0.7F);
-
             }
-
         });
     }
     @Override
@@ -159,7 +157,7 @@ public class BlackSilenceAllasGuard extends EnergizingGuardSkill {
                 event.getPlayerPatch().playSound(EpicFightSounds.NEUTRALIZE_MOBS, 3.0F, 0.0F, 0.1F);
             }
 
-            EmotionSystem.handleGuard(serverPlayer, event.getAmount(), impact, successParrying);
+            EmotionSystem.handleGuard(serverPlayer, event.getAmount(), impact, successParrying, event.getDamageSource().getEntity());
 
             this.dealEvent(event.getPlayerPatch(), event);
         }

@@ -11,11 +11,13 @@ public class EgoWeaponsModels<T extends Model> {
     public static final EgoWeaponsModels<?> LOGICAL_SERVER = new ServerModels();
     public T doubt;
     public T nothing_there;
+    public T craving_bloodbag;
     public T sunshower_fox;
     public void loadArmatures(IResourceManager resourceManager) {
         this.doubt.loadArmatureData(resourceManager);
         this.nothing_there.loadArmatureData(resourceManager);
         this.sunshower_fox.loadArmatureData(resourceManager);
+        this.craving_bloodbag.loadArmatureData(resourceManager);
     }
 
     public static class ServerModels extends EgoWeaponsModels<Model> {
@@ -23,6 +25,7 @@ public class EgoWeaponsModels<T extends Model> {
             this.doubt = Models.LOGICAL_SERVER.register(new ResourceLocation(EgoWeaponsMod.MODID, "entity/doubt_a"));
             this.nothing_there = Models.LOGICAL_SERVER.register(new ResourceLocation(EgoWeaponsMod.MODID, "entity/nothing_there"));
             this.sunshower_fox = Models.LOGICAL_SERVER.register(new ResourceLocation(EgoWeaponsMod.MODID, "entity/sunshower_fox"));
+            this.craving_bloodbag = Models.LOGICAL_SERVER.register(new ResourceLocation(EgoWeaponsMod.MODID, "entity/craving_bloodbag"));
 
         }
         public EgoWeaponsModels<?> getModels(boolean isLogicalClient) {

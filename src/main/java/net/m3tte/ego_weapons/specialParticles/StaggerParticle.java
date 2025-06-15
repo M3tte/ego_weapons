@@ -44,6 +44,7 @@ public class StaggerParticle extends HitParticle {
 
 	}
 
+
 	@Override
 	public void tick() {
 		super.tick();
@@ -76,6 +77,11 @@ public class StaggerParticle extends HitParticle {
 		}
 
 
+	}
+
+	@Override
+	public boolean shouldCull() {
+		return false;
 	}
 
 	@OnlyIn(Dist.CLIENT)

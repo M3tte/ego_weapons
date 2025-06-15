@@ -29,8 +29,8 @@ public class GalaxyGarbArmorAbility extends ItemAbility {
 
         if (playerVars.savedhealth == -1) {
             playerVars.syncPlayerVariables(player);
-        } else if (playerVars.blips > 5) {
-            playerVars.blips -= 5;
+        } else if (playerVars.light > 5) {
+            playerVars.light -= 5;
             if (world instanceof ServerWorld) {
                 ((ServerWorld) world).sendParticles(BlipeffectParticle.particle, x, (y + 1), z, (int) 8, 0.4, 0.6, 0.4, 0);
                 ((ServerWorld) world).sendParticles(GalaxyparticleParticle.particle, x, (y + 1), z, (int) 8, 0.2, 0.5, 0.2, 0.05);

@@ -6,7 +6,9 @@
   "server": [
   ],
   "mixins": [
-    "LivingEntityDamageMixin",
+    "AttributeModifierMapMixin",
+    "ItemStackMixin",
+    "LivingEntityMixin",
     "PlayerEntityDamageMixin",
     "PlayerRenderLayerMixin",
     "epicfight.AttackAnimationMixin",
@@ -18,6 +20,7 @@
     "MusicTickerMixin",
     "epicfight.EntityIndicatorMixin",
     "epicfight.HealthbarIndicatorMixin",
+    "epicfight.ItemInHandLayerMixin",
     "epicfight.PatchedEntityRendererMixin"
   ],
   "minVersion": "0.8"

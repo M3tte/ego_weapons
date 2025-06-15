@@ -8,6 +8,7 @@ import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoWeaponsArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -23,6 +24,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -34,7 +36,7 @@ import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILIT
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
-public class MagicBulletArmor extends ArmorItem {
+public class MagicBulletArmor extends GenericEgoWeaponsArmor {
 
 	static IArmorMaterial magicBulletArmor = new IArmorMaterial() {
 		@Override
@@ -83,6 +85,8 @@ public class MagicBulletArmor extends ArmorItem {
 		super(p_i48534_1_, p_i48534_2_, p_i48534_3_);
 	}
 
+
+
 	// Texture Override
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
@@ -96,7 +100,11 @@ public class MagicBulletArmor extends ArmorItem {
 			case HEAD: return pipe;
 		}
 	}
-	static Item chest = new MagicBulletArmor(magicBulletArmor, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT)) {
+
+	public MagicBulletArmor(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity) {
+		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
+	}
+	static Item chest = new MagicBulletArmor(magicBulletArmor, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT), 0.7f, 0.7f, 0.7f ,1.5f, 1f, 0.7f, 1.3f, -5, 0) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -118,16 +126,20 @@ public class MagicBulletArmor extends ArmorItem {
 			list.add(new StringTextComponent("...The contract won't end here...").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
-			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 2) + 1) + "/2] - - - - - - - =").withStyle(TextFormatting.GRAY));
-
-			switch (EgoWeaponsKeybinds.getUiPage() % 2) {
+			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 3) + 1) + "/3] - - - - - - - =").withStyle(TextFormatting.GRAY));
+			list.add(new TranslationTextComponent("desc.ego_weapons.risk.waw"));
+			list.add(new StringTextComponent(" "));
+			switch (EgoWeaponsKeybinds.getUiPage() % 3) {
 				case 0:
+					resistanceMods(itemstack, world, list, flag);
+					break;
+				case 1:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"dark_flame", "poise"});
 					else
 						generateDescription(list, "magic_bullet_armor", "passive", 4);
 					break;
-				case 1:
+				case 2:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"magic_bullet", "poise", "power_up"});
 					else
@@ -186,16 +198,16 @@ public class MagicBulletArmor extends ArmorItem {
 			Body.texOffs(32, 20).addBox(-4.0F, -8.425F, -4.0F, 8.0F, 8.0F, 8.0F, 0.3F, false);
 
 			RightArm = new ModelRenderer(this);
-			RightArm.setPos(-5.0F, 2.0F, 0.0F);
+			RightArm.setPos(-5.0F, 2.3F, 0.0F);
 			setRotationAngle(RightArm, -0.1745F, 0.0F, 0.0F);
-			RightArm.texOffs(0, 32).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.1F, false);
-			RightArm.texOffs(16, 32).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.25F, false);
+			RightArm.texOffs(0, 32).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.14F, false);
+			RightArm.texOffs(16, 32).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.29F, false);
 
 			LeftArm = new ModelRenderer(this);
-			LeftArm.setPos(5.0F, 2.0F, 0.0F);
+			LeftArm.setPos(5.0F, 2.3F, 0.0F);
 			setRotationAngle(LeftArm, 0.2094F, 0.0F, 0.0F);
-			LeftArm.texOffs(0, 32).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.1F, true);
-			LeftArm.texOffs(16, 32).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.25F, true);
+			LeftArm.texOffs(0, 32).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.14F, true);
+			LeftArm.texOffs(16, 32).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.29F, true);
 
 			Head = new ModelRenderer(this);
 			Head.setPos(1.0F, 0.0F, 0.0F);

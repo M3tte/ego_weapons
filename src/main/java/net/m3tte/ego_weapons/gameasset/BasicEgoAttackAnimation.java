@@ -2,24 +2,18 @@ package net.m3tte.ego_weapons.gameasset;
 
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
-import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.util.Hand;
 import org.jetbrains.annotations.Nullable;
-import yesman.epicfight.api.animation.property.AnimationProperty;
-import yesman.epicfight.api.animation.types.AttackAnimation;
 import yesman.epicfight.api.animation.types.BasicAttackAnimation;
-import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.api.collider.Collider;
 import yesman.epicfight.api.model.Model;
 import yesman.epicfight.api.utils.EpicFightDamageSource;
 import yesman.epicfight.api.utils.ExtendedDamageSource;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
-
-import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
 
 public class BasicEgoAttackAnimation extends BasicAttackAnimation {
 
@@ -45,7 +39,7 @@ public class BasicEgoAttackAnimation extends BasicAttackAnimation {
     }
 
     @Override
-    protected ExtendedDamageSource getExtendedDamageSource(LivingEntityPatch<?> entitypatch, Entity target, Phase phase) {
+    public ExtendedDamageSource getExtendedDamageSource(LivingEntityPatch<?> entitypatch, Entity target, Phase phase) {
         ExtendedDamageSource source = super.getExtendedDamageSource(entitypatch, target, phase);
 
         if (source instanceof EpicFightDamageSource) {
@@ -56,7 +50,7 @@ public class BasicEgoAttackAnimation extends BasicAttackAnimation {
             if (this.properties.getOrDefault(EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.DEFAULT).equals(AttackLogicPredicate.GSH)) {
                 EFsource.setMagic();
             }
-            if (this.properties.getOrDefault(EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.DEFAULT).equals(AttackLogicPredicate.ALHVFIRE)) {
+            if (this.properties.getOrDefault(EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.DEFAULT).equals(AttackLogicPredicate.PIERCE_GUARD_DODGE)) {
                 EFsource.setMagic();
             }
             if (entitypatch.getOriginal().getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.SUIT_OF_THE_BLACK_SILENCE.get())) {

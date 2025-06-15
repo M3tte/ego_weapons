@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.potion.OrlandoPotionEffect;
+import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoWeaponsArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -21,6 +22,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -32,7 +34,7 @@ import java.util.List;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
-public class BlackSilenceArmor  extends ArmorItem {
+public class BlackSilenceArmor  extends GenericEgoWeaponsArmor {
 
 	static IArmorMaterial blackSilenceArmor = new IArmorMaterial() {
 		@Override
@@ -98,7 +100,11 @@ public class BlackSilenceArmor  extends ArmorItem {
 			case HEAD: return mask;
 		}
 	}
-	static Item chest = new BlackSilenceArmor(blackSilenceArmor, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT)) {
+
+	public BlackSilenceArmor(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity) {
+		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
+	}
+	static Item chest = new BlackSilenceArmor(blackSilenceArmor, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT), 0.7f, 1f, 0.5f ,1.2f, 0.8f, 1.3f, 0.8f, 5, -5) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -119,34 +125,38 @@ public class BlackSilenceArmor  extends ArmorItem {
 			list.add(new StringTextComponent("Thats that. And this is this.").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
-			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
-
-			switch (EgoWeaponsKeybinds.getUiPage() % 5) {
+			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 6) + 1) + "/6] - - - - - - - =").withStyle(TextFormatting.GRAY));
+			list.add(new TranslationTextComponent("desc.ego_weapons.risk.aleph"));
+			list.add(new StringTextComponent(" "));
+			switch (EgoWeaponsKeybinds.getUiPage() % 6) {
 				case 0:
+					resistanceMods(itemstack, world, list, flag);
+					break;
+				case 1:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"poise"});
 					else
-						generateDescription(list, "black_silence_suit", "passive", 4);
+						generateDescription(list, "black_silence_suit", "passive", 3);
 					break;
-				case 1:
+				case 2:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"offense_up", "orlando"});
 					else
 						generateDescription(list, "black_silence_suit", "passive1", 4);
 					break;
-				case 2:
+				case 3:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"offense_up", "power_up"});
 					else
-						generateDescription(list, "black_silence_suit", "passive2", 3);
+						generateDescription(list, "black_silence_suit", "passive2", 4);
 					break;
-				case 3:
+				case 4:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"orlando"});
 					else
 						generateDescription(list, "black_silence_suit", "ability", 1);
 					break;
-				case 4:
+				case 5:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"furioso"});
 					else
@@ -211,15 +221,15 @@ public class BlackSilenceArmor  extends ArmorItem {
 			Body.texOffs(6, 34).addBox(-3.8F, 6.6F, -3.0F, 1.0F, 3.0F, 1.0F, -0.4F, false);
 			Body.texOffs(6, 34).addBox(-3.3F, 7.1F, -3.0F, 1.0F, 3.0F, 1.0F, -0.4F, false);
 			RightArm = new ModelRenderer(this);
-			RightArm.setPos(-5.0F, 2.0F, 0.0F);
+			RightArm.setPos(-5.0F, 2.3F, 0.0F);
 			setRotationAngles(RightArm, -0.1745F, 0.0F, 0.0F);
-			RightArm.texOffs(56, 48).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.26F, false);
-			RightArm.texOffs(48, 16).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.35F, false);
+			RightArm.texOffs(56, 48).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.3F, false);
+			RightArm.texOffs(48, 16).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.39F, false);
 			LeftArm = new ModelRenderer(this);
-			LeftArm.setPos(5.0F, 2.0F, 0.0F);
+			LeftArm.setPos(5.0F, 2.3F, 0.0F);
 			setRotationAngles(LeftArm, 0.2094F, 0.0F, 0.0F);
-			LeftArm.texOffs(56, 48).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.26F, true);
-			LeftArm.texOffs(48, 16).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.35F, true);
+			LeftArm.texOffs(56, 48).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.3F, true);
+			LeftArm.texOffs(48, 16).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.39F, true);
 			RightLeg = new ModelRenderer(this);
 			RightLeg.setPos(-1.9F, 12.0F, 0.0F);
 			setRotationAngles(RightLeg, 0.192F, 0.0F, 0.0349F);

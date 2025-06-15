@@ -1,0 +1,17 @@
+- Add ignition texture for stigma workshop DONE
+- Add simple ember particles DONE
+- Add skill icons for stigma workshop
+- Implement armor abilities for stigma workshop suit
+
+- Make oufi special attack guard break -
+- Increase oufi tremor infliction -
+- Make mao guard have spam penalty
+- Give dash attack a stun on enough haste -
+- Reduce dash windup
+- Slightly reduce dash range
+
+- Increase firefist ability range
+
+- Add stun animations for the new kits
+- Implement idle anim system
+- Add idle anims

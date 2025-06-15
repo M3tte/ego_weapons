@@ -4,5 +4,6 @@ public enum AttackLogicPredicate {
     DEFAULT,
     MAGIC_BULLET_FIRE,
     GSH,
-    ALHVFIRE
+    PIERCE_GUARD_DODGE,
+    FIREFIST_3
 }

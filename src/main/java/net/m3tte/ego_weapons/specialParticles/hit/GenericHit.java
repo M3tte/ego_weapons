@@ -16,7 +16,7 @@ public class GenericHit extends MetaParticle {
     public GenericHit(ClientWorld level, double x, double y, double z, double width, double height, double _null, BasicParticleType particleType) {
         super(level, x, y, z);
         this.x = x + (this.level.random.nextDouble() - 0.5D) * width;
-        this.y = y + (this.level.random.nextDouble() + height) * 0.5;
+        this.y = y + (this.level.random.nextDouble() - 0.5D);
         this.z = z + (this.level.random.nextDouble() - 0.5D) * width;
         this.level.addParticle(particleType, this.x, this.y + 1, this.z, 0.0D, 0.0D, 0.0D);
         double d = 0.2F;

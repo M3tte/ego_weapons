@@ -3,7 +3,7 @@ package net.m3tte.ego_weapons.gameasset;
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.execFunctions.BlackSilenceEvaluator;
-import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
+import net.m3tte.ego_weapons.gameasset.entities.CravingBloodbagAnims;
 import net.m3tte.ego_weapons.potion.Terror;
 import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets;
@@ -71,6 +71,7 @@ public class EgoWeaponsMobAnimations {
     public static StaticAnimation DOUBT_STUN_STAGGER;
     public static StaticAnimation DOUBT_PINDOWN;
     public static StaticAnimation DOUBT_LIFTUP;
+    public static StaticAnimation DOUBT_HITSTUN;
 
 
     public static StaticAnimation NT_IDLE;
@@ -90,11 +91,14 @@ public class EgoWeaponsMobAnimations {
 
     public static StaticAnimation SUNSHOWER_FOX_IDLE;
     public static void build() {
+        System.out.println("Building ENTITY Animations");
         EgoWeaponsModels<?> models = FMLEnvironment.dist == Dist.CLIENT ? EgoWeaponsClientModels.LOGICAL_CLIENT : EgoWeaponsModels.LOGICAL_SERVER;
         Model doubt = models.doubt;
         Model nothing_there = models.nothing_there;
         Model sunshower_fox = models.sunshower_fox;
+        Model craving_bloodbag = models.craving_bloodbag;
 
+        CravingBloodbagAnims.build(craving_bloodbag);
 
         SUNSHOWER_FOX_IDLE = new StaticAnimation(true, "sunshower_fox/idle", sunshower_fox);
 
@@ -173,6 +177,7 @@ public class EgoWeaponsMobAnimations {
 
         DOUBT_PINDOWN = new PushDownAnimation(0.05f, "doubt/pindown", doubt);
         DOUBT_LIFTUP = new PushDownAnimation(0.05f, "doubt/stun_up", doubt);
+        DOUBT_HITSTUN = new PushDownAnimation(0.05f, "doubt/hitstun_short", doubt).addProperty(StaticAnimationProperty.PLAY_SPEED, 0.5f);
 
         NT_IDLE = new StaticAnimation(true, "nothing_there/idle", nothing_there);
 
@@ -389,7 +394,6 @@ public class EgoWeaponsMobAnimations {
             if (world.isClientSide()) {
                 world.playLocalSound(entity.position().x, entity.position().y, entity.position().z, EgoWeaponsSounds.DOUBT_DEATH, SoundCategory.HOSTILE, 1, 1, true);
             }
-
         }, StaticAnimation.Event.Side.BOTH);
 
         events[1] = StaticAnimation.Event.create(delay, (entitypatch) -> {

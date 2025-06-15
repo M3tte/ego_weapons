@@ -11,6 +11,7 @@ import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.network.packages.ParticlePackages;
 import net.m3tte.ego_weapons.particle.ShadowpuffParticle;
 import net.m3tte.ego_weapons.specialParticles.numberParticle.NumberParticleTypes;
+import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
@@ -20,6 +21,8 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.Objects;
+
+import static net.m3tte.ego_weapons.world.capabilities.DamageResistanceSystem.calculateBurnResistanceFor;
 
 public class BurnEffect extends CountPotencyStatus {
     public BurnEffect() {
@@ -74,7 +77,8 @@ public class BurnEffect extends CountPotencyStatus {
 
 
         // Proc burn every 5 seconds.
-        if (entity.tickCount % 100 == 0 && !entity.level.isClientSide()) {
+        if (entity.tickCount % 100 == 0 && !entity.level.isClientSide() && entity.tickCount > 0) {
+
 
             duration -= 20;
             float burnMult = 1;
@@ -88,16 +92,21 @@ public class BurnEffect extends CountPotencyStatus {
                 EgoWeaponsEffects.DARK_BURN.get().decrement(entity, 1, 0);
             }
             else {
+
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), amplifier * 2, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 0.05, 0.3f, 1.5f, 0.7f, 1f, 0.7f));
+
                 ((ServerWorld) entity.level).sendParticles(ParticleTypes.FLAME, (entity.getX()), (entity.getY() + entity.getBbHeight() / 2),
                         (entity.getZ()), amplifier+1, (entity.getBbWidth() / 2.5), (entity.getBbHeight() / 3), (entity.getBbWidth() / 2.5), 0);
                 ((ServerWorld) entity.level).sendParticles(EgoWeaponsParticles.BURN_APPLY.get(), (entity.getX()), (entity.getY() + entity.getBbHeight() / 2),
                         (entity.getZ()), 1, 0, 0, 0, 0);
             }
 
-            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.NumberLabelParticle(entity.position().add(entity.getRandom().nextFloat() - 0.5f,1,entity.getRandom().nextFloat() - 0.5f), burnMult > 1 ? NumberParticleTypes.DARK_FLAME : NumberParticleTypes.BURN, (amplifier + 1)*burnMult));
 
             float burnVal = (amplifier + 1)*(burnMult-1);
-            float trueBurnVal = (amplifier + 1);
+            float trueBurnVal = calculateBurnResistanceFor(entity, amplifier + 1);
+
+            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.NumberLabelParticle(entity.position().add(entity.getRandom().nextFloat() - 0.5f,1,entity.getRandom().nextFloat() - 0.5f), burnMult > 1 ? NumberParticleTypes.DARK_FLAME : NumberParticleTypes.BURN, trueBurnVal + burnVal));
+
             // If entity has shield / absorption, decrement that first.
             if (entity.getAbsorptionAmount() > 0) {
                 if (entity.getAbsorptionAmount() > trueBurnVal) {
@@ -109,7 +118,10 @@ public class BurnEffect extends CountPotencyStatus {
                 }
             }
             entity.setHealth(entity.getHealth() - trueBurnVal);
-            entity.hurt(DamageSource.IN_FIRE, burnVal);
+            entity.hurt(DamageSource.IN_FIRE, burnVal + 0.01f);
+
+            StaggerSystem.reduceStagger(entity, trueBurnVal, true);
+
             shouldUpdate = true;
             entity.removeEffect(this);
         }

@@ -8,6 +8,453 @@
       }
     ]
   },
+  "generic.clash": {
+    "category": "player",
+    "subtitle": "clashing",
+    "sounds": [
+      {
+        "name": "ego_weapons:generic/clash_middle_1"
+      },
+      {
+        "name": "ego_weapons:generic/clash_middle_2"
+      },
+      {
+        "name": "ego_weapons:generic/clash_middle_3"
+      }
+    ]
+  },
+  "generic.clash_win": {
+    "category": "player",
+    "subtitle": "clashing",
+    "sounds": [
+      {
+        "name": "ego_weapons:generic/clash_win"
+      }
+    ]
+  },
+  "generic.clash_draw": {
+    "category": "player",
+    "subtitle": "clashing",
+    "sounds": [
+      {
+        "name": "ego_weapons:generic/clash_draw"
+      }
+    ]
+  },
+  "heishou_mao.sword.parry": {
+    "category": "player",
+    "subtitle": "heishou_mao.parry",
+    "sounds": [
+      {
+        "name": "ego_weapons:heishou_mao/parry_1"
+      },
+      {
+        "name": "ego_weapons:heishou_mao/parry_2"
+      },
+      {
+        "name": "ego_weapons:heishou_mao/parry_3"
+      }
+    ]
+  },
+  "heishou_mao.special.reuse.hit": {
+    "category": "player",
+    "subtitle": "heishou_mao.reuse.hit",
+    "sounds": [
+      {
+        "name": "ego_weapons:heishou_mao/special_reuse_hit"
+      }
+    ]
+  },
+  "heishou_mao.special.voiceline": {
+    "category": "player",
+    "subtitle": "heishou_mao.special.voiceline",
+    "sounds": [
+      {
+        "name": "ego_weapons:heishou_mao/special_voiceline"
+      }
+    ]
+  },
+  "heishou_mao.special.dash.hit": {
+    "category": "player",
+    "subtitle": "heishou_mao.dash.hit",
+    "sounds": [
+      {
+        "name": "ego_weapons:heishou_mao/special_dash_hit"
+      }
+    ]
+  },
+  "heishou_mao.special.jump": {
+    "category": "player",
+    "subtitle": "heishou_mao.jump",
+    "sounds": [
+      {
+        "name": "ego_weapons:heishou_mao/special_jump"
+      }
+    ]
+  },
+  "heishou_mao.special.spin": {
+    "category": "player",
+    "subtitle": "heishou_mao.spin",
+    "sounds": [
+      {
+        "name": "ego_weapons:heishou_mao/special_spin_slash"
+      }
+    ]
+  },
+  "heishou_mao.special.hit": {
+    "category": "player",
+    "subtitle": "heishou_mao.hit",
+    "sounds": [
+      {
+        "name": "ego_weapons:heishou_mao/special_swipe_hit"
+      }
+    ]
+  },
+  "heishou_mao.sword.dash": {
+    "category": "player",
+    "subtitle": "heishou_mao.dash",
+    "sounds": [
+      {
+        "name": "ego_weapons:heishou_mao/dash"
+      }
+    ]
+  },
+  "heishou_mao.sword.dash_slash": {
+    "category": "player",
+    "subtitle": "heishou_mao.dash",
+    "sounds": [
+      {
+        "name": "ego_weapons:heishou_mao/dash_slash"
+      }
+    ]
+  },
+  "heishou_mao.sword.swing": {
+    "category": "player",
+    "subtitle": "heishou_mao.swing",
+    "sounds": [
+      {
+        "name": "ego_weapons:heishou_mao/swing"
+      }
+    ]
+  },
+  "heishou_mao.sword.whirl_swing": {
+    "category": "player",
+    "subtitle": "heishou_mao.swing",
+    "sounds": [
+      {
+        "name": "ego_weapons:heishou_mao/whirl_swing"
+      }
+    ]
+  },
+  "heishou_mao.sword.hit": {
+    "category": "player",
+    "subtitle": "heishou_mao.hit",
+    "sounds": [
+      {
+        "name": "ego_weapons:heishou_mao/hit"
+      }
+    ]
+  },
+  "heishou_mao.sword.heavy_hit": {
+    "category": "player",
+    "subtitle": "heishou_mao.hit",
+    "sounds": [
+      {
+        "name": "ego_weapons:heishou_mao/heavy_hit"
+      }
+    ]
+  },
+  "firefist.ignition.trigger": {
+    "category": "player",
+    "subtitle": "firefist.ignition_trigger",
+    "sounds": [
+      {
+        "name": "ego_weapons:firefist/ignition_trigger"
+      }
+    ]
+  },
+  "firefist.click": {
+    "category": "player",
+    "subtitle": "firefist.click",
+    "sounds": [
+      {
+        "name": "ego_weapons:firefist/click"
+      }
+    ]
+  },
+  "stigma_workshop.sword.special.charge": {
+    "category": "player",
+    "subtitle": "stigma_workshop.charge",
+    "sounds": [
+      {
+        "name": "ego_weapons:stigma_workshop_sword/special_charge"
+      }
+    ]
+  },
+  "stigma_workshop.sword.parry": {
+    "category": "player",
+    "subtitle": "stigma_workshop.parry",
+    "sounds": [
+      {
+        "name": "ego_weapons:stigma_workshop_sword/parry_1"
+      },
+      {
+        "name": "ego_weapons:stigma_workshop_sword/parry_2"
+      },
+      {
+        "name": "ego_weapons:stigma_workshop_sword/parry_3"
+      }
+    ]
+  },
+  "stigma_workshop.sword.special.ignite": {
+    "category": "player",
+    "subtitle": "stigma_workshop.ignite",
+    "sounds": [
+      {
+        "name": "ego_weapons:stigma_workshop_sword/special_ignite"
+      }
+    ]
+  },
+  "stigma_workshop.sword.special.backpedal": {
+    "category": "player",
+    "subtitle": "stigma_workshop.backpedal",
+    "sounds": [
+      {
+        "name": "ego_weapons:stigma_workshop_sword/special_backpedal"
+      }
+    ]
+  },
+  "stigma_workshop.sword.special.hit": {
+    "category": "player",
+    "subtitle": "stigma_workshop.hit",
+    "sounds": [
+      {
+        "name": "ego_weapons:stigma_workshop_sword/special_hit"
+      }
+    ]
+  },
+  "stigma_workshop.sword.auto.swing": {
+    "category": "player",
+    "subtitle": "stigma_workshop.swing",
+    "sounds": [
+      {
+        "name": "ego_weapons:stigma_workshop_sword/swing"
+      }
+    ]
+  },
+  "stigma_workshop.sword.auto.hit": {
+    "category": "player",
+    "subtitle": "stigma_workshop.auto.hit",
+    "sounds": [
+      {
+        "name": "ego_weapons:stigma_workshop_sword/auto_1"
+      },
+      {
+        "name": "ego_weapons:stigma_workshop_sword/auto_2"
+      },
+      {
+        "name": "ego_weapons:stigma_workshop_sword/auto_3"
+      }
+    ]
+  },
+  "firefist.auto.hit.light": {
+    "category": "player",
+    "subtitle": "firefist.auto.hit",
+    "sounds": [
+      {
+        "name": "ego_weapons:firefist/light_punch_1"
+      },
+      {
+        "name": "ego_weapons:firefist/light_punch_2"
+      },
+      {
+        "name": "ego_weapons:firefist/light_punch_3"
+      }
+    ]
+  },
+  "firefist.special.flare": {
+    "category": "player",
+    "subtitle": "firefist.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:firefist/special_flare"
+      }
+    ]
+  },
+  "firefist.special.yell": {
+    "category": "player",
+    "subtitle": "firefist.special.yell",
+    "sounds": [
+      {
+        "name": "ego_weapons:firefist/special_yell_1"
+      },
+      {
+        "name": "ego_weapons:firefist/special_yell_2"
+      }
+    ]
+  },
+  "firefist.special.kill": {
+    "category": "player",
+    "subtitle": "firefist.special.yell",
+    "sounds": [
+      {
+        "name": "ego_weapons:firefist/special_kill_1"
+      },
+      {
+        "name": "ego_weapons:firefist/special_kill_2"
+      },
+      {
+        "name": "ego_weapons:firefist/special_kill_3"
+      }
+    ]
+  },
+  "firefist.special.groan.1": {
+    "category": "player",
+    "subtitle": "firefist.special.groan",
+    "sounds": [
+      {
+        "name": "ego_weapons:firefist/special_groan_1"
+      }
+    ]
+  },
+  "firefist.special.groan.2": {
+    "category": "player",
+    "subtitle": "firefist.special.groan",
+    "sounds": [
+      {
+        "name": "ego_weapons:firefist/special_groan_2"
+      }
+    ]
+  },
+  "firefist.special.start": {
+    "category": "player",
+    "subtitle": "firefist.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:firefist/special_start"
+      }
+    ]
+  },
+  "firefist.special.punch.1": {
+    "category": "player",
+    "subtitle": "firefist.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:firefist/special_punch"
+      }
+    ]
+  },
+  "firefist.special.punch.2": {
+    "category": "player",
+    "subtitle": "firefist.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:firefist/special_punch_2"
+      }
+    ]
+  },
+  "firefist.special.punch.3": {
+    "category": "player",
+    "subtitle": "firefist.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:firefist/special_punch_3"
+      }
+    ]
+  },
+  "firefist.auto.hit": {
+    "category": "player",
+    "subtitle": "firefist.auto.hit",
+    "sounds": [
+      {
+        "name": "ego_weapons:firefist/punch_1"
+      },
+      {
+        "name": "ego_weapons:firefist/punch_2"
+      }
+    ]
+  },
+  "firefist.spit_fire.use": {
+    "category": "player",
+    "subtitle": "firefist.spit_fire.use",
+    "sounds": [
+      {
+        "name": "ego_weapons:firefist/spit_fire_1"
+      }
+    ]
+  },
+  "firefist.spit_fire.use2": {
+    "category": "player",
+    "subtitle": "firefist.spit_fire.use",
+    "sounds": [
+      {
+        "name": "ego_weapons:firefist/spit_fire_2"
+      }
+    ]
+  },
+  "liu.south_6.special.hit.1": {
+    "category": "player",
+    "subtitle": "liu.south_6.auto",
+    "sounds": [
+      {
+        "name": "ego_weapons:liu/s6/special_1"
+      }
+    ]
+  },
+  "liu.south_6.special.hit.2": {
+    "category": "player",
+    "subtitle": "liu.south_6.auto",
+    "sounds": [
+      {
+        "name": "ego_weapons:liu/s6/special_2"
+      }
+    ]
+  },
+  "liu.south_6.special.hit.3": {
+    "category": "player",
+    "subtitle": "liu.south_6.auto",
+    "sounds": [
+      {
+        "name": "ego_weapons:liu/s6/special_3"
+      }
+    ]
+  },
+  "liu.south_6.special.hit.4": {
+    "category": "player",
+    "subtitle": "liu.south_6.auto",
+    "sounds": [
+      {
+        "name": "ego_weapons:liu/s6/special_4"
+      }
+    ]
+  },
+  "liu.south_6.auto.hit.1": {
+    "category": "player",
+    "subtitle": "liu.south_6.auto",
+    "sounds": [
+      {
+        "name": "ego_weapons:liu/s6/auto_1"
+      }
+    ]
+  },
+  "liu.south_6.auto.hit.2": {
+    "category": "player",
+    "subtitle": "liu.south_6.auto",
+    "sounds": [
+      {
+        "name": "ego_weapons:liu/s6/auto_2"
+      }
+    ]
+  },
+  "liu.south_6.auto.hit.3": {
+    "category": "player",
+    "subtitle": "liu.south_6.auto",
+    "sounds": [
+      {
+        "name": "ego_weapons:liu/s6/auto_3"
+      }
+    ]
+  },
   "full_stop_sniper.auto.fire": {
     "category": "player",
     "subtitle": "full_stop_sniper.auto",

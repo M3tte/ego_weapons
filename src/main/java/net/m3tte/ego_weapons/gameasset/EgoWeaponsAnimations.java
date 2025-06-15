@@ -6,30 +6,13 @@
 package net.m3tte.ego_weapons.gameasset;
 
 import net.m3tte.ego_weapons.*;
-import net.m3tte.ego_weapons.entities.AtelierPistolsBullet;
 import net.m3tte.ego_weapons.entities.AtelierShotgunBullet;
 import net.m3tte.ego_weapons.execFunctions.AtelierCooldownHandler;
 import net.m3tte.ego_weapons.execFunctions.BlackSilenceEvaluator;
-import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
 import net.m3tte.ego_weapons.gameasset.movesets.*;
-import net.m3tte.ego_weapons.entities.MagicBulletProjectile;
-import net.m3tte.ego_weapons.item.sunshower.Sunshower;
-import net.m3tte.ego_weapons.particle.MagicBulletAimParticle;
 import net.m3tte.ego_weapons.particle.BlacksilenceshadowParticle;
-import net.m3tte.ego_weapons.particle.MagicBulletShell;
-import net.m3tte.ego_weapons.potion.FuriosoPotionEffect;
-import net.m3tte.ego_weapons.potion.MagicBulletPotionEffect;
-import net.m3tte.ego_weapons.potion.SolemnLamentEffects;
-import net.m3tte.ego_weapons.potion.countEffects.DarkFlameEffect;
-import net.m3tte.ego_weapons.potion.countEffects.MagicBulletEffect;
-import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
-import net.m3tte.ego_weapons.procedures.BlipTick;
-import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
-import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.particles.BlockParticleData;
@@ -37,7 +20,6 @@ import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.*;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
@@ -50,43 +32,23 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.registries.ForgeRegistries;
 import yesman.epicfight.api.animation.Animator;
-import yesman.epicfight.api.animation.LivingMotions;
 import yesman.epicfight.api.animation.Pose;
 import yesman.epicfight.api.animation.property.AnimationProperty;
-import yesman.epicfight.api.animation.property.AnimationProperty.AttackAnimationProperty;
-import yesman.epicfight.api.animation.property.AnimationProperty.AttackPhaseProperty;
 import yesman.epicfight.api.animation.types.*;
 import yesman.epicfight.api.client.model.ClientModels;
 import yesman.epicfight.api.forgeevent.AnimationRegistryEvent;
 import yesman.epicfight.api.model.Model;
 import yesman.epicfight.api.utils.math.OpenMatrix4f;
-import yesman.epicfight.api.utils.math.ValueCorrector;
 import yesman.epicfight.api.utils.math.Vec3f;
-import yesman.epicfight.client.particle.EntityAfterImageParticle;
-import yesman.epicfight.gameasset.Animations;
-import yesman.epicfight.gameasset.ColliderPreset;
 import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.gameasset.Models;
 import yesman.epicfight.particle.EpicFightParticles;
-import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
-import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 
-import java.util.Comparator;
-import java.util.List;
 import java.util.Random;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
-import static net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation.*;
-import static net.m3tte.ego_weapons.item.blackSilence.weapons.DurandalItem.*;
-import static net.m3tte.ego_weapons.item.sunshower.Sunshower.getAwayEvent;
 import static net.m3tte.ego_weapons.item.sunshower.Sunshower.setOpenstate;
-import static net.m3tte.ego_weapons.procedures.SharedFunctions.pummelDownEntity;
-import static net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets.SUNSHOWER_COL;
-import static net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets.SUNSHOWER_COL_LARGE;
 import static yesman.epicfight.api.animation.property.AnimationProperty.StaticAnimationProperty;
-import static yesman.epicfight.api.utils.ExtendedDamageSource.StunType;
 
 public class EgoWeaponsAnimations {
 
@@ -103,6 +65,9 @@ public class EgoWeaponsAnimations {
 
     public static StaticAnimation PUMMEL_DOWN;
 
+    public static StaticAnimation LONG_HITSTUN;
+
+    public static StaticAnimation CLASH_STUN_BASIC;
 
 
 
@@ -117,19 +82,22 @@ public class EgoWeaponsAnimations {
 
     @SubscribeEvent
     public static void registerAnimations(AnimationRegistryEvent event) {
-        event.getRegistryMap().put( EgoWeaponsMod.MODID, EgoWeaponsAnimations::build);
+        System.out.println("Starting E.G.O Animations...");
+        event.getRegistryMap().put(EgoWeaponsMod.MODID, EgoWeaponsAnimations::build);
     }
 
 
+
     private static void build() {
+        System.out.println("Building E.G.O Animations...");
         Models<?> models = FMLEnvironment.dist == Dist.CLIENT ? ClientModels.LOGICAL_CLIENT : Models.LOGICAL_SERVER;
         Model biped = models.biped;
 
         EgoWeaponsMobAnimations.build();
-
         DurandalMovesetAnims.build(biped);
         AtelierLogicMovesetAnims.build(biped);
         BlackSilenceMovesetAnims.build(biped);
+        LiuSouth6MovesetAnims.build(biped);
         OeufiAssocMovesetAnims.build(biped);
         FullstopOfficeRepMovesetAnims.build(biped);
         FullstopOfficeSniperMovesetAnims.build(biped);
@@ -137,6 +105,9 @@ public class EgoWeaponsAnimations {
         SolemnLamentMovesetAnims.build(biped);
         SunshowerMovesetAnims.build(biped);
         MimicryMovesetAnims.build(biped);
+        FirefistMovesetAnims.build(biped);
+        StigmaWorkshopMovesetAnims.build(biped);
+        HeishouMaoBranchAnims.build(biped);
 
         PUMMEL_DOWN = new PushDownAnimation(0.05f, "biped/generic/pummel_down", biped).addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 0.7f);
 
@@ -148,15 +119,12 @@ public class EgoWeaponsAnimations {
                 .addProperty(StaticAnimationProperty.EVENTS, genericDodgeEvent());
 
 
-
-
-
-
-
-
-
         LIFT_UP = new PushDownAnimation(0.05f, "biped/sunshower/lift_up", biped).addProperty(StaticAnimationProperty.PLAY_SPEED, 0.7f);
 
+        LONG_HITSTUN = new PushDownAnimation(0.05f, "biped/generic/biped_stun", biped).addProperty(StaticAnimationProperty.PLAY_SPEED, 0.5f);
+
+
+        CLASH_STUN_BASIC = new PushDownAnimation(0.05f, "biped/generic/clash_lose", biped).addProperty(StaticAnimationProperty.PLAY_SPEED, 1f);
     }
 
     public static void spawnArmatureParticle(LivingEntityPatch<?> entityPatch, int partialTicks, Vector3d offsets, int amount, IParticleData particle, float speedmult, String jointName) {

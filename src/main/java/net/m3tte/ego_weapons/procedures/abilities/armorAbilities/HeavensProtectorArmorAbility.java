@@ -15,8 +15,8 @@ import net.minecraft.world.server.ServerWorld;
 public class HeavensProtectorArmorAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, EgoWeaponsModVars.PlayerVariables playerVars) {
-        if (playerVars.blips > 10) {
-            playerVars.blips -= 10;
+        if (playerVars.light > 10) {
+            playerVars.light -= 10;
             World world = player.level;
             double x = player.getX();
             double y = player.getY();

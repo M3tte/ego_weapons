@@ -8,6 +8,7 @@ import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoWeaponsArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -23,6 +24,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -34,7 +36,7 @@ import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILIT
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
-public class MimicryArmor extends ArmorItem {
+public class MimicryArmor extends GenericEgoWeaponsArmor {
 
 	static IArmorMaterial armormaterial = new IArmorMaterial() {
 		@Override
@@ -98,7 +100,11 @@ public class MimicryArmor extends ArmorItem {
 		}
 	}
 
-	static Item chest = new MimicryArmor(armormaterial, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT)) {
+	public MimicryArmor(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity) {
+		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
+	}
+
+	static Item chest = new MimicryArmor(armormaterial, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT), 0.3f, 1.3f, 1.2f ,1.3f, 0.7f, 1.3f, 1f, 5, -5) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -119,22 +125,26 @@ public class MimicryArmor extends ArmorItem {
 			list.add(new StringTextComponent("It periodically devours employees and wears their shell.").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
-			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 3) + 1) + "/3] - - - - - - - =").withStyle(TextFormatting.GRAY));
-
-			switch (EgoWeaponsKeybinds.getUiPage() % 3) {
+			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
+			list.add(new TranslationTextComponent("desc.ego_weapons.risk.aleph"));
+			list.add(new StringTextComponent(" "));
+			switch (EgoWeaponsKeybinds.getUiPage() % 4) {
 				case 0:
+					resistanceMods(itemstack, world, list, flag);
+					break;
+				case 1:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{});
 					else
 						generateDescription(list, "mimicry_armor", "passive", 2);
 					break;
-				case 1:
+				case 2:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"defense_up", "offense_up"});
 					else
 						generateDescription(list, "mimicry_armor", "passive2", 6);
 					break;
-				case 2:
+				case 3:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"terror","shell"});
 					else
@@ -238,12 +248,12 @@ public class MimicryArmor extends ArmorItem {
 			cube_r7.texOffs(24, 9).addBox(2.0F, -3.0F, -3.25F, 1.0F, 3.0F, 1.0F, 0.0F, false);
 
 			RightArm = new ModelRenderer(this);
-			RightArm.setPos(-5.0F, 2.0F, 0.0F);
+			RightArm.setPos(-5.0F, 2.3F, 0.0F);
 			setRotationAngle(RightArm, -0.1745F, 0.0F, 0.0F);
-			RightArm.texOffs(24, 0).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F, 0.55F, false);
-			RightArm.texOffs(24, 0).addBox(-3.0F, 2.0F, -2.0F, 4.0F, 5.0F, 4.0F, 0.35F, false);
-			RightArm.texOffs(40, 0).addBox(-3.0F, 7.0F, -2.0F, 4.0F, 3.0F, 4.0F, 0.3F, false);
-			RightArm.texOffs(32, 6).addBox(-3.35F, -1.75F, -1.5F, 0.0F, 3.0F, 3.0F, -0.3F, false);
+			RightArm.texOffs(24, 0).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F, 0.59F, false);
+			RightArm.texOffs(24, 0).addBox(-3.0F, 2.0F, -2.0F, 4.0F, 5.0F, 4.0F, 0.39F, false);
+			RightArm.texOffs(40, 0).addBox(-3.0F, 7.0F, -2.0F, 4.0F, 3.0F, 4.0F, 0.34F, false);
+			RightArm.texOffs(32, 6).addBox(-3.35F, -1.75F, -1.5F, 0.0F, 3.0F, 3.0F, -0.34F, false);
 
 			ModelRenderer cube_r8 = new ModelRenderer(this);
 			cube_r8.setPos(0.0F, 0.0F, 0.0F);
@@ -259,11 +269,11 @@ public class MimicryArmor extends ArmorItem {
 			cube_r9.texOffs(24, 9).addBox(-7.0F, -2.5F, -0.5F, 0.5F, 4.0F, 0.5F, 0.0F, false);
 
 			LeftArm = new ModelRenderer(this);
-			LeftArm.setPos(4.0F, 2.0F, 0.0F);
+			LeftArm.setPos(4.0F, 2.3F, 0.0F);
 			setRotationAngle(LeftArm, 0.2094F, 0.0F, 0.0F);
-			LeftArm.texOffs(40, 0).addBox(0.0F, 7.0F, -2.0F, 4.0F, 3.0F, 4.0F, 0.3F, true);
-			LeftArm.texOffs(24, 0).addBox(0.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F, 0.55F, true);
-			LeftArm.texOffs(24, 0).addBox(0.0F, 2.0F, -2.0F, 4.0F, 5.0F, 4.0F, 0.35F, true);
+			LeftArm.texOffs(40, 0).addBox(0.0F, 7.0F, -2.0F, 4.0F, 3.0F, 4.0F, 0.34F, true);
+			LeftArm.texOffs(24, 0).addBox(0.0F, -2.0F, -2.0F, 4.0F, 4.0F, 4.0F, 0.59F, true);
+			LeftArm.texOffs(24, 0).addBox(0.0F, 2.0F, -2.0F, 4.0F, 5.0F, 4.0F, 0.39F, true);
 
 			ModelRenderer cube_r10 = new ModelRenderer(this);
 			cube_r10.setPos(-10.0F, 0.0F, 0.0F);

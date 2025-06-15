@@ -1,9 +1,13 @@
 package net.m3tte.ego_weapons.mixin;
 
+import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.DamageSource;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -14,6 +18,8 @@ import static net.m3tte.ego_weapons.procedures.SharedFunctions.*;
 @Mixin(PlayerEntity.class)
 public class PlayerEntityDamageMixin {
 
+    @Shadow @Final public PlayerInventory inventory;
+
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;setHealth(F)V"), method = "actuallyHurt(Lnet/minecraft/util/DamageSource;F)V")
     public void applyStaggerDamage(DamageSource src, float amount, CallbackInfo ci) {
         LivingEntity self = ((LivingEntity) (Object)this);
@@ -22,6 +28,10 @@ public class PlayerEntityDamageMixin {
 
     @ModifyVariable(method = "actuallyHurt(Lnet/minecraft/util/DamageSource;F)V", at = @At("HEAD"), ordinal =0, argsOnly = true)
     private DamageSource damageSourceModifier(DamageSource value) {
+
+        if (value instanceof GenericEgoDamage)
+            return value;
+
         return evaluateDamageSource(value);
     }
 

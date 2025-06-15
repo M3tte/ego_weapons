@@ -33,7 +33,7 @@ public class BlackSilenceWeaponAbility extends ItemAbility {
 
     @Override
     public AbilityTier getAbilityTier() {
-        return AbilityTier.ALPHA;
+        return AbilityTier.ALEPH;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class BlackSilenceWeaponAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.blips >= 1 || player.getPersistentData().getDouble("furiosohits") > 10) {
+        if (playerVars.light >= 1 || player.getPersistentData().getDouble("furiosohits") > 10) {
             double x = player.getX();
             double y = player.getY();
             double z = player.getZ();

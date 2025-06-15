@@ -1,5 +1,6 @@
 package net.m3tte.ego_weapons.procedures.abilities.armorAbilities;
 
+import net.m3tte.ego_weapons.EgoWeaponsAttributes;
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 import net.m3tte.ego_weapons.gameasset.movesets.OeufiAssocMovesetAnims;
 import net.m3tte.ego_weapons.particle.BlipeffectParticle;
@@ -31,7 +32,7 @@ public class ObligationFullfillment extends ItemAbility {
 
     @Override
     public AbilityTier getAbilityTier() {
-        return AbilityTier.GAMMA;
+        return AbilityTier.HE;
     }
 
     @Override
@@ -42,7 +43,7 @@ public class ObligationFullfillment extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.blips >= 8) {
+        if (playerVars.light >= 8) {
             LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
             entitypatch.playAnimationSynchronized(OeufiAssocMovesetAnims.OEUFI_OPEN_CONTRACT, 0.1f);
@@ -51,12 +52,12 @@ public class ObligationFullfillment extends ItemAbility {
                 ((ServerWorld) player.level).sendParticles(BlipeffectParticle.particle, player.getX(), (player.getY() + 1), player.getZ(), (int) 8, 0.4, 0.6, 0.4, 0);
             }
 
-            playerVars.blips -= 8;
-            playerVars.sanity -= playerVars.maxSanity / 2;
+            playerVars.light -= 8;
+            playerVars.sanity -= EgoWeaponsAttributes.getMaxSanity(player) / 2;
             if (playerVars.sanity < 1)
                 playerVars.sanity = 1;
 
-            playerVars.stagger -= playerVars.maxStagger / 2;
+            playerVars.stagger -= EgoWeaponsAttributes.getMaxStagger(player) / 2;
             if (playerVars.stagger < 1)
                 playerVars.stagger = 1;
 
@@ -74,8 +75,8 @@ public class ObligationFullfillment extends ItemAbility {
 
     @Override
     public float getAvailability(PlayerEntity player, PlayerVariables playerVars) {
-        if (playerVars.blips < getBlipCost(player, playerVars)) {
-            return (float) (playerVars.blips / getBlipCost(player, playerVars));
+        if (playerVars.light < getBlipCost(player, playerVars)) {
+            return (float) (playerVars.light / getBlipCost(player, playerVars));
         }
 
         return 1.0f;

@@ -127,7 +127,17 @@ public class SunshowerFoxPatch extends MobPatch<SunshowerFoxEntity> implements S
     }
 
     @Override
+    public StaticAnimation getClashStunAnim(int strength) {
+        return null;
+    }
+
+    @Override
     public StaticAnimation getStunAnimation(int strength) {
+        return null;
+    }
+
+    @Override
+    public StaticAnimation getHitstunAnimation(int strength) {
         return null;
     }
 

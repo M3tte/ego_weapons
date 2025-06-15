@@ -27,7 +27,7 @@ public final class DamageNumberParticle extends TexturedParticle {
     AttackTypes attackType;
 
     boolean crit;
-    float multiplier = 1;
+    double multiplier = 1;
     int bonusMultiplier = 0;
 
     float speedUp = 0.15f;
@@ -37,12 +37,12 @@ public final class DamageNumberParticle extends TexturedParticle {
 
     String damageIdentifier = "";
 
-    public DamageNumberParticle(ClientWorld world, double x, double y, double z, float number, int type, float multiplier) {
+    public DamageNumberParticle(ClientWorld world, double x, double y, double z, float number, int type, double multiplier) {
         super(world, x, y, z, multiplier, number, type);
         //velocityMultiplier = 0.99F;
         //gravityStrength = 0.75F;
-
-        type -= 1;
+        if (type > 0)
+            type -= 1;
 
         int damageTypeIdx = type%10;
         int attackTypeIdx = (type / 10) % 10;
@@ -50,24 +50,26 @@ public final class DamageNumberParticle extends TexturedParticle {
         int zeroMult = type < 0 ? -1 : 1;
 
         type *= zeroMult;
-
         int bonusCorrector = multiplier < 0 ? -1 : 1;
 
         multiplier *= bonusCorrector;
+
 
         this.damageType = DamageTypes.values()[Math.min(DamageTypes.values().length-1, damageTypeIdx)];
         this.attackType = AttackTypes.values()[Math.min(AttackTypes.values().length-1, attackTypeIdx)];
         this.crit = type >= 100;
         this.multiplier = (multiplier % 1000) * zeroMult;
         this.bonusMultiplier = (int)((multiplier / 10000) * bonusCorrector) - 100;
+
+        //System.out.println("BonusMultiplierValue = "+this.bonusMultiplier);
+
         this.number = number;
         this.lifetime = (int) (30 + Math.min(40, this.number));
-        this.damageIdentifier = getDamageIdentifier((multiplier % 1000) * zeroMult);
+        this.damageIdentifier = getDamageIdentifier((float) ((multiplier % 1000) * zeroMult));
 
     }
 
     private String getDamageIdentifier(float mult) {
-        System.out.println("MULT IS : "+mult);
         if (mult < 0) {
             return "Absorb.";
         }
@@ -267,7 +269,8 @@ public final class DamageNumberParticle extends TexturedParticle {
 
         @Override
         public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            DamageNumberParticle particle = new DamageNumberParticle(worldIn, x, y, z, (float) xSpeed, (int)ySpeed, (float)zSpeed);
+            System.out.println("CREATING PARTICLE WITH DATA : "+xSpeed+" "+ySpeed+" "+zSpeed);
+            DamageNumberParticle particle = new DamageNumberParticle(worldIn, x, y, z, (float) xSpeed, (int)ySpeed, zSpeed);
             return particle;
         }
 

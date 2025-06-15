@@ -10,6 +10,9 @@ credits="Adds a variety of weapons from the project moon franchise."
 displayURL=""
 authors="M3tte"
 
+[[accessTransformers]]
+file="META-INF/accesstransformer.cfg"
+
 [[dependencies.ego_weapons]]
     modId="forge" #mandatory
     mandatory=true #mandatory

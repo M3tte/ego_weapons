@@ -48,6 +48,10 @@ public class FullstopCounterGuard extends EnergizingGuardSkill {
                 .addGuardBreakMotion(EgoWeaponsCategories.FULLSTOP_SNIPER, (item, player) -> BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER);
     }
 
+    public SkillDataKey<Integer> getLastActive() {
+        return LAST_ACTIVE;
+    }
+
     @Override
     public void onInitiate(SkillContainer container) {
         super.onInitiate(container);
@@ -153,7 +157,7 @@ public class FullstopCounterGuard extends EnergizingGuardSkill {
                 event.getPlayerPatch().playSound(EpicFightSounds.NEUTRALIZE_MOBS, 3.0F, 0.0F, 0.1F);
             }
 
-            EmotionSystem.handleGuard(serverPlayer, event.getAmount(), impact, successParrying);
+            EmotionSystem.handleGuard(serverPlayer, event.getAmount(), impact, successParrying, event.getDamageSource().getEntity());
 
             this.dealEvent(event.getPlayerPatch(), event);
         }

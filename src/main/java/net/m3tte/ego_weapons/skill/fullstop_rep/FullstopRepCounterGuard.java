@@ -6,8 +6,6 @@ import net.m3tte.ego_weapons.EgoWeaponsModElements;
 import net.m3tte.ego_weapons.gameasset.movesets.AtelierLogicMovesetAnims;
 import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.gameasset.movesets.FullstopOfficeRepMovesetAnims;
-import net.m3tte.ego_weapons.gameasset.movesets.OeufiAssocMovesetAnims;
-import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCategories;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -41,7 +39,7 @@ import yesman.epicfight.world.entity.eventlistener.PlayerEventListener;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static net.m3tte.ego_weapons.skill.BlackSilenceActiveGuard.canParryHeavy;
+import static net.m3tte.ego_weapons.skill.GenericActiveGuard.canParryHeavy;
 
 
 public class FullstopRepCounterGuard extends GuardSkill {
@@ -124,7 +122,7 @@ public class FullstopRepCounterGuard extends GuardSkill {
 
 
                 // Part condition. Strong attacks cannot be parried if stamina were to reach 0
-                blockType = canParryHeavy(successParrying, event.getPlayerPatch(), blockType, stamina, impact, event);
+                blockType = canParryHeavy(successParrying, event.getPlayerPatch(), blockType, stamina, impact, event, penalty);
                 if (blockType.equals(BlockType.GUARD_BREAK))
                     successParrying = false;
 
@@ -133,7 +131,7 @@ public class FullstopRepCounterGuard extends GuardSkill {
                     event.getPlayerPatch().playAnimationSynchronized(animation, 0.0F);
                 }
 
-                EmotionSystem.handleGuard(playerentity, event.getAmount(), impact, successParrying);
+                EmotionSystem.handleGuard(playerentity, event.getAmount(), impact, successParrying, event.getDamageSource().getEntity());
                 this.dealEvent(event.getPlayerPatch(), event);
                 return;
             }

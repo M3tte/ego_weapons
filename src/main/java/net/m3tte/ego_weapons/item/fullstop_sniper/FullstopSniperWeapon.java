@@ -32,6 +32,7 @@ import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import yesman.epicfight.api.animation.types.DynamicAnimation;
@@ -99,7 +100,8 @@ public class FullstopSniperWeapon extends GunItem {
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
-
+		list.add(new TranslationTextComponent("desc.ego_weapons.risk.waw"));
+		list.add(new StringTextComponent(" "));
 		switch (EgoWeaponsKeybinds.getUiPage() % 4) {
 			case 0:
 				if (EgoWeaponsKeybinds.isHoldingShift())
@@ -134,6 +136,10 @@ public class FullstopSniperWeapon extends GunItem {
 	}
 
 
+	@Override
+	public String getDefaultKillIdentifier() {
+		return "gun";
+	}
 
 	@Override
 	public boolean hurtEnemy(ItemStack itemstack, LivingEntity target, LivingEntity sourceentity) {
@@ -215,11 +221,11 @@ public class FullstopSniperWeapon extends GunItem {
 				if (lastFired.equals(AmmoType.ALHVRifle)) {
 
 					target.setHealth(target.getHealth() - 2);
-					amount *= 1.3f;
+					amount += 0.3f;
 					SharedFunctions.incrementBonusDamage(source, 0.5f);
 					int poisePotencyOver20 = Math.min(EgoWeaponsEffects.POISE.get().getPotency(sourcePatch.getOriginal()) - 20, 15);
 					if (poisePotencyOver20 > 0) {
-						amount *= 1 + (0.02f * poisePotencyOver20);
+						amount += (0.02f * poisePotencyOver20);
 						SharedFunctions.incrementBonusDamage(source, (0.02f * poisePotencyOver20));
 					}
 				}
@@ -228,18 +234,18 @@ public class FullstopSniperWeapon extends GunItem {
 
 			switch (weaponIdentifier) {
 				case "fs_sn_innate":
-						amount *= 1.4f;
+						amount += 0.4f;
 						SharedFunctions.incrementBonusDamage(source, 0.4f);
 						if (target.hasEffect(EgoWeaponsEffects.TARGET_SPOTTED.get()) && sourcePatch.getOriginal() instanceof PlayerEntity) {
 							BlipTick.chargeBlips((PlayerEntity) sourcePatch.getOriginal(), 1);
 						}
 					break;
 				case "fs_sn_special":
-						amount *= 1.5f;
+						amount += 0.5f;
 						SharedFunctions.incrementBonusDamage(source, 0.5f);
 						int poisePotencyOver20 = Math.min(EgoWeaponsEffects.POISE.get().getPotency(sourcePatch.getOriginal()) - 20, 25);
 						if (poisePotencyOver20 > 0) {
-							amount *= 1 + (0.03f * poisePotencyOver20);
+							amount += (0.03f * poisePotencyOver20);
 							SharedFunctions.incrementBonusDamage(source, (0.03f * poisePotencyOver20));
 							EgoWeaponsEffects.POISE.get().decrement(sourcePatch.getOriginal(), 0, poisePotencyOver20);
 						}

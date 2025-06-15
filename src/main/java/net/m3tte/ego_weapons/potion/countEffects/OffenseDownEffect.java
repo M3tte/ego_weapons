@@ -55,9 +55,9 @@ public class OffenseDownEffect extends CountPotencyStatus {
     }
 
 
-    static AttributeModifier damageMod = new AttributeModifier(UUID.fromString("fc414f98-920e-4b92-88d9-6ce88ebff984"), "offenseDownDamage", -0.02, AttributeModifier.Operation.MULTIPLY_BASE);
-    static AttributeModifier attackSpeedMod = new AttributeModifier(UUID.fromString("fc414f98-920e-4b92-88d9-6ce88ebff984"), "offenseDownAttackSpeed", -0.025, AttributeModifier.Operation.ADDITION);
-    static AttributeModifier impactMod = new AttributeModifier(UUID.fromString("fc414f98-920e-4b92-88d9-6ce88ebff984"), "offenseDownImpact", -0.03, AttributeModifier.Operation.ADDITION);
+    static AttributeModifier damageMod = new AttributeModifier(UUID.fromString("fc414f98-920e-4b92-88d9-6ce88ebff984"), "offenseDownDamage", -0.03, AttributeModifier.Operation.MULTIPLY_BASE);
+    static AttributeModifier attackSpeedMod = new AttributeModifier(UUID.fromString("fc414f98-920e-4b92-88d9-6ce88ebff984"), "offenseDownAttackSpeed", -0.035, AttributeModifier.Operation.ADDITION);
+    static AttributeModifier impactMod = new AttributeModifier(UUID.fromString("fc414f98-920e-4b92-88d9-6ce88ebff984"), "offenseDownImpact", -0.05, AttributeModifier.Operation.ADDITION);
 
     @Override
     public void increment(LivingEntity entity, int limit, int potency) {

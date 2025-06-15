@@ -1,5 +1,6 @@
 package net.m3tte.ego_weapons.event;
 
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.client.renderer.patched.item.*;
@@ -8,11 +9,13 @@ import net.m3tte.ego_weapons.specialParticles.*;
 import net.m3tte.ego_weapons.specialParticles.WheelsSmashParticle;
 import net.m3tte.ego_weapons.specialParticles.hit.*;
 import net.m3tte.ego_weapons.specialParticles.modelParticles.*;
+import net.m3tte.ego_weapons.specialParticles.numberParticle.ClashLabelParticle;
 import net.m3tte.ego_weapons.specialParticles.numberParticle.DamageNumberParticle;
 import net.m3tte.ego_weapons.specialParticles.numberParticle.NumberParticle;
 import net.m3tte.ego_weapons.specialParticles.texturedAfterImage.TexturedAfterImage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleManager;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3f;
@@ -43,13 +46,40 @@ public class ClientModBusEvent {
         ItemModelsProperties.register(EgoWeaponsItems.SUNSHOWER.get(), new ResourceLocation("open"), (itemStack, clientWorld, livingEntity) -> itemStack.hasTag() ? (itemStack.getTag().getInt("open")) : 0);
         ItemModelsProperties.register(EgoWeaponsItems.FULLSTOP_SNIPER_RAILGUN.get(), new ResourceLocation("charge"), (itemStack, clientWorld, livingEntity) -> itemStack.hasTag() ? (Math.min((itemStack.getTag().getInt("charge") / 3), 7)) : 0);
         ItemModelsProperties.register(EgoWeaponsItems.FULLSTOP_SNIPER_SUITCASE.get(), new ResourceLocation("dropped"), (itemStack, clientWorld, livingEntity) -> (itemStack.hasTag() ? Math.min((itemStack.getOrCreateTag().getInt("dropped")),1) : 0));
+        ItemModelsProperties.register(EgoWeaponsItems.STIGMA_WORKSHOP_SWORD.get(), new ResourceLocation("glow"), (itemStack, clientWorld, livingEntity) -> (itemStack.hasTag() ? Math.min((itemStack.getOrCreateTag().getInt("glow")),1) : 0));
+        ItemModelsProperties.register(EgoWeaponsItems.HEISHOU_MAO_SWORD.get(), new ResourceLocation("active"), (itemStack, clientWorld, livingEntity) -> (itemStack.hasTag() ? Math.min((itemStack.getOrCreateTag().getInt("active")),1) : 0));
+        ItemModelsProperties.register(EgoWeaponsItems.FIREFIST_GAUNTLET.get(), new ResourceLocation("ignition"), (itemStack, clientWorld, livingEntity) -> {
+            if (livingEntity == null)
+                return 0;
+
+            int fuel = livingEntity.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.FIREFIST_SUIT.get()) ? livingEntity.getItemBySlot(EquipmentSlotType.CHEST).getOrCreateTag().getInt("d10fuel") : 0;
 
 
-        event.addItemRenderer(ForgeRegistries.ITEMS.getValue(ResourceLocation.of("ego_weapons:durandal", ':')).getItem(), new RenderDurandal());
-        event.addItemRenderer(ForgeRegistries.ITEMS.getValue(ResourceLocation.of("ego_weapons:mook_workshop", ':')).getItem(), new RenderMook());
-        event.addItemRenderer(ForgeRegistries.ITEMS.getValue(ResourceLocation.of("ego_weapons:oeufi_contract", ':')).getItem(), new RenderOeufiContract());
-        event.addItemRenderer(ForgeRegistries.ITEMS.getValue(ResourceLocation.of("ego_weapons:fullstop_atelier_pistol", ':')).getItem(), new RenderFullstopAtelierLogic());
-        event.addItemRenderer(ForgeRegistries.ITEMS.getValue(ResourceLocation.of("ego_weapons:fullstop_office_railgun", ':')).getItem(), new RenderFullstopRailgun());
+
+            if (itemStack.hasTag()) {
+                int ign = itemStack.getOrCreateTag().getInt("ignition");
+                if (ign > 0)
+                    return ign;
+            }
+
+            if (fuel > 0 && livingEntity.hasEffect(EgoWeaponsEffects.FUEL_IGNITION.get()))
+                return 2;
+
+            return fuel > 50 || fuel <= 10 ? 0 : 2;
+        });
+
+
+        //event.addItemRenderer(ForgeRegistries.ITEMS.getValue(ResourceLocation.of("ego_weapons:durandal", ':')).getItem(), new RenderDurandal());
+        //event.addItemRenderer(ForgeRegistries.ITEMS.getValue(ResourceLocation.of("ego_weapons:mook_workshop", ':')).getItem(), new RenderMook());
+        //event.addItemRenderer(ForgeRegistries.ITEMS.getValue(ResourceLocation.of("ego_weapons:oeufi_contract", ':')).getItem(), new RenderOeufiContract());
+        //event.addItemRenderer(ForgeRegistries.ITEMS.getValue(ResourceLocation.of("ego_weapons:fullstop_atelier_pistol", ':')).getItem(), new RenderFullstopAtelierLogic());
+        //event.addItemRenderer(ForgeRegistries.ITEMS.getValue(ResourceLocation.of("ego_weapons:fullstop_office_railgun", ':')).getItem(), new RenderFullstopRailgun());
+        event.addItemRenderer(EgoWeaponsItems.DURANDAL.get(), new RenderDurandal());
+        event.addItemRenderer(EgoWeaponsItems.MOOK_WORKSHOP.get(), new RenderMook());
+        event.addItemRenderer(EgoWeaponsItems.OEUFI_CONTRACT.get(), new RenderOeufiContract());
+        event.addItemRenderer(EgoWeaponsItems.FULLSTOP_REP_PISTOL.get(), new RenderFullstopAtelierLogic());
+        event.addItemRenderer(EgoWeaponsItems.FULLSTOP_SNIPER_RAILGUN.get(), new RenderFullstopRailgun());
+        event.addItemRenderer(EgoWeaponsItems.STIGMA_WORKSHOP_SWORD.get(), new RenderStigmaWorkshopSword());
 
 
 
@@ -118,11 +148,12 @@ public class ClientModBusEvent {
         particleEngine.register(EgoWeaponsParticles.BURN_APPLY.get(), BurnEffectParticle.Provider::new);
         particleEngine.register(EgoWeaponsParticles.DARK_BURN_APPLY.get(), BurnEffectParticle.Provider::new);
         particleEngine.register(EgoWeaponsParticles.SINKING_APPLY.get(), SinkingParticle.Provider::new);
-        particleEngine.register(EgoWeaponsParticles.DURANDAL_SWIPE_DOWN.get(), SlashDownInvert.Provider::new);
-        particleEngine.register(EgoWeaponsParticles.DURANDAL_SWIPE_UP.get(), SlashDown.Provider::new);
+        particleEngine.register(EgoWeaponsParticles.DURANDAL_SWIPE_DOWN.get(), (a) -> new SlashDownInvert.Provider(a, 2.5f, 5, new Vector3f(0.3f,1f,0)));
+        particleEngine.register(EgoWeaponsParticles.DURANDAL_SWIPE_UP.get(), (a) -> new SlashDown.Provider(a, 2.5f, 5, new Vector3f(0.3f,1f,0), false));
         particleEngine.register(EgoWeaponsParticles.DURANDAL_SWIPE_HORIZONTAL.get(), DurandalSlashHorizontal.Provider::new);
         particleEngine.register(EgoWeaponsParticles.EFFECT_NUMBER.get(), NumberParticle.Provider::new);
         particleEngine.register(EgoWeaponsParticles.DAMAGE_NUMBER.get(), DamageNumberParticle.Provider::new);
+        particleEngine.register(EgoWeaponsParticles.CLASH_NUMBER.get(), ClashLabelParticle.Provider::new);
         particleEngine.register(EgoWeaponsParticles.OUFI_AUTO_STRIKE.get(), (a) -> new GenericStrike.Provider(a, 6, 2.5f));
         particleEngine.register(EgoWeaponsParticles.OUFI_AUTO_HIT.get(), new GenericHit.Provider(EgoWeaponsParticles.OUFI_AUTO_STRIKE.get()));
         particleEngine.register(EgoWeaponsParticles.OUFI_DASH_STRIKE.get(), (a) -> new GenericStrike.Provider(a, 6, 2.5f));
@@ -149,6 +180,31 @@ public class ClientModBusEvent {
         particleEngine.register(EgoWeaponsParticles.MAGIC_BULLET_FIRE_SIDE.get(), (a) -> new PierceAttack.Provider(a, 4, 5, new Vector3f(3.5f,0,0f), new Vector3f(0.1f,0,0), true));
         particleEngine.register(EgoWeaponsParticles.MAGIC_BULLET_SHOCKWAVE.get(), (a) -> new RotationBoundParticle.Provider(a, 2.5f, 8, new Vector3f(0f,0f,0), new Vector3f(0f,0,0.1f), true));
         particleEngine.register(EgoWeaponsParticles.MAGIC_BULLET_FIRE.get(), (a) -> new GenericStrike.Provider(a, 4, 0.35f));
+        particleEngine.register(EgoWeaponsParticles.LIU_S6_AUTO_STRIKE.get(), (a) -> new GenericStrike.Provider(a, 6, 1.1f));
+        particleEngine.register(EgoWeaponsParticles.LIU_S6_AUTO_HIT.get(), new LiuHit.Provider(EgoWeaponsParticles.LIU_S6_AUTO_STRIKE.get()));
+        particleEngine.register(EgoWeaponsParticles.LIU_S6_AUTO_SIDE.get(), (a) -> new PierceAttack.Provider(a, 1.8f, 10, new Vector3f(0.8f,1.5f,0), new Vector3f(0.005f,0,0), true));
+        particleEngine.register(EgoWeaponsParticles.LIU_PUNCH_SHOCKWAVE.get(), (a) -> new RotationBoundParticle.Provider(a, 2.0f, 8, new Vector3f(0f,1.5f,0), new Vector3f(0.0f,0,-0.1f), true));
+        particleEngine.register(EgoWeaponsParticles.FIREFIST_STRIKE.get(), (a) -> new GenericStrike.Provider(a, 6, 2.2f));
+        particleEngine.register(EgoWeaponsParticles.FIREFIST_HIT.get(), new LiuHit.Provider(EgoWeaponsParticles.FIREFIST_STRIKE.get()));
+        particleEngine.register(EgoWeaponsParticles.FIREFIST_FLAME_SPEW.get(), (a) -> new PierceAttack.Provider(a, 2.4f, 15, new Vector3f(1.8f,0.5f,0f), new Vector3f(0.05f,0,0), true));
+
+        particleEngine.register(EgoWeaponsParticles.STIGMA_WORKSHOP_SWORD_STRIKE.get(), (a) -> new GenericStrike.Provider(a, 6, 1.8f));
+        particleEngine.register(EgoWeaponsParticles.STIGMA_WORKSHOP_SWORD_HIT.get(), new LiuHit.Provider(EgoWeaponsParticles.STIGMA_WORKSHOP_SWORD_STRIKE.get()));
+        particleEngine.register(EgoWeaponsParticles.STIGMA_WORKSHOP_SWORD_DASH_STRIKE.get(), (a) -> new GenericStrike.Provider(a, 8, 2f));
+        particleEngine.register(EgoWeaponsParticles.STIGMA_WORKSHOP_SWORD_DASH_HIT.get(), new LiuHit.Provider(EgoWeaponsParticles.STIGMA_WORKSHOP_SWORD_DASH_STRIKE.get()));
+        particleEngine.register(EgoWeaponsParticles.STIGMA_WORKSHOP_SWORD_IGNITE.get(), (a) -> new GenericStrike.Provider(a, 10, 0.7f));
+        particleEngine.register(EgoWeaponsParticles.STIGMA_WORKSHOP_SWORD_IGNITE_SIDE.get(), (a) -> new PierceAttack.Provider(a, 1f, 11, new Vector3f(-0.4f,0f,0), new Vector3f(-0.01f,0,0), true));
+        particleEngine.register(EgoWeaponsParticles.SIMPLE_EMBER.get(), EmberParticle.Provider::new);
+        particleEngine.register(EgoWeaponsParticles.MAO_PARTICLE.get(), MaoParticle.Provider::new);
+        particleEngine.register(EgoWeaponsParticles.STIGMA_WORKSHOP_SLASH_DOWN.get(), (a) -> new SlashDownInvert.Provider(a, 2, 7, new Vector3f(0.3f,1f,0), true));
+        particleEngine.register(EgoWeaponsParticles.STIGMA_WORKSHOP_SLASH_UP.get(), (a) -> new SlashDown.Provider(a, 2, 7, new Vector3f(0.3f,1f,0), true));
+        particleEngine.register(EgoWeaponsParticles.MAO_BRANCH_STRIKE.get(), (a) -> new GenericStrike.Provider(a, 7, 2f));
+        particleEngine.register(EgoWeaponsParticles.MAO_BRANCH_HIT.get(), new LiuHit.Provider(EgoWeaponsParticles.MAO_BRANCH_STRIKE.get()));
+
+
+        particleEngine.register(EgoWeaponsParticles.MAO_BRANCH_CIRCULAR_HIT.get(), (a) -> new CircularSlashing.Provider(a, 2.2f, 12, new Vector3f(0f,0f,0), true));
+        particleEngine.register(EgoWeaponsParticles.MAO_BRANCH_REUSE.get(), DeathriteReuseParticle.Provider::new);
+
     }
 
 }

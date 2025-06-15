@@ -8,7 +8,9 @@ public interface StaggerableEntity {
     public abstract StaticAnimation getStaggerAnimation();
 
     public abstract StaticAnimation getGroundAnimation(int strength);
+    public abstract StaticAnimation getClashStunAnim(int strength);
     public abstract StaticAnimation getStunAnimation(int strength);
+    public abstract StaticAnimation getHitstunAnimation(int strength);
 
     public abstract StaticAnimation getLiftAnimation(int strength);
 }

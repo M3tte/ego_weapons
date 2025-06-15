@@ -5,6 +5,7 @@ import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
+import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.potion.EternalRestPotionEffect;
 import net.m3tte.ego_weapons.potion.SolemnLamentEffects;
@@ -24,6 +25,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import yesman.epicfight.api.animation.types.DynamicAnimation;
@@ -36,12 +38,17 @@ import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
 
-public class SolemnLament extends SwordItem {
+public class SolemnLament extends EgoWeaponsWeapon {
 	public static final Item item = null;
 
 	public SolemnLament(int p_i48460_2_, float p_i48460_3_, Properties p_i48460_4_, boolean isDeparted) {
 		super(solemnLamentTier, p_i48460_2_, p_i48460_3_, p_i48460_4_);
 
+	}
+
+	@Override
+	public String getDefaultKillIdentifier() {
+		return "solemn_lament";
 	}
 
 	@Override
@@ -51,7 +58,8 @@ public class SolemnLament extends SwordItem {
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
-
+		list.add(new TranslationTextComponent("desc.ego_weapons.risk.waw"));
+		list.add(new StringTextComponent(" "));
 		switch (EgoWeaponsKeybinds.getUiPage() % 4) {
 			case 0:
 				if (EgoWeaponsKeybinds.isHoldingShift())

@@ -150,9 +150,9 @@ public class CrimsonfanheavyprojProcedure {
 			}
 			{
 				double _setval = ((entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null)
-						.orElse(new EgoWeaponsModVars.PlayerVariables())).blips - 4);
+						.orElse(new EgoWeaponsModVars.PlayerVariables())).light - 4);
 				entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-					capability.blips = _setval;
+					capability.light = _setval;
 					capability.syncPlayerVariables(entity);
 				});
 			}

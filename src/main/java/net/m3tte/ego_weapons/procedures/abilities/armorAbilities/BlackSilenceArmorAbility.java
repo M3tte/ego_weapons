@@ -3,7 +3,6 @@ package net.m3tte.ego_weapons.procedures.abilities.armorAbilities;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
-import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.particle.BlacksilenceshadowParticle;
 import net.m3tte.ego_weapons.particle.BlipeffectParticle;
@@ -46,7 +45,7 @@ public class BlackSilenceArmorAbility extends ItemAbility {
 
     @Override
     public AbilityTier getAbilityTier() {
-        return AbilityTier.ALPHA;
+        return AbilityTier.ALEPH;
     }
 
     @Override
@@ -59,13 +58,13 @@ public class BlackSilenceArmorAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (player.hasEffect(OrlandoPotionEffect.potion) && playerVars.blips >= 6) {
-            playerVars.blips -= 6;
+        if (player.hasEffect(OrlandoPotionEffect.potion) && playerVars.light >= 6) {
+            playerVars.light -= 6;
             furiosoEffect(player, playerVars);
             applyBlipCooldown(60, playerVars);
 
             playerVars.syncPlayerVariables(player);
-        } else if (playerVars.blips >= 9) {
+        } else if (playerVars.light >= 9) {
             orlandoEffect(player);
             playerVars.syncPlayerVariables(player);
         }

@@ -20,15 +20,17 @@ public class BlackSilenceButton extends Button {
 
     @Override
     public void renderButton(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        deligatedButtonRender(matrixStack, mouseX, mouseY, partialTicks);
+        delegatedButtonRender(matrixStack, mouseX, mouseY, partialTicks);
     }
+
+    private final ResourceLocation BUTTON_RESOURCE_LOCATION = new ResourceLocation("ego_weapons:textures/screens/blacksilencebutton.png");
 
     private float hoverTime = 0;
 
-    public void deligatedButtonRender(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void delegatedButtonRender(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         Minecraft minecraft = Minecraft.getInstance();
         FontRenderer fontrenderer = minecraft.font;
-        minecraft.getTextureManager().bind(new ResourceLocation("ego_weapons:textures/screens/blacksilencebutton.png"));
+        minecraft.getTextureManager().bind(BUTTON_RESOURCE_LOCATION);
 
         if (this.isHovered && hoverTime < 10) {
             hoverTime += 0.8f;
@@ -51,10 +53,21 @@ public class BlackSilenceButton extends Button {
         }
 
         this.renderBg(matrixStack, minecraft, mouseX, mouseY);
+
+        if (minecraft.player == null)
+            return;
+
         int j = getFGColor();
-        drawCenteredString(matrixStack, fontrenderer, this.getMessage(), this.x + this.width / 2, this.y + (this.height - 8) / 2, j | MathHelper.ceil(this.alpha * 255.0F) << 24);
-
-
+        RenderSystem.pushMatrix();
+        float scale = Math.min(1,(hoverTime - 5) / 15f);
+        RenderSystem.translated(this.x + this.width / 2f, (int)(this.y + (this.height - 8) / 2 + Math.sin((minecraft.player.tickCount / 10f) * (hoverTime / 5)) * 2), 0);
+        RenderSystem.pushMatrix();
+        RenderSystem.scaled(scale, scale, scale);
+        if (hoverTime >= 5) {
+            drawCenteredString(matrixStack, fontrenderer, this.getMessage(), 0,0, j | MathHelper.ceil(this.alpha * 255.0F) << 24);
+        }
+        RenderSystem.popMatrix();
+        RenderSystem.popMatrix();
     }
 
     public int heightMultiplier() {

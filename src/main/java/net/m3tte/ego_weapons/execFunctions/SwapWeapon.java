@@ -14,6 +14,7 @@ import net.minecraft.command.FunctionObject;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -52,9 +53,9 @@ public class SwapWeapon {
 		} else {
 			{
 				double _setval = ((entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null)
-						.orElse(new EgoWeaponsModVars.PlayerVariables())).blips - 1);
+						.orElse(new EgoWeaponsModVars.PlayerVariables())).light - 1);
 				entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-					capability.blips = _setval;
+					capability.light = _setval;
 					capability.syncPlayerVariables(entity);
 				});
 			}
@@ -68,7 +69,9 @@ public class SwapWeapon {
 				}
 			}
 		}
-		EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(entity, entity.hasEffect(OrlandoPotionEffect.potion.getEffect()) ? 2 : 1, entity.hasEffect(OrlandoPotionEffect.potion.getEffect()) ? 2 : 1);
+		if (entity.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.SUIT_OF_THE_BLACK_SILENCE.get())) {
+			EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(entity, entity.hasEffect(OrlandoPotionEffect.potion.getEffect()) ? 2 : 1, entity.hasEffect(OrlandoPotionEffect.potion.getEffect()) ? 2 : 1);
+		}
 		entity.getPersistentData().putDouble("furiosohits", 0);
 		entity.getPersistentData().putDouble("furiosoattacks", 0);
 		if (world instanceof ServerWorld) {
@@ -119,7 +122,7 @@ public class SwapWeapon {
 				entity.setItemInHand(Hand.MAIN_HAND, new ItemStack(EgoWeaponsItems.ATELIER_LOGIC_PISTOLS.get()));
 				entity.getItemInHand(Hand.MAIN_HAND).getOrCreateTag().putInt("ammo", 2);
 				entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-					capability.blips -= 1;
+					capability.light -= 1;
 					capability.syncPlayerVariables(entity);
 				});
 				entity.setItemInHand(Hand.OFF_HAND, new ItemStack(EgoWeaponsItems.ATELIER_LOGIC_PISTOLS.get()));

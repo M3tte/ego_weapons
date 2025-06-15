@@ -34,8 +34,8 @@ public class JustiziaArmorAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, EgoWeaponsModVars.PlayerVariables playerVars) {
 
-        if (playerVars.blips > 6) {
-            playerVars.blips -= 6;
+        if (playerVars.light > 6) {
+            playerVars.light -= 6;
             World world = player.level;
             double x = player.getX();
             double y = player.getY();

@@ -1,5 +1,6 @@
 package net.m3tte.ego_weapons.world.capabilities;
 
+import net.m3tte.ego_weapons.EgoWeaponsAttributes;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
@@ -28,7 +29,7 @@ public class SanitySystem {
     public static void healSanity(PlayerEntity player, float amnt) {
         EgoWeaponsModVars.PlayerVariables playerVariables = player.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).orElse(new EgoWeaponsModVars.PlayerVariables());
 
-        playerVariables.sanity = Math.min(amnt + playerVariables.sanity, playerVariables.maxSanity);
+        playerVariables.sanity = Math.min(amnt + playerVariables.sanity, EgoWeaponsAttributes.getMaxSanity(player));
 
         playerVariables.syncSanity(player);
     }

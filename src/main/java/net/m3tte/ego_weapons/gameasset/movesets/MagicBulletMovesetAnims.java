@@ -8,6 +8,7 @@ import net.m3tte.ego_weapons.gameasset.AttackLogicPredicate;
 import net.m3tte.ego_weapons.gameasset.AttackMoveType;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
+import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
 import net.m3tte.ego_weapons.particle.MagicBulletAimParticle;
 import net.m3tte.ego_weapons.particle.MagicBulletShell;
@@ -178,12 +179,13 @@ public class MagicBulletMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
                 .addProperty(EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.MAGIC_BULLET_FIRE)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "magic_bullet_special")
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, false)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MAGIC_BULLET_IMPACT_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(1))
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.MAGIC_BULLET_BREATHE)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.FULLSTOP_SNIPER_INNATE_HIT)
-                .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1.2f))
+                .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1f))
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.SHORT)
                 .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, magicBulletFire1Event())
@@ -195,10 +197,11 @@ public class MagicBulletMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
                 .addProperty(EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.MAGIC_BULLET_FIRE)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "magic_bullet_special")
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, false)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MAGIC_BULLET_IMPACT_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(1))
-                .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1.2f))
+                .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1f))
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.FULLSTOP_SNIPER_SPECIAL_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.MAGIC_BULLET_BREATHE)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.KNOCKDOWN)
@@ -238,6 +241,7 @@ public class MagicBulletMovesetAnims {
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 0.8f);
 
         MAGIC_BULLET_SPIN_1 = new BasicEgoAttackAnimation(0.01F, 0.05F, 1.23F, 1.45F, 1.5F, null, "Tool_R", "biped/magic_bullet/special_1", biped)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.CLASH_KNOCK, false)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "magic_bullet_spin_1")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
@@ -253,29 +257,35 @@ public class MagicBulletMovesetAnims {
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, magicBulletSwingSpamHandler1());
 
         MAGIC_BULLET_SPIN_2 = (new EgoAttackAnimation(0.01F, "biped/magic_bullet/special_2", biped,
-                new AttackAnimation.Phase(0.0F, 0.0F, 0.01F, 0.05F, 0.1F, 0.1F, "Tool_R", EgoWeaponsCapabilityPresets.RIFLE)
+                new EgoAttackAnimation.EgoAttackPhase(0.0F, 0.0F, 0.01F, 0.05F, 0.1F, 0.1F, "Tool_R", EgoWeaponsCapabilityPresets.RIFLE)
+                        .addProperty(EgoWeaponsAttackPhaseProperty.CLASH_KNOCK, false)
                         .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
                         .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.15f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MAGIC_BULLET_HIT),
                 new AttackAnimation.Phase(0.1F, 0.1F, 0.11F, 0.15F, 0.2F, 0.2F, "Tool_R", EgoWeaponsCapabilityPresets.RIFLE)
+                        .addProperty(EgoWeaponsAttackPhaseProperty.CLASH_KNOCK, false)
                         .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
                         .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.15f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MAGIC_BULLET_HIT),
                 new AttackAnimation.Phase(0.2F, 0.2F, 0.21F, 0.25F, 0.3F, 0.3F, "Tool_R", EgoWeaponsCapabilityPresets.RIFLE)
+                        .addProperty(EgoWeaponsAttackPhaseProperty.CLASH_KNOCK, false)
                         .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
                         .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.15f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MAGIC_BULLET_HIT),
                 new AttackAnimation.Phase(0.3F, 0.3F, 0.31F, 0.35F, 0.4F, 0.4F, "Tool_R", EgoWeaponsCapabilityPresets.RIFLE)
+                        .addProperty(EgoWeaponsAttackPhaseProperty.CLASH_KNOCK, false)
                         .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
                         .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.15f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MAGIC_BULLET_HIT),
                 new AttackAnimation.Phase(0.4F, 0.4F, 0.41F, 0.45F, 1F, 1F, "Tool_R", EgoWeaponsCapabilityPresets.RIFLE)
+                        .addProperty(EgoWeaponsAttackPhaseProperty.CLASH_KNOCK, false)
                         .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MAGIC_BULLET_IMPACT_HIT)
                         .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.LONG)
                         .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(0.4f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT)
         )
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.CLASH_KNOCK, false)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "magic_bullet_spin_2")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)

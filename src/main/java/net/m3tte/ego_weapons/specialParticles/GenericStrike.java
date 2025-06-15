@@ -32,6 +32,9 @@ public class GenericStrike extends HitParticle {
         private final IAnimatedSprite spriteSet;
         private int lifeTime = 6;
         private float quadSize = 2.5f;
+
+
+
         public Provider(IAnimatedSprite spriteSet, int lifeTime, float quadSize) {
             this.spriteSet = spriteSet;
             this.lifeTime = lifeTime;

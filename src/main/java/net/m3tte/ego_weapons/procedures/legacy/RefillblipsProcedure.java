@@ -32,9 +32,6 @@ public class RefillblipsProcedure {
 				}
 			}.getEntity()).getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
 
-				capability.maxblips = 10; // TODO: Implement calculation for proper blip value regarding determination and emotion level
-				capability.blips = capability.maxblips;
-
 				capability.syncPlayerVariables((new Object() {
 					public Entity getEntity() {
 						try {

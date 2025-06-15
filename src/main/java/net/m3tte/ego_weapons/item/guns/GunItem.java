@@ -1,5 +1,6 @@
 package net.m3tte.ego_weapons.item.guns;
 
+import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
@@ -10,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class GunItem extends SwordItem {
+public class GunItem extends EgoWeaponsWeapon {
 
     private int maxAmmo;
     private GunCaliber caliber;

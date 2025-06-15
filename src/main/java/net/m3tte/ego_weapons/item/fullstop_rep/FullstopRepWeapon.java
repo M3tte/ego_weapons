@@ -91,7 +91,8 @@ public class FullstopRepWeapon extends GunItem {
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
-
+		list.add(new TranslationTextComponent("desc.ego_weapons.risk.waw"));
+		list.add(new StringTextComponent(" "));
 		switch (EgoWeaponsKeybinds.getUiPage() % 5) {
 			case 0:
 				if (EgoWeaponsKeybinds.isHoldingShift())
@@ -219,7 +220,7 @@ public class FullstopRepWeapon extends GunItem {
 	}
 
 
-	public static float critDamageCalculations(LivingEntity target, LivingEntityPatch<?> sourcePatch, float amount, DamageSource source) {
+	public static float critDamageCalculations(LivingEntity target, LivingEntityPatch<?> sourcePatch, float multiplier, DamageSource source) {
 
 		DynamicAnimation currentanim = sourcePatch.getServerAnimator().animationPlayer.getAnimation();
 
@@ -240,7 +241,7 @@ public class FullstopRepWeapon extends GunItem {
 
 			switch (weaponIdentifier) {
 				case "fs_rep_auto3":
-						amount *= 1.1f;
+						multiplier += 0.1f;
 						SharedFunctions.incrementBonusDamage(source, 0.1f);
 					break;
 				case "fullstop_rep_innate":
@@ -251,20 +252,20 @@ public class FullstopRepWeapon extends GunItem {
 							target.addEffect(new EffectInstance(EgoWeaponsEffects.TARGET_SPOTTED.get(), 120, 0));
 						}
 				case "fs_rep_auto_4_g":
-						amount *= 1.2f;
+						multiplier += 0.2f;
 						SharedFunctions.incrementBonusDamage(source, 0.2f);
 					break;
 
 				case "fullstop_special_b":
 				case "fullstop_special_g":
 						if (!sourcePatch.getOriginal().getItemInHand(Hand.OFF_HAND).getOrCreateTag().contains("lastFired")) {
-							amount *= 1.3f;
+							multiplier += 0.3f;
 							SharedFunctions.incrementBonusDamage(source, 0.3f);
 						}
 					break;
 			}
 		}
-		return amount;
+		return multiplier;
 	}
 
 	public static StaticAnimation.Event[] fireGun(float time) {

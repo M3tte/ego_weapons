@@ -1,6 +1,7 @@
 package net.m3tte.ego_weapons.mixin.epicfight;
 
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
+import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gui.ingame.PlayerStatsIndicator;
 import net.m3tte.ego_weapons.gui.ingame.StatusEffectGUI;
 import net.m3tte.ego_weapons.gui.ingame.ThreatLevelGUI;
@@ -25,7 +26,25 @@ public class AttackAnimationMixin {
     private void initializeCustomIndicators(LivingEntityPatch<?> entitypatch, CallbackInfo ci) {
         LivingEntity target = entitypatch.getOriginal();
         if (target.hasEffect(EgoWeaponsEffects.BLEED.get())) {
-            BleedEffect.apply(entitypatch.getOriginal());
+            AttackAnimation self = ((AttackAnimation) ((Object)this));
+
+            boolean triggersEffects = (self.getRealAnimation()).getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.TRIGGERS_EFFECTS).orElse(true);
+
+            AttackAnimation.Phase phase = null;
+            if (self instanceof EgoAttackAnimation) {
+                phase = ((EgoAttackAnimation)self).getPhaseByTime(entitypatch.getAnimator().getPlayerFor(self).getElapsedTime());
+            }
+
+            if (phase instanceof EgoAttackAnimation.EgoAttackPhase) {
+                Boolean elp = ((EgoAttackAnimation.EgoAttackPhase) phase).getProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.TRIGGERS_EFFECTS).orElse(null);
+
+                if (elp != null)
+                    triggersEffects = elp;
+            }
+
+
+            if (triggersEffects)
+                BleedEffect.apply(entitypatch.getOriginal());
         }
     }
 }

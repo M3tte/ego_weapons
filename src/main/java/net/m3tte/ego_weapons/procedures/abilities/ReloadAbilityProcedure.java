@@ -3,6 +3,7 @@ package net.m3tte.ego_weapons.procedures.abilities;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.item.guns.GunCaliber;
+import net.m3tte.ego_weapons.procedures.abilities.reloadAbilities.FirefistReloadAbility;
 import net.m3tte.ego_weapons.procedures.abilities.reloadAbilities.FullstopReloadAbility;
 import net.m3tte.ego_weapons.procedures.abilities.reloadAbilities.FullstopRifleReloadAbility;
 import net.m3tte.ego_weapons.procedures.abilities.weaponAbilities.*;
@@ -36,6 +37,7 @@ public class ReloadAbilityProcedure {
 		reloadAbilities.put(EgoWeaponsItems.FULLSTOP_REP_MACHETE.get(), new FullstopReloadAbility());
 		reloadAbilities.put(EgoWeaponsItems.FULLSTOP_REP_PISTOL.get(), new FullstopReloadAbility());
 		reloadAbilities.put(EgoWeaponsItems.FULLSTOP_SNIPER_RAILGUN.get(), new FullstopRifleReloadAbility());
+		reloadAbilities.put(EgoWeaponsItems.FIREFIST_GAUNTLET.get(), new FirefistReloadAbility());
 
 	}
 

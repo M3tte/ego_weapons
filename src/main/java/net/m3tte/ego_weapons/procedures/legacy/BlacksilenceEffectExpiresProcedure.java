@@ -26,7 +26,7 @@ public class BlacksilenceEffectExpiresProcedure {
 		{
 			double _setval = 0;
 			entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-				capability.blips = _setval;
+				capability.light = _setval;
 				capability.syncPlayerVariables(entity);
 			});
 		}

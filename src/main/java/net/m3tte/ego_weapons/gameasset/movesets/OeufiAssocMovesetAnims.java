@@ -2,6 +2,7 @@ package net.m3tte.ego_weapons.gameasset.movesets;
 
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
+import net.m3tte.ego_weapons.gameasset.AttackLogicPredicate;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
@@ -48,7 +49,7 @@ public class OeufiAssocMovesetAnims {
     public static StaticAnimation OEUFI_COUNTER_CONTRACT;
 
     public static void build(Model biped) {
-
+        System.out.println("Building OUFI Animations");
         OEUFI_IDLE = new StaticAnimation(true, "biped/oeufi/idle", biped);
         OEUFI_WALK = new MovementAnimation(true, "biped/oeufi/walk", biped);
         OEUFI_RUN = new MovementAnimation(true, "biped/oeufi/run", biped);
@@ -105,6 +106,7 @@ public class OeufiAssocMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1F);
 
         OEUFI_INNATE = new BasicEgoAttackAnimation(0.08F, 0.25F, 0.33F, 0.5F, 1F, null, "Tool_R", "biped/oeufi/innate_1", biped)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.CLASH_KNOCK, false)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "oeufi_innate")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
@@ -132,9 +134,12 @@ public class OeufiAssocMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1F);
 
         OEUFI_SPECIAL_1 = new BasicEgoAttackAnimation(0.08F, 0.25F, 0.5F, 0.8F, 1.7f, null, "Tool_R", "biped/oeufi/special_1", biped)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.CLASH_KNOCK, false)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "special1")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
+                .addProperty(EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.PIERCE_GUARD_DODGE)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "oeufi_halberd_special")
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.OUFI_IMPACT_UP)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.OUFI_SWING)
@@ -146,9 +151,11 @@ public class OeufiAssocMovesetAnims {
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, special1Event(0.8f));
 
         OEUFI_SPECIAL_2 = new BasicEgoAttackAnimation(0.08F, 0.25F, 0.58F, 0.83F, 1.6F, null, "Tool_R", "biped/oeufi/special_2", biped)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.CLASH_KNOCK, false)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "special2")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "oeufi_halberd_special")
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.OUFI_IMPACT_2)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.OUFI_SWING)
@@ -164,6 +171,7 @@ public class OeufiAssocMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.PIERCE)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
                 .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "oeufi_halberd_special")
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.OUFI_PIERCE_HEAVY)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.OUFI_SWING_PIERCE)

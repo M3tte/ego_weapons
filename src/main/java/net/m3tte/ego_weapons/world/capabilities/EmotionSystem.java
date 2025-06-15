@@ -1,17 +1,21 @@
 package net.m3tte.ego_weapons.world.capabilities;
 
-import net.m3tte.ego_weapons.EgoWeaponsEffects;
-import net.m3tte.ego_weapons.EgoWeaponsItems;
-import net.m3tte.ego_weapons.EgoWeaponsSounds;
-import net.m3tte.ego_weapons.EgoWeaponsModVars;
+import net.m3tte.ego_weapons.*;
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
-import net.m3tte.ego_weapons.potion.MagicBulletPotionEffect;
 import net.m3tte.ego_weapons.procedures.BlipTick;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.AttributeModifierManager;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
+
+import java.util.UUID;
 
 public class EmotionSystem {
 
@@ -34,14 +38,45 @@ public class EmotionSystem {
         return playerVars.emotionLevel * 35 + 35;
     }
 
+
+    static AttributeModifier lightMod = new AttributeModifier(UUID.fromString("c1804411-accb-4b72-a4d7-ea21ba0828b4"),"emotionLight", 1, AttributeModifier.Operation.ADDITION);
+
     public static int getMaxEnergy(PlayerEntity player) {
         PlayerVariables playerVariables = player.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables());
         return getMaxEnergy(playerVariables);
     }
 
     public static int getMaxEnergy(PlayerVariables playerVars) {
-        return (int)((playerVars.emotionLevel + 1) * 1.5) + 5;
+        return (int)((playerVars.emotionLevel + 1) * 1.5);
     }
+    public static void updateMaxEnergy(PlayerEntity player, PlayerVariables vars) {
+        PlayerVariables playerVariables = player.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables());
+        System.out.println("MAX ENERGY FLAG 0");
+
+        ModifiableAttributeInstance lightInstance = player.getAttribute(EgoWeaponsAttributes.MAX_LIGHT.get());
+
+        System.out.println("MAX ENERGY FLAG 1");
+
+        if (lightInstance == null)
+            return;
+
+        System.out.println("MAX ENERGY FLAG 2");
+
+        lightInstance.removeModifier(lightMod.getId());
+
+        if (vars.emotionLevel > 0)
+            lightInstance.addPermanentModifier(new AttributeModifier(lightMod.getId(), "lightMod " + 0, getMaxEnergy(vars), lightMod.getOperation()));
+        System.out.println("MAX ENERGY FLAG 3");
+
+        lightInstance.save();
+    }
+
+    /*public static int updateMaxEnergy(PlayerEntity player, PlayerVariables playerVars) {
+
+
+
+        return (int)((playerVars.emotionLevel + 1) * 1.5) + 5;
+    }*/
 
     /***
      * Adds a given amount of emotion points to a player.
@@ -75,7 +110,7 @@ public class EmotionSystem {
 
             playerVariables.emotionLevel += 1;
             BlipTick.chargeBlips(player, playerVariables, 1);
-            playerVariables.maxblips = getMaxEnergy(playerVariables);
+            updateMaxEnergy(player, playerVariables);
             increaseEmotionLevel(player, playerVariables.emotionLevel);
 
             levelChange = true;
@@ -104,7 +139,7 @@ public class EmotionSystem {
         if (playerVariables.emotionLevelProgress <= -10) {
             playerVariables.emotionLevel -= 1;
             playerVariables.emotionLevelProgress += getEmotionRequired(playerVariables) + 9;
-
+            updateMaxEnergy(player, playerVariables);
             decreaseEmotionLevel(player, playerVariables.emotionLevel);
 
             levelChange = true;
@@ -129,7 +164,8 @@ public class EmotionSystem {
             if (chestPlateItem.getItem().equals(EgoWeaponsItems.FULLSTOP_SNIPER_SUIT.get()))
                 EgoWeaponsEffects.POISE.get().increment(player, newLevel, newLevel * 2);
 
-
+            if (chestPlateItem.getItem().equals(EgoWeaponsItems.STIGMA_WORKSHOP_SUIT.get()))
+                EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(player, 0, newLevel);
         }
     }
 
@@ -141,7 +177,7 @@ public class EmotionSystem {
         }
 
     }
-    public static void handleGuard(PlayerEntity player, float damage, float impact, boolean parried, float staggerMult) {
+    public static void handleGuard(PlayerEntity player, float damage, float impact, boolean parried, float staggerMult, Entity source) {
         float mult = 1;
         if (parried) {
             StaggerSystem.healStagger(player, impact * 0.8f * staggerMult);
@@ -153,7 +189,7 @@ public class EmotionSystem {
 
         increaseEmotionPoints(player, (int)(damage*mult*2), true);
     }
-    public static void handleGuard(PlayerEntity player, float damage, float impact, boolean parried) {
-        EmotionSystem.handleGuard(player, damage, impact, parried, 1);
+    public static void handleGuard(PlayerEntity player, float damage, float impact, boolean parried, Entity source) {
+        EmotionSystem.handleGuard(player, damage, impact, parried, 1, source);
     }
 }

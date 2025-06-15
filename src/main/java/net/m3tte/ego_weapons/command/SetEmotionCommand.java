@@ -5,6 +5,7 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
+import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
@@ -39,6 +40,7 @@ public class SetEmotionCommand {
 					vars.globalcooldown = 0;
 					vars.emotionLevel = lvl;
 					vars.emotionLevelProgress = lvl;
+					EmotionSystem.updateMaxEnergy(target, vars);
 					vars.syncEmotionLevel(target);
 					return 0;
 				}))));

@@ -26,8 +26,6 @@ public class MagicBulletPassive extends Skill {
             evade.setSkill(EgoWeaponsSkills.MAGIC_BULLET_EVADE);
         }
     }
-
-
     public void onRemoved(SkillContainer container) {
         PlayerPatch<?> executer = container.getExecuter();
         SkillContainer mbguardskill = executer.getSkillCapability().skillContainers[GenericSkill.TC_GUARD.universalOrdinal()];

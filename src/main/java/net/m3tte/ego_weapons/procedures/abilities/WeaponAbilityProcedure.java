@@ -5,6 +5,7 @@ import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.procedures.abilities.assistAttacks.FullstopRifleWeaponAssistAttack;
 import net.m3tte.ego_weapons.procedures.abilities.assistAttacks.MagicBulletAssistAttack;
+import net.m3tte.ego_weapons.procedures.abilities.reloadAbilities.FirefistReloadAbility;
 import net.m3tte.ego_weapons.procedures.abilities.reloadAbilities.FullstopReloadAbility;
 import net.m3tte.ego_weapons.procedures.abilities.reloadAbilities.SolemnLamentReloadAbility;
 import net.m3tte.ego_weapons.procedures.abilities.weaponAbilities.*;
@@ -71,6 +72,10 @@ public class WeaponAbilityProcedure {
 		weaponAbilities.put(EgoWeaponsItems.SOLEMN_LAMENT_BLACK.get(), new SolemnLamentReloadAbility());
 		weaponAbilities.put(EgoWeaponsItems.SOLEMN_LAMENT_WHITE.get(), new SolemnLamentReloadAbility());
 		weaponAbilities.put(EgoWeaponsItems.FULLSTOP_SNIPER_RAILGUN.get(), new FullstopRifleWeaponAbility());
+		weaponAbilities.put(EgoWeaponsItems.LIU_FIRE_GAUNTLET.get(), new LiuGauntletWeaponAbility());
+		weaponAbilities.put(EgoWeaponsItems.FIREFIST_GAUNTLET.get(), new FirefistWeaponAbility());
+		weaponAbilities.put(EgoWeaponsItems.STIGMA_WORKSHOP_SWORD.get(), new StigmaWorkshopSwordWeaponAbility());
+		weaponAbilities.put(EgoWeaponsItems.HEISHOU_MAO_SWORD.get(), new HeishouMaoWeaponAbility());
 	}
 
 	public static void runWeaponAbility(PlayerEntity entity) {

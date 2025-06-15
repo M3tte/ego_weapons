@@ -13,6 +13,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -87,7 +88,7 @@ public class RotationBoundParticle extends SpriteTexturedParticle {
         super(world, x, y, z);
 
         this.spriteProvider = spriteProvider;
-
+        this.glowRenderType = glows;
         this.xd = 0;
         this.yd = 0;
         this.zd = 0;
@@ -102,8 +103,8 @@ public class RotationBoundParticle extends SpriteTexturedParticle {
     }
 
     @Override
-    public IParticleRenderType getRenderType() {
-        return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+    public @NotNull IParticleRenderType getRenderType() {
+        return this.glowRenderType ? IParticleRenderType.PARTICLE_SHEET_LIT : IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
     @Override
