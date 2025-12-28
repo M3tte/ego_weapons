@@ -33,6 +33,8 @@ public class PackageRegistry {
 
         addNetworkMessage(ParticlePackages.DirectionalAttackParticle.class, ParticlePackages.DirectionalAttackParticle::buffer, ParticlePackages.DirectionalAttackParticle::new,
                 ParticlePackages.DirectionalAttackParticle::handler);
+        addNetworkMessage(ParticlePackages.MagicBulletAimPacket.class, ParticlePackages.MagicBulletAimPacket::buffer, ParticlePackages.MagicBulletAimPacket::new,
+                ParticlePackages.MagicBulletAimPacket::handler);
         addNetworkMessage(ParticlePackages.NumberLabelParticle.class, ParticlePackages.NumberLabelParticle::buffer, ParticlePackages.NumberLabelParticle::new,
                 ParticlePackages.NumberLabelParticle::handler);
         addNetworkMessage(ParticlePackages.DamageLabelParticle.class, ParticlePackages.DamageLabelParticle::buffer, ParticlePackages.DamageLabelParticle::new,
@@ -44,6 +46,10 @@ public class PackageRegistry {
 
         addNetworkMessage(AbilityPackages.SyncOnrushData.class, AbilityPackages.SyncOnrushData::buffer, AbilityPackages.SyncOnrushData::new,
                 AbilityPackages.SyncOnrushData::handler);
+        addNetworkMessage(AbilityPackages.ApplyDialogueData.class, AbilityPackages.ApplyDialogueData::buffer, AbilityPackages.ApplyDialogueData::new,
+                AbilityPackages.ApplyDialogueData::handler);
+        addNetworkMessage(AbilityPackages.ChangePersonality.class, AbilityPackages.ChangePersonality::buffer, AbilityPackages.ChangePersonality::new,
+                AbilityPackages.ChangePersonality::handler);
         addNetworkMessage(EgoWeaponsModVars.SyncCountEffectMessage.class, EgoWeaponsModVars.SyncCountEffectMessage::buffer, EgoWeaponsModVars.SyncCountEffectMessage::new,
                 EgoWeaponsModVars.SyncCountEffectMessage::handler);
 

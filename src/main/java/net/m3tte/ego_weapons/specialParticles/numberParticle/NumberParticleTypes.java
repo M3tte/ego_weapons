@@ -7,7 +7,8 @@ public enum NumberParticleTypes {
     BLEED(11796480, "\uE001"),
     SINKING(3947660, "\uE003"),
     TREMOR(12291840, "\uE006"),
-    DEATHRITE_HASTE(12291840, "\uE042");
+    DEATHRITE_HASTE(12291840, "\uE042"),
+    BUTTERFLY(16777215, "\uE045");
 
 
     NumberParticleTypes(int color, String icon) {

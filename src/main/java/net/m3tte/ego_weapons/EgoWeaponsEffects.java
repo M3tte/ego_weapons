@@ -30,8 +30,11 @@ public class EgoWeaponsEffects {
     public static final RegistryObject<CountPotencyStatus> BURN = registerEffect("burn", new BurnEffect());
     public static final RegistryObject<CountPotencyStatus> DARK_BURN = registerEffect("dark_burn", new DarkFlameEffect());
     public static final RegistryObject<CountPotencyStatus> SINKING = registerEffect("sinking", new SinkingEffect());
+    public static final RegistryObject<CountPotencyStatus> THE_DEPARTED = registerEffect("the_departed_b", new TheDepartedButterflyEffect());
+    public static final RegistryObject<CountPotencyStatus> THE_LIVING = registerEffect("the_living_b", new TheLivingButterflyEffect());
     public static final RegistryObject<CountPotencyStatus> RUPTURE = registerEffect("rupture", new RuptureEffect());
     public static final RegistryObject<CountPotencyStatus> PROTECTION = registerEffect("protection", new ProtectionEffect());
+    public static final RegistryObject<CountPotencyStatus> FRAGILE = registerEffect("fragile", new FragileEffect());
     public static final RegistryObject<CountPotencyStatus> TREMOR = registerEffect("tremor", new TremorEffect());
     public static final RegistryObject<CountPotencyStatus> TREMOR_DECAY = registerEffect("tremor_decay", new TremorDecayEffect());
     public static final RegistryObject<CountPotencyStatus> OBLIGATION_FULLFILLMENT = registerEffect("obligation_fullfillment", new ObligationFullfillmentEffect());
@@ -55,6 +58,8 @@ public class EgoWeaponsEffects {
     public static final RegistryObject<CountPotencyStatus> DEATHRITE_HASTE = registerEffect("deathrite_haste", new DeathriteHasteEffect());
     public static final RegistryObject<Effect> CLASH_STUN = registerEffect("clashed", new ClashStunEffect());
 
+    public static final RegistryObject<CountPotencyStatus> SIN = registerEffect("sin", new SinEffect());
+    public static final RegistryObject<CountPotencyStatus> IMITATION = registerEffect("imitation", new ImitationEffect());
 
 
     public static int speedMult(LivingEntity entity) {

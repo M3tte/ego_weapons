@@ -11,6 +11,10 @@ import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import yesman.epicfight.api.animation.property.AnimationProperty;
 import yesman.epicfight.api.animation.types.*;
 import yesman.epicfight.api.model.Model;
@@ -62,6 +66,7 @@ public class MimicryMovesetAnims {
     public static StaticAnimation MIMICRY_DASH;
     public static StaticAnimation MIMICRY_HELLO;
     public static StaticAnimation MIMICRY_GOODBYE;
+    public static StaticAnimation MIMICRY_GOODBYE_ENHANCED;
 
 
     public static StaticAnimation KALI_EGO_IDLE;
@@ -70,8 +75,19 @@ public class MimicryMovesetAnims {
 
     public static StaticAnimation KALI_EGO_RUN;
     public static StaticAnimation KALI_EGO_SNEAK;
+    public static StaticAnimation MIMICRY_EQUIP;
 
     public static void build(Model biped) {
+
+        MIMICRY_EQUIP = (new ActionAnimation(0f, 1.5f,   "biped/mimicry/equip", biped))
+                .addProperty(AnimationProperty.ActionAnimationProperty.STOP_MOVEMENT, false)
+                .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false)
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f)
+                .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, equipEffect(0.5f))
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f);
+
+
+
         KALI_IDLE = new StaticAnimation(0.3f,true, "biped/kali/idle", biped);
         KALI_KNEEL = new StaticAnimation(0.3f,true, "biped/kali/kneel", biped);
         KALI_WALK = new MovementAnimation(0.3f,true, "biped/kali/walk", biped);
@@ -321,7 +337,7 @@ public class MimicryMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.COLLIDER_ADDER, 3)
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.6f);
 
-        MIMICRY_GOODBYE = (new EgoAttackAnimation(0.01F, 0.02F, 0.33F, 0.78F, 1.41F, EgoWeaponsCapabilityPresets.LONGER_BLADE, "Tool_R", "biped/mimicry/goodbye", biped))
+        MIMICRY_GOODBYE = (new EgoAttackAnimation(0.01F, 0.02F, 0.5F, 0.85F, 1.5F, EgoWeaponsCapabilityPresets.LONGER_BLADE, "Tool_R", "biped/mimicry/goodbye_1", biped))
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "mimicry_goodbye")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.SLASH)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
@@ -332,9 +348,26 @@ public class MimicryMovesetAnims {
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.KALI_SPLIT_HORIZONTAL_SWING)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.KNOCKDOWN)
                 .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION, ValueCorrector.adder(25f))
-                .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1.5f))
+                .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(2.5f))
                 .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(2f))
-                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.6f);
+                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.3f);
+
+        MIMICRY_GOODBYE_ENHANCED = (new EgoAttackAnimation(0.01F, 0.02F, 0.75F, 1.4F, 1.6F, EgoWeaponsCapabilityPresets.LONGER_BLADE, "Tool_R", "biped/mimicry/goodbye_2", biped))
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "mimicry_goodbye_enh")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.SLASH)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.GSH)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "mimicry_special")
+                .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
+                .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.NOTHING_THERE_HEAVY_SLASH)
+                .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MIMICRY_VERTICAL_HIT)
+                .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.NOTHING_THERE_SLASH_ALT)
+                .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.KNOCKDOWN)
+                .addProperty(AnimationProperty.AttackPhaseProperty.ARMOR_NEGATION, ValueCorrector.adder(25f))
+                .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(2.5f))
+                .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.setter(15f))
+                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.3f)
+                .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, enhancedGoodbyeEvent());
 
         MIMICRY_DASH = (new EgoAttackAnimation(0.02F, 0.03F, 0.36F, 0.85F, 1.8F, EgoWeaponsCapabilityPresets.LONGER_BLADE, "Tool_R", "biped/mimicry/dash", biped))
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "mimicry_dash")
@@ -375,6 +408,20 @@ public class MimicryMovesetAnims {
 
     }
 
+    public static StaticAnimation.Event[] equipEffect(float time) {
+        StaticAnimation.Event[] events = new StaticAnimation.Event[2];
+
+        events[0] = StaticAnimation.Event.create(0, (entitypatch) -> {
+            entitypatch.playSound(SoundEvents.ARMOR_EQUIP_LEATHER, 1, 1, 1);
+        }, StaticAnimation.Event.Side.BOTH);
+
+        events[1] = StaticAnimation.Event.create(time, (entitypatch) -> {
+            entitypatch.playSound(SoundEvents.CHORUS_FLOWER_GROW, 4, 1, 1);
+        }, StaticAnimation.Event.Side.BOTH);
+
+        return events;
+    }
+
     private static StaticAnimation.Event[] onrushEvent() {
         StaticAnimation.Event[] events = new StaticAnimation.Event[1];
         events[0] = StaticAnimation.Event.create(0.4F, (entitypatch) -> {
@@ -391,6 +438,35 @@ public class MimicryMovesetAnims {
         events[0] = StaticAnimation.Event.create(1.5f, (entitypatch) -> {
             LivingEntity ent = entitypatch.getOriginal();
             ent.level.addParticle(EgoWeaponsParticles.GREAT_SPLIT_HORIZONTAL.get(), ent.getX(), ent.getY()+0.9f, ent.getZ(), 0, ent.getId(), 0);
+        }, StaticAnimation.Event.Side.CLIENT);
+        return events;
+    }
+
+    public static StaticAnimation.Event[] enhancedGoodbyeEvent() {
+        StaticAnimation.Event[] events = new StaticAnimation.Event[2];
+
+        events[0] = StaticAnimation.Event.create(0.15f, (entitypatch) -> {
+            LivingEntity entity = entitypatch.getOriginal();
+            World world = entity.level;
+            if (world instanceof ServerWorld) {
+                ((ServerWorld) world).sendParticles(EpicFightParticles.BLOOD.get(), (entity.getX()), (entity.getY() + entity.getBbHeight() / 2),
+                        (entity.getZ()), (int) 20, (entity.getBbWidth() / 2.5), (entity.getBbHeight() / 3), (entity.getBbWidth() / 2.5), 0);
+            }
+
+            entity.getItemInHand(Hand.MAIN_HAND).getOrCreateTag().putInt("morph", 1);
+
+        }, StaticAnimation.Event.Side.CLIENT);
+
+        events[1] = StaticAnimation.Event.create(1.5f, (entitypatch) -> {
+            LivingEntity entity = entitypatch.getOriginal();
+            World world = entity.level;
+            if (world instanceof ServerWorld) {
+                ((ServerWorld) world).sendParticles(EpicFightParticles.BLOOD.get(), (entity.getX()), (entity.getY() + entity.getBbHeight() / 2),
+                        (entity.getZ()), (int) 20, (entity.getBbWidth() / 2.5), (entity.getBbHeight() / 3), (entity.getBbWidth() / 2.5), 0);
+            }
+
+            entity.getItemInHand(Hand.MAIN_HAND).getOrCreateTag().remove("morph");
+
         }, StaticAnimation.Event.Side.CLIENT);
         return events;
     }

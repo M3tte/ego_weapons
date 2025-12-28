@@ -3,6 +3,7 @@ package net.m3tte.ego_weapons.mixin.epicfight;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.gameasset.movesets.FullstopOfficeSniperMovesetAnims;
+import net.m3tte.ego_weapons.gameasset.movesets.JustitiaMovesetAnims;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCategories;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -60,6 +61,20 @@ public abstract class PlayerPatchMixin<T extends LivingEntity> extends LivingEnt
                                     cir.setReturnValue(FullstopOfficeSniperMovesetAnims.FULLSTOP_SNIPER_HIT_LONG);
                                     return;
                             }
+                        break;
+                }
+
+                switch (egoCat) {
+                    case JUSTITIA:
+                        switch (stun) {
+                            case SHORT:
+                            case HOLD:
+                                cir.setReturnValue(JustitiaMovesetAnims.JUSTITIA_HIT_SHORT);
+                                return;
+                            case LONG:
+                                cir.setReturnValue(JustitiaMovesetAnims.JUSTITIA_HIT_LONG);
+                                return;
+                        }
                         break;
                 }
             }

@@ -1,10 +1,10 @@
 package net.m3tte.ego_weapons.skill.magic_bullet;
 
-import net.m3tte.ego_weapons.EgoWeaponsEffects;
-import net.m3tte.ego_weapons.EgoWeaponsModElements;
+import net.m3tte.ego_weapons.*;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.gameasset.movesets.MagicBulletMovesetAnims;
+import net.m3tte.ego_weapons.network.packages.ParticlePackages;
 import net.m3tte.ego_weapons.potion.MagicBulletPotionEffect;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
@@ -19,6 +19,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.network.PacketDistributor;
 import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.api.utils.AttackResult;
 import yesman.epicfight.api.utils.ExtendedDamageSource;
@@ -99,11 +100,15 @@ public class MagicBulletGuard extends EnergizingGuardSkill {
             //boolean successParrying = event.getPlayerPatch().getOriginal().ticksExisted - container.getDataManager().getDataValue(LAST_ACTIVE) < 6;
             ServerPlayerEntity serverPlayer = event.getPlayerPatch().getOriginal();
 
-            event.getPlayerPatch().playSound(EpicFightSounds.CLASH, -0.05F, 0.1F);
+            event.getPlayerPatch().playSound(EgoWeaponsSounds.MAGIC_BULLET_GUARD, -0.05F, 0.1F);
             SanitySystem.healSanity(serverPlayer, 0.6f);
 
 
             EpicFightParticles.HIT_BLUNT.get().spawnParticleWithArgument(((ServerWorld)serverPlayer.level), HitParticleType.FRONT_OF_EYES, HitParticleType.ZERO, serverPlayer, damageSource.getDirectEntity());
+
+            if (!serverPlayer.level.isClientSide()) {
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(serverPlayer.getId(), serverPlayer.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
+            }
 
             if (damageSource.getEntity() instanceof LivingEntity) {
                 knockback += EnchantmentHelper.getKnockbackBonus((LivingEntity)damageSource.getEntity()) * 0.1F;

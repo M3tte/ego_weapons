@@ -13,7 +13,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class RotationAttackParticle extends RotationBoundParticle {
 
-    private Entity sourceEntity;
+    Entity sourceEntity;
     public RotationAttackParticle(ClientWorld world, double x, double y, double z, double xSpeed, double targetEntityID, double sourceID, IAnimatedSprite spriteProvider) {
         super(world, x, y, z, xSpeed, targetEntityID, sourceID, spriteProvider);
 
@@ -42,8 +42,8 @@ public class RotationAttackParticle extends RotationBoundParticle {
         //this.rotationOffs.set(180,0,0);
         this.quadSize = 2.5f;
         this.lifetime = 5;
-        this.offset = new Vector3f(0.3f,1f,0);
-        this.offsetRate = new Vector3f(0.1f,0,0);
+        this.offset = new Vector3f(0f,0f,0);
+        this.offsetRate = new Vector3f(0f,0,0);
     }
 
     @Override

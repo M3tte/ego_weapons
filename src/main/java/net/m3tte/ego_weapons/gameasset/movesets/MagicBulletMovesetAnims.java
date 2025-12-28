@@ -1,6 +1,7 @@
 package net.m3tte.ego_weapons.gameasset.movesets;
 
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
+import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.entities.MagicBulletProjectile;
@@ -10,10 +11,11 @@ import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
-import net.m3tte.ego_weapons.particle.MagicBulletAimParticle;
+import net.m3tte.ego_weapons.network.packages.ParticlePackages;
 import net.m3tte.ego_weapons.particle.MagicBulletShell;
 import net.m3tte.ego_weapons.potion.countEffects.DarkFlameEffect;
-import net.m3tte.ego_weapons.procedures.abilities.assistAttacks.MagicBulletAssistAttack;
+import net.m3tte.ego_weapons.gameasset.abilities.assistAttacks.MagicBulletAssistAttack;
+import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
 import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets;
@@ -25,8 +27,10 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.fml.network.PacketDistributor;
 import yesman.epicfight.api.animation.property.AnimationProperty;
 import yesman.epicfight.api.animation.types.*;
 import yesman.epicfight.api.model.Model;
@@ -40,7 +44,8 @@ import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 import java.util.Random;
 
 import static net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations.spawnArmatureParticle;
-import static net.m3tte.ego_weapons.procedures.abilities.armorAbilities.MagicBulletPipe.magicBulletPipe;
+import static net.m3tte.ego_weapons.gameasset.abilities.armorAbilities.MagicBulletPipe.magicBulletPipe;
+import static net.m3tte.ego_weapons.procedures.SharedFunctions.basicSwingEvent;
 
 public class MagicBulletMovesetAnims {
 
@@ -67,10 +72,19 @@ public class MagicBulletMovesetAnims {
     public static StaticAnimation MAGIC_BULLET_ASSIST_1;
     public static StaticAnimation MAGIC_BULLET_ASSIST_2;
     public static StaticAnimation MAGIC_BULLET_SPIN_1;
-    public static StaticAnimation MAGIC_BULLET_SPIN_2;;
+    public static StaticAnimation MAGIC_BULLET_SPIN_2;
     public static StaticAnimation MAGIC_BULLET_PIPE;
+    public static StaticAnimation MAGIC_BULLET_EQUIP;
 
     public static void build(Model biped) {
+
+        MAGIC_BULLET_EQUIP = (new ActionAnimation(0f, 1.5f,   "biped/magic_bullet/equip", biped))
+                .addProperty(AnimationProperty.ActionAnimationProperty.STOP_MOVEMENT, false)
+                .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false)
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f)
+                .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, RatPipeMovesetAnims.equipEffect(0.6f))
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f);
+
         MAGIC_BULLET_IDLE = new StaticAnimation(0.3f,true, "biped/magic_bullet/idle", biped);
         MAGIC_BULLET_WALK = new MovementAnimation(true, "biped/magic_bullet/walk", biped);
         MAGIC_BULLET_RUN = new MovementAnimation(true, "biped/magic_bullet/run", biped)
@@ -104,9 +118,10 @@ public class MagicBulletMovesetAnims {
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED,1f)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, magicBulletDodgeEvent());
 
-        MAGIC_BULLET_AUTO_1 = new BasicEgoAttackAnimation(0.08F, 0.05F, 0.28F, 0.5F, 0.7F, null, "Tool_R", "biped/magic_bullet/auto_1", biped)
+        MAGIC_BULLET_AUTO_1 = new BasicEgoAttackAnimation(0.08F, 0.05F, 0.41f, 0.6f, 0.78F, null, "Tool_R", "biped/magic_bullet/auto_1r", biped)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "magic_bullet_auto_1")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.SWING_EFFECT, basicSwingEvent)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.MAGIC_BULLET_HIT_2)
@@ -114,35 +129,35 @@ public class MagicBulletMovesetAnims {
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
                 .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.adder(3f))
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MAGIC_BULLET_HIT)
-                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.6F);
+                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.8F);
 
-        MAGIC_BULLET_AUTO_2 = new BasicEgoAttackAnimation(0.08F, 0.05F, 0.8F, 1.1F, 1.2F, null, "Tool_R", "biped/magic_bullet/auto_2", biped)
+        MAGIC_BULLET_AUTO_2 = new BasicEgoAttackAnimation(0.01F, 0.05F, 0.5F, 0.7F, 1F, null, "Tool_R", "biped/magic_bullet/auto_2r", biped)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "magic_bullet_auto_2")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.SWING_EFFECT, basicSwingEvent)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.MAGIC_BULLET_HIT_1)
-                .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.WOOSH)
                 .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(1))
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
                 .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.adder(3f))
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MAGIC_BULLET_HIT)
-                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.6F)
+                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.75F)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, magicBulletSwingsoundHandler(1));
 
-        MAGIC_BULLET_AUTO_3 = new BasicEgoAttackAnimation(0.01F, 0.05F, 0.5F, 0.7F, 1.5F, null, "Tool_R", "biped/magic_bullet/auto_3", biped)
+        MAGIC_BULLET_AUTO_3 = new BasicEgoAttackAnimation(0.01F, 0.05F, 0.5f, 0.85F, 1.5F, null, "Tool_R", "biped/magic_bullet/auto_3r", biped)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "magic_bullet_auto_3")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.SWING_EFFECT, basicSwingEvent)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.MAGIC_BULLET_HIT_2)
-                .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.WOOSH)
                 .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(3))
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.LONG)
                 .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1.5f))
                 .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.adder(-4.5f))
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MAGIC_BULLET_HIT)
-                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.7F)
+                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.78F)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, magicBulletSwingsoundHandler(2));
 
         MAGIC_BULLET_DASH = new BasicEgoAttackAnimation(0.08F, 0.05F, 0.8F, 1.1F, 1.5F, null, "Tool_R", "biped/magic_bullet/dash", biped)
@@ -185,7 +200,7 @@ public class MagicBulletMovesetAnims {
                 .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(1))
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.MAGIC_BULLET_BREATHE)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.FULLSTOP_SNIPER_INNATE_HIT)
-                .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1f))
+                .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1.25f))
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.SHORT)
                 .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, magicBulletFire1Event())
@@ -201,7 +216,7 @@ public class MagicBulletMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, false)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MAGIC_BULLET_IMPACT_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(1))
-                .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1f))
+                .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1.25f))
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.FULLSTOP_SNIPER_SPECIAL_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.MAGIC_BULLET_BREATHE)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.KNOCKDOWN)
@@ -399,9 +414,14 @@ public class MagicBulletMovesetAnims {
 
             int ampl = EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(entity);
 
-            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-2,-0.7), 1, MagicBulletAimParticle.particle, 0, "Tool_R", false);
-            if (ampl >= 3)
-                spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-2.5,-0.7), 1, MagicBulletAimParticle.particle, 0, "Tool_R", false);
+            if (!entitypatch.getOriginal().level.isClientSide()) {
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.MagicBulletAimPacket(entity.getId(), 2.3f, 0.8f, EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_SHORT.get().getRegistryName()));
+
+                if (ampl >= 3) {
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.MagicBulletAimPacket(entity.getId(), 3.1f, 0.65f, EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_SHORT.get().getRegistryName()));
+                }
+
+            }
         }, StaticAnimation.Event.Side.BOTH);
 
         events[2] = StaticAnimation.Event.create(1F, (entitypatch) -> {
@@ -430,6 +450,9 @@ public class MagicBulletMovesetAnims {
                 world.playSound(null, new BlockPos(entity.getX(), entity.getY(), entity.getZ()),
                         EgoWeaponsSounds.MAGIC_BULLET_FIRE_1,
                         SoundCategory.PLAYERS, 1f, (float) 1);
+
+            DialogueSystem.speakEvalDialogue(entity, "dialogue.ego_weapons.skills.magic_bullet.1", DialogueSystem.DialogueTypes.SKILL, TextFormatting.BLUE);
+
 
             if (entity instanceof PlayerEntity) {
                 if (SanitySystem.getSanity((PlayerEntity) entity) > ampl * 1.5f) {
@@ -485,10 +508,18 @@ public class MagicBulletMovesetAnims {
 
             int ampl = EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(entity);
 
-            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-2,-0.7), 1, MagicBulletAimParticle.particle, 0, "Tool_R", false);
-            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-2.5,-0.7), 1, MagicBulletAimParticle.particle, 0, "Tool_R", false);
-            if (ampl >= 6)
-                spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-3,-0.7), 1, MagicBulletAimParticle.particle, 0, "Tool_R", false);
+            if (!entitypatch.getOriginal().level.isClientSide()) {
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.MagicBulletAimPacket(entity.getId(), 2.3f, 0.65f, EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_LONG.get().getRegistryName()));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.MagicBulletAimPacket(entity.getId(), 3.1f, 0.9f, EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_LONG.get().getRegistryName()));
+
+                if (ampl >= 6) {
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.MagicBulletAimPacket(entity.getId(), 3.9f, 0.65f, EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_LONG.get().getRegistryName()));
+                }
+            }
+            if (!entitypatch.getOriginal().level.isClientSide()) {
+                }
+
+
 
         }, StaticAnimation.Event.Side.BOTH);
         events[2] = StaticAnimation.Event.create(1.28F, (entitypatch) -> {
@@ -504,6 +535,8 @@ public class MagicBulletMovesetAnims {
                 world.playSound(null, new BlockPos(entity.getX(), entity.getY(), entity.getZ()),
                         EgoWeaponsSounds.MAGIC_BULLET_DIALOGUE_FIRE,
                         SoundCategory.PLAYERS, 1f, (float) 1);
+            DialogueSystem.speakEvalDialogue(entity, "dialogue.ego_weapons.skills.magic_bullet.2", DialogueSystem.DialogueTypes.SKILL, TextFormatting.DARK_BLUE);
+
 
         }, StaticAnimation.Event.Side.BOTH);
         events[4] = StaticAnimation.Event.create(2.08F, (entitypatch) -> {

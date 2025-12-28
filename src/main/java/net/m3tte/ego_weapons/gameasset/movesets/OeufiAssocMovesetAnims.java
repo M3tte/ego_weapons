@@ -47,9 +47,18 @@ public class OeufiAssocMovesetAnims {
     public static StaticAnimation OEUFI_OPEN_CONTRACT;
     public static StaticAnimation OEUFI_EVADE_CONTRACT;
     public static StaticAnimation OEUFI_COUNTER_CONTRACT;
+    public static StaticAnimation OEUFI_EQUIP;
 
     public static void build(Model biped) {
         System.out.println("Building OUFI Animations");
+        OEUFI_EQUIP = (new ActionAnimation(0f, 1.5f,   "biped/oeufi/equip", biped))
+                .addProperty(AnimationProperty.ActionAnimationProperty.STOP_MOVEMENT, false)
+                .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false)
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f)
+                .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, RatPipeMovesetAnims.equipEffect(0.5f))
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f);
+
+
         OEUFI_IDLE = new StaticAnimation(true, "biped/oeufi/idle", biped);
         OEUFI_WALK = new MovementAnimation(true, "biped/oeufi/walk", biped);
         OEUFI_RUN = new MovementAnimation(true, "biped/oeufi/run", biped);

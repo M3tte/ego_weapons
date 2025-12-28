@@ -27,9 +27,9 @@ public class SolemnLamentButterfly extends HitParticle {
         this.quadSize = 0.15F;
         this.lifetime = 20 + rand.nextInt(40);
         this.gravity = (float) -0.2;
-        this.xd = vx * 0.7;
-        this.yd = vy * 0.4 + Math.abs(vy * 0.8);
-        this.zd = vz * 0.7;
+        this.xd = vx * 1.9;
+        this.yd = vy * 1.4 + Math.abs(vy * 1.7);
+        this.zd = vz * 1.9;
         this.startFrame = rand.nextInt(3) * 2 + 1;
         this.spriteSet = animatedSprite;
 
@@ -52,6 +52,10 @@ public class SolemnLamentButterfly extends HitParticle {
         this.x += this.xd;
         this.y += this.yd;
         this.z += this.zd;
+
+        this.xd *= 0.9f;
+        this.yd *= 0.9f;
+        this.zd *= 0.9f;
 
         this.oRoll = this.roll;
         this.roll += this.angularVelocity;

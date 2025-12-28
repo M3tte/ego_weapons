@@ -21,6 +21,7 @@ import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class EgoAttackAnimation extends AttackAnimation {
 
@@ -112,7 +113,7 @@ public class EgoAttackAnimation extends AttackAnimation {
                 }
 
                 if (phase instanceof EgoAttackAnimation.EgoAttackPhase) {
-                    Boolean elp = ((EgoAttackAnimation.EgoAttackPhase) phase).getProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.TRIGGERS_EFFECTS).orElse(null);
+                    Boolean elp = ((EgoAttackAnimation.EgoAttackPhase) phase).getProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.SWING_EVENT).orElse(null);
 
                     if (elp != null)
                         triggersEffects = elp;
@@ -126,6 +127,7 @@ public class EgoAttackAnimation extends AttackAnimation {
     }
 
     public static class EgoWeaponsAttackProperty<T> extends AnimationProperty<T> {
+        public static final EgoWeaponsAttackProperty<Consumer<LivingEntityPatch<?>>> SWING_EFFECT = new EgoWeaponsAttackProperty<>();
         public static final EgoWeaponsAttackProperty<Boolean> TRIGGERS_EFFECTS = new EgoWeaponsAttackProperty<>();
         public static final EgoWeaponsAttackProperty<String> IDENTIFIER = new EgoWeaponsAttackProperty<>();
         public static final EgoWeaponsAttackProperty<Boolean> LAST_OF_COMBO = new EgoWeaponsAttackProperty<>();
@@ -137,6 +139,7 @@ public class EgoAttackAnimation extends AttackAnimation {
         public static final EgoWeaponsAttackProperty<Boolean> SHOULD_CLASH = new EgoWeaponsAttackProperty<>();
         public static final EgoWeaponsAttackProperty<Boolean> CLASH_KNOCK = new EgoWeaponsAttackProperty<>();
         public static final EgoWeaponsAttackProperty<String> DEATH_MESSAGE = new EgoWeaponsAttackProperty<>();
+        public static final EgoWeaponsAttackProperty<Boolean> DISABLE_COLLISION = new EgoWeaponsAttackProperty<>();
 
         public EgoWeaponsAttackProperty() {
         }
@@ -152,7 +155,8 @@ public class EgoAttackAnimation extends AttackAnimation {
 
 
         public static class EgoWeaponsAttackPhaseProperty<T> extends AttackPhaseProperty<T> {
-            public static final EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<Boolean> TRIGGERS_EFFECTS = new EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<>();
+            public static final EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<Boolean> SWING_EVENT = new EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<>();
+            public static final EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<Consumer<LivingEntityPatch<?>>> SWING_EFFECT = new EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<>();
             public static final EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<String> IDENTIFIER = new EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<>();
             public static final EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<Boolean> LAST_OF_COMBO = new EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<>();
             public static final EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<Boolean> CONSUMES_AMMO = new EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<>();

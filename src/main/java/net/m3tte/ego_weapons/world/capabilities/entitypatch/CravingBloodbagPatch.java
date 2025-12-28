@@ -136,6 +136,7 @@ public class CravingBloodbagPatch extends MobPatch<CravingBloodbagEntity> implem
 
         DynamicAnimation currentanim = this.getServerAnimator().animationPlayer.getAnimation();
 
+
         if (!(target instanceof LivingEntity))
             return;
 

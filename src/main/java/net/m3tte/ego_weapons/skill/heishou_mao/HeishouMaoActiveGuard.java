@@ -5,9 +5,7 @@ import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.gameasset.movesets.HeishouMaoBranchAnims;
-import net.m3tte.ego_weapons.gameasset.movesets.OeufiAssocMovesetAnims;
-import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
-import net.m3tte.ego_weapons.procedures.BlipTick;
+import net.m3tte.ego_weapons.procedures.EntityTick;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.skill.NonSpamGuardSkill;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
@@ -16,15 +14,11 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import yesman.epicfight.api.animation.types.StaticAnimation;
-import yesman.epicfight.client.gui.BattleModeGui;
-import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.gameasset.Skills;
 import yesman.epicfight.particle.EpicFightParticles;
 import yesman.epicfight.particle.HitParticleType;
@@ -35,10 +29,8 @@ import yesman.epicfight.skill.SkillDataManager;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
-import yesman.epicfight.world.capabilities.entitypatch.player.ServerPlayerPatch;
 import yesman.epicfight.world.capabilities.item.CapabilityItem;
 import yesman.epicfight.world.entity.eventlistener.HurtEvent;
-import yesman.epicfight.world.entity.eventlistener.PlayerEventListener;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -142,7 +134,7 @@ public class HeishouMaoActiveGuard extends NonSpamGuardSkill {
                             return HeishouMaoBranchAnims.HEISHOU_MAO_PARRY_EVADE;
                         }
                     }
-                    BlipTick.chargeBlips(playerpatch.getOriginal(), 1, true);
+                    EntityTick.chargeBlips(playerpatch.getOriginal(), 1, true);
                     return HeishouMaoBranchAnims.HEISHOU_MAO_PARRY_2;
                 } else {
 

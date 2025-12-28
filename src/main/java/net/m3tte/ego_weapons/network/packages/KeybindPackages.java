@@ -2,9 +2,6 @@ package net.m3tte.ego_weapons.network.packages;
 
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
-import net.m3tte.ego_weapons.keybind.OpenattrinterfaceKeyBinding;
-import net.m3tte.ego_weapons.procedures.abilities.ArmorAbilityProcedure;
-import net.m3tte.ego_weapons.procedures.abilities.WeaponAbilityProcedure;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.SoundCategory;
@@ -14,9 +11,9 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-import static net.m3tte.ego_weapons.procedures.abilities.ArmorAbilityProcedure.runArmorAbility;
-import static net.m3tte.ego_weapons.procedures.abilities.ReloadAbilityProcedure.runReloadAbility;
-import static net.m3tte.ego_weapons.procedures.abilities.WeaponAbilityProcedure.runWeaponAbility;
+import static net.m3tte.ego_weapons.gameasset.abilities.ArmorAbilityProcedure.runArmorAbility;
+import static net.m3tte.ego_weapons.gameasset.abilities.ReloadAbilityProcedure.runReloadAbility;
+import static net.m3tte.ego_weapons.gameasset.abilities.WeaponAbilityProcedure.runWeaponAbility;
 
 public class KeybindPackages {
     public static class GenericKeybindingPressedMessage {

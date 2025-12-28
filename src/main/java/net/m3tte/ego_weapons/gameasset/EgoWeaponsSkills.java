@@ -26,6 +26,8 @@ import net.m3tte.ego_weapons.skill.fullstop_sniper.FullstopSniperPassive;
 import net.m3tte.ego_weapons.skill.heishou_mao.HeishouMaoActiveGuard;
 import net.m3tte.ego_weapons.skill.heishou_mao.HeishouMaoBlinkstep;
 import net.m3tte.ego_weapons.skill.heishou_mao.HeishouMaoPassive;
+import net.m3tte.ego_weapons.skill.justitia.JustitiaActiveGuard;
+import net.m3tte.ego_weapons.skill.justitia.JustitiaPassive;
 import net.m3tte.ego_weapons.skill.liu_s6.LiuS6Passive;
 import net.m3tte.ego_weapons.skill.liu_s6.LiuS6WeakGuard;
 import net.m3tte.ego_weapons.skill.magic_bullet.MagicBulletDetonate;
@@ -36,6 +38,10 @@ import net.m3tte.ego_weapons.skill.oeufi.OeufiInnate;
 import net.m3tte.ego_weapons.skill.oeufi.OeufiPassive;
 import net.m3tte.ego_weapons.skill.oldBoys.OldBoysGuard;
 import net.m3tte.ego_weapons.skill.oldBoys.OldBoysPassive;
+import net.m3tte.ego_weapons.skill.rat.RatKnifeGuard;
+import net.m3tte.ego_weapons.skill.rat.RatKnifePassive;
+import net.m3tte.ego_weapons.skill.rat.RatPipeGuard;
+import net.m3tte.ego_weapons.skill.rat.RatPipePassive;
 import net.m3tte.ego_weapons.skill.red_mist.RedMistActiveGuard;
 import net.m3tte.ego_weapons.skill.red_mist.RedMistBlockable;
 import net.m3tte.ego_weapons.skill.solemnLament.SolemnLamentActiveGuard;
@@ -92,6 +98,7 @@ public class EgoWeaponsSkills {
     public static Skill GENERIC_ACTIVE_GUARD;
 
     public static Skill BASIC_BLOCKABLE_PASSIVE;
+    public static Skill BASIC_BLOCKABLE_PASSIVE_STIGMA;
 
     public static Skill MOOK_CUT;
     public static Skill OLD_BOYS_GUARD;
@@ -130,12 +137,21 @@ public class EgoWeaponsSkills {
 
     public static Skill LIU_S6_INNATE;
     public static Skill FIREFIST_INNATE;
+    public static Skill RAT_KNIFE_INNATE;
+    public static Skill RAT_PIPE_INNATE;
+    public static Skill JUSTITIA_INNATE;
     public static Skill FIREFIST_GUARD;
     public static Skill FIREFIST_PASSIVE;
     public static Skill SUNSET_BLADE;
     public static Skill BLINKSTEP;
     public static Skill HEISHOU_MAO_GUARD;
     public static Skill HEISHOU_MAO_PASSIVE;
+    public static Skill RAT_KNIFE_GUARD;
+    public static Skill RAT_KNIFE_PASSIVE;
+    public static Skill RAT_PIPE_GUARD;
+    public static Skill RAT_PIPE_PASSIVE;
+    public static Skill JUSTITIA_GUARD;
+    public static Skill JUSTITIA_PASSIVE;
     public EgoWeaponsSkills() {
     }
 
@@ -158,7 +174,7 @@ public class EgoWeaponsSkills {
 
         SOLEMN_LAMENT_BURST = event.registerSkill((
                 new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "solemn_burst"))
-                        .setConsumption(65.0F).setAnimations(SolemnLamentMovesetAnims.SOLEMN_LAMENT_SPECIAL_ATTACK)))
+                        .setConsumption(65.0F).setAnimations(SolemnLamentMovesetAnims.SOLEMN_LAMENT_INNATE)))
                 .newPropertyLine(), false);
 
 
@@ -220,7 +236,9 @@ public class EgoWeaponsSkills {
 
         GENERIC_ACTIVE_GUARD = event.registerSkill(new GenericActiveGuard(GenericActiveGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "blacksilence_active_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
 
-        BASIC_BLOCKABLE_PASSIVE = event.registerSkill(new BasicBlockablePassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "basic_blockable_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
+        BASIC_BLOCKABLE_PASSIVE = event.registerSkill(new BasicBlockablePassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "basic_blockable_passive")).setCategory(SkillCategories.WEAPON_PASSIVE), "other"), false);
+
+        BASIC_BLOCKABLE_PASSIVE_STIGMA = event.registerSkill(new BasicBlockablePassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "basic_blockable_passive")).setCategory(SkillCategories.WEAPON_PASSIVE), "stigma_workshop_sword"), false);
 
         KALI_GUARD = event.registerSkill(new RedMistActiveGuard(GenericActiveGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "redmist_active_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
 
@@ -278,12 +296,29 @@ public class EgoWeaponsSkills {
         FIREFIST_INNATE = event.registerSkill(new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "spew_fire"))
                 .setConsumption(30.0F).setMaxStack(2).setAnimations(FirefistMovesetAnims.FIREFIST_INNATE)), false);
 
+        RAT_KNIFE_INNATE = event.registerSkill(new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "backstreets_dash"))
+                .setConsumption(22.0F).setMaxStack(2).setAnimations(RatShankMovesetAnims.RAT_KNIFE_INNATE)), false);
+
+        RAT_PIPE_INNATE = event.registerSkill(new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "dirty_blow"))
+                .setConsumption(25.0F).setMaxStack(1).setAnimations(RatPipeMovesetAnims.RAT_PIPE_INNATE)), false);
+
+        JUSTITIA_INNATE = event.registerSkill(new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "weight_of_sin"))
+                .setConsumption(25.0F).setMaxStack(1).setAnimations(JustitiaMovesetAnims.JUSTITIA_INNATE_1)), false);
+
         FIREFIST_PASSIVE = event.registerSkill(new FirefistPassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "firefist_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
         FIREFIST_GUARD =event.registerSkill(new FirefistActiveGuard(FirefistActiveGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "firefist_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
         SUNSET_BLADE = event.registerSkill(new SunsetBladeSkill(SpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "sunset_blade")).setConsumption(20.0F).setMaxStack(3)), false);
         BLINKSTEP = event.registerSkill(new HeishouMaoBlinkstep(SpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "blinkstep")).setConsumption(20.0F).setMaxStack(2)), false);
         HEISHOU_MAO_PASSIVE = event.registerSkill(new HeishouMaoPassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "heishou_mao_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
         HEISHOU_MAO_GUARD =event.registerSkill(new HeishouMaoActiveGuard(HeishouMaoActiveGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "heishou_mao_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
+        RAT_KNIFE_PASSIVE = event.registerSkill(new RatKnifePassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "rat_knife_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
+        RAT_KNIFE_GUARD =event.registerSkill(new RatKnifeGuard(RatKnifeGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "rat_knife_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
+
+        RAT_PIPE_PASSIVE = event.registerSkill(new RatPipePassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "rat_pipe_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
+        RAT_PIPE_GUARD = event.registerSkill(new RatPipeGuard(RatPipeGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "rat_pipe_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
+
+        JUSTITIA_PASSIVE = event.registerSkill(new JustitiaPassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "justitia_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
+        JUSTITIA_GUARD = event.registerSkill(new JustitiaActiveGuard(JustitiaActiveGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "justitia_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
 
     }
 }

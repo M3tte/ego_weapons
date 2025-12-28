@@ -1,6 +1,8 @@
 package net.m3tte.ego_weapons.skill.liu_s6;
 
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsSkills;
+import net.m3tte.ego_weapons.gameasset.movesets.HeishouMaoBranchAnims;
+import net.m3tte.ego_weapons.gameasset.movesets.LiuSouth6MovesetAnims;
 import net.m3tte.ego_weapons.skill.GenericSkill;
 import yesman.epicfight.skill.Skill;
 import yesman.epicfight.skill.SkillCategories;
@@ -22,6 +24,7 @@ public class LiuS6Passive extends Skill {
     public void onInitiate(SkillContainer container) {
         SkillContainer guard = container.getExecuter().getSkillCapability().skillContainers[SkillCategories.GUARD.universalOrdinal()];
 
+        container.getExecuter().playAnimationSynchronized(LiuSouth6MovesetAnims.LIU_S6_EQUIP, 0);
 
         if (!guard.isEmpty()) {
             container.getExecuter().getSkillCapability().skillContainers[GenericSkill.TC_GUARD.universalOrdinal()].setSkill(EgoWeaponsSkills.LIU_S6_GUARD);

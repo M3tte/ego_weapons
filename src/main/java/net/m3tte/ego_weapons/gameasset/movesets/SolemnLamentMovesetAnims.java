@@ -1,19 +1,25 @@
 package net.m3tte.ego_weapons.gameasset.movesets;
 
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
+import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.gameasset.AttackMoveType;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
-import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.network.packages.ParticlePackages;
 import net.m3tte.ego_weapons.potion.SolemnLamentEffects;
 import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.fml.network.PacketDistributor;
 import yesman.epicfight.api.animation.property.AnimationProperty;
 import yesman.epicfight.api.animation.types.*;
 import yesman.epicfight.api.model.Model;
@@ -22,8 +28,11 @@ import yesman.epicfight.api.utils.math.ValueCorrector;
 import yesman.epicfight.gameasset.ColliderPreset;
 import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.particle.EpicFightParticles;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 import static net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations.spawnArmatureParticle;
+import static net.m3tte.ego_weapons.procedures.SharedFunctions.basicSwingEvent;
+import static net.m3tte.ego_weapons.procedures.SharedFunctions.heavySwingEvent;
 
 public class SolemnLamentMovesetAnims {
 
@@ -56,8 +65,19 @@ public class SolemnLamentMovesetAnims {
     public static StaticAnimation SOLEMN_LAMENT_GUARD_PARRY2;
     public static StaticAnimation SOLEMN_LAMENT_GUARD_COUNTERATTACK;
     public static StaticAnimation SOLEMN_LAMENT_GUARD_RELOAD;
-    public static StaticAnimation SOLEMN_LAMENT_SPECIAL_ATTACK;
+    public static StaticAnimation SOLEMN_LAMENT_INNATE;
     public static StaticAnimation SOLEMN_LAMENT_SPECIAL_ATTACK_RELOAD;
+    public static StaticAnimation SOLEMN_LAMENT_SKILL_RELOAD;
+
+    public static StaticAnimation SOLEMN_LAMENT_AUTO_E0;
+    public static StaticAnimation SOLEMN_LAMENT_AUTO_E1;
+    public static StaticAnimation SOLEMN_LAMENT_AUTO_E2;
+    public static StaticAnimation SOLEMN_LAMENT_AUTO_E3;
+    public static StaticAnimation SOLEMN_LAMENT_DASH_E;
+    public static StaticAnimation SOLEMN_LAMENT_ARMOR_ABILITY;
+    public static StaticAnimation SOLEMN_LAMENT_ARMOR_ABILITY_PARRY;
+    public static StaticAnimation SOLEMN_LAMENT_SPECIAL;
+    public static StaticAnimation SOLEMN_LAMENT_SPECIAL_A;
 
 
     public static void build(Model biped) {
@@ -69,6 +89,154 @@ public class SolemnLamentMovesetAnims {
         SOLEMN_LAMENT_SNEAK = new MovementAnimation(true, "biped/solemn_lament/sneak", biped);
         SOLEMN_LAMENT_JUMP = new MovementAnimation(0.3f,false, "biped/solemn_lament/jump", biped)
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 2.0f);
+
+        SOLEMN_LAMENT_ARMOR_ABILITY = new ActionAnimation(0.01f, "biped/solemn_lament/armor_ability", biped).addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, triggerCoffin()).addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 0.7f);
+        SOLEMN_LAMENT_ARMOR_ABILITY_PARRY = new ActionAnimation(0.01f, "biped/solemn_lament/armor_ability_parry", biped).addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 0.7f);
+
+
+
+        SOLEMN_LAMENT_SPECIAL = (new EgoAttackAnimation(0.01F, "biped/solemn_lament/special", biped,
+                new EgoAttackAnimation.EgoAttackPhase(0.0F, 0.5F, 0.5F, 0.55F, 2F, 0.7F, "Tool_L", EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX)
+                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER, "solemn_lament_special_1")
+                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
+                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.85f))
+                        .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_E_HIT)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_HIT),
+                new EgoAttackAnimation.EgoAttackPhase(0.71F, 0.8f, 0.85f, 0.9F, 1f, 1F, "Tool_R", EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX)
+                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER, "solemn_lament_special_2")
+                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
+                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.WHITE)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.85f))
+                        .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_E_HIT)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_HIT),
+                new EgoAttackAnimation.EgoAttackPhase(1.01F, 1.10f, 1.15F, 1.2F, 1.33f, 1.34F, "Tool_L", EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX)
+                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER, "solemn_lament_special_3")
+                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
+                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.85f))
+                        .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_E_HIT)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_HIT),
+                new EgoAttackAnimation.EgoAttackPhase(1.35F, 1.36f, 1.37f, 1.43F, 1.9F, 1.9F, "Tool_R", EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX)
+                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER, "solemn_lament_special_4")
+                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
+                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.WHITE)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.85f))
+                        .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_E_HIT)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_HIT),
+                new EgoAttackAnimation.EgoAttackPhase(1.9f, 2.4f, 2.65f, 2.7f, 3.33f, 3.33f, "Tool_R", EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX_EXT)
+                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER, "solemn_lament_special_fin")
+                        .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.KNOCKDOWN)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1.4f))
+                        .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_E_HIT)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.HEISHOU_MAO_SPECIAL_DASH_HIT)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.SOLEMN_LAMENT_BURST_HIT)
+        )
+
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "solemn_lament_fire_i_shall_fire")
+                .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_E_HIT)
+                .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.STIGMA_WORKSHOP_SWORD_AUTO_SWING)
+                .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(2))
+                .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.adder(4f))
+                .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
+                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.4F)
+                .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, specialAttackEvent(0.55f, 0.85f, 1.15f, 1.47f, 2.65f)));
+
+        // 1.4166666f
+        SOLEMN_LAMENT_SPECIAL_A = new BasicEgoAttackAnimation(0.08F, 0.05F, 0.18f, 0.5F, 1.3f, EgoWeaponsCapabilityPresets.LARGE_CUBE, "Tool_L", "biped/solemn_lament/special_a", biped)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "solemn_lament_special_a")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.PALE)
+                .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.SOLEMN_LAMENT_BASH)
+                .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(2))
+                .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.SOLEMN_LAMENT_SPECIAL_IMPACT)
+                .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
+                .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.33f))
+                .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(3f))
+                .addProperty(AnimationProperty.AttackAnimationProperty.COLLIDER_ADDER, 15)
+                .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.SOLEMN_LAMENT_BURST_HIT)
+                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.6F)
+                .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, specialAttackEventB(0.25f, 1.2f));
+
+        SOLEMN_LAMENT_AUTO_E0 = new BasicEgoAttackAnimation(0.08F, 0.05F, 0.25F, 0.36F, 0.66F, ColliderPreset.FIST, "Tool_L", "biped/solemn_lament/auto_e0", biped)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "solemn_lament_e0")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.SWING_EFFECT, basicSwingEvent)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
+                .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT)
+                .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(2))
+                .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_E_HIT)
+                .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
+                .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(2f))
+                .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_HIT)
+                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.35F);
+
+        SOLEMN_LAMENT_AUTO_E1 = new BasicEgoAttackAnimation(0.08F, 0.05F, 0.25F, 0.36F, 0.7F, ColliderPreset.FIST, "Tool_R", "biped/solemn_lament/auto_e1", biped)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "solemn_lament_e1")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.SWING_EFFECT, basicSwingEvent)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
+                .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT)
+                .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(2))
+                .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_E_HIT)
+                .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
+                .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(2f))
+                .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_HIT)
+                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.32F);
+
+        SOLEMN_LAMENT_AUTO_E2 = new BasicEgoAttackAnimation(0.08F, 0.05F, 0.4F, 0.6F, 0.66F, ColliderPreset.FIST, "Leg_L", "biped/solemn_lament/auto_e2", biped)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "solemn_lament_e2")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.SWING_EFFECT, basicSwingEvent)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
+                .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT)
+                .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(2))
+                .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_E_HIT)
+                .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
+                .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLUNT)
+                .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(2f))
+                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.32F);
+
+        SOLEMN_LAMENT_AUTO_E3 = new BasicEgoAttackAnimation(0.08F, 0.05F, 0.33F, 0.66F, 1.1F, EgoWeaponsCapabilityPresets.SUNSHOWER_COL_LARGE, "Chest", "biped/solemn_lament/auto_e3", biped)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "solemn_lament_e3")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.SWING_EFFECT, heavySwingEvent)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
+                .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT_HARD)
+                .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(3))
+                .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(1.2f))
+                .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_E_FINAL)
+                .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.SHORT)
+                .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(2f))
+                .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.SOLEMN_LAMENT_BURST_HIT)
+                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.4F);
+
+        SOLEMN_LAMENT_DASH_E = new BasicEgoAttackAnimation(0.08F, 0.05F, 0.3F, 0.6F, 1F, ColliderPreset.FIST, "Tool_L", "biped/solemn_lament/dash_e", biped)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "solemn_lament_edash")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
+                .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_E_HIT)
+                .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(2))
+                .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.WOOSH)
+                .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.SHORT)
+                .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(2f))
+                .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_HIT)
+                .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
+                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.4F);
+
 
         SOLEMN_LAMENT_JUMP_ATTACK = new BasicEgoAttackAnimation(0.08F, 0.05F, 0.45F, 0.6F, 1F, ColliderPreset.FIST, "Leg_L", "biped/solemn_lament/auto_jump", biped)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
@@ -330,7 +498,7 @@ public class SolemnLamentMovesetAnims {
                 .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, solemnLamentDualEvent(0.92f));
 
-        SOLEMN_LAMENT_SPECIAL_ATTACK = new EgoAttackAnimation(0.08F, 0.3F, 0.4F, 0.56F, 1.1F,ColliderPreset.TOOLS, "Tool_R", "biped/solemn_lament/burst", biped)
+        SOLEMN_LAMENT_INNATE = new EgoAttackAnimation(0.08F, 0.3F, 0.33F, 0.56F, 1.33F,EgoWeaponsCapabilityPresets.LONGER_BLADE, "Tool_R", "biped/solemn_lament/innate", biped)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
@@ -341,12 +509,12 @@ public class SolemnLamentMovesetAnims {
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.SHORT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.WOOSH)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLUNT)
-                .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(3f))
-                .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(2.5f))
+                .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1.2f))
+                .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(3.5f))
                 .addProperty(AnimationProperty.AttackAnimationProperty.COLLIDER_ADDER, 4)
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.5F)
                 .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false)
-                .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, solemnLamentCharge(1.05f));
+                .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, solemnLamentCharge(1.2f));
 
         SOLEMN_LAMENT_SPECIAL_ATTACK_RELOAD = (new ActionAnimation(0.1f, 1.5f,   "biped/solemn_lament/burst_reload", biped))
                 .addProperty(AnimationProperty.ActionAnimationProperty.STOP_MOVEMENT, true)
@@ -354,12 +522,27 @@ public class SolemnLamentMovesetAnims {
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, solemnLamentReloadEvent(EgoWeaponsSounds.SOLEMN_LAMENT_SPIN, 2, 2, 4))
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f);
 
-        SOLEMN_LAMENT_GUARD_RELOAD = new DodgeAnimation(0.1f, "biped/solemn_lament/parryreload",0.5f, 0.7f, biped).addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1.15f)
+        SOLEMN_LAMENT_GUARD_RELOAD = new DodgeAnimation(0.1f, "biped/solemn_lament/parryreload",0.5f, 1f, biped).addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1.15f)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, solemnLamentDodgeReloadEvent());
+
+        SOLEMN_LAMENT_SKILL_RELOAD = new DodgeAnimation(0.1f, "biped/solemn_lament/special_reload",0.5f, 1f, biped).addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1.15f)
+                .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, solemnLamentOutAmmoReloadEvent())
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 0.8f);
+
 
     }
 
-
+    public static StaticAnimation.Event[] triggerCoffin() {
+        StaticAnimation.Event[] events = new StaticAnimation.Event[1];
+        events[0] = StaticAnimation.Event.create(0.1f, (entitypatch) -> {
+            LivingEntity entity = entitypatch.getOriginal();
+            World world = entity.level;
+            EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(entity, 0, 2);
+            EgoWeaponsEffects.DEFENSE_LEVEL_UP.get().increment(entity, 0, 2);
+            entity.addEffect(new EffectInstance(EgoWeaponsEffects.RESILIENCE.get(), 30, 0));
+        }, StaticAnimation.Event.Side.BOTH);
+        return events;
+    }
     private static StaticAnimation.Event[] solemnLamentCharge(float timeEnd) {
         StaticAnimation.Event[] events = new StaticAnimation.Event[2];
 
@@ -409,7 +592,7 @@ public class SolemnLamentMovesetAnims {
             }
         }, StaticAnimation.Event.Side.BOTH);
         events[1] = StaticAnimation.Event.create(timeEnd, (entitypatch) -> {
-            if (SolemnLamentEffects.getAmmoCount(entitypatch.getOriginal(), departedGun ? SolemnLamentEffects.getDeparted() : SolemnLamentEffects.getLiving()) == 0) {
+            if (SolemnLamentEffects.getAmmoCount(entitypatch.getOriginal(), departedGun ? SolemnLamentEffects.getDeparted() : SolemnLamentEffects.getLiving()) == 0 && !entitypatch.getOriginal().level.isClientSide()) {
                 if (SolemnLamentEffects.getAmmoCount(entitypatch.getOriginal(), departedGun ? SolemnLamentEffects.getLiving() : SolemnLamentEffects.getDeparted()) > 0) {
                     entitypatch.reserveAnimation(departedGun ? SolemnLamentMovesetAnims.SOLEMN_LAMENT_AUTO_R1 : SolemnLamentMovesetAnims.SOLEMN_LAMENT_AUTO_L1);
                 }
@@ -418,6 +601,144 @@ public class SolemnLamentMovesetAnims {
         return events;
     }
 
+
+    private static void spawnParticles(boolean departedGun, LivingEntityPatch<?> entitypatch, boolean fast) {
+        entitypatch.playSound(departedGun ? (fast ? EgoWeaponsSounds.SOLEMN_LAMENT_FAST_BLACK : EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_BLACK) : (fast ? EgoWeaponsSounds.SOLEMN_LAMENT_FAST_WHITE : EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_WHITE), 1, 1);
+        spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-0.2,-0.4), 1, departedGun ? EgoWeaponsParticles.SOLEMN_LAMENT_FIRE_DEPARTED.get() : EgoWeaponsParticles.SOLEMN_LAMENT_FIRE_LIVING.get(), 0, departedGun ? "Tool_L" : "Tool_R", false);
+        spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-0.5,-0.4), 2, departedGun ? EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get() : EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, departedGun ? "Tool_L" : "Tool_R", false);
+        spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1,-0.4), 2, departedGun ? EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get() : EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, departedGun ? "Tool_L" : "Tool_R", false);
+        spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-2,-0.4), 2, departedGun ? EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get() : EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, departedGun ? "Tool_L" : "Tool_R", false);
+        spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-2.5,-0.4), 2, departedGun ? EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get() : EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, departedGun ? "Tool_L" : "Tool_R", false);
+        spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-3.2,-0.4), 2, departedGun ? EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get() : EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, departedGun ? "Tool_L" : "Tool_R", false);
+
+    }
+
+    private static boolean tryConsumeAmmo(boolean departed, LivingEntityPatch<?> entitypatch) {
+        SolemnLamentEffects.SolemnLamentAmmoEffect effect = departed ? SolemnLamentEffects.getDeparted() : SolemnLamentEffects.getLiving();
+        LivingEntity entity = entitypatch.getOriginal();
+
+        boolean hasAmmo = SolemnLamentEffects.getAmmoCount(entity, effect) > 0;
+
+        if (hasAmmo) {
+            if (!entity.level.isClientSide()) {
+                System.out.println("CONSUME AMMO ON SIDE : "+entity.level.isClientSide());
+                SolemnLamentEffects.decrementEffect(entitypatch.getOriginal(), effect);
+            }
+
+            return true;
+        } else {
+            entitypatch.playAnimationSynchronized(SolemnLamentMovesetAnims.SOLEMN_LAMENT_SKILL_RELOAD, 0);
+            return false;
+        }
+
+
+
+    }
+
+    private static boolean tryConsumeAmmoBoth(LivingEntityPatch<?> entitypatch) {
+        LivingEntity entity = entitypatch.getOriginal();
+
+        boolean hasAmmo = SolemnLamentEffects.getAmmoCount(entity, SolemnLamentEffects.getDeparted()) > 0 && SolemnLamentEffects.getAmmoCount(entity, SolemnLamentEffects.getLiving()) > 0;
+
+        if (hasAmmo) {
+            if (!entity.level.isClientSide()) {
+                SolemnLamentEffects.decrementEffect(entitypatch.getOriginal(), SolemnLamentEffects.getDeparted());
+                SolemnLamentEffects.decrementEffect(entitypatch.getOriginal(), SolemnLamentEffects.getLiving());
+            }
+
+            return true;
+        } else {
+            entitypatch.playAnimationSynchronized(SolemnLamentMovesetAnims.SOLEMN_LAMENT_SKILL_RELOAD, 0);
+            return false;
+        }
+
+
+
+    }
+
+
+    private static StaticAnimation.Event[] specialAttackEvent(float g1, float g2, float g3, float g4, float g5) {
+        StaticAnimation.Event[] events = new StaticAnimation.Event[5];
+        events[0] = StaticAnimation.Event.create(g1, (entitypatch) -> {
+
+            if(tryConsumeAmmo(true, entitypatch)) {
+                spawnParticles(true, entitypatch, true);
+            }
+        }, StaticAnimation.Event.Side.BOTH);
+
+        events[1] = StaticAnimation.Event.create(g2, (entitypatch) -> {
+            if(tryConsumeAmmo(false, entitypatch)) {
+                spawnParticles(false, entitypatch, true);
+            }
+        }, StaticAnimation.Event.Side.BOTH);
+
+        events[2] = StaticAnimation.Event.create(g3, (entitypatch) -> {
+            if(tryConsumeAmmo(true, entitypatch)) {
+                spawnParticles(true, entitypatch, true);
+            }
+
+        }, StaticAnimation.Event.Side.BOTH);
+
+        events[3] = StaticAnimation.Event.create(g4, (entitypatch) -> {
+            if(tryConsumeAmmo(false, entitypatch)) {
+                spawnParticles(false, entitypatch, true);
+            }
+        }, StaticAnimation.Event.Side.BOTH);
+
+        events[4] = StaticAnimation.Event.create(g5, (entitypatch) -> {
+            entitypatch.playSound(EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_BLACK, 1, 1);
+            entitypatch.playSound(EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_WHITE, 1, 1);
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-0.2,-0.4), 1, EgoWeaponsParticles.SOLEMN_LAMENT_FIRE_DEPARTED.get(), 0, "Tool_L", false);
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-0.5,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get(), 0.1f, "Tool_L" , false);
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get(), 0.1f, "Tool_L" , false);
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1.5,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get(), 0.1f, "Tool_L" , false);
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-2,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get(), 0.1f, "Tool_L" , false);
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-3,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get(), 0.1f, "Tool_L" , false);
+
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-0.2,-0.4), 1, EgoWeaponsParticles.SOLEMN_LAMENT_FIRE_LIVING.get(), 0, "Tool_R", false);
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-0.5,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, "Tool_R" , false);
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, "Tool_R" , false);
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1.5,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, "Tool_R" , false);
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-2,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, "Tool_R" , false);
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-3,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, "Tool_R" , false);
+
+            tryConsumeAmmoBoth(entitypatch);
+
+        }, StaticAnimation.Event.Side.BOTH);
+        return events;
+    }
+
+    private static StaticAnimation.Event[] specialAttackEventB(float g0, float g1) {
+        StaticAnimation.Event[] events = new StaticAnimation.Event[2];
+
+
+        events[0] = StaticAnimation.Event.create(g0, (entitypatch) -> {
+
+            LivingEntity entity = entitypatch.getOriginal();
+
+            if (!entity.level.isClientSide()) {
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
+                ((ServerWorld) entity.level).sendParticles(EgoWeaponsParticles.SOLEMN_LAMENT_SHOCKWAVE.get(), entity.getX(), entity.getY() + 0.1, entity.getZ(), 0, 0, 0, 0, 1);
+
+            }
+
+
+
+        }, StaticAnimation.Event.Side.BOTH);
+
+
+        events[1] = StaticAnimation.Event.create(g1, (entitypatch) -> {
+
+            entitypatch.playAnimationSynchronized(SOLEMN_LAMENT_SPECIAL, 0);
+
+        }, StaticAnimation.Event.Side.BOTH);
+
+
+        return events;
+    }
     private static StaticAnimation.Event[] solemnLamentDualEvent(float time) {
         StaticAnimation.Event[] events = new StaticAnimation.Event[3];
         events[0] = StaticAnimation.Event.create(time, (entitypatch) -> {
@@ -492,6 +813,48 @@ public class SolemnLamentMovesetAnims {
             if (!entitypatch.getOriginal().level.isClientSide()) {
                 SolemnLamentEffects.setAmmoCount(entitypatch.getOriginal(), SolemnLamentEffects.getDeparted(), entitypatch.getOriginal().getEffect(SolemnLamentEffects.getDeparted()).getAmplifier() + bonus);
                 SolemnLamentEffects.setAmmoCount(entitypatch.getOriginal(), SolemnLamentEffects.getLiving(), entitypatch.getOriginal().getEffect(SolemnLamentEffects.getLiving()).getAmplifier() + bonus);
+            }
+
+        }, StaticAnimation.Event.Side.BOTH);
+        return events;
+    }
+
+    private static StaticAnimation.Event[] solemnLamentOutAmmoReloadEvent() {
+        StaticAnimation.Event[] events = new StaticAnimation.Event[3];
+        events[0] = StaticAnimation.Event.create(0, (entitypatch) -> {
+            LivingEntity entity = entitypatch.getOriginal();
+            entity.level.addParticle(EpicFightParticles.ENTITY_AFTER_IMAGE.get(), entity.getX(), entity.getY(), entity.getZ(), Double.longBitsToDouble(entity.getId()), 0, 0);
+            entitypatch.playSound(EgoWeaponsSounds.SOLEMN_LAMENT_BELL, 1f, 1f);
+            entitypatch.playSound(EgoWeaponsSounds.SOLEMN_LAMENT_READY, 1.3f, 1.3f);
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-0.3,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, "Tool_R", false);
+            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-0.3,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get(), 0.1f, "Tool_L", false);
+
+
+
+        }, StaticAnimation.Event.Side.BOTH);
+        events[1] = StaticAnimation.Event.create(0.9f, (entitypatch) -> {
+            entitypatch.playSound(EgoWeaponsSounds.SOLEMN_LAMENT_SPIN, 1.3f, 1.3f);
+            entitypatch.playSound(EgoWeaponsSounds.SOLEMN_LAMENT_SPIN, 1f, 1f);
+
+        }, StaticAnimation.Event.Side.BOTH);
+        events[2] = StaticAnimation.Event.create(1.28f, (entitypatch) -> {
+            entitypatch.playSound(EgoWeaponsSounds.SOLEMN_LAMENT_RELOAD, 1.3f, 1.3f);
+            if (!entitypatch.getOriginal().level.isClientSide()) {
+                int desparity = entitypatch.getOriginal().level.random.nextInt(3);
+                int randomInt = entitypatch.getOriginal().level.random.nextInt(2);
+
+                // Calculates Sanity Loss
+                if (entitypatch.getOriginal() instanceof PlayerEntity) {
+                    int lumpReloadedSum = 7;
+                    int ammosum = SolemnLamentEffects.getAmmoCount(entitypatch.getOriginal(), SolemnLamentEffects.getLiving()) + SolemnLamentEffects.getAmmoCount(entitypatch.getOriginal(), SolemnLamentEffects.getLiving());
+                    if (ammosum < lumpReloadedSum)
+                        SanitySystem.damageSanity((PlayerEntity) entitypatch.getOriginal(), 0.25f*(lumpReloadedSum - ammosum));
+                    else
+                        SanitySystem.healSanity((PlayerEntity) entitypatch.getOriginal(), 0.25f*(ammosum - lumpReloadedSum));
+                }
+
+                SolemnLamentEffects.setAmmoCount(entitypatch.getOriginal(), SolemnLamentEffects.getDeparted(), 4 - desparity + randomInt);
+                SolemnLamentEffects.setAmmoCount(entitypatch.getOriginal(), SolemnLamentEffects.getLiving(), 2 + desparity);
             }
 
         }, StaticAnimation.Event.Side.BOTH);

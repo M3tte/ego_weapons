@@ -12,8 +12,7 @@ import net.m3tte.ego_weapons.gameasset.AttackMoveType;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
-import net.m3tte.ego_weapons.procedures.BlipTick;
-import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
+import net.m3tte.ego_weapons.procedures.EntityTick;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCategories;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -117,7 +116,7 @@ public class TargetSpottedEffect extends CountPotencyStatus {
 
                 if (sourcePatch.getHoldingItemCapability(Hand.MAIN_HAND).getWeaponCategory().equals(EgoWeaponsCategories.FULLSTOP_SNIPER)) {
                     if (target.hasEffect(EgoWeaponsEffects.TARGET_SPOTTED.get()) && sourcePatch.getOriginal() instanceof PlayerEntity) {
-                        BlipTick.chargeBlips((PlayerEntity) sourcePatch.getOriginal(), weaponIdentifier.equals("fs_sn_innate") ? 1 : 0, true);
+                        EntityTick.chargeBlips((PlayerEntity) sourcePatch.getOriginal(), weaponIdentifier.equals("fs_sn_innate") ? 1 : 0, true);
                     }
                 }
 

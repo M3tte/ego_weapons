@@ -8,7 +8,7 @@ import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.movesets.MimicryMovesetAnims;
 import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
-import net.m3tte.ego_weapons.procedures.BlipTick;
+import net.m3tte.ego_weapons.procedures.EntityTick;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.legacy.MimicryhitentityProcedure;
 import net.minecraft.client.Minecraft;
@@ -169,15 +169,15 @@ public class MimicryItem extends EgoWeaponsWeapon {
 				break;
 			case 1:
 				if (EgoWeaponsKeybinds.isHoldingShift())
-					generateStatusDescription(list, new String[]{"red", "bleed", "offense_up"});
+					generateStatusDescription(list, new String[]{"red", "bleed", "offense_up", "imitation"});
 				else
-					generateDescription(list,"mimicry", "auto", 5);
+					generateDescription(list,"mimicry", "auto", 6);
 				break;
 			case 2:
 				if (EgoWeaponsKeybinds.isHoldingShift())
-					generateStatusDescription(list, new String[]{"red", "defense_up", "bleed"});
+					generateStatusDescription(list, new String[]{"red", "defense_up", "bleed", "imitation"});
 				else
-					generateDescription(list,"mimicry", "innate", 5);
+					generateDescription(list,"mimicry", "innate", 6);
 				break;
 			case 3:
 				if (EgoWeaponsKeybinds.isHoldingShift())
@@ -187,9 +187,9 @@ public class MimicryItem extends EgoWeaponsWeapon {
 				break;
 			case 4:
 				if (EgoWeaponsKeybinds.isHoldingShift())
-					generateStatusDescription(list, new String[]{"red", "bleed", "defense_down"});
+					generateStatusDescription(list, new String[]{"red", "bleed", "defense_down", "imitation"});
 				else {
-					generateDescription(list,"mimicry", "ability", 4);
+					generateDescription(list,"mimicry", "ability", 10);
 				}
 				break;
 		}
@@ -208,7 +208,7 @@ public class MimicryItem extends EgoWeaponsWeapon {
 
 		PlayerVariables entityData = sourceentity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
-		PlayerPatch<?> entitypatch = (PlayerPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
 		if (currentanim instanceof StaticAnimation) {
@@ -258,7 +258,7 @@ public class MimicryItem extends EgoWeaponsWeapon {
 					entitypatch.playSound(EgoWeaponsSounds.SWORD_STAB, 1, 1, 1);
 					break;
 				case "kali_impact":
-					BlipTick.chargeBlips((PlayerEntity) sourceentity, entityData, 1, true);
+					EntityTick.chargeBlips((PlayerEntity) sourceentity, entityData, 1, true);
 					EgoWeaponsEffects.BLEED.get().increment(target, 1, 1);
 					EgoWeaponsEffects.RUPTURE.get().increment(target, 1, 1);
 					EgoWeaponsEffects.OFFENSE_LEVEL_DOWN.get().decrement(target, 0, 1);
@@ -274,7 +274,12 @@ public class MimicryItem extends EgoWeaponsWeapon {
 					EgoWeaponsEffects.BLEED.get().increment(target, 0, 1);
 					break;
 				case "kali_auto_4":
-					entitypatch.setStamina(Math.min(entitypatch.getStamina() + 1f, entitypatch.getMaxStamina()));
+
+					if (entitypatch instanceof PlayerPatch) {
+						((PlayerPatch<?>)entitypatch).setStamina(Math.min(((PlayerPatch<?>)entitypatch).getStamina() + 1f, ((PlayerPatch<?>)entitypatch).getMaxStamina()));
+					}
+
+
 					sourceentity.heal(1);
 					EgoWeaponsEffects.BLEED.get().increment(target, 1, 1);
 					EgoWeaponsEffects.DEFENSE_LEVEL_DOWN.get().increment(target, 0, 1);
@@ -285,7 +290,9 @@ public class MimicryItem extends EgoWeaponsWeapon {
 							entitypatch.playSound(EgoWeaponsSounds.KALI_SPLIT_HORIZONTAL_HIT, 1,1);
 						}
 					}
-					entitypatch.setStamina(Math.min(entitypatch.getStamina() + 0.8f, entitypatch.getMaxStamina()));
+					if (entitypatch instanceof PlayerPatch) {
+						((PlayerPatch<?>)entitypatch).setStamina(Math.min(((PlayerPatch<?>)entitypatch).getStamina() + 0.8f, ((PlayerPatch<?>)entitypatch).getMaxStamina()));
+					}
 
 					if (secondIdentifier.equals("kali_great_split_horizontal_1")) {
 						EgoWeaponsEffects.DEFENSE_LEVEL_DOWN.get().increment(target, 0, 1);
@@ -316,6 +323,7 @@ public class MimicryItem extends EgoWeaponsWeapon {
 					break;
 				case "mimicry_auto_3":
 					EgoWeaponsEffects.BLEED.get().increment(target, 1, 1);
+					EgoWeaponsEffects.IMITATION.get().increment(sourceentity, 0, 1);
 					break;
 				case "mimicry_hello":
 					if (entityData.globalcooldown <= 0) {
@@ -330,10 +338,26 @@ public class MimicryItem extends EgoWeaponsWeapon {
 				case "mimicry_goodbye":
 					EgoWeaponsEffects.BLEED.get().increment(target, 3, 3);
 
+
+
 					int potency = Math.min(EgoWeaponsEffects.BLEED.get().getPotency(target) / 3,5);
 
 					if (potency > 0) {
 						EgoWeaponsEffects.DEFENSE_LEVEL_DOWN.get().increment(target, 0, potency);
+					}
+					break;
+
+				case "mimicry_goodbye_enh":
+					EgoWeaponsEffects.BLEED.get().increment(target, 3, 8);
+
+					if (entityData.globalcooldown <= 0) {
+						entitypatch.playSound(EgoWeaponsSounds.HEAVY_SLASH, 1,1);
+					}
+
+					int potency2 = Math.min(EgoWeaponsEffects.BLEED.get().getPotency(target) / 3,5);
+
+					if (potency2 > 0) {
+						EgoWeaponsEffects.DEFENSE_LEVEL_DOWN.get().increment(target, 0, potency2);
 					}
 					break;
 			}
@@ -384,6 +408,7 @@ public class MimicryItem extends EgoWeaponsWeapon {
 				case "mimicry_hello":
 					float potency = Math.min(EgoWeaponsEffects.BLEED.get().getPotency(target) / 2f,4);
 					EgoWeaponsEffects.DEFENSE_LEVEL_UP.get().increment(source, 4, 4);
+					EgoWeaponsEffects.IMITATION.get().increment(source, 0, 2);
 					if (potency > 0) {
 						if (entityData.globalcooldown <= 0) {
 							source.heal(potency);
@@ -391,8 +416,11 @@ public class MimicryItem extends EgoWeaponsWeapon {
 						}
 					}
 					break;
-				case "mimicry_goodbye":
+				case "mimicry_goodbye_enh":
 
+				case "mimicry_goodbye":
+					SharedFunctions.incrementBonusDamage(damageSource, 0.5f);
+					amount += 0.5f;
 					float potencyv = Math.min(EgoWeaponsEffects.BLEED.get().getPotency(target) * 0.02f,0.4f);
 
 					if (potencyv > 0) {
@@ -400,6 +428,7 @@ public class MimicryItem extends EgoWeaponsWeapon {
 						amount += potencyv;
 					}
 					break;
+
 				case "kali_great_split_vertical":
 
 					float gsvPot = Math.min(EgoWeaponsEffects.OFFENSE_LEVEL_DOWN.get().getPotency(target) * 0.1f,0.5f);

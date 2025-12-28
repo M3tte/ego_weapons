@@ -6,9 +6,10 @@ import net.m3tte.ego_weapons.gameasset.AttackMoveType;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
-import net.m3tte.ego_weapons.procedures.abilities.armorAbilities.FullstopAssistFire;
+import net.m3tte.ego_weapons.gameasset.abilities.armorAbilities.FullstopAssistFire;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets;
+import net.minecraft.util.SoundEvents;
 import yesman.epicfight.api.animation.property.AnimationProperty;
 import yesman.epicfight.api.animation.types.*;
 import yesman.epicfight.api.model.Model;
@@ -51,8 +52,18 @@ public class FullstopOfficeRepMovesetAnims {
     public static StaticAnimation FULLSTOP_PARRY_2;
     public static StaticAnimation FULLSTOP_PARRY_3;
 
+    public static StaticAnimation FULLSTOP_REP_EQUIP;
+
 
     public static void build(Model biped) {
+
+        FULLSTOP_REP_EQUIP = (new ActionAnimation(0f, 1.5f,   "biped/fullstop_rep/equip", biped))
+                .addProperty(AnimationProperty.ActionAnimationProperty.STOP_MOVEMENT, false)
+                .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false)
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f)
+                .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, equipEffect(0.66f, 1f))
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f);
+
 
         FULLSTOP_REP_IDLE = new StaticAnimation(true, "biped/fullstop_rep/idle", biped);
         FULLSTOP_REP_WALK = new MovementAnimation(true, "biped/fullstop_rep/walk", biped);
@@ -289,6 +300,7 @@ public class FullstopOfficeRepMovesetAnims {
                         .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(0.4f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.FULLSTOP_REP_HEAVY_SLICE)
         )
+                .addProperty(EgoWeaponsAttackProperty.DISABLE_COLLISION, true)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "fullstop_special_g")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
@@ -326,6 +338,7 @@ public class FullstopOfficeRepMovesetAnims {
                         .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(0.4f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.FULLSTOP_REP_HEAVY_SLICE)
         )
+                .addProperty(EgoWeaponsAttackProperty.DISABLE_COLLISION, true)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "fullstop_special_b")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.SLASH)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "fullstop_rep_special")
@@ -346,5 +359,18 @@ public class FullstopOfficeRepMovesetAnims {
         FULLSTOP_PARRY_3 = new ActionAnimation(0.05f,0.6f, "biped/fullstop_rep/parry_3", biped).addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1.4f);
 
 
+    }
+
+    public static StaticAnimation.Event[] equipEffect(float time1, float itme2) {
+        StaticAnimation.Event[] events = new StaticAnimation.Event[2];
+
+        events[0] = StaticAnimation.Event.create(time1, (entitypatch) -> {
+            entitypatch.playSound(SoundEvents.ARMOR_EQUIP_LEATHER, 1, 1, 1);
+        }, StaticAnimation.Event.Side.BOTH);
+
+        events[1] = StaticAnimation.Event.create(itme2, (entitypatch) -> {
+            entitypatch.playSound(EgoWeaponsSounds.CLICK, 1, 1, 1);
+        }, StaticAnimation.Event.Side.BOTH);
+        return events;
     }
 }

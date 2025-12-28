@@ -1,0 +1,11 @@
+{
+	"attributes":
+	{
+		"common":
+		{
+			"impact":4.2,
+			"max_strikes":4
+		}
+	},
+	"type":"justitia"
+}

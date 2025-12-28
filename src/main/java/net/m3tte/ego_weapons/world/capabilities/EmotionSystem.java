@@ -2,12 +2,9 @@ package net.m3tte.ego_weapons.world.capabilities;
 
 import net.m3tte.ego_weapons.*;
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
-import net.m3tte.ego_weapons.procedures.BlipTick;
+import net.m3tte.ego_weapons.procedures.EntityTick;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.AttributeModifierManager;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -16,6 +13,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 
 import java.util.UUID;
+
+import static net.m3tte.ego_weapons.world.capabilities.DialogueSystem.onEmotionUpDialogueEvaluation;
 
 public class EmotionSystem {
 
@@ -109,7 +108,7 @@ public class EmotionSystem {
             playerVariables.emotionLevelProgress -= getEmotionRequired(playerVariables);
 
             playerVariables.emotionLevel += 1;
-            BlipTick.chargeBlips(player, playerVariables, 1);
+            EntityTick.chargeBlips(player, playerVariables, 1);
             updateMaxEnergy(player, playerVariables);
             increaseEmotionLevel(player, playerVariables.emotionLevel);
 
@@ -158,6 +157,10 @@ public class EmotionSystem {
         } else {
             player.level.playLocalSound(player.getX(), player.getY(), player.getZ(), EgoWeaponsSounds.FINGER_SNAP, SoundCategory.PLAYERS, 1, 1.0F, false);
         }
+
+        if (!player.level.isClientSide())
+            onEmotionUpDialogueEvaluation(player, newLevel);
+
 
         ItemStack chestPlateItem = player.getItemBySlot(EquipmentSlotType.CHEST);
         if (!chestPlateItem.isEmpty()) {

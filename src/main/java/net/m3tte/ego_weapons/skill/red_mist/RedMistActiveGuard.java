@@ -8,7 +8,7 @@ import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.gameasset.movesets.DurandalMovesetAnims;
 import net.m3tte.ego_weapons.gameasset.movesets.MimicryMovesetAnims;
-import net.m3tte.ego_weapons.procedures.BlipTick;
+import net.m3tte.ego_weapons.procedures.EntityTick;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCategories;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsStyles;
@@ -117,7 +117,7 @@ public class RedMistActiveGuard extends GuardSkill {
                                 EgoWeaponsEffects.OFFENSE_LEVEL_DOWN.get().decrement((LivingEntity) damageSource.getEntity(), 0, 1);
                             }
 
-                            BlipTick.chargeBlips(playerentity, 1, true);
+                            EntityTick.chargeBlips(playerentity, 1, true);
 
                             event.getPlayerPatch().getOriginal().getCooldowns().addCooldown(EgoWeaponsItems.MIMICRY.get(), 100);
                             entityData.globalcooldown = 100;

@@ -19,6 +19,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -60,8 +61,18 @@ public class StigmaWorkshopMovesetAnims {
     public static StaticAnimation STIGMA_SWORD_INNATE_2E;
     public static StaticAnimation RUEFUL_EVENTIDE;
     public static StaticAnimation STIGMA_SWORD_INNATE_3;
+    public static StaticAnimation STIGMA_SWORD_EQUIP;
     public static void build(Model biped) {
         System.out.println("Building STIGMA_SWORD Animations");
+
+        STIGMA_SWORD_EQUIP = (new ActionAnimation(0f, 1.5f,   "biped/stigma_w_s/equip", biped))
+                .addProperty(AnimationProperty.ActionAnimationProperty.STOP_MOVEMENT, false)
+                .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false)
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f)
+                .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, equipEffect(0.6f))
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f);
+
+
         STIGMA_SWORD_IDLE = new StaticAnimation(true, "biped/stigma_w_s/idle", biped)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, StigmaWorkshopSword.bladeCheckEvent());
         STIGMA_SWORD_WALK = new MovementAnimation(true, "biped/stigma_w_s/walk", biped)
@@ -254,6 +265,24 @@ public class StigmaWorkshopMovesetAnims {
 
         }, StaticAnimation.Event.Side.BOTH);
 
+
+
+        return events;
+    }
+
+    public static StaticAnimation.Event[] equipEffect(float time) {
+        StaticAnimation.Event[] events = new StaticAnimation.Event[2];
+
+        events[0] = StaticAnimation.Event.create(0, (entitypatch) -> {
+            entitypatch.playSound(SoundEvents.ARMOR_EQUIP_LEATHER, 1, 1, 1);
+        }, StaticAnimation.Event.Side.SERVER);
+
+        events[1] = StaticAnimation.Event.create(time, (entitypatch) -> {
+            entitypatch.playSound(EgoWeaponsSounds.STIGMA_WORKSHOP_SWORD_SPECIAL_IGNITE, 1, 1, 1);
+            if (!entitypatch.getOriginal().level.isClientSide) {
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entitypatch.getOriginal().getId(), entitypatch.getOriginal().getId(), EgoWeaponsParticles.SLASH_SHOCKWAVE.get().getRegistryName()));
+            }
+        }, StaticAnimation.Event.Side.SERVER);
 
 
         return events;

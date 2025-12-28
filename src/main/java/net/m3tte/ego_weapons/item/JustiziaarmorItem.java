@@ -107,7 +107,7 @@ public class JustiziaarmorItem extends EgoWeaponsModElements.ModElement {
 
 			@Override
 			public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-				return "tcorp:textures/entities/justizia_clothing.png";
+				return "tcorp:textures/entities/justitia_cloak.png";
 			}
 		}.setRegistryName("justiziaarmor_chestplate"));
 	}

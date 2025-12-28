@@ -1,7 +1,0 @@
-{
-  "parent": "ego_weapons:custom/justizia",
-  "textures": {
-    "0": "ego_weapons:blocks/justizia",
-    "particle": "ego_weapons:items/defiled_cutter"
-  }
-}

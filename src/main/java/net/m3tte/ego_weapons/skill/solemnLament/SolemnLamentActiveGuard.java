@@ -1,8 +1,12 @@
 package net.m3tte.ego_weapons.skill.solemnLament;
 
 import com.google.common.collect.Lists;
+import net.m3tte.ego_weapons.EgoWeaponsMod;
+import net.m3tte.ego_weapons.EgoWeaponsParticles;
+import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.gameasset.movesets.SolemnLamentMovesetAnims;
+import net.m3tte.ego_weapons.network.packages.ParticlePackages;
 import net.m3tte.ego_weapons.potion.SolemnLamentEffects;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCategories;
@@ -16,6 +20,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.network.PacketDistributor;
 import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.gameasset.Skills;
@@ -75,8 +80,13 @@ public class SolemnLamentActiveGuard extends GuardSkill {
                 ServerPlayerEntity playerentity = event.getPlayerPatch().getOriginal();
                 boolean successParrying = playerentity.tickCount     - container.getDataManager().getDataValue(LAST_ACTIVE) < 8;
                 float penalty = container.getDataManager().getDataValue(PENALTY);
-                event.getPlayerPatch().playSound(EpicFightSounds.CLASH, -0.05F, 0.1F);
+                event.getPlayerPatch().playSound(EgoWeaponsSounds.SOLEMN_LAMENT_PARRY, -0.05F, 0.1F);
                 EpicFightParticles.HIT_BLUNT.get().spawnParticleWithArgument((ServerWorld)playerentity.level, HitParticleType.FRONT_OF_EYES, HitParticleType.ZERO, playerentity, damageSource.getDirectEntity());
+
+                if (!playerentity.level.isClientSide()) {
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(playerentity.getId(), playerentity.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
+                }
+
                 if (successParrying) {
                     knockback *= 0.4F;
 

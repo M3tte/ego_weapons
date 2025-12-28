@@ -80,7 +80,7 @@ public class TremorEffect extends CountPotencyStatus {
 
 
 
-        // Tick tremor every 5 seconds
+        // Tick tremor every 15 seconds
         if (entity.tickCount % 300 == 1 && entity.level instanceof ServerWorld) {
             duration -= 20;
 

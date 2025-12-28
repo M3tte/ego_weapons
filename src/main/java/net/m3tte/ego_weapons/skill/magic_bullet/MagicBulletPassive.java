@@ -1,6 +1,8 @@
 package net.m3tte.ego_weapons.skill.magic_bullet;
 
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsSkills;
+import net.m3tte.ego_weapons.gameasset.movesets.HeishouMaoBranchAnims;
+import net.m3tte.ego_weapons.gameasset.movesets.MagicBulletMovesetAnims;
 import net.m3tte.ego_weapons.skill.GenericSkill;
 import yesman.epicfight.gameasset.Skills;
 import yesman.epicfight.skill.Skill;
@@ -16,6 +18,8 @@ public class MagicBulletPassive extends Skill {
     public void onInitiate(SkillContainer container) {
         SkillContainer guard = container.getExecuter().getSkillCapability().skillContainers[SkillCategories.GUARD.universalOrdinal()];
         SkillContainer evade = container.getExecuter().getSkillCapability().skillContainers[SkillCategories.DODGE.universalOrdinal()];
+
+        container.getExecuter().playAnimationSynchronized(MagicBulletMovesetAnims.MAGIC_BULLET_EQUIP, 0);
 
 
         if (!guard.isEmpty()) {

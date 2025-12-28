@@ -4,27 +4,19 @@ import net.m3tte.ego_weapons.*;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
-import net.m3tte.ego_weapons.gameasset.movesets.FullstopOfficeRepMovesetAnims;
-import net.m3tte.ego_weapons.gameasset.movesets.HeishouMaoBranchAnims;
-import net.m3tte.ego_weapons.gameasset.movesets.LiuSouth6MovesetAnims;
-import net.m3tte.ego_weapons.gameasset.movesets.OeufiAssocMovesetAnims;
+import net.m3tte.ego_weapons.gameasset.movesets.*;
 import net.m3tte.ego_weapons.network.packages.ParticlePackages;
 import net.m3tte.ego_weapons.potion.OrlandoPotionEffect;
-import net.m3tte.ego_weapons.world.capabilities.AmmoType;
-import net.m3tte.ego_weapons.world.capabilities.DamageDefaults;
+import net.m3tte.ego_weapons.potion.SolemnLamentEffects;
+import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
 import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
-import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.m3tte.ego_weapons.world.capabilities.gamerules.EgoWeaponsGamerules;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -34,9 +26,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.PacketDistributor;
 import yesman.epicfight.api.animation.ServerAnimator;
 import yesman.epicfight.api.animation.types.AttackAnimation;
-import yesman.epicfight.api.animation.types.BasicAttackAnimation;
 import yesman.epicfight.api.animation.types.DynamicAnimation;
-import yesman.epicfight.api.utils.ExtendedDamageSource;
 import yesman.epicfight.particle.EpicFightParticles;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
@@ -122,13 +112,14 @@ public class OnEntityHit {
                                 sourceClash = (sourceAnim).getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.SHOULD_CLASH).orElse(true);
                             }
 
-                            System.out.println("Source Knock Stats : "+sourceKnock+ " Source is : "+sourcePatch.getOriginal());
-                            System.out.println("Target Knock Stats : "+targetKnock+ " Target is : "+targetPatch.getOriginal());
 
                             if (sourcePatch.getEntityState().attacking() && targetPatch.getEntityState().attacking() && (targetClash && sourceClash)) {
 
 
                                 float difference = sourceImpact - targetImpact;
+
+                                if (sourceImpact <= 0 || targetImpact <= 0)
+                                    return;
 
                                 LivingEntityPatch<?> loserPatch = difference < 0 ? sourcePatch : targetPatch;
                                 LivingEntityPatch<?> winnerPatch = difference > 0 ? sourcePatch : targetPatch;
@@ -141,7 +132,6 @@ public class OnEntityHit {
                                 difference = Math.abs(difference);
 
                                 if (difference > 0.5f) {
-                                    System.out.println("Knock values : W"+winnerKnock+" | s"+sourceKnock+" | t"+targetKnock);
                                     if (winnerKnock)
                                         loserPatch.knockBackEntity(winnerPatch.getOriginal().position().add(0,1.5,0), Math.min(0.8f,difference*0.05f + 0.5f));
 
@@ -227,6 +217,7 @@ public class OnEntityHit {
                                 SharedFunctions.staggerEntity(sourcePatch, 2, false);
                             }
 
+
                             entitypatch.playAnimationSynchronized(OeufiAssocMovesetAnims.OEUFI_EVADE_CONTRACT, 0);
 
                             event.setCanceled(true);
@@ -284,7 +275,7 @@ public class OnEntityHit {
                             }
 
                             if (entitypatch.getOriginal() instanceof PlayerEntity)
-                                BlipTick.chargeBlips((PlayerEntity) entitypatch.getOriginal(), 1, true);
+                                EntityTick.chargeBlips((PlayerEntity) entitypatch.getOriginal(), 1, true);
 
                             entitypatch.playSound(EgoWeaponsSounds.HEISHOU_MAO_PARRY, 1, 1);
                             entitypatch.playSound(EgoWeaponsSounds.FIREFIST_SPECIAL_FLARE, 1, 1);
@@ -294,6 +285,49 @@ public class OnEntityHit {
                             }
 
                             entitypatch.playAnimationSynchronized(HeishouMaoBranchAnims.HEISHOU_MAO_PARRY_3, 0);
+                            event.setCanceled(true);
+                        }
+
+                        if (currentanim.getId() == SolemnLamentMovesetAnims.SOLEMN_LAMENT_ARMOR_ABILITY.getId()) {
+                            if (event.getSource().getDirectEntity() instanceof LivingEntity) {
+                                LivingEntityPatch<?> sourcePatch = (LivingEntityPatch<?>) event.getSource().getDirectEntity().getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+                                SharedFunctions.hitstunEntity(sourcePatch, 2, false, 0.2f);
+                            }
+
+                            if (entitypatch.getOriginal() instanceof PlayerEntity)
+                                EntityTick.chargeBlips((PlayerEntity) entitypatch.getOriginal(), 1, true);
+
+                            entitypatch.playSound(EgoWeaponsSounds.SOLEMN_LAMENT_BASH, 1, 1);
+                            entitypatch.playSound(EgoWeaponsSounds.SOLEMN_LAMENT_SPECIAL_IMPACT, 1, 1);
+                            entitypatch.playSound(EgoWeaponsSounds.FIREFIST_SPECIAL_FLARE, 1, 1);
+                            EgoWeaponsEffects.RESILIENCE.get().decrement(entitypatch.getOriginal(), 1, 1);
+                            EgoWeaponsEffects.POWER_UP.get().increment(entitypatch.getOriginal(), 0, 2);
+                            if (!living.level.isClientSide()) {
+                                ((ServerWorld) living.level).sendParticles(EgoWeaponsParticles.RIFLE_SHOCKWAVE.get(), living.getX(), living.getY()+1, living.getZ(), 1, 0.05f, 0.2f, 0.0f, 0.2f);
+
+                                int baseReload = 3;
+                                int desparityPreset = 2;
+
+
+                                // Calculates Sanity Loss
+                                if (entitypatch.getOriginal() instanceof PlayerEntity) {
+                                    int lumpReloadedSum = baseReload*2+desparityPreset;
+                                    int ammosum = SolemnLamentEffects.getAmmoCount(entitypatch.getOriginal(), SolemnLamentEffects.getLiving()) + SolemnLamentEffects.getAmmoCount(entitypatch.getOriginal(), SolemnLamentEffects.getLiving());
+                                    if (ammosum < lumpReloadedSum)
+                                        SanitySystem.damageSanity((PlayerEntity) entitypatch.getOriginal(), 0.25f*(lumpReloadedSum - ammosum));
+                                    else
+                                        SanitySystem.healSanity((PlayerEntity) entitypatch.getOriginal(), 0.25f*(ammosum - lumpReloadedSum));
+                                }
+
+
+
+                                int desparity = entitypatch.getOriginal().level.random.nextInt(desparityPreset);
+                                int randomInt = entitypatch.getOriginal().level.random.nextInt(2);
+                                SolemnLamentEffects.setAmmoCount(entitypatch.getOriginal(), SolemnLamentEffects.getDeparted(), (baseReload + desparityPreset / 2) - desparity + randomInt);
+                                SolemnLamentEffects.setAmmoCount(entitypatch.getOriginal(), SolemnLamentEffects.getLiving(), baseReload + desparity);
+                            }
+
+                            entitypatch.playAnimationSynchronized(SolemnLamentMovesetAnims.SOLEMN_LAMENT_ARMOR_ABILITY_PARRY, 0);
                             event.setCanceled(true);
                         }
                     }

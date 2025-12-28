@@ -11,6 +11,7 @@ import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.world.capabilities.AmmoSystem;
 import net.m3tte.ego_weapons.world.capabilities.AmmoType;
+import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -152,7 +153,7 @@ public class FullstopRepWeapon extends GunItem {
 
 		PlayerVariables entityData = sourceentity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
-		PlayerPatch<?> entitypatch = (PlayerPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
 
@@ -357,6 +358,7 @@ public class FullstopRepWeapon extends GunItem {
 			LivingEntity entity = entitypatch.getOriginal();
 			Hand hand = EgoWeaponsItems.FULLSTOP_REP_MACHETE.get().equals(entity.getItemInHand(Hand.MAIN_HAND).getItem()) ? Hand.OFF_HAND : Hand.MAIN_HAND;
 			entitypatch.getOriginal().getItemInHand(hand).getOrCreateTag().putBoolean("meleeAttackTag", true);
+			DialogueSystem.speakEvalDialogue(entity, "dialogue.ego_weapons.skills.fullstop_pistol.2", DialogueSystem.DialogueTypes.SKILL, TextFormatting.WHITE);
 
 			entity.getItemInHand(hand).getOrCreateTag().remove("lastFired");
 

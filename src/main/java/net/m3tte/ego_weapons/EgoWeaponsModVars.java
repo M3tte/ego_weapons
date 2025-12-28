@@ -257,6 +257,7 @@ public class EgoWeaponsModVars {
 			nbt.putInt("emotionLevel", instance.emotionLevel);
 			nbt.putDouble("emotionLevelProgress", instance.emotionLevelProgress);
 			nbt.putInt("onHitCounter", instance.onHitCounter);
+			nbt.putString("personality", instance.personality);
 			return nbt;
 		}
 
@@ -289,6 +290,7 @@ public class EgoWeaponsModVars {
 			instance.emotionLevel = nbt.getInt("emotionLevel");
 			instance.emotionLevelProgress = nbt.getDouble("emotionLevelProgress");
 			instance.onHitCounter = nbt.getInt("onHitCounter");
+			instance.personality = nbt.getString("personality");
 		}
 	}
 
@@ -318,6 +320,7 @@ public class EgoWeaponsModVars {
 
 		// public double maxSanity = 20;
 		public double sanity = 20;
+		public String personality = "default";
 
 		public int emotionLevel = 0;
 		public double emotionLevelProgress = 0;
@@ -397,6 +400,7 @@ public class EgoWeaponsModVars {
 		clone.firingMode = original.firingMode;
 		clone.blacksilence_ws = original.blacksilence_ws;
 		clone.onHitCounter = original.onHitCounter;
+		clone.personality = original.personality;
 		if (!event.isWasDeath()) {
 			clone.iFrames = original.iFrames;
 			// clone.maxStagger = original.maxStagger;
@@ -456,6 +460,7 @@ public class EgoWeaponsModVars {
 					variables.emotionLevelProgress = message.data.emotionLevelProgress;
 					variables.emotionLevel = message.data.emotionLevel;
 					variables.onHitCounter = message.data.onHitCounter;
+					variables.personality = message.data.personality;
 				}
 			});
 			context.setPacketHandled(true);

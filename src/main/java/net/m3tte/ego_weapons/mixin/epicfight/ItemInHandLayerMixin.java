@@ -30,24 +30,24 @@ public abstract class ItemInHandLayerMixin<E extends LivingEntity, T extends Liv
                 int fuel = entitypatch.getOriginal().getItemBySlot(EquipmentSlotType.CHEST).getOrCreateTag().getInt("d10fuel");
 
                 if (entitypatch.getOriginal().hasEffect(EgoWeaponsEffects.FUEL_IGNITION.get()) && fuel > 0)
-                    return 200;
+                    return 230;
 
                 if (fuel <= 50 && fuel > 0)
-                    return 200;
+                    return 230;
             }
 
             if (item.getOrCreateTag().getInt("ignition") > 0)
-                return 200;
+                return 230;
         }
 
         if (item.getItem().equals(EgoWeaponsItems.STIGMA_WORKSHOP_SWORD.get())) {
             if (item.getOrCreateTag().getInt("glow") > 0)
-                return 200;
+                return 230;
         }
 
         if (item.getItem().equals(EgoWeaponsItems.HEISHOU_MAO_SWORD.get())) {
             if (item.getOrCreateTag().getInt("active") > 0)
-                return 200;
+                return 230;
         }
         return packedLightIn;
     }

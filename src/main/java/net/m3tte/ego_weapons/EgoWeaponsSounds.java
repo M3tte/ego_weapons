@@ -1,5 +1,6 @@
 package net.m3tte.ego_weapons;
 
+import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
@@ -30,7 +31,6 @@ public class EgoWeaponsSounds {
     public static SoundEvent SECOND_WARNING = generateSoundEvent(locationFrom("second_warning"));
     public static SoundEvent THIRD_WARNING = generateSoundEvent(locationFrom("third_warning"));
     public static SoundEvent FOURTH_WARNING = generateSoundEvent(locationFrom("fourth_warning"));
-
     public static SoundEvent POISE_CRIT = generateSoundEvent(locationFrom("effects.poise.crit"));
     public static SoundEvent SUNSHOWER_AUTO_1 = generateSoundEvent(locationFrom("sunshower.auto.1"));
     public static SoundEvent SUNSHOWER_AUTO_2 = generateSoundEvent(locationFrom("sunshower.auto.2"));
@@ -86,6 +86,8 @@ public class EgoWeaponsSounds {
     public static SoundEvent SUNSHOWER_PUDDLE_STOMP_3 = generateSoundEvent(locationFrom("sunshower.puddle_stomp.3"));
     public static SoundEvent SUNSHOWER_COUNTER_1 = generateSoundEvent(locationFrom("sunshower.counter.1"));
     public static SoundEvent SUNSHOWER_COUNTER_2 = generateSoundEvent(locationFrom("sunshower.counter.2"));
+    public static SoundEvent SUNSHOWER_SPREAD_OUT_V_1 = generateSoundEvent(locationFrom("sunshower.spread_out.v.1"));
+    public static SoundEvent SUNSHOWER_SPREAD_OUT_V_2 = generateSoundEvent(locationFrom("sunshower.spread_out.v.2"));
 
     public static SoundEvent NOTHING_THERE_WALK = generateSoundEvent(locationFrom("nothing_there.walk"));
     public static SoundEvent NOTHING_THERE_IDLE_1 = generateSoundEvent(locationFrom("nothing_there.idle.1"));
@@ -118,10 +120,11 @@ public class EgoWeaponsSounds {
     public static SoundEvent MAGIC_BULLET_SPIN_HIT = generateSoundEvent(locationFrom("magic_bullet.spin.hit"));
     public static SoundEvent MAGIC_BULLET_SPIN_SPAM = generateSoundEvent(locationFrom("magic_bullet.spin.spam"));
     public static SoundEvent MAGIC_BULLET_SPIN_DETONATE = generateSoundEvent(locationFrom("magic_bullet.spin.detonate"));
+    public static SoundEvent MAGIC_BULLET_GUARD = generateSoundEvent(locationFrom("magic_bullet.guard"));
 
     public static SoundEvent SOLEMN_LAMENT_SPECIAL_RELOAD = generateSoundEvent(locationFrom("solemn_lament.special.reload"));
-    public static SoundEvent SOLEMN_LAMENT_SPECIAL_READY = generateSoundEvent(locationFrom("solemn_lament.special.spin"));
     public static SoundEvent SOLEMN_LAMENT_SPECIAL_IMPACT = generateSoundEvent(locationFrom("solemn_lament.special.impact"));
+    public static SoundEvent SOLEMN_LAMENT_BELL = generateSoundEvent(locationFrom("solemn_lament.bell"));
     public static SoundEvent FIREFIST_AUTO_HIT = generateSoundEvent(locationFrom("firefist.auto.hit"));
     public static SoundEvent FIREFIST_SPIT_FIRE = generateSoundEvent(locationFrom("firefist.spit_fire.use"));
     public static SoundEvent FIREFIST_CLICK = generateSoundEvent(locationFrom("firefist.click"));
@@ -154,6 +157,10 @@ public class EgoWeaponsSounds {
     public static SoundEvent SOLEMN_LAMENT_FAST_WHITE = generateSoundEvent(locationFrom("solemn_lament.fast.white"));
     public static SoundEvent SOLEMN_LAMENT_AUTO_BLACK = generateSoundEvent(locationFrom("solemn_lament.auto.black"));
     public static SoundEvent SOLEMN_LAMENT_AUTO_WHITE = generateSoundEvent(locationFrom("solemn_lament.auto.white"));
+    public static SoundEvent SOLEMN_LAMENT_AUTO_E_HIT = generateSoundEvent(locationFrom("solemn_lament.auto_e.hit"));
+    public static SoundEvent SOLEMN_LAMENT_AUTO_E_FINAL = generateSoundEvent(locationFrom("solemn_lament.auto_e.final"));
+    public static SoundEvent SOLEMN_LAMENT_PARRY = generateSoundEvent(locationFrom("solemn_lament.parry"));
+    public static SoundEvent SOLEMN_LAMENT_BASH = generateSoundEvent(locationFrom("solemn_lament.bash"));
     public static SoundEvent MAGIC_BULLET_AIM_2 = generateSoundEvent(locationFrom("magic_bullet.aim.2"));
     public static SoundEvent MAGIC_BULLET_FIRE_2 = generateSoundEvent(locationFrom("magic_bullet.fire.2"));
     public static SoundEvent MAGIC_BULLET_FIRE_SWING = generateSoundEvent(locationFrom("magic_bullet.fire.swing"));
@@ -236,8 +243,23 @@ public class EgoWeaponsSounds {
     public static SoundEvent HEISHOU_MAO_SPECIAL_DASH_HIT = generateSoundEvent(locationFrom("heishou_mao.special.dash.hit"));
     public static SoundEvent HEISHOU_MAO_SPECIAL_REUSE_HIT = generateSoundEvent(locationFrom("heishou_mao.special.reuse.hit"));
     public static SoundEvent HEISHOU_MAO_SPECIAL_VOICELINE = generateSoundEvent(locationFrom("heishou_mao.special.voiceline"));
+
+
+
+    public static SoundEvent JUSTITIA_HIT = generateSoundEvent(locationFrom("justitia.hit"));
+    public static SoundEvent JUSTITIA_SPECIAL_TRIGGER = generateSoundEvent(locationFrom("justitia.special.trigger"));
+    public static SoundEvent JUSTITIA_SPECIAL_HIT = generateSoundEvent(locationFrom("justitia.special.hit"));
+    public static SoundEvent JUSTITIA_SPECIAL_HANG = generateSoundEvent(locationFrom("justitia.special.hang"));
+    public static SoundEvent JUSTITIA_INNATE_REUSE = generateSoundEvent(locationFrom("justitia.innate.reuse"));
+    public static SoundEvent JUSTITIA_GUARD_HIT = generateSoundEvent(locationFrom("justitia.guard.hit"));
+
     public static SoundEvent CLASH = generateSoundEvent(locationFrom("generic.clash"));
     public static SoundEvent CLASH_WIN = generateSoundEvent(locationFrom("generic.clash_win"));
     public static SoundEvent CLASH_DRAW = generateSoundEvent(locationFrom("generic.clash_draw"));
+
+
+    public static SoundEvent RAT_PIPE_HIT = generateSoundEvent(locationFrom("pipe_rat.hit"));
+    public static SoundEvent RAT_PIPE_HEAVY_HIT = generateSoundEvent(locationFrom("pipe_rat.heavy_hit"));
+    public static SoundEvent RAT_PIPE_SWING = generateSoundEvent(locationFrom("pipe_rat.swing"));
 
 }

@@ -2,25 +2,36 @@ package net.m3tte.ego_weapons.world.capabilities.entitypatch;
 
 import io.netty.buffer.ByteBuf;
 import net.m3tte.ego_weapons.EgoWeaponsAttributes;
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.entities.DawnOfGreenDoubtEntity;
+import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
+import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsMobAnimations;
 import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import yesman.epicfight.api.animation.LivingMotions;
+import yesman.epicfight.api.animation.types.AttackAnimation;
+import yesman.epicfight.api.animation.types.DynamicAnimation;
 import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.api.client.animation.ClientAnimator;
 import yesman.epicfight.api.model.Model;
 import yesman.epicfight.api.utils.AttackResult;
+import yesman.epicfight.api.utils.ExtendedDamageSource;
 import yesman.epicfight.api.utils.ExtendedDamageSource.StunType;
 import yesman.epicfight.gameasset.Models;
 import yesman.epicfight.particle.EpicFightParticles;
 import yesman.epicfight.particle.HitParticleType;
+import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.Faction;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import yesman.epicfight.world.capabilities.entitypatch.MobPatch;
 import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 import yesman.epicfight.world.entity.ai.goal.AnimatedAttackGoal;
@@ -126,6 +137,49 @@ public class DoubtAPatch extends MobPatch<DawnOfGreenDoubtEntity> implements Sta
 
         }
         return super.tryHurt(damageSource, amount);
+    }
+
+    @Override
+    public void onHurtSomeone(Entity target, Hand handIn, ExtendedDamageSource damagesource, float amount, boolean succeed) {
+        super.onHurtSomeone(target, handIn, damagesource, amount, succeed);
+
+        DynamicAnimation currentanim = this.getServerAnimator().animationPlayer.getAnimation();
+
+
+        if (!(target instanceof LivingEntity))
+            return;
+
+        if (currentanim.getRealAnimation() instanceof BasicEgoAttackAnimation || currentanim.getRealAnimation() instanceof EgoAttackAnimation) {
+            String animationIdentifier = (currentanim.getRealAnimation()).getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
+
+            LivingEntity targetLiving = (LivingEntity) target;
+
+            AttackAnimation.Phase phase = null;
+
+
+            if (currentanim instanceof EgoAttackAnimation) {
+                phase = ((EgoAttackAnimation)currentanim).getPhaseByTime(this.getAnimator().getPlayerFor(currentanim).getElapsedTime());
+            }
+
+            if (phase instanceof EgoAttackAnimation.EgoAttackPhase) {
+                String elp = ((EgoAttackAnimation.EgoAttackPhase) phase).getProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER).orElse(null);
+
+                if (elp != null)
+                    animationIdentifier = elp;
+            }
+
+            switch (animationIdentifier) {
+                case "doubt_auto_1":
+                case "doubt_auto_2":
+                case "doubt_dash":
+                    EgoWeaponsEffects.BLEED.get().increment(targetLiving, ((LivingEntity) target).hasEffect(EgoWeaponsEffects.BLEED.get()) ? 1 : 0, 1);
+                    break;
+                case "doubt_crit":
+                    EgoWeaponsEffects.BLEED.get().increment(targetLiving, 1, 1);
+                    break;
+            }
+        }
+
     }
 
     @Override

@@ -94,7 +94,7 @@ public class DurandalItem extends EgoWeaponsWeapon {
 
 		EgoWeaponsModVars.PlayerVariables entityData = sourceentity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
-		PlayerPatch<?> entitypatch = (PlayerPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
 
@@ -246,9 +246,11 @@ public class DurandalItem extends EgoWeaponsWeapon {
 			entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().putInt("unsheathed", 3);
 			if (entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().getBoolean("durandalLastHit")) {
 				EgoWeaponsEffects.POWER_UP.get().increment(entitypatch.getOriginal(), powerLimit, 1);
-				entitypatch.reserveAnimation(DurandalMovesetAnims.DURANDAL_AUTO_REC);
+				if (!entitypatch.getOriginal().level.isClientSide())
+					entitypatch.reserveAnimation(DurandalMovesetAnims.DURANDAL_AUTO_REC);
 			} else {
-				entitypatch.reserveAnimation(DurandalMovesetAnims.DURANDAL_AUTO_SHEATH);
+				if (!entitypatch.getOriginal().level.isClientSide())
+					entitypatch.reserveAnimation(DurandalMovesetAnims.DURANDAL_AUTO_SHEATH);
 			}
 		}, StaticAnimation.Event.Side.BOTH);
 		return events;
@@ -261,7 +263,8 @@ public class DurandalItem extends EgoWeaponsWeapon {
 			entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().remove("durandalLastHit");
 		}, StaticAnimation.Event.Side.BOTH);
 		events[1] = StaticAnimation.Event.create(time, (entitypatch) -> {
-			entitypatch.reserveAnimation(DurandalMovesetAnims.DURANDAL_AUTO_SHEATH);
+			if (!entitypatch.getOriginal().level.isClientSide())
+				entitypatch.reserveAnimation(DurandalMovesetAnims.DURANDAL_AUTO_SHEATH);
 		}, StaticAnimation.Event.Side.BOTH);
 		return events;
 	}
@@ -274,7 +277,8 @@ public class DurandalItem extends EgoWeaponsWeapon {
 		}, StaticAnimation.Event.Side.BOTH);
 		events[1] = StaticAnimation.Event.create(time, (entitypatch) -> {
 			if (entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().getBoolean("durandalLastHit"))
-				entitypatch.playAnimationSynchronized(anim, 0.01f);
+				if (!entitypatch.getOriginal().level.isClientSide())
+					entitypatch.playAnimationSynchronized(anim, 0.01f);
 
 
 		}, StaticAnimation.Event.Side.BOTH);

@@ -16,27 +16,22 @@ public class DurandalSlashHorizontal extends RotationAttackParticle {
     private Entity sourceEntity;
     public DurandalSlashHorizontal(ClientWorld world, double x, double y, double z, double xSpeed, double targetEntityID, double sourceID, IAnimatedSprite spriteProvider) {
         super(world, x, y, z, xSpeed, targetEntityID, sourceID, spriteProvider);
-        this.flipY = true;
-        this.flipX = true;
-        this.invertX = true;
+        this.flipY = false;
+        this.flipX = false;
+        this.invertX = false;
         this.invertY = false;
-        this.quadSize = 2f;
+        this.quadSize = 2.3f;
         this.lifetime = 5;
+        this.rotation.add(0,180,0);
+        this.offset.add(0.3f,1,0);
     }
-
-
 
     @Override
-    protected Vector3f[] generateVectorArray(boolean inv) {
-        //int invVar = inv ? -1 : 1;
-        // return new Vector3f[]{new Vector3f(1.0F * invVar, 0, 1.0F * invVar), new Vector3f(1.0F * invVar, 0, -1.0F * invVar), new Vector3f(-1.0F * invVar, 0, -1.0F * invVar), new Vector3f(-1.0F * invVar, 0, 1.0F * invVar)};
-        if (inv) {
-            return new Vector3f[]{new Vector3f(1.0F, 0, -1.0F), new Vector3f(1.0F, 0, 1.0F), new Vector3f(-1.0F, 0.2F, 1.0F), new Vector3f(-1.0F, 0.2F, -1.0F)};
-        } else {
-            return new Vector3f[]{new Vector3f(1.0F, 0.2f, 1.0F), new Vector3f(1.0F, 0.2f, -1.0F), new Vector3f(-1.0F, 0, -1.0F), new Vector3f(-1.0F, 0, 1.0F)};
-        }
+    protected Vector3f[] generateVectorArray() {
 
+        return new Vector3f[]{new Vector3f(1.0F, 0.0F, -1.0F), new Vector3f(1.0F, 0F, 1.0F), new Vector3f(-1.0F, 0.0F, 1.0F), new Vector3f(-1.0F, 0.0F, -1.0F)};
     }
+
 
     @OnlyIn(Dist.CLIENT)
     public static class Provider implements IParticleFactory<BasicParticleType> {

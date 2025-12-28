@@ -32,6 +32,9 @@ public enum EgoWeaponsCategories implements WeaponCategory {
     FULLSTOP_SNIPER,
     STIGMA_WORKSHOP_SWORD,
     HEISHOU_MAO_SWORD,
+    JUSTITIA,
+    RAT_KNIFE,
+    RAT_PIPE,
     MAGIC_BULLET;
 
     final int id;

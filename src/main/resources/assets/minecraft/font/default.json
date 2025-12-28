@@ -296,6 +296,27 @@
     },
     {
       "type": "bitmap",
+      "file": "ego_weapons:mob_effect/fragile.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE043"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/imitation.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE044"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/living_and_departed.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE045"]
+    },
+    {
+      "type": "bitmap",
       "file": "ego_weapons:damage_types/red.png",
       "ascent": 8,
       "height": 9,
@@ -436,6 +457,13 @@
     },
     {
       "type": "bitmap",
+      "file": "ego_weapons:mob_effect/sin.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uED47"]
+    },
+    {
+      "type": "bitmap",
       "file": "ego_weapons:screens/gui/zayin.png",
       "ascent": 8,
       "height": 9,
@@ -468,6 +496,13 @@
       "ascent": 8,
       "height": 9,
       "chars": ["\uEC05"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:screens/gui/nuun.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uEC06"]
     },
     {
       "type": "bitmap",

@@ -104,7 +104,7 @@ public class MimicryArmor extends GenericEgoWeaponsArmor {
 		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
 	}
 
-	static Item chest = new MimicryArmor(armormaterial, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT), 0.3f, 1.3f, 1.2f ,1.3f, 0.7f, 1.3f, 1f, 5, -5) {
+	static Item chest = new MimicryArmor(armormaterial, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT), 0.3f, 0.7f, 0.7f ,1.3f, 0.7f, 1.3f, 1f, 5, -5) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -146,9 +146,9 @@ public class MimicryArmor extends GenericEgoWeaponsArmor {
 					break;
 				case 3:
 					if (EgoWeaponsKeybinds.isHoldingShift())
-						generateStatusDescription(list, new String[]{"terror","shell"});
+						generateStatusDescription(list, new String[]{"terror","shell", "imitation"});
 					else
-						generateDescription(list,"mimicry_armor", "ability", 6);
+						generateDescription(list,"mimicry_armor", "ability", 7);
 					break;
 			}
 

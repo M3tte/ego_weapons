@@ -32,8 +32,11 @@ public class PatchedEntityRendererMixin <E extends LivingEntity, T extends Livin
                 entityIn.getPersistentData().remove("shakeEffect");
             }
 
-
             poseStack.translate(0, EntityShake.evaluateShakeFromValue(value), 0);
+
+            if (entityIn.getPersistentData().getBoolean("hiddenModel")) {
+                poseStack.translate(0,-50,0);
+            }
         }
 
     }

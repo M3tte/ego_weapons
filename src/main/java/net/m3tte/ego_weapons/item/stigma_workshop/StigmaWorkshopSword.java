@@ -11,6 +11,7 @@ import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.network.packages.ParticlePackages;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -196,8 +197,10 @@ public class StigmaWorkshopSword extends EgoWeaponsWeapon {
 					EgoWeaponsEffects.BURN.get().increment(target, 1, brandingBladeBuff);
 					if (!sourceentity.level.isClientSide()) {
 						if (weaponIdentifier.equals("stigma_w_s_innate_2")) {
+							System.out.println("DOWN");
 							EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.STIGMA_WORKSHOP_SLASH_DOWN.get().getRegistryName()));
 						} else {
+							System.out.println("UP");
 							EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.STIGMA_WORKSHOP_SLASH_UP.get().getRegistryName()));
 
 						}
@@ -221,7 +224,7 @@ public class StigmaWorkshopSword extends EgoWeaponsWeapon {
 
 	public static float modifyDamageAmount(LivingEntity target, LivingEntity source, float mult, DamageSource damageSource) {
 
-		PlayerPatch<?> entitypatch = (PlayerPatch<?>) source.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) source.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
 
@@ -346,7 +349,7 @@ public class StigmaWorkshopSword extends EgoWeaponsWeapon {
 			LivingEntity entity = entitypatch.getOriginal();
 
 			entity.level.addParticle(EgoWeaponsParticles.TEXTURED_AFTER_IMAGE.get(), entity.getX(), entity.getY(), entity.getZ(), Double.longBitsToDouble(entity.getId()), 2, 0);
-
+			DialogueSystem.speakEvalDialogue(entity, "dialogue.ego_weapons.skills.stigma_workshop_sword.2", DialogueSystem.DialogueTypes.SKILL, TextFormatting.GOLD);
 			entitypatch.playSound(EgoWeaponsSounds.STIGMA_WORKSHOP_SWORD_SPECIAL_BACKPEDAL, 1, 1);
 		}, StaticAnimation.Event.Side.BOTH);
 

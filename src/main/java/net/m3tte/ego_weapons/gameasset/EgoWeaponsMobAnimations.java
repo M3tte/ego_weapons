@@ -6,6 +6,7 @@ import net.m3tte.ego_weapons.execFunctions.BlackSilenceEvaluator;
 import net.m3tte.ego_weapons.gameasset.entities.CravingBloodbagAnims;
 import net.m3tte.ego_weapons.potion.Terror;
 import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
+import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityPredicate;
@@ -106,26 +107,31 @@ public class EgoWeaponsMobAnimations {
         DOUBT_A_WALK = new MovementAnimation(true, "doubt/walk", doubt)
                 .addProperty(StaticAnimationProperty.PLAY_SPEED, 1.7f);
 
-        DOUBT_DASH = (new BasicAttackAnimation(0.02F, 0.03F, 0.5F, 1F, 2F, EgoWeaponsCapabilityPresets.DoubtBlade, "Blade", "doubt/dash", doubt))
+        DOUBT_DASH = (new BasicEgoAttackAnimation(0.02F, 0.03F, 0.5F, 1F, 2F, EgoWeaponsCapabilityPresets.DoubtBlade, "Blade", "doubt/dash", doubt))
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "doubt_dash")
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.EVISCERATE)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.EVISCERATE)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
                 .addProperty(StaticAnimationProperty.PLAY_SPEED, 1.4f);
 
-        DOUBT_AUTO_1 = (new BasicAttackAnimation(0.02F, 0.03F, 0.32F, 0.6F, 1F, EgoWeaponsCapabilityPresets.DoubtBlade, "Blade", "doubt/auto_1", doubt))
+        DOUBT_AUTO_1 = (new BasicEgoAttackAnimation(0.02F, 0.03F, 0.32F, 0.6F, 1F, EgoWeaponsCapabilityPresets.DoubtBlade, "Blade", "doubt/auto_1", doubt))
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "doubt_auto_1")
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.DOUBT_HIT_LIGHT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLADE)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
                 .addProperty(StaticAnimationProperty.PLAY_SPEED, 1.4f);
 
-        DOUBT_AUTO_2 = (new BasicAttackAnimation(0.02F, 0.03F, 0.32F, 0.6F, 1F, EgoWeaponsCapabilityPresets.DoubtBlade, "Blade", "doubt/auto_2", doubt))
+        DOUBT_AUTO_2 = (new BasicEgoAttackAnimation(0.02F, 0.03F, 0.32F, 0.6F, 1F, EgoWeaponsCapabilityPresets.DoubtBlade, "Blade", "doubt/auto_2", doubt))
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "doubt_auto_2")
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.DOUBT_HIT_LIGHT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLADE)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
                 .addProperty(StaticAnimationProperty.PLAY_SPEED, 1.4f);
 
-        DOUBT_AUTO_BLUNT = (new BasicAttackAnimation(0.02F, 0.03F, 0.32F, 0.6F, 1F, ColliderPreset.FIST, "Foot_R", "doubt/blunt", doubt))
+        DOUBT_AUTO_BLUNT = (new BasicEgoAttackAnimation(0.02F, 0.03F, 0.32F, 0.6F, 1F, ColliderPreset.FIST, "Foot_R", "doubt/blunt", doubt))
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "doubt_auto_blunt")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT_HARD)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLUNT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
@@ -133,7 +139,8 @@ public class EgoWeaponsMobAnimations {
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.LONG)
                 .addProperty(StaticAnimationProperty.PLAY_SPEED, 1.4f);
 
-        DOUBT_AUTO_B1 = (new AttackAnimation(0.02F, 0.03F, 1.2F, 2.6F, 3F, EgoWeaponsCapabilityPresets.DoubtBlade, "Blade", "doubt/auto_c1", doubt))
+        DOUBT_AUTO_B1 = (new EgoAttackAnimation(0.02F, 0.03F, 1.2F, 2.6F, 3F, EgoWeaponsCapabilityPresets.DoubtBlade, "Blade", "doubt/auto_c1", doubt))
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "doubt_crit")
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.DOUBT_HIT_VERTICAL_FIRST)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLADE)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
@@ -141,7 +148,9 @@ public class EgoWeaponsMobAnimations {
                 .addProperty(StaticAnimationProperty.EVENTS, chargeSound(EgoWeaponsSounds.DOUBT_CHARGE))
                 .addProperty(StaticAnimationProperty.PLAY_SPEED, 1.4f);
 
-        DOUBT_AUTO_B2 = (new AttackAnimation(0.02F, 0.03F, 0.4F, 2F, 2.2F, EgoWeaponsCapabilityPresets.DoubtBlade, "Blade", "doubt/auto_c2", doubt))
+        DOUBT_AUTO_B2 = (new EgoAttackAnimation(0.02F, 0.03F, 0.4F, 2F, 2.2F, EgoWeaponsCapabilityPresets.DoubtBlade, "Blade", "doubt/auto_c2", doubt))
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "doubt_crit")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "doubt_eviscerate")
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.DOUBT_HIT_VERTICAL_SECOND)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.DOUBT_GROUNDSLAM_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)

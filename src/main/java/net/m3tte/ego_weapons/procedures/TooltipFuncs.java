@@ -21,6 +21,9 @@ public class TooltipFuncs {
         for (String status : statuses) {
             list.add(new StringTextComponent("  "));
             switch (status) {
+                case "butterfly": generateDescription(list, "statuses", "butterfly", 10); break;
+                case "imitation": generateDescription(list, "statuses", "imitation", 2); break;
+                case "fragile": generateDescription(list, "statuses", "fragile", 2); break;
                 case "deathrite_haste": generateDescription(list, "statuses", "deathrite_haste", 6); break;
                 case "speed_up": generateDescription(list, "statuses", "speed_up", 2); break;
                 case "speed_down": generateDescription(list, "statuses", "speed_down", 2); break;
@@ -30,6 +33,7 @@ public class TooltipFuncs {
                 case "d10fuel": generateDescription(list, "statuses", "d10fuel", 4); break;
                 case "firefist_overdrive": generateDescription(list, "statuses", "firefist_overdrive", 6); break;
                 case "orlando": generateDescription(list, "statuses", "orlando", 2); break;
+                case "sin": generateDescription(list, "statuses", "sin", 4); break;
                 case "furioso": generateDescription(list, "statuses", "furioso", 6); break;
                 case "manifest_ego": generateDescription(list, "statuses", "manifest_ego", 2); break;
                 case "terror": generateDescription(list, "statuses", "terror", 3); break;
@@ -45,7 +49,7 @@ public class TooltipFuncs {
                 case "obligation": generateDescription(list, "statuses", "obligation", 5); break;
                 case "burn": generateDescription(list, "statuses", "burn", 2); break;
                 case "rupture": generateDescription(list, "statuses", "rupture", 1); break;
-                case "protection": generateDescription(list, "statuses", "protection", 1); break;
+                case "protection": generateDescription(list, "statuses", "protection", 2); break;
                 case "bleed": generateDescription(list, "statuses", "bleed", 1); break;
                 case "dark_flame": generateDescription(list, "statuses", "dark_flame", 3); break;
                 case "magic_bullet": generateDescription(list, "statuses", "magic_bullet", 3); break;

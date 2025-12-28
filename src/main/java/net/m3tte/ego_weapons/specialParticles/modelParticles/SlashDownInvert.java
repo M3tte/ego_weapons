@@ -15,9 +15,9 @@ public class SlashDownInvert extends RotationAttackParticle {
 
     public SlashDownInvert(ClientWorld world, double x, double y, double z, double xSpeed, double targetEntityID, double sourceID, IAnimatedSprite spriteProvider, float quadsize, int lifetime, Vector3f offset, Vector3f offsetRate, boolean glow) {
         super(world, x, y, z, xSpeed, targetEntityID, sourceID, spriteProvider);
-        this.flipY = true;
-        this.invertY = true;
-
+        this.flipY = false;
+        this.invertY = false;
+        this.flipX = true;
         this.quadSize = quadsize;
         this.lifetime = lifetime;
         this.offset = offset;

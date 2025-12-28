@@ -4,7 +4,6 @@ import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.client.renderer.patched.item.*;
-import net.m3tte.ego_weapons.item.blackSilence.weapons.RangaclawItem;
 import net.m3tte.ego_weapons.specialParticles.*;
 import net.m3tte.ego_weapons.specialParticles.WheelsSmashParticle;
 import net.m3tte.ego_weapons.specialParticles.hit.*;
@@ -25,7 +24,6 @@ import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
 import yesman.epicfight.api.client.forgeevent.PatchedRenderersEvent;
 
 @OnlyIn(Dist.CLIENT)
@@ -48,6 +46,9 @@ public class ClientModBusEvent {
         ItemModelsProperties.register(EgoWeaponsItems.FULLSTOP_SNIPER_SUITCASE.get(), new ResourceLocation("dropped"), (itemStack, clientWorld, livingEntity) -> (itemStack.hasTag() ? Math.min((itemStack.getOrCreateTag().getInt("dropped")),1) : 0));
         ItemModelsProperties.register(EgoWeaponsItems.STIGMA_WORKSHOP_SWORD.get(), new ResourceLocation("glow"), (itemStack, clientWorld, livingEntity) -> (itemStack.hasTag() ? Math.min((itemStack.getOrCreateTag().getInt("glow")),1) : 0));
         ItemModelsProperties.register(EgoWeaponsItems.HEISHOU_MAO_SWORD.get(), new ResourceLocation("active"), (itemStack, clientWorld, livingEntity) -> (itemStack.hasTag() ? Math.min((itemStack.getOrCreateTag().getInt("active")),1) : 0));
+        ItemModelsProperties.register(EgoWeaponsItems.MIMICRY.get(), new ResourceLocation("morph"), (itemStack, clientWorld, livingEntity) -> (itemStack.hasTag() ? Math.min((itemStack.getOrCreateTag().getInt("morph")),1) : 0));
+
+
         ItemModelsProperties.register(EgoWeaponsItems.FIREFIST_GAUNTLET.get(), new ResourceLocation("ignition"), (itemStack, clientWorld, livingEntity) -> {
             if (livingEntity == null)
                 return 0;
@@ -200,10 +201,25 @@ public class ClientModBusEvent {
         particleEngine.register(EgoWeaponsParticles.STIGMA_WORKSHOP_SLASH_UP.get(), (a) -> new SlashDown.Provider(a, 2, 7, new Vector3f(0.3f,1f,0), true));
         particleEngine.register(EgoWeaponsParticles.MAO_BRANCH_STRIKE.get(), (a) -> new GenericStrike.Provider(a, 7, 2f));
         particleEngine.register(EgoWeaponsParticles.MAO_BRANCH_HIT.get(), new LiuHit.Provider(EgoWeaponsParticles.MAO_BRANCH_STRIKE.get()));
+        particleEngine.register(EgoWeaponsParticles.JUSTITIA_STRIKE.get(), (a) -> new GenericStrike.Provider(a, 7, 2f));
+        particleEngine.register(EgoWeaponsParticles.JUSTITIA_HIT.get(), new LiuHit.Provider(EgoWeaponsParticles.JUSTITIA_STRIKE.get()));
+        particleEngine.register(EgoWeaponsParticles.JUSTITIA_SCALE_STRIKE.get(), (a) -> new GenericStrike.Provider(a, 7, 2.4f));
+        particleEngine.register(EgoWeaponsParticles.JUSTITIA_SCALE_HIT.get(), new LiuHit.Provider(EgoWeaponsParticles.JUSTITIA_SCALE_STRIKE.get()));
 
+        particleEngine.register(EgoWeaponsParticles.JUSTITIA_SCALE.get(), (a) -> new RotationBoundParticle.Provider(a, 2.3f, 55, new Vector3f(0f,4f,0), new Vector3f(0f,0,0f), true));
+        particleEngine.register(EgoWeaponsParticles.JUSTITIA_PARTICLE.get(), JustitiaScaleParticle.Provider::new);
+        particleEngine.register(EgoWeaponsParticles.JUSTITIA_PARTICLE_SCALE.get(), JustitiaScaleParticle.Provider::new);
 
         particleEngine.register(EgoWeaponsParticles.MAO_BRANCH_CIRCULAR_HIT.get(), (a) -> new CircularSlashing.Provider(a, 2.2f, 12, new Vector3f(0f,0f,0), true));
         particleEngine.register(EgoWeaponsParticles.MAO_BRANCH_REUSE.get(), DeathriteReuseParticle.Provider::new);
+        particleEngine.register(EgoWeaponsParticles.JUSTITIA_PIECE.get(), JustitiaPieceParticle.Provider::new);
+
+        particleEngine.register(EgoWeaponsParticles.JUSTITIA_REUSE_STRIKE.get(), (a) -> new GenericStrike.Provider(a, 5, 2.5f));
+        particleEngine.register(EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get(), AirShockwaveEffect.Provider::new);
+        particleEngine.register(EgoWeaponsParticles.SLASH_SHOCKWAVE.get(), SlashShockwaveEffect.Provider::new);
+        particleEngine.register(EgoWeaponsParticles.SOLEMN_LAMENT_SHOCKWAVE.get(), SolemnLamentShockwave.Provider::new);
+        particleEngine.register(EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_SHORT.get(), (a) -> new MagicBulletCircleParticle.Provider(a, 30));
+        particleEngine.register(EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_LONG.get(), (a) -> new MagicBulletCircleParticle.Provider(a, 60));
 
     }
 

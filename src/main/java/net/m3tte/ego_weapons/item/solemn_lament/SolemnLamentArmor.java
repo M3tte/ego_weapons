@@ -134,7 +134,7 @@ public class SolemnLamentArmor extends GenericEgoWeaponsArmor {
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"eternal_rest","living_departed", "sinking"});
 					else
-						generateDescription(list,"solemn_lament_armor", "ability", 2);
+						generateDescription(list,"solemn_lament_armor", "ability", 6);
 					break;
 			}
 

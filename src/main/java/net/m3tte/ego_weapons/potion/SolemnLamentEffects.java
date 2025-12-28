@@ -121,6 +121,23 @@ public class SolemnLamentEffects {
 		}
 	}
 
+	public static void decrementEffect(LivingEntity entity, SolemnLamentAmmoEffect targetEffect, int cnt) {
+		if (entity.hasEffect(targetEffect)) {
+
+			if (entity.hasEffect(EternalRestPotionEffect.get()) && entity.getRandom().nextFloat() < 0.25f)
+				return;
+
+			EffectInstance effect = entity.getEffect(targetEffect);
+			int amplifier = entity.getEffect(targetEffect).getAmplifier();
+			if (amplifier - cnt >= 0) {
+				entity.removeEffect(targetEffect);
+				entity.addEffect(new EffectInstance(targetEffect, 2000, amplifier-cnt));
+			} else {
+				entity.removeEffect(targetEffect);
+			}
+		}
+	}
+
 	public static int getAmmoCount(LivingEntity entity, SolemnLamentAmmoEffect targetEffect) {
 		if (entity.hasEffect(targetEffect)) {
 			return entity.getEffect(targetEffect).getAmplifier() + 1;

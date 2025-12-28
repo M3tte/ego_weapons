@@ -1,6 +1,8 @@
 package net.m3tte.ego_weapons.skill.fullstop_rep;
 
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsSkills;
+import net.m3tte.ego_weapons.gameasset.movesets.FullstopOfficeRepMovesetAnims;
+import net.m3tte.ego_weapons.gameasset.movesets.HeishouMaoBranchAnims;
 import net.m3tte.ego_weapons.skill.GenericSkill;
 import yesman.epicfight.skill.Skill;
 import yesman.epicfight.skill.SkillCategories;
@@ -22,6 +24,7 @@ public class FullstopRepPassive extends Skill {
     public void onInitiate(SkillContainer container) {
         SkillContainer guard = container.getExecuter().getSkillCapability().skillContainers[SkillCategories.GUARD.universalOrdinal()];
 
+        container.getExecuter().playAnimationSynchronized(FullstopOfficeRepMovesetAnims.FULLSTOP_REP_EQUIP, 0);
 
         if (!guard.isEmpty()) {
             container.getExecuter().getSkillCapability().skillContainers[GenericSkill.TC_GUARD.universalOrdinal()].setSkill(EgoWeaponsSkills.FULLSTOP_REP_GUARD);

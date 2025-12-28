@@ -8,7 +8,7 @@ import net.m3tte.ego_weapons.gameasset.*;
 import net.m3tte.ego_weapons.particle.BlacksilenceshadowParticle;
 import net.m3tte.ego_weapons.potion.FuriosoPotionEffect;
 import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
-import net.m3tte.ego_weapons.procedures.BlipTick;
+import net.m3tte.ego_weapons.procedures.EntityTick;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.m3tte.ego_weapons.world.capabilities.damage.SimpleEgoDamageSource;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets;
@@ -840,7 +840,7 @@ public class BlackSilenceMovesetAnims {
                         //if (playerPatch.getOriginal().getCooldowns().isOnCooldown(SuitItem.helmet.getItem()))
                         //    playerPatch.getOriginal().getCooldowns().removeCooldown(SuitItem.helmet.getItem());
 
-                        BlipTick.chargeBlips((PlayerEntity) entity, (double) (mookStacks - mookStacks % 2) / 2, true);
+                        EntityTick.chargeBlips((PlayerEntity) entity, (double) (mookStacks - mookStacks % 2) / 2, true);
                         spawnArmatureParticle(entitypatch, 0, new Vector3d(0,0,-0.3), 1, EpicFightParticles.HIT_BLUNT.get(), 0, "Tool_L", true);
 
                     }
@@ -1215,11 +1215,14 @@ public class BlackSilenceMovesetAnims {
         }, StaticAnimation.Event.Side.BOTH);
 
         events[1] = StaticAnimation.Event.create(delay, (entitypatch) -> {
-            if (jumping) {
-                entitypatch.reserveAnimation(BlackSilenceMovesetAnims.MOOK_JUMP_SHEATH);
-            } else {
-                entitypatch.reserveAnimation(BlackSilenceMovesetAnims.MOOK_SHEATH);
+            if (!(entitypatch.getOriginal().level.isClientSide())) {
+                if (jumping) {
+                    entitypatch.reserveAnimation(BlackSilenceMovesetAnims.MOOK_JUMP_SHEATH);
+                } else {
+                    entitypatch.reserveAnimation(BlackSilenceMovesetAnims.MOOK_SHEATH);
+                }
             }
+
 
         }, StaticAnimation.Event.Side.BOTH);
 

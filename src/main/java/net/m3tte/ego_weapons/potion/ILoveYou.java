@@ -1,6 +1,7 @@
 
 package net.m3tte.ego_weapons.potion;
 
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
@@ -94,6 +95,7 @@ public class ILoveYou {
 			target.level.playSound(null,target.blockPosition(), EgoWeaponsSounds.METAL_CLASH, SoundCategory.PLAYERS, 1, 1);
 			if (result > 0) {
 				target.addEffect(new EffectInstance(Shell.get(),200, result-1));
+				EgoWeaponsEffects.IMITATION.get().increment(sourceLiving, 200, result-1);
 				target.addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(),30, result-1));
 			}
 

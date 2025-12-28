@@ -7,6 +7,8 @@ import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 
+import static net.m3tte.ego_weapons.world.capabilities.DialogueSystem.onHitSanityDialogueEvaluation;
+
 public class SanitySystem {
 
 
@@ -24,6 +26,8 @@ public class SanitySystem {
             playerVariables.sanity = 1;
 
         playerVariables.syncSanity(player);
+
+        onHitSanityDialogueEvaluation(player, (float) (playerVariables.sanity / EgoWeaponsAttributes.getMaxSanity(player)));
     }
 
     public static void healSanity(PlayerEntity player, float amnt) {
@@ -31,7 +35,26 @@ public class SanitySystem {
 
         playerVariables.sanity = Math.min(amnt + playerVariables.sanity, EgoWeaponsAttributes.getMaxSanity(player));
 
+
+
+
         playerVariables.syncSanity(player);
+
+        int sanityTier = player.getPersistentData().getInt("sanityDialogueTier");
+
+        // Reset Damagetiers upon regeneration
+        if (sanityTier > 0) {
+            float sanityPercent = (float) (playerVariables.sanity / EgoWeaponsAttributes.getMaxSanity(player));
+
+            if (sanityPercent > 0.3f && sanityTier > 2) {
+                sanityTier = 1;
+            }
+
+            if (sanityPercent > 0.75f && sanityTier > 1) {
+                sanityTier = 0;
+            }
+            player.getPersistentData().putInt("sanityDialogueTier", sanityTier);
+        }
     }
 
     public static double getSanity(PlayerEntity player) {

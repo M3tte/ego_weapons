@@ -63,7 +63,6 @@ public class CravingBloodbagAnims {
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f);
 
         CRAVING_BLOODBAG_DEATH = new LongHitAnimation(0.16f,   "craving_bloodbag/knockdown", bloodbagModel)
-                .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, bloodbagDeathEffect(0.6f))
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 0.8f);
 
         CRAVING_BLOODBAG_STAGGER = new LongHitAnimation(0.1f, "craving_bloodbag/stagger", bloodbagModel)
@@ -176,26 +175,8 @@ public class CravingBloodbagAnims {
     }
 
     private static StaticAnimation.Event[] bloodbagDeathEffect(float delay) {
-        StaticAnimation.Event[] events = new StaticAnimation.Event[2];
+        StaticAnimation.Event[] events = new StaticAnimation.Event[0];
 
-        events[0] = StaticAnimation.Event.create(0, (entitypatch) -> {
-            World world = entitypatch.getOriginal().level;
-            LivingEntity entity = entitypatch.getOriginal();
-            if (world.isClientSide()) {
-                world.playLocalSound(entity.position().x, entity.position().y, entity.position().z, EgoWeaponsSounds.DOUBT_DEATH, SoundCategory.HOSTILE, 1, 1, true);
-            }
-
-        }, StaticAnimation.Event.Side.BOTH);
-
-        events[1] = StaticAnimation.Event.create(delay, (entitypatch) -> {
-            World world = entitypatch.getOriginal().level;
-            LivingEntity entity = entitypatch.getOriginal();
-            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1,0), 1, EgoWeaponsParticles.DOUBT_EXPLODE.get(), 0, "Root", false);
-
-            if (world.isClientSide()) {
-                world.playLocalSound(entity.position().x, entity.position().y, entity.position().z, SoundEvents.GENERIC_EXPLODE, SoundCategory.HOSTILE, 1, 1, true);
-            }
-        }, StaticAnimation.Event.Side.BOTH);
 
         return events;
     }

@@ -43,6 +43,8 @@ public class FirefistMovesetAnims {
     public static StaticAnimation FIREFIST_SPECIAL_3;
     public static StaticAnimation FIREFIST_RELOAD;
     public static StaticAnimation FIREFIST_IGNITION;
+    public static StaticAnimation FIREFIST_EQUIP;
+
     public static void build(Model biped) {
         System.out.println("Building FIREFIST Animations");
         FIREFIST_IDLE = new StaticAnimation(true, "biped/firefist/idle", biped)
@@ -163,21 +165,21 @@ public class FirefistMovesetAnims {
                 new AttackAnimation.Phase(1.2F, 1.25F, 1.3F, 1.4F, 1.5F, 1.5F, "Tool_R", EgoWeaponsCapabilityPresets.FirefistSpew)
                         .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
-                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.TRIGGERS_EFFECTS, false)
+                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.SWING_EVENT, false)
                         .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.5f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, null)
                         .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.LIU_S6_AUTO_HIT),
                 new AttackAnimation.Phase(1.5F, 1.55f, 1.6F, 1.7F, 1.8F, 1.8F, "Tool_R", EgoWeaponsCapabilityPresets.FirefistSpew)
                         .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
-                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.TRIGGERS_EFFECTS, false)
+                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.SWING_EVENT, false)
                         .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.5f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.FIREFIST_SPIT_FIRE_2)
                         .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.LIU_S6_AUTO_HIT),
                 new AttackAnimation.Phase(1.8f, 1.85f, 1.9f, 2f, 2.1f, 2.1f, "Tool_R", EgoWeaponsCapabilityPresets.FirefistSpew)
                         .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
-                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.TRIGGERS_EFFECTS, false)
+                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.SWING_EVENT, false)
                         .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.5f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, null)
                         .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.LIU_S6_AUTO_HIT),
@@ -286,5 +288,14 @@ public class FirefistMovesetAnims {
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.FIREFIST_HIT)
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.4F)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, firefistFinalHitEvent(2, 1.1f, 2.5f));
+
+        FIREFIST_EQUIP = (new ActionAnimation(0f, 1.5f,   "biped/firefist/equip", biped))
+                .addProperty(AnimationProperty.ActionAnimationProperty.STOP_MOVEMENT, false)
+                .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false)
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f)
+                .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, RatPipeMovesetAnims.equipEffect(0.66f))
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f);
+
+
     }
 }

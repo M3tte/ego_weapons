@@ -57,13 +57,29 @@ public class SinkingEffect extends CountPotencyStatus {
 
 
 
+    @Override
+    public int getCount(LivingEntity entity) {
+        int actualSinking = super.getCount(entity);
+        int departed = EgoWeaponsEffects.THE_DEPARTED.get().getPotency(entity);
+
+        return  Math.max(actualSinking,departed);
+    }
+
+    @Override
+    public int getPotency(LivingEntity entity) {
+
+        int actualSinking = super.getPotency(entity);
+        int living = EgoWeaponsEffects.THE_LIVING.get().getPotency(entity);
+
+        return  Math.max(actualSinking,living);
+    }
 
     @Override
     public boolean isDurationEffectTick(int duration, int amplifier) {
         return true;
     }
 
-    public static void applyOnHit(LivingEntity target) {
+    public static void applyOnHit(LivingEntity target, LivingEntity source) {
         int potency = EgoWeaponsEffects.SINKING.get().getPotency(target);
         if (target instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) target;
@@ -75,6 +91,9 @@ public class SinkingEffect extends CountPotencyStatus {
 
             target.hurt(DamageSource.GENERIC,potency);
         }
+
+
+
         EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.NumberLabelParticle(target.position().add(target.getRandom().nextFloat() - 0.5f,1,target.getRandom().nextFloat() - 0.5f), NumberParticleTypes.SINKING, potency));
 
         ((ServerWorld) target.level).sendParticles(EgoWeaponsParticles.SINKING_APPLY.get(), (target.getX()), (target.getY() + target.getBbHeight() / 2),

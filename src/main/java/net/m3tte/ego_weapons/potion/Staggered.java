@@ -7,7 +7,10 @@ import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifierManager;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.potion.Effect;
@@ -19,8 +22,10 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ObjectHolder;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
+import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 
 import java.util.Objects;
+import java.util.UUID;
 
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
 
@@ -28,6 +33,11 @@ import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILIT
 public class Staggered {
 	@ObjectHolder("ego_weapons:staggered")
 	public static final Effect potion = null;
+
+
+
+
+
 
 	public static Effect get() {
 		Objects.requireNonNull(potion, () -> "Registry Object not present: STAGGER");
@@ -40,6 +50,79 @@ public class Staggered {
 	}
 
 	public static class EffectCustom extends Effect {
+
+
+		static AttributeModifier speedModifier = new AttributeModifier(UUID.fromString("fc415d98-930e-4c92-88d9-6ce88ebff984"), "speedModStagger", -1, AttributeModifier.Operation.MULTIPLY_TOTAL);
+		static AttributeModifier damageModifier = new AttributeModifier(UUID.fromString("fc415c98-930e-4c92-88d9-6ce88ebff984"), "damageModStagger", -1, AttributeModifier.Operation.MULTIPLY_TOTAL);
+		static AttributeModifier attackSpeedModifier = new AttributeModifier(UUID.fromString("fc415c98-930e-4c92-88c9-6ce88ebff984"), "atSpeedModStagger", -0.6, AttributeModifier.Operation.MULTIPLY_TOTAL);
+		static AttributeModifier impactMod = new AttributeModifier(UUID.fromString("fc415c94-930e-4c92-88c9-6ce88ebff984"), "impactModStagger", -1, AttributeModifier.Operation.MULTIPLY_TOTAL);
+
+		@Override
+		public void addAttributeModifiers(LivingEntity living, AttributeModifierManager attrman, int amplifier) {
+			super.addAttributeModifiers(living, attrman, amplifier);
+
+
+
+			ModifiableAttributeInstance speedInst = attrman.getInstance(Attributes.MOVEMENT_SPEED);
+			ModifiableAttributeInstance damageInst = attrman.getInstance(Attributes.ATTACK_DAMAGE);
+			ModifiableAttributeInstance attackSpInst = attrman.getInstance(Attributes.ATTACK_SPEED);
+			ModifiableAttributeInstance impactInst = attrman.getInstance(EpicFightAttributes.IMPACT.get());
+
+
+			if (speedInst != null) {
+				speedInst.removeModifier(speedModifier);
+				speedInst.addPermanentModifier(new AttributeModifier(speedModifier.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue(1, speedModifier), speedModifier.getOperation()));
+			}
+
+			if (damageInst != null) {
+				damageInst.removeModifier(damageModifier);
+				damageInst.addPermanentModifier(new AttributeModifier(damageModifier.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue(1, damageModifier), damageModifier.getOperation()));
+			}
+
+			if (attackSpInst != null) {
+				attackSpInst.removeModifier(attackSpeedModifier);
+				attackSpInst.addPermanentModifier(new AttributeModifier(attackSpeedModifier.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue(1, attackSpeedModifier), attackSpeedModifier.getOperation()));
+			}
+
+			if (impactInst != null) {
+				impactInst.removeModifier(impactMod);
+				impactInst.addPermanentModifier(new AttributeModifier(impactMod.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue(1, impactMod), impactMod.getOperation()));
+			}
+			attrman.save();
+		}
+
+		@Override
+		public void removeAttributeModifiers(LivingEntity living, AttributeModifierManager attrman, int amplifier) {
+			super.removeAttributeModifiers(living, attrman, amplifier);
+			ModifiableAttributeInstance speedInst = attrman.getInstance(Attributes.MOVEMENT_SPEED);
+			ModifiableAttributeInstance damageInst = attrman.getInstance(Attributes.ATTACK_DAMAGE);
+			ModifiableAttributeInstance attackSpInst = attrman.getInstance(Attributes.ATTACK_SPEED);
+			ModifiableAttributeInstance impactInst = attrman.getInstance(EpicFightAttributes.IMPACT.get());
+
+			if (speedInst != null)
+				speedInst.removeModifier(speedModifier);
+
+			if (damageInst != null)
+				damageInst.removeModifier(damageModifier);
+
+			if (attackSpInst != null)
+				attackSpInst.removeModifier(attackSpeedModifier);
+
+			if (impactInst != null)
+				impactInst.removeModifier(impactMod);
+
+			attrman.save();
+
+
+			// Black Silence Unstagger Effect
+			if (!living.hasEffect(this)) {
+				if (living.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.SUIT_OF_THE_BLACK_SILENCE.get())) {
+					EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(living, 0, 2);
+					EgoWeaponsEffects.POWER_UP.get().increment(living, 0, 2);
+				}
+			}
+		}
+
 		public EffectCustom() {
 			super(EffectType.HARMFUL, -16777216);
 			setRegistryName("staggered");
@@ -111,19 +194,6 @@ public class Staggered {
 
 		}
 
-		@Override
-		public void removeAttributeModifiers(LivingEntity entity, AttributeModifierManager p_111187_2_, int p_111187_3_) {
-			super.removeAttributeModifiers(entity, p_111187_2_, p_111187_3_);
-
-			if (!entity.hasEffect(this)) {
-				if (entity.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.SUIT_OF_THE_BLACK_SILENCE.get())) {
-					EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(entity, 0, 2);
-					EgoWeaponsEffects.POWER_UP.get().increment(entity, 0, 2);
-				}
-			}
-
-
-		}
 	}
 
 

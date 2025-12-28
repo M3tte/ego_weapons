@@ -166,4 +166,24 @@ public class EgoWeaponsParticles {
     public static final RegistryObject<BasicParticleType> MAO_BRANCH_CIRCULAR_HIT = PARTICLES.register("mao_branch_circular_hit", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> MAO_BRANCH_REUSE = PARTICLES.register("mao_branch_reuse", () -> new BasicParticleType(true));
 
+    public static final RegistryObject<BasicParticleType> JUSTITIA_STRIKE = PARTICLES.register("justitia_strike", () -> new BasicParticleType(true));
+    public static final RegistryObject<HitParticleType> JUSTITIA_HIT = PARTICLES.register("justitia_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
+
+    public static final RegistryObject<BasicParticleType> JUSTITIA_SCALE_STRIKE = PARTICLES.register("justitia_scale_strike", () -> new BasicParticleType(true));
+    public static final RegistryObject<HitParticleType> JUSTITIA_SCALE_HIT = PARTICLES.register("justitia_scale_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
+
+    public static final RegistryObject<BasicParticleType> JUSTITIA_SCALE = PARTICLES.register("justitia_scale", () -> new BasicParticleType(true));
+
+    public static final RegistryObject<BasicParticleType> JUSTITIA_PARTICLE_SCALE = PARTICLES.register("justitia_particle_scale", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> JUSTITIA_PARTICLE = PARTICLES.register("justitia_particle", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> JUSTITIA_PIECE = PARTICLES.register("justitia_piece", () -> new BasicParticleType(true));
+
+    public static final RegistryObject<BasicParticleType> JUSTITIA_REUSE_STRIKE = PARTICLES.register("justitia_reuse_hit", () -> new BasicParticleType(true));
+
+    public static final RegistryObject<BasicParticleType> HORIZONTAL_SHOCKWAVE = PARTICLES.register("horizontal_shockwave", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> SLASH_SHOCKWAVE = PARTICLES.register("slash_shockwave", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> SOLEMN_LAMENT_SHOCKWAVE = PARTICLES.register("solemn_lament_shockwave", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> MAGIC_BULLET_CIRCLE_SHORT = PARTICLES.register("magic_bullet_circle_short", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> MAGIC_BULLET_CIRCLE_LONG = PARTICLES.register("magic_bullet_circle_long", () -> new BasicParticleType(true));
+
 }

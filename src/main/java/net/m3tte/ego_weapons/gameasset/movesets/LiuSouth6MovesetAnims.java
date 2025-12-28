@@ -10,6 +10,7 @@ import net.m3tte.ego_weapons.item.sunshower.Sunshower;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.AttackTypes;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.DamageTypes;
+import net.minecraft.util.SoundEvents;
 import yesman.epicfight.api.animation.property.AnimationProperty;
 import yesman.epicfight.api.animation.types.*;
 import yesman.epicfight.api.model.Model;
@@ -49,7 +50,17 @@ public class LiuSouth6MovesetAnims {
 
     public static StaticAnimation LIU_S6_FOCUS_EMBERS_BASH;
     public static StaticAnimation LIU_S6_DASH;
+    public static StaticAnimation LIU_S6_EQUIP;
     public static void build(Model biped) {
+
+        LIU_S6_EQUIP = (new ActionAnimation(0f, 1.5f,   "biped/liu_south_6/equip", biped))
+                .addProperty(AnimationProperty.ActionAnimationProperty.STOP_MOVEMENT, false)
+                .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false)
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f)
+                .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, equipEffect(0.33f))
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f);
+
+
         System.out.println("Building LIU SOUTH 6 Animations");
         LIU_S6_IDLE = new StaticAnimation(true, "biped/liu_south_6/idle", biped);
         LIU_S6_WALK = new MovementAnimation(true, "biped/liu_south_6/walk", biped);
@@ -217,5 +228,20 @@ public class LiuSouth6MovesetAnims {
                 .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false)
                 .addProperty(AnimationProperty.ActionAnimationProperty.STOP_MOVEMENT, false)
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1.2f);
+    }
+
+    public static StaticAnimation.Event[] equipEffect(float time) {
+        StaticAnimation.Event[] events = new StaticAnimation.Event[2];
+
+        events[0] = StaticAnimation.Event.create(0, (entitypatch) -> {
+            entitypatch.playSound(SoundEvents.ARMOR_EQUIP_LEATHER, 1, 1, 1);
+        }, StaticAnimation.Event.Side.BOTH);
+
+        events[1] = StaticAnimation.Event.create(time, (entitypatch) -> {
+            entitypatch.playSound(EgoWeaponsSounds.LIU_S6_AUTO_1, 1, 1, 1);
+        }, StaticAnimation.Event.Side.SERVER);
+
+
+        return events;
     }
 }

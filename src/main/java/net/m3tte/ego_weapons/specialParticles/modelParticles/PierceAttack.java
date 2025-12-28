@@ -18,10 +18,10 @@ public class PierceAttack extends RotationAttackParticle {
     public PierceAttack(ClientWorld world, double x, double y, double z, double xSpeed, double targetEntityID, double sourceID, IAnimatedSprite spriteProvider, float quadsize, int lifetime, Vector3f offset, Vector3f offsetRate, boolean glows) {
         super(world, x, y, z, xSpeed, targetEntityID, sourceID, spriteProvider);
 
-        this.flipX = true;
+        this.flipX = false;
         this.quadSize = quadsize;
         this.lifetime = lifetime;
-        this.offset = offset;
+        this.offset = offset.copy();
         this.offsetRate = offsetRate;
         this.glowRenderType = glows;
 

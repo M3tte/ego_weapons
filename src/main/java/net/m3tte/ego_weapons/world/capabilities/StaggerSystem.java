@@ -2,6 +2,7 @@ package net.m3tte.ego_weapons.world.capabilities;
 
 import net.m3tte.ego_weapons.*;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
+import net.m3tte.ego_weapons.item.rat.RatPipe;
 import net.m3tte.ego_weapons.network.packages.ParticlePackages;
 import net.m3tte.ego_weapons.particle.StaggerShardParticle;
 import net.m3tte.ego_weapons.potion.Staggered;
@@ -9,6 +10,7 @@ import net.m3tte.ego_weapons.world.capabilities.entitypatch.StaggerableEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.CombatRules;
 import net.minecraft.util.SoundCategory;
@@ -25,6 +27,7 @@ import java.util.function.Consumer;
 
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
 import static net.m3tte.ego_weapons.procedures.SharedFunctions.onStaggered;
+import static net.m3tte.ego_weapons.world.capabilities.DialogueSystem.speakEvalDialogue;
 
 public class StaggerSystem {
 
@@ -32,9 +35,9 @@ public class StaggerSystem {
     public static boolean isStaggered(LivingEntity entity) {
         if (entity instanceof PlayerEntity) {
             EgoWeaponsModVars.PlayerVariables entityData = entity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
-            return entityData.stagger <= 0;
+            return entityData.stagger <= 0 || entity.hasEffect(Staggered.get());
         } else {
-            return entity.getPersistentData().getDouble("stagger") > entity.getMaxHealth();
+            return entity.getPersistentData().getDouble("stagger") > entity.getMaxHealth() || entity.hasEffect(Staggered.get());
         }
     }
 
@@ -55,8 +58,8 @@ public class StaggerSystem {
 
     public static void reduceStagger(LivingEntity entity, float amnt, Entity source, boolean bypassArmor) {
         reduceStagger(entity, amnt, (e) -> {
-            if (source instanceof PlayerEntity)
-                onStaggered((PlayerEntity) source, entity);
+            if (source instanceof LivingEntity)
+                onStaggered((LivingEntity) source, entity);
         }, bypassArmor);
     }
 
@@ -118,19 +121,25 @@ public class StaggerSystem {
             return;
 
 
+
         if (entity instanceof PlayerEntity) {
             System.out.println("Executing stagger");
         }
 
         if (!entity.hasEffect(Staggered.get()) && entity.isAlive()) {
-            entity.addEffect(new EffectInstance(Staggered.get(), 80, 0));
-            entity.addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 80, 0));
+            entity.addEffect(new EffectInstance(Staggered.get(), 70, 0));
+            entity.addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 70, 0));
             if (!entity.level.isClientSide) {
                 ServerWorld serverWorld = (ServerWorld) entity.level;
                 serverWorld.playSound(null,  entity.getX(), entity.getY(), entity.getZ(), EgoWeaponsSounds.STAGGER, SoundCategory.PLAYERS, 1, 1);
                 serverWorld.sendParticles(StaggerShardParticle.particle, entity.getX(), entity.getY()+entity.getBbHeight() * 0.1f, entity.getZ(), 15, 0, 0, 0, 0.3f);
                 EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendStaggerMessage(entity.getId()));
             }
+
+            // Stagger Behavior for the Rat Pipe
+            if (entity.getItemBySlot(EquipmentSlotType.MAINHAND).getItem().equals(EgoWeaponsItems.RAT_PIPE.get()))
+                RatPipe.onStagger(entity);
+
             onStagger.accept(null);
             entity.playSound(EgoWeaponsSounds.STAGGER, 1,1);
 

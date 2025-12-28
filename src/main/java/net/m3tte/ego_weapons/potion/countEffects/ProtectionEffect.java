@@ -49,21 +49,39 @@ public class ProtectionEffect extends CountPotencyStatus {
         // No ticking needed as time is handled normally.
     }
 
-    public void increment(LivingEntity entity, int potency) {
+    @Override
+    public void increment(LivingEntity entity, int limit, int potency) {
         if (entity.level.isClientSide)
             return;
 
+        if (limit == 0 || limit >= 9)
+            limit = 9;
 
-
-        if (potency > 9)
-            potency = 9;
+        if (potency > limit)
+            potency = limit;
 
         if (!entity.hasEffect(this)) {
-            entity.addEffect(new EffectInstance(this, 200, potency));
+            entity.addEffect(new EffectInstance(this, 300, potency-1));
         } else {
-            entity.getEffect(this).update(new EffectInstance(this, 200, potency));
+            entity.getEffect(this).update(new EffectInstance(this, entity.getEffect(this).getDuration(), Math.min(entity.getEffect(this).getAmplifier() + potency, limit-1)));
         }
         syncEffect(entity);
+    }
+
+    @Override
+    public void decrement(LivingEntity entity, int limit, int potency) {
+        if (entity.level.isClientSide)
+            return;
+
+        int previousPotency = 0;
+        if (entity.hasEffect(this)) {
+            previousPotency = entity.getEffect(this).getAmplifier()+1;
+            entity.removeEffect(this);
+        }
+
+        if ((previousPotency - potency) > 0) {
+            entity.addEffect(new EffectInstance(this, 300, potency-1));
+        }
     }
 
     @Override

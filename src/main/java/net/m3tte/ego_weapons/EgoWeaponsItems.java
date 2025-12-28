@@ -9,12 +9,14 @@ import net.m3tte.ego_weapons.item.firefist.FirefistGauntlet;
 import net.m3tte.ego_weapons.item.fullstop_rep.FullstopRepArmor;
 import net.m3tte.ego_weapons.item.fullstop_rep.FullstopRepWeapon;
 import net.m3tte.ego_weapons.item.fullstop_sniper.FullstopSniperArmor;
-import net.m3tte.ego_weapons.item.fullstop_sniper.FullstopSniperSuitcase;
+import net.m3tte.ego_weapons.item.fullstop_sniper.GenericCosmeticItem;
 import net.m3tte.ego_weapons.item.fullstop_sniper.FullstopSniperWeapon;
 import net.m3tte.ego_weapons.item.guns.AmmoItem;
 import net.m3tte.ego_weapons.item.guns.GunCaliber;
 import net.m3tte.ego_weapons.item.heishou_mao.HeishouMaoRobe;
 import net.m3tte.ego_weapons.item.heishou_mao.HeishouMaoSword;
+import net.m3tte.ego_weapons.item.justitia.JustitiaCloak;
+import net.m3tte.ego_weapons.item.justitia.JustitiaSword;
 import net.m3tte.ego_weapons.item.liu.LiuFireGauntlet;
 import net.m3tte.ego_weapons.item.liu.LiuSection6Armor;
 import net.m3tte.ego_weapons.item.magic_bullet.MagicBullet;
@@ -24,6 +26,10 @@ import net.m3tte.ego_weapons.item.mimicry.MimicryItem;
 import net.m3tte.ego_weapons.item.oeufi.OeufiArmor;
 import net.m3tte.ego_weapons.item.oeufi.OeufiContractItem;
 import net.m3tte.ego_weapons.item.oeufi.OeufiHalberd;
+import net.m3tte.ego_weapons.item.rat.RatBluntJacket;
+import net.m3tte.ego_weapons.item.rat.RatJacket;
+import net.m3tte.ego_weapons.item.rat.RatKnife;
+import net.m3tte.ego_weapons.item.rat.RatPipe;
 import net.m3tte.ego_weapons.item.redmist.RedMistEGOSuit;
 import net.m3tte.ego_weapons.item.redmist.RedMistJacket;
 import net.m3tte.ego_weapons.item.solemn_lament.SolemnLament;
@@ -32,7 +38,6 @@ import net.m3tte.ego_weapons.item.stigma_workshop.StigmaWorkshopSuit;
 import net.m3tte.ego_weapons.item.stigma_workshop.StigmaWorkshopSword;
 import net.m3tte.ego_weapons.item.sunshower.Sunshower;
 import net.m3tte.ego_weapons.item.sunshower.SunshowerArmor;
-import net.m3tte.ego_weapons.world.capabilities.AmmoType;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -117,7 +122,7 @@ public class EgoWeaponsItems {
     public static RegistryObject<Item> AL_HV_PULVERIZATION_RIFLE_ROUND = registerItem("al_hv_pulverization_rifle_round", new AmmoItem( new Item.Properties().tab(ItemGroup.TAB_COMBAT), 4, GunCaliber.SNIPER));
 
     public static RegistryObject<Item> FULLSTOP_SNIPER_RAILGUN = registerItem("fullstop_office_railgun", new FullstopSniperWeapon( 6, -2.25f, new Item.Properties().tab(ItemGroup.TAB_COMBAT), GunCaliber.SNIPER, 8));
-    public static RegistryObject<Item> FULLSTOP_SNIPER_SUITCASE = registerItem("fullstop_suitcase", new FullstopSniperSuitcase());
+    public static RegistryObject<Item> FULLSTOP_SNIPER_SUITCASE = registerItem("fullstop_suitcase", new GenericCosmeticItem());
 
     public static RegistryObject<Item> FULLSTOP_SNIPER_SUIT = registerItem("fullstop_office_sniper_suit", FullstopSniperArmor.getArmorForSlot(EquipmentSlotType.CHEST));
     public static RegistryObject<Item> FULLSTOP_SNIPER_PANTS = registerItem("fullstop_office_sniper_pants", FullstopSniperArmor.getArmorForSlot(EquipmentSlotType.LEGS));
@@ -132,7 +137,7 @@ public class EgoWeaponsItems {
     public static RegistryObject<Item> FIREFIST_GAUNTLET = registerItem("firefist_gauntlet", new FirefistGauntlet(5, -1.5f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
 
     public static RegistryObject<Item> STIGMA_WORKSHOP_SWORD = registerItem("stigma_workshop_sword", new StigmaWorkshopSword(3, -1.8f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
-    public static RegistryObject<Item> STIGMA_WORKSHOP_SWORD_SHEATH = registerItem("stigma_workshop_sword_sheath", new FullstopSniperSuitcase());
+    public static RegistryObject<Item> STIGMA_WORKSHOP_SWORD_SHEATH = registerItem("stigma_workshop_sword_sheath", new GenericCosmeticItem());
     public static RegistryObject<Item> STIGMA_WORKSHOP_GLASSES = registerItem("stigma_workshop_glasses", StigmaWorkshopSuit.getArmorForSlot(EquipmentSlotType.HEAD));
     public static RegistryObject<Item> STIGMA_WORKSHOP_SUIT = registerItem("stigma_workshop_suit", StigmaWorkshopSuit.getArmorForSlot(EquipmentSlotType.CHEST));
     public static RegistryObject<Item> STIGMA_WORKSHOP_PANTS = registerItem("stigma_workshop_pants", StigmaWorkshopSuit.getArmorForSlot(EquipmentSlotType.LEGS));
@@ -143,6 +148,22 @@ public class EgoWeaponsItems {
     public static RegistryObject<Item> HEISHOU_MAO_ROBE = registerItem("heishou_mao_robe", HeishouMaoRobe.getArmorForSlot(EquipmentSlotType.CHEST));
     public static RegistryObject<Item> HEISHOU_MAO_PANTS = registerItem("heishou_mao_pants", HeishouMaoRobe.getArmorForSlot(EquipmentSlotType.LEGS));
 
+    public static RegistryObject<Item> RAT_SHANK = registerItem("rat_shank", new RatKnife(0, -1.35f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+    public static RegistryObject<Item> RAT_OUTFIT = registerItem("rat_outfit", RatJacket.getArmorForSlot(EquipmentSlotType.CHEST));
+    public static RegistryObject<Item> RAT_PANTS = registerItem("rat_pants", RatJacket.getArmorForSlot(EquipmentSlotType.LEGS));
+
+    public static RegistryObject<Item> RAT_PIPE = registerItem("rat_pipe", new RatPipe(1, -1.8f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+
+    public static RegistryObject<Item> BLUNT_RAT_OUTFIT = registerItem("rat_blunt_outfit", RatBluntJacket.getArmorForSlot(EquipmentSlotType.CHEST));
+    public static RegistryObject<Item> BLUNT_RAT_PANTS = registerItem("rat_blunt_pants", RatBluntJacket.getArmorForSlot(EquipmentSlotType.LEGS));
+    public static RegistryObject<Item> BLUNT_RAT_HOOD = registerItem("rat_blunt_hood", RatBluntJacket.getArmorForSlot(EquipmentSlotType.HEAD));
+
+    public static RegistryObject<Item> JUSTITIA_SWORD = registerItem("justitia", new JustitiaSword(2, -1.4f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+
+    public static RegistryObject<Item> JUSTITIA_CLOAK = registerItem("justitia_cloak", JustitiaCloak.getArmorForSlot(EquipmentSlotType.CHEST));
+    public static RegistryObject<Item> JUSTITIA_BLINDFOLD = registerItem("justitia_blindfold", JustitiaCloak.getArmorForSlot(EquipmentSlotType.HEAD));
+
+    public static RegistryObject<Item> JUSTITIA_ROPE = registerItem("justitia_rope", new GenericCosmeticItem());
     private static RegistryObject<Item> registerItem(String registryName, Item i) {
         return ITEMS.register(registryName, () -> i);
     }

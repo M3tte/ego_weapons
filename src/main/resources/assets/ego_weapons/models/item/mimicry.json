@@ -1,7 +1,17 @@
 {
-  "parent": "ego_weapons:custom/mimicry",
-  "textures": {
-    "0": "ego_weapons:blocks/mimicry",
-    "particle": "ego_weapons:items/katana"
-  }
+  "parent": "item/generated",
+  "overrides": [
+    {
+      "predicate": {
+        "morph": 0
+      },
+      "model": "ego_weapons:item/mimicry_base"
+    },
+    {
+      "predicate": {
+        "morph": 1
+      },
+      "model": "ego_weapons:item/mimicry_goodbye"
+    }
+  ]
 }

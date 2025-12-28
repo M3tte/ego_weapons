@@ -1,13 +1,11 @@
 package net.m3tte.ego_weapons.execFunctions;
 
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
-import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.particle.BlackdamageParticle;
 import net.m3tte.ego_weapons.particle.SparkparticleParticle;
 import net.m3tte.ego_weapons.potion.FuriosoPotionEffect;
-import net.m3tte.ego_weapons.potion.countEffects.BleedEffect;
-import net.m3tte.ego_weapons.procedures.BlipTick;
+import net.m3tte.ego_weapons.procedures.EntityTick;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -185,7 +183,7 @@ public class BlackSilenceEvaluator {
                     if (player.getCooldowns().isOnCooldown(player.getItemInHand(Hand.MAIN_HAND).getItem())) {
                         player.getCooldowns().addCooldown(player.getItemInHand(Hand.OFF_HAND).getItem(), 90);
                         player.getCooldowns().addCooldown(player.getItemInHand(Hand.MAIN_HAND).getItem(), 90);
-                        BlipTick.chargeBlips(player, 1, true);
+                        EntityTick.chargeBlips(player, 1, true);
                     } else {
                         player.getCooldowns().addCooldown(player.getItemInHand(Hand.MAIN_HAND).getItem(), 100);
                     }
@@ -223,7 +221,7 @@ public class BlackSilenceEvaluator {
                     PlayerPatch<?> entitypatch = (PlayerPatch)player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, (Direction)null).orElse((EntityPatch) null);
                     entitypatch.setStamina(Math.min(entitypatch.getMaxStamina(), entitypatch.getStamina() + entitypatch.getMaxStamina() * 0.3F));
                     player.getCooldowns().addCooldown(player.getItemInHand(Hand.MAIN_HAND).getItem(), 60);
-                    BlipTick.chargeBlips(player, 1, true);
+                    EntityTick.chargeBlips(player, 1, true);
                 }
             }
         }

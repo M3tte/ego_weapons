@@ -9,10 +9,10 @@ import net.m3tte.ego_weapons.item.guns.GunItem;
 import net.m3tte.ego_weapons.potion.countEffects.Shell;
 import net.m3tte.ego_weapons.potion.SolemnLamentEffects;
 import net.m3tte.ego_weapons.procedures.legacy.BlipwarninghandlerProcedure;
-import net.m3tte.ego_weapons.procedures.abilities.AbilityTier;
-import net.m3tte.ego_weapons.procedures.abilities.WeaponAbilityProcedure;
-import net.m3tte.ego_weapons.procedures.abilities.ItemAbility;
-import net.m3tte.ego_weapons.procedures.abilities.ArmorAbilityProcedure;
+import net.m3tte.ego_weapons.gameasset.abilities.AbilityTier;
+import net.m3tte.ego_weapons.gameasset.abilities.WeaponAbilityProcedure;
+import net.m3tte.ego_weapons.gameasset.abilities.ItemAbility;
+import net.m3tte.ego_weapons.gameasset.abilities.ArmorAbilityProcedure;
 import net.m3tte.ego_weapons.world.capabilities.AmmoType;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.minecraft.client.Minecraft;
@@ -63,6 +63,7 @@ public class GenericOverlay extends ModIngameGui {
 
 	final static ResourceLocation base_ui = new ResourceLocation("ego_weapons:textures/screens/gui/base_ui.png");
 	final static ResourceLocation healthbar = new ResourceLocation("ego_weapons:textures/screens/gui/healthbar.png");
+	final static ResourceLocation creativehealthbaroverlay = new ResourceLocation("ego_weapons:textures/screens/gui/creative.png");
 	final static ResourceLocation shieldbar = new ResourceLocation("ego_weapons:textures/screens/gui/shieldbar_anim.png");
 	final static ResourceLocation healthbar_b = new ResourceLocation("ego_weapons:textures/screens/gui/healthbar_bright.png");
 	final static ResourceLocation staggerbar = new ResourceLocation("ego_weapons:textures/screens/gui/staggerbar.png");
@@ -565,16 +566,20 @@ public class GenericOverlay extends ModIngameGui {
 			blit(event.getMatrixStack(), offsetX+ 38, offsetY + 20, 0, 0, (int)(149 * currentSanityPercent), 10, 149, 10);
 		}
 
-		renderShellOverlayBar(offsetX, offsetY, player, event);
+		renderHealthbarOverlays(offsetX, offsetY, player, event);
 	}
 
 
-	private static void renderShellOverlayBar(int offsetX, int offsetY, PlayerEntity player,  RenderGameOverlayEvent.Pre event) {
+	private static void renderHealthbarOverlays(int offsetX, int offsetY, PlayerEntity player, RenderGameOverlayEvent.Pre event) {
 		if (player.hasEffect(Shell.get())) {
 			Minecraft.getInstance().getTextureManager().bind(shellHealthbar[Math.max(Math.min(player.getEffect(Shell.get()).getAmplifier(),4),0)]);
 			blit(event.getMatrixStack(), offsetX+ 29, offsetY + 8, 0, 0, 154, 11, 154, 11);
 		}
 
+		if (player.isCreative()) {
+			Minecraft.getInstance().getTextureManager().bind(creativehealthbaroverlay);
+			blit(event.getMatrixStack(), offsetX+ 31, offsetY + 8, 0, 0, 154, 11, 154, 11);
+		}
 	}
 
 

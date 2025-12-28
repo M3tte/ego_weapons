@@ -16,8 +16,9 @@ public class SlashDown extends RotationAttackParticle {
     private Entity sourceEntity;
     public SlashDown(ClientWorld world, double x, double y, double z, double xSpeed, double targetEntityID, double sourceID, IAnimatedSprite spriteProvider, float quadsize, int lifetime, Vector3f offset, Vector3f offsetRate, boolean glow) {
         super(world, x, y, z, xSpeed, targetEntityID, sourceID, spriteProvider);
-        this.flipY = false;
-        this.invertY = true;
+        this.flipY = true;
+        this.flipX = true;
+        this.invertY = false;
 
         this.quadSize = quadsize;
         this.lifetime = lifetime;

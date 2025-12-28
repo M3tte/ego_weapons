@@ -14,29 +14,22 @@ public class GreatSplitHorizontal extends RotationBoundParticle {
     public GreatSplitHorizontal(ClientWorld world, double x, double y, double z, double xSpeed, double entityUUID, double zSpeed, IAnimatedSprite spriteProvider) {
         super(world, x, y, z, xSpeed, entityUUID, zSpeed, spriteProvider);
 
-        this.invertX = true;
+        this.invertX = false;
         this.invertY = false;
 
         this.rotation.add(0,180,0);
         //this.rotationOffs.set(180,0,0);
         this.quadSize = 4f;
-        this.lifetime = 30;
+        this.lifetime = 20;
         this.offset = new Vector3f(0f,0.3f,-3f);
         this.offsetRate = new Vector3f(0f,0,0);
     }
 
     @Override
-    protected Vector3f[] generateVectorArray(boolean inv) {
-        //int invVar = inv ? -1 : 1;
-        // return new Vector3f[]{new Vector3f(1.0F * invVar, 0, 1.0F * invVar), new Vector3f(1.0F * invVar, 0, -1.0F * invVar), new Vector3f(-1.0F * invVar, 0, -1.0F * invVar), new Vector3f(-1.0F * invVar, 0, 1.0F * invVar)};
-        if (inv) {
-            return new Vector3f[]{new Vector3f(1.0F, 0, -1.0F), new Vector3f(1.0F, 0, 1.0F), new Vector3f(-1.0F, 0, 1.0F), new Vector3f(-1.0F, 0, -1.0F)};
-        } else {
-            return new Vector3f[]{new Vector3f(1.0F, 0, 1.0F), new Vector3f(1.0F, 0, -1.0F), new Vector3f(-1.0F, 0, -1.0F), new Vector3f(-1.0F, 0, 1.0F)};
-        }
+    protected Vector3f[] generateVectorArray() {
 
+        return new Vector3f[]{new Vector3f(1.0F, 0.0F, -1.0F), new Vector3f(1.0F, 0F, 1.0F), new Vector3f(-1.0F, 0.0F, 1.0F), new Vector3f(-1.0F, 0.0F, -1.0F)};
     }
-
 
     @OnlyIn(Dist.CLIENT)
     public static class Provider implements IParticleFactory<BasicParticleType> {

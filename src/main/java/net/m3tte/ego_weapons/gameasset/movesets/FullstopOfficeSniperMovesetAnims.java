@@ -6,7 +6,7 @@ import net.m3tte.ego_weapons.gameasset.AttackMoveType;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
-import net.m3tte.ego_weapons.procedures.abilities.armorAbilities.FullstopSniperFocus;
+import net.m3tte.ego_weapons.gameasset.abilities.armorAbilities.FullstopSniperFocus;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets;
 import yesman.epicfight.api.animation.property.AnimationProperty;
@@ -18,8 +18,8 @@ import yesman.epicfight.gameasset.ColliderPreset;
 import yesman.epicfight.particle.EpicFightParticles;
 
 import static net.m3tte.ego_weapons.item.fullstop_sniper.FullstopSniperWeapon.*;
-import static net.m3tte.ego_weapons.procedures.abilities.assistAttacks.FullstopRifleWeaponAssistAttack.fireFSRailgunAssistAttack;
-import static net.m3tte.ego_weapons.procedures.abilities.reloadAbilities.FullstopRifleReloadAbility.reloadFSRound;
+import static net.m3tte.ego_weapons.gameasset.abilities.assistAttacks.FullstopRifleWeaponAssistAttack.fireFSRailgunAssistAttack;
+import static net.m3tte.ego_weapons.gameasset.abilities.reloadAbilities.FullstopRifleReloadAbility.reloadFSRound;
 
 
 public class FullstopOfficeSniperMovesetAnims {
@@ -51,9 +51,18 @@ public class FullstopOfficeSniperMovesetAnims {
     public static StaticAnimation FULLSTOP_SNIPER_GUARD_HIT;
     public static StaticAnimation FULLSTOP_SNIPER_PARRY;
     public static StaticAnimation FULLSTOP_SNIPER_FOCUS;
+    public static StaticAnimation FULLSTOP_SNIPER_EQUIP;
 
 
     public static void build(Model biped) {
+
+        FULLSTOP_SNIPER_EQUIP = (new ActionAnimation(0f, 1.5f,   "biped/fullstop_sniper/equip", biped))
+                .addProperty(AnimationProperty.ActionAnimationProperty.STOP_MOVEMENT, false)
+                .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false)
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f)
+                .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, RatPipeMovesetAnims.equipEffect(0.75f))
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f);
+
 
         FULLSTOP_SNIPER_IDLE = new StaticAnimation(true, "biped/fullstop_sniper/idle", biped);
         FULLSTOP_SNIPER_WALK = new MovementAnimation(true, "biped/fullstop_sniper/walk", biped);

@@ -17,6 +17,7 @@
  */
 package net.m3tte.ego_weapons;
 
+import net.m3tte.ego_weapons.client.renderLayers.JustitiaRopeRenderer;
 import net.m3tte.ego_weapons.event.ModelRegisterHandler;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsClientModels;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsModels;
@@ -25,6 +26,7 @@ import net.m3tte.ego_weapons.network.packages.PackageRegistry;
 import net.m3tte.ego_weapons.world.capabilities.gamerules.EgoWeaponsGamerules;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.LivingRenderer;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.resources.IResourceManager;
@@ -38,6 +40,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import org.apache.logging.log4j.LogManager;
@@ -60,7 +63,6 @@ public class EgoWeaponsMod {
 		FMLJavaModLoadingContext.get().getModEventBus().register(this);
 		FMLJavaModLoadingContext.get().getModEventBus().register(new ModelRegisterHandler());
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::init);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientLoad);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doServerStuff);
 		EgoWeaponsEFLoader.registerStuffs(FMLJavaModLoadingContext.get().getModEventBus());
 		EgoWeaponsGUIElements.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -71,6 +73,7 @@ public class EgoWeaponsMod {
 
 
 
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientLoad);
 	}
 
 	private void init(FMLCommonSetupEvent event) {
@@ -89,6 +92,8 @@ public class EgoWeaponsMod {
 		EgoWeaponsClientModels.LOGICAL_CLIENT.loadArmatures(resourceManager);
 		EgoWeaponsGUIElements.registerClient();
 		MinecraftForge.EVENT_BUS.register(new EgoWeaponsKeybinds()); // Custom Keybinds
+
+
 	}
 
 	@SubscribeEvent
@@ -107,7 +112,6 @@ public class EgoWeaponsMod {
 	}
 
 
-
 	private static class TcorpModFMLBusEvents {
 		private final EgoWeaponsMod parent;
 
@@ -119,5 +123,8 @@ public class EgoWeaponsMod {
 		public void serverLoad(FMLServerStartingEvent event) {
 			this.parent.elements.getElements().forEach(element -> element.serverLoad(event));
 		}
+
 	}
+
+
 }

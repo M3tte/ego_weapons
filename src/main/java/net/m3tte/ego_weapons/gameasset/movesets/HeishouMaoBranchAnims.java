@@ -5,9 +5,8 @@ import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoAttackPhase;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
-import net.m3tte.ego_weapons.item.firefist.FirefistGauntlet;
-import net.m3tte.ego_weapons.item.oeufi.OeufiHalberd;
 import net.m3tte.ego_weapons.item.stigma_workshop.StigmaWorkshopSword;
+import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
 import net.m3tte.ego_weapons.world.capabilities.damage.DirectEgoDamageSource;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.AttackTypes;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.DamageTypes;
@@ -18,11 +17,11 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.Hand;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import yesman.epicfight.api.animation.property.AnimationProperty;
 import yesman.epicfight.api.animation.types.*;
-import yesman.epicfight.api.collider.Collider;
 import yesman.epicfight.api.model.Model;
 import yesman.epicfight.api.utils.ExtendedDamageSource;
 import yesman.epicfight.api.utils.math.ValueCorrector;
@@ -60,6 +59,7 @@ public class HeishouMaoBranchAnims {
     public static StaticAnimation HEISHOU_MAO_PARRY_ATTACK;
     public static StaticAnimation HEISHOU_MAO_SPECIAL_1;
     public static StaticAnimation HEISHOU_MAO_SPECIAL_2;
+    public static StaticAnimation HEISHOU_MAO_EQUIP;
 
     public static void build(Model biped) {
         System.out.println("Building HEISHOU_MAO Animations");
@@ -109,13 +109,13 @@ public class HeishouMaoBranchAnims {
                         .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MAO_BRANCH_HIT),
                 new EgoAttackPhase(1.12F, 1.12F, 1.15F, 1.33F, 1.4F, 1.4F, "Tool_R", EgoWeaponsCapabilityPresets.CURSEWRIT_BUTCHERBLADE)
                         .addProperty(EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER, "heishou_mao_special_3")
-                        .addProperty(EgoAttackPhase.EgoWeaponsAttackPhaseProperty.TRIGGERS_EFFECTS, false)
+                        .addProperty(EgoAttackPhase.EgoWeaponsAttackPhaseProperty.SWING_EVENT, false)
                         .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
                         .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.4f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MAO_BRANCH_HIT),
                 new EgoAttackPhase(1.4F, 1.42f, 1.44F, 1.65F, 1.9F, 1.9F, "Tool_R", EgoWeaponsCapabilityPresets.CURSEWRIT_BUTCHERBLADE)
                         .addProperty(EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER, "heishou_mao_special_4")
-                        .addProperty(EgoAttackPhase.EgoWeaponsAttackPhaseProperty.TRIGGERS_EFFECTS, false)
+                        .addProperty(EgoAttackPhase.EgoWeaponsAttackPhaseProperty.SWING_EVENT, false)
                         .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
                         .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.4f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.HEISHOU_MAO_SWING)
@@ -199,6 +199,14 @@ public class HeishouMaoBranchAnims {
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.HEISHOU_MAO_DASH)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MAO_BRANCH_HIT)
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 2.25F);
+
+        HEISHOU_MAO_EQUIP = (new ActionAnimation(0f, 1.5f,   "biped/heishou_mao/equip", biped))
+                .addProperty(AnimationProperty.ActionAnimationProperty.STOP_MOVEMENT, false)
+                .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, false)
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f)
+                .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, RatPipeMovesetAnims.equipEffect(0.6f))
+                .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f);
+
 
         HEISHOU_MAO_AUTO_1 = new BasicEgoAttackAnimation(0.08F, 0.45F, 0.9F, 1.2F, 1.4F, null, "Tool_R", "biped/heishou_mao/auto_1", biped)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
@@ -385,7 +393,7 @@ public class HeishouMaoBranchAnims {
         }, StaticAnimation.Event.Side.BOTH);
         events[1] = StaticAnimation.Event.create(1.25f, (entitypatch) -> {
             entitypatch.playAnimationSynchronized(HEISHOU_MAO_SPECIAL_2, 0);
-        }, StaticAnimation.Event.Side.BOTH);
+        }, StaticAnimation.Event.Side.SERVER);
         return events;
     }
 
@@ -446,6 +454,8 @@ public class HeishouMaoBranchAnims {
                         entity.level.addParticle(EgoWeaponsParticles.MAO_BRANCH_REUSE.get(), target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 0, 0, 0);
                     }
 
+                    DialogueSystem.speakEvalDialogue(entity, "dialogue.ego_weapons.skills.mao_branch_sword.1", DialogueSystem.DialogueTypes.SKILL, TextFormatting.YELLOW);
+
                     target.playSound(EgoWeaponsSounds.HEISHOU_MAO_SPECIAL_REUSE_HIT, 2, 1);
                 }
             }
@@ -496,7 +506,7 @@ public class HeishouMaoBranchAnims {
         }, StaticAnimation.Event.Side.BOTH);
         events[1] = StaticAnimation.Event.create(0.4f, (entitypatch) -> {
             entitypatch.playAnimationSynchronized(HEISHOU_MAO_PARRY_ATTACK, 0);
-        }, StaticAnimation.Event.Side.BOTH);
+        }, StaticAnimation.Event.Side.SERVER);
         return events;
     }
 

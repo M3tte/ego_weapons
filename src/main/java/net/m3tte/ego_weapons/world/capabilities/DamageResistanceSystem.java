@@ -1,6 +1,7 @@
 package net.m3tte.ego_weapons.world.capabilities;
 
 import net.m3tte.ego_weapons.EgoWeaponsAttributes;
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsEntities;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
@@ -118,6 +119,8 @@ public class DamageResistanceSystem {
 
             baseMult = Math.round(baseMult * 100)/100f;
 
+
+
             if (staggered) {
                 float damageFactor = 1;
 
@@ -145,10 +148,23 @@ public class DamageResistanceSystem {
     private static float getFullyQualifiedResistanceMult(GenericEgoDamage.DamageTypes damageType, GenericEgoDamage.AttackTypes attackType, LivingEntity target) {
         float mult = 1;
 
+        float extraAttackTypeResistance = 0;
+
+        /*
+            When wearing justitia. Players with SIN take 0.1x more damage per stack.
+             */
+        if (target.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.JUSTITIA_CLOAK.get())) {
+            int sinEffect = EgoWeaponsEffects.SIN.get().getPotency(target);
+
+            extraAttackTypeResistance += (float) (sinEffect * 0.1);
+
+        }
+
+
         mult *= EgoWeaponsAttributes.getDamageTypeResistance(damageType, target);
 
         if (!damageType.equals(GenericEgoDamage.DamageTypes.PALE))
-            mult *= EgoWeaponsAttributes.getAttackTypeResistance(attackType, target);
+            mult *= (EgoWeaponsAttributes.getAttackTypeResistance(attackType, target) + extraAttackTypeResistance);
 
         return mult;
     }

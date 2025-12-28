@@ -1,5 +1,6 @@
 package net.m3tte.ego_weapons.mixin;
 
+import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -45,6 +46,10 @@ public class PlayerEntityDamageMixin {
         return modifyDamageGeneric(amount, source, self);
     }
 
+    @Inject(method = "actuallyHurt(Lnet/minecraft/util/DamageSource;F)V", at = @At("TAIL"))
+    private void sendDialogueOnDamage(DamageSource src, float amnt, CallbackInfo ci) {
 
+        DialogueSystem.onHitDialogueEvaluation(((PlayerEntity)(Object)this), src);
+    }
 
 }

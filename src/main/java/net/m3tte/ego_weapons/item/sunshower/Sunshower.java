@@ -14,6 +14,7 @@ import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
 import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
@@ -146,7 +147,7 @@ public class Sunshower extends EgoWeaponsWeapon {
 			sunshowerAutoAnimIds = new int[]{SunshowerMovesetAnims.SUNSHOWER_AUTO_1.getId(), SunshowerMovesetAnims.SUNSHOWER_AUTO_2.getId(), SunshowerMovesetAnims.SUNSHOWER_AUTO_3.getId(), SunshowerMovesetAnims.SUNSHOWER_AUTO_4.getId()};
         }
 
-		PlayerPatch<?> entitypatch = (PlayerPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
 
@@ -177,7 +178,7 @@ public class Sunshower extends EgoWeaponsWeapon {
 
 		PlayerVariables entityData = sourceentity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
-		PlayerPatch<?> entitypatch = (PlayerPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
 
@@ -262,7 +263,7 @@ public class Sunshower extends EgoWeaponsWeapon {
 
 	public static float modifyDamageAmount(LivingEntity target, LivingEntity source, float mult, DamageSource damageSource) {
 
-		PlayerPatch<?> entitypatch = (PlayerPatch<?>) source.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) source.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
 
@@ -435,9 +436,13 @@ public class Sunshower extends EgoWeaponsWeapon {
 
 		events[0] = StaticAnimation.Event.create(0.0f, (entitypatch) -> {
 			entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().remove("spreadoutcounter");
+
 		}, StaticAnimation.Event.Side.BOTH);
 
 		events[1] = StaticAnimation.Event.create(0.9f, (entitypatch) -> {
+			if (entitypatch.getOriginal().level.isClientSide()){
+				entitypatch.playSound(EgoWeaponsSounds.SUNSHOWER_SPREAD_OUT_V_1, 1, 1);
+			}
 			if (entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().getInt("spreadoutcounter") == 2) {
 				entitypatch.getOriginal().addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 20, 0));
 				entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().remove("spreadoutcounter");
@@ -508,11 +513,19 @@ public class Sunshower extends EgoWeaponsWeapon {
 
 		events[0] = StaticAnimation.Event.create(0, (entitypatch) -> {
 			entitypatch.playSound(EgoWeaponsSounds.SUNSHOWER_SPREAD_OUT_3, 1f,1, 1);
+
 		}, StaticAnimation.Event.Side.CLIENT);
 
 		events[1] = StaticAnimation.Event.create(0.5f, (entitypatch) -> {
 			entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().putInt("open", 1);
+
+			DialogueSystem.speakEvalDialogue(entitypatch.getOriginal(), "dialogue.ego_weapons.skills.sunshower.2", DialogueSystem.DialogueTypes.SKILL, TextFormatting.AQUA);
+
+
 			EgoWeaponsAnimations.spawnArmatureParticle(entitypatch, 0, new Vector3d(0,0,-1.75f), 1, EgoWeaponsParticles.PUDDLE_STOMP_RIPPLE.get(), 0, "Tool_R");
+			if (entitypatch.getOriginal().level.isClientSide()){
+				entitypatch.playSound(EgoWeaponsSounds.SUNSHOWER_SPREAD_OUT_V_2, 1, 1);
+			}
 		}, StaticAnimation.Event.Side.BOTH);
 
 		events[2] = StaticAnimation.Event.create(1f, (entitypatch) -> {

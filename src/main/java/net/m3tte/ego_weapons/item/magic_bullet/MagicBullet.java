@@ -85,6 +85,14 @@ public class MagicBullet extends EgoWeaponsWeapon {
 	public static float damageMultiplier(LivingEntity sourceentity, LivingEntity target, float multiplier, DamageSource source) {
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
+
+
+		if (entitypatch == null)
+			return multiplier;
+
+		if (entitypatch.getServerAnimator() == null)
+			return multiplier;
+
 		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
 
 		if (currentanim.getRealAnimation() instanceof BasicEgoAttackAnimation || currentanim.getRealAnimation() instanceof EgoAttackAnimation) {
@@ -112,11 +120,20 @@ public class MagicBullet extends EgoWeaponsWeapon {
 	@Override
 	public boolean hurtEnemy(ItemStack itemstack, LivingEntity target, LivingEntity sourceentity){
 		boolean retval = super.hurtEnemy(itemstack, target, sourceentity);
+
 		EgoWeaponsModVars.PlayerVariables entityData = sourceentity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
-		PlayerPatch<?> entitypatch = (PlayerPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+
+		if (entitypatch == null)
+			return retval;
+
+		if (entitypatch.getServerAnimator() == null || entityData == null)
+			return retval;
 
 		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
+
+
 
 		if (currentanim.getRealAnimation() instanceof BasicEgoAttackAnimation || currentanim.getRealAnimation() instanceof EgoAttackAnimation && entityData != null) {
 
@@ -140,7 +157,10 @@ public class MagicBullet extends EgoWeaponsWeapon {
 					if (sourceentity instanceof PlayerEntity) {
 						PlayerEntity sourcePlayer = (PlayerEntity) sourceentity;
 						if (!(sourcePlayer.getCooldowns().isOnCooldown(this.getItem()) && entityData.globalcooldown <= 0)) {
-							entitypatch.setStamina(Math.min(entitypatch.getStamina() + 1f, entitypatch.getMaxStamina()));
+							if (entitypatch instanceof PlayerPatch) {
+								((PlayerPatch<?>)entitypatch).setStamina(Math.min(((PlayerPatch<?>)entitypatch).getStamina() + 1f, ((PlayerPatch<?>)entitypatch).getMaxStamina()));
+
+							}
 							StaggerSystem.healStagger(sourceentity, 0.4f);
 
 							if (EgoWeaponsItems.MAGIC_BULLET_CLOAK.get().equals(sourcePlayer.getItemBySlot(EquipmentSlotType.CHEST).getItem())) {

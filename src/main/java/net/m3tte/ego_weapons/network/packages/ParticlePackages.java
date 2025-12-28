@@ -160,6 +160,53 @@ public class ParticlePackages {
         }
     }
 
+    public static class MagicBulletAimPacket {
+
+        int entityID;
+        float targetOffset;
+        float scaleMult;
+        ResourceLocation particleID;
+        public MagicBulletAimPacket(int EntityID, float targetOffset, float scaleMult, ResourceLocation particleID) {
+            this.entityID = EntityID;
+            this.targetOffset = targetOffset;
+            this.scaleMult = scaleMult;
+            this.particleID = particleID;
+        }
+
+        public MagicBulletAimPacket(PacketBuffer buffer) {
+            this.entityID = buffer.readInt();
+            this.targetOffset = buffer.readFloat();
+            this.scaleMult = buffer.readFloat();
+            this.particleID = buffer.readResourceLocation();
+        }
+
+        public static void buffer(MagicBulletAimPacket message, PacketBuffer buffer) {
+            buffer.writeInt(message.entityID);
+            buffer.writeFloat(message.targetOffset);
+            buffer.writeFloat(message.scaleMult);
+            buffer.writeResourceLocation(message.particleID);
+        }
+
+        public static void handler(MagicBulletAimPacket message, Supplier<NetworkEvent.Context> contextSupplier) {
+            NetworkEvent.Context context = contextSupplier.get();
+            System.out.println("Handling...");
+            context.enqueueWork(() -> {
+                if (!context.getDirection().getReceptionSide().isServer()) {
+                    Entity target = Minecraft.getInstance().level.getEntity(message.entityID);
+
+                    if (target != null) {
+                        Minecraft.getInstance().level.addParticle((IParticleData) Objects.requireNonNull(ForgeRegistries.PARTICLE_TYPES.getValue(message.particleID)), target.getX(), target.getY(), target.getZ(), message.scaleMult, target.getId(), message.targetOffset);
+
+                    } else {
+                        System.out.println("Particle target or source is null");
+                    }
+
+                }
+            });
+            context.setPacketHandled(true);
+        }
+    }
+
     public static class NumberLabelParticle {
 
         double x;

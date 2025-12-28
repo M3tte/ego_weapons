@@ -47,15 +47,17 @@ public class StatusEffectGUI extends EntityIndicator {
         return true;
     }
 
-    private ResourceLocation solemnLamentEffectRL = new ResourceLocation(EgoWeaponsMod.MODID, "textures/mob_effect/living_departed.png");
+    private ResourceLocation solemnLamentButterflyRL = new ResourceLocation(EgoWeaponsMod.MODID, "textures/mob_effect/living_and_departed.png");
     private ResourceLocation ammoRL = new ResourceLocation(EgoWeaponsMod.MODID, "textures/mob_effect/ammo.png");
     private ResourceLocation d10fuelRL = new ResourceLocation(EgoWeaponsMod.MODID, "textures/mob_effect/district_10_fuel.png");
     private ResourceLocation ov_d10fuelRL = new ResourceLocation(EgoWeaponsMod.MODID, "textures/mob_effect/overheated_district_10_fuel.png");
 
+    private ResourceLocation solemnLamentEffectRL = new ResourceLocation(EgoWeaponsMod.MODID, "textures/mob_effect/living_departed.png");
+
     @Override
     public void drawIndicator(LivingEntity entityIn, MatrixStack matStackIn, IRenderTypeBuffer bufferIn, float partialTicks) {
         Matrix4f mvMatrix = super.getMVMatrix(matStackIn, entityIn, 0.0F, entityIn.getBbHeight() + 0.25F, 0.0F, true, partialTicks);
-        Collection<EffectInstance> activeEffects = entityIn.getActiveEffects().stream().filter((st) -> st.getEffect() instanceof CountPotencyStatus).collect(Collectors.toList());
+        Collection<EffectInstance> activeEffects = entityIn.getActiveEffects().stream().filter((st) -> st.getEffect() instanceof CountPotencyStatus).filter((st) -> ((CountPotencyStatus) st.getEffect()).displaysOnHudNormally()).collect(Collectors.toList());
         int column;
         float startX;
         float startY;
@@ -63,6 +65,9 @@ public class StatusEffectGUI extends EntityIndicator {
         int additionalRenders = 0;
 
         if (entityIn.hasEffect(SolemnLamentEffects.getLiving()) ||entityIn.hasEffect(SolemnLamentEffects.getDeparted()))
+            additionalRenders++;
+
+        if (entityIn.hasEffect(EgoWeaponsEffects.THE_LIVING.get()) ||entityIn.hasEffect(EgoWeaponsEffects.THE_DEPARTED.get()))
             additionalRenders++;
 
         if (entityIn.getItemInHand(Hand.MAIN_HAND).getItem() instanceof GunItem || entityIn.getItemInHand(Hand.OFF_HAND).getItem() instanceof GunItem)
@@ -85,6 +90,17 @@ public class StatusEffectGUI extends EntityIndicator {
             startX = -0.6F - entityIn.getBbWidth() / 2;
             startY = -0.2F + 0.15F * (float)column;
 
+            // Solemn Lament Butterfly
+            if (entityIn.hasEffect(EgoWeaponsEffects.THE_LIVING.get()) ||entityIn.hasEffect(EgoWeaponsEffects.THE_DEPARTED.get())) {
+                int slCount = EgoWeaponsEffects.THE_DEPARTED.get().getPotency(entityIn);
+                int slPotency = EgoWeaponsEffects.THE_LIVING.get().getPotency(entityIn);
+
+                renderEffect(solemnLamentButterflyRL, prevActives, startX, startY, slCount, slPotency, bufferIn, mvMatrix, true, true);
+
+                prevActives++;
+            }
+
+            // Solemn Lament Ammo
             if (entityIn.hasEffect(SolemnLamentEffects.getLiving()) ||entityIn.hasEffect(SolemnLamentEffects.getDeparted())) {
                 int slCount = SolemnLamentEffects.getAmmoCount(entityIn, SolemnLamentEffects.getDeparted());
                 int slPotency = SolemnLamentEffects.getAmmoCount(entityIn, SolemnLamentEffects.getLiving());

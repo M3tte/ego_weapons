@@ -1,0 +1,42 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"texture_size": [36, 46],
+	"textures": {
+		"0": "ego_weapons:items/justitia_rope",
+		"particle": "ego_weapons:items/justitia_rope"
+	},
+	"elements": [
+		{
+			"from": [3, -14, 3],
+			"to": [13, -12, 13],
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [8, -14, 3]},
+			"faces": {
+				"north": {"uv": [8, 0, 12.44444, 0.69565], "texture": "#0"},
+				"east": {"uv": [8, 0.69565, 12.44444, 1.3913], "texture": "#0"},
+				"south": {"uv": [8, 1.3913, 12.44444, 2.08696], "texture": "#0"},
+				"west": {"uv": [8, 2.08696, 12.44444, 2.78261], "texture": "#0"},
+				"up": {"uv": [4.44444, 3.47826, 0, 0], "texture": "#0"},
+				"down": {"uv": [4.44444, 3.47826, 0, 6.95652], "texture": "#0"}
+			}
+		},
+		{
+			"from": [7, -10.2, 10.2],
+			"to": [9, 32, 12.2],
+			"rotation": {"angle": 0, "axis": "x", "origin": [8, 4, 2.2]},
+			"faces": {
+				"north": {"uv": [4.44444, 0, 5.33333, 14.6087], "texture": "#0"},
+				"east": {"uv": [5.33333, 0, 6.22222, 14.6087], "texture": "#0"},
+				"south": {"uv": [6.22222, 0, 7.11111, 14.6087], "texture": "#0"},
+				"west": {"uv": [7.11111, 0, 8, 14.6087], "texture": "#0"},
+				"up": {"uv": [8.88889, 3.47826, 8, 2.78261], "texture": "#0"},
+				"down": {"uv": [8.88889, 3.47826, 8, 4.17391], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"head": {
+			"translation": [0, 13.5, 0]
+		}
+	}
+}

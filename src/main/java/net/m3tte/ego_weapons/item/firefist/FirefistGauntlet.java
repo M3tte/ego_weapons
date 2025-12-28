@@ -10,6 +10,7 @@ import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.network.packages.ParticlePackages;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -273,7 +274,7 @@ public class FirefistGauntlet extends EgoWeaponsWeapon {
 
 	public static float modifyDamageAmount(LivingEntity target, LivingEntity source, float mult, DamageSource damageSource) {
 
-		PlayerPatch<?> entitypatch = (PlayerPatch<?>) source.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) source.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
 
@@ -473,12 +474,14 @@ public class FirefistGauntlet extends EgoWeaponsWeapon {
 					case 0:
 						//entity.level.addParticle(EgoWeaponsParticles.TEXTURED_AFTER_IMAGE.get(), entity.getX(), entity.getY(), entity.getZ(), Double.longBitsToDouble(entity.getId()), 0, 0);
 						entity.addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 20, 0));
-						entitypatch.playAnimationSynchronized(FirefistMovesetAnims.FIREFIST_SPECIAL_2, 0);
+						if (!entitypatch.getOriginal().level.isClientSide())
+							entitypatch.playAnimationSynchronized(FirefistMovesetAnims.FIREFIST_SPECIAL_2, 0);
 						break;
 					case 1:
 						entity.level.addParticle(EgoWeaponsParticles.TEXTURED_AFTER_IMAGE.get(), entity.getX(), entity.getY(), entity.getZ(), Double.longBitsToDouble(entity.getId()), 0, 0);
 						entity.addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 20, 0));
-						entitypatch.playAnimationSynchronized(FirefistMovesetAnims.FIREFIST_SPECIAL_3, 0);
+						if (!entitypatch.getOriginal().level.isClientSide())
+							entitypatch.playAnimationSynchronized(FirefistMovesetAnims.FIREFIST_SPECIAL_3, 0);
 						break;
 				}
 			}
@@ -550,8 +553,12 @@ public class FirefistGauntlet extends EgoWeaponsWeapon {
 				}
 			}
 
-			if (entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().contains("ffkilled") && !entitypatch.getOriginal().level.isClientSide()) {
-				entitypatch.playSound(EgoWeaponsSounds.FIREFIST_SPECIAL_KILL, 1f, 1, 1);
+			if (entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().contains("ffkilled")) {
+
+				DialogueSystem.speakEvalDialogue(entitypatch.getOriginal(), "dialogue.ego_weapons.skills.firefist.1", DialogueSystem.DialogueTypes.SKILL, TextFormatting.RED);
+
+				if (!entitypatch.getOriginal().level.isClientSide())
+					entitypatch.playSound(EgoWeaponsSounds.FIREFIST_SPECIAL_KILL, 1f, 1, 1);
 			}
 		}, StaticAnimation.Event.Side.BOTH);
 		return events;
@@ -572,7 +579,9 @@ public class FirefistGauntlet extends EgoWeaponsWeapon {
 		StaticAnimation.Event[] events = new StaticAnimation.Event[4];
 		events[0] = StaticAnimation.Event.create(0.33f, (entitypatch) -> {
 			if (getFuel(entitypatch.getOriginal()) < 20) {
-				entitypatch.playAnimationSynchronized(FirefistMovesetAnims.FIREFIST_INNATE_B, 0);
+				if (!entitypatch.getOriginal().level.isClientSide())
+					entitypatch.playAnimationSynchronized(FirefistMovesetAnims.FIREFIST_INNATE_B, 0);
+
 				Entity entity = entitypatch.getOriginal();
 				entitypatch.getOriginal().addEffect(new EffectInstance(EgoWeaponsEffects.RESILIENCE.get(), 20, 0));
 			}

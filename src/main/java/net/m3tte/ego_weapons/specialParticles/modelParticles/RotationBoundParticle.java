@@ -29,18 +29,20 @@ public class RotationBoundParticle extends SpriteTexturedParticle {
     protected double oy;
     protected double oz;
 
-    boolean flipX = false;
-    boolean flipY = false;
+    boolean flipX = true;
+    boolean flipY = true;
 
     boolean invertX = false;
-    boolean invertY = true;
+    boolean invertY = false;
 
     boolean glowRenderType = false;
 
-    protected Vector3f[] generateVectorArray(boolean inv) {
-        int invVar = inv ? -1 : 1;
+    boolean processStartPos = true;
 
-        return new Vector3f[]{new Vector3f(1.0F * invVar, 1.0F * invVar, 0.0F), new Vector3f(1.0F * invVar, -1.0F * invVar, 0.0F), new Vector3f(-1.0F * invVar, -1.0F * invVar, 0.0F), new Vector3f(-1.0F * invVar, 1.0F * invVar, 0.0F)};
+
+    protected Vector3f[] generateVectorArray() {
+
+        return new Vector3f[]{new Vector3f(1.0F, 1.0F, 0.0F), new Vector3f(1.0F, -1.0F, 0.0F), new Vector3f(-1.0F, -1.0F, 0.0F), new Vector3f(-1.0F, 1.0F, 0.0F)};
     }
 
 
@@ -55,6 +57,8 @@ public class RotationBoundParticle extends SpriteTexturedParticle {
         } else {
             boundEntity = this.level.getEntity((int)entityUUID);
         }
+
+
 
         if (boundEntity != null && this.level.isClientSide()) {
             //this.x = newPos.x;
@@ -75,7 +79,7 @@ public class RotationBoundParticle extends SpriteTexturedParticle {
         this.zd = 0;
 
         this.spriteProvider = spriteProvider;
-
+        offset = offset.copy();
         int scaleAgeModifier = 1 + new Random().nextInt(10);
         this.quadSize = 3f;
         this.lifetime = 12;
@@ -95,7 +99,7 @@ public class RotationBoundParticle extends SpriteTexturedParticle {
         this.flipX = true;
         this.quadSize = quadsize;
         this.lifetime = lifetime;
-        this.offset = offset;
+        this.offset = offset.copy();
         this.offsetRate = offsetRate;
 
         resolveBoundEntity((int) entityUUID, world);
@@ -104,7 +108,7 @@ public class RotationBoundParticle extends SpriteTexturedParticle {
 
     @Override
     public @NotNull IParticleRenderType getRenderType() {
-        return this.glowRenderType ? IParticleRenderType.PARTICLE_SHEET_LIT : IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+        return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
     @Override
@@ -113,10 +117,9 @@ public class RotationBoundParticle extends SpriteTexturedParticle {
         this.yo = this.y;
         this.zo = this.z;
 
-        Vector3d newPos = Minecraft.getInstance().player.position();
-        /*this.x = newPos.x;
-        this.y = newPos.y;
-        this.z = newPos.z;*/
+
+
+        offset.add(offsetRate);
 
         if (this.age++ >= this.lifetime) {
             this.remove();
@@ -137,35 +140,26 @@ public class RotationBoundParticle extends SpriteTexturedParticle {
         float g = (float) (MathHelper.lerp(tickDelta, this.yo, this.y) - vec3d.y());
         float h = (float) (MathHelper.lerp(tickDelta, this.zo, this.z) - vec3d.z());
 
-        Vector3f[] Vector3fs = generateVectorArray(true);
+        Vector3f[] Vector3fs = generateVectorArray();
         float j = this.getQuadSize(tickDelta);
         Vector3f transposeVector = offset.copy();
         Vector3f offsetVector = offsetRate.copy();
-        offsetVector.mul(this.age);
+        offsetVector.mul(tickDelta);
         transposeVector.add(offsetVector);
 
         transposeVector.transform(new Quaternion(rotation.x(), rotation.y(), rotation.z(), true));
+
+        Quaternion targetQuart = new Quaternion(rotation.x() + rotationOffs.x(), rotation.y() + rotationOffs.y(), rotation.z() + rotationOffs.z(), true);
+
         for (int k = 0; k < 4; ++k) {
             Vector3f Vector3f2 = Vector3fs[k];
-            Vector3f2.transform(new Quaternion(rotation.x() + rotationOffs.x(), rotation.y() + rotationOffs.y(), rotation.z() + rotationOffs.z(), true));
-            Vector3f2.transform(new Quaternion(0, 0, 0, true));
+            Vector3f2.transform(targetQuart);
+            //Vector3f2.transform(new Quaternion(0, 0, 0, true));
             Vector3f2.mul(j);
             Vector3f2.add(f, g, h);
             Vector3f2.add(transposeVector);
         }
 
-        Vector3f[] Vector3fsb = generateVectorArray(false);
-
-        j = this.getQuadSize(tickDelta);
-
-        for (int k = 0; k < 4; ++k) {
-            Vector3f Vector3f2 = Vector3fsb[k];
-            Vector3f2.transform(new Quaternion(rotation.x(), rotation.y(), rotation.z(), true));
-            Vector3f2.transform(new Quaternion(0, 0, 0, true));
-            Vector3f2.mul(j);
-            Vector3f2.add(f, g, h);
-            Vector3f2.add(transposeVector);
-        }
         float minU = this.getU0();
         float maxU = this.getU1();
         float minV = this.getV0();
@@ -199,10 +193,10 @@ public class RotationBoundParticle extends SpriteTexturedParticle {
             maxV = plc;
         }
 
-        vertexBuilder.vertex(Vector3fsb[0].x(), Vector3fsb[0].y(), Vector3fsb[0].z()).uv(minU, maxV).color(rCol, gCol, bCol, alpha).uv2(l).endVertex();
-        vertexBuilder.vertex(Vector3fsb[1].x(), Vector3fsb[1].y(), Vector3fsb[1].z()).uv(minU, minV).color(rCol, gCol, bCol, alpha).uv2(l).endVertex();
-        vertexBuilder.vertex(Vector3fsb[2].x(), Vector3fsb[2].y(), Vector3fsb[2].z()).uv(maxU, minV).color(rCol, gCol, bCol, alpha).uv2(l).endVertex();
-        vertexBuilder.vertex(Vector3fsb[3].x(), Vector3fsb[3].y(), Vector3fsb[3].z()).uv(maxU, maxV).color(rCol, gCol, bCol, alpha).uv2(l).endVertex();
+        vertexBuilder.vertex(Vector3fs[3].x(), Vector3fs[3].y(), Vector3fs[3].z()).uv(maxU, maxV).color(rCol, gCol, bCol, alpha).uv2(l).endVertex();
+        vertexBuilder.vertex(Vector3fs[2].x(), Vector3fs[2].y(), Vector3fs[2].z()).uv(maxU, minV).color(rCol, gCol, bCol, alpha).uv2(l).endVertex();
+        vertexBuilder.vertex(Vector3fs[1].x(), Vector3fs[1].y(), Vector3fs[1].z()).uv(minU, minV).color(rCol, gCol, bCol, alpha).uv2(l).endVertex();
+        vertexBuilder.vertex(Vector3fs[0].x(), Vector3fs[0].y(), Vector3fs[0].z()).uv(minU, maxV).color(rCol, gCol, bCol, alpha).uv2(l).endVertex();
     }
 
     @OnlyIn(Dist.CLIENT)

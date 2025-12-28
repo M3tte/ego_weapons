@@ -1,6 +1,8 @@
 package net.m3tte.ego_weapons.skill.heishou_mao;
 
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsSkills;
+import net.m3tte.ego_weapons.gameasset.movesets.HeishouMaoBranchAnims;
+import net.m3tte.ego_weapons.gameasset.movesets.RatPipeMovesetAnims;
 import net.m3tte.ego_weapons.skill.GenericSkill;
 import yesman.epicfight.skill.Skill;
 import yesman.epicfight.skill.SkillCategories;
@@ -22,6 +24,7 @@ public class HeishouMaoPassive extends Skill {
     public void onInitiate(SkillContainer container) {
         SkillContainer guard = container.getExecuter().getSkillCapability().skillContainers[SkillCategories.GUARD.universalOrdinal()];
 
+        container.getExecuter().playAnimationSynchronized(HeishouMaoBranchAnims.HEISHOU_MAO_EQUIP, 0);
 
         if (!guard.isEmpty()) {
             container.getExecuter().getSkillCapability().skillContainers[GenericSkill.TC_GUARD.universalOrdinal()].setSkill(EgoWeaponsSkills.HEISHOU_MAO_GUARD);

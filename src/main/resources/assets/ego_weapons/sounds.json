@@ -41,6 +41,63 @@
       }
     ]
   },
+  "justitia.hit": {
+    "category": "player",
+    "subtitle": "justitia",
+    "sounds": [
+      {
+        "name": "ego_weapons:justitia/hit_1"
+      },
+      {
+        "name": "ego_weapons:justitia/hit_2"
+      }
+    ]
+  },
+  "justitia.special.trigger": {
+    "category": "player",
+    "subtitle": "justitia",
+    "sounds": [
+      {
+        "name": "ego_weapons:justitia/special_activate"
+      }
+    ]
+  },
+  "justitia.special.hit": {
+    "category": "player",
+    "subtitle": "justitia",
+    "sounds": [
+      {
+        "name": "ego_weapons:justitia/special_hit"
+      }
+    ]
+  },
+  "justitia.special.hang": {
+    "category": "player",
+    "subtitle": "justitia",
+    "sounds": [
+      {
+        "name": "ego_weapons:justitia/ropehang"
+      }
+    ]
+  },
+  "justitia.innate.reuse": {
+    "category": "player",
+    "subtitle": "justitia",
+    "sounds": [
+      {
+        "name": "ego_weapons:justitia/reuse"
+      }
+    ]
+  },
+  "justitia.guard.hit": {
+    "category": "player",
+    "subtitle": "justitia",
+    "sounds": [
+      {
+        "name": "ego_weapons:justitia/guard_hit"
+      }
+    ]
+  },
   "heishou_mao.sword.parry": {
     "category": "player",
     "subtitle": "heishou_mao.parry",
@@ -587,6 +644,60 @@
     "sounds": [
       {
         "name": "ego_weapons:sunshower/counter_1"
+      }
+    ]
+  },
+  "sunshower.spread_out.v.1": {
+    "category": "player",
+    "subtitle": "sunshower.spread_out",
+    "sounds": [
+      {
+        "name": "ego_weapons:sunshower/spread_out_v_1"
+      }
+    ]
+  },
+  "sunshower.spread_out.v.2": {
+    "category": "player",
+    "subtitle": "sunshower.spread_out",
+    "sounds": [
+      {
+        "name": "ego_weapons:sunshower/spread_out_v_2"
+      },
+      {
+        "name": "ego_weapons:sunshower/spread_out_v_3"
+      }
+    ]
+  },
+  "pipe_rat.hit": {
+    "category": "player",
+    "subtitle": "pipe",
+    "sounds": [
+      {
+        "name": "ego_weapons:rat_pipe/hit_1"
+      },
+      {
+        "name": "ego_weapons:rat_pipe/hit_2"
+      },
+      {
+        "name": "ego_weapons:rat_pipe/hit_3"
+      }
+    ]
+  },
+  "pipe_rat.heavy_hit": {
+    "category": "player",
+    "subtitle": "pipe",
+    "sounds": [
+      {
+        "name": "ego_weapons:rat_pipe/heavy_hit"
+      }
+    ]
+  },
+  "pipe_rat.swing": {
+    "category": "player",
+    "subtitle": "pipe",
+    "sounds": [
+      {
+        "name": "ego_weapons:rat_pipe/swing"
       }
     ]
   },
@@ -1185,6 +1296,51 @@
       }
     ]
   },
+  "solemn_lament.bell": {
+    "category": "player",
+    "subtitle": "subtitles.solemn_lament.bell",
+    "sounds": [
+      {
+        "name": "ego_weapons:solemn_lament/bell"
+      }
+    ]
+  },
+  "solemn_lament.auto_e.hit": {
+    "category": "player",
+    "subtitle": "subtitles.solemn_lament.auto_e.hit",
+    "sounds": [
+      {
+        "name": "ego_weapons:solemn_lament/auto_e_hit"
+      }
+    ]
+  },
+  "solemn_lament.auto_e.final": {
+    "category": "player",
+    "subtitle": "subtitles.solemn_lament.auto_e.final",
+    "sounds": [
+      {
+        "name": "ego_weapons:solemn_lament/auto_e_final"
+      }
+    ]
+  },
+  "solemn_lament.bash": {
+    "category": "player",
+    "subtitle": "subtitles.solemn_lament.bash",
+    "sounds": [
+      {
+        "name": "ego_weapons:solemn_lament/bash"
+      }
+    ]
+  },
+  "solemn_lament.parry": {
+    "category": "player",
+    "subtitle": "subtitles.solemn_lament.parry",
+    "sounds": [
+      {
+        "name": "ego_weapons:solemn_lament/parry"
+      }
+    ]
+  },
   "solemn_lament.special.spin": {
     "category": "player",
     "subtitle": "subtitles.solemn_lament.special.ready",
@@ -1272,6 +1428,18 @@
     "sounds": [
       {
         "name": "ego_weapons:solemn_lament/auto_white"
+      }
+    ]
+  },
+  "magic_bullet.guard": {
+    "category": "player",
+    "subtitle": "subtitles.magic_bullet.guard",
+    "sounds": [
+      {
+        "name": "ego_weapons:magic_bullet/parry_1"
+      },
+      {
+        "name": "ego_weapons:magic_bullet/parry_2"
       }
     ]
   },

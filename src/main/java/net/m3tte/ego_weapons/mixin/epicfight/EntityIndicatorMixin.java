@@ -1,5 +1,6 @@
 package net.m3tte.ego_weapons.mixin.epicfight;
 
+import net.m3tte.ego_weapons.gui.ingame.DialogueGUI;
 import net.m3tte.ego_weapons.gui.ingame.PlayerStatsIndicator;
 import net.m3tte.ego_weapons.gui.ingame.StatusEffectGUI;
 import net.m3tte.ego_weapons.gui.ingame.ThreatLevelGUI;
@@ -20,5 +21,6 @@ public class EntityIndicatorMixin {
         new ThreatLevelGUI();
         new PlayerStatsIndicator();
         new StatusEffectGUI();
+        new DialogueGUI();
     }
 }

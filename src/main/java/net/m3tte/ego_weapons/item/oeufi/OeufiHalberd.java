@@ -3,17 +3,16 @@ package net.m3tte.ego_weapons.item.oeufi;
 
 import net.m3tte.ego_weapons.*;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
-import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
-import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.gameasset.movesets.OeufiAssocMovesetAnims;
 import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.network.packages.ParticlePackages;
 import net.m3tte.ego_weapons.potion.countEffects.TremorDecayEffect;
 import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
-import net.m3tte.ego_weapons.procedures.BlipTick;
+import net.m3tte.ego_weapons.procedures.EntityTick;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
 import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
@@ -33,7 +32,6 @@ import yesman.epicfight.api.animation.types.DynamicAnimation;
 import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.particle.EpicFightParticles;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
-import yesman.epicfight.world.capabilities.entitypatch.EntityPatch;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 
@@ -200,7 +198,7 @@ public class OeufiHalberd extends EgoWeaponsWeapon {
 						if (sourceentity instanceof PlayerEntity) {
 							PlayerEntity player = (PlayerEntity)sourceentity;
 							((PlayerPatch)entitypatch).setStamina(Math.min(((PlayerPatch)entitypatch).getMaxStamina(), ((PlayerPatch)entitypatch).getStamina() + ((PlayerPatch)entitypatch).getMaxStamina() * 0.3F));
-							BlipTick.chargeBlips(player, 1, true);
+							EntityTick.chargeBlips(player, 1, true);
 						}
 					}
 
@@ -232,7 +230,7 @@ public class OeufiHalberd extends EgoWeaponsWeapon {
 							if (sourceentity instanceof PlayerEntity) {
 								PlayerEntity player = (PlayerEntity)sourceentity;
 								((PlayerPatch)entitypatch).setStamina(Math.min(((PlayerPatch)entitypatch).getMaxStamina(), ((PlayerPatch)entitypatch).getStamina() + ((PlayerPatch)entitypatch).getMaxStamina() * 0.3F));
-								BlipTick.chargeBlips(player, 1, true);
+								EntityTick.chargeBlips(player, 1, true);
 							}
 
 						} else if (tremor.getPotency(target) > 15) {
@@ -339,13 +337,9 @@ public class OeufiHalberd extends EgoWeaponsWeapon {
 
 			if (entitypatch.getOriginal() instanceof PlayerEntity) {
 				PlayerEntity player = (PlayerEntity) entitypatch.getOriginal();
-				if (!player.level.isClientSide()) {
-					MinecraftServer mcserv = ServerLifecycleHooks.getCurrentServer();
-					if (mcserv != null)
-						mcserv.getPlayerList().broadcastMessage(
-								new StringTextComponent((player.getDisplayName().getString() + ">")).withStyle(TextFormatting.DARK_PURPLE).withStyle(TextFormatting.ITALIC).append(new StringTextComponent(" I told you to watch yourself!").withStyle(TextFormatting.LIGHT_PURPLE).withStyle(TextFormatting.ITALIC)), ChatType.CHAT,
-								player.getUUID());
-				}
+
+				DialogueSystem.speakEvalDialogue(player, "dialogue.ego_weapons.skills.oeufi_armor.2", DialogueSystem.DialogueTypes.SKILL, TextFormatting.WHITE);
+
 			}
 
 

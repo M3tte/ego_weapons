@@ -21,6 +21,11 @@ import java.util.Objects;
 
 public abstract class CountPotencyStatus extends Effect {
 
+
+    public boolean displaysOnHudNormally() {
+        return true;
+    }
+
     protected final ResourceLocation icon;
     public CountPotencyStatus(EffectType category, String potionName, int color) {
         super(category, color);
@@ -54,6 +59,9 @@ public abstract class CountPotencyStatus extends Effect {
             this.syncEffect(entity);
     }
 
+
+
+
     public void syncEffect(Entity entity) {
         if (entity instanceof LivingEntity && ((LivingEntity) entity).isAffectedByPotions()) {
             if (ServerLifecycleHooks.getCurrentServer() == null)
@@ -68,7 +76,19 @@ public abstract class CountPotencyStatus extends Effect {
         }
     }
 
+    public void syncEffect(Entity entity, Effect effect) {
+        if (entity instanceof LivingEntity && ((LivingEntity) entity).isAffectedByPotions() && ((LivingEntity) entity).hasEffect(effect)) {
+            if (ServerLifecycleHooks.getCurrentServer() == null)
+                return;
 
+
+            for (ServerPlayerEntity p : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers()) {
+                if (((LivingEntity) entity).getEffect(this) != null) {
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> p), new EgoWeaponsModVars.SyncCountEffectMessage((LivingEntity) entity, ((LivingEntity) entity).getEffect(effect)));
+                }
+            }
+        }
+    }
 
     public ResourceLocation getIcon() {
         return icon;
