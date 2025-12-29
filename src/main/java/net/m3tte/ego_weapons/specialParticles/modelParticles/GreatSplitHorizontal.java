@@ -14,8 +14,10 @@ public class GreatSplitHorizontal extends RotationBoundParticle {
     public GreatSplitHorizontal(ClientWorld world, double x, double y, double z, double xSpeed, double entityUUID, double zSpeed, IAnimatedSprite spriteProvider) {
         super(world, x, y, z, xSpeed, entityUUID, zSpeed, spriteProvider);
 
-        this.invertX = false;
-        this.invertY = false;
+
+
+        this.flipX = false;
+        this.flipY = false;
 
         this.rotation.add(0,180,0);
         //this.rotationOffs.set(180,0,0);

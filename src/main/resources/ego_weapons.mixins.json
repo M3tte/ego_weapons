@@ -4,22 +4,25 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "ego_weapons.mixins.refmap.json",
   "server": [
+    "EntityPredicatesMixinServer",
+    "PushEntityMixinServer"
   ],
   "mixins": [
     "AttributeModifierMapMixin",
-    "EntityPredicatesMixin",
-    "ItemStackMixin",
     "LivingEntityMixin",
     "PlayerEntityDamageMixin",
-    "PlayerRenderLayerMixin",
     "epicfight.AttackAnimationMixin",
     "epicfight.LivingEntityPatchMixin",
     "epicfight.PlayerPatchMixin"
   ],
   "client": [
+    "EntityPredicatesMixin",
+    "PushEntityMixin",
     "HotbarRenderMixin",
+    "ItemStackMixin",
     "LivingRenderLayersMixin",
     "MusicTickerMixin",
+    "PlayerRenderLayerMixin",
     "epicfight.EntityIndicatorMixin",
     "epicfight.HealthbarIndicatorMixin",
     "epicfight.ItemInHandLayerMixin",

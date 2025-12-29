@@ -40,7 +40,7 @@ public class EgoWeaponsCapabilityPresets {
     public static final Collider WHEELS_BLADE = new MultiOBBCollider(4, 0.4, 0.6, 1.1, 0.0, 0.0, -1);
     public static final Collider LONGER_BLADE = new MultiOBBCollider(4, 0.4, 0.6, 1, 0.0, 0.0, -0.9);
     public static final Collider CURSEWRIT_BUTCHERBLADE = new MultiOBBCollider(4, 0.8, 0.8, 1.5, -0.15, -0.15, -1.1);
-    public static final Collider SPLIT_HORIZONTAL = new MultiOBBCollider(4, 0.4, 0.6, 2, 0.0, 0.0, -1.2);
+    public static final Collider SPLIT_HORIZONTAL = new MultiOBBCollider(4, 0.4, 1, 2, 0.0, 0.0, -2);
 
     public static final Collider SUNSHOWER_COL = new MultiOBBCollider(4, 0.4, 0.4, 0.75, 0.0, 0.0, -0.75);
     public static final Collider SUNSHOWER_COL_LARGE = new MultiOBBCollider(4, 0.8, 0.8, 0.6, 0.0, 0.0, -0.6);
@@ -393,6 +393,15 @@ public class EgoWeaponsCapabilityPresets {
     public static final Function<Item, CapabilityItem.Builder> SOLEMN_LAMENT = (item) -> WeaponCapability.builder()
             .category(EgoWeaponsCategories.SOLEMN_LAMENT)
             .styleProvider((playerpatch) -> {
+
+
+                EgoWeaponsModVars.PlayerVariables entityData = playerpatch.getOriginal().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
+
+                if (entityData != null) {
+                    if (!entityData.firingMode) {
+                        return Styles.ONE_HAND;
+                    }
+                }
 
                 boolean leftHandValid = true;
                 boolean rightHandValid = true;

@@ -160,7 +160,6 @@ public class DoubtAPatch extends MobPatch<DawnOfGreenDoubtEntity> implements Sta
             if (currentanim instanceof EgoAttackAnimation) {
                 phase = ((EgoAttackAnimation)currentanim).getPhaseByTime(this.getAnimator().getPlayerFor(currentanim).getElapsedTime());
             }
-
             if (phase instanceof EgoAttackAnimation.EgoAttackPhase) {
                 String elp = ((EgoAttackAnimation.EgoAttackPhase) phase).getProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER).orElse(null);
 

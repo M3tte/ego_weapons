@@ -53,24 +53,7 @@ public abstract class LivingEntityMixin {
     }
 
 
-    @Inject(at = @At(value = "HEAD"), method = "pushEntities", cancellable = true)
-    public void pushEntity(CallbackInfo ci) {
-        LivingEntity self = ((LivingEntity) (Object)this);
 
-        LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) self.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-
-        if (entitypatch != null) {
-            DynamicAnimation currentanim = self.level.isClientSide() ? entitypatch.getClientAnimator().baseLayer.animationPlayer.getAnimation() : entitypatch.getServerAnimator().animationPlayer.getAnimation();
-
-            //System.out.println("ISCLIENTSIDE ? "+self.level.isClientSide()+" --ANIM : "+currentanim);
-
-            if (currentanim.getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DISABLE_COLLISION).orElse(false)) {
-                self.setDeltaMovement(0,0,0);
-                ci.cancel();
-
-            }
-        }
-    }
 
     @Inject(method = "actuallyHurt(Lnet/minecraft/util/DamageSource;F)V", at = @At("TAIL"))
     private void sendDialogueOnDamage(DamageSource src, float amnt, CallbackInfo ci) {
@@ -78,27 +61,7 @@ public abstract class LivingEntityMixin {
         DialogueSystem.onHitDialogueEvaluation(((LivingEntity)(Object)this), src);
     }
 
-    @Inject(at = @At(value = "HEAD"), method = "push", cancellable = true)
-    public void pushEntityInner(Entity entity, CallbackInfo ci) {
-        LivingEntity self = ((LivingEntity) (Object)this);
 
-        if (entity instanceof LivingEntity) {
-            LivingEntity otherEntity = (LivingEntity) entity;
-
-            LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) otherEntity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-
-            if (entitypatch != null) {
-                DynamicAnimation currentanim = self.level.isClientSide() ? entitypatch.getClientAnimator().baseLayer.animationPlayer.getAnimation() : entitypatch.getServerAnimator().animationPlayer.getAnimation();
-
-
-                if (currentanim.getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DISABLE_COLLISION).orElse(false)) {
-                    self.setDeltaMovement(0,0,0);
-                    otherEntity.setDeltaMovement(0,0,0);
-                    ci.cancel();
-                }
-            }
-        }
-    }
 
 
     /*

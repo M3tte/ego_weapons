@@ -381,7 +381,7 @@ public class JustitiaMovesetAnims {
                     LivingEntityPatch<?> targetEnt = (LivingEntityPatch<?>) ent.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
                     ent.getPersistentData().putInt("justitiaRope", ent.tickCount);
                     ent.playSound(EgoWeaponsSounds.JUSTITIA_SPECIAL_HANG, 6f, 1);
-                    if (!world.isClientSide()) {
+                    if (!world.isClientSide() && targetEnt.getHitAnimation(ExtendedDamageSource.StunType.KNOCKDOWN) != null) {
                         if (targetEnt.getHitAnimation(ExtendedDamageSource.StunType.KNOCKDOWN).getId() == Animations.BIPED_KNOCKDOWN.getId()) {
                             targetEnt.playAnimationSynchronized(JUSTITIA_HIT_HANG, 0);
                         } else {
