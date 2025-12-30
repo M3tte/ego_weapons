@@ -224,6 +224,7 @@ public class SunshowerMovesetAnims {
         SUNSHOWER_SPREAD_OUT_1 = new BasicEgoAttackAnimation(0.08F, 0.05F, 0.33F, 0.75F, 1.1F, null, "Chest", "biped/sunshower/spread_out_1", biped)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.WHITE)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DISABLE_COLLISION, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "sunshower_spread_out_1")
                 .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)

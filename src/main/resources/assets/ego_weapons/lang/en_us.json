@@ -201,6 +201,7 @@
   "key.ego_weapons.status_detail": "Status Effect Details",
 
   "entity.ego_weapons.doubt": "Doubt",
+  "entity.ego_weapons.craving_bloodbag": "Craving Bloodbag",
   "entity.ego_weapons.nothing_there": "Nothing There",
 
   "item.ego_weapons.sunshower": "§f\uEC03 Sunshower",
@@ -1551,6 +1552,9 @@
 
   "death.attack.egoweapons.rat_shank.player": "%1$s was shanked by %2$s.",
   "death.attack.egoweapons.rat_shank": "%1$s was shanked.",
+
+  "death.attack.egoweapons.rat_pipe.player": "%1$s was slumped by %2$s.",
+  "death.attack.egoweapons.rat_pipe": "%1$s was slumped.",
 
   "death.attack.egoweapons.justitia.player": "%1$s was judged by %2$s.",
   "death.attack.egoweapons.justitia": "%1$s was judged.",

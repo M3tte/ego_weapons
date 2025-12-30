@@ -61,7 +61,7 @@ public class PlayerStatsIndicator extends EntityIndicator {
         IVertexBuilder vertexBuilder = bufferIn.getBuffer(EgoWeaponsRenderTypes.overlayTextures(ThreatLevelGUI.OVERLAY_TEXTURES));
         this.drawTexturedModalRect2DPlane(mvMatrix, vertexBuilder, -0.5F, 0F, 0.5f, 0.6F, 95, 0, 157, 36);
 
-        float healthPercent = entityIn.getHealth() / entityIn.getMaxHealth();
+        float healthPercent = Math.min(1,entityIn.getHealth() / entityIn.getMaxHealth());
         float shieldPercent = entityIn.getAbsorptionAmount() / (entityIn.getMaxHealth() + entityIn.getAbsorptionAmount());
         float sanityPercent = 0;
         float staggerPercent = 0;
@@ -71,8 +71,8 @@ public class PlayerStatsIndicator extends EntityIndicator {
 
         if (entityIn instanceof PlayerEntity) {
             EgoWeaponsModVars.PlayerVariables playerVariables = entityIn.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).orElse(createNew());
-            sanityPercent = (float) (playerVariables.sanity / EgoWeaponsAttributes.getMaxSanity((PlayerEntity) entityIn));
-            staggerPercent = (float) (playerVariables.stagger / EgoWeaponsAttributes.getMaxStagger(entityIn));
+            sanityPercent = Math.min(1,(float) (playerVariables.sanity / EgoWeaponsAttributes.getMaxSanity((PlayerEntity) entityIn)));
+            staggerPercent = Math.min(1,(float) (playerVariables.stagger / EgoWeaponsAttributes.getMaxStagger(entityIn)));
             emotionTier = playerVariables.emotionLevel;
 
         }

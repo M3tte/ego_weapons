@@ -330,8 +330,13 @@ public class FirefistGauntlet extends EgoWeaponsWeapon {
 				break;
 			case "firefist_innate_a": // +20% Damage if consuming overheated fuel
 				int innateFuel = getFuel(source);
-				if (entityData.onHitCounter > 0)
+				if (entityData != null) {
+					if (entityData.onHitCounter > 0)
+						innateFuel += 20;
+				} else {
 					innateFuel += 20;
+				}
+
 
 				if (innateFuel <= 50 || source.hasEffect(EgoWeaponsEffects.FUEL_IGNITION.get())) {
 					SharedFunctions.incrementBonusDamage(damageSource, 0.2f);
