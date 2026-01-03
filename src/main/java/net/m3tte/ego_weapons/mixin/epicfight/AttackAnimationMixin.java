@@ -15,6 +15,8 @@ import java.util.function.Consumer;
 
 @Mixin(value = AttackAnimation.class, remap = false)
 public class AttackAnimationMixin {
+
+
     // Lyesman/epicfight/client/gui/EntityIndicator;init()V
     // Lyesman/epicfight/world/capabilities/entitypatch/LivingEntityPatch;playSound(Lnet/minecraft/util/SoundEvent;FF)V
     @Inject(at = @At(value = "INVOKE", target = "Lyesman/epicfight/world/capabilities/entitypatch/LivingEntityPatch;playSound(Lnet/minecraft/util/SoundEvent;FF)V"), method = "tick(Lyesman/epicfight/world/capabilities/entitypatch/LivingEntityPatch;)V")

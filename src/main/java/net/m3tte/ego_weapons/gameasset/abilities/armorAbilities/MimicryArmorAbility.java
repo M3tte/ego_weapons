@@ -1,5 +1,6 @@
 package net.m3tte.ego_weapons.gameasset.abilities.armorAbilities;
 
+import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 import net.m3tte.ego_weapons.particle.BlacksilenceshadowParticle;
@@ -64,7 +65,7 @@ public class MimicryArmorAbility extends ItemAbility {
         double z = player.getZ();
         player.inventory.setChanged();
         if (player.level instanceof ServerWorld) {
-            ((ServerWorld) player.level).sendParticles(BlipeffectParticle.particle, x, (y + 1), z, (int) 8, 0.4, 0.6, 0.4, 0);
+            ((ServerWorld) player.level).sendParticles(EgoWeaponsParticles.EXPEND_LIGHT_PARTICLE.get(), x, (y + 1), z, (int) 8, 0.4, 0.6, 0.4, 0.05);
             ((ServerWorld) player.level).sendParticles(BlacksilenceshadowParticle.particle, x, (y + 1), z, (int) 25, 0.2, 0.6, 0.2, 0);
         }
 

@@ -257,8 +257,10 @@ public class EgoWeaponsSounds {
     public static SoundEvent CLASH_WIN = generateSoundEvent(locationFrom("generic.clash_win"));
     public static SoundEvent CLASH_DRAW = generateSoundEvent(locationFrom("generic.clash_draw"));
 
-
+    public static SoundEvent INSANITY_HEARTBEAT = generateSoundEvent(locationFrom("generic.insanity.heartbeat"));
+    public static SoundEvent INSANITY_RINGING = generateSoundEvent(locationFrom("generic.insanity.ringing"));
     public static SoundEvent RAT_PIPE_HIT = generateSoundEvent(locationFrom("pipe_rat.hit"));
+    public static SoundEvent RAT_PIPE_FALLING = generateSoundEvent(locationFrom("pipe_rat.meme_hit"));
     public static SoundEvent RAT_PIPE_HEAVY_HIT = generateSoundEvent(locationFrom("pipe_rat.heavy_hit"));
     public static SoundEvent RAT_PIPE_SWING = generateSoundEvent(locationFrom("pipe_rat.swing"));
 

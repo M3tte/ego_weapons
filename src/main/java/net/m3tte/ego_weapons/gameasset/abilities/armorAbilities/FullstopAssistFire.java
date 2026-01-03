@@ -2,6 +2,7 @@ package net.m3tte.ego_weapons.gameasset.abilities.armorAbilities;
 
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
+import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.gameasset.movesets.FullstopOfficeRepMovesetAnims;
 import net.m3tte.ego_weapons.particle.BlipeffectParticle;
@@ -80,8 +81,9 @@ public class FullstopAssistFire extends ItemAbility {
                     if (targetEntity.hasEffect(EgoWeaponsEffects.TARGET_SPOTTED.get())) {
                         entitypatch.playAnimationSynchronized(FullstopOfficeRepMovesetAnims.FULLSTOP_REP_ASSIST_FIRE, 0.1f);
 
-                        if (player.level instanceof ServerWorld) {
-                            ((ServerWorld) player.level).sendParticles(BlipeffectParticle.particle, player.getX(), (player.getY() + 1), player.getZ(), (int) blipCost, 0.4, 0.6, 0.4, 0);
+                        World world = player.level;
+                        if (world instanceof ServerWorld) {
+                            ((ServerWorld) world).sendParticles(EgoWeaponsParticles.EXPEND_LIGHT_PARTICLE.get(), player.getX(), (player.getY() + 1), player.getZ(), this.getBlipCost(player, playerVars), 0, 0.3, 0, 0.05);
                         }
 
 

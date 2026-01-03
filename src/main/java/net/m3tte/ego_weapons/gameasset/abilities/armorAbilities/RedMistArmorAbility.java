@@ -2,6 +2,7 @@ package net.m3tte.ego_weapons.gameasset.abilities.armorAbilities;
 
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
+import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.gameasset.abilities.AbilityUtils;
 import net.m3tte.ego_weapons.gameasset.abilities.ItemAbility;
 import net.m3tte.ego_weapons.particle.BlacksilenceshadowParticle;
@@ -18,6 +19,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ChatType;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
@@ -70,10 +72,14 @@ public class RedMistArmorAbility extends ItemAbility {
         player.setItemSlot(EquipmentSlotType.CHEST, EgoWeaponsItems.RED_MIST_EGO_CHESTPLATE.get().getDefaultInstance());
         player.setItemSlot(EquipmentSlotType.HEAD, EgoWeaponsItems.RED_MIST_EGO_HELMET.get().getDefaultInstance());
         player.inventory.setChanged();
-        if (player.level instanceof ServerWorld) {
-            ((ServerWorld) player.level).sendParticles(BlipeffectParticle.particle, x, (y + 1), z, (int) 8, 0.4, 0.6, 0.4, 0);
+
+        World world = player.level;
+        if (world instanceof ServerWorld) {
+            ((ServerWorld) world).sendParticles(EgoWeaponsParticles.EXPEND_LIGHT_PARTICLE.get(), player.getX(), (player.getY() + 1), player.getZ(), 6, 0, 0.3, 0, 0.05);
             ((ServerWorld) player.level).sendParticles(BlacksilenceshadowParticle.particle, x, (y + 1), z, (int) 25, 0.2, 0.6, 0.2, 0);
         }
+
+
 
         player.playSound(SoundEvents.FIRECHARGE_USE, 1, 1);
         player.addEffect(new EffectInstance(ManifestEgoPotionEffect.potion, (int) 3600, (int) 0, (false), (false)));

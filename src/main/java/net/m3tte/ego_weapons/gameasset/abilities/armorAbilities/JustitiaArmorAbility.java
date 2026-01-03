@@ -16,6 +16,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
@@ -68,8 +69,9 @@ public class JustitiaArmorAbility extends ItemAbility {
             playerVars.light -= getBlipCost(player, playerVars);
             AbilityUtils.applyBlipCooldown(40, playerVars);
 
-            if (player.level instanceof ServerWorld) {
-                ((ServerWorld) player.level).sendParticles(BlipeffectParticle.particle, player.getX(), (player.getY() + 1), player.getZ(), (int) 8, 0.4, 0.6, 0.4, 0);
+            World world = player.level;
+            if (world instanceof ServerWorld) {
+                ((ServerWorld) world).sendParticles(EgoWeaponsParticles.EXPEND_LIGHT_PARTICLE.get(), player.getX(), (player.getY() + 1), player.getZ(), this.getBlipCost(player, playerVars), 0, 0.3, 0, 0.05);
             }
             entitypatch.playAnimationSynchronized(JustitiaMovesetAnims.JUSTITIA_ARMOR_ABILITY, 0.1f);
 

@@ -5,9 +5,12 @@ import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.item.sunshower.Sunshower;
+import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
+import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets;
 import yesman.epicfight.api.animation.property.AnimationProperty;
 import yesman.epicfight.api.animation.types.*;
+import yesman.epicfight.api.collider.Collider;
 import yesman.epicfight.api.model.Model;
 import yesman.epicfight.api.utils.ExtendedDamageSource;
 import yesman.epicfight.api.utils.math.ValueCorrector;
@@ -58,7 +61,7 @@ public class SunshowerMovesetAnims {
         SUNSHOWER_SNEAK = new MovementAnimation(0.3f,true, "biped/sunshower/sneak", biped).addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, setOpenstate(0));
         SUNSHOWER_RUN = new MovementAnimation(0.3f,true, "biped/sunshower/run", biped).addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, setOpenstate(0)).addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 2f);
         SUNSHOWER_JUMP = new MovementAnimation(0.3f,false, "biped/sunshower/jump", biped);
-        SUNSHOWER_AUTO_1 = new BasicEgoAttackAnimation(0.08F, 0.45F, 0.55F, 0.83F, 1F, null, "Tool_R", "biped/sunshower/auto_1", biped)
+        SUNSHOWER_AUTO_1 = new BasicEgoAttackAnimation(0.08F, 0.45F, 0.5F, 0.75F, 1F, null, "Tool_R", "biped/sunshower/auto_1", biped)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.WHITE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "sunshower_auto_1")
@@ -71,7 +74,7 @@ public class SunshowerMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.15F)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, Sunshower.auto1Event(EgoWeaponsSounds.SUNSHOWER_AUTO_1, 0f));
 
-        SUNSHOWER_AUTO_2 = new BasicEgoAttackAnimation(0.08F, 0.1F, 0.12F, 0.25F, 0.35F, null, "Tool_R", "biped/sunshower/auto_2", biped)
+        SUNSHOWER_AUTO_2 = new BasicEgoAttackAnimation(0.02F, 0.1F, 0.12F, 0.25F, 0.35F, null, "Tool_R", "biped/sunshower/auto_2", biped)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.WHITE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "sunshower_auto_2")
@@ -86,7 +89,7 @@ public class SunshowerMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.1F)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, Sunshower.auto2Event());
 
-        SUNSHOWER_AUTO_3 = new BasicEgoAttackAnimation(0.08F, 0.08F, 0.08F, 0.33F, 0.6F, null, "Tool_R", "biped/sunshower/auto_3", biped)
+        SUNSHOWER_AUTO_3 = new BasicEgoAttackAnimation(0.02F, 0.08F, 0.25F, 0.33F, 0.55F, null, "Tool_R", "biped/sunshower/auto_3", biped)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.WHITE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "sunshower_auto_3")
@@ -100,9 +103,11 @@ public class SunshowerMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.1F)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, Sunshower.auto3Event());
 
-        SUNSHOWER_AUTO_4 = new BasicEgoAttackAnimation(0.01F, 0.15F, 0.16F, 0.5F, 1.2F, null, "Tool_R", "biped/sunshower/auto_4", biped)
+        SUNSHOWER_AUTO_4 = new BasicEgoAttackAnimation(0.01F, 0.15F, 0.33F, 0.45F, 1.2F, null, "Tool_R", "biped/sunshower/auto_4", biped)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.SWING_EFFECT, SharedFunctions.basicSwingEvent)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.WHITE)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "sunshower_auto_4")
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT_HARD)
@@ -182,7 +187,7 @@ public class SunshowerMovesetAnims {
                 .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.adder(1f))
                 .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.3f))
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.SUNSHOWER_AUTO3_HIT)
-                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.9F)
+                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1F)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, Sunshower.auto3Event());
 
         SUNSHOWER_PUDDLE_STOMP_2 = (new EgoAttackAnimation(0.0F, "biped/sunshower/puddle_stomp_2", biped,
@@ -190,6 +195,7 @@ public class SunshowerMovesetAnims {
                 new AttackAnimation.Phase(0.9F, 0.9F, 1.1f, 1.2f, 1.8F, 1.8f, "Tool_R", SUNSHOWER_COL_LARGE).addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1.2f)).addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(3)).addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD).addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND,  EpicFightSounds.BLUNT_HIT_HARD).addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.SUNSHOWER_AUTO1_HIT)))
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.WHITE)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DISABLE_COLLISION, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.CLASH_KNOCK, false)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "sunshower_puddle_stomp_2")
@@ -198,7 +204,7 @@ public class SunshowerMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, false)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH_BIG)
                 .addProperty(AnimationProperty.AttackAnimationProperty.COLLIDER_ADDER, 1)
-                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.8f)
+                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.9f)
                 .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1.4f))
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, Sunshower.puddleStomp2Event());
 
@@ -221,7 +227,7 @@ public class SunshowerMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.9F)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, Sunshower.puddleStomp3Event());
 
-        SUNSHOWER_SPREAD_OUT_1 = new BasicEgoAttackAnimation(0.08F, 0.05F, 0.33F, 0.75F, 1.1F, null, "Chest", "biped/sunshower/spread_out_1", biped)
+        SUNSHOWER_SPREAD_OUT_1 = new BasicEgoAttackAnimation(0.08F, 0.05F, 0.33F, 0.75F, 1.1F, SUNSHOWER_COL_LARGE, "Chest", "biped/sunshower/spread_out_1", biped)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.WHITE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DISABLE_COLLISION, true)
@@ -233,7 +239,7 @@ public class SunshowerMovesetAnims {
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.SHORT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.adder(3f))
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.SUNSHOWER_AUTO3_HIT)
-                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1F)
+                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.2F)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, Sunshower.spreadout1Event());
 
         SUNSHOWER_SPREAD_OUT_2 = new EgoAttackAnimation(0.08F, 0.05F, 0.33F, 0.75F, 1.1F, null, "Tool_R", "biped/sunshower/spread_out_2", biped)
@@ -254,6 +260,7 @@ public class SunshowerMovesetAnims {
         SUNSHOWER_SPREAD_OUT_3 = new EgoAttackAnimation(0.08F, 0.05F, 0.5F, 0.6F, 1.1F, SUNSHOWER_COL_LARGE, "Tool_R", "biped/sunshower/spread_out_3", biped)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.WHITE)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "sunshower_spread_out_3")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DISABLE_COLLISION, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)

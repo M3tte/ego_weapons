@@ -67,12 +67,13 @@ public class SunshowerUmbrellaEntity extends MobEntity {
         int ownerID = this.getPersistentData().getInt("ownerEntity");
         int consumedSinking = this.getPersistentData().getInt("consumedSinking");
 
-        if (consumedSinking >= 5) {
-            this.addEffect(new EffectInstance(EgoWeaponsEffects.PROTECTION.get(), 20, consumedSinking / 5));
+        if (consumedSinking >= 5 && !this.hasEffect(EgoWeaponsEffects.PROTECTION.get())) {
+            EgoWeaponsEffects.PROTECTION.get().increment(this, consumedSinking / 5, consumedSinking / 5);
+
         }
 
 
-        if (this.tickCount % 140 == 20) {
+        if (this.tickCount % 180 == 20) {
 
             if (!this.level.isClientSide()) {
                 ((ServerWorld)this.level).sendParticles(EgoWeaponsParticles.PUDDLE_STOMP_RIPPLE.get(),this.getX(),this.getY()+0.01,this.getZ(),1,0, 0, 0,0);
@@ -113,7 +114,7 @@ public class SunshowerUmbrellaEntity extends MobEntity {
             }
 
             if (this.getPersistentData().getInt("agedEffects") > 5 + consumedSinking/4) {
-                this.remove();
+                this.kill();
             }
         }
     }

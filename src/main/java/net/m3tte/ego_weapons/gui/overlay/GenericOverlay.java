@@ -42,7 +42,7 @@ import java.util.stream.Stream;
 public class GenericOverlay extends ModIngameGui {
 
 	static long latestArmorUnready = 0;
-	static boolean hasPlayedUnready = false;
+	static boolean hasPlayedUnready = true;
 
 	static double currentHealthPercent = -1;
 	static double currentBrightHealthPercent = -1;
@@ -58,7 +58,7 @@ public class GenericOverlay extends ModIngameGui {
 	static ResourceLocation DEPARTED_BULLET = new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/gui/bullets/the_departed_bullet.png");
 	static ResourceLocation LIVING_BULLET = new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/gui/bullets/the_living_bullet.png");
 	static long lastRenderedTick = 0;
-	static boolean hasPlayedWeaponUnready = false;
+	static boolean hasPlayedWeaponUnready = true;
 
 
 	final static ResourceLocation base_ui = new ResourceLocation("ego_weapons:textures/screens/gui/base_ui.png");
@@ -78,6 +78,7 @@ public class GenericOverlay extends ModIngameGui {
 	final static ResourceLocation d10fuel = new ResourceLocation("ego_weapons:textures/screens/gui/firefist/district_10_fuel.png");
 	final static ResourceLocation d10fuel_ignited = new ResourceLocation("ego_weapons:textures/screens/gui/firefist/burning_district_10_fuel.png");
 
+	final static ResourceLocation lightTextureMap = new ResourceLocation("ego_weapons:textures/screens/light_texmap.png");
 
 	static ResourceLocation[] shellLeft = parseMultiStateTexture(1 ,5, "overlay/shell/shell_left");
 	static ResourceLocation[] shellRight = parseMultiStateTexture(1 ,5, "overlay/shell/shell_right");
@@ -148,7 +149,7 @@ public class GenericOverlay extends ModIngameGui {
 		double z = _z;
 
 		EgoWeaponsModVars.PlayerVariables playerVariables = entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).orElse(new EgoWeaponsModVars.PlayerVariables());
-		int energy = (int) playerVariables.light;
+		float light = (float) playerVariables.light;
 
 		//Fetch Render System
 
@@ -157,6 +158,54 @@ public class GenericOverlay extends ModIngameGui {
 		RenderSystem.disableAlphaTest();
 
 		MatrixStack matStack = event.getMatrixStack();
+
+		// Light UI
+
+		int maxLight = EgoWeaponsAttributes.getMaxLight(entity);
+
+		int lightsPerLine = 8;
+
+		int baseXPos = w - (posX / 3);
+		GL11.glPushMatrix();
+
+		GL11.glTranslated(baseXPos - 80, h - 50, 0);
+
+		GL11.glPushMatrix();
+
+		GL11.glScaled(0.72f, 0.72f, 0.72f);
+
+		Minecraft.getInstance().getTextureManager().bind(lightTextureMap);
+
+		int fixedOffset = -12 * (maxLight/lightsPerLine);
+
+		for (int n = 0; n < maxLight; n++) {
+
+			int lightOffset = (light - n - 1) >= 0 ? 24 : 48;
+
+
+			if ((maxLight - (n / lightsPerLine)*8) >= lightsPerLine) {
+				blit(event.getMatrixStack(), 22 * (n % lightsPerLine), 23 * (n / lightsPerLine) - fixedOffset, 0, 0, 24, 24, 24, 72);
+
+				if (n + 0.5f <= light) {
+					blit(event.getMatrixStack(), 22 * (n % lightsPerLine), 23 * (n / lightsPerLine) - fixedOffset, 0, lightOffset, 24, 24, 24, 72);
+				}
+
+			} else {
+
+				int inCurrLine = maxLight % lightsPerLine;
+				float offsetScale = (lightsPerLine - inCurrLine) / 2f;
+
+				blit(event.getMatrixStack(),  (int)(22f * (offsetScale + (n%lightsPerLine))), -23 * (n / lightsPerLine) - fixedOffset, 0, 0, 24, 24, 24, 72);
+
+				if (n + 0.5f <= light) {
+					blit(event.getMatrixStack(), (int)(22f * (offsetScale + (n%lightsPerLine))), -23 * (n / lightsPerLine) - fixedOffset, 0, lightOffset, 24, 24, 24, 72);
+				}
+			}
+		}
+
+		GL11.glPopMatrix();
+
+		GL11.glPopMatrix();
 
 		// Blip UI
 
@@ -169,18 +218,18 @@ public class GenericOverlay extends ModIngameGui {
 
 		//Minecraft.getInstance().font.draw(event.getMatrixStack(), "TCorp - Indev - Bugs are to be expected", 30, 20, -1);
 
-		Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("ego_weapons:textures/screens/blip_background.png"));
+		/*Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("ego_weapons:textures/screens/blip_background.png"));
 		blit(event.getMatrixStack(), w - (posX / 3) - 30, posY + 98, 0, 0, 64, 20, 64, 20);
 		Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("ego_weapons:textures/screens/power_blip.png"));
-		for (int sc = 0; sc < Math.min(energy, 10); sc++) {
+		for (int sc = 0; sc < Math.min(light, 10); sc++) {
 			blit(event.getMatrixStack(), w - (posX / 3) + 4 - 30 + sc * 6, posY + 102, 0, 0, 3, 9, 3, 9);
 		}
-		if (energy > 10) {
+		if (light > 10) {
 			Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("ego_weapons:textures/screens/golden_blip.png"));
-			for (int sc = 10; sc < Math.min(energy, 20); sc++) {
+			for (int sc = 10; sc < Math.min(light, 20); sc++) {
 				blit(event.getMatrixStack(), w - (posX / 3) + 3 - 30 + (sc - 10) * 6, posY + 101, 0, 0, 5, 11, 5, 11);
 			}
-		}
+		}*/
 		ItemStack equippedArmor = entity.getItemBySlot(EquipmentSlotType.CHEST);
 		ItemStack equippedItem = entity.getItemBySlot(EquipmentSlotType.MAINHAND);
 
@@ -213,7 +262,11 @@ public class GenericOverlay extends ModIngameGui {
 				float availability = ability.getAvailability(entity, playerVariables);
 				float flashProgress = 0;
 				if (availability >= 1) {
-					flashProgress = 1 - ((float) (entity.tickCount - latestArmorUnready) / 11);
+
+					if (entity.tickCount < latestArmorUnready)
+						latestArmorUnready = 0;
+
+					flashProgress = 1 - Math.max(0,((float) (entity.tickCount + event.getPartialTicks() - latestArmorUnready) / 11));
 
 					if (!hasPlayedUnready) {
 						hasPlayedUnready = true;
@@ -246,7 +299,11 @@ public class GenericOverlay extends ModIngameGui {
 				float availability = ability.getAvailability(entity, playerVariables);
 				float flashProgress = 0;
 				if (availability >= 1) {
-					flashProgress = 1 - ((float) (entity.tickCount - latestWeaponUnready) / 11);
+
+					if (entity.tickCount < latestWeaponUnready)
+						latestWeaponUnready = 0;
+
+					flashProgress = 1 - Math.max(0,((float) (entity.tickCount + event.getPartialTicks() - latestWeaponUnready) / 11));
 
 					if (!hasPlayedWeaponUnready) {
 						hasPlayedWeaponUnready = true;
@@ -261,13 +318,6 @@ public class GenericOverlay extends ModIngameGui {
 			}
 		}
 
-
-		if (BlipwarninghandlerProcedure.executeProcedure(Stream.of(new AbstractMap.SimpleEntry<>("entity", entity)).collect(HashMap::new,
-				(_m, _e) -> _m.put(_e.getKey(), _e.getValue()), Map::putAll))) {
-			Minecraft.getInstance().getTextureManager().bind(new ResourceLocation("ego_weapons:textures/screens/blip_warning.png"));
-			blit(event.getMatrixStack(), w - (posX / 3) - 30, posY + 98, 0, 0, 64, 20, 64, 20);
-		}
-		//
 
 		if (entity.getItemInHand(Hand.MAIN_HAND).getItem().equals(EgoWeaponsItems.MAGIC_BULLET.get())) {
 			renderMagicBullet(h / 2 - 10, 100, entity, event);
@@ -432,8 +482,8 @@ public class GenericOverlay extends ModIngameGui {
 
 	private static void renderStatisticUI(int offsetY, int offsetX, PlayerEntity player, EgoWeaponsModVars.PlayerVariables playerVariables, RenderGameOverlayEvent.Pre event) {
 		double targetPercent = player.getHealth() != 0 ? player.getHealth() : -1;
-		double targetStagger = playerVariables.stagger != 0 ? playerVariables.stagger : -1;
-		double targetSanity = playerVariables.sanity != 0 ? playerVariables.sanity : -1;
+		double targetStagger = playerVariables.stagger != 0 ? Math.max(playerVariables.stagger,0) : -1;
+		double targetSanity = playerVariables.sanity != 0 ? Math.max(playerVariables.sanity,0) : -1;
 
 		if (lastRenderedTick != player.tickCount) {
 			// Calculate Percent
@@ -441,10 +491,10 @@ public class GenericOverlay extends ModIngameGui {
 				targetPercent = player.getHealth() / player.getMaxHealth();
 
 			if (EgoWeaponsAttributes.getMaxStagger(player) != 0)
-				targetStagger = playerVariables.stagger / EgoWeaponsAttributes.getMaxStagger(player);
+				targetStagger = Math.max(playerVariables.stagger,0) / EgoWeaponsAttributes.getMaxStagger(player);
 
 			if (EgoWeaponsAttributes.getMaxSanity(player) != 0)
-				targetSanity = playerVariables.sanity / EgoWeaponsAttributes.getMaxSanity(player);
+				targetSanity = Math.max(playerVariables.sanity,0) / EgoWeaponsAttributes.getMaxSanity(player);
 
 			// Calc Health
 			if (currentHealthPercent == -1)
@@ -700,6 +750,12 @@ public class GenericOverlay extends ModIngameGui {
 		if (icon != null) {
 			GL11.glPushMatrix();
 
+			if (availability < 1) {
+				GL11.glTranslated(-25,0, 0);
+				GL11.glColor4f(0.8f,0.8f,0.8f, 1);
+			}
+
+			GL11.glPushMatrix();
 			GL11.glTranslated(0,offsetY,0);
 			if (flashProgress > 0) {
 				GL11.glTranslated(32 * flashProgress,-20 * flashProgress,0);
@@ -796,7 +852,7 @@ public class GenericOverlay extends ModIngameGui {
 			GL11.glPopMatrix();
 			GL11.glPopMatrix();
 			GL11.glPopMatrix();
-
+			GL11.glPopMatrix();
 
 			GL11.glPopMatrix();
 		}

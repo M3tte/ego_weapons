@@ -2,6 +2,7 @@ package net.m3tte.ego_weapons.gameasset.abilities.reloadAbilities;
 
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
+import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.gameasset.movesets.FirefistMovesetAnims;
 import net.m3tte.ego_weapons.particle.BlipeffectParticle;
@@ -75,13 +76,12 @@ public class FirefistReloadAbility extends ReloadAbility {
             double z = player.getZ();
             int potency = 1;
             if (world instanceof ServerWorld) {
-                ((ServerWorld) world).sendParticles(BlipeffectParticle.particle, x, (y + 1), z, (int) 4, 0.4, 0.6, 0.4, 0);
+                ((ServerWorld) world).sendParticles(EgoWeaponsParticles.EXPEND_LIGHT_PARTICLE.get(), x, (y + 1), z, this.getBlipCost(player, playerVars), 0, 0.3, 0, 0.05);
             }
 
             LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
             playerVars.globalcooldown = 100;
 
-            player.getItemBySlot(EquipmentSlotType.CHEST).getOrCreateTag().putInt("d10fuel",100);
 
             if (!world.isClientSide()) {
 

@@ -20,6 +20,7 @@ public class PackageRegistry {
                 EgoWeaponsModVars.PlayerVariablesSyncMessage::handler);
         addNetworkMessage(EgoWeaponsModVars.SyncStaggerMessage.class, EgoWeaponsModVars.SyncStaggerMessage::buffer, EgoWeaponsModVars.SyncStaggerMessage::new,
                 EgoWeaponsModVars.SyncStaggerMessage::handler);
+
         addNetworkMessage(EgoWeaponsModVars.SyncEmotionLevelMSG.class, EgoWeaponsModVars.SyncEmotionLevelMSG::buffer, EgoWeaponsModVars.SyncEmotionLevelMSG::new,
                 EgoWeaponsModVars.SyncEmotionLevelMSG::handler);
         addNetworkMessage(EgoWeaponsModVars.SyncSanityMessage.class, EgoWeaponsModVars.SyncSanityMessage::buffer, EgoWeaponsModVars.SyncSanityMessage::new,
@@ -27,6 +28,9 @@ public class PackageRegistry {
 
         addNetworkMessage(ParticlePackages.SendStaggerMessage.class, ParticlePackages.SendStaggerMessage::buffer, ParticlePackages.SendStaggerMessage::new,
                 ParticlePackages.SendStaggerMessage::handler);
+
+        addNetworkMessage(ParticlePackages.SendInsanityMessage.class, ParticlePackages.SendInsanityMessage::buffer, ParticlePackages.SendInsanityMessage::new,
+                ParticlePackages.SendInsanityMessage::handler);
 
         addNetworkMessage(ParticlePackages.SendTakeAimParticle.class, ParticlePackages.SendTakeAimParticle::buffer, ParticlePackages.SendTakeAimParticle::new,
                 ParticlePackages.SendTakeAimParticle::handler);

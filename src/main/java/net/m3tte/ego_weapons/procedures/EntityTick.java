@@ -1,9 +1,11 @@
 package net.m3tte.ego_weapons.procedures;
 
 import net.m3tte.ego_weapons.*;
+import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.network.packages.AbilityPackages;
 import net.m3tte.ego_weapons.potion.EnergyboostPotionEffect;
 import net.m3tte.ego_weapons.potion.EnergyfatiguePotionEffect;
+import net.m3tte.ego_weapons.potion.Panic;
 import net.m3tte.ego_weapons.potion.Terror;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
@@ -17,10 +19,15 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.PacketDistributor;
+import yesman.epicfight.world.capabilities.EpicFightCapabilities;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
+import yesman.epicfight.world.effect.EpicFightMobEffects;
+import yesman.epicfight.world.entity.EpicFightEntities;
 
 import java.util.*;
 
@@ -193,12 +200,10 @@ public class EntityTick {
 
 			int maxEnergy = EgoWeaponsAttributes.getMaxLight(entity);
 
-			if (SanitySystem.getSanity(entity)<=0.1f) {
-				entity.addEffect(new EffectInstance(Effects.BLINDNESS, 300, 0));
-				entity.addEffect(new EffectInstance(Effects.WEAKNESS, 300, 1));
-				entity.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 300, 1));
-				entity.addEffect(new EffectInstance(Effects.DIG_SLOWDOWN, 300, 1));
-				SanitySystem.healSanity(entity, 10);
+
+
+			if (SanitySystem.getSanity(entity) <= 0.1f) {
+				entityData.sanity = 0;
 			}
 
 			if (entityData.light < maxEnergy) {

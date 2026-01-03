@@ -3,12 +3,14 @@ package net.m3tte.ego_weapons.item.rat;
 
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
+import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
 import net.m3tte.ego_weapons.gameasset.movesets.OeufiAssocMovesetAnims;
 import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.potion.OrlandoPotionEffect;
 import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
@@ -201,6 +203,11 @@ public class RatPipe extends EgoWeaponsWeapon {
 				case "rat_pipe_sp_3":
 					TremorEffect.burstTremor(target, true);
 					TremorEffect.burstTremor(sourceentity, true);
+
+					if (sourceentity.hasEffect(OrlandoPotionEffect.potion)) {
+						System.out.println("PLAYING RAT PIPE FALLING SOUND NOW");
+						entitypatch.playSound(EgoWeaponsSounds.RAT_PIPE_FALLING, 1, 1);
+					}
 					break;
 				case "rat_pipe_auto2":
 					EgoWeaponsEffects.TREMOR.get().increment(target, 0, 1);
@@ -273,6 +280,13 @@ public class RatPipe extends EgoWeaponsWeapon {
 			case "rat_pipe_sp_3":
 				SharedFunctions.incrementBonusDamage(damageSource, Math.min(0.5f, 0.05f * targetTremor));
 				mult += Math.min(0.5f, 0.05f * targetTremor);
+
+				if (source.hasEffect(OrlandoPotionEffect.potion)) {
+					SharedFunctions.incrementBonusDamage(damageSource, 0.5f);
+					mult += 0.5f;
+
+				}
+
 				break;
 		}
 

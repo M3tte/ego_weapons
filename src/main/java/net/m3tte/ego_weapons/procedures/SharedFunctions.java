@@ -29,6 +29,7 @@ import net.m3tte.ego_weapons.item.rat.RatPipe;
 import net.m3tte.ego_weapons.item.solemn_lament.SolemnLament;
 import net.m3tte.ego_weapons.item.stigma_workshop.StigmaWorkshopSword;
 import net.m3tte.ego_weapons.item.sunshower.Sunshower;
+import net.m3tte.ego_weapons.item.sunshower.SunshowerArmor;
 import net.m3tte.ego_weapons.network.packages.AbilityPackages;
 import net.m3tte.ego_weapons.network.packages.ParticlePackages;
 import net.m3tte.ego_weapons.potion.*;
@@ -374,18 +375,37 @@ public class SharedFunctions {
                         case "heishou_mao_sword": multiplier = HeishouMaoSword.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source); break;
                         case "rat_shank": multiplier = RatKnife.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source); break;
                         case "rat_pipe": multiplier = RatPipe.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source); break;
+                        case "sunshower": multiplier = Sunshower.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source); break;
 
 
                     }
                 }
             }
 
-            // If player has blunt rat, decrease damage taken based on temor
+            // Sunshower on hit effects
+            if (((LivingEntity)source.getEntity()).getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.SUNSHOWER_CLOAK.get())) {
+                LivingEntityPatch<?> sourcePatch = (LivingEntityPatch<?>) source.getEntity().getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+
+                if (sourcePatch != null) {
+                    multiplier = SunshowerArmor.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source);
+                }
+            }
+
+            // Oeufi Tremor Effects
             if (((LivingEntity)source.getEntity()).getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.OEUFI_CHESTPLATE.get())) {
                 LivingEntityPatch<?> sourcePatch = (LivingEntityPatch<?>) source.getEntity().getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
                 if (sourcePatch != null) {
                     multiplier = OeufiArmor.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source);
+                }
+            }
+
+            // If player has blunt rat, decrease damage taken based on tremor
+            if (self.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.BLUNT_RAT_OUTFIT.get())) {
+                LivingEntityPatch<?> sourcePatch = (LivingEntityPatch<?>) source.getEntity().getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+
+                if (sourcePatch != null) {
+                    multiplier = RatBluntJacket.modifyDamageAmountInbound(self, (LivingEntity) source.getEntity(), multiplier, source);
                 }
             }
 
@@ -410,16 +430,8 @@ public class SharedFunctions {
                 }
             }
 
-            // If player has blunt rat, decrease damage taken based on temor
-            if (((LivingEntity)self.getEntity()).getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.BLUNT_RAT_OUTFIT.get()) && source.getEntity() instanceof LivingEntity) {
-                LivingEntityPatch<?> sourcePatch = (LivingEntityPatch<?>) source.getEntity().getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
-                if (sourcePatch != null) {
-                    multiplier = RatBluntJacket.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source);
-                }
-            }
-
-            // If player has knife rat, decrease damage taken based on temor
+            // If player has knife rat, apply effects
             if (((LivingEntity)self.getEntity()).getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.RAT_OUTFIT.get()) && source.getEntity() instanceof LivingEntity) {
                 LivingEntityPatch<?> sourcePatch = (LivingEntityPatch<?>) source.getEntity().getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
@@ -645,6 +657,9 @@ public class SharedFunctions {
         multiplier = DamageResistanceSystem.processDamageForEntity(self, (LivingEntity) source.getEntity(), multiplier, source, isStaggered(self));
 
 
+        System.out.println("SOURCE IS : "+source);
+        if (source instanceof GenericEgoDamage)
+            System.out.println("FINAL PRE MULTIPLIER : "+multiplier+" calculated ="+((GenericEgoDamage)source).getBonusMult()+ " - - " + ((GenericEgoDamage)source).getResistanceMult());
 
         amount *= multiplier;
 

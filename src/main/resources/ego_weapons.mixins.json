@@ -17,12 +17,12 @@
   ],
   "client": [
     "EntityPredicatesMixin",
-    "PushEntityMixin",
     "HotbarRenderMixin",
     "ItemStackMixin",
     "LivingRenderLayersMixin",
     "MusicTickerMixin",
     "PlayerRenderLayerMixin",
+    "PushEntityMixin",
     "epicfight.EntityIndicatorMixin",
     "epicfight.HealthbarIndicatorMixin",
     "epicfight.ItemInHandLayerMixin",

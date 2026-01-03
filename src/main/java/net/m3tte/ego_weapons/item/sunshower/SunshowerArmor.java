@@ -3,8 +3,13 @@ package net.m3tte.ego_weapons.item.sunshower;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.m3tte.ego_weapons.EgoWeaponsAttributes;
+import net.m3tte.ego_weapons.EgoWeaponsModVars;
+import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
+import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoWeaponsArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
@@ -12,9 +17,11 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
@@ -25,10 +32,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
+import yesman.epicfight.api.animation.types.DynamicAnimation;
+import yesman.epicfight.world.capabilities.EpicFightCapabilities;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
@@ -117,6 +128,27 @@ public class SunshowerArmor extends GenericEgoWeaponsArmor {
 		}
 	};
 
+	public static float modifyDamageAmount(LivingEntity target, LivingEntity source, float dmgMult, DamageSource damageSource) {
+
+
+
+		EgoWeaponsModVars.PlayerVariables entityData = source.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
+
+		if (entityData != null) {
+
+			float missingSanity = 100 - (int) ((entityData.sanity / EgoWeaponsAttributes.getMaxSanity((PlayerEntity) source)) * 100);
+
+			System.out.println("Missing Sanity Percent is : "+missingSanity+ " - - - "+Math.min(missingSanity*0.004f,0.2f));
+
+			SharedFunctions.incrementBonusDamage(damageSource, Math.min(missingSanity*0.004f,0.2f));
+			dmgMult += Math.min(missingSanity*0.004f,0.2f);
+		}
+
+
+
+		return dmgMult;
+	}
+
 	static Item chest = new SunshowerArmor(armormaterial, EquipmentSlotType.CHEST, new Properties().tab(ItemGroup.TAB_COMBAT), 1f, 0.7f, 1.2f ,1.3f, 0.7f, 1f, 1.3f, 5, 0) {
 
 
@@ -148,10 +180,10 @@ public class SunshowerArmor extends GenericEgoWeaponsArmor {
 			list.add(new StringTextComponent("...Go away. Don't bother poking at me.").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
-			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 3) + 1) + "/3] - - - - - - - =").withStyle(TextFormatting.GRAY));
+			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
 			list.add(new TranslationTextComponent("desc.ego_weapons.risk.he"));
 			list.add(new StringTextComponent(" "));
-			switch (EgoWeaponsKeybinds.getUiPage() % 3) {
+			switch (EgoWeaponsKeybinds.getUiPage() % 4) {
 				case 0:
 					resistanceMods(itemstack, world, list, flag);
 					break;
@@ -162,6 +194,12 @@ public class SunshowerArmor extends GenericEgoWeaponsArmor {
 						generateDescription(list, "sunshower_cloak", "passive", 2);
 					break;
 				case 2:
+					if (EgoWeaponsKeybinds.isHoldingShift())
+						generateStatusDescription(list, new String[]{"protection", "offense_up", "offense_down", "rupture"});
+					else
+						generateDescription(list, "sunshower_cloak", "passive2", 9);
+					break;
+				case 3:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"bleed", "sinking"});
 					else

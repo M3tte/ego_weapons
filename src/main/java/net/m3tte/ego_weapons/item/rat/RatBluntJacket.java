@@ -116,7 +116,7 @@ public class RatBluntJacket extends GenericEgoWeaponsArmor {
 		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
 	}
 
-	public static float modifyDamageAmount(LivingEntity target, LivingEntity source, float dmgMult, DamageSource damageSource) {
+	public static float modifyDamageAmountInbound(LivingEntity target, LivingEntity source, float dmgMult, DamageSource damageSource) {
 
 		TremorEffect tremor = TremorEffect.detectTremorType(target);
 		if (tremor != null) {

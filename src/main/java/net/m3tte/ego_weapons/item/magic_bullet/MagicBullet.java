@@ -82,7 +82,7 @@ public class MagicBullet extends EgoWeaponsWeapon {
 	}
 
 
-	public static float damageMultiplier(LivingEntity sourceentity, LivingEntity target, float multiplier, DamageSource source) {
+	public static float damageMultiplier(LivingEntity target, LivingEntity sourceentity, float multiplier, DamageSource source) {
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 
@@ -100,18 +100,16 @@ public class MagicBullet extends EgoWeaponsWeapon {
 			AttackLogicPredicate type = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.LOGIC_PREDICATE).orElse(AttackLogicPredicate.DEFAULT);
 
 			if (type.equals(AttackLogicPredicate.MAGIC_BULLET_FIRE)) {
-				if (source instanceof EpicFightDamageSource) {
 
-					SharedFunctions.incrementBonusDamage(source, 0.25f * EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(entitypatch.getOriginal()));
 
-					multiplier += 0.25f * EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(entitypatch.getOriginal());
+				SharedFunctions.incrementBonusDamage(source, 0.20f * EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(entitypatch.getOriginal()));
+				multiplier += 0.20f * EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(entitypatch.getOriginal());
 
-					float amountPredicate = (0.02f * Math.min(15, EgoWeaponsEffects.BURN.get().getPotency(target)));
+				float amountPredicate = (0.02f * Math.min(15, EgoWeaponsEffects.BURN.get().getPotency(target)));
 
-					SharedFunctions.incrementBonusDamage(source, amountPredicate);
+				SharedFunctions.incrementBonusDamage(source, amountPredicate);
 
-					multiplier += 1 + amountPredicate;
-				}
+				multiplier += 1 + amountPredicate;
 			}
 		}
 		return multiplier;

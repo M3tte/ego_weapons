@@ -1,6 +1,7 @@
 package net.m3tte.ego_weapons.network.packages;
 
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
+import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.specialParticles.numberParticle.NumberParticleTypes;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.AttackTypes;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.DamageTypes;
@@ -10,7 +11,9 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -54,7 +57,6 @@ public class ParticlePackages {
     }
 
     public static class SendStaggerMessage {
-
         int entityID;
         public SendStaggerMessage(int EntityID) {
             this.entityID = EntityID;
@@ -79,6 +81,45 @@ public class ParticlePackages {
                         Minecraft.getInstance().level.addParticle(EgoWeaponsParticles.STAGGER.get(), target.getX(), target.getY(), target.getZ(), 0, target.getId(), 0);
                     } else {
                         System.out.println("Stagger Target Is Null");
+                    }
+
+                }
+            });
+            context.setPacketHandled(true);
+        }
+    }
+
+    public static class SendInsanityMessage {
+        int entityID;
+        public SendInsanityMessage(int EntityID) {
+            this.entityID = EntityID;
+        }
+
+        public SendInsanityMessage(PacketBuffer buffer) {
+            this.entityID = buffer.readInt();
+        }
+
+        public static void buffer(SendInsanityMessage message, PacketBuffer buffer) {
+            buffer.writeInt(message.entityID);
+        }
+
+        public static void handler(SendInsanityMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
+            NetworkEvent.Context context = contextSupplier.get();
+            context.enqueueWork(() -> {
+                if (!context.getDirection().getReceptionSide().isServer()) {
+                    Entity target = Minecraft.getInstance().level.getEntity(message.entityID);
+
+                    System.out.println("SENT INSANITY MSG TO -> "+target+" at "+target.level.isClientSide());
+
+                    if (target != null) {
+                        // Minecraft.getInstance().level.addParticle(EgoWeaponsParticles.STAGGER.get(), target.getX(), target.getY(), target.getZ(), 0, target.getId(), 0);
+
+                        target.playSound(EgoWeaponsSounds.INSANITY_HEARTBEAT, 0.5f, 1);
+                        target.playSound(EgoWeaponsSounds.INSANITY_RINGING, 0.5f, 1);
+
+
+                    } else {
+                        System.out.println("Insanity Target Is Null");
                     }
 
                 }
@@ -373,6 +414,7 @@ public class ParticlePackages {
             this.y = pos.y();
             this.z = pos.z();
 
+
             this.number = number;
             this.typeMetadata = damageType.ordinal() + 1;
             this.typeMetadata += attackType.ordinal() * 10;
@@ -382,9 +424,11 @@ public class ParticlePackages {
                 this.typeMetadata *= -1;
 
             this.mult = Math.abs(mult);
-            bonusMult = (Math.round(bonusMult * 100)) / 100f;
+
+            bonusMult = (Math.round(bonusMult * 100)) / 100d;
 
             this.mult += Math.abs(bonusMult) * 1000000;
+
 
             if (bonusMult < 0)
                 this.mult *= -1;
@@ -415,6 +459,7 @@ public class ParticlePackages {
             NetworkEvent.Context context = contextSupplier.get();
             context.enqueueWork(() -> {
                 if (!context.getDirection().getReceptionSide().isServer() && Minecraft.getInstance().level != null) {
+                    System.out.println("TRANSFERRING MULTIPLIER VALUE : "+message.mult);
                     Minecraft.getInstance().level.addParticle(EgoWeaponsParticles.DAMAGE_NUMBER.get(), message.x, message.y, message.z ,message.number, message.typeMetadata, message.mult);
                 }
             });

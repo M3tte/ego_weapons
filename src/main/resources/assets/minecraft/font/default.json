@@ -317,6 +317,34 @@
     },
     {
       "type": "bitmap",
+      "file": "ego_weapons:mob_effect/sanity_up.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE046"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/sanity_down.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE047"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/shield.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE048"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/panic.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE049"]
+    },
+    {
+      "type": "bitmap",
       "file": "ego_weapons:damage_types/red.png",
       "ascent": 8,
       "height": 9,

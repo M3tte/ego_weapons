@@ -253,7 +253,8 @@ public class DurandalMovesetAnims {
         }, StaticAnimation.Event.Side.BOTH);
 
         events[1] = StaticAnimation.Event.create(0.55F, (entitypatch) -> {
-            entitypatch.reserveAnimation(DurandalMovesetAnims.DURANDAL_FURIOSO_SHEATH);
+            if (!entitypatch.getOriginal().level.isClientSide())
+                entitypatch.reserveAnimation(DurandalMovesetAnims.DURANDAL_FURIOSO_SHEATH);
         }, StaticAnimation.Event.Side.BOTH);
 
         return events;

@@ -22,7 +22,7 @@ public class SetEmotionCommand {
 	@SubscribeEvent
 	public static void registerCommands(RegisterCommandsEvent event) {
 		event.getDispatcher().register(LiteralArgumentBuilder.<CommandSource>literal("setEmotionLevel").requires(s -> s.hasPermission(4))
-				.then(Commands.argument("name", EntityArgument.player())
+				.then(Commands.argument("name", EntityArgument.players())
 						.then(Commands.argument("level", IntegerArgumentType.integer(0, 5)).executes(arguments -> {
 					ServerWorld world = arguments.getSource().getLevel();
 					double x = arguments.getSource().getPosition().x();
@@ -32,16 +32,21 @@ public class SetEmotionCommand {
 					if (entity == null)
 						entity = FakePlayerFactory.getMinecraft(world);
 
-					PlayerEntity target = EntityArgument.getPlayer(arguments, "name");
 					int lvl = IntegerArgumentType.getInteger(arguments, "level");
 
-					PlayerVariables vars = target.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY).orElse(new PlayerVariables());
+					for (PlayerEntity player : EntityArgument.getPlayers(arguments, "name")) {
+						PlayerVariables vars = player.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY).orElse(new PlayerVariables());
 
-					vars.globalcooldown = 0;
-					vars.emotionLevel = lvl;
-					vars.emotionLevelProgress = lvl;
-					EmotionSystem.updateMaxEnergy(target, vars);
-					vars.syncEmotionLevel(target);
+						vars.globalcooldown = 0;
+						vars.emotionLevel = lvl;
+						vars.emotionLevelProgress = lvl;
+						EmotionSystem.updateMaxEnergy(player, vars);
+						vars.syncEmotionLevel(player);
+					}
+
+
+
+
 					return 0;
 				}))));
 	}

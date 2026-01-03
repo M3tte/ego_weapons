@@ -152,7 +152,7 @@ public class DialogueGUI extends EntityIndicator {
                     secondUpOffs -= 0.1f;
                 }
             }
-            System.out.println("ENTRY LINES IS : "+entry.getLines().length);
+            // System.out.println("ENTRY LINES IS : "+entry.getLines().length);
             upOffset += 0.09f * (entry.getLines().length - 2) + 0.48f;
         }
         // this.drawTexturedModalRect2DPlane(mvMatrix, vertexBuilder, -1.2F, -0.4F, 1.2f, 0.3F, 0, 0, 256, 100);

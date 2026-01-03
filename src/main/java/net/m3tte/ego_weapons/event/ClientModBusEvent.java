@@ -218,8 +218,11 @@ public class ClientModBusEvent {
         particleEngine.register(EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get(), AirShockwaveEffect.Provider::new);
         particleEngine.register(EgoWeaponsParticles.SLASH_SHOCKWAVE.get(), SlashShockwaveEffect.Provider::new);
         particleEngine.register(EgoWeaponsParticles.SOLEMN_LAMENT_SHOCKWAVE.get(), SolemnLamentShockwave.Provider::new);
-        particleEngine.register(EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_SHORT.get(), (a) -> new MagicBulletCircleParticle.Provider(a, 30));
+        particleEngine.register(EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_SHORT.get(), (a) -> new MagicBulletCircleParticle.Provider(a, 40));
         particleEngine.register(EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_LONG.get(), (a) -> new MagicBulletCircleParticle.Provider(a, 60));
+        particleEngine.register(EgoWeaponsParticles.TARGET_MAGIC_BULLET_CIRCLE_SHORT.get(), (a) -> new MagicBulletTargetCircle.Provider(a, 40));
+        particleEngine.register(EgoWeaponsParticles.TARGET_MAGIC_BULLET_CIRCLE_LONG.get(), (a) -> new MagicBulletTargetCircle.Provider(a, 60));
+        particleEngine.register(EgoWeaponsParticles.EXPEND_LIGHT_PARTICLE.get(), ExpendLightParticle.Provider::new);
 
     }
 

@@ -1,9 +1,6 @@
 package net.m3tte.ego_weapons.gameasset.movesets;
 
-import net.m3tte.ego_weapons.EgoWeaponsEffects;
-import net.m3tte.ego_weapons.EgoWeaponsMod;
-import net.m3tte.ego_weapons.EgoWeaponsParticles;
-import net.m3tte.ego_weapons.EgoWeaponsSounds;
+import net.m3tte.ego_weapons.*;
 import net.m3tte.ego_weapons.gameasset.AttackMoveType;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
@@ -15,6 +12,7 @@ import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
@@ -213,6 +211,7 @@ public class SolemnLamentMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "solemn_lament_e3")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.SWING_EFFECT, heavySwingEvent)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT_HARD)
                 .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(3))
@@ -619,7 +618,10 @@ public class SolemnLamentMovesetAnims {
 
         boolean hasAmmo = SolemnLamentEffects.getAmmoCount(entity, effect) > 0;
 
-        if (hasAmmo) {
+        boolean hasWeapon = departed ? entity.getItemInHand(Hand.OFF_HAND).getItem().equals(EgoWeaponsItems.SOLEMN_LAMENT_BLACK.get()) : entity.getItemInHand(Hand.MAIN_HAND).getItem().equals(EgoWeaponsItems.SOLEMN_LAMENT_WHITE.get());
+
+
+        if (hasAmmo && hasWeapon) {
             if (!entity.level.isClientSide()) {
                 System.out.println("CONSUME AMMO ON SIDE : "+entity.level.isClientSide());
                 SolemnLamentEffects.decrementEffect(entitypatch.getOriginal(), effect);
@@ -640,7 +642,11 @@ public class SolemnLamentMovesetAnims {
 
         boolean hasAmmo = SolemnLamentEffects.getAmmoCount(entity, SolemnLamentEffects.getDeparted()) > 0 && SolemnLamentEffects.getAmmoCount(entity, SolemnLamentEffects.getLiving()) > 0;
 
-        if (hasAmmo) {
+        boolean hasWhite = entity.getItemInHand(Hand.MAIN_HAND).getItem().equals(EgoWeaponsItems.SOLEMN_LAMENT_WHITE.get());
+        boolean hasBlack = entity.getItemInHand(Hand.OFF_HAND).getItem().equals(EgoWeaponsItems.SOLEMN_LAMENT_WHITE.get());
+
+
+        if (hasAmmo && hasWhite && hasBlack) {
             if (!entity.level.isClientSide()) {
                 SolemnLamentEffects.decrementEffect(entitypatch.getOriginal(), SolemnLamentEffects.getDeparted());
                 SolemnLamentEffects.decrementEffect(entitypatch.getOriginal(), SolemnLamentEffects.getLiving());

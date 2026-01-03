@@ -69,6 +69,7 @@ public class EgoWeaponsAnimations {
 
     public static StaticAnimation CLASH_STUN_BASIC;
 
+    public static StaticAnimation INSANITY_STUN;
 
 
 
@@ -115,6 +116,7 @@ public class EgoWeaponsAnimations {
         PUMMEL_DOWN = new PushDownAnimation(0.05f, "biped/generic/pummel_down", biped).addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 0.7f);
 
         STAGGER = new LongHitAnimation(0.05f, "biped/generic/stagger", biped);
+        INSANITY_STUN = new LongHitAnimation(0.05f, "biped/generic/insanity", biped);
         BS_DODGE = new DodgeAnimation(0f, "biped/generic/bs_evade", 0.5f, 0.5f, biped)
                 .addProperty(AnimationProperty.ActionAnimationProperty.CANCELABLE_MOVE, true)
                 .addProperty(AnimationProperty.ActionAnimationProperty.STOP_MOVEMENT, true)

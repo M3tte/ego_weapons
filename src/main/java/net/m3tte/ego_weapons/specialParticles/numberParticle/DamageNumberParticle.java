@@ -37,8 +37,8 @@ public final class DamageNumberParticle extends TexturedParticle {
 
     String damageIdentifier = "";
 
-    public DamageNumberParticle(ClientWorld world, double x, double y, double z, float number, int type, double multiplier) {
-        super(world, x, y, z, multiplier, number, type);
+    public DamageNumberParticle(ClientWorld world, double x, double y, double z, float number, int type, double inMultiplier) {
+        super(world, x, y, z, inMultiplier, number, type);
         //velocityMultiplier = 0.99F;
         //gravityStrength = 0.75F;
         if (type > 0)
@@ -50,22 +50,23 @@ public final class DamageNumberParticle extends TexturedParticle {
         int zeroMult = type < 0 ? -1 : 1;
 
         type *= zeroMult;
-        int bonusCorrector = multiplier < 0 ? -1 : 1;
+        int bonusCorrector = inMultiplier < 0 ? -1 : 1;
 
-        multiplier *= bonusCorrector;
+        inMultiplier *= bonusCorrector;
 
 
         this.damageType = DamageTypes.values()[Math.min(DamageTypes.values().length-1, damageTypeIdx)];
         this.attackType = AttackTypes.values()[Math.min(AttackTypes.values().length-1, attackTypeIdx)];
         this.crit = type >= 100;
-        this.multiplier = (multiplier % 1000) * zeroMult;
-        this.bonusMultiplier = (int)((multiplier / 10000) * bonusCorrector) - 100;
+        this.multiplier = (inMultiplier % 1000) * zeroMult;
+        this.bonusMultiplier = (int)((inMultiplier / 10000) * bonusCorrector) - 100;
+
 
         //System.out.println("BonusMultiplierValue = "+this.bonusMultiplier);
 
         this.number = number;
         this.lifetime = (int) (30 + Math.min(40, this.number));
-        this.damageIdentifier = getDamageIdentifier((float) ((multiplier % 1000) * zeroMult));
+        this.damageIdentifier = getDamageIdentifier((float) ((inMultiplier % 1000) * zeroMult));
 
     }
 
@@ -162,6 +163,7 @@ public final class DamageNumberParticle extends TexturedParticle {
         Quaternion secondRot = Vector3f.YP.rotationDegrees(activeRenderInfo.getYRot());
         Quaternion thirdRot = Vector3f.XP.rotationDegrees(-activeRenderInfo.getXRot());
         secondRot.mul(thirdRot);
+
 
         matrixStack.mulPose(secondRot);
         int multiplier = (int)((this.multiplier - 1) * 100) + bonusMultiplier;

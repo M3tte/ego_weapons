@@ -1,6 +1,7 @@
 package net.m3tte.ego_weapons.gameasset.abilities.armorAbilities;
 
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
+import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.gameasset.abilities.AbilityTier;
 import net.m3tte.ego_weapons.gameasset.abilities.AbilityUtils;
 import net.m3tte.ego_weapons.gameasset.abilities.ItemAbility;
@@ -65,12 +66,8 @@ public class SunshowerArmorAbility extends ItemAbility {
 
             playerVars.light -= getBlipCost(player, playerVars);
             World world = player.level;
-            double x = player.getX();
-            double y = player.getY();
-            double z = player.getZ();
-            int potency = 1;
             if (world instanceof ServerWorld) {
-                ((ServerWorld) world).sendParticles(BlipeffectParticle.particle, x, (y + 1), z, (int) 4, 0.4, 0.6, 0.4, 0);
+                ((ServerWorld) world).sendParticles(EgoWeaponsParticles.EXPEND_LIGHT_PARTICLE.get(), player.getX(), (player.getY() + 1), player.getZ(), this.getBlipCost(player, playerVars), 0, 0.3, 0, 0.05);
             }
 
             LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);

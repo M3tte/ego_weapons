@@ -23,6 +23,24 @@
       }
     ]
   },
+  "generic.insanity.ringing": {
+    "category": "player",
+    "subtitle": "ringing",
+    "sounds": [
+      {
+        "name": "ego_weapons:generic/insanity_ringing"
+      }
+    ]
+  },
+  "generic.insanity.heartbeat": {
+    "category": "player",
+    "subtitle": "ringing",
+    "sounds": [
+      {
+        "name": "ego_weapons:generic/heartbeat"
+      }
+    ]
+  },
   "generic.clash_win": {
     "category": "player",
     "subtitle": "clashing",
@@ -698,6 +716,15 @@
     "sounds": [
       {
         "name": "ego_weapons:rat_pipe/swing"
+      }
+    ]
+  },
+  "pipe_rat.meme_hit": {
+    "category": "player",
+    "subtitle": "pipe",
+    "sounds": [
+      {
+        "name": "ego_weapons:rat_pipe/pipe_falling"
       }
     ]
   },

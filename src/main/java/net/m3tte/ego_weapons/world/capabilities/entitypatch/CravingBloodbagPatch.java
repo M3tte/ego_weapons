@@ -134,6 +134,9 @@ public class CravingBloodbagPatch extends MobPatch<CravingBloodbagEntity> implem
     public void onHurtSomeone(Entity target, Hand handIn, ExtendedDamageSource damagesource, float amount, boolean succeed) {
         super.onHurtSomeone(target, handIn, damagesource, amount, succeed);
 
+        if (target.isInvulnerable())
+            return;
+
         DynamicAnimation currentanim = this.getServerAnimator().animationPlayer.getAnimation();
 
 
@@ -183,6 +186,10 @@ public class CravingBloodbagPatch extends MobPatch<CravingBloodbagEntity> implem
             if (this.getServerAnimator().animationPlayer.getAnimation().getId() == CravingBloodbagAnims.CRAVING_BLOODBAG_COUNTER_START.getId() && !damageSource.isMagic() && this.getOriginal().hasEffect(EgoWeaponsEffects.RESILIENCE.get())) {
                 boolean isFront = false;
                 boolean isRanged = false;
+
+                if (damageSource.getDirectEntity() == null)
+                    return super.tryHurt(damageSource, amount);
+
                 LivingEntityPatch<?> sourcePatch = (LivingEntityPatch<?>) damageSource.getDirectEntity().getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
                 if (sourcePatch != null) {

@@ -220,7 +220,7 @@
   "desc.ego_weapons.sunshower.innate.2": "[III] §7Spend §f5 \uE003 §cSinking §7Potency: Cast §f[IV]",
   "desc.ego_weapons.sunshower.innate.3": "[IV] §7Inflict §f2 \uE005 §cRupture §7Count, §7Inflict §f5 \uE005 §cRupture §7Potency.",
   "desc.ego_weapons.sunshower.innate.4": "[IV] §7Deal §f+50% §7Damage.",
-  "desc.ego_weapons.sunshower.innate.5": "[IV] §7Recover §f5 §bSanity§7.",
+  "desc.ego_weapons.sunshower.innate.5": "[IV] §7Recover §f3 §f\uE046 §bSanity§7.",
   "desc.ego_weapons.sunshower.innate.6": "[IV] §7Trigger §f\uE006 §cTremor Burst",
 
   "desc.ego_weapons.sunshower.auto.title": "§7[Auto] §fUmbrella Thwack - \uED02",
@@ -231,6 +231,7 @@
   "desc.ego_weapons.sunshower.auto.5": "[II] §7Inflict §f1 \uE003 §cSinking §7Count. Inflict 1 §f\uE003 §cSinking §7Potency.",
   "desc.ego_weapons.sunshower.auto.6": "[III] §7Inflict §f1 \uE003 §cSinking §7Count. Inflict 1 §f\uE003 §cSinking §7Potency.",
   "desc.ego_weapons.sunshower.auto.7": "[IV] §7Inflict §f4 \uE003 §cSinking §7Count. Inflict 2 §f\uE003 §cSinking §7Potency.",
+  "desc.ego_weapons.sunshower.auto.8": "[IV] §7Restore §f3 §f\uE046 §bSanity§7.",
 
   "desc.ego_weapons.sunshower.guard.title": "§c[Counter] §fWarning",
   "desc.ego_weapons.sunshower.guard.1": "    - = | \uED31 \uED31 | = -",
@@ -240,19 +241,31 @@
   "desc.ego_weapons.sunshower.passive.title": "§a[Passive] §fStinging Umbrellas",
   "desc.ego_weapons.sunshower.passive.1": "§7Deal +2% more damage for every §f\uE003 §cSinking §7Potency on Self. §8[Max 20%]",
   "desc.ego_weapons.sunshower.passive.2": "§7Deal +1% more damage for every §f\uE003 §cSinking §7Potency on target. §8[Max 10%]",
-  "desc.ego_weapons.sunshower.passive.3": "§7At > 10 combined §f\uE003 §cSinking §7Potency on Target and Self:",
-  "desc.ego_weapons.sunshower.passive.4": "§7Inflict §f1 \uE023 §cOffense Level Down §on Hit. §8[Max 4]",
+  "desc.ego_weapons.sunshower.passive.3": "§7On final attacks at 10+ combined §f\uE003 §cSinking §7Potency on Target and Self:",
+  "desc.ego_weapons.sunshower.passive.4": "§7- Consume §f3 \uE003 §cSinking §7Potency on Target or Self",
+  "desc.ego_weapons.sunshower.passive.5": "§7- Inflict §f2 \uE023 §cOffense Level Down §on Hit. §8[Max 4]",
 
 
   "desc.ego_weapons.sunshower_cloak.passive.title": "§a[Passive] §fShielding Sorrow",
-  "desc.ego_weapons.sunshower_cloak.passive.1": "§bSanity§7 Damage from all sources is reduced by §a50%",
+  "desc.ego_weapons.sunshower_cloak.passive.1": "§f\uE047 §cSanity Damage§7 from all sources is reduced by §a50%",
   "desc.ego_weapons.sunshower_cloak.passive.2": "§c[Before Hit] §7Gain §f\uE007 §bProtection §7equal to a third of §f\uE003§c Sinking §7Potency §8[Max 5]",
+
+  "desc.ego_weapons.sunshower_cloak.passive2.title": "§a[Passive] §fE.G.O SYNC :: Drifting Fox",
+  "desc.ego_weapons.sunshower_cloak.passive2.1": "§7Deal §f+0.4% §7Damage for every missing Percent of Sanity on Self. §8[Max 20%]",
+  "desc.ego_weapons.sunshower_cloak.passive2.2": "§7When §f\uE049 §cPanicking§7, if there is an §cOld Umbrella §7nearby: ",
+  "desc.ego_weapons.sunshower_cloak.passive2.3": "§7 - Do not §f\uE049 §cPanic",
+  "desc.ego_weapons.sunshower_cloak.passive2.4": "§7 - Restore §f25% \uE046 §bSanity§7.",
+  "desc.ego_weapons.sunshower_cloak.passive2.5": "§7 - Gain §f\uE022 §cOffense Level Up§7 by §f\uE007 §bProtection§7 on Self. §8[Max 5]",
+  "desc.ego_weapons.sunshower_cloak.passive2.6": "§7 - Gain §f\uE025 §cDefense Level Down§7 by §f\uE007 §bProtection§7 on Self. §8[Max 5]",
+  "desc.ego_weapons.sunshower_cloak.passive2.7": "§7 - Lose all §f\uE007 §bProtection §7on self.",
+  "desc.ego_weapons.sunshower_cloak.passive2.8": "§7 - Gain §f3 \uE005 §cRupture §7Potency.",
+  "desc.ego_weapons.sunshower_cloak.passive2.9": "§7 - §cDestroy §7the §cOld Umbrella§7.",
 
   "desc.ego_weapons.sunshower_cloak.ability.title": "§a[Ability] §fSpreading Sorrow - \uE004\uE004\uE004\uE004\uE004\uE004",
   "desc.ego_weapons.sunshower_cloak.ability.1": "[Use] §7Inflict 2 §f\uE001§c Bleed §7Potency and 1 §f\uE001§c Bleed §7Count §7on self",
-  "desc.ego_weapons.sunshower_cloak.ability.2": "[Use] §7Spawn an §cUmbrella §7, Consume 5 §f\uE003§c Sinking §7Potency to empower umbrella §8 [Max 3].",
+  "desc.ego_weapons.sunshower_cloak.ability.2": "[Use] §7Spawn an §cOld Umbrella §7, Consume 5 §f\uE003§c Sinking §7Potency to empower umbrella §8 [Max 3].",
   "desc.ego_weapons.sunshower_cloak.ability.3": "[Umbrella] §7Periodically inflict 1 §f\uE003§c Sinking §7to foes.",
-  "desc.ego_weapons.sunshower_cloak.ability.4": "[Umbrella] §7Apply §f(Sinking Consumed / 5)§7 shield to user. §8[Max: §fSinking Consumed§8]",
+  "desc.ego_weapons.sunshower_cloak.ability.4": "[Umbrella] §7Apply §f(Sinking Consumed / 5)§7 §f\uE048 §fShield §7to user. §8[Max: §fSinking Consumed§8]",
 
   "desc.ego_weapons.blacksilenceweapon.ability.title": "§b[Ability] §fPocket Dimension - \uE004",
   "desc.ego_weapons.blacksilenceweapon.ability.1": "§7Swap Weapon",
@@ -449,7 +462,7 @@
 
   "desc.ego_weapons.solemn_lament_armorcc.ability.title": "§b[Ability] §fEternal Rest - \uE004\uE004\uE004\uE004\uE004\uE004\uE004",
   "desc.ego_weapons.solemn_lament_armorcc.ability.1": "Apply §f\uE026 §cEternal Rest §7to self.",
-  "desc.ego_weapons.solemn_lament_armorcc.ability.2": "Restore §f10 §bSanity§7.",
+  "desc.ego_weapons.solemn_lament_armorcc.ability.2": "Restore §f10 §f\uE046 §bSanity§7.",
 
   "desc.ego_weapons.solemn_lament_armor.ability.title": "§b[Ability] §fShielding Coffin of Sorrow \uE004\uE004\uE004\uE004\uE004",
   "desc.ego_weapons.solemn_lament_armor.ability.1": "[Use] §7Gain §f2 \uE022 §cOffense Level Up.",
@@ -500,7 +513,7 @@
   "desc.ego_weapons.mimicry_armor.ability.title": "§b[Ability] §fI lOve yOu! - \uE004\uE004\uE004\uE004\uE004\uE004\uE004\uE004",
   "desc.ego_weapons.mimicry_armor.ability.1": "§8§oIf hit within the next §7§o15 Seconds:",
   "desc.ego_weapons.mimicry_armor.ability.2": " §7Restore §aHealth§7 by §f25% §7of Attackers Max HP. §8[Max 35% of Users Max HP]",
-  "desc.ego_weapons.mimicry_armor.ability.3": " §7Restore §bSanity§7",
+  "desc.ego_weapons.mimicry_armor.ability.3": " §7Restore §f\uE046 §bSanity§7.",
   "desc.ego_weapons.mimicry_armor.ability.4": " §7Take §f30% §7Less §cDamage§7.",
   "desc.ego_weapons.mimicry_armor.ability.5": " §7Inflict §f\uE027 §cTerror §7on Attacker.",
   "desc.ego_weapons.mimicry_armor.ability.6": " §7Gain §f1 \uE028 §cShell §7for every §f6 §cAttack Power §7of Attacker. §8[Max 5]",
@@ -603,7 +616,7 @@
   "desc.ego_weapons.oufi_armor.ability.2": "[On Use] §7Gain §f20 \uE020 §cObligation Fulfillment§7.",
   "desc.ego_weapons.oufi_armor.ability.3": "[On Use] §7Gain §f2 \uE021 §cResilience§7.",
   "desc.ego_weapons.oufi_armor.ability.4": "[On Use] §7Deal §f50% §cStagger Damage §7to self §8(Does not stagger).",
-  "desc.ego_weapons.oufi_armor.ability.5": "[On Use] §7Deal §f50% §bSanity Damage §7to self §8(Does not panic).",
+  "desc.ego_weapons.oufi_armor.ability.5": "[On Use] §7Deal §f50% §f\uE047 §cSanity Damage §7to self §8(Does not panic).",
   "desc.ego_weapons.oufi_armor.ability.6": "§c[When Interrupted] §7Counterattack with [I]",
   "desc.ego_weapons.oufi_armor.ability.7": "[I] §7Trigger §f\uE006 §cTremor Burst",
 
@@ -737,15 +750,15 @@
   "desc.ego_weapons.magic_bullet.innate.3": "[I] §7Inflict §f\uE002 §cBurn §7Potency by §f\uE009 §cDark Flame§7.",
 
   "desc.ego_weapons.magic_bullet.ability.title": "§b[Ability] §fMagic Bullet Fire - \uE004\uE004\uE004\uE004\uE004\uE004",
-  "desc.ego_weapons.magic_bullet.ability.1": "[Use] §7Consume §bSanity §7depending on §f\uE016 §cMagic Bullet §7Count.",
-  "desc.ego_weapons.magic_bullet.ability.2": "[Use] §7If this would cause panic, consume no sanity. Bullet also hits user.",
+  "desc.ego_weapons.magic_bullet.ability.1": "[Use] §7Consume §f\uE047 §cSanity §7depending on §f\uE016 §cMagic Bullet §7Count.",
+  "desc.ego_weapons.magic_bullet.ability.2": "[Use] §7If this would cause panic, consume no Sanity. Bullet also hits user.",
   "desc.ego_weapons.magic_bullet.ability.3": "[I] §7Gain additional §cDamage §7by §f\uE016 §cMagic Bullet §7Count.",
   "desc.ego_weapons.magic_bullet.ability.4": "[I] §7Gain attack weight by §f\uE016 §cMagic Bullet §7Count.",
   "desc.ego_weapons.magic_bullet.ability.5": "[I] §7Inflict §f\uE009 §cDark Flame§7 equal to §f\uE016 §cMagic Bullet §7Count.",
 
   "desc.ego_weapons.magic_bullet.guard.title": "§c[Simple Guard] §fThe Price of a Bullet",
   "desc.ego_weapons.magic_bullet.guard.1": "§cCannot Parry",
-  "desc.ego_weapons.magic_bullet.guard.2": "[Guard] §7Recover §bSanity Damage§7, Consume less §6Stamina §7by §f\uE016 §cMagic Bullet §7Count.",
+  "desc.ego_weapons.magic_bullet.guard.2": "[Guard] §7Recover §f\uE046 §bSanity§7, Consume less §6Stamina §7by §f\uE016 §cMagic Bullet §7Count.",
 
   "desc.ego_weapons.magic_bullet_armor.passive.title": "§b[Passive] §fDark Haze",
   "desc.ego_weapons.magic_bullet_armor.passive.1": "§7When hitting a target with §cReduced Defense Level§7:",
@@ -796,7 +809,7 @@
   "desc.ego_weapons.liu_south_6_armor.ability.title": "§b[Ability] §fFocus Embers \uE004\uE004\uE004\uE004",
   "desc.ego_weapons.liu_south_6_armor.ability.1": "§7Gain §f3 \uE024 §cDefense Level Up.",
   "desc.ego_weapons.liu_south_6_armor.ability.2": "§7When hit during the Animation: ",
-  "desc.ego_weapons.liu_south_6_armor.ability.3": "- §7Gain §bShield Health §7for every §f\uE002 §cBurn §7on Attacker. §8[Max 7]",
+  "desc.ego_weapons.liu_south_6_armor.ability.3": "- §7Gain §f1 \uE048 §fShield §7for every §f\uE002 §cBurn §7on Attacker. §8[Max 7]",
   "desc.ego_weapons.liu_south_6_armor.ability.4": "- §7Gain §f1 \uE030 §cPower Up§7.",
   "desc.ego_weapons.liu_south_6_armor.ability.5": "- §7Inflict §f2 \uE002 §cBurn §7Count. §7Inflict §f3 \uE002 §cBurn §7Potency.",
 
@@ -1088,8 +1101,8 @@
   "desc.ego_weapons.justitia.passive.title": "§b[Passive] §fTilted Scale",
   "desc.ego_weapons.justitia.passive.1": "§7Deal §f5% §7more damage for every §f\uED47 §cSin §7on target.",
   "desc.ego_weapons.justitia.passive.2": "§7Deal §f5% §7more damage for every §f\uED47 §cSin §7on self.",
-  "desc.ego_weapons.justitia.passive.3": "§7At §f6+ \uED47 §cSin §7on self: attacks become §c[Indiscriminate]",
-  "desc.ego_weapons.justitia.passive.4": "§7Allies with §f6+ \uED47 §cSin §7may be targeted.",
+  "desc.ego_weapons.justitia.passive.3": "§7At §f4+ \uED47 §cSin §7on self: attacks become §c[Indiscriminate]",
+  "desc.ego_weapons.justitia.passive.4": "§7Allies with §f4+ \uED47 §cSin §7may be targeted.",
 
   "desc.ego_weapons.justitia.auto.title": "§b[Auto] §fCollect Sins §f\uED04",
   "desc.ego_weapons.justitia.auto.1": "    - = | \uED33  \uED33  \uED43  \uED33 | = -",
@@ -1167,10 +1180,10 @@
   "desc.ego_weapons.stigma_workshop_armor.passive.3": "  §7Gain §fx \uE022 §cOffense Level Up§7.",
 
   "desc.ego_weapons.stigma_workshop_armor.ability.title": "§b[Ability] §fRueful Eventide \uE004\uE004\uE004\uE004\uE004",
-  "desc.ego_weapons.stigma_workshop_armor.ability.1": "[Use] §7Consume §f25% §bSanity§7.",
+  "desc.ego_weapons.stigma_workshop_armor.ability.1": "[Use] §7Consume §f25% §f\uE047 §cSanity§7.",
   "desc.ego_weapons.stigma_workshop_armor.ability.2": "[Use] §7Gain §f3 \uE022 §cOffense Level Up§7.",
-  "desc.ego_weapons.stigma_workshop_armor.ability.3": "[Use] §7Gain §f4 §bShield§7. §8[Max 8]",
-  "desc.ego_weapons.stigma_workshop_armor.ability.4": "§7At less than 30% §bSanity§7: ",
+  "desc.ego_weapons.stigma_workshop_armor.ability.3": "[Use] §7Gain §f4 \uE048 §fShield§7. §8[Max 8]",
+  "desc.ego_weapons.stigma_workshop_armor.ability.4": "§7At less than §f30% \uE046 §bSanity§7: ",
   "desc.ego_weapons.stigma_workshop_armor.ability.5": "   §7Gain §f5 \uE025 §cDefense Level Down§7.",
   "desc.ego_weapons.stigma_workshop_armor.ability.6": "   §7Gain §f2 \uE030 §cPower Up§7.",
 
@@ -1229,7 +1242,7 @@
   "desc.ego_weapons.statuses.title": "Relevant Keywords:",
 
   "desc.ego_weapons.statuses.sinking.title": "\uE003 §cSinking ",
-  "desc.ego_weapons.statuses.sinking.1": "§c[On Hit]: §7Take §bSanity Damage §7by §fPotency. §7Remove 1 Count.",
+  "desc.ego_weapons.statuses.sinking.1": "§c[On Hit]: §7Take §f\uE047 §cSanity§7 Damage §7by §fPotency. §7Remove 1 Count.",
   "desc.ego_weapons.statuses.sinking.2": "§c[No Sanity Target]: §7Take §f\uED02 White Damage §7by §fPotency §7instead.",
 
   "desc.ego_weapons.statuses.rupture.title": "\uE005 §cRupture ",
@@ -1328,7 +1341,7 @@
 
   "desc.ego_weapons.statuses.obligation.title": "\uE020 §cObligation Fulfillment ",
   "desc.ego_weapons.statuses.obligation.1": "§7Decrements by 1 per second.",
-  "desc.ego_weapons.statuses.obligation.2": "§bSanity §7cannot go below 1.",
+  "desc.ego_weapons.statuses.obligation.2": "§f\uE046 §bSanity §7cannot go below 1.",
   "desc.ego_weapons.statuses.obligation.3": "§6Stagger §7cannot go below 1.",
   "desc.ego_weapons.statuses.obligation.4": "[On Hit] §7Deal §f+25% §7Damage to Targets with \uE011 §cTremor: Decay§7.",
   "desc.ego_weapons.statuses.obligation.5": "[Final Coins] §7Trigger §f\uE006 §cTremor Burst.",
@@ -1351,7 +1364,7 @@
 
   "desc.ego_weapons.statuses.terror.title": "\uE027 §cTerror",
   "desc.ego_weapons.statuses.terror.1": "§7Deal §f20% §7less Damage against targets with §f\uE028 §cShell§7.",
-  "desc.ego_weapons.statuses.terror.2": "§7Passively lose §bSanity §7instead of regenerating it.",
+  "desc.ego_weapons.statuses.terror.2": "§7Passively lose §f\uE047 §cSanity §7instead of regenerating it.",
   "desc.ego_weapons.statuses.terror.3": "§7Disable the use of E.G.O Abilities.",
 
   "desc.ego_weapons.statuses.burn.title": "\uE002 §cBurn ",
@@ -1375,7 +1388,7 @@
 
   "desc.ego_weapons.resistances.defense_level": "§f\uED44 §7Defense Level §f: ",
   "desc.ego_weapons.resistances.stagger_bonus": "§f\uED45 §6Stagger Resistance §f: ",
-  "desc.ego_weapons.resistances.sanity_bonus": "§f\uED46 §bMax Sanity §f: ",
+  "desc.ego_weapons.resistances.sanity_bonus": "§f\uE046 §bMax Sanity §f: ",
 
   "desc.ego_weapons.resistances.red":  "\uED01 §4Red   §f: ",
   "desc.ego_weapons.resistances.white":"\uED02 §fWhite  §f: ",
@@ -1413,7 +1426,7 @@
   "desc.ego_weapons.statuses.butterfly.7": "§c[On Decay]§7: Gain §f\uE003 §cSinking §7Potency by §f\uE018 §cThe Living §7on self.",
   "desc.ego_weapons.statuses.butterfly.8": "§c[On Decay]§7: Turn all §f\uE018 §cThe Living §7into §f\uE019 §cThe Departed§7.",
   "desc.ego_weapons.statuses.butterfly.9": "§c[On Hit]§7: Take §f\uED03 §5Black Damage§7 by §f[(\uE003 §cSinking§f Potency x §f\uE019 §cThe Departed§f) / 3]",
-  "desc.ego_weapons.statuses.butterfly.10": "§c[On Hit]§7: Attacker Heals §f[\uE018 §cThe Living §f / 4] §bSanity§7.",
+  "desc.ego_weapons.statuses.butterfly.10": "§c[On Hit]§7: Attacker Heals §f[\uE018 §cThe Living §f / 4] §f\uE046 §bSanity§7.",
 
 
   "desc.ego_weapons.statuses.tremor.title": "\uE008 §cTremor ",
@@ -1504,6 +1517,7 @@
 
   "death.attack.egoweapons.sunshower_innate.player": "%1$s was crushed with an umbrella by %2$s.",
   "death.attack.egoweapons.sunshower_innate": "%1$s was crushed with an umbrella.",
+  "entity.ego_weapons.sunshower_umbrella": "a Jagged Umbrella",
 
   "death.attack.egoweapons.stigma_sword.player": "%1$s was ruefully slashed by %2$s.",
   "death.attack.egoweapons.stigma_sword": "%1$s was ruefully slashed.",
@@ -1537,6 +1551,9 @@
 
   "death.attack.egoweapons.magic_bullet_special.player": "%1$s met their end by the devils bullet.",
   "death.attack.egoweapons.magic_bullet_special": "%1$s met their end by the devils bullet.",
+
+  "death.attack.egoweapons.magic_bullet_self.player": "%1$s met their end by the devils bullet.",
+  "death.attack.egoweapons.magic_bullet_self": "%1$s met their end by the devils bullet.",
 
   "death.attack.egoweapons.gun.player": "%1$s was shot by %2$s.",
   "death.attack.egoweapons.gun": "%1$s was shot.",

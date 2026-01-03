@@ -23,7 +23,7 @@ import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILIT
 import static net.m3tte.ego_weapons.gameasset.abilities.AbilityUtils.applyBlipCooldown;
 import static net.m3tte.ego_weapons.gameasset.abilities.AbilityUtils.findValidPlacement;
 
-public class JustiziaArmorAbility extends ItemAbility {
+public class LegacyJustitiaArmorAbility extends ItemAbility {
 
     @Override
     public int getBlipCost(PlayerEntity player, EgoWeaponsModVars.PlayerVariables playerVars) {

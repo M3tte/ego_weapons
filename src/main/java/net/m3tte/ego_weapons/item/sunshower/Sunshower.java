@@ -1,10 +1,7 @@
 
 package net.m3tte.ego_weapons.item.sunshower;
 
-import net.m3tte.ego_weapons.EgoWeaponsEffects;
-import net.m3tte.ego_weapons.EgoWeaponsEntities;
-import net.m3tte.ego_weapons.EgoWeaponsParticles;
-import net.m3tte.ego_weapons.EgoWeaponsSounds;
+import net.m3tte.ego_weapons.*;
 import net.m3tte.ego_weapons.entities.SunshowerUmbrellaEntity;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
@@ -12,21 +9,24 @@ import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.gameasset.movesets.SunshowerMovesetAnims;
 import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.network.packages.ParticlePackages;
 import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
 import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
+import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.command.Commands;
+import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.scoreboard.ScorePlayerTeam;
+import net.minecraft.util.*;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
@@ -34,6 +34,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.PacketDistributor;
 import yesman.epicfight.api.animation.LivingMotions;
 import yesman.epicfight.api.animation.types.DynamicAnimation;
 import yesman.epicfight.api.animation.types.StaticAnimation;
@@ -44,6 +45,7 @@ import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 import yesman.epicfight.world.effect.EpicFightMobEffects;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -105,15 +107,15 @@ public class Sunshower extends EgoWeaponsWeapon {
 		list.add(new StringTextComponent("I’ll show you how much it hurts to have ragged broken ribs from a dumped umbrella jammed in you.").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
-		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
+		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
 		list.add(new TranslationTextComponent("desc.ego_weapons.risk.he"));
 		list.add(new StringTextComponent(" "));
-		switch (EgoWeaponsKeybinds.getUiPage() % 4) {
+		switch (EgoWeaponsKeybinds.getUiPage() % 5) {
 			case 0:
 				if (EgoWeaponsKeybinds.isHoldingShift())
 					generateStatusDescription(list, new String[]{"white", "sinking"});
 				else
-					generateDescription(list, "sunshower", "auto", 7);
+					generateDescription(list, "sunshower", "auto", 8);
 				break;
 			case 1:
 				if (EgoWeaponsKeybinds.isHoldingShift())
@@ -132,6 +134,12 @@ public class Sunshower extends EgoWeaponsWeapon {
 					generateStatusDescription(list, new String[]{"white", "sinking"});
 				else
 					generateDescription(list,"sunshower", "guard", 3);
+				break;
+			case 4:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"sinking", "offense_down"});
+				else
+					generateDescription(list,"sunshower", "passive", 5);
 		}
 
 		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -199,6 +207,17 @@ public class Sunshower extends EgoWeaponsWeapon {
 
 			case "sunshower_auto_4":
 				EgoWeaponsEffects.SINKING.get().increment(target, 3, 1);
+				if (sourceentity instanceof PlayerEntity) {
+					PlayerEntity sourcePlayer = (PlayerEntity) sourceentity;
+					if (!(sourcePlayer.getCooldowns().isOnCooldown(this.getItem()) && entityData.globalcooldown <= 0)) {
+
+						SanitySystem.healSanity((PlayerEntity) sourceentity, 3f);
+
+
+						((PlayerEntity) sourceentity).getCooldowns().addCooldown(itemstack.getItem(), (int) 2);
+						entityData.globalcooldown = 2;
+					}
+				}
 				break;
 
 			case "sunshower_jump_attack":
@@ -243,6 +262,17 @@ public class Sunshower extends EgoWeaponsWeapon {
 				EgoWeaponsEffects.RUPTURE.get().increment(target, 2, 5);
 				TremorEffect.burstTremor(target, true);
 				EgoWeaponsEffects.SINKING.get().increment(target, 1, 2);
+				if (sourceentity instanceof PlayerEntity) {
+					PlayerEntity sourcePlayer = (PlayerEntity) sourceentity;
+					if (!(sourcePlayer.getCooldowns().isOnCooldown(this.getItem()) && entityData.globalcooldown <= 0)) {
+
+						SanitySystem.healSanity((PlayerEntity) sourceentity, 3f);
+
+
+						((PlayerEntity) sourceentity).getCooldowns().addCooldown(itemstack.getItem(), (int) 2);
+						entityData.globalcooldown = 2;
+					}
+				}
 				break;
 		}
 
@@ -260,6 +290,47 @@ public class Sunshower extends EgoWeaponsWeapon {
 
 		return retval;
 	}
+	static float hDist = 32;
+	static float vDist = 4;
+
+	public static boolean testInsanityEffect(PlayerEntity player, PlayerVariables vars) {
+
+		ArrayList<SunshowerUmbrellaEntity> nearbyUmbrellas = new ArrayList<>(player.level
+				.getNearbyEntities(SunshowerUmbrellaEntity.class,
+						EntityPredicate.DEFAULT, player, new AxisAlignedBB(player.getX() - (hDist), player.getY() - (vDist), player.getZ() - (hDist), player.getX() + (hDist), player.getY() + (vDist), player.getZ() + (hDist))));
+
+		SunshowerUmbrellaEntity targetUmbrella = null;
+
+		int playerId = player.getId();
+
+		for (SunshowerUmbrellaEntity ent : nearbyUmbrellas) {
+
+			if (ent.getPersistentData().getInt("ownerEntity") == playerId) {
+				targetUmbrella = ent;
+				break;
+			}
+		}
+
+		if (targetUmbrella != null) {
+			SanitySystem.healSanity(player, EgoWeaponsAttributes.getMaxSanity(player) * 0.25f);
+			EgoWeaponsEffects.RUPTURE.get().increment(player, 0, 3);
+
+			int protectionLevels = EgoWeaponsEffects.PROTECTION.get().getPotency(player);
+
+			EgoWeaponsEffects.PROTECTION.get().decrement(player, 0, protectionLevels);
+
+			EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(player, 5, protectionLevels);
+			EgoWeaponsEffects.DEFENSE_LEVEL_DOWN.get().increment(player, 5, protectionLevels);
+
+			player.playSound(EgoWeaponsSounds.SUNSHOWER_SPREAD_OUT_3, 1, 1);
+			player.playSound(EgoWeaponsSounds.PAPER_FLIP, 1, 1);
+
+			targetUmbrella.kill();
+		}
+
+
+		return false;
+	}
 
 	public static float modifyDamageAmount(LivingEntity target, LivingEntity source, float mult, DamageSource damageSource) {
 
@@ -271,15 +342,39 @@ public class Sunshower extends EgoWeaponsWeapon {
 
 		PlayerVariables entityData = source.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
+		boolean isFinal = (currentanim.getRealAnimation()).getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LAST_OF_COMBO).orElse(false);
 
-		int selfSinkingPotency = EgoWeaponsEffects.SINKING.get().getPotency(source);
-		int targetSinkingPotency = EgoWeaponsEffects.SINKING.get().getPotency(source);
+		int sourceSinkingPotency = EgoWeaponsEffects.SINKING.get().getPotency(source);
+		int targetSinkingPotency = EgoWeaponsEffects.SINKING.get().getPotency(target);
+
+		SharedFunctions.incrementBonusDamage(damageSource, Math.min(0.2f, 0.02f * sourceSinkingPotency));
+		mult += Math.min(0.2f, 0.02f * sourceSinkingPotency);
+
+		SharedFunctions.incrementBonusDamage(damageSource, Math.min(0.1f, 0.01f * targetSinkingPotency));
+		mult += Math.min(0.1f, 0.01f * targetSinkingPotency);
 
 
+		if ((sourceSinkingPotency + targetSinkingPotency) > 10 && isFinal) {
+			if (sourceSinkingPotency >= 2)
+				EgoWeaponsEffects.SINKING.get().decrement(source, 0, 3);
+			else if (targetSinkingPotency >= 2)
+				EgoWeaponsEffects.SINKING.get().decrement(target, 0, 3);
+
+			EgoWeaponsEffects.OFFENSE_LEVEL_DOWN.get().increment(target, 4, 2);
+
+		}
 
 		switch (weaponIdentifier) {
 			case "sunshower_puddle_stomp_3":
 				SharedFunctions.incrementBonusDamage(damageSource, 0.5f);
+
+				if (!target.level.isClientSide()) {
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), target.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), target.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), target.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
+
+				}
+
 				mult += 0.5f;
 				break;
 

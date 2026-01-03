@@ -310,19 +310,19 @@ public class DialogueSystem {
         }
 
 
-        if (sanity < 2 && sanityPercent <= 0.6) {
+        if (sanity < 1 && sanityPercent <= 0.6) {
 
 
             speakEvalDialogue(target, "dialogue.ego_weapons.generic.sanity.1.",personality, dialogue, TextFormatting.WHITE, DialogueTypes.FILLER);
-            target.getPersistentData().putInt("damageDialogueTier", 2);
+            target.getPersistentData().putInt("sanityDialogueTier", 1);
             downChange = true;
         }
 
-        if (sanity < 3 && sanityPercent <= 0.2) {
+        if (sanity < 2 && sanityPercent <= 0.2) {
 
 
             speakEvalDialogue(target, "dialogue.ego_weapons.generic.sanity.2.",personality, dialogue, TextFormatting.RED, DialogueTypes.FILLER);
-            target.getPersistentData().putInt("damageDialogueTier", 3);
+            target.getPersistentData().putInt("sanityDialogueTier", 2);
             downChange = true;
         }
 

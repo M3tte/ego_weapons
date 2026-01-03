@@ -1,6 +1,7 @@
 package net.m3tte.ego_weapons.gameasset.abilities.armorAbilities;
 
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
+import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.gameasset.abilities.AbilityTier;
 import net.m3tte.ego_weapons.gameasset.abilities.AbilityUtils;
@@ -10,6 +11,7 @@ import net.m3tte.ego_weapons.gameasset.movesets.SolemnLamentMovesetAnims;
 import net.m3tte.ego_weapons.particle.BlipeffectParticle;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
@@ -43,8 +45,9 @@ public class SolemnLamentArmorAbility extends ItemAbility {
             LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
             entitypatch.playAnimationSynchronized(SolemnLamentMovesetAnims.SOLEMN_LAMENT_ARMOR_ABILITY, 0.1f);
             entitypatch.playSound(EgoWeaponsSounds.SOLEMN_LAMENT_READY, 1, 1);
-            if (player.level instanceof ServerWorld) {
-                ((ServerWorld) player.level).sendParticles(BlipeffectParticle.particle, player.getX(), (player.getY() + 1), player.getZ(), (int) 8, 0.4, 0.6, 0.4, 0);
+            World world = player.level;
+            if (world instanceof ServerWorld) {
+                ((ServerWorld) world).sendParticles(EgoWeaponsParticles.EXPEND_LIGHT_PARTICLE.get(), player.getX(), (player.getY() + 1), player.getZ(), this.getBlipCost(player, playerVars), 0, 0.3, 0, 0.05);
             }
 
             playerVars.light -= getBlipCost(player, playerVars);

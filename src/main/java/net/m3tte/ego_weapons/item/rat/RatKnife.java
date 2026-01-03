@@ -197,6 +197,7 @@ public class RatKnife extends EgoWeaponsWeapon {
 						itemstack.getOrCreateTag().putInt("stickEntityId", target.getId());
 					} else {
 						itemstack.getOrCreateTag().putInt("followUpHit", 0);
+						EgoWeaponsEffects.BLEED.get().increment(target, 1, 2);
 					}
 					break;
 				case "rat_shank_sp_2a":

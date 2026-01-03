@@ -1,56 +1,51 @@
 package net.m3tte.ego_weapons.gameasset.abilities.armorAbilities;
 
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
-import net.m3tte.ego_weapons.EgoWeaponsSounds;
+import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.gameasset.abilities.AbilityUtils;
-import net.m3tte.ego_weapons.gameasset.abilities.ItemAbility;
-import net.m3tte.ego_weapons.gameasset.movesets.StigmaWorkshopMovesetAnims;
-import net.m3tte.ego_weapons.particle.BlipeffectParticle;
+import net.m3tte.ego_weapons.gameasset.movesets.HeishouMaoBranchAnims;
 import net.m3tte.ego_weapons.gameasset.abilities.AbilityTier;
-import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
+import net.m3tte.ego_weapons.gameasset.abilities.ItemAbility;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
-public class RuefulEventide extends ItemAbility {
+public class HeishouMaoArmorAbility extends ItemAbility {
 
     @Override
     public int getBlipCost(PlayerEntity player, PlayerVariables playerVars) {
-        return 5;
+        return 4;
     }
 
     @Override
     public ResourceLocation getIconLocation(PlayerEntity player, PlayerVariables vars) {
-        return AbilityUtils.getAbilityIcon("rueful_eventide");
+        return AbilityUtils.getAbilityIcon("heishou_mutation");
     }
 
     @Override
     public AbilityTier getAbilityTier() {
-        return AbilityTier.TETH;
+        return AbilityTier.HE;
     }
 
     @Override
     public String getName(PlayerEntity player, PlayerVariables playerVars) {
-        return "Rueful  \nEventide";
+        return "Partial \nMutation";
     }
 
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.light >= 5) {
+        if (playerVars.light >= 4) {
             LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-            entitypatch.playAnimationSynchronized(StigmaWorkshopMovesetAnims.RUEFUL_EVENTIDE, 0.1f);
+            entitypatch.playAnimationSynchronized(HeishouMaoBranchAnims.HEISHOU_MAO_STRIDER_MAO, 0.1f);
 
-            player.playSound(EgoWeaponsSounds.DICE_ROLL, 1, 1);
-            if (player.level instanceof ServerWorld) {
-                ((ServerWorld) player.level).sendParticles(BlipeffectParticle.particle, player.getX(), (player.getY() + 1), player.getZ(), (int) 8, 0.4, 0.6, 0.4, 0);
+            World world = player.level;
+            if (world instanceof ServerWorld) {
+                ((ServerWorld) world).sendParticles(EgoWeaponsParticles.EXPEND_LIGHT_PARTICLE.get(), player.getX(), (player.getY() + 1), player.getZ(), this.getBlipCost(player, playerVars), 0, 0.3, 0, 0.05);
             }
-
-            DialogueSystem.speakEvalDialogue(player, "dialogue.ego_weapons.skills.stigma_workshop_armor.1", DialogueSystem.DialogueTypes.SKILL, TextFormatting.GOLD);
-
 
             playerVars.light -= getBlipCost(player, playerVars);
 

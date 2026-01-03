@@ -185,5 +185,9 @@ public class EgoWeaponsParticles {
     public static final RegistryObject<BasicParticleType> SOLEMN_LAMENT_SHOCKWAVE = PARTICLES.register("solemn_lament_shockwave", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> MAGIC_BULLET_CIRCLE_SHORT = PARTICLES.register("magic_bullet_circle_short", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> MAGIC_BULLET_CIRCLE_LONG = PARTICLES.register("magic_bullet_circle_long", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> EXPEND_LIGHT_PARTICLE = PARTICLES.register("expend_light", () -> new BasicParticleType(true));
+
+    public static final RegistryObject<BasicParticleType> TARGET_MAGIC_BULLET_CIRCLE_SHORT = PARTICLES.register("magic_bullet_target_circle_short", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> TARGET_MAGIC_BULLET_CIRCLE_LONG = PARTICLES.register("magic_bullet_target_circle_long", () -> new BasicParticleType(true));
 
 }

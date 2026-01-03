@@ -1,6 +1,7 @@
 package net.m3tte.ego_weapons.gameasset.abilities.armorAbilities;
 
 import net.m3tte.ego_weapons.EgoWeaponsItems;
+import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
@@ -79,7 +80,7 @@ public class BlackSilenceArmorAbility extends ItemAbility {
         player.inventory.armor.set((int) 3, EgoWeaponsItems.PERCEPTION_BLOCKING_MASK.get().getDefaultInstance());
         player.inventory.setChanged();
         if (player.level instanceof ServerWorld) {
-            ((ServerWorld) player.level).sendParticles(BlipeffectParticle.particle, x, (y + 1), z, (int) 8, 0.4, 0.6, 0.4, 0);
+            ((ServerWorld) player.level).sendParticles(EgoWeaponsParticles.EXPEND_LIGHT_PARTICLE.get(), x, (y + 1), z, (int) 8, 0.4, 0.6, 0.4, 0.05);
             ((ServerWorld) player.level).sendParticles(BlacksilenceshadowParticle.particle, x, (y + 1), z, (int) 25, 0.2, 0.6, 0.2, 0);
         }
 
@@ -87,13 +88,7 @@ public class BlackSilenceArmorAbility extends ItemAbility {
 
         player.playSound(EgoWeaponsSounds.THAT_IS_THAT_AND_THIS_IS_THIS, 1, 1);
         player.addEffect(new EffectInstance(OrlandoPotionEffect.potion, (int) 3600, (int) 0, (false), (false)));
-        if (!player.level.isClientSide()) {
-            MinecraftServer mcserv = ServerLifecycleHooks.getCurrentServer();
-            if (mcserv != null)
-                mcserv.getPlayerList().broadcastMessage(
-                        new StringTextComponent((player.getDisplayName().getString() + ">")).withStyle(TextFormatting.ITALIC).append(new StringTextComponent(" Thats that... and this is this...").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC)), ChatType.CHAT,
-                        player.getUUID());
-        }
+
 
         LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 

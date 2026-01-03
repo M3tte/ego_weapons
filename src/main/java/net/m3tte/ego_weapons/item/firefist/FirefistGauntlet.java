@@ -630,6 +630,11 @@ public class FirefistGauntlet extends EgoWeaponsWeapon {
 		StaticAnimation.Event[] events = new StaticAnimation.Event[1];
 		events[0] = StaticAnimation.Event.create(0.8f, (entitypatch) -> {
 			World world = entitypatch.getOriginal().level;
+			if (!entitypatch.getOriginal().getItemBySlot(EquipmentSlotType.CHEST).isEmpty()) {
+				entitypatch.getOriginal().getItemBySlot(EquipmentSlotType.CHEST).getOrCreateTag().putInt("d10fuel",100);
+
+			}
+
 			world.playSound(null, entitypatch.getOriginal().blockPosition(),
 					EgoWeaponsSounds.FIREFIST_CLICK,
 					SoundCategory.PLAYERS, (float) 2, (float) 1);
