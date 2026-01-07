@@ -1,11 +1,9 @@
 package net.m3tte.ego_weapons.procedures;
 
 import net.m3tte.ego_weapons.*;
-import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.network.packages.AbilityPackages;
 import net.m3tte.ego_weapons.potion.EnergyboostPotionEffect;
 import net.m3tte.ego_weapons.potion.EnergyfatiguePotionEffect;
-import net.m3tte.ego_weapons.potion.Panic;
 import net.m3tte.ego_weapons.potion.Terror;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
@@ -15,19 +13,12 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.PacketDistributor;
-import yesman.epicfight.world.capabilities.EpicFightCapabilities;
-import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
-import yesman.epicfight.world.effect.EpicFightMobEffects;
-import yesman.epicfight.world.entity.EpicFightEntities;
 
 import java.util.*;
 
@@ -58,11 +49,11 @@ public class EntityTick {
 	}
 
 
-	public static void chargeBlips(PlayerEntity player, EgoWeaponsModVars.PlayerVariables vars, double amount) {
-		chargeBlips(player, vars, amount, false);
+	public static void regenerateLight(PlayerEntity player, EgoWeaponsModVars.PlayerVariables vars, double amount) {
+		regenerateLight(player, vars, amount, false);
 	}
 
-	public static void chargeBlips(PlayerEntity player, EgoWeaponsModVars.PlayerVariables vars, double amount, boolean sfx) {
+	public static void regenerateLight(PlayerEntity player, EgoWeaponsModVars.PlayerVariables vars, double amount, boolean sfx) {
 		float multiplier = 1;
 		float pitch = 1;
 
@@ -81,15 +72,15 @@ public class EntityTick {
 					SoundCategory.PLAYERS, 1, pitch);
 	}
 
-	public static void chargeBlips(PlayerEntity player, double amount, boolean sfx) {
+	public static void regenerateLight(PlayerEntity player, double amount, boolean sfx) {
 		EgoWeaponsModVars.PlayerVariables playerVariables = player.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).orElse(new EgoWeaponsModVars.PlayerVariables());
-		chargeBlips(player, playerVariables, amount, sfx);
+		regenerateLight(player, playerVariables, amount, sfx);
 		playerVariables.syncPlayerVariables(player);
 	}
 
-	public static void chargeBlips(PlayerEntity player, double amount) {
+	public static void regenerateLight(PlayerEntity player, double amount) {
 		EgoWeaponsModVars.PlayerVariables playerVariables = player.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).orElse(new EgoWeaponsModVars.PlayerVariables());
-		chargeBlips(player, playerVariables, amount, false);
+		regenerateLight(player, playerVariables, amount, false);
 		playerVariables.syncPlayerVariables(player);
 	}
 
@@ -200,8 +191,13 @@ public class EntityTick {
 
 			int maxEnergy = EgoWeaponsAttributes.getMaxLight(entity);
 
+			entityData.injury_threshold -= 0.001;
 
+			if (entityData.injury_threshold < 0)
+				entityData.injury_threshold = 0;
 
+			if (entityData.injury_threshold > 3)
+				entityData.injury_threshold = 3;
 			if (SanitySystem.getSanity(entity) <= 0.1f) {
 				entityData.sanity = 0;
 			}

@@ -38,9 +38,6 @@ public class PlayerEntityDamageMixin {
     }
 
 
-
-    @Shadow @Final public PlayerInventory inventory;
-
     @Inject(at = @At(value = "HEAD"), method = "canHarmPlayer(Lnet/minecraft/entity/player/PlayerEntity;)Z", cancellable = true)
     public void overrideFriendlyFire(PlayerEntity target, CallbackInfoReturnable<Boolean> cir) {
         PlayerEntity self = ((PlayerEntity) (Object)this);

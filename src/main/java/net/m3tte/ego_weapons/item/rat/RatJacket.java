@@ -134,7 +134,7 @@ public class RatJacket extends GenericEgoWeaponsArmor {
 			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 			list.add(new StringTextComponent("= - - - - - - - [Page: " + ((EgoWeaponsKeybinds.getUiPage() % 3) + 1) + "/3] - - - - - - - =").withStyle(TextFormatting.GRAY));
-			list.add(new TranslationTextComponent("desc.ego_weapons.risk.nuun"));
+			list.add(new TranslationTextComponent("desc.ego_weapons.risk.10"));
 			list.add(new StringTextComponent(" "));
 			switch (EgoWeaponsKeybinds.getUiPage() % 3) {
 				case 0:

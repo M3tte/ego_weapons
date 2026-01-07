@@ -840,7 +840,7 @@ public class BlackSilenceMovesetAnims {
                         //if (playerPatch.getOriginal().getCooldowns().isOnCooldown(SuitItem.helmet.getItem()))
                         //    playerPatch.getOriginal().getCooldowns().removeCooldown(SuitItem.helmet.getItem());
 
-                        EntityTick.chargeBlips((PlayerEntity) entity, (double) (mookStacks - mookStacks % 2) / 2, true);
+                        EntityTick.regenerateLight((PlayerEntity) entity, (double) (mookStacks - mookStacks % 2) / 2, true);
                         spawnArmatureParticle(entitypatch, 0, new Vector3d(0,0,-0.3), 1, EpicFightParticles.HIT_BLUNT.get(), 0, "Tool_L", true);
 
                     }

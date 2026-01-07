@@ -243,7 +243,7 @@ public class JustitiaSword extends EgoWeaponsWeapon {
 
 					if (targetSin >= 7) {
 						if (sourceentity instanceof PlayerEntity)
-							EntityTick.chargeBlips((PlayerEntity) sourceentity, 1, true);
+							EntityTick.regenerateLight((PlayerEntity) sourceentity, 1, true);
 					}
 
 					break;

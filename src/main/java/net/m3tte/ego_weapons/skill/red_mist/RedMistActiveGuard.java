@@ -117,7 +117,7 @@ public class RedMistActiveGuard extends GuardSkill {
                                 EgoWeaponsEffects.OFFENSE_LEVEL_DOWN.get().decrement((LivingEntity) damageSource.getEntity(), 0, 1);
                             }
 
-                            EntityTick.chargeBlips(playerentity, 1, true);
+                            EntityTick.regenerateLight(playerentity, 1, true);
 
                             event.getPlayerPatch().getOriginal().getCooldowns().addCooldown(EgoWeaponsItems.MIMICRY.get(), 100);
                             entityData.globalcooldown = 100;

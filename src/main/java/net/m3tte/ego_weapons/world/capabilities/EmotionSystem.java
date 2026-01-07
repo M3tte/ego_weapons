@@ -108,7 +108,7 @@ public class EmotionSystem {
             playerVariables.emotionLevelProgress -= getEmotionRequired(playerVariables);
 
             playerVariables.emotionLevel += 1;
-            EntityTick.chargeBlips(player, playerVariables, 1);
+            EntityTick.regenerateLight(player, playerVariables, 1);
             updateMaxEnergy(player, playerVariables);
             increaseEmotionLevel(player, playerVariables.emotionLevel);
 

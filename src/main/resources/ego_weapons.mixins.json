@@ -13,7 +13,8 @@
     "PlayerEntityDamageMixin",
     "epicfight.AttackAnimationMixin",
     "epicfight.LivingEntityPatchMixin",
-    "epicfight.PlayerPatchMixin"
+    "epicfight.PlayerPatchMixin",
+    "rendering.renderBufferInterface"
   ],
   "client": [
     "EntityPredicatesMixin",
@@ -26,7 +27,13 @@
     "epicfight.EntityIndicatorMixin",
     "epicfight.HealthbarIndicatorMixin",
     "epicfight.ItemInHandLayerMixin",
-    "epicfight.PatchedEntityRendererMixin"
+    "epicfight.PatchedEntityRendererMixin",
+    "epicfight.PHumanoidMixin",
+    "rendering.LivingRendererInvoker",
+    "rendering.LivingRendererMixin",
+    "rendering.RenderBuffersMixin",
+    "rendering.RenderWearableInvoker",
+    "rendering.RenderWearableItemMixin"
   ],
   "minVersion": "0.8"
 }

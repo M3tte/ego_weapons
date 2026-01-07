@@ -40,7 +40,7 @@ public class WheelsIndustry extends EgoWeaponsWeapon {
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
-		list.add(new TranslationTextComponent("desc.ego_weapons.risk.aleph"));
+		list.add(new TranslationTextComponent("desc.ego_weapons.risk.1"));
 		list.add(new StringTextComponent(" "));
 		switch (EgoWeaponsKeybinds.getUiPage() % 4) {
 			case 0:

@@ -89,7 +89,7 @@ public class MimicryItem extends EgoWeaponsWeapon {
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 7) + 1) + "/7] - - - - - - - =").withStyle(TextFormatting.GRAY));
-		list.add(new TranslationTextComponent("desc.ego_weapons.risk.aleph"));
+		list.add(new TranslationTextComponent("desc.ego_weapons.risk.1"));
 		list.add(new StringTextComponent(" "));
 
 		switch (EgoWeaponsKeybinds.getUiPage() % 7) {
@@ -158,7 +158,8 @@ public class MimicryItem extends EgoWeaponsWeapon {
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
-
+		list.add(new TranslationTextComponent("desc.ego_weapons.risk.aleph"));
+		list.add(new StringTextComponent(" "));
 
 		switch (EgoWeaponsKeybinds.getUiPage() % 5) {
 			case 0:
@@ -258,7 +259,7 @@ public class MimicryItem extends EgoWeaponsWeapon {
 					entitypatch.playSound(EgoWeaponsSounds.SWORD_STAB, 1, 1, 1);
 					break;
 				case "kali_impact":
-					EntityTick.chargeBlips((PlayerEntity) sourceentity, entityData, 1, true);
+					EntityTick.regenerateLight((PlayerEntity) sourceentity, entityData, 1, true);
 					EgoWeaponsEffects.BLEED.get().increment(target, 1, 1);
 					EgoWeaponsEffects.RUPTURE.get().increment(target, 1, 1);
 					EgoWeaponsEffects.OFFENSE_LEVEL_DOWN.get().decrement(target, 0, 1);

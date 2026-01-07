@@ -83,7 +83,7 @@ mixin {
 dependencies {
     implementation 'org.jetbrains:annotations:24.0.0'
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.39'
-    implementation fg.deobf('curse.maven:epicfight-405076:4029362')
+    implementation fg.deobf("curse.maven:epic-fight-mod-405076:4867904")
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 

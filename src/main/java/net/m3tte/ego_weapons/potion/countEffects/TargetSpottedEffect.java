@@ -116,7 +116,7 @@ public class TargetSpottedEffect extends CountPotencyStatus {
 
                 if (sourcePatch.getHoldingItemCapability(Hand.MAIN_HAND).getWeaponCategory().equals(EgoWeaponsCategories.FULLSTOP_SNIPER)) {
                     if (target.hasEffect(EgoWeaponsEffects.TARGET_SPOTTED.get()) && sourcePatch.getOriginal() instanceof PlayerEntity) {
-                        EntityTick.chargeBlips((PlayerEntity) sourcePatch.getOriginal(), weaponIdentifier.equals("fs_sn_innate") ? 1 : 0, true);
+                        EntityTick.regenerateLight((PlayerEntity) sourcePatch.getOriginal(), weaponIdentifier.equals("fs_sn_innate") ? 1 : 0, true);
                     }
                 }
 

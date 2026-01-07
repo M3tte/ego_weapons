@@ -84,7 +84,7 @@ public class LiuFireGauntlet extends EgoWeaponsWeapon {
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
-		list.add(new TranslationTextComponent("desc.ego_weapons.risk.zayin"));
+		list.add(new TranslationTextComponent("desc.ego_weapons.risk.7"));
 		list.add(new StringTextComponent(" "));
 		switch (EgoWeaponsKeybinds.getUiPage() % 5) {
 			case 0:

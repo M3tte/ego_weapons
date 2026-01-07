@@ -20,6 +20,8 @@ public class PackageRegistry {
                 EgoWeaponsModVars.PlayerVariablesSyncMessage::handler);
         addNetworkMessage(EgoWeaponsModVars.SyncStaggerMessage.class, EgoWeaponsModVars.SyncStaggerMessage::buffer, EgoWeaponsModVars.SyncStaggerMessage::new,
                 EgoWeaponsModVars.SyncStaggerMessage::handler);
+        addNetworkMessage(EgoWeaponsModVars.SyncInjuryMessage.class, EgoWeaponsModVars.SyncInjuryMessage::buffer, EgoWeaponsModVars.SyncInjuryMessage::new,
+                EgoWeaponsModVars.SyncInjuryMessage::handler);
 
         addNetworkMessage(EgoWeaponsModVars.SyncEmotionLevelMSG.class, EgoWeaponsModVars.SyncEmotionLevelMSG::buffer, EgoWeaponsModVars.SyncEmotionLevelMSG::new,
                 EgoWeaponsModVars.SyncEmotionLevelMSG::handler);

@@ -1,4 +1,4 @@
-package net.m3tte.ego_weapons.mixin;
+package net.m3tte.ego_weapons.mixin.rendering;
 
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.RenderType;

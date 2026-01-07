@@ -99,7 +99,7 @@ public class FullstopSniperWeapon extends GunItem {
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
-		list.add(new TranslationTextComponent("desc.ego_weapons.risk.waw"));
+		list.add(new TranslationTextComponent("desc.ego_weapons.risk.3"));
 		list.add(new StringTextComponent(" "));
 		switch (EgoWeaponsKeybinds.getUiPage() % 4) {
 			case 0:
@@ -236,7 +236,7 @@ public class FullstopSniperWeapon extends GunItem {
 						amount += 0.4f;
 						SharedFunctions.incrementBonusDamage(source, 0.4f);
 						if (target.hasEffect(EgoWeaponsEffects.TARGET_SPOTTED.get()) && sourcePatch.getOriginal() instanceof PlayerEntity) {
-							EntityTick.chargeBlips((PlayerEntity) sourcePatch.getOriginal(), 1);
+							EntityTick.regenerateLight((PlayerEntity) sourcePatch.getOriginal(), 1);
 						}
 					break;
 				case "fs_sn_special":

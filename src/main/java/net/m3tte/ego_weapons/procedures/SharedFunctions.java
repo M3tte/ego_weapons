@@ -1,7 +1,5 @@
 package net.m3tte.ego_weapons.procedures;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.m3tte.ego_weapons.*;
 import net.m3tte.ego_weapons.entities.DawnOfGreenDoubtEntity;
 import net.m3tte.ego_weapons.entities.NothingThere2Entity;
@@ -43,12 +41,6 @@ import net.m3tte.ego_weapons.world.capabilities.entitypatch.NothingTherePatch;
 import net.m3tte.ego_weapons.world.capabilities.entitypatch.StaggerableEntity;
 import net.m3tte.ego_weapons.world.capabilities.gamerules.EgoWeaponsGamerules;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCategories;
-import net.minecraft.client.particle.IParticleRenderType;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.AtlasTexture;
-import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -781,7 +773,7 @@ public class SharedFunctions {
                 source.getItemBySlot(EquipmentSlotType.MAINHAND).getOrCreateTag().putBoolean("ffkilled", true);
                 if (src.getEntity() instanceof LivingEntity) {
                     if (src.getEntity() instanceof PlayerEntity)
-                        EntityTick.chargeBlips((PlayerEntity) src.getEntity(), 1, true);
+                        EntityTick.regenerateLight((PlayerEntity) src.getEntity(), 1, true);
                     EgoWeaponsEffects.POWER_UP.get().increment((LivingEntity) src.getEntity(), 4, 2);
                 }
             }
@@ -1159,6 +1151,16 @@ public class SharedFunctions {
             if (self.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.MIMICRY_CHESTPLATE.get())) {
                 MimicryArmor.getDamageReceivedBuff(self, amount);
             }
+        }
+
+        EgoWeaponsModVars.PlayerVariables entityData = self.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
+
+        if (self instanceof PlayerEntity && entityData != null) {
+
+            entityData.injury_threshold += amount / self.getMaxHealth();
+
+
+            entityData.syncInjury(self);
         }
 
 

@@ -183,7 +183,7 @@ public class BlackSilenceEvaluator {
                     if (player.getCooldowns().isOnCooldown(player.getItemInHand(Hand.MAIN_HAND).getItem())) {
                         player.getCooldowns().addCooldown(player.getItemInHand(Hand.OFF_HAND).getItem(), 90);
                         player.getCooldowns().addCooldown(player.getItemInHand(Hand.MAIN_HAND).getItem(), 90);
-                        EntityTick.chargeBlips(player, 1, true);
+                        EntityTick.regenerateLight(player, 1, true);
                     } else {
                         player.getCooldowns().addCooldown(player.getItemInHand(Hand.MAIN_HAND).getItem(), 100);
                     }
@@ -221,7 +221,7 @@ public class BlackSilenceEvaluator {
                     PlayerPatch<?> entitypatch = (PlayerPatch)player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, (Direction)null).orElse((EntityPatch) null);
                     entitypatch.setStamina(Math.min(entitypatch.getMaxStamina(), entitypatch.getStamina() + entitypatch.getMaxStamina() * 0.3F));
                     player.getCooldowns().addCooldown(player.getItemInHand(Hand.MAIN_HAND).getItem(), 60);
-                    EntityTick.chargeBlips(player, 1, true);
+                    EntityTick.regenerateLight(player, 1, true);
                 }
             }
         }

@@ -5,6 +5,7 @@ import net.minecraft.client.particle.IAnimatedSprite;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.particles.BasicParticleType;
@@ -89,7 +90,6 @@ public class MagicBulletTargetCircle extends QuarternionBoundParticle {
     }
 
     float lastTickDelta = 0;
-
     @Override
     public void render(IVertexBuilder vertexBuilder, ActiveRenderInfo renderInfo, float tickDelta) {
         if (tickDelta < lastTickDelta)

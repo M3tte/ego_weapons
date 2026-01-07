@@ -258,6 +258,7 @@ public class EgoWeaponsModVars {
 			nbt.putDouble("emotionLevelProgress", instance.emotionLevelProgress);
 			nbt.putInt("onHitCounter", instance.onHitCounter);
 			nbt.putString("personality", instance.personality);
+			nbt.putDouble("injury_threshold", instance.injury_threshold);
 			return nbt;
 		}
 
@@ -291,6 +292,7 @@ public class EgoWeaponsModVars {
 			instance.emotionLevelProgress = nbt.getDouble("emotionLevelProgress");
 			instance.onHitCounter = nbt.getInt("onHitCounter");
 			instance.personality = nbt.getString("personality");
+			instance.injury_threshold = nbt.getDouble("injury_threshold");
 		}
 	}
 
@@ -321,6 +323,7 @@ public class EgoWeaponsModVars {
 		// public double maxSanity = 20;
 		public double sanity = 20;
 		public String personality = "default";
+		public double injury_threshold = 0;
 
 		public int emotionLevel = 0;
 		public double emotionLevelProgress = 0;
@@ -334,6 +337,14 @@ public class EgoWeaponsModVars {
 			if (entity instanceof ServerPlayerEntity) {
 				for (ServerPlayerEntity p : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers()) {
 					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> p), new SyncStaggerMessage(this, (ServerPlayerEntity)entity));
+				}
+			}
+		}
+
+		public void syncInjury(Entity entity) {
+			if (entity instanceof ServerPlayerEntity) {
+				for (ServerPlayerEntity p : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers()) {
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> p), new SyncInjuryMessage(this, (ServerPlayerEntity)entity));
 				}
 			}
 		}
@@ -409,6 +420,7 @@ public class EgoWeaponsModVars {
 			clone.sanity = original.sanity;
 			clone.emotionLevel = original.emotionLevel;
 			clone.emotionLevelProgress = original.emotionLevelProgress;
+			clone.injury_threshold = original.injury_threshold;
 		}
 	}
 
@@ -461,6 +473,7 @@ public class EgoWeaponsModVars {
 					variables.emotionLevel = message.data.emotionLevel;
 					variables.onHitCounter = message.data.onHitCounter;
 					variables.personality = message.data.personality;
+					variables.injury_threshold = message.data.injury_threshold;
 				}
 			});
 			context.setPacketHandled(true);
@@ -468,24 +481,21 @@ public class EgoWeaponsModVars {
 	}
 
 	public static class SyncStaggerMessage {
-		public double maxStagger;
+
 		public double stagger;
 		public UUID targetUUID;
 
 		public SyncStaggerMessage(PacketBuffer buffer) {
-			this.maxStagger = buffer.readDouble();
 			this.stagger = buffer.readDouble();
 			this.targetUUID = buffer.readUUID();
 		}
 
 		public SyncStaggerMessage(PlayerVariables data, PlayerEntity target) {
-			// this.maxStagger = data.maxStagger;
 			this.stagger = data.stagger;
 			this.targetUUID = target.getUUID();
 		}
 
 		public static void buffer(SyncStaggerMessage message, PacketBuffer buffer) {
-			buffer.writeDouble(message.maxStagger);
 			buffer.writeDouble(message.stagger);
 			buffer.writeUUID(message.targetUUID);
 		}
@@ -502,6 +512,46 @@ public class EgoWeaponsModVars {
 							.orElse(new PlayerVariables());
 					// variables.maxStagger = message.maxStagger;
 					variables.stagger = message.stagger;
+					/*if (variables.stagger <= 0) {
+						StaggerSystem.stagger(Minecraft.getInstance().player);
+					}*/
+				}
+			});
+			context.setPacketHandled(true);
+		}
+	}
+
+	public static class SyncInjuryMessage {
+		public double injury;
+		public UUID targetUUID;
+
+		public SyncInjuryMessage(PacketBuffer buffer) {
+			this.injury = buffer.readDouble();
+			this.targetUUID = buffer.readUUID();
+		}
+
+		public SyncInjuryMessage(PlayerVariables data, PlayerEntity target) {
+			this.injury = data.injury_threshold;
+			this.targetUUID = target.getUUID();
+		}
+
+		public static void buffer(SyncInjuryMessage message, PacketBuffer buffer) {
+			buffer.writeDouble(message.injury);
+			buffer.writeUUID(message.targetUUID);
+		}
+
+		public static void handler(SyncInjuryMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
+			NetworkEvent.Context context = contextSupplier.get();
+			context.enqueueWork(() -> {
+				if (!context.getDirection().getReceptionSide().isServer()) {
+					if (Minecraft.getInstance().level.getPlayerByUUID(message.targetUUID) == null) {
+						System.out.println("TARGET NULL");
+						return;
+					}
+					PlayerVariables variables = Minecraft.getInstance().level.getPlayerByUUID(message.targetUUID).getCapability(PLAYER_VARIABLES_CAPABILITY, null)
+							.orElse(new PlayerVariables());
+					// variables.maxStagger = message.maxStagger;
+					variables.injury_threshold = message.injury;
 					/*if (variables.stagger <= 0) {
 						StaggerSystem.stagger(Minecraft.getInstance().player);
 					}*/

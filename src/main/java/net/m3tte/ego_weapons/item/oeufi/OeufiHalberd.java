@@ -96,7 +96,7 @@ public class OeufiHalberd extends EgoWeaponsWeapon {
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
-		list.add(new TranslationTextComponent("desc.ego_weapons.risk.he"));
+		list.add(new TranslationTextComponent("desc.ego_weapons.risk.4"));
 		list.add(new StringTextComponent(" "));
 		switch (EgoWeaponsKeybinds.getUiPage() % 4) {
 			case 0:
@@ -198,7 +198,7 @@ public class OeufiHalberd extends EgoWeaponsWeapon {
 						if (sourceentity instanceof PlayerEntity) {
 							PlayerEntity player = (PlayerEntity)sourceentity;
 							((PlayerPatch)entitypatch).setStamina(Math.min(((PlayerPatch)entitypatch).getMaxStamina(), ((PlayerPatch)entitypatch).getStamina() + ((PlayerPatch)entitypatch).getMaxStamina() * 0.3F));
-							EntityTick.chargeBlips(player, 1, true);
+							EntityTick.regenerateLight(player, 1, true);
 						}
 					}
 
@@ -230,7 +230,7 @@ public class OeufiHalberd extends EgoWeaponsWeapon {
 							if (sourceentity instanceof PlayerEntity) {
 								PlayerEntity player = (PlayerEntity)sourceentity;
 								((PlayerPatch)entitypatch).setStamina(Math.min(((PlayerPatch)entitypatch).getMaxStamina(), ((PlayerPatch)entitypatch).getStamina() + ((PlayerPatch)entitypatch).getMaxStamina() * 0.3F));
-								EntityTick.chargeBlips(player, 1, true);
+								EntityTick.regenerateLight(player, 1, true);
 							}
 
 						} else if (tremor.getPotency(target) > 15) {

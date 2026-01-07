@@ -134,7 +134,7 @@ public class HeishouMaoActiveGuard extends NonSpamGuardSkill {
                             return HeishouMaoBranchAnims.HEISHOU_MAO_PARRY_EVADE;
                         }
                     }
-                    EntityTick.chargeBlips(playerpatch.getOriginal(), 1, true);
+                    EntityTick.regenerateLight(playerpatch.getOriginal(), 1, true);
                     return HeishouMaoBranchAnims.HEISHOU_MAO_PARRY_2;
                 } else {
 

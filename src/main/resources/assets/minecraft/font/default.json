@@ -534,6 +534,76 @@
     },
     {
       "type": "bitmap",
+      "file": "ego_weapons:screens/gui/one.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uEC11"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:screens/gui/two.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uEC12"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:screens/gui/three.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uEC13"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:screens/gui/four.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uEC14"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:screens/gui/five.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uEC15"]
+    },{
+      "type": "bitmap",
+      "file": "ego_weapons:screens/gui/six.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uEC16"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:screens/gui/seven.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uEC17"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:screens/gui/eight.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uEC18"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:screens/gui/nine.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uEC19"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:screens/gui/ten.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uEC10"]
+    },
+
+    {
+      "type": "bitmap",
       "file": "ego_weapons:damage_types/clash/red.png",
       "ascent": 8,
       "height": 9,

@@ -275,7 +275,7 @@ public class OnEntityHit {
                             }
 
                             if (entitypatch.getOriginal() instanceof PlayerEntity)
-                                EntityTick.chargeBlips((PlayerEntity) entitypatch.getOriginal(), 1, true);
+                                EntityTick.regenerateLight((PlayerEntity) entitypatch.getOriginal(), 1, true);
 
                             entitypatch.playSound(EgoWeaponsSounds.HEISHOU_MAO_PARRY, 1, 1);
                             entitypatch.playSound(EgoWeaponsSounds.FIREFIST_SPECIAL_FLARE, 1, 1);
@@ -295,7 +295,7 @@ public class OnEntityHit {
                             }
 
                             if (entitypatch.getOriginal() instanceof PlayerEntity)
-                                EntityTick.chargeBlips((PlayerEntity) entitypatch.getOriginal(), 1, true);
+                                EntityTick.regenerateLight((PlayerEntity) entitypatch.getOriginal(), 1, true);
 
                             entitypatch.playSound(EgoWeaponsSounds.SOLEMN_LAMENT_BASH, 1, 1);
                             entitypatch.playSound(EgoWeaponsSounds.SOLEMN_LAMENT_SPECIAL_IMPACT, 1, 1);

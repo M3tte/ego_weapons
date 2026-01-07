@@ -158,7 +158,7 @@ public class HeishouMaoRobe extends GenericEgoWeaponsArmor {
 			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 			list.add(new StringTextComponent("= - - - - - - - [Page: " + ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
-			list.add(new TranslationTextComponent("desc.ego_weapons.risk.he"));
+			list.add(new TranslationTextComponent("desc.ego_weapons.risk.4"));
 			list.add(new StringTextComponent(" "));
 			switch (EgoWeaponsKeybinds.getUiPage() % 4) {
 				case 0:
