@@ -2,6 +2,7 @@
 package net.m3tte.ego_weapons.command;
 
 import com.mojang.brigadier.arguments.BoolArgumentType;
+import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.m3tte.ego_weapons.procedures.EntityTick;
@@ -21,11 +22,11 @@ public class sanityCommand {
 	@SubscribeEvent
 	public static void registerCommands(RegisterCommandsEvent event) {
 		event.getDispatcher().register(LiteralArgumentBuilder.<CommandSource>literal("sanity").requires(s -> s.hasPermission(4))
-				.then(Commands.argument("target", EntityArgument.players()).then(Commands.argument("amount", IntegerArgumentType.integer()).executes(arguments -> {
+				.then(Commands.argument("target", EntityArgument.players()).then(Commands.argument("amount", FloatArgumentType.floatArg()).executes(arguments -> {
 
 					System.out.println("Executing");
 					Collection<ServerPlayerEntity> targets = EntityArgument.getPlayers(arguments, "target");
-					int amount = IntegerArgumentType.getInteger(arguments, "amount");
+					float amount = FloatArgumentType.getFloat(arguments, "amount");
 					for (ServerPlayerEntity target : targets) {
 						if (amount >= 0) SanitySystem.healSanity(target, amount); else SanitySystem.damageSanity(target, amount*-1);
 					}

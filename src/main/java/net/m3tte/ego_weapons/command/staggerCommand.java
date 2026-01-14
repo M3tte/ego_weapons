@@ -2,6 +2,7 @@
 package net.m3tte.ego_weapons.command;
 
 import com.mojang.brigadier.arguments.BoolArgumentType;
+import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
@@ -21,11 +22,11 @@ public class staggerCommand {
 	@SubscribeEvent
 	public static void registerCommands(RegisterCommandsEvent event) {
 		event.getDispatcher().register(LiteralArgumentBuilder.<CommandSource>literal("stagger").requires(s -> s.hasPermission(4))
-				.then(Commands.argument("target", EntityArgument.players()).then(Commands.argument("amount", IntegerArgumentType.integer()).then(Commands.argument("bypassArmor", BoolArgumentType.bool()).executes(arguments -> {
+				.then(Commands.argument("target", EntityArgument.players()).then(Commands.argument("amount", FloatArgumentType.floatArg()).then(Commands.argument("bypassArmor", BoolArgumentType.bool()).executes(arguments -> {
 
 					System.out.println("Executing");
 					Collection<ServerPlayerEntity> targets = EntityArgument.getPlayers(arguments, "target");
-					int amount = IntegerArgumentType.getInteger(arguments, "amount");
+					float amount = FloatArgumentType.getFloat(arguments, "amount");
 					for (ServerPlayerEntity target : targets) {
 						if (amount < 0) StaggerSystem.reduceStagger(target, amount * -1, BoolArgumentType.getBool(arguments, "bypassArmor")); else StaggerSystem.healStagger(target, amount);
 					}

@@ -8,7 +8,6 @@
     "PushEntityMixinServer"
   ],
   "mixins": [
-    "AttributeModifierMapMixin",
     "LivingEntityMixin",
     "PlayerEntityDamageMixin",
     "epicfight.AttackAnimationMixin",

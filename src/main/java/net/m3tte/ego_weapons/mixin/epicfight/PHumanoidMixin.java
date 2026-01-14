@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import yesman.epicfight.client.renderer.patched.entity.PHumanoidRenderer;
 
-@Mixin(PHumanoidRenderer.class)
+@Mixin(value = PHumanoidRenderer.class, remap = false)
 public class PHumanoidMixin {
 
 

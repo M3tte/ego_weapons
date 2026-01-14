@@ -21,6 +21,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.PacketDistributor;
 import yesman.epicfight.api.animation.LivingMotions;
+import yesman.epicfight.api.animation.ServerAnimator;
 import yesman.epicfight.api.animation.types.AttackAnimation;
 import yesman.epicfight.api.animation.types.DynamicAnimation;
 import yesman.epicfight.api.animation.types.StaticAnimation;
@@ -80,9 +81,12 @@ public class CravingBloodbagPatch extends MobPatch<CravingBloodbagEntity> implem
                                 if (e.getTarget() != null) {
                                     LivingEntityPatch<?> sourcePatch = (LivingEntityPatch<?>) e.getTarget().getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
-                                    if (sourcePatch.getServerAnimator() != null)
-                                        if (sourcePatch.getServerAnimator().animationPlayer != null)
-                                            return sourcePatch.getServerAnimator().animationPlayer.getAnimation() instanceof AttackAnimation;
+                                    if (sourcePatch != null) {
+                                        if (sourcePatch.getAnimator() instanceof ServerAnimator)
+                                            if (sourcePatch.getServerAnimator().animationPlayer != null)
+                                                return sourcePatch.getServerAnimator().animationPlayer.getAnimation() instanceof AttackAnimation;
+
+                                    }
 
                                 }
                                 return false;
