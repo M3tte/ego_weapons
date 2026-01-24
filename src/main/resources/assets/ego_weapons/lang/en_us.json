@@ -1443,7 +1443,7 @@
 
   "desc.ego_weapons.statuses.tremor.title": "\uE008 §cTremor ",
   "desc.ego_weapons.statuses.tremor.1": "§7Gradually decrements in §fCount.",
-  "desc.ego_weapons.statuses.tremor8.2": "§c[On §f\uE006 §cTremor Burst]: §7Take §6Stagger Damage §7by §fPotency.",
+  "desc.ego_weapons.statuses.tremor.2": "§c[On §f\uE006 §cTremor Burst]: §7Take §6Stagger Damage §7by §fPotency.",
 
   "desc.ego_weapons.statuses.poise.title": "\uE013 §cPoise ",
   "desc.ego_weapons.statuses.poise.1": "[On Attack] x * 5% §7Chance to §c[Crit]",
