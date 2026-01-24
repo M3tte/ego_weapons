@@ -448,7 +448,7 @@ public class GenericOverlay extends ModIngameGui {
 
 		GL11.glPushMatrix();
 		GL11.glTranslated(offsetX, offsetY,0); // -265,245
-		GL11.glRotated(7,0,0,1);
+		GL11.glRotated(7,0,0,0.001);
 		Minecraft.getInstance().getTextureManager().bind(defense_level);
 		blit(event.getMatrixStack(), 0, 0, 0, 0, 26, 26, 26, 26);
 		Minecraft.getInstance().font.draw(event.getMatrixStack(), ""+((armor % 1) == 0 ? ((int) armor) : (armor)), 16, 12,  (16773613));

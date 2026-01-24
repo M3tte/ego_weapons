@@ -102,8 +102,12 @@ public class MagicBullet extends EgoWeaponsWeapon {
 			if (type.equals(AttackLogicPredicate.MAGIC_BULLET_FIRE)) {
 
 
-				SharedFunctions.incrementBonusDamage(source, 0.20f * EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(entitypatch.getOriginal()));
-				multiplier += 0.20f * EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(entitypatch.getOriginal());
+				int potency = EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(entitypatch.getOriginal());
+
+				if (potency == 0)
+					potency = 7;
+				SharedFunctions.incrementBonusDamage(source, 0.20f * potency);
+				multiplier += 0.20f * potency;
 
 				float amountPredicate = (0.02f * Math.min(15, EgoWeaponsEffects.BURN.get().getPotency(target)));
 

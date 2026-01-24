@@ -8,6 +8,7 @@ public class EgoWeaponsGamerules {
     public static GameRules.RuleKey<GameRules.BooleanValue> ENABLE_CLASHINDICATOR;
     public static GameRules.RuleKey<GameRules.IntegerValue> DIALOGUE_DENSITY;
     public static GameRules.RuleKey<GameRules.BooleanValue> DIALOGUE_BUBBLES;
+    public static GameRules.RuleKey<GameRules.BooleanValue> SHOW_PLAYER_INFO;
 
 
     public static void registerRules() {
@@ -16,6 +17,7 @@ public class EgoWeaponsGamerules {
         ENABLE_CLASHINDICATOR = GameRules.register("enableClashingIndicators", GameRules.Category.MISC, GameRules.BooleanValue.create(true));
         DIALOGUE_DENSITY = GameRules.register("dialogueDensity", GameRules.Category.MISC, GameRules.IntegerValue.create(2));
         DIALOGUE_BUBBLES = GameRules.register("enableSpeechBubbles", GameRules.Category.MISC, GameRules.BooleanValue.create(true));
+        SHOW_PLAYER_INFO = GameRules.register("showPlayerStatsAboveHead", GameRules.Category.MISC, GameRules.BooleanValue.create(true));
 
 
 

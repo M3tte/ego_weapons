@@ -11,6 +11,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.EgoWeaponsAttributes;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.client.renderer.EgoWeaponsRenderTypes;
+import net.m3tte.ego_weapons.world.capabilities.gamerules.EgoWeaponsGamerules;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -30,7 +31,9 @@ public class PlayerStatsIndicator extends EntityIndicator {
 
     public boolean shouldDraw(ClientPlayerEntity player, LivingEntity entityIn) {
 
-        if (!(Boolean)EpicFightMod.CLIENT_INGAME_CONFIG.showHealthIndicator.getValue()) {
+        if (!player.level.getGameRules().getBoolean(EgoWeaponsGamerules.SHOW_PLAYER_INFO))
+            return false;
+        else if (!(Boolean)EpicFightMod.CLIENT_INGAME_CONFIG.showHealthIndicator.getValue()) {
             return false;
         } else if (entityIn.canChangeDimensions() && !entityIn.isInvisible() && entityIn != player.getVehicle()) {
             if (entityIn.distanceToSqr(Minecraft.getInstance().getCameraEntity()) >= 400.0) {

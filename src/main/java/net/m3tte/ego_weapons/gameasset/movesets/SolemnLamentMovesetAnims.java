@@ -643,7 +643,7 @@ public class SolemnLamentMovesetAnims {
         boolean hasAmmo = SolemnLamentEffects.getAmmoCount(entity, SolemnLamentEffects.getDeparted()) > 0 && SolemnLamentEffects.getAmmoCount(entity, SolemnLamentEffects.getLiving()) > 0;
 
         boolean hasWhite = entity.getItemInHand(Hand.MAIN_HAND).getItem().equals(EgoWeaponsItems.SOLEMN_LAMENT_WHITE.get());
-        boolean hasBlack = entity.getItemInHand(Hand.OFF_HAND).getItem().equals(EgoWeaponsItems.SOLEMN_LAMENT_WHITE.get());
+        boolean hasBlack = entity.getItemInHand(Hand.OFF_HAND).getItem().equals(EgoWeaponsItems.SOLEMN_LAMENT_BLACK.get());
 
 
         if (hasAmmo && hasWhite && hasBlack) {
@@ -692,23 +692,26 @@ public class SolemnLamentMovesetAnims {
         }, StaticAnimation.Event.Side.BOTH);
 
         events[4] = StaticAnimation.Event.create(g5, (entitypatch) -> {
-            entitypatch.playSound(EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_BLACK, 1, 1);
-            entitypatch.playSound(EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_WHITE, 1, 1);
-            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-0.2,-0.4), 1, EgoWeaponsParticles.SOLEMN_LAMENT_FIRE_DEPARTED.get(), 0, "Tool_L", false);
-            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-0.5,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get(), 0.1f, "Tool_L" , false);
-            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get(), 0.1f, "Tool_L" , false);
-            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1.5,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get(), 0.1f, "Tool_L" , false);
-            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-2,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get(), 0.1f, "Tool_L" , false);
-            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-3,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get(), 0.1f, "Tool_L" , false);
 
-            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-0.2,-0.4), 1, EgoWeaponsParticles.SOLEMN_LAMENT_FIRE_LIVING.get(), 0, "Tool_R", false);
-            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-0.5,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, "Tool_R" , false);
-            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, "Tool_R" , false);
-            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1.5,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, "Tool_R" , false);
-            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-2,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, "Tool_R" , false);
-            spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-3,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, "Tool_R" , false);
+            if (tryConsumeAmmoBoth(entitypatch)) {
+                entitypatch.playSound(EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_BLACK, 1, 1);
+                entitypatch.playSound(EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_WHITE, 1, 1);
+                spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-0.2,-0.4), 1, EgoWeaponsParticles.SOLEMN_LAMENT_FIRE_DEPARTED.get(), 0, "Tool_L", false);
+                spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-0.5,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get(), 0.1f, "Tool_L" , false);
+                spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get(), 0.1f, "Tool_L" , false);
+                spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1.5,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get(), 0.1f, "Tool_L" , false);
+                spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-2,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get(), 0.1f, "Tool_L" , false);
+                spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-3,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_BUTTERFLY.get(), 0.1f, "Tool_L" , false);
 
-            tryConsumeAmmoBoth(entitypatch);
+                spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-0.2,-0.4), 1, EgoWeaponsParticles.SOLEMN_LAMENT_FIRE_LIVING.get(), 0, "Tool_R", false);
+                spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-0.5,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, "Tool_R" , false);
+                spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, "Tool_R" , false);
+                spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1.5,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, "Tool_R" , false);
+                spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-2,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, "Tool_R" , false);
+                spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-3,-0.4), 2, EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_BUTTERFLY.get(), 0.1f, "Tool_R" , false);
+            }
+
+
 
         }, StaticAnimation.Event.Side.BOTH);
         return events;
