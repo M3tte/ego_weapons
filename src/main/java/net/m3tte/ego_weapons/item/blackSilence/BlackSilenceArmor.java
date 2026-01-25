@@ -3,6 +3,7 @@ package net.m3tte.ego_weapons.item.blackSilence;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.potion.OrlandoPotionEffect;
@@ -104,7 +105,7 @@ public class BlackSilenceArmor  extends GenericEgoWeaponsArmor {
 	public BlackSilenceArmor(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity) {
 		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
 	}
-	static Item chest = new BlackSilenceArmor(blackSilenceArmor, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT), 0.7f, 1f, 0.5f ,1.2f, 0.8f, 1.3f, 0.8f, 5, -5) {
+	static Item chest = new BlackSilenceArmor(blackSilenceArmor, EquipmentSlotType.CHEST, new Item.Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 0.7f, 1f, 0.5f ,1.2f, 0.8f, 1.3f, 0.8f, 5, -5) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -167,7 +168,7 @@ public class BlackSilenceArmor  extends GenericEgoWeaponsArmor {
 			list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
 		}
 	};
-	static Item mask = new ArmorItem(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Item.Properties().tab(ItemGroup.TAB_COMBAT)) {
+	static Item mask = new ArmorItem(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Item.Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS)) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {

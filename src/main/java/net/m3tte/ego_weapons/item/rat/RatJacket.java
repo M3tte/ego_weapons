@@ -3,6 +3,7 @@ package net.m3tte.ego_weapons.item.rat;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
@@ -108,7 +109,7 @@ public class RatJacket extends GenericEgoWeaponsArmor {
 		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
 	}
 
-	static Item chest = new RatJacket(solemnLamentArmor, EquipmentSlotType.CHEST, new Properties().tab(ItemGroup.TAB_COMBAT), 0.9f, 1.25f, 1f ,1.5f, 1f, 0.7f, 1.5f, 2, -2) {
+	static Item chest = new RatJacket(solemnLamentArmor, EquipmentSlotType.CHEST, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 0.9f, 1.25f, 1f ,1.5f, 1f, 0.7f, 1.5f, 2, -2) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -172,7 +173,7 @@ public class RatJacket extends GenericEgoWeaponsArmor {
 		return dmgMult;
 	}
 
-	static Item pants = new RatJacket(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.LEGS, new Properties().tab(ItemGroup.TAB_COMBAT)) {
+	static Item pants = new RatJacket(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.LEGS, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS)) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {

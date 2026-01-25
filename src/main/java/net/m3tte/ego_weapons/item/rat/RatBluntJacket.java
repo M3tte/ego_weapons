@@ -3,6 +3,7 @@ package net.m3tte.ego_weapons.item.rat;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
@@ -133,7 +134,7 @@ public class RatBluntJacket extends GenericEgoWeaponsArmor {
 		return dmgMult;
 	}
 
-	static Item chest = new RatBluntJacket(solemnLamentArmor, EquipmentSlotType.CHEST, new Properties().tab(ItemGroup.TAB_COMBAT), 0.9f, 1.25f, 1f ,1.5f, 1f, 1.5f, 0.7f, 2, -2) {
+	static Item chest = new RatBluntJacket(solemnLamentArmor, EquipmentSlotType.CHEST, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 0.9f, 1.25f, 1f ,1.5f, 1f, 1.5f, 0.7f, 2, -2) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -184,7 +185,7 @@ public class RatBluntJacket extends GenericEgoWeaponsArmor {
 
 	};
 
-	static Item hat = new RatBluntJacket(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Properties().tab(ItemGroup.TAB_COMBAT)) {
+	static Item hat = new RatBluntJacket(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS)) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -206,7 +207,7 @@ public class RatBluntJacket extends GenericEgoWeaponsArmor {
 		}
 	};
 
-	static Item pants = new RatBluntJacket(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.LEGS, new Properties().tab(ItemGroup.TAB_COMBAT)) {
+	static Item pants = new RatBluntJacket(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.LEGS, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS)) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {

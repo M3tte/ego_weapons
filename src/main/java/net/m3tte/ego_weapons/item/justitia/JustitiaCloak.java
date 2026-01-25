@@ -3,6 +3,7 @@ package net.m3tte.ego_weapons.item.justitia;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoWeaponsArmor;
@@ -106,7 +107,7 @@ public class JustitiaCloak extends GenericEgoWeaponsArmor {
 		}
 	}
 
-	static Item mask = new JustitiaCloak(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Properties().tab(ItemGroup.TAB_COMBAT)) {
+	static Item mask = new JustitiaCloak(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS)) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -129,7 +130,7 @@ public class JustitiaCloak extends GenericEgoWeaponsArmor {
 			return 0;
 		}
 	};
-	static Item chest = new JustitiaCloak(justitiaArmor, EquipmentSlotType.CHEST, new Properties().tab(ItemGroup.TAB_COMBAT), 0.5f, 0.5f, 0.5f ,0.5f, 1.3f, 1f, 0.7f, -4, -4) {
+	static Item chest = new JustitiaCloak(justitiaArmor, EquipmentSlotType.CHEST, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 0.5f, 0.5f, 0.5f ,0.5f, 1.3f, 1f, 0.7f, -4, -4) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {

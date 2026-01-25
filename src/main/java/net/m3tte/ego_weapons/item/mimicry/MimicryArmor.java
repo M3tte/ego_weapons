@@ -3,6 +3,7 @@ package net.m3tte.ego_weapons.item.mimicry;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
@@ -104,7 +105,7 @@ public class MimicryArmor extends GenericEgoWeaponsArmor {
 		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
 	}
 
-	static Item chest = new MimicryArmor(armormaterial, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT), 0.3f, 0.7f, 0.7f ,1.3f, 0.7f, 1.3f, 1f, 5, -5) {
+	static Item chest = new MimicryArmor(armormaterial, EquipmentSlotType.CHEST, new Item.Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 0.3f, 0.7f, 0.7f ,1.3f, 0.7f, 1.3f, 1f, 5, -5) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -156,7 +157,7 @@ public class MimicryArmor extends GenericEgoWeaponsArmor {
 		}
 	};
 
-	static Item legs = new MimicryArmor(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.LEGS, new Item.Properties().tab(ItemGroup.TAB_COMBAT)) {
+	static Item legs = new MimicryArmor(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.LEGS, new Item.Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS)) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {

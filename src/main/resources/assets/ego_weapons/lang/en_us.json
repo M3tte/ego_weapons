@@ -1,4 +1,5 @@
 {
+  "itemGroup.ego_weapons.items": "E.G.O Weaponry",
   "effect.markedeffect": "Marked",
   "subtitles.ominousbell": "Ominous Bell",
   "effect.putridtouch": "Putric Strike",
@@ -213,7 +214,7 @@
   "desc.ego_weapons.sunshower.ability.2": "[I] §7Gain §f5 \uE003 §cSinking §7Potency. Gain §f1 \uE003 §cSinking §7 Count.",
   "desc.ego_weapons.sunshower.ability.3": "[I] §7Inflict §f4 §f\uE003 §cSinking §7Count.",
   "desc.ego_weapons.sunshower.ability.4": "[III] §7Deal §f+100% §7Damage.",
-  "desc.ego_weapons.sunshower.ability.6": "[III] §7Inflict §f2 \uE005 §cRupture §7Count, §7Inflict §f4 \uE005 §cRupture §7Potency.",
+  "desc.ego_weapons.sunshower.ability.5": "[III] §7Inflict §f2 \uE005 §cRupture §7Count, §7Inflict §f4 \uE005 §cRupture §7Potency.",
 
   "desc.ego_weapons.sunshower.innate.title": "§b[Innate] §fPuddle Stomp - \uED02",
   "desc.ego_weapons.sunshower.innate.1": "    - = | \uED33 \uED33 \uED33 \uED33 | = -",

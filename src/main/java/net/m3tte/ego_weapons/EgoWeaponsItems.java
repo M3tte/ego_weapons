@@ -41,16 +41,24 @@ import net.m3tte.ego_weapons.item.sunshower.SunshowerArmor;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import static net.m3tte.ego_weapons.EgoWeaponsCreativeTabs.EGO_WEAPONS;
+
 public class EgoWeaponsItems {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, EgoWeaponsMod.MODID);
-    public static RegistryObject<Item>  ZWEI_ASSOCIATION_LONGSWORD = registerItem("zweilongsword", new ZweiSwordItem(ZweiSwordItem.zweiItemTier, 3, -2.7f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
-    public static RegistryObject<Item>  MIMICRY = registerItem("mimicry", new MimicryItem(4, -2.65f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+
+    public static RegistryObject<Item>  ICON_ITEM = registerItem("icon_item", new Item(new Item.Properties()));
+
+
+
+    public static RegistryObject<Item>  ZWEI_ASSOCIATION_LONGSWORD = registerItem("zweilongsword", new ZweiSwordItem(ZweiSwordItem.zweiItemTier, 3, -2.7f, new Item.Properties().tab(EGO_WEAPONS)));
+    public static RegistryObject<Item>  MIMICRY = registerItem("mimicry", new MimicryItem(4, -2.65f, new Item.Properties().tab(EGO_WEAPONS)));
     public static RegistryObject<Item>  MIMICRY_CHESTPLATE = registerItem("mimicry_chestplate", MimicryArmor.getArmorForSlot(EquipmentSlotType.CHEST));
     public static RegistryObject<Item>  MIMICRY_LEGGINGS = registerItem("mimicry_leggings", MimicryArmor.getArmorForSlot(EquipmentSlotType.LEGS));
     public static RegistryObject<Item>  SUIT_LEGGINGS = registerItem("suit_leggings", SuitItem.getArmorForSlot(EquipmentSlotType.LEGS));
@@ -61,7 +69,7 @@ public class EgoWeaponsItems {
 
     public static RegistryObject<Item> JACKET_OF_THE_RED_MIST = registerItem("jacket_of_the_red_mist", RedMistJacket.getArmorForSlot(EquipmentSlotType.CHEST));
     public static RegistryObject<Item> CIGARETTE = registerItem("cigarette", RedMistJacket.getArmorForSlot(EquipmentSlotType.HEAD));
-    public static RegistryObject<Item> MAGIC_BULLET = registerItem("magic_bullet", new MagicBullet(5, -3f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+    public static RegistryObject<Item> MAGIC_BULLET = registerItem("magic_bullet", new MagicBullet(5, -3f, new Item.Properties().tab(EGO_WEAPONS)));
 
     public static RegistryObject<Item> MAGIC_BULLET_CLOAK = registerItem("magic_bullet_cloak", MagicBulletArmor.getArmorForSlot(EquipmentSlotType.CHEST));
     public static RegistryObject<Item> MAGIC_BULLET_PIPE = registerItem("magic_bullet_pipe", MagicBulletArmor.getArmorForSlot(EquipmentSlotType.HEAD));
@@ -74,29 +82,29 @@ public class EgoWeaponsItems {
     public static RegistryObject<Item> SOLEMN_LAMENT_BUTTERFLY = registerItem("solemn_lament_butterfly", SolemnLamentArmor.getArmorForSlot(EquipmentSlotType.HEAD));
 
 
-    public static RegistryObject<Item> ALLAS_SPEAR = registerItem("allas_spear", new AllasSpearItem(4, -3.1f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
-    public static RegistryObject<Item> ATELIER_LOGIC_PISTOLS = registerItem("atelier_logic_pistols", new AtelierLogicRevolver(4, -2.7f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
-    public static RegistryObject<Item> ATELIER_LOGIC_SHOTGUN = registerItem("atelier_logic_shotgun", new AtelierlogicshotgunItem(4, -3f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
-    public static RegistryObject<Item> CRYSTAL_ATELIER = registerItem("crystal_atelier", new CrystalatelierItem(4, -2.3f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
-    public static RegistryObject<Item> DURANDAL = registerItem("durandal", new DurandalItem(4, -2.9f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+    public static RegistryObject<Item> ALLAS_SPEAR = registerItem("allas_spear", new AllasSpearItem(4, -3.1f, new Item.Properties().tab(EGO_WEAPONS)));
+    public static RegistryObject<Item> ATELIER_LOGIC_PISTOLS = registerItem("atelier_logic_pistols", new AtelierLogicRevolver(4, -2.7f, new Item.Properties().tab(EGO_WEAPONS)));
+    public static RegistryObject<Item> ATELIER_LOGIC_SHOTGUN = registerItem("atelier_logic_shotgun", new AtelierlogicshotgunItem(4, -3f, new Item.Properties().tab(EGO_WEAPONS)));
+    public static RegistryObject<Item> CRYSTAL_ATELIER = registerItem("crystal_atelier", new CrystalatelierItem(4, -2.3f, new Item.Properties().tab(EGO_WEAPONS)));
+    public static RegistryObject<Item> DURANDAL = registerItem("durandal", new DurandalItem(4, -2.9f, new Item.Properties().tab(EGO_WEAPONS)));
     public static RegistryObject<Item> DURANDAL_SHEATH = registerItem("durandal_sheath", new DurandalsheathItem());
     public static RegistryObject<Item> MOOK_SHEATH = registerItem("mook_sheath", new MookSheath());
-    public static RegistryObject<Item> MOOK_WORKSHOP = registerItem("mook_workshop", new MookWorkshop(4, -2.2f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
-    public static RegistryObject<Item> OLD_BOYS_WORKSHOP = registerItem("old_boys_workshop", new OldBoysWorkshop( 2, -3f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
-    public static RegistryObject<Item> RANGA_CLAW = registerItem("ranga_claw", new RangaclawItem( 4, -2.3f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
-    public static RegistryObject<Item> RANGA_CLAW_L = registerItem("ranga_claw_l", new RangaclawItem( 4, -2.3f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
-    public static RegistryObject<Item> WHEELS_INDUSTRY = registerItem("wheels_industry", new WheelsIndustry( 2, -3.1f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
-    public static RegistryObject<Item> ZELKOVA_AXE = registerItem("zelkova_axe", new ZelkovaaxeItem( 2, -2.8f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
-    public static RegistryObject<Item> ZELKOVA_MACE = registerItem("zelkova_mace", new ZelkovamaceItem( 2, -2.9f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+    public static RegistryObject<Item> MOOK_WORKSHOP = registerItem("mook_workshop", new MookWorkshop(4, -2.2f, new Item.Properties().tab(EGO_WEAPONS)));
+    public static RegistryObject<Item> OLD_BOYS_WORKSHOP = registerItem("old_boys_workshop", new OldBoysWorkshop( 2, -3f, new Item.Properties().tab(EGO_WEAPONS)));
+    public static RegistryObject<Item> RANGA_CLAW = registerItem("ranga_claw", new RangaclawItem( 4, -2.3f, new Item.Properties().tab(EGO_WEAPONS)));
+    public static RegistryObject<Item> RANGA_CLAW_L = registerItem("ranga_claw_l", new RangaclawItem( 4, -2.3f, new Item.Properties().tab(EGO_WEAPONS)));
+    public static RegistryObject<Item> WHEELS_INDUSTRY = registerItem("wheels_industry", new WheelsIndustry( 2, -3.1f, new Item.Properties().tab(EGO_WEAPONS)));
+    public static RegistryObject<Item> ZELKOVA_AXE = registerItem("zelkova_axe", new ZelkovaaxeItem( 2, -2.8f, new Item.Properties().tab(EGO_WEAPONS)));
+    public static RegistryObject<Item> ZELKOVA_MACE = registerItem("zelkova_mace", new ZelkovamaceItem( 2, -2.9f, new Item.Properties().tab(EGO_WEAPONS)));
 
-    public static RegistryObject<Item> SOLEMN_LAMENT_WHITE = registerItem("solemn_lament_living", new SolemnLament( 5, -2.3f, new Item.Properties().tab(ItemGroup.TAB_COMBAT), false));
-    public static RegistryObject<Item> SOLEMN_LAMENT_BLACK = registerItem("solemn_lament_departed", new SolemnLament( 5, -2.3f, new Item.Properties().tab(ItemGroup.TAB_COMBAT), true));
+    public static RegistryObject<Item> SOLEMN_LAMENT_WHITE = registerItem("solemn_lament_living", new SolemnLament( 5, -2.3f, new Item.Properties().tab(EGO_WEAPONS), false));
+    public static RegistryObject<Item> SOLEMN_LAMENT_BLACK = registerItem("solemn_lament_departed", new SolemnLament( 5, -2.3f, new Item.Properties().tab(EGO_WEAPONS), true));
 
-    public static RegistryObject<Item> DOUBT_SPAWN_EGG = registerItem("doubt_spawn_egg", new ForgeSpawnEggItem(EgoWeaponsEntities.DAWN_OF_GREEN_DOUBT, 16777215, 16777215, new Item.Properties().tab(ItemGroup.TAB_MISC)));
-    public static RegistryObject<Item> NOTHING_THERE_SPAWN_EGG = registerItem("nothing_there_spawn_egg", new ForgeSpawnEggItem(EgoWeaponsEntities.NOTHING_THERE, 16777215, 16777215, new Item.Properties().tab(ItemGroup.TAB_MISC)));
-    public static RegistryObject<Item> CRAVING_BLOODBAG_SPAWN_EGG = registerItem("craving_bloodbag_spawn_egg", new ForgeSpawnEggItem(EgoWeaponsEntities.CRAVING_BLOODBAG, 16777215, 16777215, new Item.Properties().tab(ItemGroup.TAB_MISC)));
+    public static RegistryObject<Item> DOUBT_SPAWN_EGG = registerItem("doubt_spawn_egg", new ForgeSpawnEggItem(EgoWeaponsEntities.DAWN_OF_GREEN_DOUBT, 16777215, 16777215, new Item.Properties().tab(EGO_WEAPONS)));
+    public static RegistryObject<Item> NOTHING_THERE_SPAWN_EGG = registerItem("nothing_there_spawn_egg", new ForgeSpawnEggItem(EgoWeaponsEntities.NOTHING_THERE, 16777215, 16777215, new Item.Properties().tab(EGO_WEAPONS)));
+    public static RegistryObject<Item> CRAVING_BLOODBAG_SPAWN_EGG = registerItem("craving_bloodbag_spawn_egg", new ForgeSpawnEggItem(EgoWeaponsEntities.CRAVING_BLOODBAG, 16777215, 16777215, new Item.Properties().tab(EGO_WEAPONS)));
 
-    public static RegistryObject<Item> SUNSHOWER = registerItem("sunshower", new Sunshower( 2, -2.65f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+    public static RegistryObject<Item> SUNSHOWER = registerItem("sunshower", new Sunshower( 2, -2.65f, new Item.Properties().tab(EGO_WEAPONS)));
 
     public static RegistryObject<Item> SUNSHOWER_CLOAK = registerItem("sunshower_cloak", SunshowerArmor.getArmorForSlot(EquipmentSlotType.CHEST));
     public static RegistryObject<Item> SUNSHOWER_HOOD = registerItem("sunshower_hood", SunshowerArmor.getArmorForSlot(EquipmentSlotType.HEAD));
@@ -104,24 +112,24 @@ public class EgoWeaponsItems {
     public static RegistryObject<Item> OEUFI_HAT = registerItem("oeufi_association_hat", OeufiArmor.getArmorForSlot(EquipmentSlotType.HEAD));
     public static RegistryObject<Item> OEUFI_CHESTPLATE = registerItem("oeufi_association_vest", OeufiArmor.getArmorForSlot(EquipmentSlotType.CHEST));
     public static RegistryObject<Item> OEUFI_LEGGINGS = registerItem("oeufi_association_pants", OeufiArmor.getArmorForSlot(EquipmentSlotType.LEGS));
-    public static RegistryObject<Item> OEUFI_HALBERD = registerItem("oeufi_association_halberd", new OeufiHalberd( 4, -2.6f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+    public static RegistryObject<Item> OEUFI_HALBERD = registerItem("oeufi_association_halberd", new OeufiHalberd( 4, -2.6f, new Item.Properties().tab(EGO_WEAPONS)));
     public static RegistryObject<Item> OEUFI_CONTRACT = registerItem("oeufi_contract", new OeufiContractItem());
 
-    public static RegistryObject<Item> FULLSTOP_REP_PISTOL = registerItem("fullstop_atelier_pistol", new FullstopRepWeapon( 5, -2.3f, new Item.Properties().tab(ItemGroup.TAB_COMBAT), GunCaliber.PISTOL, 9));
-    public static RegistryObject<Item> FULLSTOP_REP_MACHETE = registerItem("fullstop_machete", new FullstopRepWeapon( 5, -2.3f, new Item.Properties().tab(ItemGroup.TAB_COMBAT), GunCaliber.NONE, 0));
+    public static RegistryObject<Item> FULLSTOP_REP_PISTOL = registerItem("fullstop_atelier_pistol", new FullstopRepWeapon( 5, -2.3f, new Item.Properties().tab(EGO_WEAPONS), GunCaliber.PISTOL, 9));
+    public static RegistryObject<Item> FULLSTOP_REP_MACHETE = registerItem("fullstop_machete", new FullstopRepWeapon( 5, -2.3f, new Item.Properties().tab(EGO_WEAPONS), GunCaliber.NONE, 0));
 
     public static RegistryObject<Item> FULLSTOP_EARPIECE = registerItem("fullstop_office_earpiece", FullstopRepArmor.getArmorForSlot(EquipmentSlotType.HEAD));
     public static RegistryObject<Item> FULLSTOP_REP_CLOAK = registerItem("fullstop_office_rep_cloak", FullstopRepArmor.getArmorForSlot(EquipmentSlotType.CHEST));
     public static RegistryObject<Item> FULLSTOP_REP_PANTS = registerItem("fullstop_office_rep_pants", FullstopRepArmor.getArmorForSlot(EquipmentSlotType.LEGS));
 
-    public static RegistryObject<Item> BASIC_LIGHT_BULLET = registerItem("basic_light_bullet", new AmmoItem( new Item.Properties().tab(ItemGroup.TAB_COMBAT), 0, GunCaliber.PISTOL));
-    public static RegistryObject<Item> INC_LIGHT_BULLET = registerItem("incendiary_light_bullet", new AmmoItem( new Item.Properties().tab(ItemGroup.TAB_COMBAT), 1, GunCaliber.PISTOL));
-    public static RegistryObject<Item> MOONST_LIGHT_BULLET = registerItem("moonstone_light_bullet", new AmmoItem( new Item.Properties().tab(ItemGroup.TAB_COMBAT), 2, GunCaliber.PISTOL));
+    public static RegistryObject<Item> BASIC_LIGHT_BULLET = registerItem("basic_light_bullet", new AmmoItem( new Item.Properties().tab(EGO_WEAPONS), 0, GunCaliber.PISTOL));
+    public static RegistryObject<Item> INC_LIGHT_BULLET = registerItem("incendiary_light_bullet", new AmmoItem( new Item.Properties().tab(EGO_WEAPONS), 1, GunCaliber.PISTOL));
+    public static RegistryObject<Item> MOONST_LIGHT_BULLET = registerItem("moonstone_light_bullet", new AmmoItem( new Item.Properties().tab(EGO_WEAPONS), 2, GunCaliber.PISTOL));
 
-    public static RegistryObject<Item> BASIC_RIFLE_BULLET = registerItem("basic_rifle_bullet", new AmmoItem( new Item.Properties().tab(ItemGroup.TAB_COMBAT), 3, GunCaliber.SNIPER));
-    public static RegistryObject<Item> AL_HV_PULVERIZATION_RIFLE_ROUND = registerItem("al_hv_pulverization_rifle_round", new AmmoItem( new Item.Properties().tab(ItemGroup.TAB_COMBAT), 4, GunCaliber.SNIPER));
+    public static RegistryObject<Item> BASIC_RIFLE_BULLET = registerItem("basic_rifle_bullet", new AmmoItem( new Item.Properties().tab(EGO_WEAPONS), 3, GunCaliber.SNIPER));
+    public static RegistryObject<Item> AL_HV_PULVERIZATION_RIFLE_ROUND = registerItem("al_hv_pulverization_rifle_round", new AmmoItem( new Item.Properties().tab(EGO_WEAPONS), 4, GunCaliber.SNIPER));
 
-    public static RegistryObject<Item> FULLSTOP_SNIPER_RAILGUN = registerItem("fullstop_office_railgun", new FullstopSniperWeapon( 6, -2.25f, new Item.Properties().tab(ItemGroup.TAB_COMBAT), GunCaliber.SNIPER, 8));
+    public static RegistryObject<Item> FULLSTOP_SNIPER_RAILGUN = registerItem("fullstop_office_railgun", new FullstopSniperWeapon( 6, -2.25f, new Item.Properties().tab(EGO_WEAPONS), GunCaliber.SNIPER, 8));
     public static RegistryObject<Item> FULLSTOP_SNIPER_SUITCASE = registerItem("fullstop_suitcase", new GenericCosmeticItem());
 
     public static RegistryObject<Item> FULLSTOP_SNIPER_SUIT = registerItem("fullstop_office_sniper_suit", FullstopSniperArmor.getArmorForSlot(EquipmentSlotType.CHEST));
@@ -129,36 +137,36 @@ public class EgoWeaponsItems {
 
     public static RegistryObject<Item> LIU_SOUTH_6_CHESTPLATE = registerItem("liu_south_6_chestplate", LiuSection6Armor.getArmorForSlot(EquipmentSlotType.CHEST));
     public static RegistryObject<Item> LIU_SOUTH_6_LEGGINGS = registerItem("liu_south_6_leggings", LiuSection6Armor.getArmorForSlot(EquipmentSlotType.LEGS));
-    public static RegistryObject<Item> LIU_FIRE_GAUNTLET = registerItem("liu_flame_gauntlet", new LiuFireGauntlet(2, -1.7f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+    public static RegistryObject<Item> LIU_FIRE_GAUNTLET = registerItem("liu_flame_gauntlet", new LiuFireGauntlet(2, -1.7f, new Item.Properties().tab(EGO_WEAPONS)));
 
     public static RegistryObject<Item> FIREFIST_MASK = registerItem("firefist_mask", FirefistArmor.getArmorForSlot(EquipmentSlotType.HEAD));
     public static RegistryObject<Item> FIREFIST_SUIT = registerItem("firefist_suit", FirefistArmor.getArmorForSlot(EquipmentSlotType.CHEST));
     public static RegistryObject<Item> FIREFIST_LEGGINGS = registerItem("firefist_pants", FirefistArmor.getArmorForSlot(EquipmentSlotType.LEGS));
-    public static RegistryObject<Item> FIREFIST_GAUNTLET = registerItem("firefist_gauntlet", new FirefistGauntlet(5, -1.5f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+    public static RegistryObject<Item> FIREFIST_GAUNTLET = registerItem("firefist_gauntlet", new FirefistGauntlet(5, -1.5f, new Item.Properties().tab(EGO_WEAPONS)));
 
-    public static RegistryObject<Item> STIGMA_WORKSHOP_SWORD = registerItem("stigma_workshop_sword", new StigmaWorkshopSword(3, -1.8f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+    public static RegistryObject<Item> STIGMA_WORKSHOP_SWORD = registerItem("stigma_workshop_sword", new StigmaWorkshopSword(3, -1.8f, new Item.Properties().tab(EGO_WEAPONS)));
     public static RegistryObject<Item> STIGMA_WORKSHOP_SWORD_SHEATH = registerItem("stigma_workshop_sword_sheath", new GenericCosmeticItem());
     public static RegistryObject<Item> STIGMA_WORKSHOP_GLASSES = registerItem("stigma_workshop_glasses", StigmaWorkshopSuit.getArmorForSlot(EquipmentSlotType.HEAD));
     public static RegistryObject<Item> STIGMA_WORKSHOP_SUIT = registerItem("stigma_workshop_suit", StigmaWorkshopSuit.getArmorForSlot(EquipmentSlotType.CHEST));
     public static RegistryObject<Item> STIGMA_WORKSHOP_PANTS = registerItem("stigma_workshop_pants", StigmaWorkshopSuit.getArmorForSlot(EquipmentSlotType.LEGS));
 
-    public static RegistryObject<Item> HEISHOU_MAO_SWORD = registerItem("heishou_mao_sword", new HeishouMaoSword(5, -1.5f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+    public static RegistryObject<Item> HEISHOU_MAO_SWORD = registerItem("heishou_mao_sword", new HeishouMaoSword(5, -1.5f, new Item.Properties().tab(EGO_WEAPONS)));
 
     public static RegistryObject<Item> HEISHOU_MAO_HAT = registerItem("heishou_mao_bamboo_hat", HeishouMaoRobe.getArmorForSlot(EquipmentSlotType.HEAD));
     public static RegistryObject<Item> HEISHOU_MAO_ROBE = registerItem("heishou_mao_robe", HeishouMaoRobe.getArmorForSlot(EquipmentSlotType.CHEST));
     public static RegistryObject<Item> HEISHOU_MAO_PANTS = registerItem("heishou_mao_pants", HeishouMaoRobe.getArmorForSlot(EquipmentSlotType.LEGS));
 
-    public static RegistryObject<Item> RAT_SHANK = registerItem("rat_shank", new RatKnife(0, -1.35f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+    public static RegistryObject<Item> RAT_SHANK = registerItem("rat_shank", new RatKnife(0, -1.35f, new Item.Properties().tab(EGO_WEAPONS)));
     public static RegistryObject<Item> RAT_OUTFIT = registerItem("rat_outfit", RatJacket.getArmorForSlot(EquipmentSlotType.CHEST));
     public static RegistryObject<Item> RAT_PANTS = registerItem("rat_pants", RatJacket.getArmorForSlot(EquipmentSlotType.LEGS));
 
-    public static RegistryObject<Item> RAT_PIPE = registerItem("rat_pipe", new RatPipe(1, -1.8f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+    public static RegistryObject<Item> RAT_PIPE = registerItem("rat_pipe", new RatPipe(1, -1.8f, new Item.Properties().tab(EGO_WEAPONS)));
 
     public static RegistryObject<Item> BLUNT_RAT_OUTFIT = registerItem("rat_blunt_outfit", RatBluntJacket.getArmorForSlot(EquipmentSlotType.CHEST));
     public static RegistryObject<Item> BLUNT_RAT_PANTS = registerItem("rat_blunt_pants", RatBluntJacket.getArmorForSlot(EquipmentSlotType.LEGS));
     public static RegistryObject<Item> BLUNT_RAT_HOOD = registerItem("rat_blunt_hood", RatBluntJacket.getArmorForSlot(EquipmentSlotType.HEAD));
 
-    public static RegistryObject<Item> JUSTITIA_SWORD = registerItem("justitia", new JustitiaSword(2, -1.4f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+    public static RegistryObject<Item> JUSTITIA_SWORD = registerItem("justitia", new JustitiaSword(2, -1.4f, new Item.Properties().tab(EGO_WEAPONS)));
 
     public static RegistryObject<Item> JUSTITIA_CLOAK = registerItem("justitia_cloak", JustitiaCloak.getArmorForSlot(EquipmentSlotType.CHEST));
     public static RegistryObject<Item> JUSTITIA_BLINDFOLD = registerItem("justitia_blindfold", JustitiaCloak.getArmorForSlot(EquipmentSlotType.HEAD));

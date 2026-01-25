@@ -3,6 +3,7 @@ package net.m3tte.ego_weapons.item.redmist;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
 import net.m3tte.ego_weapons.EgoWeaponsModElements;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
@@ -106,7 +107,7 @@ public class RedMistJacket extends GenericEgoWeaponsArmor {
 	public RedMistJacket(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity) {
 		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
 	}
-	static Item chest = new RedMistJacket(armormaterial, EquipmentSlotType.CHEST, new Item.Properties().tab(ItemGroup.TAB_COMBAT), 0.6f, 0.6f, 1.2f ,1.3f, 1f, 0.6f, 1.4f, 6, 0) {
+	static Item chest = new RedMistJacket(armormaterial, EquipmentSlotType.CHEST, new Item.Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 0.6f, 0.6f, 1.2f ,1.3f, 1f, 0.6f, 1.4f, 6, 0) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -166,7 +167,7 @@ public class RedMistJacket extends GenericEgoWeaponsArmor {
 			list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
 		}
 	};
-	static Item cig = new RedMistJacket(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Item.Properties().tab(ItemGroup.TAB_COMBAT)) {
+	static Item cig = new RedMistJacket(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Item.Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS)) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {

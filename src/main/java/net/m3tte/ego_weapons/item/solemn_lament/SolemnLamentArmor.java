@@ -3,6 +3,7 @@ package net.m3tte.ego_weapons.item.solemn_lament;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoWeaponsArmor;
@@ -97,7 +98,7 @@ public class SolemnLamentArmor extends GenericEgoWeaponsArmor {
 			case HEAD: return butterfly;
 		}
 	}
-	static Item chest = new SolemnLamentArmor(solemnLamentArmor, EquipmentSlotType.CHEST, new Properties().tab(ItemGroup.TAB_COMBAT), 1.3f, 0.6f, 0.6f ,1.5f, 1f, 1.3f, 0.7f, 0, 4) {
+	static Item chest = new SolemnLamentArmor(solemnLamentArmor, EquipmentSlotType.CHEST, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 1.3f, 0.6f, 0.6f ,1.5f, 1f, 1.3f, 0.7f, 0, 4) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -145,7 +146,7 @@ public class SolemnLamentArmor extends GenericEgoWeaponsArmor {
 		}
 
 	};
-	static Item butterfly = new SolemnLamentArmor(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Properties().tab(ItemGroup.TAB_COMBAT)) {
+	static Item butterfly = new SolemnLamentArmor(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS)) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {

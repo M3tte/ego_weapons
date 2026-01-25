@@ -3,6 +3,7 @@ package net.m3tte.ego_weapons.item.heishou_mao;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.item.magic_bullet.MagicBulletArmor;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
@@ -109,7 +110,7 @@ public class HeishouMaoRobe extends GenericEgoWeaponsArmor {
 		}
 	}
 
-	static Item mask = new HeishouMaoRobe(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Properties().tab(ItemGroup.TAB_COMBAT)) {
+	static Item mask = new HeishouMaoRobe(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS)) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -132,7 +133,7 @@ public class HeishouMaoRobe extends GenericEgoWeaponsArmor {
 			return 0;
 		}
 	};
-	static Item chest = new HeishouMaoRobe(firefistArmor, EquipmentSlotType.CHEST, new Properties().tab(ItemGroup.TAB_COMBAT), 1.2f, 1.2f, 0.8f ,0.8f, 0.7f, 1f, 1.3f, 2, 0) {
+	static Item chest = new HeishouMaoRobe(firefistArmor, EquipmentSlotType.CHEST, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 1.2f, 1.2f, 0.8f ,0.8f, 0.7f, 1f, 1.3f, 2, 0) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -189,7 +190,7 @@ public class HeishouMaoRobe extends GenericEgoWeaponsArmor {
 
 	};
 
-	static Item pants = new HeishouMaoRobe(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.LEGS, new Properties().tab(ItemGroup.TAB_COMBAT)) {
+	static Item pants = new HeishouMaoRobe(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.LEGS, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS)) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {

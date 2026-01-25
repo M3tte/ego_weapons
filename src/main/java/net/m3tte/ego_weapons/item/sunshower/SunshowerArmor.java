@@ -4,6 +4,7 @@ package net.m3tte.ego_weapons.item.sunshower;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.EgoWeaponsAttributes;
+import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
@@ -115,7 +116,7 @@ public class SunshowerArmor extends GenericEgoWeaponsArmor {
 		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
 	}
 
-	static Item head = new SunshowerArmor(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Properties().tab(ItemGroup.TAB_COMBAT)) {
+	static Item head = new SunshowerArmor(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS)) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -149,7 +150,7 @@ public class SunshowerArmor extends GenericEgoWeaponsArmor {
 		return dmgMult;
 	}
 
-	static Item chest = new SunshowerArmor(armormaterial, EquipmentSlotType.CHEST, new Properties().tab(ItemGroup.TAB_COMBAT), 1f, 0.7f, 1.2f ,1.3f, 0.7f, 1f, 1.3f, 5, 0) {
+	static Item chest = new SunshowerArmor(armormaterial, EquipmentSlotType.CHEST, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 1f, 0.7f, 1.2f ,1.3f, 0.7f, 1f, 1.3f, 5, 0) {
 
 
 
