@@ -58,7 +58,7 @@ public class SolemnLament extends EgoWeaponsWeapon {
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
-		list.add(new StringTextComponent("It is merely that butterflies, both living and dead, bloom from where the gun points.").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+		list.add(new TranslationTextComponent("desc.ego_weapons.solemn_lament.desc"));
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -85,7 +85,7 @@ public class SolemnLament extends EgoWeaponsWeapon {
 				if (EgoWeaponsKeybinds.isHoldingShift())
 					generateStatusDescription(list, new String[]{"living_departed", "the_living", "the_departed", "sinking", "butterfly"});
 				else {
-					generateDescription(list, "solemn_lament", "ability", 13);
+					generateDescription(list, "solemn_lament", "ability", 13, true);
 					list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 					generateDescription(list, "solemn_lament", "ability2", 2);
 				}

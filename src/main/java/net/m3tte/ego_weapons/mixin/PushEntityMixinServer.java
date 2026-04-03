@@ -26,7 +26,7 @@ public abstract class PushEntityMixinServer {
             //System.out.println("ISCLIENTSIDE ? "+self.level.isClientSide()+" --ANIM : "+currentanim);
 
             if (currentanim.getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DISABLE_COLLISION).orElse(false)) {
-                self.setDeltaMovement(0,0,0);
+                //self.setDeltaMovement(0,0,0);
                 ci.cancel();
 
             }
@@ -47,8 +47,8 @@ public abstract class PushEntityMixinServer {
 
 
                 if (currentanim.getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DISABLE_COLLISION).orElse(false)) {
-                    self.setDeltaMovement(0,0,0);
-                    otherEntity.setDeltaMovement(0,0,0);
+                    //self.setDeltaMovement(0,0,0);
+                    //otherEntity.setDeltaMovement(0,0,0);
                     ci.cancel();
                 }
             }

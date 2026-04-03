@@ -4,13 +4,19 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import it.unimi.dsi.fastutil.objects.ObjectListIterator;
+import net.m3tte.ego_weapons.client.models.wearable.ArdorBlossomFireModel;
+import net.m3tte.ego_weapons.client.models.wearable.ArdorBlossomWingsModel;
 import net.m3tte.ego_weapons.client.models.wearable.TaggedModel;
+import net.m3tte.ego_weapons.item.ardor_blossom.ArdorBlossomSuit;
+import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.math.vector.Vector3i;
@@ -84,7 +90,7 @@ public class OpenModelBakery extends CustomModelBakery {
 
 
 
-    public static ClientModel bakeBipedCustomWearable(BipedModel<?> model, ResourceLocation item, boolean debuggingMode, ResourceLocation rl, LivingEntity entity) {
+    public static ClientModel bakeBipedCustomWearable(BipedModel<?> model, ResourceLocation item, boolean debuggingMode, ResourceLocation rl, LivingEntity entity, float partialTick) {
         List<OpenModelPartition> boxes = Lists.newArrayList();
         resetRotation(model.head);
         resetRotation(model.hat);
@@ -105,6 +111,56 @@ public class OpenModelBakery extends CustomModelBakery {
                     boxes.add(new OpenModelPartition(HEAD, RIGHT_LEG_CHILD, model.head));
 
 
+                    break;
+                case "ardor_blossom_fire":
+                    boxes.add(new OpenModelPartition(CHEST, CHEST_CHILD, model.body));
+                    boxes.add(new OpenModelPartition(RIGHT_ARM, LEFT_LEG_CHILD, model.rightArm));
+                    boxes.add(new OpenModelPartition(LEFT_ARM, RIGHT_LEG_CHILD, model.leftArm));
+                    break;
+
+                case "ardor_blossom_wings":
+
+                    float time = (entity.tickCount + partialTick);
+
+                    if (model instanceof ArdorBlossomWingsModel<?>) {
+                        ArdorBlossomWingsModel<?> ardorModel = (ArdorBlossomWingsModel<?>) model;
+
+                        double sourceRotation = (0.7 + 0.2F * Math.sin(time / 10));
+
+                        CompoundNBT data = ArdorBlossomSuit.getWingMetadata(entity);
+
+                        int targetTime = data.getInt("targetTime");
+                        int triggerTimePre = data.getInt("triggerTimePre");
+                        int triggerTimePost = data.getInt("triggerTimePost");
+                        float triggerRotation = data.getFloat("targetRotation");
+                        float overrideStartRot = data.getFloat("overrideStartRot");
+
+
+
+                       if ((time >= targetTime-triggerTimePre) && (time < targetTime+triggerTimePost)) {
+                            double ctxTime = time - targetTime;
+
+                            double progress = ctxTime >= 0 ? ctxTime / triggerTimePost : ctxTime / triggerTimePre;
+                            progress = Math.min(Math.max(progress, -1),1) * Math.PI * 0.5f;
+                            double completion = Math.cos(progress);
+
+                            if (progress <= 0 && overrideStartRot >= 0)
+                                sourceRotation = overrideStartRot;
+
+
+                            sourceRotation = MathHelper.lerp(completion, sourceRotation, triggerRotation);
+
+
+                        }
+
+
+                        ardorModel.setRotationAngle(ardorModel.BodyLayer_r2, 0.0F, (float) sourceRotation, 0.0F);
+                        ardorModel.setRotationAngle(ardorModel.BodyLayer_r1, 0.0F, (float) sourceRotation * - 1, 0.0F);
+                    }
+
+
+
+                    boxes.add(new OpenModelPartition(CHEST, CHEST_CHILD, model.body));
                     break;
             }
         }

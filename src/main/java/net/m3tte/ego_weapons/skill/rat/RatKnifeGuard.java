@@ -43,6 +43,7 @@ import javax.annotation.Nullable;
 import java.util.function.BiFunction;
 
 import static net.m3tte.ego_weapons.skill.GenericActiveGuard.canParryHeavy;
+import static net.m3tte.ego_weapons.skill.NonSpamGuardSkill.handleKnockback;
 import static yesman.epicfight.world.entity.eventlistener.PlayerEventListener.EventType;
 
 public class RatKnifeGuard extends EnergizingGuardSkill {
@@ -121,12 +122,8 @@ public class RatKnifeGuard extends EnergizingGuardSkill {
 
 
 
-            if (damageSource.getEntity() instanceof LivingEntity) {
-                knockback += EnchantmentHelper.getKnockbackBonus((LivingEntity)damageSource.getEntity()) * 0.1F;
-            }
+            handleKnockback(event, knockback, successParrying, 0.2f, 0.2f);
 
-
-            event.getPlayerPatch().knockBackEntity(damageSource.getEntity().position(), knockback);
 
             float stamina = event.getPlayerPatch().getStamina() - penalty * impact;
 

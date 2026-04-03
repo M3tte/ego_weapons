@@ -4,9 +4,13 @@ package net.m3tte.ego_weapons.item.stigma_workshop;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
+import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.item.magic_bullet.MagicBulletArmor;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
+import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoWeaponsArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
@@ -20,6 +24,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
@@ -31,6 +36,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.lwjgl.system.CallbackI;
+import yesman.epicfight.api.animation.types.DynamicAnimation;
+import yesman.epicfight.world.capabilities.EpicFightCapabilities;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 import java.util.List;
 
@@ -90,6 +98,25 @@ public class StigmaWorkshopSuit extends GenericEgoWeaponsArmor {
 		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
 
 
+	}
+
+	public static float modifyDamageAmount(LivingEntity target, LivingEntity source, float dmgMult, DamageSource damageSource) {
+
+		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) source.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+
+
+		int targetPotency = EgoWeaponsEffects.BURN.get().getPotency(target);
+		int selfPotency = EgoWeaponsEffects.BURN.get().getPotency(source);
+
+		if (targetPotency >= 5) {
+			dmgMult += SharedFunctions.incrementBonusDamage(damageSource, 0.15f);
+		}
+
+		if (selfPotency >= 0) {
+			dmgMult += SharedFunctions.incrementBonusDamage(damageSource, Math.min(0.3f, selfPotency * 0.02f));
+		}
+
+		return dmgMult;
 	}
 
 	// Texture Override
@@ -160,13 +187,13 @@ public class StigmaWorkshopSuit extends GenericEgoWeaponsArmor {
 		@Override
 		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.appendHoverText(itemstack, world, list, flag);
-			list.add(new StringTextComponent("A suit manufactured by Stigma Workshop.").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+			list.add(new TranslationTextComponent("desc.ego_weapons.stigma_workshop_armor.desc"));
 			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
-			list.add(new StringTextComponent("= - - - - - - - [Page: " + ((EgoWeaponsKeybinds.getUiPage() % 3) + 1) + "/3] - - - - - - - =").withStyle(TextFormatting.GRAY));
+			list.add(new StringTextComponent("= - - - - - - - [Page: " + ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
 			list.add(new TranslationTextComponent("desc.ego_weapons.risk.5"));
 			list.add(new StringTextComponent(" "));
-			switch (EgoWeaponsKeybinds.getUiPage() % 3) {
+			switch (EgoWeaponsKeybinds.getUiPage() % 4) {
 				case 0:
 					resistanceMods(itemstack, world, list, flag);
 					break;
@@ -178,9 +205,15 @@ public class StigmaWorkshopSuit extends GenericEgoWeaponsArmor {
 					break;
 				case 2:
 					if (EgoWeaponsKeybinds.isHoldingShift())
+						generateStatusDescription(list, new String[]{"offense_up"});
+					else
+						generateDescription(list, "stigma_workshop_armor", "passive2", 2, true);
+					break;
+				case 3:
+					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"offense_up","defense_down","power_up"});
 					else
-						generateDescription(list, "stigma_workshop_armor", "ability", 6);
+						generateDescription(list, "stigma_workshop_armor", "ability", 6, true);
 					break;
 			}
 

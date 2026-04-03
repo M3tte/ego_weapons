@@ -178,7 +178,7 @@ public class SunshowerArmor extends GenericEgoWeaponsArmor {
 		@Override
 		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.appendHoverText(itemstack, world, list, flag);
-			list.add(new StringTextComponent("...Go away. Don't bother poking at me.").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+			list.add(new TranslationTextComponent("desc.ego_weapons.sunshower_cloak.desc"));
 			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -192,19 +192,19 @@ public class SunshowerArmor extends GenericEgoWeaponsArmor {
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"protection", "sinking"});
 					else
-						generateDescription(list, "sunshower_cloak", "passive", 2);
+						generateDescription(list, "sunshower_cloak", "passive", 2, true);
 					break;
 				case 2:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"protection", "offense_up", "offense_down", "rupture"});
 					else
-						generateDescription(list, "sunshower_cloak", "passive2", 9);
+						generateDescription(list, "sunshower_cloak", "passive2", 9, true);
 					break;
 				case 3:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"bleed", "sinking"});
 					else
-						generateDescription(list,"sunshower_cloak", "ability", 4);
+						generateDescription(list,"sunshower_cloak", "ability", 4, true);
 					break;
 			}
 

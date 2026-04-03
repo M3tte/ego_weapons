@@ -1,0 +1,88 @@
+package net.m3tte.ego_weapons.specialParticles.modelParticles;
+
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+import javafx.scene.effect.Glow;
+import net.m3tte.ego_weapons.client.renderer.EgoWeaponsRenderTypes;
+import net.minecraft.client.particle.IAnimatedSprite;
+import net.minecraft.client.particle.IParticleFactory;
+import net.minecraft.client.particle.IParticleRenderType;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.Entity;
+import net.minecraft.particles.BasicParticleType;
+import net.minecraft.util.math.vector.Vector3f;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Random;
+
+
+public class GlowingShockwaveEffect extends RotationAttackParticle {
+
+    private Entity sourceEntity;
+    float targetQuadSize = 0;
+    Random r = new Random();
+
+
+    public GlowingShockwaveEffect(ClientWorld world, double x, double y, double z, double xSpeed, double targetEntityID, double sourceID, IAnimatedSprite spriteProvider) {
+        super(world, x, y, z, xSpeed, targetEntityID, sourceID, spriteProvider);
+        this.flipY = true;
+        this.flipX = true;
+        this.invertX = true;
+        this.invertY = false;
+        this.lifetime = 11 + r.nextInt(4);
+        this.glowRenderType = true;
+
+        this.offset = new Vector3f(0,0.5f,0f);
+        this.targetQuadSize = 5.5f + r.nextFloat();
+        this.quadSize = 0.001f;
+        this.rotation = new Vector3f(r.nextInt(20) - 10, r.nextInt(360), r.nextInt(20) - 10);
+
+
+        this.offsetRate = new Vector3f((float) 0, 0, 0);
+    }
+
+
+    @Override
+    protected Vector3f[] generateVectorArray() {
+
+        return new Vector3f[]{new Vector3f(1.0F, 0.0F, -1.0F), new Vector3f(1.0F, 0F, 1.0F), new Vector3f(-1.0F, 0.0F, 1.0F), new Vector3f(-1.0F, 0.0F, -1.0F)};
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        this.offsetRate.mul(0.9f);
+
+    }
+
+    @Override
+    public void render(IVertexBuilder vertexBuilder, ActiveRenderInfo renderInfo, float tickDelta) {
+        super.render(vertexBuilder, renderInfo, tickDelta);
+
+        this.quadSize = lerpPercentage(this.age + tickDelta, this.targetQuadSize, 1);
+        this.alpha = 1 - lerpPercentage(this.age + tickDelta, 0.6f, 0.1f);
+    }
+
+    private float lerpPercentage(float x, float maxValue, float multiplier) {
+        return maxValue - maxValue / (Math.max(1f, 1 + x * multiplier));
+    }
+
+
+    @OnlyIn(Dist.CLIENT)
+    public static class Provider implements IParticleFactory<BasicParticleType> {
+        private final IAnimatedSprite spriteSet;
+
+        public Provider(IAnimatedSprite spriteSet) {
+            this.spriteSet = spriteSet;
+        }
+
+        @Override
+        public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double targetID, double sourceID) {
+            GlowingShockwaveEffect particle = new GlowingShockwaveEffect(worldIn, x, y, z, 0, targetID, sourceID, spriteSet);
+            return particle;
+        }
+    }
+}

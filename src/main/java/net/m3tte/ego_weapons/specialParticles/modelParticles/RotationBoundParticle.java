@@ -1,9 +1,12 @@
 package net.m3tte.ego_weapons.specialParticles.modelParticles;
 
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.VertexBuilderUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.particles.BasicParticleType;
@@ -134,6 +137,7 @@ public class RotationBoundParticle extends SpriteTexturedParticle {
     @Override
     public void render(IVertexBuilder vertexBuilder, ActiveRenderInfo renderInfo, float tickDelta) {
         this.setSpriteFromAge(spriteProvider);
+
 
         Vector3d vec3d = renderInfo.getPosition();
         float f = (float) (MathHelper.lerp(tickDelta, this.xo, this.x) - vec3d.x());

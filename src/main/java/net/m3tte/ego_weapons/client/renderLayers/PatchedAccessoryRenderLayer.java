@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.mojang.blaze3d.vertex.VertexBuilderUtils;
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.client.renderer.EgoWeaponsRenderTypes;
 import net.m3tte.ego_weapons.client.renderer.modelBakery.OpenModelBakery;
@@ -16,10 +17,12 @@ import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.model.pipeline.VertexBufferConsumer;
 import yesman.epicfight.api.client.model.ClientModel;
 import yesman.epicfight.api.utils.math.OpenMatrix4f;
 import yesman.epicfight.client.ClientEngine;
@@ -31,6 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
+import static net.m3tte.ego_weapons.client.renderer.EgoWeaponsRenderTypes.getFullbrightAnimatedArmor;
 
 @OnlyIn(Dist.CLIENT)
 public class PatchedAccessoryRenderLayer<E extends LivingEntity, T extends LivingEntityPatch<E>, M extends BipedModel<E>> extends PatchedLayer<E, T, M, AccessoryRenderLayer<E, M>> {
@@ -51,40 +55,63 @@ public class PatchedAccessoryRenderLayer<E extends LivingEntity, T extends Livin
 
     ResourceLocation defaultBloodLocation = new ResourceLocation("ego_weapons","blood_stage_1");
 
+    ResourceLocation ardorFireLoc = new ResourceLocation("ego_weapons","ardor_blossom_fire_loc");
+    ResourceLocation ardorWingLoc = new ResourceLocation("ego_weapons","ardor_blossom_wing_loc");
+
     @Override
-    public void renderLayer(T t, E e, AccessoryRenderLayer<E, M> emAccessoryRenderLayer, MatrixStack poseStack, IRenderTypeBuffer buf, int packedLightIn, OpenMatrix4f[] poses, float netYawHead, float pitchHead, float partialTicks) {
-        if (e instanceof PlayerEntity) {
+    public void renderLayer(T t, E entity, AccessoryRenderLayer<E, M> emAccessoryRenderLayer, MatrixStack poseStack, IRenderTypeBuffer buf, int packedLightIn, OpenMatrix4f[] poses, float netYawHead, float pitchHead, float partialTicks) {
+        if (entity instanceof PlayerEntity) {
             boolean hasEffect = true;
 
 
-           /* EgoWeaponsModVars.PlayerVariables entityData = e.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
-            int bloodIDX = -1;
+            if (entity instanceof LivingEntity) {
+                if (entity.getItemBySlot(EquipmentSlotType.CHEST).getItem().getRegistryName() != null) {
+                    String equippedItemChest = entity.getItemBySlot(EquipmentSlotType.CHEST).getItem().getRegistryName().getPath();
 
-            if (entityData != null) {
+                    switch (equippedItemChest) {
+                        case "ardor_blossom_suit":
+                            WearableRenderer<?,?,?> fireRenderer = emAccessoryRenderLayer.getArdorFireModel();
+                            WearableRenderer<?,?,?> wingRenderer = emAccessoryRenderLayer.getArdorWingModel();
 
-                if (entityData.injury_threshold > 2.3f) {
-                    bloodIDX = 4;
-                } else if (entityData.injury_threshold > 1.6f) {
-                    bloodIDX = 3;
-                } else if (entityData.injury_threshold > 1.1f) {
-                    bloodIDX = 2;
-                } else if (entityData.injury_threshold > 0.7f) {
-                    bloodIDX = 1;
-                } else if (entityData.injury_threshold > 0.3f) {
-                    bloodIDX = 0;
+                            int burnPotency = EgoWeaponsEffects.BURN.get().getPotency(entity);
+
+                            ResourceLocation fireTexture = this.getWearableTexture(entity, fireRenderer);
+                            ClientModel fireModel = this.getWearableModel(fireRenderer, entity, ardorFireLoc, fireTexture, true, partialTicks);
+                            IVertexBuilder fireVertex = getArmorVertexBuilder(buf, getFullbrightAnimatedArmor(fireTexture));
+
+                            this.renderWearable(poseStack, buf, packedLightIn, hasEffect, fireModel, 1.0F, 1.0F, 1.0F, fireTexture, poses, fireVertex);
+                            if (burnPotency >= 10) {
+                                this.renderWearable(poseStack, buf, packedLightIn, hasEffect, fireModel, 1.0F, 1.0F, 1.0F, fireTexture, poses, buf.getBuffer(EgoWeaponsRenderTypes.getFireGlintDirect()));
+                            }
+
+                            if (entity.hasEffect(EgoWeaponsEffects.EGO_ATTUNEMENT_ARDOR_BLOSSOM.get())) {
+                                ResourceLocation wingTexture = this.getWearableTexture(entity, wingRenderer);
+                                ClientModel wingModel = this.getWearableModel(wingRenderer, entity, ardorWingLoc, wingTexture, true, partialTicks);
+                                IVertexBuilder wingVertex = getArmorVertexBuilder(buf, getFullbrightAnimatedArmor(wingTexture));
+
+
+
+
+                                this.renderWearable(poseStack, buf, packedLightIn, hasEffect, wingModel, 1.0F, 1.0F, 1.0F, wingTexture, poses, wingVertex);
+                                if (burnPotency >= 10) {
+                                    this.renderWearable(poseStack, buf, packedLightIn, hasEffect, wingModel, 1.0F, 1.0F, 1.0F, wingTexture, poses, buf.getBuffer(EgoWeaponsRenderTypes.getFireGlintDirect()));
+                                }
+                            }
+
+
+
+                            break;
+
+                    }
+
                 }
 
-                if (bloodIDX > -1) {
-                    WearableRenderer<?,?,?> renderer = emAccessoryRenderLayer.getBloodOverlayModel();
 
-                    ResourceLocation texture = this.getWearableTexture(e, renderer);
-                    ClientModel model = this.getWearableModel(renderer, e, defaultBloodLocation, texture);
+            }
 
-                    this.renderWearable(poseStack, buf, packedLightIn, hasEffect, model, 1.0F, 1.0F, 1.0F, texture, poses, bloodIDX);
-                }
 
-            }*/
+
 
         }
     }
@@ -96,13 +123,14 @@ public class PatchedAccessoryRenderLayer<E extends LivingEntity, T extends Livin
         this.doNotRenderHelment = doNotRenderHelment;
     }
 
-    private static IVertexBuilder getArmorVertexBuilder(IRenderTypeBuffer buffer, RenderType renderType, int bloodIndex) {
+    public static IVertexBuilder getArmorVertexBuilder(IRenderTypeBuffer buffer, RenderType renderType) {
 
-        return (bloodIndex > -1) ? VertexBuilderUtils.create(buffer.getBuffer(EgoWeaponsRenderTypes.bloodOverlay(bloodIndex)), buffer.getBuffer(renderType)) : buffer.getBuffer(renderType);
+        return buffer.getBuffer(renderType);
+        //return (bloodIndex > -1) ? VertexBuilderUtils.create(buffer.getBuffer(EgoWeaponsRenderTypes.bloodOverlay(bloodIndex)), buffer.getBuffer(renderType)) : buffer.getBuffer(renderType);
     }
-    private void renderWearable(MatrixStack matStack, IRenderTypeBuffer multiBufferSource, int packedLightIn, boolean hasEffect, ClientModel model, float r, float g, float b, ResourceLocation armorTexture, OpenMatrix4f[] poses, int bloodIDX) {
-        IVertexBuilder vertexConsumer = getArmorVertexBuilder(multiBufferSource, EpicFightRenderTypes.animatedArmor(armorTexture, true), bloodIDX);
-        model.drawAnimatedModel(matStack, vertexConsumer, packedLightIn, r, g, b, 1.0F, OverlayTexture.NO_OVERLAY, poses);
+    private void renderWearable(MatrixStack matStack, IRenderTypeBuffer multiBufferSource, int packedLightIn, boolean hasEffect, ClientModel model, float r, float g, float b, ResourceLocation armorTexture, OpenMatrix4f[] poses, IVertexBuilder vertexBuilderIn) {
+
+        model.drawAnimatedModel(matStack, vertexBuilderIn, packedLightIn, r, g, b, 1.0F, OverlayTexture.NO_OVERLAY, poses);
         //model.drawRawModel(matStack, vertexConsumer, packedLightIn, r, g, b, 1.0F, OverlayTexture.NO_OVERLAY);
     }
 
@@ -126,7 +154,7 @@ public class PatchedAccessoryRenderLayer<E extends LivingEntity, T extends Livin
         return renderer.getWearableModel(entity);
     }
 
-    private ClientModel getWearableModel(WearableRenderer<? extends LivingEntity, ? extends BipedModel<? extends LivingEntity>, ? extends BipedModel<? extends LivingEntity>> wearableRenderer, LivingEntity entityliving, ResourceLocation registryName, ResourceLocation rl) {
+    private ClientModel getWearableModel(WearableRenderer<? extends LivingEntity, ? extends BipedModel<? extends LivingEntity>, ? extends BipedModel<? extends LivingEntity>> wearableRenderer, LivingEntity entityliving, ResourceLocation registryName, ResourceLocation rl, boolean forceRender, float partialTicks) {
         boolean debuggingMode = ClientEngine.instance.isArmorModelDebuggingMode();
 
         // Create a searching key, allows saving armor models for things like odmg
@@ -141,15 +169,20 @@ public class PatchedAccessoryRenderLayer<E extends LivingEntity, T extends Livin
         if (ARMOR_MODELS.containsKey(searchingKey) && !debuggingMode) {
             return ARMOR_MODELS.get(searchingKey);
         } else {
-            // HEAVILY Edited, theoretically the resourcemanager cannot even have this resource location as it is not a normal armor piece.
+            // HEAVILY Edited
             BipedModel<?> defaultModel = getDefaultModel(wearableRenderer, entityliving);
 
             // Needs a custom-custom model bakery
-            ClientModel model = OpenModelBakery.bakeBipedCustomWearable((BipedModel<?>)defaultModel, registryName, debuggingMode, rl, entityliving);
+            ClientModel model = OpenModelBakery.bakeBipedCustomWearable((BipedModel<?>)defaultModel, registryName, debuggingMode, rl, entityliving, partialTicks);
 
             // These types of items should always be rendered
-            // None for now, just save them as is.
-            ARMOR_MODELS.put(searchingKey, model);
+
+
+            if (!forceRender) {
+                // None for now, just save them as is.
+                ARMOR_MODELS.put(searchingKey, model);
+
+            }
 
 
             return model;
@@ -157,7 +190,7 @@ public class PatchedAccessoryRenderLayer<E extends LivingEntity, T extends Livin
     }
 
     private ResourceLocation getWearableTexture(E e, WearableRenderer wearableRenderer) {
-        // Simplified, i will pray to god this one works.
+        // Simplified, I will pray to god this one works.
         return wearableRenderer.getWearableTexture(e);
     }
 

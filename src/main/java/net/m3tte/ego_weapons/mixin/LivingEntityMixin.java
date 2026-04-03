@@ -36,12 +36,12 @@ public abstract class LivingEntityMixin {
         self.getAttributes().supplier = new EgoWeaponsAttributeSupplier(self.getAttributes().supplier);
     }
 
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraftforge/common/ForgeHooks;onLivingDamage(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/util/DamageSource;F)F"), method = "actuallyHurt(Lnet/minecraft/util/DamageSource;F)V")
+    /*@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraftforge/common/ForgeHooks;onLivingDamage(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/util/DamageSource;F)F"), method = "actuallyHurt(Lnet/minecraft/util/DamageSource;F)V")
     public void applyStaggerDamage(DamageSource src, float amount, CallbackInfo ci) {
         LivingEntity self = ((LivingEntity) (Object)this);
 
         applyStaggerDamageGeneric(src, amount, ci, self);
-    }
+    }*/
 
     @ModifyVariable(method = "actuallyHurt(Lnet/minecraft/util/DamageSource;F)V", at = @At("HEAD"), ordinal =0, argsOnly = true)
     private DamageSource damageSourceModifier(DamageSource value) {

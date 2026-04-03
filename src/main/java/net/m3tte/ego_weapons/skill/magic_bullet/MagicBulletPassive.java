@@ -4,6 +4,7 @@ import net.m3tte.ego_weapons.gameasset.EgoWeaponsSkills;
 import net.m3tte.ego_weapons.gameasset.movesets.HeishouMaoBranchAnims;
 import net.m3tte.ego_weapons.gameasset.movesets.MagicBulletMovesetAnims;
 import net.m3tte.ego_weapons.skill.GenericSkill;
+import net.minecraft.util.ResourceLocation;
 import yesman.epicfight.gameasset.Skills;
 import yesman.epicfight.skill.Skill;
 import yesman.epicfight.skill.SkillCategories;
@@ -26,8 +27,11 @@ public class MagicBulletPassive extends Skill {
             container.getExecuter().getSkillCapability().skillContainers[GenericSkill.TC_GUARD.universalOrdinal()].setSkill(EgoWeaponsSkills.MAGIC_BULLET_GUARD);
         }
         if (!evade.isEmpty()) {
-            savedEvade = evade.getSkill();
-            evade.setSkill(EgoWeaponsSkills.MAGIC_BULLET_EVADE);
+
+            if (evade.getSkill() != null) {
+                container.getExecuter().getOriginal().getPersistentData().putString("savedDodgeAnimationWeapon", evade.getSkill().getRegistryName().toString());
+                evade.setSkill(EgoWeaponsSkills.MAGIC_BULLET_EVADE);
+            }
         }
     }
     public void onRemoved(SkillContainer container) {
@@ -44,13 +48,12 @@ public class MagicBulletPassive extends Skill {
         SkillContainer dodgeskill = executer.getSkillCapability().skillContainers[SkillCategories.DODGE.universalOrdinal()];
 
         if (dodgeskill.hasSkill(EgoWeaponsSkills.MAGIC_BULLET_EVADE)) {
-            if (savedEvade != null && savedEvade != EgoWeaponsSkills.MAGIC_BULLET_EVADE) {
-                dodgeskill.setSkill(savedEvade);
+            String savedAnim = executer.getOriginal().getPersistentData().getString("savedDodgeAnimationWeapon");
+            if (savedAnim.split(":").length == 2) {
+                dodgeskill.setSkill(EgoWeaponsSkills.REGISTERED_SKILLS_REF.get(new ResourceLocation(savedAnim)));
             } else {
                 dodgeskill.setSkill(Skills.STEP);
             }
-            dodgeskill.getSkill().onInitiate(dodgeskill);
-
         }
     }
 

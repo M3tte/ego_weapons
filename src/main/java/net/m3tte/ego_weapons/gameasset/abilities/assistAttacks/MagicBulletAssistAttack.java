@@ -50,7 +50,9 @@ public class MagicBulletAssistAttack extends ItemAbility {
     public int getBlipCost(PlayerEntity player, PlayerVariables playerVars) {
         int extra = 0;
 
-        return 6;
+        extra = EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(player) / 2;
+        return 4 + extra;
+
     }
 
     @Override
@@ -216,10 +218,10 @@ public class MagicBulletAssistAttack extends ItemAbility {
                 Entity foundEntity = entity.level.getEntity(entityId);
 
                 if (foundEntity != null) {
-                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.MagicBulletAimPacket(entity.getId(), 0f, 0.8f, EgoWeaponsParticles.TARGET_MAGIC_BULLET_CIRCLE_SHORT.get().getRegistryName()));
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.MagicBulletAimPacket(foundEntity.getId(), 0f, 0.8f, EgoWeaponsParticles.TARGET_MAGIC_BULLET_CIRCLE_SHORT.get().getRegistryName()));
 
                     if (ampl >= 3) {
-                        EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.MagicBulletAimPacket(entity.getId(), 0.1f, 0.65f, EgoWeaponsParticles.TARGET_MAGIC_BULLET_CIRCLE_SHORT.get().getRegistryName()));
+                        EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.MagicBulletAimPacket(foundEntity.getId(), 0.1f, 0.65f, EgoWeaponsParticles.TARGET_MAGIC_BULLET_CIRCLE_SHORT.get().getRegistryName()));
                     }
                 }
             }
@@ -334,11 +336,11 @@ public class MagicBulletAssistAttack extends ItemAbility {
                 Entity foundEntity = entity.level.getEntity(entityId);
 
                 if (foundEntity != null) {
-                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.MagicBulletAimPacket(entity.getId(), 0f, 0.8f, EgoWeaponsParticles.TARGET_MAGIC_BULLET_CIRCLE_LONG.get().getRegistryName()));
-                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.MagicBulletAimPacket(entity.getId(), 0.1f, 0.65f, EgoWeaponsParticles.TARGET_MAGIC_BULLET_CIRCLE_LONG.get().getRegistryName()));
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.MagicBulletAimPacket(foundEntity.getId(), 0f, 0.8f, EgoWeaponsParticles.TARGET_MAGIC_BULLET_CIRCLE_LONG.get().getRegistryName()));
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.MagicBulletAimPacket(foundEntity.getId(), 0.1f, 0.65f, EgoWeaponsParticles.TARGET_MAGIC_BULLET_CIRCLE_LONG.get().getRegistryName()));
 
                     if (ampl >= 6) {
-                        EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.MagicBulletAimPacket(entity.getId(), 0.2f, 0.5f, EgoWeaponsParticles.TARGET_MAGIC_BULLET_CIRCLE_LONG.get().getRegistryName()));
+                        EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.MagicBulletAimPacket(foundEntity.getId(), 0.2f, 0.5f, EgoWeaponsParticles.TARGET_MAGIC_BULLET_CIRCLE_LONG.get().getRegistryName()));
                     }
                 }
 

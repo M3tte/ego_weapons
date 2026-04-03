@@ -59,6 +59,321 @@
       }
     ]
   },
+
+  "ardor_blossom.flap": {
+    "category": "player",
+    "subtitle": "ardor_blossom",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/ardor_flap"
+      }
+    ]
+  },
+  "ardor_blossom.flap_burst": {
+    "category": "player",
+    "subtitle": "ardor_blossom",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/ardor_flap_burst"
+      }
+    ]
+  },
+  "ardor_blossom.wing_slash": {
+    "category": "player",
+    "subtitle": "ardor_blossom",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/ardor_wing_slash"
+      }
+    ]
+  },
+  "ardor_blossom.explode": {
+    "category": "player",
+    "subtitle": "ardor_blossom",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/ardor_explode"
+      }
+    ]
+  },
+  "udjat.mirage": {
+    "category": "player",
+    "subtitle": "udjat.mirage",
+    "sounds": [
+      {
+        "name": "ego_weapons:udjat/impact"
+      }
+    ]
+  },
+  "udjat.special_reuse": {
+    "category": "player",
+    "subtitle": "udjat.special_reuse",
+    "sounds": [
+      {
+        "name": "ego_weapons:udjat/special_reuse"
+      }
+    ]
+  },
+  "udjat.command": {
+    "category": "player",
+    "subtitle": "udjat.command",
+    "sounds": [
+      {
+        "name": "ego_weapons:udjat/command"
+      }
+    ]
+  },
+  "udjat.khopesh.auto": {
+    "category": "player",
+    "subtitle": "udjat.khopesh",
+    "sounds": [
+      {
+        "name": "ego_weapons:udjat/auto_1"
+      },
+      {
+        "name": "ego_weapons:udjat/auto_2"
+      },
+      {
+        "name": "ego_weapons:udjat/auto_3"
+      }
+    ]
+  },
+  "udjat.khopesh.parry": {
+    "category": "player",
+    "subtitle": "udjat.khopesh",
+    "sounds": [
+      {
+        "name": "ego_weapons:udjat/parry_1"
+      },
+      {
+        "name": "ego_weapons:udjat/parry_2"
+      },
+      {
+        "name": "ego_weapons:udjat/parry_3"
+      }
+    ]
+  },
+  "udjat.khopesh.innate.hit": {
+    "category": "player",
+    "subtitle": "udjat.khopesh",
+    "sounds": [
+      {
+        "name": "ego_weapons:udjat/innate_hit"
+      }
+    ]
+  },
+  "udjat.khopesh.innate.spin": {
+    "category": "player",
+    "subtitle": "udjat.khopesh",
+    "sounds": [
+      {
+        "name": "ego_weapons:udjat/spin"
+      }
+    ]
+  },
+
+  "ardor_blossom.parry": {
+    "category": "player",
+    "subtitle": "ardor_blossom.parry",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/parry_1"
+      },
+      {
+        "name": "ego_weapons:ardor_blossom/parry_2"
+      },
+      {
+        "name": "ego_weapons:ardor_blossom/parry_3"
+      }
+    ]
+  },
+  "ardor_blossom.special.b.1": {
+    "category": "player",
+    "subtitle": "ardor_blossom.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/special_b_1"
+      }
+    ]
+  },
+  "ardor_blossom.special.b.2": {
+    "category": "player",
+    "subtitle": "ardor_blossom.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/special_b_2"
+      }
+    ]
+  },
+  "ardor_blossom.special.b.3": {
+    "category": "player",
+    "subtitle": "ardor_blossom.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/special_b_3"
+      }
+    ]
+  },
+  "ardor_blossom.special.voice.1.c": {
+    "category": "player",
+    "subtitle": "ardor_blossom.special.voice.1.c",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/voice/special_corr_1"
+      }
+    ]
+  },
+  "ardor_blossom.special.voice.2.c": {
+    "category": "player",
+    "subtitle": "ardor_blossom.special.voice.2.c",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/voice/special_corr_2"
+      }
+    ]
+  },
+  "ardor_blossom.special.voice.1.r": {
+    "category": "player",
+    "subtitle": "ardor_blossom.special.voice.1.r",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/voice/rage_special_1"
+      }
+    ]
+  },
+  "ardor_blossom.special.voice.2.r": {
+    "category": "player",
+    "subtitle": "ardor_blossom.special.voice.2.r",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/voice/rage_special_2"
+      }
+    ]
+  },
+  "ardor_blossom.special.voice.1": {
+    "category": "player",
+    "subtitle": "ardor_blossom.special.voice.1",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/voice/special_1_1"
+      },
+      {
+        "name": "ego_weapons:ardor_blossom/voice/special_1_2"
+      }
+    ]
+  },
+  "ardor_blossom.special.voice.2": {
+    "category": "player",
+    "subtitle": "ardor_blossom.special.voice.2",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/voice/special_2_1"
+      },
+      {
+        "name": "ego_weapons:ardor_blossom/voice/special_2_2"
+      }
+    ]
+  },
+  "ardor_blossom.auto.swing": {
+    "category": "player",
+    "subtitle": "ardor_blossom.auto",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/auto_swing_1"
+      }
+    ]
+  },
+  "ardor_blossom.auto.hit": {
+    "category": "player",
+    "subtitle": "ardor_blossom.auto",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/auto_hit_1"
+      }
+    ]
+  },
+  "ardor_blossom.auto.hit_final": {
+    "category": "player",
+    "subtitle": "ardor_blossom.auto",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/auto_hit_final"
+      }
+    ]
+  },
+  "ardor_blossom.special.d.hit.1": {
+    "category": "player",
+    "subtitle": "ardor_blossom.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/special_d_hit_1"
+      }
+    ]
+  },
+  "ardor_blossom.special.d.hit.2": {
+    "category": "player",
+    "subtitle": "ardor_blossom.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/special_d_hit_2"
+      }
+    ]
+  },
+  "ardor_blossom.special.d.swing": {
+    "category": "player",
+    "subtitle": "ardor_blossom.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/special_d_swing"
+      }
+    ]
+  },
+  "ardor_blossom.innate.hit.1": {
+    "category": "player",
+    "subtitle": "ardor_blossom.innate",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/innate_hit_1"
+      }
+    ]
+  },
+  "ardor_blossom.innate.hit.2": {
+    "category": "player",
+    "subtitle": "ardor_blossom.innate",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/innate_hit_2"
+      }
+    ]
+  },
+  "ardor_blossom.innate.hit.3": {
+    "category": "player",
+    "subtitle": "ardor_blossom.innate",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/innate_hit_3"
+      }
+    ]
+  },
+  "ardor_blossom.innate.charge.1": {
+    "category": "player",
+    "subtitle": "ardor_blossom.innate",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/charge"
+      }
+    ]
+  },
+  "ardor_blossom.innate.charge.2": {
+    "category": "player",
+    "subtitle": "ardor_blossom.innate",
+    "sounds": [
+      {
+        "name": "ego_weapons:ardor_blossom/innate_charge"
+      }
+    ]
+  },
+
   "justitia.hit": {
     "category": "player",
     "subtitle": "justitia",

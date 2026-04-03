@@ -34,12 +34,8 @@ public abstract class PushEntityMixin {
         if (entitypatch != null) {
             DynamicAnimation currentanim = self.level.isClientSide() ? entitypatch.getClientAnimator().baseLayer.animationPlayer.getAnimation() : entitypatch.getServerAnimator().animationPlayer.getAnimation();
 
-            //System.out.println("ISCLIENTSIDE ? "+self.level.isClientSide()+" --ANIM : "+currentanim);
-
             if (currentanim.getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DISABLE_COLLISION).orElse(false)) {
-                self.setDeltaMovement(0,0,0);
                 ci.cancel();
-
             }
         }
     }
@@ -58,8 +54,8 @@ public abstract class PushEntityMixin {
 
 
                 if (currentanim.getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DISABLE_COLLISION).orElse(false)) {
-                    self.setDeltaMovement(0,0,0);
-                    otherEntity.setDeltaMovement(0,0,0);
+                    //self.setDeltaMovement(0,0,0);
+                    //otherEntity.setDeltaMovement(0,0,0);
                     ci.cancel();
                 }
             }

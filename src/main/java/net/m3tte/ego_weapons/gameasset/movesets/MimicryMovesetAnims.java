@@ -2,6 +2,7 @@ package net.m3tte.ego_weapons.gameasset.movesets;
 
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
+import net.m3tte.ego_weapons.gameasset.AttackCycleType;
 import net.m3tte.ego_weapons.gameasset.AttackLogicPredicate;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
@@ -186,6 +187,7 @@ public class MimicryMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "kali_dash")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.DASH)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.CLASH_KNOCK, false)
                 .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
@@ -200,6 +202,7 @@ public class MimicryMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "kali_rend")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.DASH)
                 .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
@@ -215,6 +218,7 @@ public class MimicryMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "kali_jump")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.JUMP_CRIT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.CLASH_KNOCK, false)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.KALI_STAB)
@@ -261,6 +265,7 @@ public class MimicryMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.GSH)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.SLASH)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, false)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.6f)
@@ -277,6 +282,7 @@ public class MimicryMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.CLASH_KNOCK, false)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "kali_great_split_vertical")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "mimicry_redmist_innate")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.SLASH)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
@@ -327,6 +333,7 @@ public class MimicryMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "mimicry_hello")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE,true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT_HARD)
@@ -344,6 +351,7 @@ public class MimicryMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.SLASH)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "mimicry_special")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.KALI_HORIZONTAL)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MIMICRY_VERTICAL_HIT)
@@ -359,6 +367,7 @@ public class MimicryMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.SLASH)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.GSH)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "mimicry_special")
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.NOTHING_THERE_HEAVY_SLASH)
@@ -375,6 +384,7 @@ public class MimicryMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "mimicry_dash")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.DASH)
                 .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.KALI_STAB)

@@ -69,11 +69,8 @@ public class FirefistActiveGuard extends NonSpamGuardSkill {
 
                 container.getDataManager().setDataSync(PENALTY, penalty, playerentity);
 
-                if (damageSource.getDirectEntity() instanceof LivingEntity) {
-                    knockback += (float) EnchantmentHelper.getKnockbackBonus((LivingEntity)damageSource.getDirectEntity()) * 0.1F;
-                }
+                handleKnockback(event, knockback, successParrying);
 
-                event.getPlayerPatch().knockBackEntity(damageSource.getDirectEntity().position(), knockback);
                 float stamina = event.getPlayerPatch().getStamina();
                 stamina -= penalty * impact;
                 event.getPlayerPatch().setStamina(stamina);

@@ -23,6 +23,8 @@ import net.minecraftforge.fml.network.PacketDistributor;
 import java.util.Iterator;
 import java.util.Objects;
 
+import static net.m3tte.ego_weapons.EgoWeaponsEffects.TURN_DURATION;
+
 public class TremorEffect extends CountPotencyStatus {
     public TremorEffect() {
         super(EffectType.HARMFUL, "tremor",-16777216);
@@ -81,7 +83,7 @@ public class TremorEffect extends CountPotencyStatus {
 
 
         // Tick tremor every 15 seconds
-        if (entity.tickCount % 300 == 1 && entity.level instanceof ServerWorld) {
+        if (entity.tickCount % TURN_DURATION == 1 && entity.level instanceof ServerWorld) {
             duration -= 20;
 
             shouldUpdate = true;
@@ -125,10 +127,10 @@ public class TremorEffect extends CountPotencyStatus {
         if (potency > 0) {
             StaggerSystem.reduceStagger(entity, potency, true);
         }
-
-        EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.NumberLabelParticle(entity.position().add(entity.getRandom().nextFloat() - 0.5f,1,entity.getRandom().nextFloat() - 0.5f), NumberParticleTypes.TREMOR, potency));
-        EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendShakeMessage(entity.getId(), 2 + (potency / 55f)));
+        // TODO: Check if this things broken and potentially causes crashes?
         if (!entity.level.isClientSide()) {
+            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.NumberLabelParticle(entity.position().add(entity.getRandom().nextFloat() - 0.5f,1,entity.getRandom().nextFloat() - 0.5f), NumberParticleTypes.TREMOR, potency));
+            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendShakeMessage(entity.getId(), 2 + (potency / 55f)));
             entity.level.playSound(null, new BlockPos(entity.getX(), entity.getY(), entity.getZ()),
                     EgoWeaponsSounds.TREMOR_BURST,
                     SoundCategory.NEUTRAL, 1f, (float) 1);

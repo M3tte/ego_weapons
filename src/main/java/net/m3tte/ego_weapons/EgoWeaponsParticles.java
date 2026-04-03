@@ -156,6 +156,10 @@ public class EgoWeaponsParticles {
     public static final RegistryObject<BasicParticleType> STIGMA_WORKSHOP_SWORD_IGNITE = PARTICLES.register("stigma_workshop_ignite", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> STIGMA_WORKSHOP_SWORD_IGNITE_SIDE = PARTICLES.register("stigma_workshop_ignite_side", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> SIMPLE_EMBER = PARTICLES.register("simple_ember", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> UDJAT_SAND = PARTICLES.register("udjat_sand", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> UDJAT_BLUE_SAND = PARTICLES.register("udjat_blue_sand", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> INGOING_EMBER = PARTICLES.register("ingoing_ember", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> OUTGOING_EMBER = PARTICLES.register("outgoing_ember", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> MAO_PARTICLE = PARTICLES.register("mao_particle", () -> new BasicParticleType(true));
 
     public static final RegistryObject<BasicParticleType> STIGMA_WORKSHOP_SLASH_UP = PARTICLES.register("stigma_workshop_slash_up", () -> new BasicParticleType(true));
@@ -182,6 +186,8 @@ public class EgoWeaponsParticles {
 
     public static final RegistryObject<BasicParticleType> HORIZONTAL_SHOCKWAVE = PARTICLES.register("horizontal_shockwave", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> SLASH_SHOCKWAVE = PARTICLES.register("slash_shockwave", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> VERTICAL_SLASH_SHOCKWAVE = PARTICLES.register("vert_slash_shockwave", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> FIRE_SHOCKWAVE = PARTICLES.register("fire_shockwave", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> SOLEMN_LAMENT_SHOCKWAVE = PARTICLES.register("solemn_lament_shockwave", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> MAGIC_BULLET_CIRCLE_SHORT = PARTICLES.register("magic_bullet_circle_short", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> MAGIC_BULLET_CIRCLE_LONG = PARTICLES.register("magic_bullet_circle_long", () -> new BasicParticleType(true));
@@ -189,5 +195,9 @@ public class EgoWeaponsParticles {
 
     public static final RegistryObject<BasicParticleType> TARGET_MAGIC_BULLET_CIRCLE_SHORT = PARTICLES.register("magic_bullet_target_circle_short", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> TARGET_MAGIC_BULLET_CIRCLE_LONG = PARTICLES.register("magic_bullet_target_circle_long", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> ARDOR_BLOSSOM_CHARGE = PARTICLES.register("ardor_blossom_charge", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> ARDOR_BLOSSOM_IMPACT = PARTICLES.register("ardor_blossom_impact", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> UDJAT_KH_STRIKE = PARTICLES.register("udjat_kh_strike", () -> new BasicParticleType(true));
+    public static final RegistryObject<HitParticleType> UDJAT_KH_HIT = PARTICLES.register("udjat_kh_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
 
 }

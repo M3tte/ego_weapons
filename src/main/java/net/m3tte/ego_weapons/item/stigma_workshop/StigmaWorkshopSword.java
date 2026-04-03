@@ -96,7 +96,7 @@ public class StigmaWorkshopSword extends EgoWeaponsWeapon {
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
-		list.add(new StringTextComponent("A sword manufactured by Stigma Workshop").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+		list.add(new TranslationTextComponent("desc.ego_weapons.stigma_workshop_sword.desc"));
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -113,7 +113,7 @@ public class StigmaWorkshopSword extends EgoWeaponsWeapon {
                 if (EgoWeaponsKeybinds.isHoldingShift())
                     generateStatusDescription(list, new String[]{"red", "burn", "branding_blade"});
                 else
-                    generateDescription(list, "stigma_workshop_sword", "ability", 8);
+                    generateDescription(list, "stigma_workshop_sword", "ability", 8, true);
                 break;
 			case 2:
 				if (EgoWeaponsKeybinds.isHoldingShift())
@@ -241,7 +241,7 @@ public class StigmaWorkshopSword extends EgoWeaponsWeapon {
 		switch (weaponIdentifier) {
 			case "stigma_w_s_sp_1":
 			case "stigma_w_s_sp_2":
-				int burnMult = EgoWeaponsEffects.BURN.get().getPotency(target) / 7;
+				int burnMult = EgoWeaponsEffects.BURN.get().getPotency(target) / 4;
 
 				if (burnMult > 0) {
 					SharedFunctions.incrementBonusDamage(damageSource, Math.min(0.2f, burnMult * 0.1f));

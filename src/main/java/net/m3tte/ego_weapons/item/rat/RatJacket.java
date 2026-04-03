@@ -165,8 +165,8 @@ public class RatJacket extends GenericEgoWeaponsArmor {
 		if (missingHealthOnSource >= 15) {
 			int stacks = missingHealthOnSource / 15;
 
-			SharedFunctions.incrementBonusDamage(damageSource, stacks*0.05f);
-			dmgMult += stacks*0.05f;
+
+			dmgMult += SharedFunctions.incrementBonusDamage(damageSource, stacks*0.1f);
 
 		}
 

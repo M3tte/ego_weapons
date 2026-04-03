@@ -1,6 +1,7 @@
 package net.m3tte.ego_weapons.gameasset.movesets;
 
 import net.m3tte.ego_weapons.*;
+import net.m3tte.ego_weapons.gameasset.AttackCycleType;
 import net.m3tte.ego_weapons.gameasset.AttackMoveType;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
@@ -18,6 +19,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.PacketDistributor;
+import yesman.epicfight.api.animation.LivingMotions;
 import yesman.epicfight.api.animation.property.AnimationProperty;
 import yesman.epicfight.api.animation.types.*;
 import yesman.epicfight.api.model.Model;
@@ -137,6 +139,7 @@ public class SolemnLamentMovesetAnims {
 
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "solemn_lament_fire_i_shall_fire")
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_E_HIT)
@@ -152,6 +155,7 @@ public class SolemnLamentMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "solemn_lament_special_a")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.PALE)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.SOLEMN_LAMENT_BASH)
                 .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(2))
@@ -226,6 +230,7 @@ public class SolemnLamentMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "solemn_lament_edash")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.DASH)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_E_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(2))
@@ -240,6 +245,7 @@ public class SolemnLamentMovesetAnims {
         SOLEMN_LAMENT_JUMP_ATTACK = new BasicEgoAttackAnimation(0.08F, 0.05F, 0.45F, 0.6F, 1F, ColliderPreset.FIST, "Leg_L", "biped/solemn_lament/auto_jump", biped)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.JUMP_CRIT)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT_HARD)
                 .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(3))
@@ -445,6 +451,7 @@ public class SolemnLamentMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "solemn_lament_departed")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.DASH)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, false)
                 .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(2))
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.SOLEMN_LAMENT_READY)
@@ -462,6 +469,7 @@ public class SolemnLamentMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.WHITE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "solemn_lament_living")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.DASH)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, false)
                 .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(2))
                 .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1.3f))
@@ -482,6 +490,7 @@ public class SolemnLamentMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.DEFENSIVE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "solemn_lament_dual")
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
@@ -500,7 +509,8 @@ public class SolemnLamentMovesetAnims {
         SOLEMN_LAMENT_INNATE = new EgoAttackAnimation(0.08F, 0.3F, 0.33F, 0.56F, 1.33F,EgoWeaponsCapabilityPresets.LONGER_BLADE, "Tool_R", "biped/solemn_lament/innate", biped)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
-                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.MELEE)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "solemn_lament_special")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "solemn_lament_innate")
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
@@ -724,7 +734,6 @@ public class SolemnLamentMovesetAnims {
         events[0] = StaticAnimation.Event.create(g0, (entitypatch) -> {
 
             LivingEntity entity = entitypatch.getOriginal();
-
             if (!entity.level.isClientSide()) {
                 EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
                 EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));

@@ -2,6 +2,7 @@ package net.m3tte.ego_weapons.gameasset.movesets;
 
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
+import net.m3tte.ego_weapons.gameasset.AttackCycleType;
 import net.m3tte.ego_weapons.gameasset.AttackMoveType;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
@@ -114,6 +115,7 @@ public class FullstopOfficeRepMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "fs_rep_dash")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.DASH)
                 .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
@@ -129,6 +131,7 @@ public class FullstopOfficeRepMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "fs_rep_jump")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.JUMP_CRIT)
                 .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
@@ -256,6 +259,7 @@ public class FullstopOfficeRepMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
                 .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
@@ -304,6 +308,7 @@ public class FullstopOfficeRepMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "fullstop_special_g")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(EgoWeaponsAttackProperty.CONSUMES_AMMO, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "fullstop_rep_special")
@@ -341,6 +346,7 @@ public class FullstopOfficeRepMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.DISABLE_COLLISION, true)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "fullstop_special_b")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.SLASH)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "fullstop_rep_special")
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.MELEE)

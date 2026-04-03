@@ -35,6 +35,8 @@ public enum EgoWeaponsCategories implements WeaponCategory {
     JUSTITIA,
     RAT_KNIFE,
     RAT_PIPE,
+    ARDOR_BLOSSOM_BLUNT,
+    UDJAT_KHOPESH,
     MAGIC_BULLET;
 
     final int id;

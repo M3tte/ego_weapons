@@ -264,4 +264,46 @@ public class EgoWeaponsSounds {
     public static SoundEvent RAT_PIPE_HEAVY_HIT = generateSoundEvent(locationFrom("pipe_rat.heavy_hit"));
     public static SoundEvent RAT_PIPE_SWING = generateSoundEvent(locationFrom("pipe_rat.swing"));
 
+
+    public static SoundEvent ARDOR_BLOSSOM_SWING = generateSoundEvent(locationFrom("ardor_blossom.auto.swing"));
+    public static SoundEvent ARDOR_BLOSSOM_HIT = generateSoundEvent(locationFrom("ardor_blossom.auto.hit"));
+    public static SoundEvent ARDOR_BLOSSOM_HIT_FINAL = generateSoundEvent(locationFrom("ardor_blossom.auto.hit_final"));
+    public static SoundEvent ARDOR_BLOSSOM_INNATE_HIT_1 = generateSoundEvent(locationFrom("ardor_blossom.innate.hit.1"));
+    public static SoundEvent ARDOR_BLOSSOM_INNATE_HIT_2 = generateSoundEvent(locationFrom("ardor_blossom.innate.hit.2"));
+    public static SoundEvent ARDOR_BLOSSOM_INNATE_HIT_3 = generateSoundEvent(locationFrom("ardor_blossom.innate.hit.3"));
+    public static SoundEvent ARDOR_BLOSSOM_INNATE_CHARGE_1 = generateSoundEvent(locationFrom("ardor_blossom.innate.charge.1"));
+    public static SoundEvent ARDOR_BLOSSOM_INNATE_CHARGE_2 = generateSoundEvent(locationFrom("ardor_blossom.innate.charge.2"));
+
+    public static SoundEvent ARDOR_BLOSSOM_SPECIAL_D_HIT_1 = generateSoundEvent(locationFrom("ardor_blossom.special.d.hit.1"));
+    public static SoundEvent ARDOR_BLOSSOM_SPECIAL_D_HIT_2 = generateSoundEvent(locationFrom("ardor_blossom.special.d.hit.2"));
+    public static SoundEvent ARDOR_BLOSSOM_SPECIAL_D_SWING = generateSoundEvent(locationFrom("ardor_blossom.special.d.swing"));
+
+    public static SoundEvent ARDOR_BLOSSOM_PARRY = generateSoundEvent(locationFrom("ardor_blossom.parry"));
+
+    public static SoundEvent ARDOR_BLOSSOM_SPECIAL_VOICE_1 = generateSoundEvent(locationFrom("ardor_blossom.special.voice.1"));
+    public static SoundEvent ARDOR_BLOSSOM_SPECIAL_VOICE_2 = generateSoundEvent(locationFrom("ardor_blossom.special.voice.2"));
+    public static SoundEvent ARDOR_BLOSSOM_SPECIAL_RAGE_1 = generateSoundEvent(locationFrom("ardor_blossom.special.voice.1.r"));
+    public static SoundEvent ARDOR_BLOSSOM_SPECIAL_RAGE_2 = generateSoundEvent(locationFrom("ardor_blossom.special.voice.2.r"));
+    public static SoundEvent ARDOR_BLOSSOM_SPECIAL_SWING_1 = generateSoundEvent(locationFrom("ardor_blossom.special.b.1"));
+    public static SoundEvent ARDOR_BLOSSOM_SPECIAL_SWING_2 = generateSoundEvent(locationFrom("ardor_blossom.special.b.2"));
+    public static SoundEvent ARDOR_BLOSSOM_SPECIAL_SWING_3 = generateSoundEvent(locationFrom("ardor_blossom.special.b.3"));
+    public static SoundEvent ARDOR_BLOSSOM_SPECIAL_CORROSION_1 = generateSoundEvent(locationFrom("ardor_blossom.special.voice.1.c"));
+    public static SoundEvent ARDOR_BLOSSOM_SPECIAL_CORROSION_2 = generateSoundEvent(locationFrom("ardor_blossom.special.voice.2.c"));
+
+    public static SoundEvent ARDOR_BLOSSOM_FLAP = generateSoundEvent(locationFrom("ardor_blossom.flap"));
+    public static SoundEvent ARDOR_BLOSSOM_FLAP_BURST = generateSoundEvent(locationFrom("ardor_blossom.flap_burst"));
+    public static SoundEvent ARDOR_BLOSSOM_WING_SLASH = generateSoundEvent(locationFrom("ardor_blossom.wing_slash"));
+    public static SoundEvent ARDOR_BLOSSOM_EXPLODE = generateSoundEvent(locationFrom("ardor_blossom.explode"));
+    public static SoundEvent UDJAT_KHOPESH_AUTO = generateSoundEvent(locationFrom("udjat.khopesh.auto"));
+
+    public static SoundEvent UDJAT_KHOPESH_INNATE_HIT = generateSoundEvent(locationFrom("udjat.khopesh.innate.hit"));
+    public static SoundEvent UDJAT_KHOPESH_INNATE_SPIN = generateSoundEvent(locationFrom("udjat.khopesh.innate.spin"));
+    public static SoundEvent UDJAT_KHOPESH_PARRY = generateSoundEvent(locationFrom("udjat.khopesh.parry"));
+    public static SoundEvent UDJAT_COMMAND = generateSoundEvent(locationFrom("udjat.command"));
+    public static SoundEvent UDJAT_MIRAGE = generateSoundEvent(locationFrom("udjat.mirage"));
+    public static SoundEvent UDJAT_SPECIAL_REUSE = generateSoundEvent(locationFrom("udjat.special_reuse"));
+
+    // udjat.khopesh.innate.hit
+    // udjat.khopesh.auto
+
 }

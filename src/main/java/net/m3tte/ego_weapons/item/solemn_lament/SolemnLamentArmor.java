@@ -120,22 +120,28 @@ public class SolemnLamentArmor extends GenericEgoWeaponsArmor {
 		@Override
 		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.appendHoverText(itemstack, world, list, flag);
-			list.add(new StringTextComponent("Could the small wings... of a butterfly have... fluttered away from this... place...?").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+			list.add(new TranslationTextComponent("desc.ego_weapons.solemn_lament_armor.desc"));
 			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 			// Temporary Ineffeciency, Will be resolved once damage efficiencies exist
-			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 2) + 1) + "/2] - - - - - - - =").withStyle(TextFormatting.GRAY));
+			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 3) + 1) + "/3] - - - - - - - =").withStyle(TextFormatting.GRAY));
 			list.add(new TranslationTextComponent("desc.ego_weapons.risk.waw"));
 			list.add(new StringTextComponent(" "));
-			switch (EgoWeaponsKeybinds.getUiPage() % 2) {
+			switch (EgoWeaponsKeybinds.getUiPage() % 3) {
 				case 0:
 					resistanceMods(itemstack, world, list, flag);
 					break;
 				case 1:
 					if (EgoWeaponsKeybinds.isHoldingShift())
+						generateStatusDescription(list, new String[]{"pale", "offense_up"});
+					else // TODO: ACTUALLY COMPLETE THIS PASSIVE
+						generateDescription(list, "solemn_lament_armor", "passive", 2, true);
+					break;
+				case 2:
+					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"eternal_rest","living_departed", "sinking"});
 					else
-						generateDescription(list,"solemn_lament_armor", "ability", 6);
+						generateDescription(list,"solemn_lament_armor", "ability", 6, true);
 					break;
 			}
 

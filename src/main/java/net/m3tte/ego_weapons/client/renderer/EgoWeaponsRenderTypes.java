@@ -1,17 +1,17 @@
 package net.m3tte.ego_weapons.client.renderer;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.particle.IParticleRenderType;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.RenderState;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import yesman.epicfight.client.renderer.EpicFightRenderTypes;
 
 import java.util.function.Function;
 
@@ -55,31 +55,42 @@ public class EgoWeaponsRenderTypes extends RenderType {
     public static final ResourceLocation BLOOD_3_LOC = new ResourceLocation("ego_weapons","textures/screens/shaders/blood_stage_3.png");
     public static final ResourceLocation BLOOD_4_LOC = new ResourceLocation("ego_weapons","textures/screens/shaders/blood_stage_4.png");
 
-    protected static final RenderState.LayerState POLYGON_OFFSET_LAYERING_INV = new RenderState.LayerState("polygon_offset_layering_inv", () -> {
-        RenderSystem.polygonOffset(1.0F, 10.0F);
-        RenderSystem.enablePolygonOffset();
-    }, () -> {
-        RenderSystem.polygonOffset(0.0F, 0.0F);
-        RenderSystem.disablePolygonOffset();
-    });
-
+    protected static final RenderState.LayerState VIEW_OFFSET_Z_LAYERING_ALT = new RenderState.LayerState("view_offset_z_layering", () -> {
+        RenderSystem.pushMatrix();
+        RenderSystem.scalef(0.99955586F, 0.99955586F, 0.99955586F);
+    }, RenderSystem::popMatrix);
+    public static final ResourceLocation FIRE_GLINT_LOC = new ResourceLocation("ego_weapons","textures/shaders/fire_glint.png");
+    //private static final RenderType FIRE_ENTITY_GLINT_DIRECT = create("ego_weapons:flame_glint", DefaultVertexFormats.NEW_ENTITY, 7, 256, RenderType.State.builder().setTextureState(new RenderState.TextureState(FIRE_GLINT_LOC, true, false)).setWriteMaskState(COLOR_WRITE).setCullState(NO_CULL).setDepthTestState(EQUAL_DEPTH_TEST).setTransparencyState(GLINT_TRANSPARENCY).setTexturingState(ENTITY_GLINT_TEXTURING).setLayeringState(VIEW_OFFSET_Z_LAYERING).createCompositeState(false));
+    private static final RenderType FIRE_GLINT = create("ego_weapons:fire_glint_fx", DefaultVertexFormats.NEW_ENTITY, 4, 256, false, false, State.builder().setTextureState(new RenderState.TextureState(FIRE_GLINT_LOC, false, false)).setWriteMaskState(COLOR_WRITE).setCullState(NO_CULL).setDepthTestState(EQUAL_DEPTH_TEST).setTransparencyState(GLINT_TRANSPARENCY).setTexturingState(ENTITY_GLINT_TEXTURING).setLayeringState(VIEW_OFFSET_Z_LAYERING_ALT).createCompositeState(false));
     private static final RenderType ENTITY_BLOOD_OVERLAY_0 = create("ego_weapons:ego_entity_blood_fx", DefaultVertexFormats.NEW_ENTITY, 4, 256, RenderType.State.builder().setTextureState(new RenderState.TextureState(BLOOD_0_LOC, false, false)).setDiffuseLightingState(DIFFUSE_LIGHTING).setLightmapState(LIGHTMAP).setCullState(NO_CULL).setDepthTestState(RenderState.EQUAL_DEPTH_TEST).setTransparencyState(RenderState.TRANSLUCENT_TRANSPARENCY).setTexturingState(ENTITY_BLOOD_TEXTURING_ALT).setOutputState(TRANSLUCENT_TARGET).createCompositeState(false));
     private static final RenderType ENTITY_BLOOD_OVERLAY_1 = create("ego_weapons:ego_entity_blood_fx", DefaultVertexFormats.NEW_ENTITY, 4, 256, RenderType.State.builder().setTextureState(new RenderState.TextureState(BLOOD_1_LOC, false, false)).setDiffuseLightingState(DIFFUSE_LIGHTING).setLightmapState(LIGHTMAP).setCullState(NO_CULL).setDepthTestState(RenderState.EQUAL_DEPTH_TEST).setTransparencyState(RenderState.TRANSLUCENT_TRANSPARENCY).setTexturingState(ENTITY_BLOOD_TEXTURING_ALT).setOutputState(TRANSLUCENT_TARGET).createCompositeState(false));
     private static final RenderType ENTITY_BLOOD_OVERLAY_2 = create("ego_weapons:ego_entity_blood_fx", DefaultVertexFormats.NEW_ENTITY, 4, 256, RenderType.State.builder().setTextureState(new RenderState.TextureState(BLOOD_2_LOC, false, false)).setDiffuseLightingState(DIFFUSE_LIGHTING).setLightmapState(LIGHTMAP).setCullState(NO_CULL).setDepthTestState(RenderState.EQUAL_DEPTH_TEST).setTransparencyState(RenderState.TRANSLUCENT_TRANSPARENCY).setTexturingState(ENTITY_BLOOD_TEXTURING_ALT).setOutputState(TRANSLUCENT_TARGET).createCompositeState(false));
     private static final RenderType ENTITY_BLOOD_OVERLAY_3 = create("ego_weapons:ego_entity_blood_fx", DefaultVertexFormats.NEW_ENTITY, 4, 256, RenderType.State.builder().setTextureState(new RenderState.TextureState(BLOOD_3_LOC, false, false)).setDiffuseLightingState(DIFFUSE_LIGHTING).setLightmapState(LIGHTMAP).setCullState(NO_CULL).setDepthTestState(RenderState.EQUAL_DEPTH_TEST).setTransparencyState(RenderState.TRANSLUCENT_TRANSPARENCY).setTexturingState(ENTITY_BLOOD_TEXTURING_ALT).setOutputState(TRANSLUCENT_TARGET).createCompositeState(false));
     private static final RenderType ENTITY_BLOOD_OVERLAY_4 = create("ego_weapons:ego_entity_blood_fx", DefaultVertexFormats.NEW_ENTITY, 4, 256, RenderType.State.builder().setTextureState(new RenderState.TextureState(BLOOD_4_LOC, false, false)).setDiffuseLightingState(DIFFUSE_LIGHTING).setLightmapState(LIGHTMAP).setCullState(NO_CULL).setDepthTestState(RenderState.EQUAL_DEPTH_TEST).setTransparencyState(RenderState.TRANSLUCENT_TRANSPARENCY).setTexturingState(ENTITY_BLOOD_TEXTURING_ALT).setOutputState(TRANSLUCENT_TARGET).createCompositeState(false));
-
     private static final RenderType BLOOD_OVERLAY_0 = create("ego_weapons:ego_blood_fx", DefaultVertexFormats.NEW_ENTITY, 4, 256, false, false, State.builder().setTextureState(new RenderState.TextureState(BLOOD_0_LOC, false, false)).setDiffuseLightingState(DIFFUSE_LIGHTING).setLightmapState(LIGHTMAP).setCullState(NO_CULL).setDepthTestState(EQUAL_DEPTH_TEST).setTransparencyState(RenderState.TRANSLUCENT_TRANSPARENCY).setTexturingState(ENTITY_BLOOD_TEXTURING).setLayeringState(RenderState.VIEW_OFFSET_Z_LAYERING).createCompositeState(false));
     private static final RenderType BLOOD_OVERLAY_1 = create("ego_weapons:ego_blood_fx", DefaultVertexFormats.NEW_ENTITY, 4, 256, false, false, State.builder().setTextureState(new RenderState.TextureState(BLOOD_1_LOC, false, false)).setDiffuseLightingState(DIFFUSE_LIGHTING).setLightmapState(LIGHTMAP).setCullState(NO_CULL).setDepthTestState(EQUAL_DEPTH_TEST).setTransparencyState(RenderState.TRANSLUCENT_TRANSPARENCY).setTexturingState(ENTITY_BLOOD_TEXTURING).setLayeringState(RenderState.VIEW_OFFSET_Z_LAYERING).createCompositeState(false));
     private static final RenderType BLOOD_OVERLAY_2 = create("ego_weapons:ego_blood_fx", DefaultVertexFormats.NEW_ENTITY, 4, 256, false, false, State.builder().setTextureState(new RenderState.TextureState(BLOOD_2_LOC, false, false)).setDiffuseLightingState(DIFFUSE_LIGHTING).setLightmapState(LIGHTMAP).setCullState(NO_CULL).setDepthTestState(EQUAL_DEPTH_TEST).setTransparencyState(RenderState.TRANSLUCENT_TRANSPARENCY).setTexturingState(ENTITY_BLOOD_TEXTURING).setLayeringState(RenderState.VIEW_OFFSET_Z_LAYERING).createCompositeState(false));
     private static final RenderType BLOOD_OVERLAY_3 = create("ego_weapons:ego_blood_fx", DefaultVertexFormats.NEW_ENTITY, 4, 256, false, false, State.builder().setTextureState(new RenderState.TextureState(BLOOD_3_LOC, false, false)).setDiffuseLightingState(DIFFUSE_LIGHTING).setLightmapState(LIGHTMAP).setCullState(NO_CULL).setDepthTestState(EQUAL_DEPTH_TEST).setTransparencyState(RenderState.TRANSLUCENT_TRANSPARENCY).setTexturingState(ENTITY_BLOOD_TEXTURING).setLayeringState(RenderState.VIEW_OFFSET_Z_LAYERING).createCompositeState(false));
     private static final RenderType BLOOD_OVERLAY_4 = create("ego_weapons:ego_blood_fx", DefaultVertexFormats.NEW_ENTITY, 4, 256, false, false, State.builder().setTextureState(new RenderState.TextureState(BLOOD_4_LOC, false, false)).setDiffuseLightingState(DIFFUSE_LIGHTING).setLightmapState(LIGHTMAP).setCullState(NO_CULL).setDepthTestState(EQUAL_DEPTH_TEST).setTransparencyState(RenderState.TRANSLUCENT_TRANSPARENCY).setTexturingState(ENTITY_BLOOD_TEXTURING).setLayeringState(RenderState.VIEW_OFFSET_Z_LAYERING).createCompositeState(false));
 
+    private static final Function<ResourceLocation, RenderType> FULLBRIGHT_ANIMATED_ARMOR = (p_173206_) -> {
+        RenderType.State rendertype$compositestate = State.builder().setTextureState(new RenderState.TextureState(p_173206_, false, false)).setTransparencyState(NO_TRANSPARENCY).setCullState(NO_CULL).setOverlayState(OVERLAY).setLayeringState(VIEW_OFFSET_Z_LAYERING_ALT).setAlphaState(DEFAULT_ALPHA).createCompositeState(true);
+        return create("ego_weapons:fullbright_armor", DefaultVertexFormats.NEW_ENTITY, 4, 256, true, false, rendertype$compositestate);
+    };
+
+
     private static final Function<ResourceLocation, RenderType> RISK_INDICATOR;
 
     private static final Function<ResourceLocation, RenderType> ARMOR_TRANSLUCENT_NO_CULL;
 
 
+    public static RenderType getFullbrightAnimatedArmor(ResourceLocation tex) {
+        return FULLBRIGHT_ANIMATED_ARMOR.apply(tex);
+    }
+
+    public static RenderType getFireGlintDirect() {
+        return FIRE_GLINT;
+    }
     public static RenderType overlayTextures(ResourceLocation locationIn) {
         return RISK_INDICATOR.apply(locationIn);
     }
@@ -120,4 +131,5 @@ public class EgoWeaponsRenderTypes extends RenderType {
 
 
     }
+
 }

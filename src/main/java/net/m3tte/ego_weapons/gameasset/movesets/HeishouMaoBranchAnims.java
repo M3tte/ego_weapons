@@ -1,6 +1,7 @@
 package net.m3tte.ego_weapons.gameasset.movesets;
 
 import net.m3tte.ego_weapons.*;
+import net.m3tte.ego_weapons.gameasset.AttackCycleType;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoAttackPhase;
@@ -92,6 +93,7 @@ public class HeishouMaoBranchAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "heishou_mao_special_1")
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.HEISHOU_MAO_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
@@ -109,13 +111,13 @@ public class HeishouMaoBranchAnims {
                         .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MAO_BRANCH_HIT),
                 new EgoAttackPhase(1.12F, 1.12F, 1.15F, 1.33F, 1.4F, 1.4F, "Tool_R", EgoWeaponsCapabilityPresets.CURSEWRIT_BUTCHERBLADE)
                         .addProperty(EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER, "heishou_mao_special_3")
-                        .addProperty(EgoAttackPhase.EgoWeaponsAttackPhaseProperty.SWING_EVENT, false)
+                        .addProperty(EgoAttackPhase.EgoWeaponsAttackPhaseProperty.TRIGGERS_EFFECTS, false)
                         .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
                         .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.4f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MAO_BRANCH_HIT),
                 new EgoAttackPhase(1.4F, 1.42f, 1.44F, 1.65F, 1.9F, 1.9F, "Tool_R", EgoWeaponsCapabilityPresets.CURSEWRIT_BUTCHERBLADE)
                         .addProperty(EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER, "heishou_mao_special_4")
-                        .addProperty(EgoAttackPhase.EgoWeaponsAttackPhaseProperty.SWING_EVENT, false)
+                        .addProperty(EgoAttackPhase.EgoWeaponsAttackPhaseProperty.TRIGGERS_EFFECTS, false)
                         .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
                         .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.4f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.HEISHOU_MAO_SWING)
@@ -132,6 +134,7 @@ public class HeishouMaoBranchAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "firefist_innate_a")
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.HEISHOU_MAO_SPECIAL_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.STIGMA_WORKSHOP_SWORD_AUTO_SWING)
@@ -147,6 +150,7 @@ public class HeishouMaoBranchAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "heishou_mao_innate_1")
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.HEISHOU_MAO_HIT)
@@ -160,6 +164,7 @@ public class HeishouMaoBranchAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "heishou_mao_innate_2")
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.HEISHOU_MAO_HIT)
@@ -174,6 +179,7 @@ public class HeishouMaoBranchAnims {
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "heishou_mao_innate_3")
                 .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.HEISHOU_MAO_HIT)
@@ -192,6 +198,7 @@ public class HeishouMaoBranchAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "heishou_mao_dash")
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.DASH)
                 .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.HEISHOU_MAO_HIT)
@@ -267,6 +274,7 @@ public class HeishouMaoBranchAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "heishou_mao_jump")
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.JUMP_CRIT)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.HEISHOU_MAO_HEAVY_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.STIGMA_WORKSHOP_SWORD_AUTO_SWING)
@@ -294,6 +302,7 @@ public class HeishouMaoBranchAnims {
                 .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.DEFENSIVE)
                 .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.HEISHOU_MAO_PARRY)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.STIGMA_WORKSHOP_SWORD_AUTO_SWING)

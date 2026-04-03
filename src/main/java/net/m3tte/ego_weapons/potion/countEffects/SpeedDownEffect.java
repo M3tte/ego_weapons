@@ -72,6 +72,9 @@ public class SpeedDownEffect extends CountPotencyStatus {
             speedInst.addPermanentModifier(new AttributeModifier(speedModifier.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue((int) (processedPotency), speedModifier), speedModifier.getOperation()));
         }
 
+
+
+
         attrman.save();
     }
 

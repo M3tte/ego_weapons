@@ -40,6 +40,7 @@ import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 import yesman.epicfight.world.capabilities.item.CapabilityItem;
 import yesman.epicfight.world.entity.eventlistener.HurtEvent;
 
+import static net.m3tte.ego_weapons.skill.NonSpamGuardSkill.handleKnockback;
 import static yesman.epicfight.world.entity.eventlistener.PlayerEventListener.EventType;
 
 public class RatPipeGuard extends EnergizingGuardSkill {
@@ -108,16 +109,15 @@ public class RatPipeGuard extends EnergizingGuardSkill {
 
             EpicFightParticles.HIT_BLUNT.get().spawnParticleWithArgument(((ServerWorld)serverPlayer.level), HitParticleType.FRONT_OF_EYES, HitParticleType.ZERO, serverPlayer, damageSource.getDirectEntity());
 
-            if (damageSource.getEntity() instanceof LivingEntity) {
-                knockback += EnchantmentHelper.getKnockbackBonus((LivingEntity)damageSource.getEntity()) * 0.1F;
-            }
+            handleKnockback(event, knockback, false, 0.3f, 0.6f);
+
             TremorEffect tremorType = TremorEffect.detectTremorType(serverPlayer);
 
 
 
             int tremorLevel = Math.min(8, tremorType != null ? tremorType.getPotency(serverPlayer) : 0);
 
-            event.getPlayerPatch().knockBackEntity(damageSource.getEntity().position(), knockback);
+
 
             float stamina = event.getPlayerPatch().getStamina() - penalty * impact * (0.8f-0.03f*tremorLevel);
             event.getPlayerPatch().setStamina(stamina);

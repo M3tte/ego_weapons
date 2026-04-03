@@ -1,5 +1,6 @@
 package net.m3tte.ego_weapons.procedures;
 
+import com.google.common.collect.Lists;
 import net.m3tte.ego_weapons.*;
 import net.m3tte.ego_weapons.entities.DawnOfGreenDoubtEntity;
 import net.m3tte.ego_weapons.entities.NothingThere2Entity;
@@ -10,6 +11,8 @@ import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.gameasset.movesets.FirefistMovesetAnims;
 import net.m3tte.ego_weapons.gameasset.movesets.MimicryMovesetAnims;
 import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
+import net.m3tte.ego_weapons.item.ardor_blossom.ArdorBlossomBat;
+import net.m3tte.ego_weapons.item.ardor_blossom.ArdorBlossomSuit;
 import net.m3tte.ego_weapons.item.firefist.FirefistGauntlet;
 import net.m3tte.ego_weapons.item.fullstop_sniper.FullstopSniperArmor;
 import net.m3tte.ego_weapons.item.fullstop_sniper.FullstopSniperWeapon;
@@ -25,9 +28,12 @@ import net.m3tte.ego_weapons.item.rat.RatJacket;
 import net.m3tte.ego_weapons.item.rat.RatKnife;
 import net.m3tte.ego_weapons.item.rat.RatPipe;
 import net.m3tte.ego_weapons.item.solemn_lament.SolemnLament;
+import net.m3tte.ego_weapons.item.stigma_workshop.StigmaWorkshopSuit;
 import net.m3tte.ego_weapons.item.stigma_workshop.StigmaWorkshopSword;
 import net.m3tte.ego_weapons.item.sunshower.Sunshower;
 import net.m3tte.ego_weapons.item.sunshower.SunshowerArmor;
+import net.m3tte.ego_weapons.item.udjat.UdjatArmor;
+import net.m3tte.ego_weapons.item.udjat.UdjatKhopesh;
 import net.m3tte.ego_weapons.network.packages.AbilityPackages;
 import net.m3tte.ego_weapons.network.packages.ParticlePackages;
 import net.m3tte.ego_weapons.potion.*;
@@ -41,6 +47,8 @@ import net.m3tte.ego_weapons.world.capabilities.entitypatch.NothingTherePatch;
 import net.m3tte.ego_weapons.world.capabilities.entitypatch.StaggerableEntity;
 import net.m3tte.ego_weapons.world.capabilities.gamerules.EgoWeaponsGamerules;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCategories;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -49,9 +57,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.*;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import yesman.epicfight.api.animation.types.AttackAnimation;
@@ -67,8 +80,11 @@ import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 import yesman.epicfight.world.effect.EpicFightMobEffects;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
 import static net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.canProcEffects;
@@ -82,6 +98,7 @@ public class SharedFunctions {
 
 
 
+
     public static Consumer<LivingEntityPatch<?>> basicSwingEvent = entityPatch -> {
 
         if (entityPatch == null)
@@ -91,6 +108,18 @@ public class SharedFunctions {
 
         if (!entityPatch.getOriginal().level.isClientSide) {
             EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(ent.getId(), ent.getId(), EgoWeaponsParticles.SLASH_SHOCKWAVE.get().getRegistryName()));
+        }
+    };
+
+    public static Consumer<LivingEntityPatch<?>> vertSwingEvent = entityPatch -> {
+
+        if (entityPatch == null)
+            return;
+
+        LivingEntity ent = entityPatch.getOriginal();
+
+        if (!entityPatch.getOriginal().level.isClientSide) {
+            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(ent.getId(), ent.getId(), EgoWeaponsParticles.VERTICAL_SLASH_SHOCKWAVE.get().getRegistryName()));
         }
     };
 
@@ -108,6 +137,36 @@ public class SharedFunctions {
             EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(ent.getId(), ent.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
         }
     };
+
+
+
+    public static List<LivingEntity> getNearbyEntities(LivingEntity source, Vector3d pos, float hDist, float vDist, EntityPredicate predicate) {
+        return new ArrayList<>(source.level
+                .getNearbyEntities(LivingEntity.class,
+                        predicate, source, new AxisAlignedBB(pos.x() - (hDist), pos.y() - (vDist), pos.z() - (hDist), pos.x() + (hDist), pos.y() + (vDist), pos.z() + (hDist))));
+    }
+
+
+
+    public static List<LivingEntity> getNearbyEntities(LivingEntity source, float hDist, float vDist) {
+        return getNearbyEntities(source, source.position(), hDist, vDist, EntityPredicate.DEFAULT);
+    }
+
+    public static List<LivingEntity> getNearbyEntities(LivingEntity source, float hDist, float vDist, EntityPredicate predicate) {
+        return getNearbyEntities(source, source.position(), hDist, vDist, predicate);
+    }
+
+    public static List<LivingEntity> getLivingEntitiesRadius(World level, LivingEntity source, Vector3d pos, float radius, EntityPredicate predicate) {
+        List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, new AxisAlignedBB(pos.x() - (radius), pos.y() - (radius), pos.z() - (radius), pos.x() + (radius), pos.y() + (radius), pos.z() + (radius)));
+        List<LivingEntity> list1 = Lists.newArrayList();
+        for(LivingEntity t : list) {
+            if (predicate.test(source, t) && t.position().distanceTo(pos) <= radius) {
+                list1.add(t);
+            }
+        }
+        return list1;
+    }
+
 
     public static void clashStunEntity(LivingEntityPatch<?> patch, int strength) {
         if (patch == null)
@@ -142,7 +201,8 @@ public class SharedFunctions {
         if (patch.getHitAnimation(ExtendedDamageSource.StunType.KNOCKDOWN) != null) {
             patch.getOriginal().addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 30, 0));
             if (patch.getHitAnimation(ExtendedDamageSource.StunType.KNOCKDOWN).getId() == Animations.BIPED_KNOCKDOWN.getId()) {
-                patch.playAnimationSynchronized(EgoWeaponsAnimations.PUMMEL_DOWN, 0);
+                if (!patch.getOriginal().level.isClientSide())
+                    patch.playAnimationSynchronized(EgoWeaponsAnimations.PUMMEL_DOWN, 0);
                 return;
             }
         }
@@ -152,7 +212,8 @@ public class SharedFunctions {
             StaticAnimation stunAnim = ((StaggerableEntity) patch).getGroundAnimation(strength);
 
             if (stunAnim != null)
-                patch.playAnimationSynchronized(stunAnim, 0);
+                if (!patch.getOriginal().level.isClientSide())
+                    patch.playAnimationSynchronized(stunAnim, 0);
         }
 
     }
@@ -177,8 +238,12 @@ public class SharedFunctions {
         if (patch.getHitAnimation(ExtendedDamageSource.StunType.KNOCKDOWN) != null) {
             if (stunImmunity)
                 patch.getOriginal().addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 40, 0));
+            else
+                patch.getOriginal().addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 2, 0, false, false, false));
+
             if (patch.getHitAnimation(ExtendedDamageSource.StunType.KNOCKDOWN).getId() == Animations.BIPED_KNOCKDOWN.getId()) {
                 patch.playAnimationSynchronized(EgoWeaponsAnimations.LONG_HITSTUN, time);
+
                 return true;
             }
         }
@@ -189,8 +254,12 @@ public class SharedFunctions {
 
             if (stunAnim != null) {
                 if (stunImmunity)
-                    patch.getOriginal().addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 40, 0));
+                    patch.getOriginal().addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 40, 0, false, false, false));
+                else
+                    patch.getOriginal().addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 2, 0, false, false, false));
+
                 patch.playAnimationSynchronized(stunAnim, time);
+
             }
             return true;
         }
@@ -201,10 +270,16 @@ public class SharedFunctions {
         if (patch == null)
             return;
 
+
+
         if (patch.getHitAnimation(ExtendedDamageSource.StunType.KNOCKDOWN) != null) {
             if (stunImmunity)
                 patch.getOriginal().addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 40, 0));
+            else
+                patch.getOriginal().addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 3, 0));
+
             if (patch.getHitAnimation(ExtendedDamageSource.StunType.KNOCKDOWN).getId() == Animations.BIPED_KNOCKDOWN.getId()) {
+
                 patch.playAnimationSynchronized(EgoWeaponsAnimations.STAGGER, 0);
                 return;
             }
@@ -217,6 +292,9 @@ public class SharedFunctions {
             if (stunAnim != null) {
                 if (stunImmunity)
                     patch.getOriginal().addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 40, 0));
+                else
+                    patch.getOriginal().addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 3, 0));
+
                 patch.playAnimationSynchronized(stunAnim, 0);
             }
 
@@ -249,10 +327,12 @@ public class SharedFunctions {
 
     }
 
-    public static void incrementBonusDamage(DamageSource source, float factor) {
+    public static float incrementBonusDamage(DamageSource source, float factor) {
         if (source instanceof GenericEgoDamage) {
             ((GenericEgoDamage) source).setBonusMult(((GenericEgoDamage) source).getBonusMult() + (factor));
         }
+
+        return factor;
     }
 
     public static void incrementResistanceDamage(DamageSource source, float factor) {
@@ -273,13 +353,18 @@ public class SharedFunctions {
 
         boolean hitCooldownStart = false;
 
-        boolean doesProcEffects = canProcEffects(source.getEntity() != null ? (LivingEntity) source.getEntity() : null);
+        if (source.getEntity() == null)
+            return amount;
+
+        boolean doesProcEffects = source.getEntity() instanceof LivingEntity && canProcEffects(source.getEntity() != null ? (LivingEntity) source.getEntity() : null);
 
         if (source.getEntity() instanceof PlayerEntity) {
             EgoWeaponsModVars.PlayerVariables entityData = source.getEntity().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
             hitCooldownStart = entityData.onHitCounter <= 0;
+
         }
+
 
         boolean crit = false;
         float multiplier = 1;
@@ -368,38 +453,57 @@ public class SharedFunctions {
                         case "rat_shank": multiplier = RatKnife.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source); break;
                         case "rat_pipe": multiplier = RatPipe.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source); break;
                         case "sunshower": multiplier = Sunshower.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source); break;
-
-
+                        case "ardor_blossom_bat": multiplier = ArdorBlossomBat.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source); break;
+                        case "udjat_khopesh": multiplier = UdjatKhopesh.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source); break;
                     }
                 }
             }
 
-            // Sunshower on hit effects
-            if (((LivingEntity)source.getEntity()).getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.SUNSHOWER_CLOAK.get())) {
-                LivingEntityPatch<?> sourcePatch = (LivingEntityPatch<?>) source.getEntity().getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+            Item chestItem = ((LivingEntity)source.getEntity()).getItemBySlot(EquipmentSlotType.CHEST).getItem();
+            Item selfChestItem = (self).getItemBySlot(EquipmentSlotType.CHEST).getItem();
+            LivingEntityPatch<?> sourcePatch = (LivingEntityPatch<?>) source.getEntity().getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
-                if (sourcePatch != null) {
-                    multiplier = SunshowerArmor.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source);
+
+            if (sourcePatch != null) {
+                if (chestItem != null) {
+                    if (chestItem.getRegistryName() != null) {
+                        switch (chestItem.getRegistryName().getPath()) {
+                            case "sunshower_cloak":
+                                multiplier = SunshowerArmor.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source);
+                                break;
+
+                            case "oeufi_association_vest":
+                                multiplier = OeufiArmor.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source);
+                                break;
+
+                            case "stigma_workshop_suit":
+                                multiplier = StigmaWorkshopSuit.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source);
+                                break;
+                            case "fullstop_office_sniper_suit":
+                                multiplier = FullstopSniperArmor.hitDamageBonus(sourcePatch, multiplier, source);
+                                break;
+                            case "rat_outfit":
+                                multiplier = RatJacket.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source);
+                                break;
+                            case "ardor_blossom_suit":
+                                multiplier = ArdorBlossomSuit.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source);
+                                break;
+
+                        }
+                    }
+                }
+
+                if (selfChestItem != null) {
+                    if (selfChestItem.getRegistryName() != null) {
+                        switch (selfChestItem.getRegistryName().getPath()) {
+                            case "rat_blunt_outfit":
+                                multiplier = RatBluntJacket.modifyDamageAmountInbound(self, (LivingEntity) source.getEntity(), multiplier, source);
+                                break;
+                        }
+                    }
                 }
             }
 
-            // Oeufi Tremor Effects
-            if (((LivingEntity)source.getEntity()).getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.OEUFI_CHESTPLATE.get())) {
-                LivingEntityPatch<?> sourcePatch = (LivingEntityPatch<?>) source.getEntity().getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-
-                if (sourcePatch != null) {
-                    multiplier = OeufiArmor.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source);
-                }
-            }
-
-            // If player has blunt rat, decrease damage taken based on tremor
-            if (self.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.BLUNT_RAT_OUTFIT.get())) {
-                LivingEntityPatch<?> sourcePatch = (LivingEntityPatch<?>) source.getEntity().getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-
-                if (sourcePatch != null) {
-                    multiplier = RatBluntJacket.modifyDamageAmountInbound(self, (LivingEntity) source.getEntity(), multiplier, source);
-                }
-            }
 
             if (((LivingEntity) source.getEntity()).hasEffect(EgoWeaponsEffects.OBLIGATION_FULLFILLMENT.get())) {
                 LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) source.getEntity().getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
@@ -414,23 +518,9 @@ public class SharedFunctions {
                 }
             }
 
-            if (((LivingEntity)source.getEntity()).getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.FULLSTOP_SNIPER_SUIT.get()) && source.getEntity() instanceof LivingEntity) {
-                LivingEntityPatch<?> sourcePatch = (LivingEntityPatch<?>) source.getEntity().getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-
-                if (sourcePatch != null) {
-                    multiplier = FullstopSniperArmor.hitDamageBonus(sourcePatch, multiplier, source);
-                }
-            }
 
 
-            // If player has knife rat, apply effects
-            if (((LivingEntity)self.getEntity()).getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.RAT_OUTFIT.get()) && source.getEntity() instanceof LivingEntity) {
-                LivingEntityPatch<?> sourcePatch = (LivingEntityPatch<?>) source.getEntity().getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
-                if (sourcePatch != null) {
-                    multiplier = RatJacket.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source);
-                }
-            }
         }
 
 
@@ -461,7 +551,6 @@ public class SharedFunctions {
 
         // Apply protection from PROTECTION and FRAGILE stacks.
         if (self.hasEffect(EgoWeaponsEffects.PROTECTION.get()) && source.getEntity() instanceof LivingEntity) {
-
             float totalMult = 1 - EgoWeaponsEffects.PROTECTION.get().getPotency(self) * 0.1f + EgoWeaponsEffects.FRAGILE.get().getPotency(self) * 0.1f;
 
             totalMult = Math.max(0, totalMult);
@@ -470,10 +559,28 @@ public class SharedFunctions {
             multiplier *= (1 - totalMult);
         }
 
-        // Apply protection from PROTECTION stacks.
-        if (self.hasEffect(EgoWeaponsEffects.PROTECTION.get()) && source.getEntity() instanceof LivingEntity) {
-            incrementBonusDamage(source, -multiplier*EgoWeaponsEffects.PROTECTION.get().getPotency(self)*0.1f);
-            multiplier *= (1 - EgoWeaponsEffects.PROTECTION.get().getPotency(self)*0.1f);
+        // Apply base increased damage from SIN.
+        if (self.hasEffect(EgoWeaponsEffects.SIN.get()) && source.getEntity() instanceof LivingEntity) {
+            incrementBonusDamage(source, -multiplier*EgoWeaponsEffects.SIN.get().getPotency(self)*0.1f);
+            multiplier *= (1 - EgoWeaponsEffects.SIN.get().getPotency(self)*0.1f);
+        }
+
+        // Apply base increased damage from SIN.
+        float collectiveSin = 0;
+        if (self.hasEffect(EgoWeaponsEffects.SIN.get())) {
+            collectiveSin += EgoWeaponsEffects.SIN.get().getPotency(self);
+        }
+
+        if (source.getEntity() instanceof LivingEntity) {
+            LivingEntity livingSource = (LivingEntity) source.getEntity();
+
+            if (livingSource.hasEffect(EgoWeaponsEffects.SIN.get())) {
+                collectiveSin += EgoWeaponsEffects.SIN.get().getPotency(livingSource);
+            }
+        }
+
+        if (collectiveSin > 0) {
+            multiplier += incrementBonusDamage(source, collectiveSin * 0.02f);
         }
 
         // Decrement resilience stacks
@@ -641,17 +748,14 @@ public class SharedFunctions {
             }
         }
 
-
-        multiplier = evaluateOnHitEffects(self, (LivingEntity) source.getEntity(), multiplier, source, isStaggered(self), hitCooldownStart);
+        if (source.getEntity() instanceof LivingEntity)
+            multiplier = evaluateOnHitEffects(self, (LivingEntity) source.getEntity(), multiplier, source, isStaggered(self), hitCooldownStart);
 
 
         // Apply all flat damage modifiers
-        multiplier = DamageResistanceSystem.processDamageForEntity(self, (LivingEntity) source.getEntity(), multiplier, source, isStaggered(self));
+        if (source.getEntity() instanceof LivingEntity)
+            multiplier = DamageResistanceSystem.processDamageForEntity(self, (LivingEntity) source.getEntity(), multiplier, source, isStaggered(self));
 
-
-        System.out.println("SOURCE IS : "+source);
-        if (source instanceof GenericEgoDamage)
-            System.out.println("FINAL PRE MULTIPLIER : "+multiplier+" calculated ="+((GenericEgoDamage)source).getBonusMult()+ " - - " + ((GenericEgoDamage)source).getResistanceMult());
 
         amount *= multiplier;
 
@@ -739,7 +843,7 @@ public class SharedFunctions {
     }
 
     private static void onKilled(DamageSource src, LivingEntity self) {
-        System.out.println("Executing onKILLED for entity "+self+" source entity is : "+src.getEntity());
+        //intln("Executing onKILLED for entity "+self+" source entity is : "+src.getEntity());
         if (src.getEntity() instanceof PlayerEntity) {
             PlayerEntity source = (PlayerEntity) src.getEntity();
 
@@ -756,7 +860,7 @@ public class SharedFunctions {
 
             int lastKillTime = source.getPersistentData().getInt("lastKillDialogue");
             int diff = source.getEntity().tickCount - lastKillTime;
-            System.out.println("Lastkilldialoguetime is : "+lastKillTime+" thus diff is : "+diff);
+            //System.out.println("Lastkilldialoguetime is : "+lastKillTime+" thus diff is : "+diff);
             // Potentially add other bypasses or more config. Default for now is 60 ticks between kill msgs unless its a player kill. Then its 10 ticks
 
             if (diff <= 0) {
@@ -776,6 +880,26 @@ public class SharedFunctions {
                         EntityTick.regenerateLight((PlayerEntity) src.getEntity(), 1, true);
                     EgoWeaponsEffects.POWER_UP.get().increment((LivingEntity) src.getEntity(), 4, 2);
                 }
+            }
+
+            if (source.getItemBySlot(EquipmentSlotType.MAINHAND).getItem().equals(EgoWeaponsItems.ARDOR_BLOSSOM_BAT.get())) {
+                List<LivingEntity> nearby = SharedFunctions.getNearbyEntities(source, 10, 5, TeamLockedPredicate.ONLY_HOSTILES);
+
+                int burnOnTarget = EgoWeaponsEffects.BURN.get().getPotency(self);
+
+                if (nearby.size() > 1) {
+                    int splitBurn = Math.max(1, burnOnTarget / (nearby.size()-1));
+
+                    for (LivingEntity ent : nearby) {
+                        if (ent.getId() != self.getId()) {
+                            EgoWeaponsEffects.BURN.get().increment(ent, 0, splitBurn);
+                            if (!ent.level.isClientSide())
+                                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.INGOING_EMBER.get(), Math.min(20,Math.max(2,splitBurn * 3)), ent.getX(), ent.getY() + ent.getBbHeight()/2, ent.getZ(), 3f, 0.3f, 10, 0,0,0));
+
+                        }
+                    }
+                }
+
             }
 
             if (anim_id == MimicryMovesetAnims.MIMICRY_GOODBYE.getId() || anim_id == MimicryMovesetAnims.MIMICRY_GOODBYE_ENHANCED.getId()) {
@@ -839,14 +963,22 @@ public class SharedFunctions {
             EgoWeaponsEffects.POWER_UP.get().increment(source, 4, 2);
         }
 
+        if (source.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.UDJAT_SUIT.get())) {
+            if (self.hasEffect(EgoWeaponsEffects.BLUE_SAND.get())) {
+                EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(source, 9, 3);
+            } else {
+                EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(source, 3, 1);
+            }
+        }
+
         String selfPersonality = getPersonality(self);
 
         if (!self.level.isClientSide()) {
-            System.out.println("NOT CLIENT SIDE, TESTING STAGGER");
+            //System.out.println("NOT CLIENT SIDE, TESTING STAGGER");
             if (!selfPersonality.isEmpty()) {
 
                 int dialogue = self.getRandom().nextInt(5);
-                System.out.println("SPEAKING STAGGER FOR SELF");
+                //System.out.println("SPEAKING STAGGER FOR SELF");
                 speakEvalDialogue(self, "dialogue.ego_weapons.generic.stagger." ,selfPersonality, dialogue, TextFormatting.YELLOW, DialogueSystem.DialogueTypes.FILLER);
             }
 
@@ -854,7 +986,7 @@ public class SharedFunctions {
                 String sourcePersonality = getPersonality(source);
                 if (!sourcePersonality.isEmpty()) {
 
-                    System.out.println("SPEAKING STAGGER FOR ATTACKER");
+                    //System.out.println("SPEAKING STAGGER FOR ATTACKER");
                     int dialogue = source.getRandom().nextInt(5);
                     speakEvalDialogue(source, "dialogue.ego_weapons.generic.staggerEnemy." ,sourcePersonality, dialogue, TextFormatting.WHITE, DialogueSystem.DialogueTypes.FILLER);
                 }
@@ -927,6 +1059,9 @@ public class SharedFunctions {
 
         ItemStack itemHandIdent = patch.getValidItemInHand(hand);
 
+        boolean ammoconsume = dynAnim.getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.CONSUMES_AMMO).orElse(false);
+        boolean consumesStatus = dynAnim.getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.TRIGGERS_EFFECTS).orElse(true);
+
         if (dynAnim instanceof AttackAnimation) {
             AttackAnimation.Phase phase = ((AttackAnimation)dynAnim).getPhaseByTime(patch.getAnimator().getPlayerFor(dynAnim).getElapsedTime());
 
@@ -934,12 +1069,11 @@ public class SharedFunctions {
                 hand = phase.getHand();
                 attackType = dynAnim.getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE).orElse(attackType);
                 damageType = dynAnim.getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE).orElse(damageType);
+                consumesStatus = dynAnim.getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.TRIGGERS_EFFECTS).orElse(consumesStatus);
             }
 
 
         }
-        boolean ammoconsume = dynAnim.getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.CONSUMES_AMMO).orElse(false);
-        boolean consumesStatus = dynAnim.getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.TRIGGERS_EFFECTS).orElse(true);
 
         if (ammoconsume) {
             AmmoType lastFired = null;
@@ -1135,7 +1269,7 @@ public class SharedFunctions {
 
     }
 
-    public static void applyStaggerDamageGeneric(DamageSource src, float amount, CallbackInfo ci, LivingEntity self) {
+    public static void applyStaggerDamageGeneric(DamageSource src, float amount, LivingDamageEvent evt, LivingEntity self) {
 
         if (src == null)
             return;
@@ -1176,11 +1310,11 @@ public class SharedFunctions {
                 EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DamageLabelParticle(self.position().add(randomX,randomY,randomZ), conv.getDamageType(), conv.getAttackType(), conv.getCrit(), amount, conv.getResistanceMult(), conv.getBonusMult()));
         }
 
-        if (src.getEntity() instanceof NothingThere2Entity) {
+        if (src.getEntity() instanceof LivingEntity) {
             LivingEntityPatch<?> livingPatch = (LivingEntityPatch<?>) src.getEntity().getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-            int animid = livingPatch.getServerAnimator().animationPlayer.getAnimation().getId();
             if (livingPatch != null) {
-                if (animid == EgoWeaponsMobAnimations.NT_GOODBYE.getId() || animid == MimicryMovesetAnims.MIMICRY_GOODBYE.getId()) {
+                int animid = livingPatch.getServerAnimator().animationPlayer.getAnimation().getId();
+                if (animid == EgoWeaponsMobAnimations.NT_GOODBYE.getId() || animid == MimicryMovesetAnims.MIMICRY_GOODBYE.getId() || animid == MimicryMovesetAnims.MIMICRY_GOODBYE_ENHANCED.getId()) {
                     if (self.getHealth() <= amount) {
 
                         if (self.level instanceof ServerWorld) {
@@ -1222,6 +1356,17 @@ public class SharedFunctions {
                 reduceStagger(self, amount * 1.3f, src.getEntity(), true);
             }
         } else {
+
+
+            if (self.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.UDJAT_SUIT.get())) {
+                if (UdjatArmor.evaluateAntiDeath(self, src.getEntity())) {
+                    System.out.println("Trying to cancel death event");
+                    evt.setCanceled(true);
+                    return;
+                }
+            }
+
+
             onKilled(src, self);
         }
 

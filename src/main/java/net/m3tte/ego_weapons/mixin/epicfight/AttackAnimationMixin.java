@@ -36,7 +36,7 @@ public class AttackAnimationMixin {
 
 
             if (phase instanceof EgoAttackAnimation.EgoAttackPhase) {
-                Boolean elp = ((EgoAttackAnimation.EgoAttackPhase) phase).getProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.SWING_EVENT).orElse(null);
+                Boolean elp = ((EgoAttackAnimation.EgoAttackPhase) phase).getProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.TRIGGERS_EFFECTS).orElse(null);
                 Consumer<LivingEntityPatch<?>> plc = ((EgoAttackAnimation.EgoAttackPhase) phase).getProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.SWING_EFFECT).orElse(null);
 
                 if (elp != null)

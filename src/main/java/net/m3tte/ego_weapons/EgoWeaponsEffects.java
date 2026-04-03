@@ -26,6 +26,9 @@ public class EgoWeaponsEffects {
         return EFFECTS.register(registryName, () -> status);
     }
 
+    public static final int TURN_DURATION = 300;
+    public static final int SHORTER_TURN_DURATION = 200;
+
     public static final RegistryObject<CountPotencyStatus> BLEED = registerEffect("bleed", new BleedEffect());
     public static final RegistryObject<CountPotencyStatus> BURN = registerEffect("burn", new BurnEffect());
     public static final RegistryObject<CountPotencyStatus> DARK_BURN = registerEffect("dark_burn", new DarkFlameEffect());
@@ -60,6 +63,9 @@ public class EgoWeaponsEffects {
 
     public static final RegistryObject<CountPotencyStatus> SIN = registerEffect("sin", new SinEffect());
     public static final RegistryObject<CountPotencyStatus> IMITATION = registerEffect("imitation", new ImitationEffect());
+    public static final RegistryObject<CountPotencyStatus> EMBERS = registerEffect("embers", new EmberEffect());
+    public static final RegistryObject<CountPotencyStatus> EGO_ATTUNEMENT_ARDOR_BLOSSOM = registerEffect("ego_att_ardor", new EGOAttArdorBlossom());
+    public static final RegistryObject<CountPotencyStatus> BLUE_SAND = registerEffect("blue_sand", new BlueSandEffect());
 
 
     public static int speedMult(LivingEntity entity) {

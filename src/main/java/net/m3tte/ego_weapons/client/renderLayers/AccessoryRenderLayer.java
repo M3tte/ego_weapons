@@ -1,9 +1,12 @@
 package net.m3tte.ego_weapons.client.renderLayers;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.client.models.wearable.BloodOverlayModel;
 import net.m3tte.ego_weapons.client.models.wearable.SlimCompatibleModel;
+import net.m3tte.ego_weapons.client.renderer.wearable.ArdorBlossomFireRenderer;
+import net.m3tte.ego_weapons.client.renderer.wearable.ArdorBlossomWingRenderer;
 import net.m3tte.ego_weapons.client.renderer.wearable.BloodOverlayRenderer;
 import net.m3tte.ego_weapons.client.renderer.wearable.WearableRenderer;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
@@ -14,6 +17,7 @@ import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -27,22 +31,49 @@ import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILIT
 public class AccessoryRenderLayer<T extends LivingEntity, M extends BipedModel<T>> extends LayerRenderer<T, M> {
     private WearableRenderer bloodOverlayModel = null;
 
-
+    private WearableRenderer ardorBlossomModel = null;
+    private WearableRenderer ardorWingsModel = null;
     public WearableRenderer getBloodOverlayModel() {
         return bloodOverlayModel;
     }
 
+    public WearableRenderer getArdorFireModel() {
+        return ardorBlossomModel;
+    }
+    public WearableRenderer getArdorWingModel() {
+        return ardorWingsModel;
+    }
+
     public AccessoryRenderLayer(IEntityRenderer<T, M> entityRenderer) {
         super(entityRenderer);
-        BipedModel<T> baseWearableModel = new BipedModel(0.4F);
+        BipedModel<T> baseWearableModel = new BipedModel<>(0.4F);
         this.bloodOverlayModel = new BloodOverlayRenderer<>();
+        this.ardorBlossomModel = new ArdorBlossomFireRenderer<>();
+        this.ardorWingsModel = new ArdorBlossomWingRenderer<>();
 
 
 
     }
 
     public void render(MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, T entity, float animationPosition, float animationSpeed, float partialTick, float viewBob, float yaw, float pitch) {
-        EgoWeaponsModVars.PlayerVariables entityData = entity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
+
+        if (entity instanceof LivingEntity) {
+            if (entity.getItemBySlot(EquipmentSlotType.CHEST).getItem().getRegistryName() != null) {
+                String equippedItemChest = entity.getItemBySlot(EquipmentSlotType.CHEST).getItem().getRegistryName().getPath();
+
+                switch (equippedItemChest) {
+                    case "ardor_blossom_suit":
+                        ardorBlossomModel.render(entity, null, this.getParentModel(), matrixStack, buffer, combinedLight, animationPosition, animationSpeed, partialTick);
+
+                        if (entity.hasEffect(EgoWeaponsEffects.EGO_ATTUNEMENT_ARDOR_BLOSSOM.get()))
+                            ardorWingsModel.render(entity, null, this.getParentModel(), matrixStack, buffer, combinedLight, animationPosition, animationSpeed, partialTick);
+                        break;
+                }
+
+            }
+
+
+        }
 
         /*if (entity instanceof PlayerEntity && entityData != null) {
             if (entityData.injury_threshold > 0.7f) {

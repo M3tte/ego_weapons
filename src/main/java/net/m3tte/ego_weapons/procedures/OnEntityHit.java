@@ -203,7 +203,7 @@ public class OnEntityHit {
 
 
 
-            if (living.hasEffect(EgoWeaponsEffects.OBLIGATION_FULLFILLMENT.get())) {
+            if (event.getSource().getDirectEntity() instanceof LivingEntity && living.hasEffect(EgoWeaponsEffects.OBLIGATION_FULLFILLMENT.get())) {
                 PlayerPatch<?> entitypatch = (PlayerPatch<?>) living.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 
@@ -229,7 +229,7 @@ public class OnEntityHit {
                 }
             }
 
-            if (living.hasEffect(EgoWeaponsEffects.RESILIENCE.get())) {
+            if (event.getSource().getDirectEntity() instanceof LivingEntity && living.hasEffect(EgoWeaponsEffects.RESILIENCE.get())) {
                 LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) living.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 
@@ -336,9 +336,9 @@ public class OnEntityHit {
 
 
 
-            if (EgoWeaponsItems.FULLSTOP_REP_CLOAK.get().equals(living.getItemBySlot(EquipmentSlotType.CHEST).getItem())) {
+            if (event.getSource().getEntity() instanceof LivingEntity && EgoWeaponsItems.FULLSTOP_REP_CLOAK.get().equals(living.getItemBySlot(EquipmentSlotType.CHEST).getItem())) {
                 LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) living.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-                if (EgoWeaponsEffects.POISE.get().getPotency(living) >= 27 && !(living.hasEffect(EpicFightMobEffects.STUN_IMMUNITY.get()))) {
+                if (EgoWeaponsEffects.POISE.get().getPotency(living) >= 25 && !(living.hasEffect(EpicFightMobEffects.STUN_IMMUNITY.get()))) {
 
                     boolean cooldownFlag = true;
                     if (living instanceof PlayerEntity) {
@@ -350,14 +350,25 @@ public class OnEntityHit {
                         if (living instanceof PlayerEntity) {
                             ((PlayerEntity) living).getCooldowns().addCooldown(EgoWeaponsItems.FULLSTOP_REP_CLOAK.get(), 100);
                         }
-                        EgoWeaponsEffects.POISE.get().decrement(living, 0, 7);
+                        EgoWeaponsEffects.POISE.get().decrement(living, 0, 5);
                         entitypatch.playAnimationSynchronized(FullstopOfficeRepMovesetAnims.FULLSTOP_REP_EVADE, 0);
                         event.setCanceled(true);
                     }
                 }
             }
 
-            if (living.hasEffect(OrlandoPotionEffect.potion) && living instanceof PlayerEntity) {
+            // Ardor Blossom Autododge
+            if (event.getSource().getEntity() instanceof LivingEntity && living.hasEffect(EgoWeaponsEffects.EGO_ATTUNEMENT_ARDOR_BLOSSOM.get())) {
+                LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) living.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+                if (entitypatch != null && !(living.hasEffect(EpicFightMobEffects.STUN_IMMUNITY.get()))) {
+
+                    entitypatch.playAnimationSynchronized(living.getRandom().nextBoolean() ? ArdorBlossomMovesetAnims.WEAVE_1 : ArdorBlossomMovesetAnims.WEAVE_2, 0);
+                    EgoWeaponsEffects.EGO_ATTUNEMENT_ARDOR_BLOSSOM.get().decrement(living, 0, 1);
+                    event.setCanceled(true);
+                }
+            }
+
+            if (event.getSource().getDirectEntity() instanceof LivingEntity && living.hasEffect(OrlandoPotionEffect.potion) && living instanceof PlayerEntity) {
                 PlayerEntity player = (PlayerEntity) living;
 
                 PlayerPatch<?> entitypatch = (PlayerPatch<?>) living.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);

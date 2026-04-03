@@ -9,6 +9,8 @@ import net.m3tte.ego_weapons.particle.BlipeffectParticle;
 import net.m3tte.ego_weapons.gameasset.abilities.AbilityTier;
 import net.m3tte.ego_weapons.gameasset.abilities.AbilityUtils;
 import net.m3tte.ego_weapons.gameasset.abilities.ItemAbility;
+import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.procedures.TeamLockedPredicate;
 import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityPredicate;
@@ -162,14 +164,10 @@ public class FullstopAssistFire extends ItemAbility {
 
     static float hDist = 32;
     static float vDist = 4;
-    private static List<LivingEntity> getNearbyTeammates(LivingEntity source) {
-        return new ArrayList<>(source.level
-                .getNearbyEntities(PlayerEntity.class,
-                        EntityPredicate.DEFAULT.allowSameTeam(), source, new AxisAlignedBB(source.getX() - (hDist), source.getY() - (vDist), source.getZ() - (hDist), source.getX() + (hDist), source.getY() + (vDist), source.getZ() + (hDist))));
-    }
+
 
     private static void applyBuffsToNearbyAllies(LivingEntity source, int poiseToSpread, int targetUUID) {
-        List<LivingEntity> nearbyFriendlies = getNearbyTeammates(source);
+        List<LivingEntity> nearbyFriendlies = SharedFunctions.getNearbyEntities(source, 32, 4, TeamLockedPredicate.ONLY_ALLIES);
         //nearbyFriendlies.add(source);
 
         if (nearbyFriendlies.isEmpty())

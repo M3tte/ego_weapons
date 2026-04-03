@@ -104,7 +104,7 @@ public class Sunshower extends EgoWeaponsWeapon {
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
-		list.add(new StringTextComponent("I’ll show you how much it hurts to have ragged broken ribs from a dumped umbrella jammed in you.").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+		list.add(new TranslationTextComponent("desc.ego_weapons.sunshower.desc"));
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -127,7 +127,7 @@ public class Sunshower extends EgoWeaponsWeapon {
 				if (EgoWeaponsKeybinds.isHoldingShift())
 					generateStatusDescription(list, new String[]{"white", "sinking", "rupture"});
 				else
-					generateDescription(list,"sunshower", "ability", 4);
+					generateDescription(list,"sunshower", "ability", 4, true);
 				break;
 			case 3:
 				if (EgoWeaponsKeybinds.isHoldingShift())

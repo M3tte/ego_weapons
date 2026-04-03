@@ -2,6 +2,8 @@ package net.m3tte.ego_weapons;
 
 import net.m3tte.ego_weapons.item.SuitItem;
 import net.m3tte.ego_weapons.item.ZweiSwordItem;
+import net.m3tte.ego_weapons.item.ardor_blossom.ArdorBlossomBat;
+import net.m3tte.ego_weapons.item.ardor_blossom.ArdorBlossomSuit;
 import net.m3tte.ego_weapons.item.blackSilence.BlackSilenceArmor;
 import net.m3tte.ego_weapons.item.blackSilence.weapons.*;
 import net.m3tte.ego_weapons.item.firefist.FirefistArmor;
@@ -38,6 +40,8 @@ import net.m3tte.ego_weapons.item.stigma_workshop.StigmaWorkshopSuit;
 import net.m3tte.ego_weapons.item.stigma_workshop.StigmaWorkshopSword;
 import net.m3tte.ego_weapons.item.sunshower.Sunshower;
 import net.m3tte.ego_weapons.item.sunshower.SunshowerArmor;
+import net.m3tte.ego_weapons.item.udjat.UdjatArmor;
+import net.m3tte.ego_weapons.item.udjat.UdjatKhopesh;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -129,7 +133,7 @@ public class EgoWeaponsItems {
     public static RegistryObject<Item> BASIC_RIFLE_BULLET = registerItem("basic_rifle_bullet", new AmmoItem( new Item.Properties().tab(EGO_WEAPONS), 3, GunCaliber.SNIPER));
     public static RegistryObject<Item> AL_HV_PULVERIZATION_RIFLE_ROUND = registerItem("al_hv_pulverization_rifle_round", new AmmoItem( new Item.Properties().tab(EGO_WEAPONS), 4, GunCaliber.SNIPER));
 
-    public static RegistryObject<Item> FULLSTOP_SNIPER_RAILGUN = registerItem("fullstop_office_railgun", new FullstopSniperWeapon( 6, -2.25f, new Item.Properties().tab(EGO_WEAPONS), GunCaliber.SNIPER, 8));
+    public static RegistryObject<Item> FULLSTOP_SNIPER_RAILGUN = registerItem("fullstop_office_railgun", new FullstopSniperWeapon( 7, -2.25f, new Item.Properties().tab(EGO_WEAPONS), GunCaliber.SNIPER, 8));
     public static RegistryObject<Item> FULLSTOP_SNIPER_SUITCASE = registerItem("fullstop_suitcase", new GenericCosmeticItem());
 
     public static RegistryObject<Item> FULLSTOP_SNIPER_SUIT = registerItem("fullstop_office_sniper_suit", FullstopSniperArmor.getArmorForSlot(EquipmentSlotType.CHEST));
@@ -166,12 +170,24 @@ public class EgoWeaponsItems {
     public static RegistryObject<Item> BLUNT_RAT_PANTS = registerItem("rat_blunt_pants", RatBluntJacket.getArmorForSlot(EquipmentSlotType.LEGS));
     public static RegistryObject<Item> BLUNT_RAT_HOOD = registerItem("rat_blunt_hood", RatBluntJacket.getArmorForSlot(EquipmentSlotType.HEAD));
 
-    public static RegistryObject<Item> JUSTITIA_SWORD = registerItem("justitia", new JustitiaSword(2, -1.4f, new Item.Properties().tab(EGO_WEAPONS)));
+    public static RegistryObject<Item> JUSTITIA_SWORD = registerItem("justitia", new JustitiaSword(2, -1.3f, new Item.Properties().tab(EGO_WEAPONS)));
 
     public static RegistryObject<Item> JUSTITIA_CLOAK = registerItem("justitia_cloak", JustitiaCloak.getArmorForSlot(EquipmentSlotType.CHEST));
     public static RegistryObject<Item> JUSTITIA_BLINDFOLD = registerItem("justitia_blindfold", JustitiaCloak.getArmorForSlot(EquipmentSlotType.HEAD));
 
     public static RegistryObject<Item> JUSTITIA_ROPE = registerItem("justitia_rope", new GenericCosmeticItem());
+
+    public static RegistryObject<Item> ARDOR_BLOSSOM_BAT = registerItem("ardor_blossom_bat", new ArdorBlossomBat(3, -2f, new Item.Properties().tab(EGO_WEAPONS)));
+
+    public static RegistryObject<Item> ARDOR_BLOSSOM_STAR_SUIT = registerItem("ardor_blossom_suit", ArdorBlossomSuit.getArmorForSlot(EquipmentSlotType.CHEST));
+
+    // Next Update :3
+    // public static RegistryObject<Item> UDJAT_KHOPESH = registerItem("udjat_khopesh", new UdjatKhopesh( 2, -2.45f, new Item.Properties().tab(ItemGroup.TAB_SEARCH)));
+
+    // public static RegistryObject<Item> UDJAT_SUIT = registerItem("udjat_suit", UdjatArmor.getArmorForSlot(EquipmentSlotType.CHEST));
+    // public static RegistryObject<Item> UDJAT_PANTS = registerItem("udjat_pants", UdjatArmor.getArmorForSlot(EquipmentSlotType.LEGS));
+    // public static RegistryObject<Item> UDJAT_HAT = registerItem("udjat_mask", UdjatArmor.getArmorForSlot(EquipmentSlotType.HEAD));
+
     private static RegistryObject<Item> registerItem(String registryName, Item i) {
         return ITEMS.register(registryName, () -> i);
     }

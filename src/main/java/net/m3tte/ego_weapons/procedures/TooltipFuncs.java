@@ -8,10 +8,20 @@ import java.util.List;
 
 public class TooltipFuncs {
 
-    public static void generateDescription(List<ITextComponent> list, String weaponIdentifier, String typeIdentifier, int maxIndices) {
+
+    public static void generateDescription(List<ITextComponent> list, String weaponIdentifier, String typeIdentifier, int maxIndices, boolean flavorText) {
         list.add(new TranslationTextComponent("desc.ego_weapons."+weaponIdentifier+"."+typeIdentifier+".title"));
         for (int i = 1; i <= maxIndices; i++)
             list.add(new TranslationTextComponent("desc.ego_weapons."+weaponIdentifier+"."+typeIdentifier+"."+i));
+
+        if (flavorText) {
+            list.add(new StringTextComponent("   "));
+            list.add(new TranslationTextComponent("desc.ego_weapons."+weaponIdentifier+"."+typeIdentifier+".desc"));
+        }
+    }
+
+    public static void generateDescription(List<ITextComponent> list, String weaponIdentifier, String typeIdentifier, int maxIndices) {
+        generateDescription(list, weaponIdentifier, typeIdentifier, maxIndices, false);
     }
 
 
@@ -21,6 +31,9 @@ public class TooltipFuncs {
         for (String status : statuses) {
             list.add(new StringTextComponent("  "));
             switch (status) {
+                case "blue_sand": generateDescription(list, "statuses", "blue_sand", 6); break;
+                case "ego_att_ardor": generateDescription(list, "statuses", "ego_att_ardor", 5); break;
+                case "embers": generateDescription(list, "statuses", "embers", 4); break;
                 case "butterfly": generateDescription(list, "statuses", "butterfly", 10); break;
                 case "imitation": generateDescription(list, "statuses", "imitation", 2); break;
                 case "fragile": generateDescription(list, "statuses", "fragile", 2); break;

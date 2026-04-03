@@ -2,6 +2,7 @@ package net.m3tte.ego_weapons.gameasset.movesets;
 
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
+import net.m3tte.ego_weapons.gameasset.AttackCycleType;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
@@ -73,6 +74,7 @@ public class LiuSouth6MovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "liu_s6_auto1")
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.DASH)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.LIU_S6_AUTO_3)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
@@ -134,6 +136,7 @@ public class LiuSouth6MovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "liu_s6_innate1")
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.LIU_S6_AUTO_1)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
@@ -149,6 +152,7 @@ public class LiuSouth6MovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "liu_s6_innate2")
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.LIU_S6_AUTO_3)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.SHORT)
@@ -163,6 +167,7 @@ public class LiuSouth6MovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "liu_s6_sp1")
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.LIU_S6_SPECIAL_1)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
@@ -178,6 +183,7 @@ public class LiuSouth6MovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "liu_s6_sp2")
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.LIU_S6_SPECIAL_2)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
@@ -193,6 +199,7 @@ public class LiuSouth6MovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "liu_s6_sp3")
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.LIU_S6_SPECIAL_3)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
@@ -209,6 +216,7 @@ public class LiuSouth6MovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "liu_s6_sp4")
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.LIU_S6_SPECIAL_4)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)

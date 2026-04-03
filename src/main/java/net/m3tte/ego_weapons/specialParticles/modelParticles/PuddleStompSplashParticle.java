@@ -15,9 +15,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class PuddleStompSplashParticle extends SpriteTexturedParticle {
-    static final AbstractParticleModel WAVE_MODEL = new PuddleStompSplashModel();
-    static final AbstractParticleModel WAVE_RIM_MODEL = new PuddleStompOuterSplashModel();
-    static final AbstractParticleModel WAVE_BOTTOM_MODEL = new PuddleStompSplashModel();
+
+    public static AbstractParticleModel DEFAULT_WAVE_MODEL = new PuddleStompSplashModel();
+    public static AbstractParticleModel DEFAULT_RIM_MODEL = new PuddleStompOuterSplashModel();
+
+    private AbstractParticleModel WAVE_MODEL = new PuddleStompSplashModel();
+    private AbstractParticleModel WAVE_RIM_MODEL = new PuddleStompOuterSplashModel();
     private final IAnimatedSprite sprites;
     private float widthMultiplier;
     private final float heightMultiplier;
@@ -28,21 +31,24 @@ public class PuddleStompSplashParticle extends SpriteTexturedParticle {
     private final float g;
     private final float b;
 
-    public PuddleStompSplashParticle(ClientWorld level, double x, double y, double z, IAnimatedSprite spriteSet) {
+    public PuddleStompSplashParticle(ClientWorld level, double x, double y, double z, IAnimatedSprite spriteSet, AbstractParticleModel waveModel, AbstractParticleModel rimModel, float widthMult, float heightMult, int wave1End, int wave2Start, int wave2End, float r, float g, float b) {
         super(level, x, y, z);
         this.sprites = spriteSet;
         this.gravity = 0.0F;
-        this.widthMultiplier = 1;
-        this.heightMultiplier = 1;
+        this.widthMultiplier = widthMult;
+        this.heightMultiplier = heightMult;
+        this.r = (float) r;
+        this.g = (float) g;
+        this.b = (float) b;
 
-        r = (float) 0.2f;
-        g = (float) 1f;
-        b = (float) 0.8f;
         alpha = 0.5f;
 
-        this.wave1End = 10;
-        this.wave2Start = 2;
-        this.wave2End = 12;
+        this.wave1End = wave1End;// 10;
+        this.wave2Start = wave2Start;// 2;
+        this.wave2End = wave2End;// 12;
+
+        this.WAVE_MODEL = waveModel;
+        this.WAVE_RIM_MODEL = rimModel;
     }
 
     @Override
@@ -160,13 +166,37 @@ public class PuddleStompSplashParticle extends SpriteTexturedParticle {
     public static class Provider implements IParticleFactory<BasicParticleType> {
         private final IAnimatedSprite spriteSet;
 
-        public Provider(IAnimatedSprite spriteSet) {
+        private final AbstractParticleModel waveModel;
+        private final AbstractParticleModel waveRimModel;
+        private final float waveWidth;
+        private final float waveHeight;
+        private final int wave1End;
+        private final int wave2Start;
+        private final int wave2End;
+
+        private final float r;
+        private final float g;
+        private final float b;
+
+
+        public Provider(IAnimatedSprite spriteSet, AbstractParticleModel waveModel, AbstractParticleModel waveRimModel, float waveWidth, float waveHeight, int wave1End, int wave2Start, int wave2End, float r, float g, float b) {
             this.spriteSet = spriteSet;
+            this.waveModel = waveModel;
+            this.waveRimModel = waveRimModel;
+            this.waveWidth = waveWidth;
+            this.waveHeight = waveHeight;
+            this.wave1End = wave1End;
+            this.wave2Start = wave2Start;
+            this.wave2End = wave2End;
+            this.r = r;
+            this.g = g;
+            this.b = b;
+
         }
 
         @Override
         public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            PuddleStompSplashParticle particle = new PuddleStompSplashParticle(worldIn, x, y, z, spriteSet);
+            PuddleStompSplashParticle particle = new PuddleStompSplashParticle(worldIn, x, y, z, spriteSet, waveModel, waveRimModel, waveWidth, waveHeight, wave1End, wave2Start, wave2End, this.r, this.g, this.b);
             return particle;
         }
 

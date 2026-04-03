@@ -3,6 +3,7 @@ package net.m3tte.ego_weapons.gameasset.abilities;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.gameasset.abilities.armorAbilities.*;
+import net.m3tte.ego_weapons.item.udjat.UdjatArmor;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
@@ -60,6 +61,8 @@ public class ArmorAbilityProcedure {
 		armorAbilities.put(EgoWeaponsItems.RAT_OUTFIT.get(), new RatArmorAbility());
 		armorAbilities.put(EgoWeaponsItems.BLUNT_RAT_OUTFIT.get(), new BluntRatArmorAbility());
 		armorAbilities.put(EgoWeaponsItems.JUSTITIA_CLOAK.get(), new JustitiaArmorAbility());
+		armorAbilities.put(EgoWeaponsItems.ARDOR_BLOSSOM_STAR_SUIT.get(), new ArdorBlossomArmorAbility());
+		armorAbilities.put(EgoWeaponsItems.UDJAT_SUIT.get(), new UdjatArmorAbility());
 
 	}
 

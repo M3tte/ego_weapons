@@ -4,7 +4,8 @@ public enum TexturedAfterImagePresets {
     STANDARD(0.9f, 0.7f, 0.5f, 0.3f, 0.05f, 0.05f, 0.05f, -0.02f, 20),
     RED_MIST(0.8f, 0.5f, 0.5f, 0.6f, 0.1f, 0.02f, 0.02f, -0.02f, 15),
     SWIFT_FIREFIST(1f, 0.7f, 0.5f, 0.3f, 0.05f, 0.05f, 0.05f, -0.03f, 20),
-    PALE(0.2f, 0.7f, 1f, 0.5f, 0.1f, 0.1f, 0.1f, -0.02f, 15);
+    PALE(0.2f, 0.7f, 1f, 0.5f, 0.1f, 0.1f, 0.1f, -0.02f, 15),
+    UDJAT(0.9f, 0.9f, 0.5f, 0.4f, -0.02f, -0.02f, -0.02f, -0.05f, 20);
 
 
     private final float r;

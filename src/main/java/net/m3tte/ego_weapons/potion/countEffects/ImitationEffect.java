@@ -53,7 +53,7 @@ public class ImitationEffect extends CountPotencyStatus {
         World world = entity.level;
         if (entity.getEffect(this).getDuration() <= 10 && amplifier > 0) {
             entity.removeEffect(this);
-            entity.addEffect(new EffectInstance(this, 200, amplifier-1));
+            entity.addEffect(new EffectInstance(this, 400, amplifier-1));
             entity.playSound(SoundEvents.CHORUS_FLOWER_GROW, 1, 1);
 
             if (world instanceof ServerWorld) {
@@ -69,14 +69,14 @@ public class ImitationEffect extends CountPotencyStatus {
         if (entity.level.isClientSide)
             return;
 
-        if (limit == 0 || limit >= 9)
-            limit = 9;
+        if (limit == 0 || limit >= 10)
+            limit = 10;
 
         if (potency > limit)
             potency = limit;
 
         if (!entity.hasEffect(this)) {
-            entity.addEffect(new EffectInstance(this, 200, potency-1));
+            entity.addEffect(new EffectInstance(this, 400, potency-1));
         } else {
             entity.getEffect(this).update(new EffectInstance(this, entity.getEffect(this).getDuration(), Math.min(entity.getEffect(this).getAmplifier() + potency, limit-1)));
         }

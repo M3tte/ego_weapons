@@ -2,6 +2,7 @@ package net.m3tte.ego_weapons.gameasset.movesets;
 
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
+import net.m3tte.ego_weapons.gameasset.AttackCycleType;
 import net.m3tte.ego_weapons.gameasset.AttackLogicPredicate;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
@@ -105,6 +106,7 @@ public class OeufiAssocMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "oeufi_dash")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.PIERCE)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.DASH)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.OUFI_PIERCE)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.OUFI_SWING_PIERCE)
@@ -119,6 +121,7 @@ public class OeufiAssocMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "oeufi_innate")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.OUFI_IMPACT_UP)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.OUFI_SWING)
@@ -133,6 +136,7 @@ public class OeufiAssocMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.PIERCE)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
                 .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.OUFI_IMPACT_DOWN)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.OUFI_SWING_PIERCE)
@@ -147,6 +151,7 @@ public class OeufiAssocMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "special1")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.PIERCE_GUARD_DODGE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "oeufi_halberd_special")
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
@@ -164,6 +169,7 @@ public class OeufiAssocMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "special2")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "oeufi_halberd_special")
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.OUFI_IMPACT_2)
@@ -180,6 +186,7 @@ public class OeufiAssocMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.PIERCE)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
                 .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "oeufi_halberd_special")
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.OUFI_PIERCE_HEAVY)
@@ -204,6 +211,7 @@ public class OeufiAssocMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.BLUNT)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.DEFENSIVE)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT_HARD)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.OUFI_SWING_PIERCE)
@@ -228,6 +236,7 @@ public class OeufiAssocMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "oeufi_contract_counter")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.DEFENSIVE)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.OUFI_PIERCE_HEAVY)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.OUFI_SWING_PIERCE)

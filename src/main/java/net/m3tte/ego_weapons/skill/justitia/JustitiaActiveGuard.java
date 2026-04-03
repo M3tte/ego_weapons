@@ -57,7 +57,7 @@ public class JustitiaActiveGuard extends NonSpamGuardSkill {
             DamageSource damageSource = event.getDamageSource();
             if (this.isBlockableSource(damageSource, true)) {
                 ServerPlayerEntity playerentity = event.getPlayerPatch().getOriginal();
-                boolean successParrying = playerentity.tickCount     - container.getDataManager().getDataValue(this.getLastActive()) < 12 - (EgoWeaponsEffects.SIN.get().getPotency(playerentity) * 3);
+                boolean successParrying = playerentity.tickCount     - container.getDataManager().getDataValue(this.getLastActive()) < 8 - (EgoWeaponsEffects.SIN.get().getPotency(playerentity) * 2);
                 float penalty = container.getDataManager().getDataValue(PENALTY);
 
                 if (successParrying) {
@@ -72,11 +72,8 @@ public class JustitiaActiveGuard extends NonSpamGuardSkill {
                 container.getDataManager().setDataSync(PENALTY, penalty, playerentity);
                 container.getDataManager().setDataSync(getLastActive(), 0, playerentity );
 
-                if (damageSource.getDirectEntity() instanceof LivingEntity) {
-                    knockback += (float) EnchantmentHelper.getKnockbackBonus((LivingEntity)damageSource.getDirectEntity()) * 0.1F;
-                }
+                handleKnockback(event, knockback, successParrying);
 
-                event.getPlayerPatch().knockBackEntity(damageSource.getDirectEntity().position(), knockback);
                 float stamina = event.getPlayerPatch().getStamina();
                 stamina -= penalty * impact;
                 event.getPlayerPatch().setStamina(stamina);

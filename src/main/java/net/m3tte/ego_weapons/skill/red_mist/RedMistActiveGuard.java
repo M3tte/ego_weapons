@@ -43,6 +43,7 @@ import java.util.List;
 
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
 import static net.m3tte.ego_weapons.skill.GenericActiveGuard.canParryHeavy;
+import static net.m3tte.ego_weapons.skill.NonSpamGuardSkill.handleKnockback;
 
 
 public class RedMistActiveGuard extends GuardSkill {
@@ -96,11 +97,8 @@ public class RedMistActiveGuard extends GuardSkill {
                 }
                 container.getDataManager().setDataSync(PENALTY, penalty, playerentity);
 
-                if (damageSource.getDirectEntity() instanceof LivingEntity) {
-                    knockback += (float) EnchantmentHelper.getKnockbackBonus((LivingEntity)damageSource.getDirectEntity()) * 0.1F;
-                }
+                handleKnockback(event, knockback, successParrying, 0.6f, 0.5f);
 
-                event.getPlayerPatch().knockBackEntity(damageSource.getDirectEntity().position(), knockback);
                 float stamina = event.getPlayerPatch().getStamina();
 
                 if ((itemCapability.getStyle(event.getPlayerPatch()).equals(EgoWeaponsStyles.KALI_EGO) || itemCapability.getStyle(event.getPlayerPatch()).equals(EgoWeaponsStyles.KALI)) && successParrying) {

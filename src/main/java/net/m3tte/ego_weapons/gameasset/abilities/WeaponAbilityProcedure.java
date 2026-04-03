@@ -77,6 +77,8 @@ public class WeaponAbilityProcedure {
 		weaponAbilities.put(EgoWeaponsItems.RAT_SHANK.get(), new RatKnifeWeaponAbility());
 		weaponAbilities.put(EgoWeaponsItems.RAT_PIPE.get(), new RatPipeWeaponAbility());
 		weaponAbilities.put(EgoWeaponsItems.JUSTITIA_SWORD.get(), new JustitiaWeaponAbility());
+		weaponAbilities.put(EgoWeaponsItems.ARDOR_BLOSSOM_BAT.get(), new ArdorBlossomBatWeaponAbility());
+		weaponAbilities.put(EgoWeaponsItems.UDJAT_KHOPESH.get(), new UdjatKhopeshWeaponAbility());
 	}
 
 	public static void runWeaponAbility(PlayerEntity entity) {

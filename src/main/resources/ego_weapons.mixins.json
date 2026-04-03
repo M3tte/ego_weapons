@@ -13,6 +13,8 @@
     "epicfight.AttackAnimationMixin",
     "epicfight.LivingEntityPatchMixin",
     "epicfight.PlayerPatchMixin",
+    "epicfight.SkillRegistryEventInvoker",
+    "epicfight.SkillRegistryEventMixin",
     "rendering.renderBufferInterface"
   ],
   "client": [

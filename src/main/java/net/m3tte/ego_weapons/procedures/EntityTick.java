@@ -1,6 +1,7 @@
 package net.m3tte.ego_weapons.procedures;
 
 import net.m3tte.ego_weapons.*;
+import net.m3tte.ego_weapons.item.ardor_blossom.ArdorBlossomSuit;
 import net.m3tte.ego_weapons.network.packages.AbilityPackages;
 import net.m3tte.ego_weapons.potion.EnergyboostPotionEffect;
 import net.m3tte.ego_weapons.potion.EnergyfatiguePotionEffect;
@@ -10,6 +11,7 @@ import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
 import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.nbt.CompoundNBT;
@@ -48,6 +50,17 @@ public class EntityTick {
 		}
 	}
 
+	public static double getLight(PlayerEntity player) {
+		EgoWeaponsModVars.PlayerVariables playerVariables = player.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).orElse(new EgoWeaponsModVars.PlayerVariables());
+
+		return playerVariables.light;
+	}
+
+	public static void consumeLight(PlayerEntity player, float amount) {
+		EgoWeaponsModVars.PlayerVariables playerVariables = player.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).orElse(new EgoWeaponsModVars.PlayerVariables());
+		playerVariables.light = Math.max(0,playerVariables.light - amount);
+		playerVariables.syncPlayerVariables(player);
+	}
 
 	public static void regenerateLight(PlayerEntity player, EgoWeaponsModVars.PlayerVariables vars, double amount) {
 		regenerateLight(player, vars, amount, false);
@@ -84,6 +97,14 @@ public class EntityTick {
 		playerVariables.syncPlayerVariables(player);
 	}
 
+
+
+	public static void purgeArmorData(LivingEntity target) {
+		if (target.getPersistentData().contains("ardorWingAnimationData")) {
+			target.getPersistentData().remove("ardorWingAnimationData");
+		}
+	}
+
 	public static void executeProcedure(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
@@ -97,6 +118,20 @@ public class EntityTick {
 
 		EgoWeaponsModVars.PlayerVariables entityData = entity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
+
+		// Equipment Ticks
+
+		String equipmentSlotChest = entity.getItemBySlot(EquipmentSlotType.CHEST).getItem().getRegistryName() != null ? entity.getItemBySlot(EquipmentSlotType.CHEST).getItem().getRegistryName().getPath() : "";
+
+		switch (equipmentSlotChest) {
+			case "ardor_blossom_suit":
+				ArdorBlossomSuit.tickEvent(entity);
+				break;
+			case "":
+				if (entity.tickCount % 20 == 0)
+					purgeArmorData(entity);
+				break;
+		}
 
 		if (entityData == null)
 			return;

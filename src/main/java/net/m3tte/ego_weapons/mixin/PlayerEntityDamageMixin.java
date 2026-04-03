@@ -2,6 +2,7 @@ package net.m3tte.ego_weapons.mixin;
 
 import net.m3tte.ego_weapons.EgoWeaponsAttributes;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
+import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.gameasset.AttackLogicPredicate;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
@@ -12,6 +13,7 @@ import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.util.DamageSource;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -31,11 +33,11 @@ import static net.m3tte.ego_weapons.procedures.SharedFunctions.*;
 @Mixin(PlayerEntity.class)
 public class PlayerEntityDamageMixin {
 
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;setHealth(F)V"), method = "actuallyHurt(Lnet/minecraft/util/DamageSource;F)V")
+    /*@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;setHealth(F)V"), method = "actuallyHurt(Lnet/minecraft/util/DamageSource;F)V")
     public void applyStaggerDamage(DamageSource src, float amount, CallbackInfo ci) {
         LivingEntity self = ((LivingEntity) (Object)this);
         applyStaggerDamageGeneric(src, amount, ci, self);
-    }
+    }*/
 
 
     @Inject(at = @At(value = "HEAD"), method = "canHarmPlayer(Lnet/minecraft/entity/player/PlayerEntity;)Z", cancellable = true)
@@ -55,11 +57,14 @@ public class PlayerEntityDamageMixin {
             cir.setReturnValue(true);
         }
 
-        int sinOnSelf = EgoWeaponsEffects.SIN.get().getPotency(self);
-        int sinOnTarget = EgoWeaponsEffects.SIN.get().getPotency(target);
 
-        if (sinOnSelf >= 4 ||sinOnTarget >= 4)
-            cir.setReturnValue(true);
+        if (self.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.JUSTITIA_CLOAK.get())) {
+            int sinOnSelf = EgoWeaponsEffects.SIN.get().getPotency(self);
+            int sinOnTarget = EgoWeaponsEffects.SIN.get().getPotency(target);
+            if (sinOnSelf >= 4 ||sinOnTarget >= 4)
+                cir.setReturnValue(true);
+        }
+
 
 
         if (self.hasEffect(Panic.get()))

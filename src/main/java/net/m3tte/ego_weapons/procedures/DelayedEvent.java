@@ -24,6 +24,11 @@ public class DelayedEvent {
     }
 
     public DelayedEvent(int waitTicks, Consumer<?> consumer) {
+        if (waitTicks <= 0) {
+            consumer.accept(null);
+            return;
+        }
+
         this.waitTicks = waitTicks;
         this.consumer = consumer;
 

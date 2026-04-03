@@ -36,6 +36,12 @@ public class SanitySystem {
             amnt *= 0.5f;
         }
 
+        if (player.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.UDJAT_SUIT.get())) {
+            int protection = Math.min(5, EgoWeaponsEffects.PROTECTION.get().getPotency(player));
+
+            amnt *= (1 - 0.05f * protection);
+        }
+
         playerVariables.sanity -= amnt;
 
         if (player.hasEffect(EgoWeaponsEffects.OBLIGATION_FULLFILLMENT.get()) && playerVariables.sanity < 1)

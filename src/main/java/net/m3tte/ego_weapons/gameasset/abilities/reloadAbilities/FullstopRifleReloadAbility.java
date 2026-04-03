@@ -70,20 +70,16 @@ public class FullstopRifleReloadAbility extends ReloadAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars, ItemStack ammoItem) {
 
-        if (playerVars.light >= getBlipCost(player, playerVars)) {
+        if (playerVars.light >= 0) {
 
-            playerVars.light -= getBlipCost(player, playerVars);
             World world = player.level;
             double x = player.getX();
             double y = player.getY();
             double z = player.getZ();
-            int potency = 1;
-            if (world instanceof ServerWorld) {
-                ((ServerWorld) world).sendParticles(EgoWeaponsParticles.EXPEND_LIGHT_PARTICLE.get(), x, (y + 1), z, this.getBlipCost(player, playerVars), 0, 0.3, 0, 0.05);
-            }
+
 
             LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-            playerVars.globalcooldown = 25;
+            playerVars.globalcooldown = 23;
 
             if (!world.isClientSide()) {
 

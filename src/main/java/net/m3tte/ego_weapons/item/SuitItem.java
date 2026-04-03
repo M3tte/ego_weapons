@@ -1,6 +1,7 @@
 
 package net.m3tte.ego_weapons.item;
 
+import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
@@ -25,7 +26,7 @@ public class SuitItem extends ArmorItem {
 	}
 
 
-	static Item legs = new SuitItem(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.LEGS, new Item.Properties().tab(ItemGroup.TAB_COMBAT)) {
+	static Item legs = new SuitItem(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.LEGS, new Item.Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS)) {
 	};
 
 

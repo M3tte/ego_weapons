@@ -106,7 +106,7 @@ public class JustitiaSword extends EgoWeaponsWeapon {
 				break;
 			case 1:
 				if (EgoWeaponsKeybinds.isHoldingShift())
-					generateStatusDescription(list, new String[]{"pale", "sin", "offense_up", "offense_down"});
+					generateStatusDescription(list, new String[]{"pale", "sin", "offense_up", "offense_down", "fragile"});
 				else
 					generateDescription(list,"justitia", "ability", 9);
 				break;

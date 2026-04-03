@@ -116,7 +116,7 @@ public class FullstopSniperWeapon extends GunItem {
 				break;
 			case 2:
 				if (EgoWeaponsKeybinds.isHoldingShift())
-					generateStatusDescription(list, new String[]{"poise", "ammo"});
+					generateStatusDescription(list, new String[]{"poise", "ammo", "target_marked"});
 				else
 					generateDescription(list,"fullstop_sniper", "innate", 4);
 				break;

@@ -26,6 +26,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import yesman.epicfight.api.client.forgeevent.PatchedRenderersEvent;
 
+import static net.m3tte.ego_weapons.specialParticles.modelParticles.PuddleStompSplashParticle.DEFAULT_RIM_MODEL;
+import static net.m3tte.ego_weapons.specialParticles.modelParticles.PuddleStompSplashParticle.DEFAULT_WAVE_MODEL;
+
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(
         modid = "ego_weapons",
@@ -47,6 +50,7 @@ public class ClientModBusEvent {
         ItemModelsProperties.register(EgoWeaponsItems.STIGMA_WORKSHOP_SWORD.get(), new ResourceLocation("glow"), (itemStack, clientWorld, livingEntity) -> (itemStack.hasTag() ? Math.min((itemStack.getOrCreateTag().getInt("glow")),1) : 0));
         ItemModelsProperties.register(EgoWeaponsItems.HEISHOU_MAO_SWORD.get(), new ResourceLocation("active"), (itemStack, clientWorld, livingEntity) -> (itemStack.hasTag() ? Math.min((itemStack.getOrCreateTag().getInt("active")),1) : 0));
         ItemModelsProperties.register(EgoWeaponsItems.MIMICRY.get(), new ResourceLocation("morph"), (itemStack, clientWorld, livingEntity) -> (itemStack.hasTag() ? Math.min((itemStack.getOrCreateTag().getInt("morph")),1) : 0));
+        ItemModelsProperties.register(EgoWeaponsItems.ARDOR_BLOSSOM_BAT.get(), new ResourceLocation("ext"), (itemStack, clientWorld, livingEntity) -> itemStack.hasTag() ? (itemStack.getTag().getInt("ext")) : 0);
 
 
         ItemModelsProperties.register(EgoWeaponsItems.FIREFIST_GAUNTLET.get(), new ResourceLocation("ignition"), (itemStack, clientWorld, livingEntity) -> {
@@ -141,7 +145,13 @@ public class ClientModBusEvent {
         particleEngine.register(EgoWeaponsParticles.SUNSHOWER_OPEN.get(), SunshowerOpenUmbrella.Provider::new);
         particleEngine.register(EgoWeaponsParticles.SUNSHOWER_AUTO3_STRIKE.get(), (a) -> new GenericStrike.Provider(a, 6, 2.5f));
         particleEngine.register(EgoWeaponsParticles.SUNSHOWER_AUTO3_HIT.get(), new GenericHit.Provider(EgoWeaponsParticles.SUNSHOWER_AUTO3_STRIKE.get()));
-        particleEngine.register(EgoWeaponsParticles.PUDDLE_STOMP_IMPACT.get(), PuddleStompSplashParticle.Provider::new);
+        /*
+
+          r = (float) 0.2f;
+        g = (float) 1f;
+        b = (float) 0.8f;
+         */
+        particleEngine.register(EgoWeaponsParticles.PUDDLE_STOMP_IMPACT.get(), (a) -> new PuddleStompSplashParticle.Provider(a, DEFAULT_WAVE_MODEL, DEFAULT_RIM_MODEL, 1, 1, 10, 2, 12, 0.2f, 1, 0.8f));
         particleEngine.register(EgoWeaponsParticles.PUDDLE_STOMP_RIPPLE.get(), PuddleStompRipple.Provider::new);
         particleEngine.register(EgoWeaponsParticles.SUNSHOWER_DRIFT.get(), RotationBoundParticle.Provider::new);
         particleEngine.register(EgoWeaponsParticles.SUNSHOWER_DRIFT_B.get(), SunshowerDashB.Provider::new);
@@ -196,6 +206,10 @@ public class ClientModBusEvent {
         particleEngine.register(EgoWeaponsParticles.STIGMA_WORKSHOP_SWORD_IGNITE.get(), (a) -> new GenericStrike.Provider(a, 10, 0.7f));
         particleEngine.register(EgoWeaponsParticles.STIGMA_WORKSHOP_SWORD_IGNITE_SIDE.get(), (a) -> new PierceAttack.Provider(a, 1f, 11, new Vector3f(-0.4f,0f,0), new Vector3f(-0.01f,0,0), true));
         particleEngine.register(EgoWeaponsParticles.SIMPLE_EMBER.get(), EmberParticle.Provider::new);
+        particleEngine.register(EgoWeaponsParticles.UDJAT_SAND.get(), UdjatSandParticle.Provider::new);
+        particleEngine.register(EgoWeaponsParticles.UDJAT_BLUE_SAND.get(), UdjatBlueSandParticle.Provider::new);
+        particleEngine.register(EgoWeaponsParticles.INGOING_EMBER.get(), IngoingEmberParticle.Provider::new);
+        particleEngine.register(EgoWeaponsParticles.OUTGOING_EMBER.get(), OutgoingEmberParticle.Provider::new);
         particleEngine.register(EgoWeaponsParticles.MAO_PARTICLE.get(), MaoParticle.Provider::new);
         particleEngine.register(EgoWeaponsParticles.STIGMA_WORKSHOP_SLASH_DOWN.get(), (a) -> new SlashDownInvert.Provider(a, 2, 7, new Vector3f(0.3f,1f,0), true));
         particleEngine.register(EgoWeaponsParticles.STIGMA_WORKSHOP_SLASH_UP.get(), (a) -> new SlashDown.Provider(a, 2, 7, new Vector3f(0.3f,1f,0), true));
@@ -216,14 +230,19 @@ public class ClientModBusEvent {
 
         particleEngine.register(EgoWeaponsParticles.JUSTITIA_REUSE_STRIKE.get(), (a) -> new GenericStrike.Provider(a, 5, 2.5f));
         particleEngine.register(EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get(), AirShockwaveEffect.Provider::new);
+        particleEngine.register(EgoWeaponsParticles.FIRE_SHOCKWAVE.get(), GlowingShockwaveEffect.Provider::new);
         particleEngine.register(EgoWeaponsParticles.SLASH_SHOCKWAVE.get(), SlashShockwaveEffect.Provider::new);
+        particleEngine.register(EgoWeaponsParticles.VERTICAL_SLASH_SHOCKWAVE.get(), VertSlashShockwaveEffect.Provider::new);
         particleEngine.register(EgoWeaponsParticles.SOLEMN_LAMENT_SHOCKWAVE.get(), SolemnLamentShockwave.Provider::new);
         particleEngine.register(EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_SHORT.get(), (a) -> new MagicBulletCircleParticle.Provider(a, 40));
         particleEngine.register(EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_LONG.get(), (a) -> new MagicBulletCircleParticle.Provider(a, 60));
         particleEngine.register(EgoWeaponsParticles.TARGET_MAGIC_BULLET_CIRCLE_SHORT.get(), (a) -> new MagicBulletTargetCircle.Provider(a, 40));
         particleEngine.register(EgoWeaponsParticles.TARGET_MAGIC_BULLET_CIRCLE_LONG.get(), (a) -> new MagicBulletTargetCircle.Provider(a, 60));
         particleEngine.register(EgoWeaponsParticles.EXPEND_LIGHT_PARTICLE.get(), ExpendLightParticle.Provider::new);
-
+        particleEngine.register(EgoWeaponsParticles.ARDOR_BLOSSOM_CHARGE.get(), (a) -> new GenericStrike.Provider(a, 25, 4f));
+        particleEngine.register(EgoWeaponsParticles.ARDOR_BLOSSOM_IMPACT.get(), (a) -> new PuddleStompSplashParticle.Provider(a, DEFAULT_WAVE_MODEL, DEFAULT_RIM_MODEL, 1, 1, 10, 2, 12, 1, 1, 1));
+        particleEngine.register(EgoWeaponsParticles.UDJAT_KH_STRIKE.get(), (a) -> new GenericStrike.Provider(a, 6, 2.3f));
+        particleEngine.register(EgoWeaponsParticles.UDJAT_KH_HIT.get(), new LiuHit.Provider(EgoWeaponsParticles.UDJAT_KH_STRIKE.get()));
     }
 
 }

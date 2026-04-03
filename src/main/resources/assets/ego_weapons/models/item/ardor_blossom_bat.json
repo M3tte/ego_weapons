@@ -1,0 +1,21 @@
+{
+	"parent": "ego_weapons:item/fullstop_railgun/fullstop_office_railgun_model",
+	"textures": {
+		"0": "ego_weapons:items/fullstop_railgun/fullstop_office_railgun_0",
+		"particle": "ego_weapons:items/fullstop_railgun/fullstop_office_railgun_0"
+	},
+	"overrides": [
+		{
+			"predicate": {
+				"ext": 0
+			},
+			"model": "ego_weapons:item/ardor_blossom_bat_short"
+		},
+		{
+			"predicate": {
+				"ext": 1
+			},
+			"model": "ego_weapons:item/ardor_blossom_bat_large"
+		}
+	]
+}

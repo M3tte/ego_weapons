@@ -193,8 +193,13 @@ public class RatKnife extends EgoWeaponsWeapon {
 
 
 						target.setDeltaMovement(dist.x,dist.y,dist.z);
-						itemstack.getOrCreateTag().putInt("followUpHit", success ? 2 : 1);
-						itemstack.getOrCreateTag().putInt("stickEntityId", target.getId());
+
+						// sourceentity.teleportTo(target.getX(), target.getY(), target.getZ());
+
+						if (itemstack.getOrCreateTag().getInt("followUpHit") <= 0) {
+							itemstack.getOrCreateTag().putInt("followUpHit", success ? 2 : 1);
+							itemstack.getOrCreateTag().putInt("stickEntityId", target.getId());
+						}
 					} else {
 						itemstack.getOrCreateTag().putInt("followUpHit", 0);
 						EgoWeaponsEffects.BLEED.get().increment(target, 1, 2);

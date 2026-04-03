@@ -148,6 +148,10 @@ public class GenericOverlay extends ModIngameGui {
 		double y = _y;
 		double z = _z;
 
+
+		if (entity == null)
+			return;
+
 		EgoWeaponsModVars.PlayerVariables playerVariables = entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).orElse(new EgoWeaponsModVars.PlayerVariables());
 		float light = (float) playerVariables.light;
 
@@ -184,10 +188,10 @@ public class GenericOverlay extends ModIngameGui {
 
 
 			if ((maxLight - (n / lightsPerLine)*8) >= lightsPerLine) {
-				blit(event.getMatrixStack(), 22 * (n % lightsPerLine), 23 * (n / lightsPerLine) - fixedOffset, 0, 0, 24, 24, 24, 72);
+				blit(event.getMatrixStack(), 22 * (n % lightsPerLine), -23 * (n / lightsPerLine) - fixedOffset, 0, 0, 24, 24, 24, 72);
 
 				if (n + 0.5f <= light) {
-					blit(event.getMatrixStack(), 22 * (n % lightsPerLine), 23 * (n / lightsPerLine) - fixedOffset, 0, lightOffset, 24, 24, 24, 72);
+					blit(event.getMatrixStack(), 22 * (n % lightsPerLine), -23 * (n / lightsPerLine) - fixedOffset, 0, lightOffset, 24, 24, 24, 72);
 				}
 
 			} else {

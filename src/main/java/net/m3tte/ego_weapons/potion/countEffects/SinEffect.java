@@ -11,7 +11,7 @@ import net.minecraft.potion.EffectType;
 
 public class SinEffect extends CountPotencyStatus {
     public SinEffect() {
-        super(EffectType.BENEFICIAL, "sin",-16777216);
+        super(EffectType.HARMFUL, "sin",-16777216);
     }
     @Override
     public String getDescriptionId() {
@@ -29,7 +29,7 @@ public class SinEffect extends CountPotencyStatus {
 
         if (entity.hasEffect(this)) {
             if (entity.getEffect(this).getDuration() < 10) {
-                decrement(entity, 1, 0);
+                decrement(entity, 0, 1);
             }
         }
 
@@ -43,12 +43,12 @@ public class SinEffect extends CountPotencyStatus {
 
 
         if (!entity.hasEffect(this)) {
-            entity.addEffect(new EffectInstance(this, 400, Math.min(6,Math.max(potency-1,0))));
+            entity.addEffect(new EffectInstance(this, 800, Math.min(6,Math.max(potency-1,0))));
             syncEffect(entity);
         } else {
             potency = Math.min(entity.getEffect(this).getAmplifier() + potency,6);
 
-            entity.getEffect(this).update(new EffectInstance(this, 400, potency));
+            entity.getEffect(this).update(new EffectInstance(this, 800, potency));
 
             syncEffect(entity);
         }
@@ -58,8 +58,6 @@ public class SinEffect extends CountPotencyStatus {
     public void decrement(LivingEntity entity, int count, int potency) {
         if (entity.level.isClientSide)
             return;
-
-
 
         if (entity.hasEffect(this)) {
             potency = Math.min(entity.getEffect(this).getAmplifier() - potency,99);

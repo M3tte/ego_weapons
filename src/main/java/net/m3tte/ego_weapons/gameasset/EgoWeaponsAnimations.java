@@ -10,6 +10,7 @@ import net.m3tte.ego_weapons.entities.AtelierShotgunBullet;
 import net.m3tte.ego_weapons.execFunctions.AtelierCooldownHandler;
 import net.m3tte.ego_weapons.execFunctions.BlackSilenceEvaluator;
 import net.m3tte.ego_weapons.gameasset.movesets.*;
+import net.m3tte.ego_weapons.network.packages.ParticlePackages;
 import net.m3tte.ego_weapons.particle.BlacksilenceshadowParticle;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -29,6 +30,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.registries.ForgeRegistries;
 import yesman.epicfight.api.animation.Animator;
@@ -110,8 +112,10 @@ public class EgoWeaponsAnimations {
         StigmaWorkshopMovesetAnims.build(biped);
         HeishouMaoBranchAnims.build(biped);
         RatShankMovesetAnims.build(biped);
+        UdjatKhopeshMovesetAnims.build(biped);
         RatPipeMovesetAnims.build(biped);
         JustitiaMovesetAnims.build(biped);
+        ArdorBlossomMovesetAnims.build(biped);
 
         PUMMEL_DOWN = new PushDownAnimation(0.05f, "biped/generic/pummel_down", biped).addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 0.7f);
 
@@ -184,6 +188,37 @@ public class EgoWeaponsAnimations {
                 l.addParticle(particle, particlePos.x, particlePos.y, particlePos.z, r.nextFloat() * speedmult - speedMultHalf,r.nextFloat() * speedmult - speedMultHalf,r.nextFloat() * speedmult - speedMultHalf); //r.nextFloat() * 0.2 - 0.1, r.nextFloat() * 0.2 - 0.1, );
             } else if (acceptServerSide) {
                 ((ServerWorld)l).sendParticles(particle,particlePos.x,particlePos.y,particlePos.z, 1, 0,0,0,speedmult);
+            }
+        }
+    }
+
+    public static void spawnArmatureParticle(LivingEntityPatch<?> entityPatch, int partialTicks, Vector3d offsets, int amount, IParticleData particle, Vector3d speedOffsets, String jointName, boolean acceptServerSide) {
+        Pose currentPose = entityPatch.getAnimator().getPose(partialTicks);
+        World l = entityPatch.getOriginal().level;
+        Random r = l.random;
+        Vector3d posMid = entityPatch.getOriginal().position();
+
+        LivingEntity source = entityPatch.getOriginal();
+
+        OpenMatrix4f middleModelTf = OpenMatrix4f.createTranslation((float)posMid.x, (float)posMid.y, (float)posMid.z)
+                .mulBack(OpenMatrix4f.createRotatorDeg(180.0F, Vec3f.Y_AXIS)
+                        .mulBack(entityPatch.getModelMatrix(partialTicks)));
+        OpenMatrix4f middleJointTf;
+        if (l.isClientSide)
+            middleJointTf = Animator.getBindedJointTransformByName(currentPose,entityPatch.getEntityModel(ClientModels.LOGICAL_CLIENT).getArmature(), jointName).mulFront(middleModelTf);
+        else
+            middleJointTf = Animator.getBindedJointTransformByName(currentPose,entityPatch.getEntityModel(ClientModels.LOGICAL_SERVER).getArmature(), jointName).mulFront(middleModelTf);
+
+        //entityPatch.getAnimator().getPose((float) (i + r.nextInt(3) - 1) / 10F).getJointTransformData().get("Tool_R").toMatrix().mulFront(middleModelTf);
+
+        Vector3d particlePos = OpenMatrix4f.transform(middleJointTf, offsets);
+        for (int x = 0; x < amount; x++) {
+            if (l.isClientSide()) {
+                l.addParticle(particle, particlePos.x, particlePos.y, particlePos.z, speedOffsets.x, speedOffsets.y, speedOffsets.z); //r.nextFloat() * 0.2 - 0.1, r.nextFloat() * 0.2 - 0.1, );
+            } else if (acceptServerSide) {
+                if (!source.level.isClientSide())
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.UDJAT_SAND.get(), amount, particlePos.x, particlePos.y, particlePos.z, speedOffsets.x, speedOffsets.y, speedOffsets.z, 0,0,0));
+
             }
         }
     }

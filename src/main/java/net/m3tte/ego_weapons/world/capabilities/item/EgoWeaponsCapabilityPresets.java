@@ -39,6 +39,8 @@ public class EgoWeaponsCapabilityPresets {
 
     public static final Collider WHEELS_BLADE = new MultiOBBCollider(4, 0.4, 0.6, 1.1, 0.0, 0.0, -1);
     public static final Collider LONGER_BLADE = new MultiOBBCollider(4, 0.4, 0.6, 1, 0.0, 0.0, -0.9);
+    public static final Collider EVEN_LONGER_BLADE = new MultiOBBCollider(4, 0.6, 0.8, 1.2, 0.0, 0.0, -0.9);
+    public static final Collider LARGE_BOX_ARDOR = new MultiOBBCollider(4, 1.6, 1.5, 2.8, 0, 0, -1);
     public static final Collider CURSEWRIT_BUTCHERBLADE = new MultiOBBCollider(4, 0.8, 0.8, 1.5, -0.15, -0.15, -1.1);
     public static final Collider SPLIT_HORIZONTAL = new MultiOBBCollider(4, 0.4, 1, 2, 0.0, 0.0, -2);
 
@@ -793,6 +795,46 @@ public class EgoWeaponsCapabilityPresets {
 
             .canBePlacedOffhand(false);
 
+    public static final Function<Item, CapabilityItem.Builder> ARDOR_BLOSSOM_BAT = (item) -> WeaponCapability.builder()
+            .category(EgoWeaponsCategories.ARDOR_BLOSSOM_BLUNT)
+            .styleProvider((playerpatch) -> {
+                return Styles.TWO_HAND;
+            })
+            .collider(ColliderPreset.SWORD)
+            .hitSound(EpicFightSounds.BLADE_HIT)
+            .specialAttack(Styles.TWO_HAND, EgoWeaponsSkills.ARDOR_BLOSSOM_INNATE)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.IDLE, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_IDLE)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.WALK, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_WALK)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.SNEAK, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_SNEAK)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.KNEEL, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_KNEEL)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.RUN, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_RUN)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.JUMP, RatShankMovesetAnims.RAT_KNIFE_JUMP)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.BLOCK, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_GUARD)
+            .passiveSkill(EgoWeaponsSkills.ARDOR_BLOSSOM_PASSIVE)
+            .newStyleCombo(Styles.TWO_HAND, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_AUTO_1, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_AUTO_2, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_AUTO_3, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_DASH, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_JUMP_ATTACK)
+
+            .canBePlacedOffhand(false);
+
+    public static final Function<Item, CapabilityItem.Builder> UDJAT_KHOPESH = (item) -> WeaponCapability.builder()
+            .category(EgoWeaponsCategories.UDJAT_KHOPESH)
+            .styleProvider((playerpatch) -> {
+                return Styles.TWO_HAND;
+            })
+            .collider(ColliderPreset.SWORD)
+            .hitSound(EpicFightSounds.BLADE_HIT)
+            .specialAttack(Styles.TWO_HAND, EgoWeaponsSkills.UDJAT_KHOPESH_INNATE)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.IDLE, UdjatKhopeshMovesetAnims.KHOPESH_IDLE)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.WALK, UdjatKhopeshMovesetAnims.KHOPESH_WALK)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.SNEAK, UdjatKhopeshMovesetAnims.KHOPESH_SNEAK)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.KNEEL, UdjatKhopeshMovesetAnims.KHOPESH_KNEEL)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.RUN, UdjatKhopeshMovesetAnims.KHOPESH_RUN)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.JUMP, RatShankMovesetAnims.RAT_KNIFE_JUMP)
+            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.BLOCK, UdjatKhopeshMovesetAnims.KHOPESH_GUARD)
+            .passiveSkill(EgoWeaponsSkills.UDJAT_KH_PASSIVE)
+            .newStyleCombo(Styles.TWO_HAND, UdjatKhopeshMovesetAnims.KHOPESH_AUTO_1, UdjatKhopeshMovesetAnims.KHOPESH_AUTO_2, UdjatKhopeshMovesetAnims.KHOPESH_AUTO_3, UdjatKhopeshMovesetAnims.KHOPESH_DASH, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_JUMP_ATTACK)
+
+            .canBePlacedOffhand(false);
+
     public EgoWeaponsCapabilityPresets() {
     }
 
@@ -822,6 +864,8 @@ public class EgoWeaponsCapabilityPresets {
         event.getTypeEntry().put("heishou_mao_sword", HEISHOU_MAO_SWORD);
         event.getTypeEntry().put("rat_knife", RAT_KNIFE);
         event.getTypeEntry().put("rat_pipe", RAT_PIPE);
+        event.getTypeEntry().put("ardor_blossom_bat", ARDOR_BLOSSOM_BAT);
+        event.getTypeEntry().put("udjat_khopesh", UDJAT_KHOPESH);
         event.getTypeEntry().put("justitia", JUSTITIA);
     }
 }

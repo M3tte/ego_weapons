@@ -5,5 +5,7 @@ public enum AttackLogicPredicate {
     MAGIC_BULLET_FIRE,
     GSH,
     PIERCE_GUARD_DODGE,
-    FIREFIST_3
+    FIREFIST_3,
+    FULLSTOP_INNATE,
+    UDJAT_KHOPESH
 }

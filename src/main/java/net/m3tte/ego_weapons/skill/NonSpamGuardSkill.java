@@ -1,16 +1,33 @@
 package net.m3tte.ego_weapons.skill;
 
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
 import yesman.epicfight.skill.GuardSkill;
 import yesman.epicfight.skill.SkillContainer;
 import yesman.epicfight.skill.SkillDataManager;
+import yesman.epicfight.world.capabilities.EpicFightCapabilities;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import yesman.epicfight.world.capabilities.entitypatch.player.ServerPlayerPatch;
 import yesman.epicfight.world.capabilities.item.CapabilityItem;
+import yesman.epicfight.world.entity.eventlistener.HurtEvent;
 import yesman.epicfight.world.entity.eventlistener.PlayerEventListener;
 
 public class NonSpamGuardSkill extends GuardSkill {
+    public NonSpamGuardSkill(Builder builder, float blockCancelPenalty, int blockCancelTime, float attackPenaltyDecrement, float attackPenaltyFactor, float maxKnockbackDef, float knockbackFactor) {
+        super(builder);
+
+        this.blockCancelPenalty = blockCancelPenalty;
+        this.blockCancelTime = blockCancelTime;
+        this.attackPenaltyFactor = attackPenaltyFactor;
+        this.attackPenaltyDecrement = attackPenaltyDecrement;
+        this.maxKnockbackDef = maxKnockbackDef;
+        this.knockbackFactor = knockbackFactor;
+    }
+
     public NonSpamGuardSkill(Builder builder, float blockCancelPenalty, int blockCancelTime, float attackPenaltyDecrement, float attackPenaltyFactor) {
         super(builder);
 
@@ -26,7 +43,38 @@ public class NonSpamGuardSkill extends GuardSkill {
     int blockCancelTime = 30;
     float attackPenaltyDecrement = 0.5f;
     float attackPenaltyFactor = 2f;
+    protected float maxKnockbackDef = 0.5f;
+    protected float knockbackFactor = 0.5f;
 
+
+    protected void handleKnockback(HurtEvent.Pre event, float knockbackIn, boolean successParrying) {
+        handleKnockback(event, knockbackIn, successParrying, this.maxKnockbackDef, this.knockbackFactor);
+    }
+
+    public static void handleKnockback(HurtEvent.Pre event, float knockbackIn, boolean successParrying, float maxKnockbackDef, float knockbackFactor) {
+        // Modified two sided knockback code
+        LivingEntityPatch<?> sourcePatch = null;
+
+        DamageSource damageSource = event.getDamageSource();
+
+
+        if (damageSource.getDirectEntity() instanceof LivingEntity) {
+            knockbackIn += (float) EnchantmentHelper.getKnockbackBonus((LivingEntity)damageSource.getDirectEntity()) * 0.1F;
+
+            sourcePatch = (LivingEntityPatch<?>) damageSource.getDirectEntity().getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+        }
+
+        event.getPlayerPatch().knockBackEntity(damageSource.getDirectEntity().position(), knockbackIn);
+
+        if (sourcePatch != null) {
+
+            float sourceKnockback = Math.min(knockbackIn + 0.2f, maxKnockbackDef);
+
+            sourceKnockback *= successParrying ? knockbackFactor : knockbackFactor/2;
+
+            sourcePatch.knockBackEntity(event.getPlayerPatch().getOriginal().position().add(0,0.5f,0), sourceKnockback);
+        }
+    }
 
     @Override
     public void onRemoved(SkillContainer container) {

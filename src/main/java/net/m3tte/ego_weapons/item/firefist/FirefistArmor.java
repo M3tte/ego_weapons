@@ -3,6 +3,7 @@ package net.m3tte.ego_weapons.item.firefist;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.item.magic_bullet.MagicBulletArmor;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
@@ -106,7 +107,7 @@ public class FirefistArmor extends GenericEgoWeaponsArmor {
 		}
 	}
 
-	static Item mask = new MagicBulletArmor(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Item.Properties().tab(ItemGroup.TAB_COMBAT)) {
+	static Item mask = new MagicBulletArmor(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Item.Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS)) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -133,7 +134,7 @@ public class FirefistArmor extends GenericEgoWeaponsArmor {
 			return 0;
 		}
 	};
-	static Item chest = new FirefistArmor(firefistArmor, EquipmentSlotType.CHEST, new Properties().tab(ItemGroup.TAB_COMBAT), 0.7f, 1.3f, 0.7f ,1.5f, 0.7f, 1.3f, 1.0f, 5, -5) {
+	static Item chest = new FirefistArmor(firefistArmor, EquipmentSlotType.CHEST, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 0.7f, 1.3f, 0.7f ,1.5f, 0.7f, 1.3f, 1.0f, 5, -5) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -198,7 +199,7 @@ public class FirefistArmor extends GenericEgoWeaponsArmor {
 
 	};
 
-	static Item pants = new FirefistArmor(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.LEGS, new Properties().tab(ItemGroup.TAB_COMBAT)) {
+	static Item pants = new FirefistArmor(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.LEGS, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS)) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {

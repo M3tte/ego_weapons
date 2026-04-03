@@ -3,6 +3,7 @@ package net.m3tte.ego_weapons.gameasset.movesets;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
+import net.m3tte.ego_weapons.gameasset.AttackCycleType;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
@@ -77,6 +78,7 @@ public class RatPipeMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.BLUNT)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "rat_pipe_sp_1")
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.RAT_PIPE_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
@@ -92,6 +94,7 @@ public class RatPipeMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.BLUNT)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "rat_pipe_sp_2")
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.RAT_PIPE_HEAVY_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.KNOCKDOWN)
@@ -110,6 +113,7 @@ public class RatPipeMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.BLUNT)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "rat_pipe_sp_3")
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.RAT_PIPE_HEAVY_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.KNOCKDOWN)
@@ -127,6 +131,7 @@ public class RatPipeMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.CLASH_KNOCK, false)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.BLUNT)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "rat_pipe_innate")
                 .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
@@ -155,6 +160,7 @@ public class RatPipeMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.BLUNT)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "rat_pipe_jump")
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.JUMP_CRIT)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.RAT_PIPE_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)

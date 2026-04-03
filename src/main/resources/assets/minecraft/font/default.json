@@ -345,6 +345,27 @@
     },
     {
       "type": "bitmap",
+      "file": "ego_weapons:mob_effect/ego_att_ardor.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE050"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/embers.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE051"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/blue_sand.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE052"]
+    },
+    {
+      "type": "bitmap",
       "file": "ego_weapons:damage_types/red.png",
       "ascent": 8,
       "height": 9,
@@ -490,6 +511,7 @@
       "height": 9,
       "chars": ["\uED47"]
     },
+
     {
       "type": "bitmap",
       "file": "ego_weapons:screens/gui/zayin.png",
@@ -600,6 +622,13 @@
       "ascent": 8,
       "height": 9,
       "chars": ["\uEC10"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/warning.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uEC33"]
     },
 
     {

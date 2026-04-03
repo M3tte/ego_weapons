@@ -33,6 +33,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 import static net.m3tte.ego_weapons.skill.GenericActiveGuard.canParryHeavy;
+import static net.m3tte.ego_weapons.skill.NonSpamGuardSkill.handleKnockback;
 
 
 public class OeufiActiveGuard extends GuardSkill {
@@ -86,11 +87,8 @@ public class OeufiActiveGuard extends GuardSkill {
                 }
                 container.getDataManager().setDataSync(PENALTY, penalty, playerentity);
 
-                if (damageSource.getDirectEntity() instanceof LivingEntity) {
-                    knockback += (float) EnchantmentHelper.getKnockbackBonus((LivingEntity)damageSource.getDirectEntity()) * 0.1F;
-                }
+                handleKnockback(event, knockback, successParrying, 0.3f, 0.3f);
 
-                event.getPlayerPatch().knockBackEntity(damageSource.getDirectEntity().position(), knockback);
                 float stamina = event.getPlayerPatch().getStamina();
                 stamina -= penalty * impact;
                 event.getPlayerPatch().setStamina(stamina);

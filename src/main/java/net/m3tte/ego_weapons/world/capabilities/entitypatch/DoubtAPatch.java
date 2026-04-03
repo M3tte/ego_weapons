@@ -145,6 +145,8 @@ public class DoubtAPatch extends MobPatch<DawnOfGreenDoubtEntity> implements Sta
 
         DynamicAnimation currentanim = this.getServerAnimator().animationPlayer.getAnimation();
 
+        if (!succeed)
+            return;
 
         if (!(target instanceof LivingEntity))
             return;

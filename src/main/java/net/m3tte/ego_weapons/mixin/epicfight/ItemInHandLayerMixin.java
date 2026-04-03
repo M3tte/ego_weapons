@@ -40,6 +40,11 @@ public abstract class ItemInHandLayerMixin<E extends LivingEntity, T extends Liv
                 return 230;
         }
 
+        if (item.getItem().equals(EgoWeaponsItems.ARDOR_BLOSSOM_BAT.get())) {
+            return 230;
+
+        }
+
         if (item.getItem().equals(EgoWeaponsItems.STIGMA_WORKSHOP_SWORD.get())) {
             if (item.getOrCreateTag().getInt("glow") > 0)
                 return 230;

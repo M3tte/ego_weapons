@@ -2,17 +2,13 @@ package net.m3tte.ego_weapons.gameasset.movesets;
 
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
-import net.m3tte.ego_weapons.gameasset.AttackLogicPredicate;
-import net.m3tte.ego_weapons.gameasset.AttackMoveType;
-import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
-import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
+import net.m3tte.ego_weapons.gameasset.*;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
 import net.m3tte.ego_weapons.item.firefist.FirefistGauntlet;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.AttackTypes;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.DamageTypes;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets;
-import net.minecraft.potion.Effects;
 import yesman.epicfight.api.animation.property.AnimationProperty;
 import yesman.epicfight.api.animation.types.*;
 import yesman.epicfight.api.model.Model;
@@ -70,6 +66,7 @@ public class FirefistMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.BLUNT)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "firefist_dash")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.DASH)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.FIREFIST_AUTO_LIGHT_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
@@ -129,6 +126,7 @@ public class FirefistMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.BLUNT)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.DEFENSIVE)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "firefist_counter")
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.FIREFIST_AUTO_LIGHT_HIT)
@@ -166,21 +164,21 @@ public class FirefistMovesetAnims {
                 new AttackAnimation.Phase(1.2F, 1.25F, 1.3F, 1.4F, 1.5F, 1.5F, "Tool_R", EgoWeaponsCapabilityPresets.FirefistSpew)
                         .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
-                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.SWING_EVENT, false)
+                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.TRIGGERS_EFFECTS, false)
                         .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.5f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, null)
                         .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.LIU_S6_AUTO_HIT),
                 new AttackAnimation.Phase(1.5F, 1.55f, 1.6F, 1.7F, 1.8F, 1.8F, "Tool_R", EgoWeaponsCapabilityPresets.FirefistSpew)
                         .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
-                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.SWING_EVENT, false)
+                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.TRIGGERS_EFFECTS, false)
                         .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.5f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.FIREFIST_SPIT_FIRE_2)
                         .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.LIU_S6_AUTO_HIT),
                 new AttackAnimation.Phase(1.8f, 1.85f, 1.9f, 2f, 2.1f, 2.1f, "Tool_R", EgoWeaponsCapabilityPresets.FirefistSpew)
                         .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
-                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.SWING_EVENT, false)
+                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.TRIGGERS_EFFECTS, false)
                         .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.5f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, null)
                         .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.LIU_S6_AUTO_HIT),
@@ -198,6 +196,7 @@ public class FirefistMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "firefist_innate_a")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.LIU_S6_AUTO_1)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.SHORT)
@@ -214,6 +213,7 @@ public class FirefistMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.BLUNT)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "firefist_innate_b")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.FIREFIST_AUTO_LIGHT_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.SHORT)
@@ -231,6 +231,7 @@ public class FirefistMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "firefist_sp1")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "firefist_special")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.FIREFIST_SPECIAL_PUNCH_1)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
@@ -247,6 +248,7 @@ public class FirefistMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "firefist_sp1")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "firefist_special")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.FIREFIST_SPECIAL_PUNCH_1)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
@@ -262,6 +264,7 @@ public class FirefistMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "firefist_sp2")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "firefist_special")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.FIREFIST_SPECIAL_PUNCH_2)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
@@ -278,6 +281,7 @@ public class FirefistMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.FIREFIST_3)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "firefist_sp3")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "firefist_special")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.FIREFIST_SPECIAL_PUNCH_3)

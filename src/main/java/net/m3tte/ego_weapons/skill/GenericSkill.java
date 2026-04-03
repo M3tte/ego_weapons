@@ -3,7 +3,7 @@ package net.m3tte.ego_weapons.skill;
 import yesman.epicfight.skill.SkillCategory;
 
 public enum GenericSkill implements SkillCategory {
-    TC_EVADE(false, false, false),
+    TC_EVADE(true, true, false),
     TC_GUARD(true, true, false);
 
     boolean shouldSaved;

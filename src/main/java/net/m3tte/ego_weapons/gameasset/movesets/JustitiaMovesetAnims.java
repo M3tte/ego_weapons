@@ -4,6 +4,7 @@ import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
+import net.m3tte.ego_weapons.gameasset.AttackCycleType;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
@@ -48,6 +49,8 @@ import yesman.epicfight.world.effect.EpicFightMobEffects;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static net.m3tte.ego_weapons.procedures.SharedFunctions.getNearbyEntities;
 
 public class JustitiaMovesetAnims {
     public static StaticAnimation JUSTITIA_IDLE;
@@ -100,6 +103,7 @@ public class JustitiaMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.BLUNT)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.PALE)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "justitia_special_1")
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.JUSTITIA_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
@@ -113,6 +117,7 @@ public class JustitiaMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.BLUNT)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.PALE)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "justitia_innate1")
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.JUSTITIA_HIT)
@@ -127,6 +132,7 @@ public class JustitiaMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.BLUNT)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.PALE)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "justitia_innate2")
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.EVISCERATE)
@@ -145,6 +151,7 @@ public class JustitiaMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.PALE)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "justitia_dash")
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.DASH)
                 .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.JUSTITIA_HIT)
@@ -210,6 +217,7 @@ public class JustitiaMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.PALE)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "justitia_jump")
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.JUMP_CRIT)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.JUSTITIA_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.RAT_PIPE_SWING)
@@ -261,7 +269,7 @@ public class JustitiaMovesetAnims {
     private static StaticAnimation.Event[] innateFollowup(float time) {
         StaticAnimation.Event[] events = new StaticAnimation.Event[2];
 
-        events[0] = StaticAnimation.Event.create(0, (entitypatch) -> {
+        events[0] = StaticAnimation.Event.create(0.15f, (entitypatch) -> {
             LivingEntity entity = entitypatch.getOriginal();
             World world = entity.level;
 
@@ -270,6 +278,7 @@ public class JustitiaMovesetAnims {
                 entity.getItemInHand(Hand.MAIN_HAND).getOrCreateTag().remove("noTrigger");
             }
 
+            entity.addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 20, 0, false, false));
 
         }, StaticAnimation.Event.Side.BOTH);
 
@@ -336,7 +345,7 @@ public class JustitiaMovesetAnims {
             LivingEntity entity = entitypatch.getOriginal();
             World world = entity.level;
             if (!world.isClientSide()) {
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.JUSTITIA_PARTICLE_SCALE.get(), 20, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.JUSTITIA_PARTICLE_SCALE.get(), 20, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), entity.getId(), 0.6f, 1.5f, 0.5f, 1f, 0.5f));
                 EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.JUSTITIA_PIECE.get(), 8, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
             }
 
@@ -351,23 +360,23 @@ public class JustitiaMovesetAnims {
             LivingEntity entity = entitypatch.getOriginal();
             World world = entity.level;
 
-            List<LivingEntity> nearbies = getNearbyEntities(entity);
+            List<LivingEntity> nearbies = getNearbyEntities(entity, 16, 4);
 
 
             if (!world.isClientSide()) {
                 EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.JUSTITIA_SCALE.get().getRegistryName()));
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.JUSTITIA_PARTICLE_SCALE.get(), 20, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 0, 0, 0, 0, 0, 0));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.JUSTITIA_PARTICLE_SCALE.get(), 20, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), entity.getId(), 0, 0, 0, 0, 0));
 
                 new DelayedEvent(10, (e) -> {
-                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.JUSTITIA_PARTICLE_SCALE.get(), 10, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 0, 0, 0, 0, 0, 0));
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.JUSTITIA_PARTICLE_SCALE.get(), 10, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), entity.getId(), 0, 0, 0, 0, 0));
                 });
 
                 new DelayedEvent(20, (e) -> {
-                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.JUSTITIA_PARTICLE_SCALE.get(), 10, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 0, 0, 0, 0, 0, 0));
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.JUSTITIA_PARTICLE_SCALE.get(), 10, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), entity.getId(), 0, 0, 0, 0, 0));
                 });
 
                 new DelayedEvent(30, (e) -> {
-                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.JUSTITIA_PARTICLE_SCALE.get(), 10, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 0, 0, 0, 0, 0, 0));
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.JUSTITIA_PARTICLE_SCALE.get(), 10, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), entity.getId(), 0, 0, 0, 0, 0));
                 });
             }
 
@@ -381,14 +390,19 @@ public class JustitiaMovesetAnims {
                     LivingEntityPatch<?> targetEnt = (LivingEntityPatch<?>) ent.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
                     ent.getPersistentData().putInt("justitiaRope", ent.tickCount);
                     ent.playSound(EgoWeaponsSounds.JUSTITIA_SPECIAL_HANG, 6f, 1);
-                    if (!world.isClientSide() && targetEnt.getHitAnimation(ExtendedDamageSource.StunType.KNOCKDOWN) != null) {
-                        if (targetEnt.getHitAnimation(ExtendedDamageSource.StunType.KNOCKDOWN).getId() == Animations.BIPED_KNOCKDOWN.getId()) {
-                            targetEnt.playAnimationSynchronized(JUSTITIA_HIT_HANG, 0);
-                        } else {
-                            ent.addEffect(new EffectInstance(Effects.LEVITATION, 45, 0));
-                            SharedFunctions.hitstunEntity(targetEnt, 1, false, 0.5f);
+
+
+                    if (targetEnt != null) {
+                        if (!world.isClientSide() && targetEnt.getHitAnimation(ExtendedDamageSource.StunType.KNOCKDOWN) != null) {
+                            if (targetEnt.getHitAnimation(ExtendedDamageSource.StunType.KNOCKDOWN).getId() == Animations.BIPED_KNOCKDOWN.getId()) {
+                                targetEnt.playAnimationSynchronized(JUSTITIA_HIT_HANG, 0);
+                            } else {
+                                ent.addEffect(new EffectInstance(Effects.LEVITATION, 45, 0));
+                                SharedFunctions.hitstunEntity(targetEnt, 1, false, 0.5f);
+                            }
                         }
                     }
+
 
 
 
@@ -438,12 +452,6 @@ public class JustitiaMovesetAnims {
         return events;
     }
 
-    static float hDist = 16;
-    static float vDist = 4;
-    private static List<LivingEntity> getNearbyEntities(LivingEntity source) {
-        return new ArrayList<>(source.level
-                .getNearbyEntities(LivingEntity.class,
-                        EntityPredicate.DEFAULT, source, new AxisAlignedBB(source.getX() - (hDist), source.getY() - (vDist), source.getZ() - (hDist), source.getX() + (hDist), source.getY() + (vDist), source.getZ() + (hDist))));
-    }
+
 
 }

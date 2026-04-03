@@ -39,16 +39,50 @@ public class DamageResistanceSystem {
         registerDefaults(EntityType.WITHER_SKELETON, GenericEgoDamage.AttackTypes.BLUNT, GenericEgoDamage.DamageTypes.BLACK);
     }
 
+    public static float calculateStaggerBurnResistanceFor(LivingEntity entity, float inValue) {
+        Item chestItem = entity.getItemBySlot(EquipmentSlotType.CHEST).getItem();
+
+        if (chestItem != null) {
+            switch (chestItem.getRegistryName().getPath()) {
+
+                case "ardor_blossom_suit":
+                    inValue *= 0.0f;
+                    break;
+            }
+        }
+
+        return inValue;
+    }
+
     public static float calculateBurnResistanceFor(LivingEntity entity, float inValue) {
         Item chestItem = entity.getItemBySlot(EquipmentSlotType.CHEST).getItem();
 
-        if (chestItem.equals(EgoWeaponsItems.LIU_SOUTH_6_CHESTPLATE.get())) {
-            inValue = Math.max(inValue - Math.max(inValue * 0.15f, 1),0);
+        if (chestItem != null) {
+            switch (chestItem.getRegistryName().getPath()) {
+                case "liu_south_6_chestplate":
+                    inValue = Math.max(inValue - Math.max(inValue * 0.15f, 1),0);
+                break;
+                case "firefist_suit":
+                    inValue = Math.max(inValue - Math.max(inValue * 0.25f, 1),0);
+                    break;
+                case "stigma_workshop_suit":
+                    inValue = Math.max(0, inValue - 2);
+                    break;
+                case "ardor_blossom_suit":
+                    inValue *= 0.5f;
+
+                    float healthThreshold = entity.getMaxHealth() * 0.25f;
+                    float thresHoldDiff = entity.getHealth() - inValue - healthThreshold;
+
+                    if (thresHoldDiff < 0) {
+                        inValue = Math.max(0,inValue + thresHoldDiff);
+                    }
+
+                    break;
+            }
         }
 
-        if (chestItem.equals(EgoWeaponsItems.FIREFIST_SUIT.get())) {
-            inValue = Math.max(inValue - Math.max(inValue * 0.25f, 1),0);
-        }
+
 
         return inValue;
     }

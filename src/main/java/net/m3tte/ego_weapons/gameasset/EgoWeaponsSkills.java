@@ -15,6 +15,9 @@ import net.m3tte.ego_weapons.skill.AtelierShotgun.AtelierShotgunPassive;
 import net.m3tte.ego_weapons.skill.*;
 import net.m3tte.ego_weapons.skill.allas.AllasPassive;
 import net.m3tte.ego_weapons.skill.allas.BlackSilenceAllasGuard;
+import net.m3tte.ego_weapons.skill.ardorBlossom.ABSActiveGuard;
+import net.m3tte.ego_weapons.skill.ardorBlossom.ABSEngagementSkill;
+import net.m3tte.ego_weapons.skill.ardorBlossom.ABSPassive;
 import net.m3tte.ego_weapons.skill.durandal.BasicBlockablePassive;
 import net.m3tte.ego_weapons.skill.durandal.DurandalCleave;
 import net.m3tte.ego_weapons.skill.firefist.FirefistActiveGuard;
@@ -50,6 +53,8 @@ import net.m3tte.ego_weapons.skill.stigmaSword.SunsetBladeSkill;
 import net.m3tte.ego_weapons.skill.sunshower.SunshowerActiveGuard;
 import net.m3tte.ego_weapons.skill.sunshower.SunshowerPassive;
 import net.m3tte.ego_weapons.skill.sunshower.SunshowerPuddleStomp;
+import net.m3tte.ego_weapons.skill.udjat.UdjatKhopeshGuard;
+import net.m3tte.ego_weapons.skill.udjat.UdjatKhopeshPassive;
 import net.m3tte.ego_weapons.skill.wheels.WheelsCounterGuard;
 import net.m3tte.ego_weapons.skill.wheels.WheelsPassive;
 import net.minecraft.util.ResourceLocation;
@@ -60,7 +65,12 @@ import yesman.epicfight.api.utils.math.ExtraDamageType;
 import yesman.epicfight.api.utils.math.ValueCorrector;
 import yesman.epicfight.skill.*;
 
+import java.util.Map;
+
 public class EgoWeaponsSkills {
+
+    public static Map<ResourceLocation, Skill> REGISTERED_SKILLS_REF = null;
+
     public static Skill DURANDAL_CLEAVE;
     public static Skill GREATER_SPLIT_VERTICAL;
     public static Skill HELLO;
@@ -140,6 +150,7 @@ public class EgoWeaponsSkills {
     public static Skill RAT_KNIFE_INNATE;
     public static Skill RAT_PIPE_INNATE;
     public static Skill JUSTITIA_INNATE;
+    public static Skill UDJAT_KHOPESH_INNATE;
     public static Skill FIREFIST_GUARD;
     public static Skill FIREFIST_PASSIVE;
     public static Skill SUNSET_BLADE;
@@ -152,6 +163,13 @@ public class EgoWeaponsSkills {
     public static Skill RAT_PIPE_PASSIVE;
     public static Skill JUSTITIA_GUARD;
     public static Skill JUSTITIA_PASSIVE;
+    public static Skill ARDOR_BLOSSOM_INNATE;
+    public static Skill ARDOR_BLOSSOM_GUARD;
+    public static Skill ARDOR_BLOSSOM_PASSIVE;
+    public static Skill ARDOR_BLOSSOM_EVADE;
+
+    public static Skill UDJAT_KH_GUARD;
+    public static Skill UDJAT_KH_PASSIVE;
     public EgoWeaponsSkills() {
     }
 
@@ -238,7 +256,7 @@ public class EgoWeaponsSkills {
 
         BASIC_BLOCKABLE_PASSIVE = event.registerSkill(new BasicBlockablePassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "basic_blockable_passive")).setCategory(SkillCategories.WEAPON_PASSIVE), "other"), false);
 
-        BASIC_BLOCKABLE_PASSIVE_STIGMA = event.registerSkill(new BasicBlockablePassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "basic_blockable_passive")).setCategory(SkillCategories.WEAPON_PASSIVE), "stigma_workshop_sword"), false);
+        BASIC_BLOCKABLE_PASSIVE_STIGMA = event.registerSkill(new BasicBlockablePassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "basic_blockable_passive_stigma")).setCategory(SkillCategories.WEAPON_PASSIVE), "stigma_workshop_sword"), false);
 
         KALI_GUARD = event.registerSkill(new RedMistActiveGuard(GenericActiveGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "redmist_active_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
 
@@ -305,6 +323,9 @@ public class EgoWeaponsSkills {
         JUSTITIA_INNATE = event.registerSkill(new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "weight_of_sin"))
                 .setConsumption(25.0F).setMaxStack(1).setAnimations(JustitiaMovesetAnims.JUSTITIA_INNATE_1)), false);
 
+        UDJAT_KHOPESH_INNATE = event.registerSkill(new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "sand_strike"))
+                .setConsumption(25.0F).setMaxStack(1).setAnimations(UdjatKhopeshMovesetAnims.KHOPESH_INNATE)), false);
+
         FIREFIST_PASSIVE = event.registerSkill(new FirefistPassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "firefist_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
         FIREFIST_GUARD =event.registerSkill(new FirefistActiveGuard(FirefistActiveGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "firefist_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
         SUNSET_BLADE = event.registerSkill(new SunsetBladeSkill(SpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "sunset_blade")).setConsumption(20.0F).setMaxStack(3)), false);
@@ -319,6 +340,14 @@ public class EgoWeaponsSkills {
 
         JUSTITIA_PASSIVE = event.registerSkill(new JustitiaPassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "justitia_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
         JUSTITIA_GUARD = event.registerSkill(new JustitiaActiveGuard(JustitiaActiveGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "justitia_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
+        ARDOR_BLOSSOM_INNATE = event.registerSkill(new ABSEngagementSkill(SpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "abs_engagement")).setConsumption(15.0F).setMaxStack(3)), false);
+        ARDOR_BLOSSOM_PASSIVE = event.registerSkill(new ABSPassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "abs_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
+        ARDOR_BLOSSOM_GUARD = event.registerSkill(new ABSActiveGuard(ABSActiveGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "abs_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
+
+        ARDOR_BLOSSOM_EVADE = event.registerSkill(new StepSkill(DodgeSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "ardor_blossom_evade")).setConsumption(2.0F).setAnimations(ArdorBlossomMovesetAnims.DASH_FORWARD, ArdorBlossomMovesetAnims.DASH_BACKWARD, ArdorBlossomMovesetAnims.DASH_L, ArdorBlossomMovesetAnims.DASH_R)), false);
+
+        UDJAT_KH_PASSIVE = event.registerSkill(new UdjatKhopeshPassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "udjat_kh_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
+        UDJAT_KH_GUARD = event.registerSkill(new UdjatKhopeshGuard(UdjatKhopeshGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "udjat_kh_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
 
     }
 }

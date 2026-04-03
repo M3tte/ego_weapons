@@ -71,11 +71,8 @@ public class HeishouMaoActiveGuard extends NonSpamGuardSkill {
                 container.getDataManager().setDataSync(PENALTY, penalty, playerentity);
                 container.getDataManager().setDataSync(getLastActive(), 0, playerentity );
 
-                if (damageSource.getDirectEntity() instanceof LivingEntity) {
-                    knockback += (float) EnchantmentHelper.getKnockbackBonus((LivingEntity)damageSource.getDirectEntity()) * 0.1F;
-                }
+                handleKnockback(event, knockback, successParrying);
 
-                event.getPlayerPatch().knockBackEntity(damageSource.getDirectEntity().position(), knockback);
                 float stamina = event.getPlayerPatch().getStamina();
                 stamina -= penalty * impact;
                 event.getPlayerPatch().setStamina(stamina);

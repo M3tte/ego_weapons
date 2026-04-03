@@ -73,7 +73,15 @@ public class BleedEffect extends CountPotencyStatus {
             }
         }
 
-        target.setHealth(target.getHealth() - potency);
+        if (target.getHealth() <= potency) {
+            target.setHealth(0.1f);
+            target.hurt(new DamageSource("egoweapons.bleed").bypassInvul().bypassArmor(), 999);
+
+        } else {
+            target.setHealth(target.getHealth() - potency);
+
+        }
+
         EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.NumberLabelParticle(target.position().add(target.getRandom().nextFloat() - 0.5f,1,target.getRandom().nextFloat() - 0.5f), NumberParticleTypes.BLEED, potency));
 
 

@@ -22,7 +22,10 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.Objects;
 
+import static net.m3tte.ego_weapons.EgoWeaponsEffects.SHORTER_TURN_DURATION;
+import static net.m3tte.ego_weapons.EgoWeaponsEffects.TURN_DURATION;
 import static net.m3tte.ego_weapons.world.capabilities.DamageResistanceSystem.calculateBurnResistanceFor;
+import static net.m3tte.ego_weapons.world.capabilities.DamageResistanceSystem.calculateStaggerBurnResistanceFor;
 
 public class BurnEffect extends CountPotencyStatus {
     public BurnEffect() {
@@ -77,7 +80,7 @@ public class BurnEffect extends CountPotencyStatus {
 
 
         // Proc burn every 5 seconds.
-        if (entity.tickCount % 100 == 0 && !entity.level.isClientSide() && entity.tickCount > 0) {
+        if (entity.tickCount % (SHORTER_TURN_DURATION) == 0 && !entity.level.isClientSide() && entity.tickCount > 0) {
 
 
             duration -= 20;
@@ -117,10 +120,17 @@ public class BurnEffect extends CountPotencyStatus {
                     entity.setAbsorptionAmount(0);
                 }
             }
-            entity.setHealth(entity.getHealth() - trueBurnVal);
-            entity.hurt(DamageSource.IN_FIRE, burnVal + 0.01f);
+            if (entity.getHealth() <= trueBurnVal) {
+                entity.setHealth(0.1f);
+                entity.hurt(new DamageSource("egoweapons.burn").bypassInvul().bypassArmor(), 999);
 
-            StaggerSystem.reduceStagger(entity, trueBurnVal, true);
+            } else {
+                entity.setHealth(entity.getHealth() - trueBurnVal);
+                entity.hurt(new DamageSource("egoweapons.burn").bypassInvul().bypassArmor(), burnVal + 0.01f);
+
+            }
+
+            StaggerSystem.reduceStagger(entity, calculateStaggerBurnResistanceFor(entity, trueBurnVal), true);
 
             shouldUpdate = true;
             entity.removeEffect(this);

@@ -3,6 +3,7 @@ package net.m3tte.ego_weapons.world.capabilities;
 import net.m3tte.ego_weapons.*;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.item.rat.RatPipe;
+import net.m3tte.ego_weapons.item.udjat.UdjatArmor;
 import net.m3tte.ego_weapons.network.packages.ParticlePackages;
 import net.m3tte.ego_weapons.particle.StaggerShardParticle;
 import net.m3tte.ego_weapons.potion.Staggered;
@@ -35,6 +36,10 @@ public class StaggerSystem {
     public static boolean isStaggered(LivingEntity entity) {
         if (entity instanceof PlayerEntity) {
             EgoWeaponsModVars.PlayerVariables entityData = entity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
+
+            if (entityData == null || entity == null)
+                return false;
+
             return entityData.stagger <= 0 || entity.hasEffect(Staggered.get());
         } else {
             return entity.getPersistentData().getDouble("stagger") > entity.getMaxHealth() || entity.hasEffect(Staggered.get());
@@ -60,13 +65,13 @@ public class StaggerSystem {
         reduceStagger(entity, amnt, (e) -> {
             if (source instanceof LivingEntity)
                 onStaggered((LivingEntity) source, entity);
-        }, bypassArmor);
+        }, bypassArmor, source);
     }
 
     public static void reduceStagger(LivingEntity entity, float amnt, boolean bypassArmor) {
-        reduceStagger(entity, amnt, (n) -> {}, bypassArmor);
+        reduceStagger(entity, amnt, (n) -> {}, bypassArmor, null);
     }
-    public static void reduceStagger(LivingEntity entity, float amnt, Consumer<?> onStagger, boolean bypassArmor) {
+    public static void reduceStagger(LivingEntity entity, float amnt, Consumer<?> onStagger, boolean bypassArmor, Entity sourceEntity) {
         if (entity instanceof PlayerEntity) {
             EgoWeaponsModVars.PlayerVariables entityData = entity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
             entityData.stagger = Math.min(entityData.stagger, EgoWeaponsAttributes.getMaxStagger(entity));
@@ -79,7 +84,18 @@ public class StaggerSystem {
             if (entity.hasEffect(EgoWeaponsEffects.OBLIGATION_FULLFILLMENT.get()) && entityData.stagger < 1)
                 entityData.stagger = 1;
 
+
+
+
             if (entityData.stagger <= 0) {
+
+                if (entity.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.UDJAT_SUIT.get())) {
+                    if (UdjatArmor.evaluateAntiStagger(entity, entityData, sourceEntity)) {
+                        entityData.syncStagger(entity);
+                        return;
+                    }
+                }
+
                 entityData.stagger = 0;
                 stagger(entity, onStagger);
             }

@@ -41,6 +41,8 @@ import yesman.epicfight.world.entity.eventlistener.PlayerEventListener;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static net.m3tte.ego_weapons.skill.NonSpamGuardSkill.handleKnockback;
+
 
 public class GenericActiveGuard extends GuardSkill {
     public GenericActiveGuard(Builder builder) {
@@ -122,11 +124,8 @@ public class GenericActiveGuard extends GuardSkill {
                 }
                 container.getDataManager().setDataSync(PENALTY, penalty, playerentity);
 
-                if (damageSource.getDirectEntity() instanceof LivingEntity) {
-                    knockback += (float) EnchantmentHelper.getKnockbackBonus((LivingEntity)damageSource.getDirectEntity()) * 0.1F;
-                }
+                handleKnockback(event, knockback, successParrying, 0.5f, 0.5f);
 
-                event.getPlayerPatch().knockBackEntity(damageSource.getDirectEntity().position(), knockback);
                 float stamina = event.getPlayerPatch().getStamina();
 
                 if (itemCapability.getWeaponCategory().equals(EgoWeaponsCategories.MOOK_WORKSHOP) && successParrying) {

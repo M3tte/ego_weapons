@@ -27,6 +27,9 @@ import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 import java.util.Objects;
 import java.util.UUID;
 
+import static net.m3tte.ego_weapons.EgoWeaponsEffects.SHORTER_TURN_DURATION;
+import static net.m3tte.ego_weapons.EgoWeaponsEffects.TURN_DURATION;
+
 public class DarkFlameEffect extends CountPotencyStatus {
     public DarkFlameEffect() {
         super(EffectType.HARMFUL, "dark_burn",-16777216);
@@ -128,7 +131,7 @@ public class DarkFlameEffect extends CountPotencyStatus {
         }
 
 
-        if (entity.tickCount % 100 == 0 && entity.tickCount > 0 && !(entity.level.isClientSide()) && !entity.hasEffect(EgoWeaponsEffects.BURN.get())) {
+        if (entity.tickCount % SHORTER_TURN_DURATION == 0 && entity.tickCount > 0 && !(entity.level.isClientSide()) && !entity.hasEffect(EgoWeaponsEffects.BURN.get())) {
             duration -= 20;
             shouldUpdate = true;
         }

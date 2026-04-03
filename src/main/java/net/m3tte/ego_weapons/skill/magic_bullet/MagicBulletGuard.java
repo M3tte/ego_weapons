@@ -38,6 +38,7 @@ import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 import yesman.epicfight.world.capabilities.item.CapabilityItem;
 import yesman.epicfight.world.entity.eventlistener.HurtEvent;
 
+import static net.m3tte.ego_weapons.skill.NonSpamGuardSkill.handleKnockback;
 import static yesman.epicfight.world.entity.eventlistener.PlayerEventListener.EventType;
 
 public class MagicBulletGuard extends EnergizingGuardSkill {
@@ -110,12 +111,11 @@ public class MagicBulletGuard extends EnergizingGuardSkill {
                 EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(serverPlayer.getId(), serverPlayer.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
             }
 
-            if (damageSource.getEntity() instanceof LivingEntity) {
-                knockback += EnchantmentHelper.getKnockbackBonus((LivingEntity)damageSource.getEntity()) * 0.1F;
-            }
+            handleKnockback(event, knockback, false, 0.3f, 0.3f);
+
+
             int magicBulletLevel = EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(serverPlayer);
 
-            event.getPlayerPatch().knockBackEntity(damageSource.getEntity().position(), knockback);
 
             float stamina = event.getPlayerPatch().getStamina() - penalty * impact * (0.8f-0.06f*magicBulletLevel);
             event.getPlayerPatch().setStamina(stamina);

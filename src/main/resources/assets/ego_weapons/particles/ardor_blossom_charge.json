@@ -1,0 +1,12 @@
+{
+  "textures": [
+    "ego_weapons:ardor/charge_0",
+    "ego_weapons:ardor/charge_1",
+    "ego_weapons:ardor/charge_2",
+    "ego_weapons:ardor/charge_3",
+    "ego_weapons:ardor/charge_4",
+    "ego_weapons:ardor/charge_5",
+    "ego_weapons:ardor/charge_6",
+    "ego_weapons:ardor/charge_7"
+  ]
+}

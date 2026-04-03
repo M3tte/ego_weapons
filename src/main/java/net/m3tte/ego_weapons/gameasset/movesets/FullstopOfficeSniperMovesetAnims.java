@@ -1,10 +1,7 @@
 package net.m3tte.ego_weapons.gameasset.movesets;
 
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
-import net.m3tte.ego_weapons.gameasset.AttackLogicPredicate;
-import net.m3tte.ego_weapons.gameasset.AttackMoveType;
-import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
-import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
+import net.m3tte.ego_weapons.gameasset.*;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
 import net.m3tte.ego_weapons.gameasset.abilities.armorAbilities.FullstopSniperFocus;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
@@ -138,11 +135,13 @@ public class FullstopOfficeSniperMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "fs_sn_innate")
                 .addProperty(EgoWeaponsAttackProperty.CONSUMES_AMMO, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
+                .addProperty(EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.FULLSTOP_INNATE)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, false).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.FULLSTOP_SNIPER_INNATE_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.FULLSTOP_SNIPER_INNATE_FIRE)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLUNT)
-                .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(1.35f))
+                .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(2.3f))
                 .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1.4f))
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.SHORT)
                 .addProperty(AnimationProperty.AttackAnimationProperty.COLLIDER_ADDER, 1)
@@ -159,7 +158,7 @@ public class FullstopOfficeSniperMovesetAnims {
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.FULLSTOP_SNIPER_INNATE_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.FULLSTOP_SNIPER_INNATE_FIRE)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLUNT)
-                .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(1.35f))
+                .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(2.35f))
                 .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0f))
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.SHORT)
                 .addProperty(AnimationProperty.AttackAnimationProperty.COLLIDER_ADDER, 1)
@@ -171,6 +170,7 @@ public class FullstopOfficeSniperMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
                 .addProperty(EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.PIERCE_GUARD_DODGE)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(EgoWeaponsAttackProperty.CONSUMES_AMMO, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, false)

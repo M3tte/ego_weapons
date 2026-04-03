@@ -1,6 +1,7 @@
 package net.m3tte.ego_weapons.gameasset.movesets;
 
 import net.m3tte.ego_weapons.*;
+import net.m3tte.ego_weapons.gameasset.AttackCycleType;
 import net.m3tte.ego_weapons.gameasset.AttackLogicPredicate;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
@@ -88,6 +89,7 @@ public class StigmaWorkshopMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.PIERCE)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "stigma_w_s_dash")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.DASH)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.FIREFIST_AUTO_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
@@ -102,6 +104,7 @@ public class StigmaWorkshopMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.PIERCE)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "stigma_w_s_sp_1")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.STIGMA_WORKSHOP_SWORD_SPECIAL_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
@@ -118,6 +121,7 @@ public class StigmaWorkshopMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "stigma_w_s_sp_1")
                 .addProperty(EgoWeaponsAttackProperty.DEATH_MESSAGE, "stigma_sword_special")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.STIGMA_WORKSHOP_SWORD_SPECIAL_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
@@ -135,6 +139,7 @@ public class StigmaWorkshopMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "stigma_w_s_sp_2")
                 .addProperty(EgoWeaponsAttackProperty.DEATH_MESSAGE, "stigma_sword_special")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.STIGMA_WORKSHOP_SWORD_SPECIAL_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.SHORT)
@@ -153,6 +158,7 @@ public class StigmaWorkshopMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "stigma_w_s_innate_1")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.STIGMA_WORKSHOP_SWORD_AUTO_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
@@ -170,6 +176,7 @@ public class StigmaWorkshopMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "stigma_w_s_innate_2")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.STIGMA_WORKSHOP_SWORD_AUTO_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
@@ -183,6 +190,7 @@ public class StigmaWorkshopMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "stigma_w_s_innate_3")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.STIGMA_WORKSHOP_SWORD_AUTO_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.KNOCKDOWN)
@@ -303,6 +311,7 @@ public class StigmaWorkshopMovesetAnims {
             world.playSound(null, entitypatch.getOriginal().blockPosition(),
                     EgoWeaponsSounds.STIGMA_WORKSHOP_SWORD_SPECIAL_IGNITE,
                     SoundCategory.PLAYERS, (float) 2, (float) 1);
+
             EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(entitypatch.getOriginal(), 0, 3);
 
             entitypatch.getOriginal().setAbsorptionAmount(Math.min(entitypatch.getOriginal().getAbsorptionAmount() + 4, 8));
