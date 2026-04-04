@@ -181,9 +181,10 @@ public class EgoWeaponsItems {
 
     public static RegistryObject<Item> ARDOR_BLOSSOM_STAR_SUIT = registerItem("ardor_blossom_suit", ArdorBlossomSuit.getArmorForSlot(EquipmentSlotType.CHEST));
 
-    // Next Update :3
-    // public static RegistryObject<Item> UDJAT_KHOPESH = registerItem("udjat_khopesh", new UdjatKhopesh( 2, -2.45f, new Item.Properties().tab(ItemGroup.TAB_SEARCH)));
 
+    public static RegistryObject<Item> UDJAT_KHOPESH = registerItem("udjat_khopesh", new UdjatKhopesh( 2, -2.45f, new Item.Properties().tab(ItemGroup.TAB_SEARCH)));
+
+    // TODO: Implement next Update
     // public static RegistryObject<Item> UDJAT_SUIT = registerItem("udjat_suit", UdjatArmor.getArmorForSlot(EquipmentSlotType.CHEST));
     // public static RegistryObject<Item> UDJAT_PANTS = registerItem("udjat_pants", UdjatArmor.getArmorForSlot(EquipmentSlotType.LEGS));
     // public static RegistryObject<Item> UDJAT_HAT = registerItem("udjat_mask", UdjatArmor.getArmorForSlot(EquipmentSlotType.HEAD));

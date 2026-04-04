@@ -89,12 +89,15 @@ public class StaggerSystem {
 
             if (entityData.stagger <= 0) {
 
+                /*
+                TODO: Add Next Update
+
                 if (entity.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.UDJAT_SUIT.get())) {
                     if (UdjatArmor.evaluateAntiStagger(entity, entityData, sourceEntity)) {
                         entityData.syncStagger(entity);
                         return;
                     }
-                }
+                }*/
 
                 entityData.stagger = 0;
                 stagger(entity, onStagger);

@@ -127,10 +127,10 @@ public class MagicBulletArmor extends GenericEgoWeaponsArmor {
 			list.add(new StringTextComponent("...The contract won't end here...").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
-			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 3) + 1) + "/3] - - - - - - - =").withStyle(TextFormatting.GRAY));
+			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
 			list.add(new TranslationTextComponent("desc.ego_weapons.risk.waw"));
 			list.add(new StringTextComponent(" "));
-			switch (EgoWeaponsKeybinds.getUiPage() % 3) {
+			switch (EgoWeaponsKeybinds.getUiPage() % 4) {
 				case 0:
 					resistanceMods(itemstack, world, list, flag);
 					break;
@@ -141,6 +141,12 @@ public class MagicBulletArmor extends GenericEgoWeaponsArmor {
 						generateDescription(list, "magic_bullet_armor", "passive", 4);
 					break;
 				case 2:
+					if (EgoWeaponsKeybinds.isHoldingShift())
+						generateStatusDescription(list, new String[]{"dark_flame", "burn"});
+					else
+						generateDescription(list, "magic_bullet_armor", "passive2", 3, true);
+					break;
+				case 3:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"magic_bullet", "poise", "power_up"});
 					else
@@ -259,7 +265,7 @@ public class MagicBulletArmor extends GenericEgoWeaponsArmor {
 		}
 	}
 
-	public static void poiseEffect(LivingEntity target, LivingEntity source, float amount, DamageSource damageSource) {
+	public static float poiseEffect(LivingEntity target, LivingEntity source, float amount, float multiplier, DamageSource damageSource) {
 		EgoWeaponsModVars.PlayerVariables entityData = source.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
 
@@ -275,6 +281,16 @@ public class MagicBulletArmor extends GenericEgoWeaponsArmor {
 				entityData.syncPlayerVariables(source);
 			}
 		}
+
+		int burnOnTarget = EgoWeaponsEffects.BURN.get().getPotency(target);
+
+		multiplier += SharedFunctions.incrementBonusDamage(damageSource, Math.min(0.3f, burnOnTarget * 0.03f));
+
+		if (SharedFunctions.hasDefenseDown(target))
+			multiplier += SharedFunctions.incrementBonusDamage(damageSource, 0.15f);
+
+
+		return multiplier;
 	}
 
 }

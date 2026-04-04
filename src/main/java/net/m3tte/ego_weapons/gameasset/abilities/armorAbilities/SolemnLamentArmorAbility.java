@@ -30,7 +30,7 @@ public class SolemnLamentArmorAbility extends ItemAbility {
 
     @Override
     public AbilityTier getAbilityTier() {
-        return AbilityTier.HE;
+        return AbilityTier.WAW;
     }
 
     @Override

@@ -55,19 +55,19 @@ public class MagicBullet extends EgoWeaponsWeapon {
 				if (EgoWeaponsKeybinds.isHoldingShift())
 					generateStatusDescription(list, new String[]{"burn", "dark_flame"});
 				else
-					generateDescription(list,"magic_bullet", "auto", 4);
+					generateDescription(list,"magic_bullet", "auto", 5);
 				break;
 			case 1:
 				if (EgoWeaponsKeybinds.isHoldingShift())
 					generateStatusDescription(list, new String[]{"burn", "dark_flame", "magic_bullet"});
 				else
-					generateDescription(list,"magic_bullet", "innate", 3);
+					generateDescription(list,"magic_bullet", "innate", 4);
 				break;
 			case 2:
 				if (EgoWeaponsKeybinds.isHoldingShift())
 					generateStatusDescription(list, new String[]{"burn", "dark_flame", "magic_bullet"});
 				else {
-					generateDescription(list,"magic_bullet", "ability", 5);
+					generateDescription(list,"magic_bullet", "ability", 8);
 				}
 				break;
 			case 3:
@@ -101,13 +101,17 @@ public class MagicBullet extends EgoWeaponsWeapon {
 
 			if (type.equals(AttackLogicPredicate.MAGIC_BULLET_FIRE)) {
 
+				int burnOnTarget = EgoWeaponsEffects.BURN.get().getPotency(target);
+
+				multiplier += SharedFunctions.incrementBonusDamage(source, Math.min(1,0.05f * burnOnTarget));
+
 
 				int potency = EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(entitypatch.getOriginal());
 
 				if (potency == 0)
 					potency = 7;
-				SharedFunctions.incrementBonusDamage(source, 0.20f * potency);
-				multiplier += 0.20f * potency;
+
+				multiplier += SharedFunctions.incrementBonusDamage(source, 0.20f * potency);
 
 				float amountPredicate = (0.02f * Math.min(15, EgoWeaponsEffects.BURN.get().getPotency(target)));
 

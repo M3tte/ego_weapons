@@ -24,8 +24,8 @@ public class SolemnLamentBurstHit extends MetaParticle {
         this.y = y + (height) * 0.5;
         this.z = z + (this.level.random.nextDouble() - 0.5D) * width;
         for (int i = 0; i < 2; i++) {
-            this.level.addParticle(EgoWeaponsParticles.SOLEMN_LAMENT_FIRE_DEPARTED.get(), this.x + randBetween(-1f, 1f), this.y + 1 + randBetween(-0.5f, 0.5f), this.z + randBetween(-0.5f, 0.5f), 0.0D, 0.0D, 0.0D);
-            this.level.addParticle(EgoWeaponsParticles.SOLEMN_LAMENT_FIRE_LIVING.get(), this.x + randBetween(-1f, 1f), this.y + 1 + randBetween(-0.5f, 0.5f), this.z + randBetween(-0.5f, 0.5f), 0.0D, 0.0D, 0.0D);
+            this.level.addParticle(EgoWeaponsParticles.SOLEMN_LAMENT_FIRE_DEPARTED.get(), this.x + randBetween(-0.5f, 0.5f), this.y + 1 + randBetween(-1f, 1f), this.z + randBetween(-0.5f, 0.5f), 0.0D, 0.0D, 0.0D);
+            this.level.addParticle(EgoWeaponsParticles.SOLEMN_LAMENT_FIRE_LIVING.get(), this.x + randBetween(-0.5f, 0.5f), this.y + 1 + randBetween(-1f, 1f), this.z + randBetween(-0.5f, 0.5f), 0.0D, 0.0D, 0.0D);
         }
         double d = 0.2F;
 

@@ -432,10 +432,6 @@ public class SharedFunctions {
             // Animation Bound Effects
             multiplier = evaluateAnimationEffects(self, (LivingEntity) source.getEntity(), multiplier, source);
 
-            if (((LivingEntity)source.getEntity()).getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.MAGIC_BULLET_CLOAK.get())) {
-                MagicBulletArmor.poiseEffect(self, (LivingEntity) source.getEntity(), amount, source);
-            }
-
             Item mainHandItem = ((LivingEntity)source.getEntity()).getItemBySlot(EquipmentSlotType.MAINHAND).getItem();
 
             if (mainHandItem != null) {
@@ -488,7 +484,9 @@ public class SharedFunctions {
                             case "ardor_blossom_suit":
                                 multiplier = ArdorBlossomSuit.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source);
                                 break;
-
+                            case "magic_bullet_cloak":
+                                multiplier = MagicBulletArmor.poiseEffect(self, (LivingEntity) source.getEntity(), amount, multiplier, source);
+                                break;
                         }
                     }
                 }
@@ -844,10 +842,10 @@ public class SharedFunctions {
 
     private static void onKilled(DamageSource src, LivingEntity self) {
         //intln("Executing onKILLED for entity "+self+" source entity is : "+src.getEntity());
-        if (src.getEntity() instanceof PlayerEntity) {
-            PlayerEntity source = (PlayerEntity) src.getEntity();
+        if (src.getEntity() instanceof LivingEntity) {
+            LivingEntity source = (LivingEntity) src.getEntity();
 
-            PlayerPatch<?> entitypatch = (PlayerPatch<?>) source.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+            LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) source.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
             DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
             final int anim_id = currentanim.getId();
 
@@ -882,25 +880,45 @@ public class SharedFunctions {
                 }
             }
 
-            if (source.getItemBySlot(EquipmentSlotType.MAINHAND).getItem().equals(EgoWeaponsItems.ARDOR_BLOSSOM_BAT.get())) {
-                List<LivingEntity> nearby = SharedFunctions.getNearbyEntities(source, 10, 5, TeamLockedPredicate.ONLY_HOSTILES);
+            // Solemn Lament on Kill
+            if (source.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.SOLEMN_LAMENT_CLOAK.get())) {
+                EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(source, 5, 1);
 
-                int burnOnTarget = EgoWeaponsEffects.BURN.get().getPotency(self);
+                float maxHealth = Math.min(10, self.getMaxHealth() * 0.2f);
 
-                if (nearby.size() > 1) {
-                    int splitBurn = Math.max(1, burnOnTarget / (nearby.size()-1));
+                List<LivingEntity> targets = SharedFunctions.getNearbyEntities(source, self.position(), 6, 5, TeamLockedPredicate.ONLY_HOSTILES);
 
-                    for (LivingEntity ent : nearby) {
-                        if (ent.getId() != self.getId()) {
-                            EgoWeaponsEffects.BURN.get().increment(ent, 0, splitBurn);
-                            if (!ent.level.isClientSide())
-                                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.INGOING_EMBER.get(), Math.min(20,Math.max(2,splitBurn * 3)), ent.getX(), ent.getY() + ent.getBbHeight()/2, ent.getZ(), 3f, 0.3f, 10, 0,0,0));
+                for (LivingEntity target : targets) {
+                    if (target != self && target != source) {
+                        target.hurt(new SimpleEgoDamageSource("", null, GenericEgoDamage.AttackTypes.BLUNT, GenericEgoDamage.DamageTypes.PALE, "butterfly_armor_passive"), maxHealth);
+                        target.playSound(EgoWeaponsSounds.SOLEMN_LAMENT_BELL, 1f, 1);
 
+                        if (!target.level.isClientSide()) {
+                            ((ServerWorld) target.level).sendParticles(EgoWeaponsParticles.SOLEMN_LAMENT_BURST_HIT.get(), target.getX(), target.getY() + target.getBbHeight()/2 - 1, target.getZ(), 1, 0, 0, 0, 0);
                         }
                     }
                 }
-
             }
+
+            if (source.getItemBySlot(EquipmentSlotType.MAINHAND).getItem().equals(EgoWeaponsItems.ARDOR_BLOSSOM_BAT.get())) {
+            List<LivingEntity> nearby = SharedFunctions.getNearbyEntities(source, 10, 5, TeamLockedPredicate.ONLY_HOSTILES);
+
+            int burnOnTarget = EgoWeaponsEffects.BURN.get().getPotency(self);
+
+            if (nearby.size() > 1) {
+                int splitBurn = Math.max(1, burnOnTarget / (nearby.size()-1));
+
+                for (LivingEntity ent : nearby) {
+                    if (ent.getId() != self.getId()) {
+                        EgoWeaponsEffects.BURN.get().increment(ent, 0, splitBurn);
+                        if (!ent.level.isClientSide())
+                            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.INGOING_EMBER.get(), Math.min(20,Math.max(2,splitBurn * 3)), ent.getX(), ent.getY() + ent.getBbHeight()/2, ent.getZ(), 3f, 0.3f, 10, 0,0,0));
+
+                    }
+                }
+            }
+
+        }
 
             if (anim_id == MimicryMovesetAnims.MIMICRY_GOODBYE.getId() || anim_id == MimicryMovesetAnims.MIMICRY_GOODBYE_ENHANCED.getId()) {
                 if (src.getEntity() instanceof LivingEntity) {
@@ -962,7 +980,7 @@ public class SharedFunctions {
         if (anim_id == FirefistMovesetAnims.FIREFIST_SPECIAL_3.getId()) {
             EgoWeaponsEffects.POWER_UP.get().increment(source, 4, 2);
         }
-
+/*      // TODO: Add Next Update
         if (source.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.UDJAT_SUIT.get())) {
             if (self.hasEffect(EgoWeaponsEffects.BLUE_SAND.get())) {
                 EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(source, 9, 3);
@@ -970,6 +988,8 @@ public class SharedFunctions {
                 EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(source, 3, 1);
             }
         }
+ */
+
 
         String selfPersonality = getPersonality(self);
 
@@ -1357,14 +1377,15 @@ public class SharedFunctions {
             }
         } else {
 
-
+            /*
+            TODO: Add Next Update
             if (self.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.UDJAT_SUIT.get())) {
                 if (UdjatArmor.evaluateAntiDeath(self, src.getEntity())) {
                     System.out.println("Trying to cancel death event");
                     evt.setCanceled(true);
                     return;
                 }
-            }
+            }*/
 
 
             onKilled(src, self);
