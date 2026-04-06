@@ -62,8 +62,7 @@ public class ArmorAbilityProcedure {
 		armorAbilities.put(EgoWeaponsItems.BLUNT_RAT_OUTFIT.get(), new BluntRatArmorAbility());
 		armorAbilities.put(EgoWeaponsItems.JUSTITIA_CLOAK.get(), new JustitiaArmorAbility());
 		armorAbilities.put(EgoWeaponsItems.ARDOR_BLOSSOM_STAR_SUIT.get(), new ArdorBlossomArmorAbility());
-		// TODO: Enable next Update
-		// armorAbilities.put(EgoWeaponsItems.UDJAT_SUIT.get(), new UdjatArmorAbility());
+		armorAbilities.put(EgoWeaponsItems.UDJAT_SUIT.get(), new UdjatArmorAbility());
 
 	}
 

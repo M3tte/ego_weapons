@@ -134,7 +134,7 @@ public class SolemnLamentArmor extends GenericEgoWeaponsArmor {
 				case 1:
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"pale", "offense_up"});
-					else // TODO: ACTUALLY COMPLETE THIS PASSIVE
+					else
 						generateDescription(list, "solemn_lament_armor", "passive", 2, true);
 					break;
 				case 2:

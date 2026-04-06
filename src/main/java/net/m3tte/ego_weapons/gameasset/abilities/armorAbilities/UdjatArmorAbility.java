@@ -120,9 +120,7 @@ public class UdjatArmorAbility extends ItemAbility {
         for (LivingEntity ent : nearbyFriendlies) {
             if (ent != source) {
 
-                // TODO: ENABLE NEXT UPDATE
-                // boolean udjatGear = ent.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.UDJAT_SUIT.get());
-                boolean udjatGear = false;
+                boolean udjatGear = ent.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.UDJAT_SUIT.get());
                 EgoWeaponsEffects.PROTECTION.get().increment(ent, 5, udjatGear ? 2 : 1);
                 EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(ent, 0, protection);
 

@@ -846,8 +846,15 @@ public class SharedFunctions {
             LivingEntity source = (LivingEntity) src.getEntity();
 
             LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) source.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-            DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
-            final int anim_id = currentanim.getId();
+
+            DynamicAnimation currentanim = null;
+           if (entitypatch != null) {
+               currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
+           }
+
+
+
+            final int anim_id = currentanim != null ? currentanim.getId() : 0;
 
             Item it = source.getItemBySlot(EquipmentSlotType.CHEST).getItem();
 
@@ -980,15 +987,14 @@ public class SharedFunctions {
         if (anim_id == FirefistMovesetAnims.FIREFIST_SPECIAL_3.getId()) {
             EgoWeaponsEffects.POWER_UP.get().increment(source, 4, 2);
         }
-/*      // TODO: Add Next Update
+
         if (source.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.UDJAT_SUIT.get())) {
             if (self.hasEffect(EgoWeaponsEffects.BLUE_SAND.get())) {
-                EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(source, 9, 3);
+                EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(source, 4, 2);
             } else {
-                EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(source, 3, 1);
+                EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(source, 2, 1);
             }
         }
- */
 
 
         String selfPersonality = getPersonality(self);
@@ -1377,15 +1383,13 @@ public class SharedFunctions {
             }
         } else {
 
-            /*
-            TODO: Add Next Update
             if (self.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.UDJAT_SUIT.get())) {
                 if (UdjatArmor.evaluateAntiDeath(self, src.getEntity())) {
                     System.out.println("Trying to cancel death event");
                     evt.setCanceled(true);
                     return;
                 }
-            }*/
+            }
 
 
             onKilled(src, self);

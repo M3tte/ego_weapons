@@ -42,6 +42,7 @@ import net.m3tte.ego_weapons.item.sunshower.Sunshower;
 import net.m3tte.ego_weapons.item.sunshower.SunshowerArmor;
 import net.m3tte.ego_weapons.item.udjat.UdjatArmor;
 import net.m3tte.ego_weapons.item.udjat.UdjatKhopesh;
+import net.m3tte.ego_weapons.world.capabilities.item.DisabledItem;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -54,7 +55,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import static net.m3tte.ego_weapons.EgoWeaponsCreativeTabs.EGO_WEAPONS;
 
 public class EgoWeaponsItems {
-
+    // TODO:
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, EgoWeaponsMod.MODID);
 
     public static RegistryObject<Item>  ICON_ITEM = registerItem("icon_item", new Item(new Item.Properties()));
@@ -182,12 +183,11 @@ public class EgoWeaponsItems {
     public static RegistryObject<Item> ARDOR_BLOSSOM_STAR_SUIT = registerItem("ardor_blossom_suit", ArdorBlossomSuit.getArmorForSlot(EquipmentSlotType.CHEST));
 
 
-    public static RegistryObject<Item> UDJAT_KHOPESH = registerItem("udjat_khopesh", new UdjatKhopesh( 2, -2.45f, new Item.Properties().tab(ItemGroup.TAB_SEARCH)));
+    public static RegistryObject<Item> UDJAT_KHOPESH = registerItem("udjat_khopesh", new DisabledItem()); // new UdjatKhopesh( 2, -2.45f, new Item.Properties().tab(ItemGroup.TAB_SEARCH)));
 
-    // TODO: Implement next Update
-    // public static RegistryObject<Item> UDJAT_SUIT = registerItem("udjat_suit", UdjatArmor.getArmorForSlot(EquipmentSlotType.CHEST));
-    // public static RegistryObject<Item> UDJAT_PANTS = registerItem("udjat_pants", UdjatArmor.getArmorForSlot(EquipmentSlotType.LEGS));
-    // public static RegistryObject<Item> UDJAT_HAT = registerItem("udjat_mask", UdjatArmor.getArmorForSlot(EquipmentSlotType.HEAD));
+    public static RegistryObject<Item> UDJAT_SUIT = registerItem("udjat_suit", new DisabledItem()); //  UdjatArmor.getArmorForSlot(EquipmentSlotType.CHEST));
+    public static RegistryObject<Item> UDJAT_PANTS = registerItem("udjat_pants", new DisabledItem()); //  UdjatArmor.getArmorForSlot(EquipmentSlotType.LEGS));
+    public static RegistryObject<Item> UDJAT_HAT = registerItem("udjat_mask", new DisabledItem()); //  UdjatArmor.getArmorForSlot(EquipmentSlotType.HEAD));
 
     private static RegistryObject<Item> registerItem(String registryName, Item i) {
         return ITEMS.register(registryName, () -> i);

@@ -125,11 +125,6 @@ public class RedMistActiveGuard extends GuardSkill {
                     }
                 } else {
 
-                    if (stamina > event.getPlayerPatch().getMaxStamina() - 0.05) {
-                        if (event.getDamageSource().getDirectEntity() instanceof LivingEntity) {
-                            ((LivingEntity) event.getDamageSource().getDirectEntity()).addEffect(new EffectInstance(Effects.WEAKNESS, 100, 1)); // TODO: REPLACE WITH FRAGILE
-                        }
-                    }
 
                     stamina -= penalty * impact;
                 }

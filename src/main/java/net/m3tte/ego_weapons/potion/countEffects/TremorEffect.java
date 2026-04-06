@@ -127,7 +127,7 @@ public class TremorEffect extends CountPotencyStatus {
         if (potency > 0) {
             StaggerSystem.reduceStagger(entity, potency, true);
         }
-        // TODO: Check if this things broken and potentially causes crashes?
+
         if (!entity.level.isClientSide()) {
             EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.NumberLabelParticle(entity.position().add(entity.getRandom().nextFloat() - 0.5f,1,entity.getRandom().nextFloat() - 0.5f), NumberParticleTypes.TREMOR, potency));
             EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendShakeMessage(entity.getId(), 2 + (potency / 55f)));

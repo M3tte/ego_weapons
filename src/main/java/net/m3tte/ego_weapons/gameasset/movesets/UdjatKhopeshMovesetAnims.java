@@ -103,7 +103,7 @@ public class UdjatKhopeshMovesetAnims {
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1.4f)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, activateUdjatMirage());
 
-        KHOPESH_AUTO_1 = new BasicEgoAttackAnimation(0.05F, 0.2F, 0.33f, 0.45F, 0.5F, null, "Tool_R", "biped/udjat/auto_1", biped)
+        KHOPESH_AUTO_1 = new BasicEgoAttackAnimation(0.05F, 0.2F, 0.33f, 0.45F, 0.55F, null, "Tool_R", "biped/udjat/auto_1", biped)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.WHITE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.SWING_EFFECT, vertSwingEvent)

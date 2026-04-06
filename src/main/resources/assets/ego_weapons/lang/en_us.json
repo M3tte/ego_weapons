@@ -535,7 +535,7 @@
   "desc.ego_weapons.mimicry_armor.ability.title": "§b[Ability] §fI lOve yOu! - \uE004\uE004\uE004\uE004\uE004\uE004\uE004\uE004",
   "desc.ego_weapons.mimicry_armor.ability.1": "§8§oIf hit within the next §7§o15 Seconds:",
   "desc.ego_weapons.mimicry_armor.ability.2": " §7Restore §aHealth§7 by §f25% §7of Attackers Max HP. §8[Max 35% of Users Max HP]",
-  "desc.ego_weapons.mimicry_armor.ability.3": " §7Restore §f\uE046 §bSanity§7.",
+  "desc.ego_weapons.mimicry_armor.ability.3": " §7Restore §f25% \uE046 §bSanity§7.",
   "desc.ego_weapons.mimicry_armor.ability.4": " §7Take §f30% §7Less §cDamage§7.",
   "desc.ego_weapons.mimicry_armor.ability.5": " §7Inflict §f\uE027 §cTerror §7on Attacker.",
   "desc.ego_weapons.mimicry_armor.ability.6": " §7Gain §f1 \uE028 §cShell §7for every §f6 §cAttack Power §7of Attacker. §8[Max 5]",
@@ -1431,9 +1431,9 @@
 
   "desc.ego_weapons.udjat_suit.passive.title": "§b[Passive] §fThe Eye of Horus",
   "desc.ego_weapons.udjat_suit.passive.1": "§7When Staggering an Enemy:",
-  "desc.ego_weapons.udjat_suit.passive.2": "§7- Gain §f1 \uE022 §cOffense Level Up§7. §8[Max 3]",
+  "desc.ego_weapons.udjat_suit.passive.2": "§7- Gain §f1 \uE022 §cOffense Level Up§7. §8[Max 2]",
   "desc.ego_weapons.udjat_suit.passive.3": "§7If the Target has §f\uE052 §cBlue Sand§7.",
-  "desc.ego_weapons.udjat_suit.passive.4": "§7- Gain §f3 \uE022 §cOffense Level Up§7 instead. §8[Max 9]",
+  "desc.ego_weapons.udjat_suit.passive.4": "§7- Gain §f2 \uE022 §cOffense Level Up§7 instead. §8[Max 4]",
 
   "desc.ego_weapons.udjat_suit.passive2.title": "§b[Passive] §fCognition Filter // Eye of the Udjat",
   "desc.ego_weapons.udjat_suit.passive2.1": "§7Take less §f-5% \uE047 §cSanity§7 Damage §7for every §f\uE007 §cProtection §7on self.",

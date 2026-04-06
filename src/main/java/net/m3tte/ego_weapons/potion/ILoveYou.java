@@ -1,11 +1,13 @@
 
 package net.m3tte.ego_weapons.potion;
 
+import net.m3tte.ego_weapons.EgoWeaponsAttributes;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.potion.countEffects.Shell;
+import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -104,10 +106,11 @@ public class ILoveYou {
 				healAmount = target.getMaxHealth() * 0.35f;
 			target.heal(healAmount);
 			sourceLiving.addEffect(new EffectInstance(Terror.get(),300, 0));
-			// TODO: HEAL SANITY ONCE IMPLEMENTED
 
 			if (target instanceof PlayerEntity) {
 				PlayerPatch<?> entitypatch = (PlayerPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+
+				SanitySystem.healSanity((PlayerEntity) target, EgoWeaponsAttributes.getMaxSanity((PlayerEntity) target) * 0.25f);
 
 				entitypatch.playAnimationSynchronized(BlackSilenceMovesetAnims.RANGA_GUARD_HIT, 0);
 			}

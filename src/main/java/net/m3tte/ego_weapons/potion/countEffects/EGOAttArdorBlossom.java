@@ -67,15 +67,20 @@ public class EGOAttArdorBlossom extends CountPotencyStatus {
 
             SkillContainer evade = entitypatch.getSkillCapability().skillContainers[SkillCategories.DODGE.universalOrdinal()];
 
-            System.out.println("STOPPED ANIMATION. Evade skill is : "+evade.getSkill().toString());
-            if (evade.getSkill().equals(EgoWeaponsSkills.ARDOR_BLOSSOM_EVADE)) {
-                String savedAnim = entity.getPersistentData().getString("savedDodgeAnimationArmor");
 
-                System.out.println("STOPPED ANIMATION SAVED SHOULD BE :: "+savedAnim);
-                if (savedAnim.split(":").length == 2) {
-                    evade.setSkill(EgoWeaponsSkills.REGISTERED_SKILLS_REF.get(new ResourceLocation(savedAnim)));
+            if (evade != null) {
+                if (evade.getSkill() != null) {
+                    if (evade.getSkill().equals(EgoWeaponsSkills.ARDOR_BLOSSOM_EVADE)) {
+                        String savedAnim = entity.getPersistentData().getString("savedDodgeAnimationArmor");
+
+                        System.out.println("STOPPED ANIMATION SAVED SHOULD BE :: "+savedAnim);
+                        if (savedAnim.split(":").length == 2) {
+                            evade.setSkill(EgoWeaponsSkills.REGISTERED_SKILLS_REF.get(new ResourceLocation(savedAnim)));
+                        }
+                    }
                 }
             }
+
         }
     }
 
