@@ -14,7 +14,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 
-version = '1.0'
+version = '1.01.11'
 group = 'net.m3tte.ego_weapons'
 archivesBaseName = 'ego_weapons'
 

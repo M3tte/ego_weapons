@@ -1382,6 +1382,11 @@
   "desc.ego_weapons.ardor_blossom_suit.ability2.3": "[I] §7Inflict §f1 \uE002 §cBurn §7Potency for every §f\uE050 §cE.G.O Attunement :: A.B.S§7.",
   "desc.ego_weapons.ardor_blossom_suit.ability2.4": "[I] §7Deal Damage by §f\uE050 §cE.G.O Attunement :: A.B.S§7.",
 
+  "item.ego_weapons.lca_udjat_khopesh": "§f\uEC11 LCA Udjat Khopesh",
+  "desc.ego_weapons.lca_udjat_khopesh.desc": "§7§o\"From Company to Company... The Udjat still serves their sole leader.\"",
+
+
+
   "item.ego_weapons.udjat_khopesh": "§f\uEC13 Udjat Khopesh",
   "desc.ego_weapons.udjat_khopesh.desc": "§7§o\"As Lady Dias Commands. Stepping stones we shall be.\"",
 

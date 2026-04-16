@@ -97,7 +97,7 @@ public class BlackSilenceArmor  extends GenericEgoWeaponsArmor {
 	public static Item getArmorForSlot(EquipmentSlotType slot) {
 		switch (slot) {
 			default: return null;
-			case CHEST: return chest;
+			case CHEST: return chest;i u 
 			case HEAD: return mask;
 		}
 	}

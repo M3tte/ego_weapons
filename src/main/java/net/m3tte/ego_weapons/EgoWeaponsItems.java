@@ -183,11 +183,13 @@ public class EgoWeaponsItems {
     public static RegistryObject<Item> ARDOR_BLOSSOM_STAR_SUIT = registerItem("ardor_blossom_suit", ArdorBlossomSuit.getArmorForSlot(EquipmentSlotType.CHEST));
 
 
-    public static RegistryObject<Item> UDJAT_KHOPESH = registerItem("udjat_khopesh", new DisabledItem()); // new UdjatKhopesh( 2, -2.45f, new Item.Properties().tab(ItemGroup.TAB_SEARCH)));
+    public static RegistryObject<Item> UDJAT_KHOPESH = registerItem("udjat_khopesh", new UdjatKhopesh( 2, -2.45f, new Item.Properties().tab(ItemGroup.TAB_SEARCH)));
 
-    public static RegistryObject<Item> UDJAT_SUIT = registerItem("udjat_suit", new DisabledItem()); //  UdjatArmor.getArmorForSlot(EquipmentSlotType.CHEST));
-    public static RegistryObject<Item> UDJAT_PANTS = registerItem("udjat_pants", new DisabledItem()); //  UdjatArmor.getArmorForSlot(EquipmentSlotType.LEGS));
-    public static RegistryObject<Item> UDJAT_HAT = registerItem("udjat_mask", new DisabledItem()); //  UdjatArmor.getArmorForSlot(EquipmentSlotType.HEAD));
+    public static RegistryObject<Item> UDJAT_SUIT = registerItem("udjat_suit", UdjatArmor.getArmorForSlot(EquipmentSlotType.CHEST));
+    public static RegistryObject<Item> UDJAT_PANTS = registerItem("udjat_pants", UdjatArmor.getArmorForSlot(EquipmentSlotType.LEGS));
+    public static RegistryObject<Item> UDJAT_HAT = registerItem("udjat_mask", UdjatArmor.getArmorForSlot(EquipmentSlotType.HEAD));
+
+    public static RegistryObject<Item> LCA_UDJAT_KHOPESH = registerItem("lca_udjat_khopesh", new UdjatKhopesh( 4, -2.35f, new Item.Properties().tab(ItemGroup.TAB_SEARCH)));
 
     private static RegistryObject<Item> registerItem(String registryName, Item i) {
         return ITEMS.register(registryName, () -> i);
