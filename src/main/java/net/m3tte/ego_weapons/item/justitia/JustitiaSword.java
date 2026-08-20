@@ -14,6 +14,8 @@ import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.procedures.EntityTick;
 import net.m3tte.ego_weapons.procedures.DelayedEvent;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
+import net.m3tte.ego_weapons.world.capabilities.UtilitySystems;
 import net.m3tte.ego_weapons.world.capabilities.damage.DirectEgoDamageSource;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.minecraft.client.util.ITooltipFlag;
@@ -24,10 +26,7 @@ import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import yesman.epicfight.api.animation.types.AttackAnimation;
@@ -42,8 +41,8 @@ import java.util.List;
 
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
+import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.generateAttackContext;
 
 public class JustitiaSword extends EgoWeaponsWeapon {
 
@@ -91,7 +90,8 @@ public class JustitiaSword extends EgoWeaponsWeapon {
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
-		list.add(new StringTextComponent("A sword wrapped with the blinding bandages of Justice. For the scale always tips just.").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+
+		TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.justitia_cloak.desc");
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -106,9 +106,9 @@ public class JustitiaSword extends EgoWeaponsWeapon {
 				break;
 			case 1:
 				if (EgoWeaponsKeybinds.isHoldingShift())
-					generateStatusDescription(list, new String[]{"pale", "sin", "offense_up", "offense_down", "fragile"});
+					generateStatusDescription(list, new String[]{"pale", "sin", "offense_up", "offense_down", "fragile", "sealed"});
 				else
-					generateDescription(list,"justitia", "ability", 9);
+					generateDescription(list,"justitia", "ability", 12);
 				break;
 			case 2:
 				if (EgoWeaponsKeybinds.isHoldingShift())
@@ -131,7 +131,7 @@ public class JustitiaSword extends EgoWeaponsWeapon {
 				break;
 		}
 
-		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+		generateStatusHelp(list);
 	}
 
 
@@ -181,28 +181,13 @@ public class JustitiaSword extends EgoWeaponsWeapon {
 
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
-		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
-
-		//EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 8, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
+		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
 
 
-		if (currentanim.getRealAnimation() instanceof BasicEgoAttackAnimation || currentanim.getRealAnimation() instanceof EgoAttackAnimation) {
+		if (context.isValidEgoAnimation()) {
 			//System.out.println("IS BASIC EGO ATTACK ANIM" + (currentanim.getRealAnimation()).getProperty(BasicEgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER));
 
-			String weaponIdentifier = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
 
-			AttackAnimation.Phase phase = null;
-			if (currentanim instanceof EgoAttackAnimation) {
-				phase = ((EgoAttackAnimation)currentanim).getPhaseByTime(entitypatch.getAnimator().getPlayerFor(currentanim).getElapsedTime());
-			}
-
-			if (phase instanceof EgoAttackAnimation.EgoAttackPhase) {
-				String elp = ((EgoAttackAnimation.EgoAttackPhase) phase).getProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER).orElse(null);
-
-				if (elp != null)
-					weaponIdentifier = elp;
-
-			}
 
 			int sourceSpeed = EgoWeaponsEffects.speedMult(sourceentity);
 			int targetSpeed = EgoWeaponsEffects.speedMult(target);
@@ -214,7 +199,7 @@ public class JustitiaSword extends EgoWeaponsWeapon {
 			int targetSin = EgoWeaponsEffects.SIN.get().getPotency(target);
 			int sourceSin = EgoWeaponsEffects.SIN.get().getPotency(sourceentity);
 
-			switch (weaponIdentifier) {
+			switch (context.getAnimationIdentifier()) {
 				case "justitia_auto1":
 					EgoWeaponsEffects.RUPTURE.get().increment(target, 0, 1);
 
@@ -300,81 +285,6 @@ public class JustitiaSword extends EgoWeaponsWeapon {
 		return true;
 	}
 
-	public static float modifyDamageAmount(LivingEntity target, LivingEntity source, float mult, DamageSource damageSource) {
-
-		PlayerPatch<?> entitypatch = (PlayerPatch<?>) source.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-
-		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
-
-		String weaponIdentifier = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
-
-		PlayerVariables entityData = source.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
-
-
-		int sourceSpeed = EgoWeaponsEffects.speedMult(source);
-		int targetSpeed = EgoWeaponsEffects.speedMult(target);
-
-		int speedDif = sourceSpeed - targetSpeed;
-
-		if (speedDif < 0) {
-			if (sourceSpeed >= 5) {
-				SharedFunctions.incrementBonusDamage(damageSource, -0.25f);
-				mult -= 0.25f;
-			}
-
-			speedDif = 0;
-		}
-
-		int hastePot = EgoWeaponsEffects.SPEED_UP.get().getPotency(source);
-
-		if (hastePot > 0) {
-			SharedFunctions.incrementBonusDamage(damageSource, Math.min(0.03f * hastePot, 0.3f));
-			mult += Math.min(0.03f * hastePot, 0.3f);
-		}
-
-		switch (weaponIdentifier) {
-			case "heishou_mao_special_fin":
-				if (sourceSpeed >= 5) {
-					SharedFunctions.incrementBonusDamage(damageSource, 0.25f);
-					mult += 0.25f;
-				}
-
-			case "heishou_mao_special_1":
-			case "heishou_mao_special_2":
-			case "heishou_mao_special_3":
-			case "heishou_mao_special_4":
-				float buffFactor = Math.max(0, speedDif * EgoWeaponsEffects.RUPTURE.get().getPotency(target) * 0.01f);
-
-				if (buffFactor > 0) {
-					SharedFunctions.incrementBonusDamage(damageSource, Math.min(0.5f, buffFactor));
-					mult += Math.min(0.5f, buffFactor);
-				}
-
-				break;
-
-			case "heishou_mao_innate_1":
-			case "heishou_mao_innate_2":
-			case "heishou_mao_innate_3":
-				float buffFactor2 = Math.max(0, speedDif * EgoWeaponsEffects.RUPTURE.get().getPotency(target) * 0.01f);
-
-				if (buffFactor2 > 0) {
-					SharedFunctions.incrementBonusDamage(damageSource, Math.min(0.3f, buffFactor2));
-					mult += Math.min(0.3f, buffFactor2);
-				}
-
-				float striderMaoPotency = Math.max(0, EgoWeaponsEffects.STRIDER_MAO.get().getPotency(target) * 0.1f);
-
-				if (striderMaoPotency > 0) {
-					SharedFunctions.incrementBonusDamage(damageSource, Math.min(0.3f, striderMaoPotency));
-					mult += Math.min(0.3f, striderMaoPotency);
-				}
-				break;
-		}
-
-
-
-		return mult;
-	}
 
 
 

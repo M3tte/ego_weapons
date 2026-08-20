@@ -178,7 +178,7 @@ public class HeishouMaoBranchAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "heishou_mao_innate_3")
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
@@ -239,7 +239,7 @@ public class HeishouMaoBranchAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.8F);
 
         HEISHOU_MAO_AUTO_3 = new BasicEgoAttackAnimation(0.01F, 0.08F, 0.33F, 0.55F, 2F, null, "Tool_R", "biped/heishou_mao/auto_3", biped)
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "heishou_mao_auto3")
@@ -253,11 +253,11 @@ public class HeishouMaoBranchAnims {
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, auto3Swing());
 
         HEISHOU_MAO_AUTO_4 = new BasicEgoAttackAnimation(0.01F, 0.08F, 0.5F, 0.66F, 1.5F, null, "Tool_R", "biped/heishou_mao/auto_4", biped)
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "heishou_mao_auto4")
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.HEISHOU_MAO_HEAVY_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.STIGMA_WORKSHOP_SWORD_AUTO_SWING)
@@ -270,7 +270,7 @@ public class HeishouMaoBranchAnims {
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, innateAttack(0.1f, 0.4f, false));
 
         HEISHOU_MAO_AUTO_JUMP = new BasicEgoAttackAnimation(0.01F, 0.08F, 0.5F, 0.66F, 1.5F, null, "Tool_R", "biped/heishou_mao/auto_4", biped)
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "heishou_mao_jump")
@@ -299,7 +299,7 @@ public class HeishouMaoBranchAnims {
 
         HEISHOU_MAO_PARRY_ATTACK = new BasicEgoAttackAnimation(0.08F, 0.05F, 0.2F, 0.5F, 1.55F, null, "Tool_R", "biped/heishou_mao/counter_2", biped)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "heishou_mao_counter")
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.DEFENSIVE)

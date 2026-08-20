@@ -6,8 +6,7 @@ import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.gameasset.movesets.FullstopOfficeSniperMovesetAnims;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
-import net.m3tte.ego_weapons.particle.BlipeffectParticle;
+import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.gameasset.abilities.AbilityTier;
 import net.m3tte.ego_weapons.gameasset.abilities.AbilityUtils;
 import net.m3tte.ego_weapons.gameasset.abilities.ItemAbility;
@@ -41,7 +40,7 @@ public class FullstopRifleWeaponAssistAttack extends ItemAbility {
     public int getBlipCost(PlayerEntity player, PlayerVariables playerVars) {
         int extra = 0;
 
-        return 3;
+        return deductLightDecreases(player, AbilityUtils.AbilityType.WEAPON,3);
     }
 
     @Override
@@ -57,7 +56,7 @@ public class FullstopRifleWeaponAssistAttack extends ItemAbility {
     }
 
     @Override
-    public AbilityTier getAbilityTier() {
+    public AbilityTier getAbilityTier(PlayerEntity player, PlayerVariables playerVars) {
         return AbilityTier.WAW;
     }
 
@@ -80,7 +79,7 @@ public class FullstopRifleWeaponAssistAttack extends ItemAbility {
 
         int blipCost = getBlipCost(player, playerVars);
 
-        if (playerVars.light >= blipCost) {
+        if (canTrigger(player, playerVars)) {
 
             World world = player.level;
             double x = player.getX();
@@ -143,7 +142,7 @@ public class FullstopRifleWeaponAssistAttack extends ItemAbility {
 
             if (!world.isClientSide()) {
                 int entityId = entity.getPersistentData().getInt("assistFireTarget");
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendTakeAimParticle(entityId));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendTakeAimParticle(entityId));
 
                 int randomNum = entity.getRandom().nextInt(3);
                 SoundEvent callout = EgoWeaponsSounds.FULLSTOP_SNIPER_MOVE_ASIDE;

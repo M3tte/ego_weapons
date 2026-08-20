@@ -50,7 +50,12 @@ public class ArdorBlossomWingsModel<T extends LivingEntity> extends BipedModel<T
     }
 
     @Override
-    public String getTag() {
+    public String getModelIdentity() {
+        return "ardor_blossom_wings";
+    }
+
+    @Override
+    public String getIdentifier() {
         return "ardor_blossom_wings";
     }
 }

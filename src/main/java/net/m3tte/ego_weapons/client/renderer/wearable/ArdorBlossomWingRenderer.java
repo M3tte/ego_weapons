@@ -35,6 +35,8 @@ public class ArdorBlossomWingRenderer<R extends LivingEntity, M extends BipedMod
     private static final ResourceLocation UNFLARE_3 = new ResourceLocation("ego_weapons", "textures/entities/ardor_blossom/ardor_wings_deflare_3.png");
     private final ArdorBlossomWingsModel<R> ardorFireWingModel = new ArdorBlossomWingsModel();
 
+    ResourceLocation location = new ResourceLocation("ego_weapons","ardor_blossom_wings_loc");
+
     public ArdorBlossomWingRenderer() {
     }
 
@@ -125,5 +127,10 @@ public class ArdorBlossomWingRenderer<R extends LivingEntity, M extends BipedMod
 
 
         return TEX_1;
+    }
+
+    @Override
+    public ResourceLocation getRendererLocation() {
+        return location;
     }
 }

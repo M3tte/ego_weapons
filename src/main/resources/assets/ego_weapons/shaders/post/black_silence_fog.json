@@ -1,0 +1,17 @@
+{
+  "targets": [
+    "swap1"
+  ],
+  "passes": [
+    {
+      "name": "ego_weapons:black_silence_smoke",
+      "intarget": "minecraft:main",
+      "outtarget": "swap1"
+    },
+    {
+      "name": "blit",
+      "intarget": "swap1",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}

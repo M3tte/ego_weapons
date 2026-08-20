@@ -30,7 +30,7 @@ public class OeufiArmorAbility extends ItemAbility {
     }
 
     @Override
-    public AbilityTier getAbilityTier() {
+    public AbilityTier getAbilityTier(PlayerEntity player, PlayerVariables playerVars) {
         return AbilityTier.HE;
     }
 
@@ -42,7 +42,7 @@ public class OeufiArmorAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.light >= 8) {
+        if (canTrigger(player, playerVars)) {
             LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
             entitypatch.playAnimationSynchronized(OeufiAssocMovesetAnims.OEUFI_OPEN_CONTRACT, 0.1f);

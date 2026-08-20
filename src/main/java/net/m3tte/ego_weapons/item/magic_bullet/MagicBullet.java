@@ -8,7 +8,9 @@ import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.potion.countEffects.DarkFlameEffect;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
+import net.m3tte.ego_weapons.world.capabilities.UtilitySystems;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -35,8 +37,8 @@ import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 import java.util.List;
 
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
+import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.generateAttackContext;
 
 
 public class MagicBullet extends EgoWeaponsWeapon {
@@ -44,7 +46,7 @@ public class MagicBullet extends EgoWeaponsWeapon {
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
-		list.add(new StringTextComponent("This bullet can truly hit anything...").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+		TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.magic_bullet.desc");
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -78,7 +80,7 @@ public class MagicBullet extends EgoWeaponsWeapon {
 				break;
 		}
 
-		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+		generateStatusHelp(list);
 	}
 
 
@@ -137,22 +139,14 @@ public class MagicBullet extends EgoWeaponsWeapon {
 		if (entitypatch.getServerAnimator() == null || entityData == null)
 			return retval;
 
-		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
+		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
 
 
 
-		if (currentanim.getRealAnimation() instanceof BasicEgoAttackAnimation || currentanim.getRealAnimation() instanceof EgoAttackAnimation && entityData != null) {
-
-			String weaponIdentifier;
-
-			if (currentanim.getRealAnimation() instanceof BasicEgoAttackAnimation) {
-				weaponIdentifier = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
-			} else {
-				weaponIdentifier = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
-			}
+		if (context.isValidEgoAnimation() && entityData != null) {
 
 			// Different animation effects
-			switch (weaponIdentifier) {
+			switch (context.getAnimationIdentifier()) {
 				case "magic_bullet_auto_1":
 				case "magic_bullet_auto_2":
 					EgoWeaponsEffects.BURN.get().increment(target, 0, 1);

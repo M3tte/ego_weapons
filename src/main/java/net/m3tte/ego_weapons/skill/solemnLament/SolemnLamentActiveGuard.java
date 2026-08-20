@@ -6,12 +6,10 @@ import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.gameasset.movesets.SolemnLamentMovesetAnims;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
+import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.potion.SolemnLamentEffects;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCategories;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.DamageSource;
@@ -22,7 +20,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
 import yesman.epicfight.api.animation.types.StaticAnimation;
-import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.gameasset.Skills;
 import yesman.epicfight.particle.EpicFightParticles;
 import yesman.epicfight.particle.HitParticleType;
@@ -40,6 +37,7 @@ import java.util.List;
 
 import static net.m3tte.ego_weapons.skill.GenericActiveGuard.canParryHeavy;
 import static net.m3tte.ego_weapons.skill.NonSpamGuardSkill.handleKnockback;
+import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.calculateBlockDelay;
 
 
 public class SolemnLamentActiveGuard extends GuardSkill {
@@ -79,13 +77,13 @@ public class SolemnLamentActiveGuard extends GuardSkill {
             DamageSource damageSource = event.getDamageSource();
             if (this.isBlockableSource(damageSource, true)) {
                 ServerPlayerEntity playerentity = event.getPlayerPatch().getOriginal();
-                boolean successParrying = playerentity.tickCount     - container.getDataManager().getDataValue(LAST_ACTIVE) < 8;
+                boolean successParrying = playerentity.tickCount     - container.getDataManager().getDataValue(LAST_ACTIVE) < calculateBlockDelay(event.getPlayerPatch().getOriginal(),8);
                 float penalty = container.getDataManager().getDataValue(PENALTY);
                 event.getPlayerPatch().playSound(EgoWeaponsSounds.SOLEMN_LAMENT_PARRY, -0.05F, 0.1F);
                 EpicFightParticles.HIT_BLUNT.get().spawnParticleWithArgument((ServerWorld)playerentity.level, HitParticleType.FRONT_OF_EYES, HitParticleType.ZERO, playerentity, damageSource.getDirectEntity());
 
                 if (!playerentity.level.isClientSide()) {
-                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(playerentity.getId(), playerentity.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(playerentity.getId(), playerentity.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
                 }
 
                 if (successParrying) {

@@ -14,11 +14,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class RotationAttackParticle extends RotationBoundParticle {
 
     Entity sourceEntity;
-    public RotationAttackParticle(ClientWorld world, double x, double y, double z, double xSpeed, double targetEntityID, double sourceID, IAnimatedSprite spriteProvider) {
-        super(world, x, y, z, xSpeed, targetEntityID, sourceID, spriteProvider);
+    public RotationAttackParticle(ClientWorld world, double x, double y, double z, double xSpeed, double sourceID, double zSpeed, IAnimatedSprite spriteProvider) {
+        super(world, x, y, z, xSpeed, sourceID, zSpeed, spriteProvider);
 
-        System.out.println("SOURCE ID IS: "+sourceID);
-        if (sourceID == 0) {
+        resolveBoundEntity((int) sourceID, world);
+        /*if (sourceID == 0) {
             if (world.isClientSide()) {
                 sourceEntity = Minecraft.getInstance().player;
             }
@@ -36,7 +36,9 @@ public class RotationAttackParticle extends RotationBoundParticle {
             oy = y;
             oz = z;
             rotation.setY(-sourceEntity.getRotationVector().y);
-        }
+        }*/
+
+
 
         this.rotation.add(0,-90,0);
         //this.rotationOffs.set(180,0,0);

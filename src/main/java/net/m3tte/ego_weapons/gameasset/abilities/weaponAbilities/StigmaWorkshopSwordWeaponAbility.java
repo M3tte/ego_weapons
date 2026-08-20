@@ -25,10 +25,10 @@ public class StigmaWorkshopSwordWeaponAbility extends ItemAbility {
 
     @Override
     public int getBlipCost(PlayerEntity player, PlayerVariables playerVars) {
-        int extra = 0;
+        int val = 5;
         if (player.hasEffect(EgoWeaponsEffects.BRANDING_BLADE.get()))
-            return 3;
-        return 5;
+            val = 3;
+        return deductLightDecreases(player, AbilityUtils.AbilityType.WEAPON,val);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class StigmaWorkshopSwordWeaponAbility extends ItemAbility {
     }
 
     @Override
-    public AbilityTier getAbilityTier() {
+    public AbilityTier getAbilityTier(PlayerEntity player, PlayerVariables playerVars) {
         return AbilityTier.TETH;
     }
 
@@ -55,7 +55,7 @@ public class StigmaWorkshopSwordWeaponAbility extends ItemAbility {
 
     @Override
     public float getAvailability(PlayerEntity player, PlayerVariables playerVars) {
-        if (playerVars.light < getBlipCost(player, playerVars)) {
+        if (canTrigger(player, playerVars)) {
             return (float) (playerVars.light / getBlipCost(player, playerVars));
         }
 

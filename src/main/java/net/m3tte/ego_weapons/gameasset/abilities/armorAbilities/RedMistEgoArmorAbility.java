@@ -37,7 +37,7 @@ public class RedMistEgoArmorAbility extends ItemAbility {
     }
 
     @Override
-    public AbilityTier getAbilityTier() {
+    public AbilityTier getAbilityTier(PlayerEntity player, PlayerVariables playerVars) {
         return AbilityTier.ALEPH;
     }
 
@@ -62,7 +62,7 @@ public class RedMistEgoArmorAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.light >= getBlipCost(player, playerVars)) {
+        if (canTrigger(player, playerVars)) {
 
             playerVars.light -= getBlipCost(player, playerVars);
             World world = player.level;

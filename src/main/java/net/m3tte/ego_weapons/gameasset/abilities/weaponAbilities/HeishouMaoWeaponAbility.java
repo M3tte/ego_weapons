@@ -24,7 +24,7 @@ public class HeishouMaoWeaponAbility extends ItemAbility {
     public int getBlipCost(PlayerEntity player, PlayerVariables playerVars) {
         int extra = 0;
 
-        return 7;
+        return deductLightDecreases(player, AbilityUtils.AbilityType.WEAPON,7);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class HeishouMaoWeaponAbility extends ItemAbility {
     }
 
     @Override
-    public AbilityTier getAbilityTier() {
+    public AbilityTier getAbilityTier(PlayerEntity player, PlayerVariables playerVars) {
         return AbilityTier.HE;
     }
 
@@ -61,7 +61,7 @@ public class HeishouMaoWeaponAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.light >= getBlipCost(player, playerVars)) {
+        if (canTrigger(player, playerVars)) {
 
 
             playerVars.light -= getBlipCost(player, playerVars);

@@ -15,14 +15,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import yesman.epicfight.world.effect.EpicFightMobEffects;
 
-public class MagicBulletEffect extends CountPotencyStatus {
+public class MagicBulletEffect extends PotencyOnlyStatus {
     public MagicBulletEffect() {
-        super(EffectType.BENEFICIAL, "magic_bullet",-16777216);
-    }
-
-    @Override
-    public String getDescriptionId() {
-        return "effect.magic_bullet";
+        super(EffectType.BENEFICIAL, "magic_bullet",-16777216, false, 8, 999999);
     }
 
     @Override
@@ -45,8 +40,6 @@ public class MagicBulletEffect extends CountPotencyStatus {
         if (EmotionSystem.getEmotionLevel(player) == 0 && EmotionSystem.getEmotionPoints(player) < 2 && EmotionSystem.getEmotionPoints(player) > 0) {
             entity.removeEffect(this);
         }
-
-
 
         if (world instanceof ServerWorld) {
             ((ServerWorld) world).sendParticles(ShadowpuffParticle.particle, (entity.getX()), (entity.getY() + entity.getBbHeight() / 2),
@@ -83,8 +76,6 @@ public class MagicBulletEffect extends CountPotencyStatus {
         if (entity.level.isClientSide)
             return;
 
-
-
         if (!entity.hasEffect(this)) {
             entity.addEffect(new EffectInstance(this, 9999, Math.min(Math.max(potency-1,0),6)));
             syncEffect(entity);
@@ -100,35 +91,9 @@ public class MagicBulletEffect extends CountPotencyStatus {
                 entity.getEffect(this).update(new EffectInstance(this, 9999, potency));
 
             }
-
-
             syncEffect(entity);
         }
     }
 
-    @Override
-    public void decrement(LivingEntity entity, int count, int potency) {
-        if (entity.level.isClientSide)
-            return;
-
-        if (entity.hasEffect(this)) {
-            potency = Math.min(entity.getEffect(this).getAmplifier() - potency,99);
-            entity.removeEffect(this);
-            if (potency >= 0) {
-                entity.addEffect(new EffectInstance(this, 99999, potency));
-                syncEffect(entity);
-            }
-        }
-    }
-
-    @Override
-    public int getCount(EffectInstance ef) {
-        return 0;
-    }
-
-    @Override
-    public boolean isDurationEffectTick(int duration, int amplifier) {
-        return true;
-    }
 
 }

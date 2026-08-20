@@ -9,6 +9,7 @@ import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoWeaponsArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
@@ -34,8 +35,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.List;
 
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
 
 public class MimicryArmor extends GenericEgoWeaponsArmor {
 
@@ -123,7 +123,7 @@ public class MimicryArmor extends GenericEgoWeaponsArmor {
 		@Override
 		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.appendHoverText(itemstack, world, list, flag);
-			list.add(new StringTextComponent("It periodically devours employees and wears their shell.").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+			TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.mimicry_armor.desc");
 			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -153,7 +153,7 @@ public class MimicryArmor extends GenericEgoWeaponsArmor {
 					break;
 			}
 
-			list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+			generateStatusHelp(list);
 		}
 	};
 

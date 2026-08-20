@@ -3,3 +3,6 @@ This mod aims to add several pieces of equipment and mechanics from the Project 
 
 ## CurseForge Page
 https://www.curseforge.com/minecraft/mc-mods/ego-weapons
+
+## Modrinth Page
+https://modrinth.com/mod/ego-weapons

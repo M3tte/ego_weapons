@@ -8,6 +8,7 @@ import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoWeaponsArmor;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.model.BipedModel;
@@ -36,8 +37,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
 
 public class RatJacket extends GenericEgoWeaponsArmor {
 
@@ -131,7 +131,7 @@ public class RatJacket extends GenericEgoWeaponsArmor {
 		@Override
 		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.appendHoverText(itemstack, world, list, flag);
-			list.add(new StringTextComponent("A shabby jacket stuffed with cloth. Provides a bit of protection.").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+			TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.rat_blunt_outfit.desc");
 			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 			list.add(new StringTextComponent("= - - - - - - - [Page: " + ((EgoWeaponsKeybinds.getUiPage() % 3) + 1) + "/3] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -155,7 +155,7 @@ public class RatJacket extends GenericEgoWeaponsArmor {
 					break;
 			}
 
-			list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+			generateStatusHelp(list);
 		}
 
 	};

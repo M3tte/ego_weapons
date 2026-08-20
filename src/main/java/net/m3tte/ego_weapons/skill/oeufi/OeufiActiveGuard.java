@@ -34,6 +34,7 @@ import java.util.List;
 
 import static net.m3tte.ego_weapons.skill.GenericActiveGuard.canParryHeavy;
 import static net.m3tte.ego_weapons.skill.NonSpamGuardSkill.handleKnockback;
+import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.calculateBlockDelay;
 
 
 public class OeufiActiveGuard extends GuardSkill {
@@ -73,7 +74,7 @@ public class OeufiActiveGuard extends GuardSkill {
             DamageSource damageSource = event.getDamageSource();
             if (this.isBlockableSource(damageSource, true)) {
                 ServerPlayerEntity playerentity = event.getPlayerPatch().getOriginal();
-                boolean successParrying = playerentity.tickCount     - container.getDataManager().getDataValue(LAST_ACTIVE) < 8;
+                boolean successParrying = playerentity.tickCount     - container.getDataManager().getDataValue(LAST_ACTIVE) < calculateBlockDelay(event.getPlayerPatch().getOriginal(),8);
                 float penalty = container.getDataManager().getDataValue(PENALTY);
                 event.getPlayerPatch().playSound(EpicFightSounds.CLASH, -0.05F, 0.1F);
                 EpicFightParticles.HIT_BLUNT.get().spawnParticleWithArgument((ServerWorld)playerentity.level, HitParticleType.FRONT_OF_EYES, HitParticleType.ZERO, playerentity, damageSource.getDirectEntity());

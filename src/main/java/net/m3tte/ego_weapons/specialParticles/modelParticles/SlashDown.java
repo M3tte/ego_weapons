@@ -22,7 +22,7 @@ public class SlashDown extends RotationAttackParticle {
 
         this.quadSize = quadsize;
         this.lifetime = lifetime;
-        this.offset = offset;
+        this.offset = offset.copy();
         this.offsetRate = offsetRate;
         this.glowRenderType = glow;
     }

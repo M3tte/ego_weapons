@@ -6,7 +6,7 @@ public class EntityShake {
 
 
     public static float evaluateShakeFromValue(float value) {
-        return (float) (Math.sin(value*33)*value) * 0.1f;
+        return (float) (Math.sin(value*38)*value) * 0.13f;
     }
 
 }

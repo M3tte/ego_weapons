@@ -27,7 +27,7 @@ public class SunshowerWeaponAbility extends ItemAbility {
     public int getBlipCost(PlayerEntity player, PlayerVariables playerVars) {
         int extra = 0;
 
-        return 5;
+        return deductLightDecreases(player, AbilityUtils.AbilityType.WEAPON,5);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class SunshowerWeaponAbility extends ItemAbility {
     }
 
     @Override
-    public AbilityTier getAbilityTier() {
+    public AbilityTier getAbilityTier(PlayerEntity player, PlayerVariables playerVars) {
         return AbilityTier.HE;
     }
 
@@ -64,7 +64,7 @@ public class SunshowerWeaponAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.light >= getBlipCost(player, playerVars)) {
+        if (canTrigger(player, playerVars)) {
 
 
 

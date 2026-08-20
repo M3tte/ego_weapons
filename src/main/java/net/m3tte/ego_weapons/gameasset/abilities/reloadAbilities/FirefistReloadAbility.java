@@ -21,6 +21,7 @@ import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 import static net.m3tte.ego_weapons.gameasset.abilities.AbilityUtils.applyBlipCooldown;
+import static net.m3tte.ego_weapons.gameasset.abilities.ItemAbility.deductLightDecreases;
 
 public class FirefistReloadAbility extends ReloadAbility {
 
@@ -30,7 +31,7 @@ public class FirefistReloadAbility extends ReloadAbility {
     public int getBlipCost(PlayerEntity player, PlayerVariables playerVars) {
         int extra = 0;
 
-        return 3;
+        return deductLightDecreases(player, AbilityUtils.AbilityType.RELOAD,3);
     }
 
     @Override
@@ -67,7 +68,7 @@ public class FirefistReloadAbility extends ReloadAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars, ItemStack ammoItem) {
 
-        if (playerVars.light >= getBlipCost(player, playerVars) && player.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.FIREFIST_SUIT.get())) {
+        if (canTrigger(player, playerVars) && player.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.FIREFIST_SUIT.get())) {
 
             playerVars.light -= getBlipCost(player, playerVars);
             World world = player.level;

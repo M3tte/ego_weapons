@@ -17,16 +17,26 @@ import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 import yesman.epicfight.world.capabilities.item.CapabilityItem;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
+import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.valids;
+
 @Mixin(value = LivingEntityPatch.class, remap = false)
 public abstract class LivingEntityPatchMixin<T extends LivingEntity> extends EntityPatch<T> {
 
 
     @Shadow public abstract CapabilityItem getHoldingItemCapability(Hand hand);
 
+    // List of resource ids that should always render in the offhand as well...
+
+
+
     @Inject(at = @At(value = "HEAD"), method = "isOffhandItemValid()Z", cancellable = true)
     private void bypassOffhandHide(CallbackInfoReturnable<Boolean> cir) {
-        // If a player entity, do not ever display the bar as it is replaced.
-        if (this.original.getItemInHand(Hand.OFF_HAND).getItem().equals(EgoWeaponsItems.OEUFI_CONTRACT.get())) {
+        String resourceName = this.original.getItemInHand(Hand.OFF_HAND).getItem().getRegistryName().toString();
+        if (Arrays.asList(valids).contains(resourceName)) {
             cir.setReturnValue(true);
             cir.cancel();
         }

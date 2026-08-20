@@ -53,7 +53,12 @@ public class BloodOverlayModel<T extends LivingEntity> extends BipedModel<T> imp
     }
 
     @Override
-    public String getTag() {
+    public String getModelIdentity() {
+        return "basic_fullbody";
+    }
+
+    @Override
+    public String getIdentifier() {
         return "blood_overlay";
     }
 }

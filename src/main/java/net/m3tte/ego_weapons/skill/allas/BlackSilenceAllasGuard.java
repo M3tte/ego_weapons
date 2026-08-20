@@ -32,6 +32,7 @@ import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import yesman.epicfight.world.capabilities.item.CapabilityItem;
 import yesman.epicfight.world.entity.eventlistener.HurtEvent;
 
+import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.calculateBlockDelay;
 import static yesman.epicfight.world.entity.eventlistener.PlayerEventListener.EventType;
 
 public class BlackSilenceAllasGuard extends EnergizingGuardSkill {
@@ -95,7 +96,7 @@ public class BlackSilenceAllasGuard extends EnergizingGuardSkill {
 
             float penalty = container.getDataManager().getDataValue(PENALTY) + this.getPenaltyMultiplier(itemCapapbility);
 
-            boolean successParrying = event.getPlayerPatch().getOriginal().tickCount - container.getDataManager().getDataValue(LAST_ACTIVE) < 6;
+            boolean successParrying = event.getPlayerPatch().getOriginal().tickCount - container.getDataManager().getDataValue(LAST_ACTIVE) < calculateBlockDelay(event.getPlayerPatch().getOriginal(), 6);
 
             if (isRudimentaryBlockable(damageSource, advanced) && container.getDataManager().getDataValue(PENALTY) < 0.2f && successParrying) {
                 if (event.getDamageSource().getEntity() instanceof LivingEntity) {

@@ -13,6 +13,8 @@ import net.minecraft.util.ResourceLocation;
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
 
 public class BloodOverlayRenderer<R extends LivingEntity, M extends BipedModel<R>> extends WearableRenderer<R, M, BloodOverlayModel<R>> {
+
+    ResourceLocation location = new ResourceLocation("ego_weapons","blood_overlay_loc");
     private static final ResourceLocation TEX_INJURED_0 = new ResourceLocation("ego_weapons", "textures/accessories/blood_stage_0.png");
     private static final ResourceLocation TEX_INJURED_1 = new ResourceLocation("ego_weapons", "textures/accessories/blood_stage_1.png");
     private static final ResourceLocation TEX_INJURED_2 = new ResourceLocation("ego_weapons", "textures/accessories/blood_stage_2.png");
@@ -57,5 +59,10 @@ public class BloodOverlayRenderer<R extends LivingEntity, M extends BipedModel<R
 
 
         return TEX_INJURED_0;
+    }
+
+    @Override
+    public ResourceLocation getRendererLocation() {
+        return location;
     }
 }

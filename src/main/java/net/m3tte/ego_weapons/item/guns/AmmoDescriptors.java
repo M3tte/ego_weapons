@@ -14,6 +14,7 @@ import java.util.List;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
 
+@Deprecated
 public class AmmoDescriptors {
     public static void incendiaryBulletDescription(ItemStack itemstack, World world, List<ITextComponent> list) {
         list.add(new StringTextComponent("= - - - - - - - [Page: 1/1] - - - - - - - =").withStyle(TextFormatting.GRAY));

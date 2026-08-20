@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class CravingBloodbagEntity extends MonsterEntity {
+public class CravingBloodbagEntity extends MonsterEntity implements PersonalityEntity {
 
     public CravingBloodbagEntity(EntityType<CravingBloodbagEntity> entityType, World world) {
         super(entityType, world);
@@ -106,5 +106,10 @@ public class CravingBloodbagEntity extends MonsterEntity {
 
     public double getMyRidingOffset() {
         return -0.6D;
+    }
+
+    @Override
+    public String getPersonality() {
+        return "craving_bloodbag";
     }
 }

@@ -40,6 +40,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 import static net.m3tte.ego_weapons.skill.GenericActiveGuard.canParryHeavy;
+import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.calculateBlockDelay;
 
 
 public class FullstopRepCounterGuard extends GuardSkill {
@@ -79,7 +80,7 @@ public class FullstopRepCounterGuard extends GuardSkill {
             DamageSource damageSource = event.getDamageSource();
             if (this.isBlockableSource(damageSource, true)) {
                 ServerPlayerEntity playerentity = event.getPlayerPatch().getOriginal();
-                boolean successParrying = playerentity.tickCount - container.getDataManager().getDataValue(LAST_ACTIVE) < 8;
+                boolean successParrying = playerentity.tickCount - container.getDataManager().getDataValue(LAST_ACTIVE) < calculateBlockDelay(event.getPlayerPatch().getOriginal(),8);
 
                 if (EgoWeaponsItems.FULLSTOP_REP_PISTOL.get().equals(playerentity.getItemInHand(Hand.MAIN_HAND).getItem()))
                     successParrying = false;

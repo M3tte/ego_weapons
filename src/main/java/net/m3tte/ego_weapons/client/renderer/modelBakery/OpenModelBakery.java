@@ -4,15 +4,13 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import it.unimi.dsi.fastutil.objects.ObjectListIterator;
-import net.m3tte.ego_weapons.client.models.wearable.ArdorBlossomFireModel;
 import net.m3tte.ego_weapons.client.models.wearable.ArdorBlossomWingsModel;
 import net.m3tte.ego_weapons.client.models.wearable.TaggedModel;
 import net.m3tte.ego_weapons.item.ardor_blossom.ArdorBlossomSuit;
-import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -101,8 +99,8 @@ public class OpenModelBakery extends CustomModelBakery {
         resetRotation(model.leftLeg);
 
         if (model instanceof TaggedModel) {
-            switch(((TaggedModel) model).getTag()) {
-                case "blood_overlay":
+            switch(((TaggedModel) model).getModelIdentity()) {
+                case "basic_fullbody":
                     boxes.add(new OpenModelPartition(CHEST, CHEST_CHILD, model.body));
                     boxes.add(new OpenModelPartition(LEFT_LEG, LEFT_LEG_CHILD, model.leftLeg));
                     boxes.add(new OpenModelPartition(RIGHT_LEG, RIGHT_LEG_CHILD, model.rightLeg));
@@ -112,10 +110,20 @@ public class OpenModelBakery extends CustomModelBakery {
 
 
                     break;
-                case "ardor_blossom_fire":
+                case "basic_torso":
                     boxes.add(new OpenModelPartition(CHEST, CHEST_CHILD, model.body));
                     boxes.add(new OpenModelPartition(RIGHT_ARM, LEFT_LEG_CHILD, model.rightArm));
                     boxes.add(new OpenModelPartition(LEFT_ARM, RIGHT_LEG_CHILD, model.leftArm));
+                    break;
+
+                case "basic_hat":
+
+                    if (Minecraft.getInstance().player.equals(entity)) {
+                        if (Minecraft.getInstance().options.getCameraType().isFirstPerson())
+                            break;
+                    }
+
+                    boxes.add(new OpenModelPartition(HEAD, HEAD, model.hat));
                     break;
 
                 case "ardor_blossom_wings":

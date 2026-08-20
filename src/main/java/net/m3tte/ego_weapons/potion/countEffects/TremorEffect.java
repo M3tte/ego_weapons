@@ -8,11 +8,10 @@ package net.m3tte.ego_weapons.potion.countEffects;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
+import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.specialParticles.numberParticle.NumberParticleTypes;
 import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.MilkBucketItem;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
 import net.minecraft.util.SoundCategory;
@@ -20,7 +19,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.PacketDistributor;
 
-import java.util.Iterator;
 import java.util.Objects;
 
 import static net.m3tte.ego_weapons.EgoWeaponsEffects.TURN_DURATION;
@@ -129,8 +127,8 @@ public class TremorEffect extends CountPotencyStatus {
         }
 
         if (!entity.level.isClientSide()) {
-            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.NumberLabelParticle(entity.position().add(entity.getRandom().nextFloat() - 0.5f,1,entity.getRandom().nextFloat() - 0.5f), NumberParticleTypes.TREMOR, potency));
-            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendShakeMessage(entity.getId(), 2 + (potency / 55f)));
+            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.NumberLabelParticle(entity.position().add(entity.getRandom().nextFloat() - 0.5f,1,entity.getRandom().nextFloat() - 0.5f), NumberParticleTypes.TREMOR, potency));
+            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendShakeMessage(entity.getId(), 3 + (potency / 50f)));
             entity.level.playSound(null, new BlockPos(entity.getX(), entity.getY(), entity.getZ()),
                     EgoWeaponsSounds.TREMOR_BURST,
                     SoundCategory.NEUTRAL, 1f, (float) 1);

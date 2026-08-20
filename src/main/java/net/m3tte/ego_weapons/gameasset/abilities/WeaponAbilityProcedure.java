@@ -7,6 +7,7 @@ import net.m3tte.ego_weapons.gameasset.abilities.assistAttacks.FullstopRifleWeap
 import net.m3tte.ego_weapons.gameasset.abilities.assistAttacks.MagicBulletAssistAttack;
 import net.m3tte.ego_weapons.gameasset.abilities.reloadAbilities.SolemnLamentReloadAbility;
 import net.m3tte.ego_weapons.gameasset.abilities.weaponAbilities.*;
+import net.m3tte.ego_weapons.gameasset.abilities.weaponAbilities.offhand.LCARifleAltWeaponAbility;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
@@ -19,12 +20,20 @@ import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILIT
 public class WeaponAbilityProcedure {
 
 	private static Map<Item, ItemAbility> weaponAbilities;
+	private static Map<Item, ItemAbility> altWeaponAbilities;
 	private static Map<Item, ItemAbility> assistAttacks;
 	private static Map<Item, ItemAbility> getWeaponAbilities() {
 		if (weaponAbilities == null) {
 			setupWeaponAbilities();
 		}
 		return weaponAbilities;
+	}
+
+	private static Map<Item, ItemAbility> getAltWeaponAbilities() {
+		if (altWeaponAbilities == null) {
+			setupWeaponAltAbilities();
+		}
+		return altWeaponAbilities;
 	}
 
 	public static Map<Item, ItemAbility> getAssistAttacks() {
@@ -34,11 +43,18 @@ public class WeaponAbilityProcedure {
 		return assistAttacks;
 	}
 
+
+	public static final ItemAbility NO_ITEM_ABILITY = new ItemAbility();
+
 	public static ItemAbility getAssistForItem(Item item) {
 		return getAssistAttacks().getOrDefault(item, null);
 	}
 	public static ItemAbility getForItem(Item item) {
-		return getWeaponAbilities().getOrDefault(item, new ItemAbility());
+		return getWeaponAbilities().getOrDefault(item, NO_ITEM_ABILITY);
+	}
+
+	public static ItemAbility getAltForItem(Item item) {
+		return getAltWeaponAbilities().getOrDefault(item, NO_ITEM_ABILITY);
 	}
 
 	public static void setupWeaponAssists() {
@@ -46,6 +62,12 @@ public class WeaponAbilityProcedure {
 
 		assistAttacks.put(EgoWeaponsItems.FULLSTOP_SNIPER_RAILGUN.get(), new FullstopRifleWeaponAssistAttack());
 		assistAttacks.put(EgoWeaponsItems.MAGIC_BULLET.get(), new MagicBulletAssistAttack());
+	}
+
+	public static void setupWeaponAltAbilities() {
+		altWeaponAbilities = new HashMap<>();
+		altWeaponAbilities.put(EgoWeaponsItems.LCA_RIFLE.get(), new LCARifleAltWeaponAbility());
+
 	}
 	public static void setupWeaponAbilities() {
 		weaponAbilities = new HashMap<>();
@@ -79,8 +101,24 @@ public class WeaponAbilityProcedure {
 		weaponAbilities.put(EgoWeaponsItems.JUSTITIA_SWORD.get(), new JustitiaWeaponAbility());
 		weaponAbilities.put(EgoWeaponsItems.ARDOR_BLOSSOM_BAT.get(), new ArdorBlossomBatWeaponAbility());
 		weaponAbilities.put(EgoWeaponsItems.UDJAT_KHOPESH.get(), new UdjatKhopeshWeaponAbility());
+		weaponAbilities.put(EgoWeaponsItems.LCA_UDJAT_KHOPESH.get(), new UdjatKhopeshWeaponAbility());
+		weaponAbilities.put(EgoWeaponsItems.LCA_RIFLE.get(), new LCARifleWeaponAbility());
+		weaponAbilities.put(EgoWeaponsItems.ARAYASHIKI.get(), new ArayashikiWeaponAbility());
 	}
 
+	public static void runAltWeaponAbility(PlayerEntity entity) {
+		EgoWeaponsModVars.PlayerVariables playerVars = entity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
+		if (playerVars.globalcooldown > 0)
+			return;
+		Item handItem = entity.getItemBySlot(EquipmentSlotType.OFFHAND).getItem();
+		ItemAbility ability = null;
+
+		if (ability == null) {
+			ability = getAltForItem(handItem);
+		}
+
+		ability.trigger(entity, playerVars);
+	}
 	public static void runWeaponAbility(PlayerEntity entity) {
 		EgoWeaponsModVars.PlayerVariables playerVars = entity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
@@ -100,7 +138,12 @@ public class WeaponAbilityProcedure {
 			ability = getForItem(handItem);
 		}
 
-		ability.trigger(entity, playerVars);
+		if (ability != NO_ITEM_ABILITY) {
+			ability.trigger(entity, playerVars);
+		} else {
+			runAltWeaponAbility(entity);
+		}
+
 
 		/*if (DefiledbladeItem.block == ((entity instanceof LivingEntity) ? ((LivingEntity) entity).getMainHandItem().getItem() : ItemStack.EMPTY.getItem())
 				&& (entity.getCapability(TcorpModVariables.PLAYER_VARIABLES_CAPABILITY, null)

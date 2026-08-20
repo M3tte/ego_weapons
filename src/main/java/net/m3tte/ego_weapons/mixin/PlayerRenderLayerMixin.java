@@ -1,9 +1,6 @@
 package net.m3tte.ego_weapons.mixin;
 
-import net.m3tte.ego_weapons.client.renderLayers.AccessoryRenderLayer;
-import net.m3tte.ego_weapons.client.renderLayers.FullstopSuitcaseRenderer;
-import net.m3tte.ego_weapons.client.renderLayers.JustitiaRopeRenderer;
-import net.m3tte.ego_weapons.client.renderLayers.SunshowerFoxRenderLayer;
+import net.m3tte.ego_weapons.client.renderLayers.*;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.PlayerRenderer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,6 +21,7 @@ public class PlayerRenderLayerMixin {
         self.addLayer(new FullstopSuitcaseRenderer<>(self));
         self.addLayer(new AccessoryRenderLayer<>(self));
         self.addLayer(new JustitiaRopeRenderer<>(self));
+        self.addLayer(new UdjatKhopeshRenderer<>(self));
 
     }
 

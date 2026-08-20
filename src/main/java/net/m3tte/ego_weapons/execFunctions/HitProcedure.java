@@ -45,7 +45,6 @@ public class HitProcedure {
 
 		@SubscribeEvent
 		public static void onEntityDamaged(LivingDamageEvent event) {
-			System.out.println("DAMAGED TEST");
 			applyStaggerDamageGeneric(event.getSource(), event.getAmount(), event, event.getEntityLiving());
 		}
 

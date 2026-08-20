@@ -6,17 +6,13 @@ import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProper
 import net.m3tte.ego_weapons.gameasset.abilities.armorAbilities.ArdorBlossomArmorAbility;
 import net.m3tte.ego_weapons.gameasset.abilities.weaponAbilities.ArdorBlossomBatWeaponAbility;
 import net.m3tte.ego_weapons.item.ardor_blossom.ArdorBlossomSuit;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
-import net.m3tte.ego_weapons.procedures.SharedFunctions;
-import net.m3tte.ego_weapons.procedures.TeamLockedPredicate;
+import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
-import net.m3tte.ego_weapons.world.capabilities.damage.DirectEgoDamageSource;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.AttackTypes;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.DamageTypes;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -31,10 +27,6 @@ import yesman.epicfight.api.model.Model;
 import yesman.epicfight.api.utils.ExtendedDamageSource;
 import yesman.epicfight.api.utils.math.ValueCorrector;
 import yesman.epicfight.gameasset.ColliderPreset;
-import yesman.epicfight.world.capabilities.EpicFightCapabilities;
-import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
-
-import java.util.List;
 
 import static net.m3tte.ego_weapons.gameasset.abilities.weaponAbilities.ArdorBlossomBatWeaponAbility.castOverclockExplosion;
 import static net.m3tte.ego_weapons.procedures.SharedFunctions.basicSwingEvent;
@@ -160,10 +152,10 @@ public class ArdorBlossomMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.6F);
 
         ARDOR_BLOSSOM_AUTO_3 = new BasicEgoAttackAnimation(0.01F, 0.08F, 0.4f, 0.66F, 1.35f, null, "Tool_R", "biped/ardor_blossom/auto_3", biped)
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.BLUNT)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.SWING_EFFECT, basicSwingEvent)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "ardor_blossom_auto_3")
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
@@ -243,7 +235,7 @@ public class ArdorBlossomMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.SWING_EFFECT, basicSwingEvent)
-                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "ardor_blossom_innate_3")
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.ARDOR_BLOSSOM_INNATE_HIT_3)
@@ -436,7 +428,7 @@ public class ArdorBlossomMovesetAnims {
             if (!entity.level.isClientSide())
                 entitypatch.playSound(EgoWeaponsSounds.ARDOR_BLOSSOM_FLAP, 1, 1);
             if (!entity.level.isClientSide())
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.OUTGOING_EMBER.get(), 20, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 2.3f, 1.5f, 20, 0,0,0));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.OUTGOING_EMBER.get(), 20, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 2.3f, 1.5f, 20, 0,0,0));
 
 
             ArdorBlossomSuit.setWingRotationState(entity, 0, 6, 5, 3, 0f, 1.5f);
@@ -455,7 +447,7 @@ public class ArdorBlossomMovesetAnims {
             if (!entity.level.isClientSide())
                 entitypatch.playSound(EgoWeaponsSounds.ARDOR_BLOSSOM_FLAP, 1, 1);
             if (!entity.level.isClientSide())
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.OUTGOING_EMBER.get(), 20, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 2.3f, 1.5f, 20, 0,0,0));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.OUTGOING_EMBER.get(), 20, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 2.3f, 1.5f, 20, 0,0,0));
 
 
             ArdorBlossomSuit.setWingRotationState(entity, 0, 6, 5, 9, 0f, 1.7f);
@@ -484,7 +476,7 @@ public class ArdorBlossomMovesetAnims {
 
             if (!entity.level.isClientSide()) {
                 entitypatch.playSound(EgoWeaponsSounds.ARDOR_BLOSSOM_INNATE_CHARGE_2, 1, 1);
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.INGOING_EMBER.get(), 30, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 4f, 0.3f, 10, 0,0,0));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.INGOING_EMBER.get(), 30, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 4f, 0.3f, 10, 0,0,0));
 
             }
 
@@ -498,7 +490,7 @@ public class ArdorBlossomMovesetAnims {
             entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().putInt("ext", 1);
 
             if (!entity.level.isClientSide())
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.OUTGOING_EMBER.get(), 40, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 2f, 1f, 20, 0,0,0));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.OUTGOING_EMBER.get(), 40, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 2f, 1f, 20, 0,0,0));
             ArdorBlossomSuit.setWingActivationState(entity, true, 0);
             ArdorBlossomSuit.setWingActivationState(entity, false, 100);
 
@@ -585,7 +577,7 @@ public class ArdorBlossomMovesetAnims {
         events[1] = StaticAnimation.Event.create(0.1F, (entitypatch) -> {
             LivingEntity entity = entitypatch.getOriginal();
             if (!entity.level.isClientSide())
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.INGOING_EMBER.get(), 30, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 4f, 0.3f, 10, 0,0,0));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.INGOING_EMBER.get(), 30, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 4f, 0.3f, 10, 0,0,0));
             if (!entity.level.isClientSide())
                 entitypatch.playSound(EgoWeaponsSounds.ARDOR_BLOSSOM_INNATE_CHARGE_2, 1, 1);
 
@@ -599,7 +591,7 @@ public class ArdorBlossomMovesetAnims {
             entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().putInt("ext", 1);
 
             if (!entity.level.isClientSide())
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.OUTGOING_EMBER.get(), 40, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 2f, 1f, 20, 0,0,0));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.OUTGOING_EMBER.get(), 40, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 2f, 1f, 20, 0,0,0));
             ArdorBlossomSuit.setWingActivationState(entity, true, 0);
             ArdorBlossomSuit.setWingActivationState(entity, false, 100);
 
@@ -656,7 +648,7 @@ public class ArdorBlossomMovesetAnims {
 
 
             if (!entity.level.isClientSide()) {
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.ARDOR_BLOSSOM_CHARGE.get(), 2, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 0f, 0f, 0, 0,0,0));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.ARDOR_BLOSSOM_CHARGE.get(), 2, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 0f, 0f, 0, 0,0,0));
 
 
                 DialogueSystem.speakEvalDialogue(entitypatch.getOriginal(), "dialogue.ego_weapons.skills.ardor_blossom_bat.corrosion.2", DialogueSystem.DialogueTypes.SKILL, TextFormatting.WHITE);
@@ -705,7 +697,7 @@ public class ArdorBlossomMovesetAnims {
                 entitypatch.playSound(EgoWeaponsSounds.ARDOR_BLOSSOM_FLAP, 1, 1);
 
             if (!entity.level.isClientSide())
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.OUTGOING_EMBER.get(), 20, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 2.3f, 1.5f, 20, 0,0,0));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.OUTGOING_EMBER.get(), 20, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 2.3f, 1.5f, 20, 0,0,0));
 
 
             ArdorBlossomSuit.setWingRotationState(entity, 0, 6, 5, 9, 1.5f, 0f);
@@ -752,7 +744,7 @@ public class ArdorBlossomMovesetAnims {
         events[1] = StaticAnimation.Event.create(0.1F, (entitypatch) -> {
             LivingEntity entity = entitypatch.getOriginal();
             if (!entity.level.isClientSide())
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.INGOING_EMBER.get(), 30, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 4f, 0.3f, 10, 0,0,0));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.INGOING_EMBER.get(), 30, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 4f, 0.3f, 10, 0,0,0));
 
 
             if (!entity.level.isClientSide())
@@ -768,7 +760,7 @@ public class ArdorBlossomMovesetAnims {
 
 
             if (!entity.level.isClientSide())
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.OUTGOING_EMBER.get(), 40, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 2f, 1f, 20, 0,0,0));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.OUTGOING_EMBER.get(), 40, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 2f, 1f, 20, 0,0,0));
 
             ArdorBlossomArmorAbility.processArmorAbility(entitypatch, entity);
 

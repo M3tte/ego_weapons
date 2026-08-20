@@ -49,7 +49,7 @@ public class GenericEgoWeaponsArmor extends ArmorItem {
 
     public void resistanceMods(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 
-        list.add(new StringTextComponent("Defensive Statistics:").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+        list.add(new TranslationTextComponent("desc.ego_weapons.resistances.title.1").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
         list.add(new TranslationTextComponent("desc.ego_weapons.resistances.defense_level").append(this.material.getDefenseForSlot(this.slot)+"").withStyle(TextFormatting.BLUE));
         if (bonusStaggerThreshold > 0) {
             list.add(new TranslationTextComponent("desc.ego_weapons.resistances.stagger_bonus").append(((int)this.bonusStaggerThreshold)+"").withStyle(TextFormatting.BLUE));
@@ -65,7 +65,7 @@ public class GenericEgoWeaponsArmor extends ArmorItem {
 
         list.add(new StringTextComponent(" "));
 
-        list.add(new StringTextComponent("Damage Resistances:").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+        list.add(new TranslationTextComponent("desc.ego_weapons.resistances.title.2").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
         list.add(new TranslationTextComponent("desc.ego_weapons.resistances.red").append(this.redResistance+"x"));
         list.add(new TranslationTextComponent("desc.ego_weapons.resistances.white").append(this.whiteResistance+"x"));
@@ -73,7 +73,7 @@ public class GenericEgoWeaponsArmor extends ArmorItem {
         list.add(new TranslationTextComponent("desc.ego_weapons.resistances.pale").append(this.paleResistance+"x"));
         list.add(new StringTextComponent(" "));
 
-        list.add(new StringTextComponent("Attack Type Resistances:").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+        list.add(new TranslationTextComponent("desc.ego_weapons.resistances.title.3").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
         list.add(new TranslationTextComponent("desc.ego_weapons.resistances.slash").append(this.slashResistance+"x"));
         list.add(new TranslationTextComponent("desc.ego_weapons.resistances.pierce").append(this.pierceResistance+"x"));
         list.add(new TranslationTextComponent("desc.ego_weapons.resistances.blunt").append(this.bluntResistance+"x"));

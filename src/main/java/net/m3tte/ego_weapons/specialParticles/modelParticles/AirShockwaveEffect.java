@@ -19,7 +19,6 @@ import java.util.Random;
 
 public class AirShockwaveEffect extends RotationAttackParticle {
 
-    private Entity sourceEntity;
     float targetQuadSize = 0;
     Random r = new Random();
 
@@ -36,7 +35,7 @@ public class AirShockwaveEffect extends RotationAttackParticle {
         this.offset = new Vector3f(0,1f,-0.2f);
         this.targetQuadSize = 2.2f + r.nextFloat();
         this.quadSize = 0.001f;
-        this.rotation = new Vector3f(r.nextInt(40) - 20, r.nextInt(360), r.nextInt(40) - 20);
+        this.rotation.add(r.nextInt(40) - 20, 90 + r.nextInt(20) - 10, r.nextInt(40) - 20);
 
 
         this.offsetRate = new Vector3f((float) 0, 0, 0.15f + r.nextFloat() * 0.08f);

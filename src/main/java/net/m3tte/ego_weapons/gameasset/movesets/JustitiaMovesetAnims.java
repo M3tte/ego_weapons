@@ -8,31 +8,24 @@ import net.m3tte.ego_weapons.gameasset.AttackCycleType;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
-import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.item.stigma_workshop.StigmaWorkshopSword;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
+import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.procedures.DelayedEvent;
+import net.m3tte.ego_weapons.procedures.EntityTick;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
-import net.m3tte.ego_weapons.world.capabilities.damage.DirectEgoDamageSource;
+import net.m3tte.ego_weapons.procedures.TeamLockedPredicate;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.AttackTypes;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.DamageTypes;
 import net.m3tte.ego_weapons.world.capabilities.damage.SimpleEgoDamageSource;
-import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.PacketDistributor;
-import org.jetbrains.annotations.Nullable;
 import yesman.epicfight.api.animation.property.AnimationProperty;
 import yesman.epicfight.api.animation.types.*;
 import yesman.epicfight.api.model.Model;
@@ -44,10 +37,8 @@ import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.particle.EpicFightParticles;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
-import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 import yesman.epicfight.world.effect.EpicFightMobEffects;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static net.m3tte.ego_weapons.procedures.SharedFunctions.getNearbyEntities;
@@ -183,7 +174,7 @@ public class JustitiaMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.6F);
 
         JUSTITIA_AUTO_3 = new BasicEgoAttackAnimation(0.01F, 0.08F, 1F, 1.33F, 1.66F, null, "Tool_R", "biped/justitia/auto_3", biped)
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.PALE)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "justitia_auto3")
@@ -197,11 +188,11 @@ public class JustitiaMovesetAnims {
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, skill3Event());
 
         JUSTITIA_AUTO_4 = new BasicEgoAttackAnimation(0.01F, 0.08F, 0.66F, 1F, 2F, null, "Tool_R", "biped/justitia/auto_4", biped)
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.PALE)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "justitia_auto4")
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.JUSTITIA_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.RAT_PIPE_SWING)
@@ -213,7 +204,7 @@ public class JustitiaMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.5f);
 
         JUSTITIA_AUTO_JUMP = new BasicEgoAttackAnimation(0.01F, 0.08F, 0.45F, 0.66F, 1.5F, null, "Tool_R", "biped/justitia/jump_attack", biped)
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.PALE)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "justitia_jump")
@@ -345,8 +336,8 @@ public class JustitiaMovesetAnims {
             LivingEntity entity = entitypatch.getOriginal();
             World world = entity.level;
             if (!world.isClientSide()) {
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.JUSTITIA_PARTICLE_SCALE.get(), 20, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), entity.getId(), 0.6f, 1.5f, 0.5f, 1f, 0.5f));
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.JUSTITIA_PIECE.get(), 8, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.JUSTITIA_PARTICLE_SCALE.get(), 20, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), entity.getId(), 0.6f, 1.5f, 0.5f, 1f, 0.5f));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.JUSTITIA_PIECE.get(), 8, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
             }
 
             entity.level.addParticle(EgoWeaponsParticles.TEXTURED_AFTER_IMAGE.get(), entity.getX(), entity.getY(), entity.getZ(), Double.longBitsToDouble(entity.getId()), 3, 0);
@@ -360,24 +351,24 @@ public class JustitiaMovesetAnims {
             LivingEntity entity = entitypatch.getOriginal();
             World world = entity.level;
 
-            List<LivingEntity> nearbies = getNearbyEntities(entity, 16, 4);
+            List<LivingEntity> nearbies = getNearbyEntities(entity, 16, 4, TeamLockedPredicate.EVERYONE_AND_ANYONE);
 
 
             if (!world.isClientSide()) {
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.JUSTITIA_SCALE.get().getRegistryName()));
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.JUSTITIA_PARTICLE_SCALE.get(), 20, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), entity.getId(), 0, 0, 0, 0, 0));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.JUSTITIA_SCALE.get().getRegistryName()));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.JUSTITIA_PARTICLE_SCALE.get(), 20, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), entity.getId(), 0, 0, 0, 0, 0));
 
-                new DelayedEvent(10, (e) -> {
-                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.JUSTITIA_PARTICLE_SCALE.get(), 10, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), entity.getId(), 0, 0, 0, 0, 0));
-                });
+                DelayedEvent.animDelayEvent(entitypatch, 15, (e) -> {
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.JUSTITIA_PARTICLE_SCALE.get(), 10, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), entity.getId(), 0, 0, 0, 0, 0));
+                }, "SIN VFX 1");
 
-                new DelayedEvent(20, (e) -> {
-                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.JUSTITIA_PARTICLE_SCALE.get(), 10, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), entity.getId(), 0, 0, 0, 0, 0));
-                });
+                DelayedEvent.animDelayEvent(entitypatch, 30, (e) -> {
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.JUSTITIA_PARTICLE_SCALE.get(), 10, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), entity.getId(), 0, 0, 0, 0, 0));
+                }, "SIN VFX 2");
 
-                new DelayedEvent(30, (e) -> {
-                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.JUSTITIA_PARTICLE_SCALE.get(), 10, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), entity.getId(), 0, 0, 0, 0, 0));
-                });
+                DelayedEvent.animDelayEvent(entitypatch, 45, (e) -> {
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.JUSTITIA_PARTICLE_SCALE.get(), 10, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), entity.getId(), 0, 0, 0, 0, 0));
+                }, "SIN VFX 3");
             }
 
 
@@ -389,6 +380,7 @@ public class JustitiaMovesetAnims {
 
                     LivingEntityPatch<?> targetEnt = (LivingEntityPatch<?>) ent.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
                     ent.getPersistentData().putInt("justitiaRope", ent.tickCount);
+                    ent.getPersistentData().putInt("justitiaRopeE", ent.tickCount + 200);
                     ent.playSound(EgoWeaponsSounds.JUSTITIA_SPECIAL_HANG, 6f, 1);
 
 
@@ -406,11 +398,17 @@ public class JustitiaMovesetAnims {
 
 
 
-                    new DelayedEvent(35 + i, (e) -> {
+                    DelayedEvent.animDelayEvent(entitypatch, 90 + i, (e) -> {
                         int sinCount = EgoWeaponsEffects.SIN.get().getPotency(ent);
 
                         if (ent.getArmorValue() > 0)
                             ent.addEffect(new EffectInstance(EgoWeaponsEffects.DEFENSE_LEVEL_DOWN.get(), 3, ent.getArmorValue() - 1));
+
+
+                        if (sinCount >= 2) {
+                            EgoWeaponsEffects.FRAGILE.get().increment(ent, 0, sinCount/2);
+                            EgoWeaponsEffects.SEALED.get().increment(ent, 0, sinCount/2);
+                        }
 
                         EgoWeaponsEffects.OFFENSE_LEVEL_DOWN.get().increment(ent, 0, sinCount);
                         ent.getPersistentData().remove("justitiaRope");
@@ -418,6 +416,11 @@ public class JustitiaMovesetAnims {
                         ent.removeEffect(EgoWeaponsEffects.SIN.get());
 
                         entity.level.addParticle(EgoWeaponsParticles.JUSTITIA_SCALE_STRIKE.get(), ent.getX(), ent.getY() + ent.getBbHeight() / 2, ent.getZ(), 0, 0, 0);
+
+
+                        if (ent instanceof PlayerEntity) {
+                            EntityTick.consumeLight((PlayerEntity) ent, sinCount);
+                        }
 
                         for (int c = 0; c < 20; c++) {
                             entity.level.addParticle(EgoWeaponsParticles.JUSTITIA_PIECE.get(), ent.getX() + ent.getRandom().nextFloat() - 0.5f, ent.getY() + ent.getBbHeight() / 2 + ent.getRandom().nextFloat() * 0.2 - 0.1f, ent.getZ() + ent.getRandom().nextFloat() - 0.5f, -0.2 + 0.02 * c, 0.2f, 1.3f);
@@ -427,9 +430,9 @@ public class JustitiaMovesetAnims {
 
 
 
-                        ent.hurt(new SimpleEgoDamageSource("", null, GenericEgoDamage.AttackTypes.BLUNT, GenericEgoDamage.DamageTypes.PALE, "justitia_special"), (float) ent.getMaxHealth() * sinCount * 0.05f + 3 * sinCount);
+                        ent.hurt(new SimpleEgoDamageSource("", null, GenericEgoDamage.AttackTypes.BLUNT, GenericEgoDamage.DamageTypes.PALE, "justitia_special"), (float) ent.getMaxHealth() * sinCount * 0.05f + 5 * sinCount);
                         ent.playSound(EgoWeaponsSounds.JUSTITIA_HIT, 6f, 1);
-                    });
+                    }, "SIN DAMAGE EFFECT");
 
 
                 }

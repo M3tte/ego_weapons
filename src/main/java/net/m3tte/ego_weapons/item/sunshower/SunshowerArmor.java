@@ -11,6 +11,7 @@ import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoWeaponsArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
@@ -41,8 +42,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
 
 public class SunshowerArmor extends GenericEgoWeaponsArmor {
 
@@ -178,7 +178,7 @@ public class SunshowerArmor extends GenericEgoWeaponsArmor {
 		@Override
 		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.appendHoverText(itemstack, world, list, flag);
-			list.add(new TranslationTextComponent("desc.ego_weapons.sunshower_cloak.desc"));
+			TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.sunshower_cloak.desc");
 			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -208,9 +208,7 @@ public class SunshowerArmor extends GenericEgoWeaponsArmor {
 					break;
 			}
 
-			list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
-
-
+			generateStatusHelp(list);
 
 		}
 

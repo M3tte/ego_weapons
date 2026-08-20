@@ -5,7 +5,8 @@ import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.gameasset.movesets.*;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
+import net.m3tte.ego_weapons.network.packages.VFXPackages;
+import net.m3tte.ego_weapons.potion.NoAmmo;
 import net.m3tte.ego_weapons.potion.OrlandoPotionEffect;
 import net.m3tte.ego_weapons.potion.SolemnLamentEffects;
 import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
@@ -43,7 +44,7 @@ public class OnEntityHit {
 
 
 
-        @SubscribeEvent(priority = EventPriority.LOWEST)
+        @SubscribeEvent(priority = EventPriority.HIGHEST)
         public static void onEntityAttacked(LivingAttackEvent event) {
 
 
@@ -53,6 +54,14 @@ public class OnEntityHit {
             float amount = event.getAmount();
 
             LivingEntity living = event.getEntityLiving();
+
+            // Cancelling if source has no ammo
+            if (event.getSource().getEntity() instanceof LivingEntity) {
+                if (((LivingEntity) event.getSource().getEntity()).hasEffect(NoAmmo.get())) {
+                    event.setCanceled(true);
+                    return;
+                }
+            }
 
             // Clashing, only occurs when enabled in gamerule
             if (event.getSource().getDirectEntity() instanceof LivingEntity && event.getEntityLiving().level.getGameRules().getBoolean(EgoWeaponsGamerules.ENABLE_CLASHING)) {
@@ -186,8 +195,8 @@ public class OnEntityHit {
                                 if (!living.level.isClientSide()) {
                                     ((ServerWorld) living.level).sendParticles(EpicFightParticles.HIT_BLUNT.get(), living.getX(), living.getY()+1, living.getZ(), 2, 0.01f, 0.1f, 0.1f, 0.1f);
                                     if (targetPatch.getOriginal().level.getGameRules().getBoolean(EgoWeaponsGamerules.ENABLE_CLASHINDICATOR)) {
-                                        EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.ClashLabelParticle(targetPatch.getOriginal().position().add(0, 2, 0), evaluateDamageType(targetPatch), targetCracked, targetImpact));
-                                        EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.ClashLabelParticle(sourcePatch.getOriginal().position().add(0, 2, 0), evaluateDamageType(sourcePatch), sourceCracked, sourceImpact));
+                                        EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.ClashLabelParticle(targetPatch.getOriginal().position().add(0, 2, 0), evaluateDamageType(targetPatch), targetCracked, targetImpact));
+                                        EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.ClashLabelParticle(sourcePatch.getOriginal().position().add(0, 2, 0), evaluateDamageType(sourcePatch), sourceCracked, sourceImpact));
                                     }
                                 }
 

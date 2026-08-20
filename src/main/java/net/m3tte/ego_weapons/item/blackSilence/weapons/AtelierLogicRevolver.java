@@ -7,6 +7,7 @@ import net.m3tte.ego_weapons.execFunctions.BlackSilenceEvaluator;
 import net.m3tte.ego_weapons.gameasset.movesets.AtelierLogicMovesetAnims;
 import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -29,8 +30,7 @@ import java.util.List;
 
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
 import static net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations.spawnArmatureParticle;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
 
 //atelier_logic_pistols
 public class AtelierLogicRevolver extends EgoWeaponsWeapon {
@@ -116,7 +116,7 @@ public class AtelierLogicRevolver extends EgoWeaponsWeapon {
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
-		list.add(new StringTextComponent("Manufactured by Atelier Logic").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+		TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.atelier_logic_pistols.desc");
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 8) + 1) + "/8] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -173,7 +173,7 @@ public class AtelierLogicRevolver extends EgoWeaponsWeapon {
 				break;
 		}
 
-		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+		generateStatusHelp(list);
 	}
 	public static StaticAnimation.Event[] revolverFire(float time, String limb) {
 		StaticAnimation.Event[] events = new StaticAnimation.Event[1];

@@ -66,10 +66,21 @@ public class EgoWeaponsEffects {
     public static final RegistryObject<CountPotencyStatus> EMBERS = registerEffect("embers", new EmberEffect());
     public static final RegistryObject<CountPotencyStatus> EGO_ATTUNEMENT_ARDOR_BLOSSOM = registerEffect("ego_att_ardor", new EGOAttArdorBlossom());
     public static final RegistryObject<CountPotencyStatus> BLUE_SAND = registerEffect("blue_sand", new BlueSandEffect());
+    public static final RegistryObject<CountPotencyStatus> SHEUT_FRACTURE = registerEffect("sheut_fracture", new SheutFractureEffect());
+    public static final RegistryObject<CountPotencyStatus> WHITE_FRAGILITY = registerEffect("white_fragility", new WhiteFragilityEffect());
+    public static final RegistryObject<CountPotencyStatus> UDJAT_VANGUARD = registerEffect("udjat_vanguard", new UdjatVanguard());
+    public static final RegistryObject<CountPotencyStatus> SHIELDING_ALLOY_REGENERATIVE_CYCLE = registerEffect("alloy_regenerative_cycle", new ArmorRegenerativeCycle());
+    public static final RegistryObject<CountPotencyStatus> SEVER_THE_THREAD = registerEffect("sever_the_thread", new SeverTheThreadEffect());
+    public static final RegistryObject<CountPotencyStatus> LOSS_OF_SELF = registerEffect("loss_of_self", new LossOfSelfEffect());
+    public static final RegistryObject<CountPotencyStatus> CHESEDS_LATENCY = registerEffect("cheseds_latency", new ChesedsLatency());
+    public static final RegistryObject<CountPotencyStatus> TIANSHIA_STAR = registerEffect("tianshia_star", new TianshiaStarsBlade());
+    public static final RegistryObject<CountPotencyStatus> SEALED = registerEffect("sealed", new SealedEffect());
+    public static final RegistryObject<CountPotencyStatus> SHELL = registerEffect("shell", new ShellEffect());
+    public static final RegistryObject<CountPotencyStatus> TERROR = registerEffect("terror", new TerrorEffect());
 
 
     public static int speedMult(LivingEntity entity) {
-        return SPEED_UP.get().getPotency(entity) - SPEED_DOWN.get().getPotency(entity);
+        return SPEED_UP.get().getPotency(entity) - SPEED_DOWN.get().getPotency(entity) + UDJAT_VANGUARD.get().getPotency(entity)*2;
     }
 
     public static void extendEffect(LivingEntity target, Effect effect, int time) {

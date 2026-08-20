@@ -3,32 +3,27 @@ package net.m3tte.ego_weapons.item.sunshower;
 
 import net.m3tte.ego_weapons.*;
 import net.m3tte.ego_weapons.entities.SunshowerUmbrellaEntity;
-import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
-import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.gameasset.movesets.SunshowerMovesetAnims;
 import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
+import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
 import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
-import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
+import net.m3tte.ego_weapons.world.capabilities.UtilitySystems;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.command.Commands;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -42,7 +37,6 @@ import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.particle.EpicFightParticles;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
-import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 import yesman.epicfight.world.effect.EpicFightMobEffects;
 
 import java.util.ArrayList;
@@ -53,8 +47,8 @@ import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILIT
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 import static net.m3tte.ego_weapons.execFunctions.HitProcedure.hitStunEffect;
 import static net.m3tte.ego_weapons.procedures.SharedFunctions.*;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
+import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.generateAttackContext;
 
 public class Sunshower extends EgoWeaponsWeapon {
 
@@ -104,7 +98,7 @@ public class Sunshower extends EgoWeaponsWeapon {
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
-		list.add(new TranslationTextComponent("desc.ego_weapons.sunshower.desc"));
+		TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.sunshower.desc");
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -142,9 +136,7 @@ public class Sunshower extends EgoWeaponsWeapon {
 					generateDescription(list,"sunshower", "passive", 5);
 		}
 
-		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
-
-
+		generateStatusHelp(list);
 
 	}
 
@@ -179,114 +171,110 @@ public class Sunshower extends EgoWeaponsWeapon {
 		if (puddleStompAnimations == null) {
 			puddleStompAnimations = new int[]{SunshowerMovesetAnims.SUNSHOWER_PUDDLE_STOMP_2.getId(), SunshowerMovesetAnims.SUNSHOWER_PUDDLE_STOMP_3.getId()};;
 		}
-
-		World world = target.level;
-
-		Item chestItem = sourceentity.getItemBySlot(EquipmentSlotType.CHEST).getItem();
-
 		PlayerVariables entityData = sourceentity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
-		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
+		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
 
-		final int anim_id = currentanim.getId();
+		System.out.println("CONTEXT DATA : "+context.isValidEgoAnimation()+" - "+context.getAnimationIdentifier()+" - "+context.getAnimation());
 
-		String animIdentifier = currentanim.getRealAnimation().getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
+		if (context.isValidEgoAnimation()) {
+			switch (context.getAnimationIdentifier()) {
+				case "sunshower_auto_1":
+					EgoWeaponsEffects.SINKING.get().increment(target, 1, 1);
+					EgoWeaponsEffects.SINKING.get().increment(sourceentity, 0, 2);
+					break;
 
-		switch (animIdentifier) {
-			case "sunshower_auto_1":
-				EgoWeaponsEffects.SINKING.get().increment(target, 1, 1);
-				EgoWeaponsEffects.SINKING.get().increment(sourceentity, 0, 2);
-				break;
+				case "sunshower_auto_2":
+				case "sunshower_auto_3":
+					EgoWeaponsEffects.SINKING.get().increment(target, 1, 1);
+					break;
 
-			case "sunshower_auto_2":
-			case "sunshower_auto_3":
-				EgoWeaponsEffects.SINKING.get().increment(target, 1, 1);
-				break;
+				case "sunshower_auto_4":
+					EgoWeaponsEffects.SINKING.get().increment(target, 3, 1);
+					if (sourceentity instanceof PlayerEntity) {
+						PlayerEntity sourcePlayer = (PlayerEntity) sourceentity;
+						if (!(sourcePlayer.getCooldowns().isOnCooldown(this.getItem()) && entityData.globalcooldown <= 0)) {
 
-			case "sunshower_auto_4":
-				EgoWeaponsEffects.SINKING.get().increment(target, 3, 1);
-				if (sourceentity instanceof PlayerEntity) {
-					PlayerEntity sourcePlayer = (PlayerEntity) sourceentity;
-					if (!(sourcePlayer.getCooldowns().isOnCooldown(this.getItem()) && entityData.globalcooldown <= 0)) {
-
-						SanitySystem.healSanity((PlayerEntity) sourceentity, 3f);
+							SanitySystem.healSanity((PlayerEntity) sourceentity, 3f);
 
 
-						((PlayerEntity) sourceentity).getCooldowns().addCooldown(itemstack.getItem(), (int) 2);
-						entityData.globalcooldown = 2;
+							((PlayerEntity) sourceentity).getCooldowns().addCooldown(itemstack.getItem(), (int) 2);
+							entityData.globalcooldown = 2;
+						}
 					}
-				}
-				break;
+					break;
 
-			case "sunshower_jump_attack":
-				entitypatch.playAnimationSynchronized(SunshowerMovesetAnims.SUNSHOWER_JUMP_ATTACK_F, 0);
-				LivingEntityPatch<?> targetentitypatch = (LivingEntityPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-				EgoWeaponsEffects.SINKING.get().increment(target, 1, 0);
+				case "sunshower_jump_attack":
+					entitypatch.playAnimationSynchronized(SunshowerMovesetAnims.SUNSHOWER_JUMP_ATTACK_F, 0);
+					LivingEntityPatch<?> targetentitypatch = (LivingEntityPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+					EgoWeaponsEffects.SINKING.get().increment(target, 1, 0);
 
-				if (targetentitypatch != null) {
-					pummelDownEntity(targetentitypatch, 2);
-				}
-
-				entitypatch.playSound(EgoWeaponsSounds.SWORD_STAB, 1, 1, 1);
-				break;
-
-			case "sunshower_spread_out_1":
-				entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().putInt("spreadoutcounter",1);
-				EgoWeaponsEffects.SINKING.get().increment(target, 4, 0);
-				break;
-
-			case "sunshower_spread_out_2":
-				entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().putInt("spreadoutcounter",2);
-				LivingEntityPatch<?> trgtPatch = (LivingEntityPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-
-				if (trgtPatch != null) {
-					target.addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 3, 0));
-					pummelUpEntity(trgtPatch, 2);
-				}
-
-				entitypatch.playSound(EgoWeaponsSounds.SWORD_STAB, 1, 1, 1);
-				break;
-
-			case "sunshower_spread_out_3":
-				entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().remove("spreadoutcounter");
-				EgoWeaponsEffects.RUPTURE.get().increment(target, 2, 4);
-				break;
-
-			case "sunshower_counter":
-				EgoWeaponsEffects.SINKING.get().increment(target, 1, 2);
-				break;
-
-			case "sunshower_puddle_stomp_3":
-				EgoWeaponsEffects.RUPTURE.get().increment(target, 2, 5);
-				TremorEffect.burstTremor(target, true);
-				EgoWeaponsEffects.SINKING.get().increment(target, 1, 2);
-				if (sourceentity instanceof PlayerEntity) {
-					PlayerEntity sourcePlayer = (PlayerEntity) sourceentity;
-					if (!(sourcePlayer.getCooldowns().isOnCooldown(this.getItem()) && entityData.globalcooldown <= 0)) {
-
-						SanitySystem.healSanity((PlayerEntity) sourceentity, 3f);
-
-
-						((PlayerEntity) sourceentity).getCooldowns().addCooldown(itemstack.getItem(), (int) 2);
-						entityData.globalcooldown = 2;
+					if (targetentitypatch != null) {
+						pummelDownEntity(targetentitypatch, 2, true);
 					}
+
+					entitypatch.playSound(EgoWeaponsSounds.SWORD_STAB, 1, 1, 1);
+					break;
+
+				case "sunshower_spread_out_1":
+					entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().putInt("spreadoutcounter",1);
+					EgoWeaponsEffects.SINKING.get().increment(target, 4, 0);
+					break;
+
+				case "sunshower_spread_out_2":
+					entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().putInt("spreadoutcounter",2);
+					LivingEntityPatch<?> trgtPatch = (LivingEntityPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+
+					if (trgtPatch != null) {
+						target.addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 3, 0));
+						pummelUpEntity(trgtPatch, 2);
+					}
+
+					entitypatch.playSound(EgoWeaponsSounds.SWORD_STAB, 1, 1, 1);
+					break;
+
+				case "sunshower_spread_out_3":
+					entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().remove("spreadoutcounter");
+					EgoWeaponsEffects.RUPTURE.get().increment(target, 2, 4);
+					break;
+
+				case "sunshower_counter":
+					EgoWeaponsEffects.SINKING.get().increment(target, 1, 2);
+					break;
+
+				case "sunshower_puddle_stomp_3":
+					EgoWeaponsEffects.RUPTURE.get().increment(target, 2, 5);
+					TremorEffect.burstTremor(target, true);
+					EgoWeaponsEffects.SINKING.get().increment(target, 1, 2);
+					if (sourceentity instanceof PlayerEntity) {
+						PlayerEntity sourcePlayer = (PlayerEntity) sourceentity;
+						if (!(sourcePlayer.getCooldowns().isOnCooldown(this.getItem()) && entityData.globalcooldown <= 0)) {
+
+							SanitySystem.healSanity((PlayerEntity) sourceentity, 3f);
+
+
+							((PlayerEntity) sourceentity).getCooldowns().addCooldown(itemstack.getItem(), (int) 2);
+							entityData.globalcooldown = 2;
+						}
+					}
+					break;
+			}
+
+
+
+			// Any of the puddle stomp animations.
+			if (Arrays.stream(puddleStompAnimations).anyMatch((e) -> e == context.getAnimation().getId())) {
+				LivingEntityPatch<?> targetPatch = (LivingEntityPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+
+				if (targetPatch != null) {
+					targetPatch.knockBackEntity(sourceentity.position(), -1);
+					pummelDownEntity(targetPatch, 2, true);
 				}
-				break;
-		}
-
-
-
-		// Any of the puddle stomp animations.
-		if (Arrays.stream(puddleStompAnimations).anyMatch((e) -> e == anim_id)) {
-			LivingEntityPatch<?> targetPatch = (LivingEntityPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-
-			if (targetPatch != null) {
-				targetPatch.knockBackEntity(sourceentity.position(), -1);
-				pummelDownEntity(targetPatch, 2);
 			}
 		}
+
 
 		return retval;
 	}
@@ -336,13 +324,7 @@ public class Sunshower extends EgoWeaponsWeapon {
 
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) source.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
-		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
-
-		String weaponIdentifier = (currentanim.getRealAnimation()).getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
-
-		PlayerVariables entityData = source.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
-
-		boolean isFinal = (currentanim.getRealAnimation()).getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LAST_OF_COMBO).orElse(false);
+		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
 
 		int sourceSinkingPotency = EgoWeaponsEffects.SINKING.get().getPotency(source);
 		int targetSinkingPotency = EgoWeaponsEffects.SINKING.get().getPotency(target);
@@ -354,7 +336,7 @@ public class Sunshower extends EgoWeaponsWeapon {
 		mult += Math.min(0.1f, 0.01f * targetSinkingPotency);
 
 
-		if ((sourceSinkingPotency + targetSinkingPotency) > 10 && isFinal) {
+		if ((sourceSinkingPotency + targetSinkingPotency) > 10 && context.isFinalCoin()) {
 			if (sourceSinkingPotency >= 2)
 				EgoWeaponsEffects.SINKING.get().decrement(source, 0, 3);
 			else if (targetSinkingPotency >= 2)
@@ -364,14 +346,14 @@ public class Sunshower extends EgoWeaponsWeapon {
 
 		}
 
-		switch (weaponIdentifier) {
+		switch (context.getAnimationIdentifier()) {
 			case "sunshower_puddle_stomp_3":
 				SharedFunctions.incrementBonusDamage(damageSource, 0.5f);
 
 				if (!target.level.isClientSide()) {
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), target.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), target.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), target.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), target.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), target.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), target.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
 
 				}
 

@@ -4,14 +4,11 @@ package net.m3tte.ego_weapons.item.rat;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
-import net.m3tte.ego_weapons.EgoWeaponsEffects;
-import net.m3tte.ego_weapons.EgoWeaponsItems;
-import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
-import net.m3tte.ego_weapons.item.heishou_mao.HeishouMaoRobe;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoWeaponsArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
@@ -22,7 +19,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.DamageSource;
@@ -36,14 +32,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
-import yesman.epicfight.api.animation.types.DynamicAnimation;
-import yesman.epicfight.world.capabilities.EpicFightCapabilities;
-import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 import java.util.List;
 
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
 
 public class RatBluntJacket extends GenericEgoWeaponsArmor {
 
@@ -156,7 +148,7 @@ public class RatBluntJacket extends GenericEgoWeaponsArmor {
 		@Override
 		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.appendHoverText(itemstack, world, list, flag);
-			list.add(new StringTextComponent("A shabby hoodie stuffed with cloth. Provides a bit of protection.").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+			TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.rat_blunt_outfit.desc");
 			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 			list.add(new StringTextComponent("= - - - - - - - [Page: " + ((EgoWeaponsKeybinds.getUiPage() % 3) + 1) + "/3] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -180,7 +172,7 @@ public class RatBluntJacket extends GenericEgoWeaponsArmor {
 					break;
 			}
 
-			list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+			generateStatusHelp(list);
 		}
 
 	};

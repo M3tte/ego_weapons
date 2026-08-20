@@ -9,9 +9,11 @@ import net.m3tte.ego_weapons.item.guns.GunCaliber;
 import net.m3tte.ego_weapons.item.guns.GunItem;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.AmmoSystem;
 import net.m3tte.ego_weapons.world.capabilities.AmmoType;
 import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
+import net.m3tte.ego_weapons.world.capabilities.UtilitySystems;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -32,15 +34,14 @@ import yesman.epicfight.api.animation.types.DynamicAnimation;
 import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
-import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 
 import java.util.List;
 
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 import static net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations.spawnArmatureParticle;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
+import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.generateAttackContext;
 
 public class FullstopRepWeapon extends GunItem {
 
@@ -88,38 +89,44 @@ public class FullstopRepWeapon extends GunItem {
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
-		list.add(new StringTextComponent("Manufactured by Atelier Logic").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+		TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.fullstop_rep_armor.desc");
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
-
-		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
+		appendAmmoDialogueLine(list);
+		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 6) + 1) + "/6] - - - - - - - =").withStyle(TextFormatting.GRAY));
 		list.add(new TranslationTextComponent("desc.ego_weapons.risk.3"));
 		list.add(new StringTextComponent(" "));
-		switch (EgoWeaponsKeybinds.getUiPage() % 5) {
+		switch (EgoWeaponsKeybinds.getUiPage() % 6) {
 			case 0:
 				if (EgoWeaponsKeybinds.isHoldingShift())
-					generateStatusDescription(list, new String[]{"poise", "ammo"});
+					generateStatusDescription(list, new String[]{"ammo"});
 				else
-					generateDescription(list, "fullstop_rep", "passive", 3);
+					generateDescription(list, "fullstop_rep", "reload", 2);
 				break;
 			case 1:
 				if (EgoWeaponsKeybinds.isHoldingShift())
 					generateStatusDescription(list, new String[]{"poise", "ammo"});
 				else
-					generateDescription(list,"fullstop_rep", "auto", 6);
+					generateDescription(list, "fullstop_rep", "passive", 2);
 				break;
 			case 2:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"poise", "ammo"});
+				else
+					generateDescription(list,"fullstop_rep", "auto", 6);
+				break;
+			case 3:
 				if (EgoWeaponsKeybinds.isHoldingShift())
 					generateStatusDescription(list, new String[]{"red", "poise"});
 				else
 					generateDescription(list,"fullstop_rep", "auto_alt", 2);
 				break;
-			case 3:
+			case 4:
 				if (EgoWeaponsKeybinds.isHoldingShift())
 					generateStatusDescription(list, new String[]{"red", "poise", "target_marked"});
 				else
 					generateDescription(list,"fullstop_rep", "innate", 7);
 				break;
-			case 4:
+			case 5:
 				if (EgoWeaponsKeybinds.isHoldingShift())
 					generateStatusDescription(list, new String[]{"red", "poise", "ammo", "target_marked"});
 				else {
@@ -131,7 +138,7 @@ public class FullstopRepWeapon extends GunItem {
 				break;
 			}
 
-		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+		generateStatusHelp(list);
 	}
 	public static void interruptedAttack(LivingEntity target) {
 
@@ -155,28 +162,13 @@ public class FullstopRepWeapon extends GunItem {
 
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
-		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
+		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
 
-		if (currentanim.getRealAnimation() instanceof BasicEgoAttackAnimation || currentanim.getRealAnimation() instanceof EgoAttackAnimation) {
+		if (context.isValidEgoAnimation()) {
 			//System.out.println("IS BASIC EGO ATTACK ANIM" + (currentanim.getRealAnimation()).getProperty(BasicEgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER));
 
-			String weaponIdentifier;
 
-			boolean consumesAmmo;
-			boolean finale;
-
-			if (currentanim.getRealAnimation() instanceof BasicEgoAttackAnimation) {
-				weaponIdentifier = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
-				consumesAmmo = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.CONSUMES_AMMO).orElse(false);
-				finale = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO).orElse(false);
-			} else {
-				weaponIdentifier = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
-				consumesAmmo = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.CONSUMES_AMMO).orElse(false);
-				finale = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO).orElse(false);
-			}
-			System.out.println("IDENTIFIER IS : "+weaponIdentifier+" - MELEE TAG IS : "+sourceentity.getItemInHand(Hand.OFF_HAND).getOrCreateTag().contains("meleeAttackTag"));
-
-			if (consumesAmmo && !sourceentity.getItemInHand(Hand.OFF_HAND).getOrCreateTag().contains("meleeAttackTag")) {
+			if (context.isAmmoSkill() && !sourceentity.getItemInHand(Hand.OFF_HAND).getOrCreateTag().contains("meleeAttackTag")) {
 
 
 				Hand hand = EgoWeaponsItems.FULLSTOP_REP_MACHETE.get().equals(sourceentity.getItemInHand(Hand.MAIN_HAND).getItem()) ? Hand.OFF_HAND : Hand.MAIN_HAND;
@@ -187,13 +179,13 @@ public class FullstopRepWeapon extends GunItem {
 				if (sourceentity.level instanceof ServerWorld) {
 					((ServerWorld) sourceentity.level).sendParticles(lastFired.getHitParticle(), target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), (int) 1, 0, 0, 0, 0);
 					switch (lastFired) {
-						case Standard:
+						case StandardLight:
 							break;
 						case Moonstone:
-							EgoWeaponsEffects.SINKING.get().increment(target, finale ? 1 : 0, 1);
+							EgoWeaponsEffects.SINKING.get().increment(target, context.isFinalCoin() ? 1 : 0, 1);
 							break;
 						case Incendiary:
-							EgoWeaponsEffects.BURN.get().increment(target, finale ? 1 : 0, 1);
+							EgoWeaponsEffects.BURN.get().increment(target, context.isFinalCoin() ? 1 : 0, 1);
 							break;
 					}
 
@@ -201,7 +193,7 @@ public class FullstopRepWeapon extends GunItem {
 			}
 
 			// Different animation effects
-			switch (weaponIdentifier) {
+			switch (context.getAnimationIdentifier()) {
 				case "fullstop_rep_innate":
 					target.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 200, 0));
 					target.addEffect(new EffectInstance(Effects.WEAKNESS, 200, 0));
@@ -283,7 +275,7 @@ public class FullstopRepWeapon extends GunItem {
 			Hand hand = EgoWeaponsItems.FULLSTOP_REP_MACHETE.get().equals(entity.getItemInHand(Hand.MAIN_HAND).getItem()) ? Hand.OFF_HAND : Hand.MAIN_HAND;
 
 			AmmoType ammo = AmmoSystem.getAndRemovelastammo(entity.getItemInHand(hand), entity, true);
-			if (ammo == AmmoType.Standard) {
+			if (ammo == AmmoType.StandardLight) {
 				EgoWeaponsEffects.POISE.get().increment(entity, 1, 1);
 			}
 			ItemStack offhandItem = entitypatch.getOriginal().getOffhandItem();
@@ -309,7 +301,7 @@ public class FullstopRepWeapon extends GunItem {
 		Hand hand = EgoWeaponsItems.FULLSTOP_REP_MACHETE.get().equals(entity.getItemInHand(Hand.MAIN_HAND).getItem()) ? Hand.OFF_HAND : Hand.MAIN_HAND;
 
 		AmmoType ammo = AmmoSystem.getAndRemovelastammo(entity.getItemInHand(hand), entity, true);
-		if (ammo == AmmoType.Standard) {
+		if (ammo == AmmoType.StandardLight) {
 			EgoWeaponsEffects.POISE.get().increment(entity, 0, 1);
 		}
 

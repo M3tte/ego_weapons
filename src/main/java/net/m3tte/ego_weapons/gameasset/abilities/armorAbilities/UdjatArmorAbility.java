@@ -46,7 +46,7 @@ public class UdjatArmorAbility extends ItemAbility {
     }
 
     @Override
-    public AbilityTier getAbilityTier() {
+    public AbilityTier getAbilityTier(PlayerEntity player, PlayerVariables playerVars) {
         return AbilityTier.WAW;
     }
 
@@ -59,7 +59,7 @@ public class UdjatArmorAbility extends ItemAbility {
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
         int blipCost = getBlipCost(player, playerVars);
-        if (playerVars.light >= blipCost) {
+        if (canTrigger(player, playerVars)) {
             LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
             entitypatch.playAnimationSynchronized(UdjatKhopeshMovesetAnims.KHOPESH_ARMOR_ABILITY, 0.1f);
@@ -120,7 +120,7 @@ public class UdjatArmorAbility extends ItemAbility {
         for (LivingEntity ent : nearbyFriendlies) {
             if (ent != source) {
 
-                boolean udjatGear = ent.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.UDJAT_SUIT.get());
+                boolean udjatGear = ent.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.UDJAT_SUIT.get()) || ent.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.LCA_UDJAT_SUIT.get());
                 EgoWeaponsEffects.PROTECTION.get().increment(ent, 5, udjatGear ? 2 : 1);
                 EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(ent, 0, protection);
 

@@ -2,14 +2,13 @@
 package net.m3tte.ego_weapons.item.liu;
 
 import net.m3tte.ego_weapons.*;
-import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
-import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
-import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
 import net.m3tte.ego_weapons.gameasset.movesets.LiuSouth6MovesetAnims;
 import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
+import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
+import net.m3tte.ego_weapons.world.capabilities.UtilitySystems;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.IItemTier;
@@ -21,7 +20,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.PacketDistributor;
-import yesman.epicfight.api.animation.types.DynamicAnimation;
 import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
@@ -31,8 +29,8 @@ import java.util.List;
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 import static net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations.spawnArmatureParticle;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
+import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.generateAttackContext;
 
 public class LiuFireGauntlet extends EgoWeaponsWeapon {
 
@@ -80,7 +78,7 @@ public class LiuFireGauntlet extends EgoWeaponsWeapon {
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
-		list.add(new StringTextComponent("A standard Gauntlet made for low ranked Liu Association fixers").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+		TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.liu_south_6_gauntlet.desc");
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -119,7 +117,7 @@ public class LiuFireGauntlet extends EgoWeaponsWeapon {
 				break;
 		}
 
-		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+		generateStatusHelp(list);
 	}
 
 
@@ -144,51 +142,48 @@ public class LiuFireGauntlet extends EgoWeaponsWeapon {
 
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
-		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
+		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
 
-		if (currentanim.getRealAnimation() instanceof BasicEgoAttackAnimation || currentanim.getRealAnimation() instanceof EgoAttackAnimation) {
+		if (context.isValidEgoAnimation()) {
 			//System.out.println("IS BASIC EGO ATTACK ANIM" + (currentanim.getRealAnimation()).getProperty(BasicEgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER));
 
-			String weaponIdentifier = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
 
-			switch (weaponIdentifier) {
-
-
+			switch (context.getAnimationIdentifier()) {
                 case "liu_s6_innate2":
                     EgoWeaponsEffects.BURN.get().increment(target, 0, 2);
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_S6_AUTO_SIDE.get().getRegistryName()));
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_PUNCH_SHOCKWAVE.get().getRegistryName()));
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 8, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_S6_AUTO_SIDE.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_PUNCH_SHOCKWAVE.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 8, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
 
 					break;
 
 				case "liu_s6_auto3":
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_PUNCH_SHOCKWAVE.get().getRegistryName()));
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 8, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_PUNCH_SHOCKWAVE.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 8, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
 
 				case "liu_s6_auto1":
 				case "liu_s6_auto2":
 					EgoWeaponsEffects.BURN.get().increment(target, 0, 1);
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_S6_AUTO_SIDE.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_S6_AUTO_SIDE.get().getRegistryName()));
 				break;
                 case "liu_s6_innate1":
 					entitypatch.playAnimationSynchronized(LiuSouth6MovesetAnims.LIU_S6_INNATE_2, 0);
 					EgoWeaponsEffects.BURN.get().increment(target, 0, 2);
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_S6_AUTO_SIDE.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_S6_AUTO_SIDE.get().getRegistryName()));
 
 					break;
 				case "liu_s6_sp1":
 				case "liu_s6_sp2":
 				case "liu_s6_sp3":
 					EgoWeaponsEffects.BURN.get().increment(target, 0, 1);
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_S6_AUTO_SIDE.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_S6_AUTO_SIDE.get().getRegistryName()));
 					entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().putBoolean("liu_gauntlet_hit", true);
 					break;
 				case "liu_s6_sp4":
 					EgoWeaponsEffects.BURN.get().increment(target, 1, 3);
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_S6_AUTO_SIDE.get().getRegistryName()));
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_PUNCH_SHOCKWAVE.get().getRegistryName()));
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 8, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_S6_AUTO_SIDE.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_PUNCH_SHOCKWAVE.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 8, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
 
 					target.setDeltaMovement(target.getDeltaMovement().add(0,0.3,0));
 					break;

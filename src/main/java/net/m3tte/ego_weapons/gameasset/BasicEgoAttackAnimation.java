@@ -54,7 +54,7 @@ public class BasicEgoAttackAnimation extends BasicAttackAnimation {
                 EFsource.setMagic();
             }
             if (entitypatch.getOriginal().getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.SUIT_OF_THE_BLACK_SILENCE.get())) {
-                if (this.properties.getOrDefault(EgoWeaponsAttackProperty.LAST_OF_COMBO, false).equals(true)) {
+                if (this.properties.getOrDefault(EgoWeaponsAttackProperty.FINAL_COIN, false).equals(true)) {
                     EFsource.setMagic();
                     // Applies cooldown after. Locks all other on hit effects from triggering as well.
                     if (entitypatch.getOriginal() instanceof PlayerEntity) {

@@ -35,7 +35,7 @@ public class FullstopWeaponAbility extends ItemAbility {
     public int getBlipCost(PlayerEntity player, PlayerVariables playerVars) {
         int extra = 0;
 
-        return 5;
+        return deductLightDecreases(player, AbilityUtils.AbilityType.WEAPON,5);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class FullstopWeaponAbility extends ItemAbility {
     }
 
     @Override
-    public AbilityTier getAbilityTier() {
+    public AbilityTier getAbilityTier(PlayerEntity player, PlayerVariables playerVars) {
         return AbilityTier.WAW;
     }
 
@@ -72,7 +72,7 @@ public class FullstopWeaponAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.light >= getBlipCost(player, playerVars)) {
+        if (canTrigger(player, playerVars)) {
 
 
             playerVars.light -= getBlipCost(player, playerVars);
@@ -100,7 +100,7 @@ public class FullstopWeaponAbility extends ItemAbility {
 
             Vector3d lookV = player.getLookAngle();
             EgoWeaponsEffects.POISE.get().increment(entitypatch.getOriginal(), 2, 1);
-            if (ammoCount >= 3) {
+            if (ammoCount >= 3 && playerVars.firingMode) {
                 entitypatch.playAnimationSynchronized(FullstopOfficeRepMovesetAnims.FULLSTOP_SPECIAL_G, 0.1f);
 
             } else {

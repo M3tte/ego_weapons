@@ -4,12 +4,14 @@ import net.m3tte.ego_weapons.*;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.item.rat.RatPipe;
 import net.m3tte.ego_weapons.item.udjat.UdjatArmor;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
+import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.particle.StaggerShardParticle;
 import net.m3tte.ego_weapons.potion.Staggered;
+import net.m3tte.ego_weapons.procedures.EntityTick;
 import net.m3tte.ego_weapons.world.capabilities.entitypatch.StaggerableEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.potion.EffectInstance;
@@ -34,6 +36,10 @@ public class StaggerSystem {
 
 
     public static boolean isStaggered(LivingEntity entity) {
+        if (entity == null)
+            return false;
+
+
         if (entity instanceof PlayerEntity) {
             EgoWeaponsModVars.PlayerVariables entityData = entity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
@@ -71,13 +77,30 @@ public class StaggerSystem {
     public static void reduceStagger(LivingEntity entity, float amnt, boolean bypassArmor) {
         reduceStagger(entity, amnt, (n) -> {}, bypassArmor, null);
     }
+
+    private static float staggerResistanceModifiers(LivingEntity entity, float inAmnt) {
+
+        if (entity.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.LCA_UDJAT_SUIT.get())) {
+
+            if (entity.hasEffect(EgoWeaponsEffects.UDJAT_VANGUARD.get())) {
+                inAmnt *= 0.8f;
+            } else {
+                inAmnt *= 0.9f;
+            }
+        }
+
+        return inAmnt;
+    }
+
     public static void reduceStagger(LivingEntity entity, float amnt, Consumer<?> onStagger, boolean bypassArmor, Entity sourceEntity) {
         if (entity instanceof PlayerEntity) {
             EgoWeaponsModVars.PlayerVariables entityData = entity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
             entityData.stagger = Math.min(entityData.stagger, EgoWeaponsAttributes.getMaxStagger(entity));
 
             if (!bypassArmor)
-                amnt = CombatRules.getDamageAfterAbsorb(amnt, entity.getArmorValue(), 0);
+                amnt = CombatRules.getDamageAfterAbsorb(amnt, entity.getArmorValue(), (float) entity.getAttributeValue(Attributes.ARMOR_TOUGHNESS));
+
+            amnt = staggerResistanceModifiers(entity, amnt);
 
             entityData.stagger -= amnt;
 
@@ -150,12 +173,16 @@ public class StaggerSystem {
                 ServerWorld serverWorld = (ServerWorld) entity.level;
                 serverWorld.playSound(null,  entity.getX(), entity.getY(), entity.getZ(), EgoWeaponsSounds.STAGGER, SoundCategory.PLAYERS, 1, 1);
                 serverWorld.sendParticles(StaggerShardParticle.particle, entity.getX(), entity.getY()+entity.getBbHeight() * 0.1f, entity.getZ(), 15, 0, 0, 0, 0.3f);
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendStaggerMessage(entity.getId()));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendStaggerMessage(entity.getId()));
+
+                if (entity instanceof PlayerEntity) {
+                    UtilitySystems.sendShockwavePacket((PlayerEntity) entity, 1.4f, 1, 0.5f, 0);
+                }
             }
 
-            // Stagger Behavior for the Rat Pipe
-            if (entity.getItemBySlot(EquipmentSlotType.MAINHAND).getItem().equals(EgoWeaponsItems.RAT_PIPE.get()))
-                RatPipe.onStagger(entity);
+            // Stagger Behaviors
+
+            staggerEffect(entity);
 
             onStagger.accept(null);
             entity.playSound(EgoWeaponsSounds.STAGGER, 1,1);
@@ -168,7 +195,25 @@ public class StaggerSystem {
                 if (staggerAnim != null)
                     entitypatch.playAnimationSynchronized(staggerAnim, 0.1f);
             }
+
+
         }
+    }
+
+    public static void staggerEffect(LivingEntity entity) {
+        if (entity.getItemBySlot(EquipmentSlotType.MAINHAND).getItem().equals(EgoWeaponsItems.RAT_PIPE.get()))
+            RatPipe.onStagger(entity);
+
+        if (entity.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.JUSTITIA_CLOAK.get())) {
+            int sin = EgoWeaponsEffects.SIN.get().getPotency(entity);
+
+            entity.removeEffect(EgoWeaponsEffects.SIN.get());
+            EgoWeaponsEffects.DEFENSE_LEVEL_UP.get().increment(entity, 0, sin);
+            if (entity instanceof PlayerEntity) {
+                EntityTick.regenerateLight((PlayerEntity) entity, (int)(sin / 2f));
+            }
+        }
+
     }
 
     public static StaticAnimation getStaggerAnimation(LivingEntityPatch<?> patch) {

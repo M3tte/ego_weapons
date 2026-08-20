@@ -8,22 +8,21 @@ package net.m3tte.ego_weapons.potion.countEffects;
 import net.m3tte.ego_weapons.EgoWeaponsAttributes;
 import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
+import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifierManager;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
 import net.minecraftforge.fml.network.PacketDistributor;
 import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 
 import java.util.UUID;
 
-public class BlueSandEffect extends CountPotencyStatus {
+public class BlueSandEffect extends PotencyOnlyStatus {
     public BlueSandEffect() {
-        super(EffectType.HARMFUL, "blue_sand",-16777216);
+        super(EffectType.HARMFUL, "blue_sand",-16777216, true, 3, 300);
     }
     @Override
     public String getDescriptionId() {
@@ -40,15 +39,10 @@ public class BlueSandEffect extends CountPotencyStatus {
     public void applyEffectTick(LivingEntity entity, int amplifier) {
 
         if (entity.hasEffect(this)) {
-            if (entity.getEffect(this).getDuration() < 10) {
-                decrement(entity, 0, 1);
-            }
-
             if (!entity.level.isClientSide()) {
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.UDJAT_BLUE_SAND.get(), 1, entity.getX(), entity.getY() + entity.getEyeHeight() - 0.1f, entity.getZ(), entity.getId(), 0.1, 0, 0.0,0.0,0.0));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.UDJAT_BLUE_SAND.get(), 1, entity.getX(), entity.getY() + entity.getEyeHeight() - 0.1f, entity.getZ(), entity.getId(), 0.1, 0, 0.0,0.0,0.0));
             }
         }
-
     }
 
     static AttributeModifier whiteResistanceMod = new AttributeModifier(UUID.fromString("fb214f98-930e-4b92-83d1-6ce88ebfc984"), "whiteResistanceMod", 0.1f, AttributeModifier.Operation.ADDITION);
@@ -101,55 +95,5 @@ public class BlueSandEffect extends CountPotencyStatus {
         attrman.save();
     }
 
-
-    @Override
-    public void increment(LivingEntity entity, int cap, int potency) {
-        if (entity.level.isClientSide)
-            return;
-
-
-        if (!entity.hasEffect(this)) {
-            entity.addEffect(new EffectInstance(this, 200, Math.min(Math.min(2,cap),Math.max(potency-1,0))));
-            syncEffect(entity);
-        } else {
-            potency = Math.min(entity.getEffect(this).getAmplifier() + potency,Math.min(2,cap));
-
-            entity.getEffect(this).update(new EffectInstance(this, 200, potency));
-
-            syncEffect(entity);
-        }
-    }
-
-    @Override
-    public void decrement(LivingEntity entity, int cap, int potency) {
-        if (entity.level.isClientSide)
-            return;
-
-
-
-        if (entity.hasEffect(this)) {
-            potency = Math.min(entity.getEffect(this).getAmplifier() - potency,99);
-            entity.removeEffect(this);
-            if (potency >= 0) {
-                entity.addEffect(new EffectInstance(this, 200, potency));
-                syncEffect(entity);
-            }
-        }
-    }
-
-    @Override
-    public int getCount(LivingEntity entity) {
-        return super.getCount(entity);
-    }
-
-    @Override
-    public int getCount(EffectInstance ef) {
-        return 0;
-    }
-
-    @Override
-    public boolean isDurationEffectTick(int duration, int amplifier) {
-        return true;
-    }
 
 }

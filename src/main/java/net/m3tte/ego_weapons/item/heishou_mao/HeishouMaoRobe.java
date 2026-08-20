@@ -4,9 +4,13 @@ package net.m3tte.ego_weapons.item.heishou_mao;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.item.magic_bullet.MagicBulletArmor;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
+import net.m3tte.ego_weapons.world.capabilities.UtilitySystems;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoWeaponsArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
@@ -20,6 +24,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
@@ -30,11 +35,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
+import yesman.epicfight.world.capabilities.EpicFightCapabilities;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 import java.util.List;
 
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
+import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.generateAttackContext;
 
 public class HeishouMaoRobe extends GenericEgoWeaponsArmor {
 
@@ -155,7 +162,7 @@ public class HeishouMaoRobe extends GenericEgoWeaponsArmor {
 		@Override
 		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.appendHoverText(itemstack, world, list, flag);
-			list.add(new StringTextComponent("A robe commonly used by Heishou hares.").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+			TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.heishou_mao_robe.desc");
 			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 			list.add(new StringTextComponent("= - - - - - - - [Page: " + ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -169,7 +176,7 @@ public class HeishouMaoRobe extends GenericEgoWeaponsArmor {
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"rupture", "speed"});
 					else
-						generateDescription(list, "heishou_mao_robe", "passive", 2);
+						generateDescription(list, "heishou_mao_robe", "passive", 3);
 					break;
 				case 2:
 					if (EgoWeaponsKeybinds.isHoldingShift())
@@ -185,10 +192,43 @@ public class HeishouMaoRobe extends GenericEgoWeaponsArmor {
 					break;
 			}
 
-			list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+			generateStatusHelp(list);
 		}
 
 	};
+
+
+	public static float onHitTargetEffect(LivingEntity sourceEntity, LivingEntity targetEntity, float amount, float multiplier, DamageSource damageSource) {
+		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceEntity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
+
+		if (context != null) {
+			int targetSpeed = EgoWeaponsEffects.speedMult(targetEntity);
+			int sourceSpeed = EgoWeaponsEffects.speedMult(sourceEntity);
+
+			if (sourceSpeed - targetSpeed >= 7) {
+				if (context.triggersEffects()) {
+					EgoWeaponsEffects.RUPTURE.get().increment(targetEntity, 0, 1);
+				}
+			}
+		}
+		return multiplier;
+	}
+
+	public static float onHitSelfEffect(LivingEntity sourceEntity, LivingEntity targetEntity, float amount, float multiplier, DamageSource damageSource) {
+		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceEntity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
+
+		if (context != null) {
+			int targetSpeed = EgoWeaponsEffects.speedMult(targetEntity);
+			int sourceSpeed = EgoWeaponsEffects.speedMult(sourceEntity);
+
+			if (targetSpeed - sourceSpeed >= 7) {
+				multiplier += SharedFunctions.incrementBonusDamage(damageSource, -0.1f);
+			}
+		}
+		return multiplier;
+	}
 
 	static Item pants = new HeishouMaoRobe(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.LEGS, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS)) {
 		@Override

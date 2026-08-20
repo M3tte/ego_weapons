@@ -2,6 +2,7 @@ package net.m3tte.ego_weapons.specialParticles.numberParticle;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.AttackTypes;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.DamageTypes;
@@ -44,17 +45,20 @@ public final class DamageNumberParticle extends TexturedParticle {
         if (type > 0)
             type -= 1;
 
+
+        int zeroMult = type < 0 ? -1 : 1;
+        type *= zeroMult;
+
         int damageTypeIdx = type%10;
         int attackTypeIdx = (type / 10) % 10;
 
-        int zeroMult = type < 0 ? -1 : 1;
 
-        type *= zeroMult;
         int bonusCorrector = inMultiplier < 0 ? -1 : 1;
 
         inMultiplier *= bonusCorrector;
 
-
+        EgoWeaponsMod.LOGGER.warn("CREATING PARTICLE WITH DAMAGE TYPE: "+Math.min(DamageTypes.values().length-1, damageTypeIdx)+" ATTACK TYPE : "+Math.min(AttackTypes.values().length-1, attackTypeIdx)+" METADATA: "+type);
+        EgoWeaponsMod.LOGGER.warn("MinFactor: "+(DamageTypes.values().length-1)+" // "+(AttackTypes.values().length-1));
         this.damageType = DamageTypes.values()[Math.min(DamageTypes.values().length-1, damageTypeIdx)];
         this.attackType = AttackTypes.values()[Math.min(AttackTypes.values().length-1, attackTypeIdx)];
         this.crit = type >= 100;
@@ -271,7 +275,6 @@ public final class DamageNumberParticle extends TexturedParticle {
 
         @Override
         public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            System.out.println("CREATING PARTICLE WITH DATA : "+xSpeed+" "+ySpeed+" "+zSpeed);
             DamageNumberParticle particle = new DamageNumberParticle(worldIn, x, y, z, (float) xSpeed, (int)ySpeed, zSpeed);
             return particle;
         }

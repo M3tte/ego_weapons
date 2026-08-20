@@ -180,8 +180,10 @@ public class AmmoSystem {
         return new int[]{0, 0};
 
     }
-
     public static void reloadGun(ItemStack gunItem, ItemStack ammoItem, LivingEntity target) {
+        reloadGun(gunItem, ammoItem, target, -1);
+    }
+    public static void reloadGun(ItemStack gunItem, ItemStack ammoItem, LivingEntity target, int maxReload) {
         /*
         Add ammo detection handling later
         if (ammoItem == null) {
@@ -191,6 +193,11 @@ public class AmmoSystem {
 
         if (gunItem.getItem() instanceof GunItem) {
             GunItem gunType = (GunItem) gunItem.getItem();
+
+            int reloadCap = gunType.getMaxAmmo();
+
+            if (maxReload > 0)
+                reloadCap = Math.min(reloadCap, maxReload);
 
             int[] oldAmmo = gunItem.getOrCreateTag().getIntArray("loadedAmmo");
             LinkedList<Integer> newAmmo = new LinkedList<>();
@@ -208,13 +215,13 @@ public class AmmoSystem {
                     if (it.getItem() instanceof AmmoItem) {
 
                         if (((AmmoItem)it.getItem()).getCaliber().equals(gunType.getCaliber())) {
-                            if (it.getCount() + length <= gunType.getMaxAmmo()) {
+                            if (it.getCount() + length <= reloadCap) {
                                 for (int i = 0; i < it.getCount(); i++)
                                     newAmmo.push(((AmmoItem) it.getItem()).getAmmoType().ordinal());
                                 ((PlayerEntity) target).inventory.removeItem(it);
                             } else {
                                 int consumed = 0;
-                                while (newAmmo.size() < gunType.getMaxAmmo()) {
+                                while (newAmmo.size() < reloadCap) {
                                     consumed++;
                                     newAmmo.push(((AmmoItem) it.getItem()).getAmmoType().ordinal());
                                 }
@@ -225,7 +232,7 @@ public class AmmoSystem {
 
                     }
 
-                    if (newAmmo.size() >= gunType.getMaxAmmo()) {
+                    if (newAmmo.size() >= reloadCap) {
                         break;
                     }
 

@@ -19,9 +19,9 @@ import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 import java.util.Random;
 import java.util.UUID;
 
-public class OffenseDownEffect extends CountPotencyStatus {
+public class OffenseDownEffect extends PotencyOnlyStatus {
     public OffenseDownEffect() {
-        super(EffectType.HARMFUL, "offense_down",-16777216);
+        super(EffectType.HARMFUL, "offense_down",-16777216, false, 99, 300);
     }
 
     @Override
@@ -29,70 +29,9 @@ public class OffenseDownEffect extends CountPotencyStatus {
         return "effect.offense_down";
     }
 
-    @Override
-    public boolean isBeneficial() {
-        return false;
-    }
-
-    @Override
-    public boolean isInstantenous() {
-        return false;
-    }
-
-    @Override
-    public boolean shouldRenderInvText(EffectInstance effect) {
-        return true;
-    }
-
-    @Override
-    public boolean shouldRender(EffectInstance effect) {
-        return true;
-    }
-
-    @Override
-    public boolean shouldRenderHUD(EffectInstance effect) {
-        return true;
-    }
-
-
     static AttributeModifier damageMod = new AttributeModifier(UUID.fromString("fc414f98-920e-4b92-88d9-6ce88ebff984"), "offenseDownDamage", -0.03, AttributeModifier.Operation.MULTIPLY_BASE);
     static AttributeModifier attackSpeedMod = new AttributeModifier(UUID.fromString("fc414f98-920e-4b92-88d9-6ce88ebff984"), "offenseDownAttackSpeed", -0.035, AttributeModifier.Operation.ADDITION);
     static AttributeModifier impactMod = new AttributeModifier(UUID.fromString("fc414f98-920e-4b92-88d9-6ce88ebff984"), "offenseDownImpact", -0.05, AttributeModifier.Operation.ADDITION);
-
-    @Override
-    public void increment(LivingEntity entity, int limit, int potency) {
-        if (entity.level.isClientSide)
-            return;
-
-        if (limit == 0)
-            limit = 98;
-
-        if (potency > limit)
-            potency = limit;
-
-        if (!entity.hasEffect(this)) {
-            entity.addEffect(new EffectInstance(this, 300, potency-1));
-        } else {
-            entity.getEffect(this).update(new EffectInstance(this, entity.getEffect(this).getDuration(), Math.min(entity.getEffect(this).getAmplifier() + potency, limit-1)));
-        }
-        syncEffect(entity);
-    }
-
-    @Override
-    public void decrement(LivingEntity entity, int limit, int potency) {
-        if (entity.level.isClientSide)
-            return;
-
-        int previousPotency = 0;
-        if (entity.hasEffect(this)) {
-            previousPotency = entity.getEffect(this).getAmplifier()+1;
-            entity.removeEffect(this);
-        }
-
-        if ((previousPotency - potency) > 0) {
-            entity.addEffect(new EffectInstance(this, 300, potency-1));
-        }
-    }
 
     @Override
     public void addAttributeModifiers(LivingEntity living, AttributeModifierManager attrman, int amplifier) {
@@ -158,14 +97,4 @@ public class OffenseDownEffect extends CountPotencyStatus {
         // No ticking needed as time is handled normally.
     }
 
-
-    @Override
-    public boolean isDurationEffectTick(int duration, int amplifier) {
-        return true;
-    }
-
-    @Override
-    public int getCount(EffectInstance ef) {
-        return 0;
-    }
 }

@@ -366,6 +366,76 @@
     },
     {
       "type": "bitmap",
+      "file": "ego_weapons:mob_effect/sheut_fracture.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE053"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/white_fragility.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE054"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/udjat_vanguard.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE055"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/udjat_mark.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE056"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/alloy_regenerative_cycle.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE057"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/cheseds_latency.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE058"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/loss_of_self.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE059"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/sever_the_thread.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE060"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/tianshia_star.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE061"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/sealed.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE062"]
+    },
+    {
+      "type": "bitmap",
       "file": "ego_weapons:damage_types/red.png",
       "ascent": 8,
       "height": 9,

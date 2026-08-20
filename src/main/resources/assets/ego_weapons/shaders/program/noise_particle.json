@@ -1,0 +1,48 @@
+{
+  "blend": {
+    "func": "add",
+    "srcrgb": "srcalpha",
+    "dstrgb": "1-srcalpha"
+  },
+
+  "vertex": "ego_weapons:portal_particle",
+  "fragment": "ego_weapons:portal_particle",
+
+  "samplers": [
+    {
+      "name": "DiffuseSampler"
+    },
+    {
+      "name": "StarSampler"
+    }
+  ],
+
+  "attributes": [
+    "Position",
+    "UV0",
+    "Color"
+  ],
+
+  "uniforms": [
+    {
+      "name": "GameTime",
+      "type": "float",
+      "count": 1,
+      "values": [0.0]
+    },
+
+    {
+      "name": "WarpStrength",
+      "type": "float",
+      "count": 1,
+      "values": [0.18]
+    },
+
+    {
+      "name": "StarIntensity",
+      "type": "float",
+      "count": 1,
+      "values": [1.5]
+    }
+  ]
+}

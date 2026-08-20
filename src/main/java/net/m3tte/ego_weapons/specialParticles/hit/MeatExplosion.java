@@ -20,14 +20,14 @@ public class MeatExplosion extends MetaParticle {
         this.z = z + (this.level.random.nextDouble() - 0.5D) * width;
         double d = 0.2F;
 
-        for(int i = 0; i < 52; i++) {
+        for(int i = 0; i < 40; i++) {
             double particleMotionY = this.level.random.nextFloat() * d;
             double particleMotionX = this.level.random.nextDouble() * d;
             d = d * (this.level.random.nextBoolean() ? 1.0D : -1.0D);
             double particleMotionZ = this.level.random.nextDouble() * d;
             d = d * (this.level.random.nextBoolean() ? 1.0D : -1.0D);
             this.level.addParticle(EpicFightParticles.BLOOD.get(), this.x, this.y + 1, this.z, particleMotionX, 0.0D, particleMotionZ);
-            if (i % 3 == 0)
+            if (i % 2 == 0)
                 this.level.addParticle(MeatChunkParticle.particle, this.x, this.y + this.level.random.nextFloat() * 1.5 + 0.3, this.z, particleMotionX * 2, particleMotionY * 2, particleMotionZ * 2);
         }
     }

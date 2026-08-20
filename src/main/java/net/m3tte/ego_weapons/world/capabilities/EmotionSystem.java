@@ -24,8 +24,18 @@ public class EmotionSystem {
     }
 
     public static int getEmotionLevel(PlayerEntity player) {
+
+        if (player == null)
+            return 0;
+
         PlayerVariables playerVariables = player.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables());
+
         return playerVariables.emotionLevel;
+    }
+
+    public static boolean getFireMode(PlayerEntity player) {
+        PlayerVariables playerVariables = player.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables());
+        return playerVariables.firingMode;
     }
 
     public static double getEmotionPoints(PlayerEntity player) {
@@ -83,13 +93,23 @@ public class EmotionSystem {
      * @param value
      * @return Returns true when emotion level is increased.
      */
-    public static boolean increaseEmotionPoints(PlayerEntity player, int value, boolean respectModifiers) {
+    public static boolean increaseEmotionPoints(PlayerEntity player, float value, boolean respectModifiers) {
         PlayerVariables playerVariables = player.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables());
         boolean levelChange = false;
 
         if (respectModifiers) {
             if (player.getItemInHand(Hand.MAIN_HAND).getItem().equals(EgoWeaponsItems.FULLSTOP_SNIPER_RAILGUN.get())) {
                 value = (int) (value * 1.75f);
+            }
+
+            int lossOfSelf = EgoWeaponsEffects.LOSS_OF_SELF.get().getPotency(player);
+            if (lossOfSelf > 0) {
+                value *= 1f - (Math.min(0.8f, 0.008f * lossOfSelf));
+            }
+
+            int severThread = EgoWeaponsEffects.SEVER_THE_THREAD.get().getPotency(player);
+            if (severThread > 0) {
+                value *= 1f - (Math.min(0.5f, 0.005f * severThread));
             }
         }
 
@@ -190,7 +210,7 @@ public class EmotionSystem {
         }
 
 
-        increaseEmotionPoints(player, (int)(damage*mult*2), true);
+        increaseEmotionPoints(player, (damage*mult*2), true);
     }
     public static void handleGuard(PlayerEntity player, float damage, float impact, boolean parried, Entity source) {
         EmotionSystem.handleGuard(player, damage, impact, parried, 1, source);

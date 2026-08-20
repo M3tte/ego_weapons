@@ -2,27 +2,19 @@ package net.m3tte.ego_weapons.gameasset.movesets;
 
 import net.m3tte.ego_weapons.*;
 import net.m3tte.ego_weapons.gameasset.AttackCycleType;
-import net.m3tte.ego_weapons.gameasset.AttackLogicPredicate;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
-import net.m3tte.ego_weapons.item.firefist.FirefistGauntlet;
 import net.m3tte.ego_weapons.item.stigma_workshop.StigmaWorkshopSword;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
-import net.m3tte.ego_weapons.particle.BlacksilenceshadowParticle;
+import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.AttackTypes;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.DamageTypes;
-import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.PacketDistributor;
 import yesman.epicfight.api.animation.property.AnimationProperty;
 import yesman.epicfight.api.animation.types.*;
@@ -30,10 +22,7 @@ import yesman.epicfight.api.model.Model;
 import yesman.epicfight.api.utils.ExtendedDamageSource;
 import yesman.epicfight.api.utils.math.ValueCorrector;
 import yesman.epicfight.gameasset.EpicFightSounds;
-import yesman.epicfight.particle.EpicFightParticles;
 
-import static net.m3tte.ego_weapons.item.firefist.FirefistGauntlet.firefistFinalHitEvent;
-import static net.m3tte.ego_weapons.item.firefist.FirefistGauntlet.firefistHitEvent;
 import static net.m3tte.ego_weapons.item.stigma_workshop.StigmaWorkshopSword.*;
 
 public class StigmaWorkshopMovesetAnims {
@@ -188,7 +177,7 @@ public class StigmaWorkshopMovesetAnims {
         STIGMA_SWORD_INNATE_3 = new EgoAttackAnimation(0.02F, 0.45F, 0.25F, 0.6F, 1.33F, null, "Tool_R", "biped/stigma_w_s/innate_3", biped)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
-                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "stigma_w_s_innate_3")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
@@ -225,10 +214,10 @@ public class StigmaWorkshopMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.5F);
 
         STIGMA_SWORD_AUTO_3 = new BasicEgoAttackAnimation(0.01F, 0.08F, 0.33F, 0.66F, 1.4F, null, "Tool_R", "biped/stigma_w_s/auto_3", biped)
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
-                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "stigma_w_s_auto3")
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.STIGMA_WORKSHOP_SWORD_AUTO_HIT)
@@ -290,7 +279,7 @@ public class StigmaWorkshopMovesetAnims {
         events[1] = StaticAnimation.Event.create(time, (entitypatch) -> {
             entitypatch.playSound(EgoWeaponsSounds.STIGMA_WORKSHOP_SWORD_SPECIAL_IGNITE, 1, 1, 1);
             if (!entitypatch.getOriginal().level.isClientSide) {
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entitypatch.getOriginal().getId(), entitypatch.getOriginal().getId(), EgoWeaponsParticles.SLASH_SHOCKWAVE.get().getRegistryName()));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(entitypatch.getOriginal().getId(), entitypatch.getOriginal().getId(), EgoWeaponsParticles.SLASH_SHOCKWAVE.get().getRegistryName()));
             }
         }, StaticAnimation.Event.Side.SERVER);
 
@@ -328,7 +317,7 @@ public class StigmaWorkshopMovesetAnims {
                 }
 
                 if (!entitypatch.getOriginal().level.isClientSide)
-                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 14, player.getX(), player.getY() + player.getBbHeight()/2, player.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 14, player.getX(), player.getY() + player.getBbHeight()/2, player.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
 
             }
 

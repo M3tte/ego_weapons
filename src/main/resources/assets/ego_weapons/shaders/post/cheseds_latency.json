@@ -1,0 +1,17 @@
+{
+  "targets": [
+    "swap2"
+  ],
+  "passes": [
+    {
+      "name": "ego_weapons:ches_lat",
+      "intarget": "minecraft:main",
+      "outtarget": "swap2"
+    },
+    {
+      "name": "blit",
+      "intarget": "swap2",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}

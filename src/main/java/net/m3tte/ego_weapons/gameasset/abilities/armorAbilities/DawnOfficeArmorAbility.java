@@ -30,7 +30,7 @@ public class DawnOfficeArmorAbility extends ItemAbility {
     }
 
     @Override
-    public AbilityTier getAbilityTier() {
+    public AbilityTier getAbilityTier(PlayerEntity player, PlayerVariables playerVars) {
         return AbilityTier.TETH;
     }
 
@@ -42,7 +42,7 @@ public class DawnOfficeArmorAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.light >= 5) {
+        if (canTrigger(player, playerVars)) {
             LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
             entitypatch.playAnimationSynchronized(StigmaWorkshopMovesetAnims.RUEFUL_EVENTIDE, 0.1f);
 

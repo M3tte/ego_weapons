@@ -33,7 +33,7 @@ public class SolemnLamentArmorAbilityC extends ItemAbility {
     }
 
     @Override
-    public AbilityTier getAbilityTier() {
+    public AbilityTier getAbilityTier(PlayerEntity player, PlayerVariables playerVars) {
         return AbilityTier.WAW;
     }
 
@@ -45,9 +45,9 @@ public class SolemnLamentArmorAbilityC extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.light >= 8) {
+        if (canTrigger(player, playerVars)) {
             manifestLament(player);
-            playerVars.light -= 8;
+            playerVars.light -= getBlipCost(player, playerVars);
             playerVars.syncPlayerVariables(player);
         }
     }

@@ -186,6 +186,7 @@ public class EgoWeaponsParticles {
 
     public static final RegistryObject<BasicParticleType> HORIZONTAL_SHOCKWAVE = PARTICLES.register("horizontal_shockwave", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> SLASH_SHOCKWAVE = PARTICLES.register("slash_shockwave", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> DISTORTION_SHOCKWAVE = PARTICLES.register("distortion_shockwave", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> VERTICAL_SLASH_SHOCKWAVE = PARTICLES.register("vert_slash_shockwave", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> FIRE_SHOCKWAVE = PARTICLES.register("fire_shockwave", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> SOLEMN_LAMENT_SHOCKWAVE = PARTICLES.register("solemn_lament_shockwave", () -> new BasicParticleType(true));
@@ -199,5 +200,19 @@ public class EgoWeaponsParticles {
     public static final RegistryObject<BasicParticleType> ARDOR_BLOSSOM_IMPACT = PARTICLES.register("ardor_blossom_impact", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> UDJAT_KH_STRIKE = PARTICLES.register("udjat_kh_strike", () -> new BasicParticleType(true));
     public static final RegistryObject<HitParticleType> UDJAT_KH_HIT = PARTICLES.register("udjat_kh_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
+    public static final RegistryObject<BasicParticleType> UDJAT_SYMBOLS = PARTICLES.register("udjat_symbol", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> TEST_PARTICLE = PARTICLES.register("test_particle", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> TEST_PARTICLE_2 = PARTICLES.register("test_particle_2", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> ARAYASHIKI_INNATE_STRIKE = PARTICLES.register("arayashiki_innate_strike", () -> new BasicParticleType(true));
+    public static final RegistryObject<HitParticleType> ARAYASHIKI_INNATE_HIT = PARTICLES.register("arayashiki_innate_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
+    public static final RegistryObject<BasicParticleType> GENERIC_SPACE_REND = PARTICLES.register("rend_space_gen", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> ROTATED_GENERIC_SPACE_REND = PARTICLES.register("rend_space_rot", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> ARAYASHIKI_REND_SPACE_SLASH = PARTICLES.register("arayashiki_rend_space", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> ARAYASHIKI_REND_SPACE_SLASH_CROSS = PARTICLES.register("arayashiki_rend_space_cross", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> ARAYASHIKI_REND_SPACE_SHORT = PARTICLES.register("arayashiki_rend_space_short", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> ARAYASHIKI_HOR_SLASH = PARTICLES.register("arayashiki_h_slash", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> ARAYASHIKI_CROSS_SLASH = PARTICLES.register("arayashiki_cross_slash", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> ARAYASHIKI_UNSHEATH_SPARKLE = PARTICLES.register("arayashiki_unsheath_sparkle", () -> new BasicParticleType(true));
 
+    public static final RegistryObject<BasicParticleType> ARAYASHIKI_REND_TARGET = PARTICLES.register("rend_target", () -> new BasicParticleType(true));
 }

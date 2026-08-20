@@ -71,20 +71,36 @@ public abstract class CountPotencyStatus extends Effect {
             for (ServerPlayerEntity p : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers()) {
                 if (((LivingEntity) entity).getEffect(this) != null) {
                     EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> p), new EgoWeaponsModVars.SyncCountEffectMessage((LivingEntity) entity, ((LivingEntity) entity).getEffect(this)));
+                } else {
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> p), new EgoWeaponsModVars.SyncCountEffectMessage((LivingEntity) entity, this));
                 }
             }
         }
     }
 
-    public void syncEffect(Entity entity, Effect effect) {
+    public static void syncRemoveEffect(Entity entity, Effect effect) {
         if (entity instanceof LivingEntity && ((LivingEntity) entity).isAffectedByPotions() && ((LivingEntity) entity).hasEffect(effect)) {
             if (ServerLifecycleHooks.getCurrentServer() == null)
                 return;
 
 
             for (ServerPlayerEntity p : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers()) {
-                if (((LivingEntity) entity).getEffect(this) != null) {
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> p), new EgoWeaponsModVars.SyncCountEffectMessage((LivingEntity) entity, effect));
+            }
+        }
+    }
+
+    public static void syncEffect(Entity entity, Effect effect) {
+        if (entity instanceof LivingEntity && ((LivingEntity) entity).isAffectedByPotions() && ((LivingEntity) entity).hasEffect(effect)) {
+            if (ServerLifecycleHooks.getCurrentServer() == null)
+                return;
+
+
+            for (ServerPlayerEntity p : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers()) {
+                if (((LivingEntity) entity).getEffect(effect) != null) {
                     EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> p), new EgoWeaponsModVars.SyncCountEffectMessage((LivingEntity) entity, ((LivingEntity) entity).getEffect(effect)));
+                } else {
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> p), new EgoWeaponsModVars.SyncCountEffectMessage((LivingEntity) entity, effect));
                 }
             }
         }
@@ -134,7 +150,8 @@ public abstract class CountPotencyStatus extends Effect {
 
             count = Math.min(entity.getEffect(this).getDuration()/20 + count,98);
 
-            entity.getEffect(this).update(new EffectInstance(this, count * 20, potency));
+            entity.removeEffect(this);
+            entity.addEffect(new EffectInstance(this, count * 20, potency));
 
             syncEffect(entity);
         }

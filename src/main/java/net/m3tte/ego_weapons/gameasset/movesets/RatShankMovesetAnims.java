@@ -5,19 +5,13 @@ import net.m3tte.ego_weapons.gameasset.AttackCycleType;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
-import net.m3tte.ego_weapons.item.stigma_workshop.StigmaWorkshopSword;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
-import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.AttackTypes;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.DamageTypes;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.network.PacketDistributor;
 import yesman.epicfight.api.animation.property.AnimationProperty;
 import yesman.epicfight.api.animation.types.*;
 import yesman.epicfight.api.model.Model;
@@ -26,8 +20,6 @@ import yesman.epicfight.api.utils.math.ValueCorrector;
 import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.particle.EpicFightParticles;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
-
-import static net.m3tte.ego_weapons.item.stigma_workshop.StigmaWorkshopSword.*;
 
 public class RatShankMovesetAnims {
     public static StaticAnimation RAT_KNIFE_IDLE;
@@ -190,7 +182,7 @@ public class RatShankMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.5F);
 
         RAT_KNIFE_AUTO_3 = new BasicEgoAttackAnimation(0.01F, 0.08F, 0.41f, 0.82F, 1.6F, null, "Tool_R", "biped/rat_shank/auto_3", biped)
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "rat_shank_auto3")

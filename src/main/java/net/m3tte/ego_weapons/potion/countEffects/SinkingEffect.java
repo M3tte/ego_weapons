@@ -8,7 +8,7 @@ package net.m3tte.ego_weapons.potion.countEffects;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
+import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.specialParticles.numberParticle.NumberParticleTypes;
 import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
 import net.minecraft.entity.LivingEntity;
@@ -94,7 +94,7 @@ public class SinkingEffect extends CountPotencyStatus {
 
 
 
-        EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.NumberLabelParticle(target.position().add(target.getRandom().nextFloat() - 0.5f,1,target.getRandom().nextFloat() - 0.5f), NumberParticleTypes.SINKING, potency));
+        EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.NumberLabelParticle(target.position().add(target.getRandom().nextFloat() - 0.5f,1,target.getRandom().nextFloat() - 0.5f), NumberParticleTypes.SINKING, potency));
 
         ((ServerWorld) target.level).sendParticles(EgoWeaponsParticles.SINKING_APPLY.get(), (target.getX()), (target.getY() + target.getBbHeight() / 2),
                 (target.getZ()), 1, 0, 0, 0, 0);

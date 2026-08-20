@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.OutlineLayerBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -34,7 +35,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
+import static net.m3tte.ego_weapons.client.renderer.EgoWeaponsRenderTypes.armorTranslucentNoCull;
 import static net.m3tte.ego_weapons.client.renderer.EgoWeaponsRenderTypes.getFullbrightAnimatedArmor;
+import static net.minecraft.client.renderer.RenderType.armorCutoutNoCull;
 
 @OnlyIn(Dist.CLIENT)
 public class PatchedAccessoryRenderLayer<E extends LivingEntity, T extends LivingEntityPatch<E>, M extends BipedModel<E>> extends PatchedLayer<E, T, M, AccessoryRenderLayer<E, M>> {
@@ -51,19 +54,10 @@ public class PatchedAccessoryRenderLayer<E extends LivingEntity, T extends Livin
         this(false);
     }
 
-
-
-    ResourceLocation defaultBloodLocation = new ResourceLocation("ego_weapons","blood_stage_1");
-
-    ResourceLocation ardorFireLoc = new ResourceLocation("ego_weapons","ardor_blossom_fire_loc");
-    ResourceLocation ardorWingLoc = new ResourceLocation("ego_weapons","ardor_blossom_wing_loc");
-
     @Override
     public void renderLayer(T t, E entity, AccessoryRenderLayer<E, M> emAccessoryRenderLayer, MatrixStack poseStack, IRenderTypeBuffer buf, int packedLightIn, OpenMatrix4f[] poses, float netYawHead, float pitchHead, float partialTicks) {
         if (entity instanceof PlayerEntity) {
             boolean hasEffect = true;
-
-
 
             if (entity instanceof LivingEntity) {
                 if (entity.getItemBySlot(EquipmentSlotType.CHEST).getItem().getRegistryName() != null) {
@@ -71,35 +65,20 @@ public class PatchedAccessoryRenderLayer<E extends LivingEntity, T extends Livin
 
                     switch (equippedItemChest) {
                         case "ardor_blossom_suit":
-                            WearableRenderer<?,?,?> fireRenderer = emAccessoryRenderLayer.getArdorFireModel();
-                            WearableRenderer<?,?,?> wingRenderer = emAccessoryRenderLayer.getArdorWingModel();
 
                             int burnPotency = EgoWeaponsEffects.BURN.get().getPotency(entity);
 
-                            ResourceLocation fireTexture = this.getWearableTexture(entity, fireRenderer);
-                            ClientModel fireModel = this.getWearableModel(fireRenderer, entity, ardorFireLoc, fireTexture, true, partialTicks);
-                            IVertexBuilder fireVertex = getArmorVertexBuilder(buf, getFullbrightAnimatedArmor(fireTexture));
-
-                            this.renderWearable(poseStack, buf, packedLightIn, hasEffect, fireModel, 1.0F, 1.0F, 1.0F, fireTexture, poses, fireVertex);
+                            renderWearableModel(emAccessoryRenderLayer.getRenderer("ardor_blossom_fire"), entity, buf, ValidRenderTypes.FULLBRIGHT, poseStack, packedLightIn, poses, netYawHead, pitchHead, partialTicks);
                             if (burnPotency >= 10) {
-                                this.renderWearable(poseStack, buf, packedLightIn, hasEffect, fireModel, 1.0F, 1.0F, 1.0F, fireTexture, poses, buf.getBuffer(EgoWeaponsRenderTypes.getFireGlintDirect()));
+                                renderWearableModel(emAccessoryRenderLayer.getRenderer("ardor_blossom_fire"), entity, buf, ValidRenderTypes.FIRE_GLINT, poseStack, packedLightIn, poses, netYawHead, pitchHead, partialTicks);
                             }
 
                             if (entity.hasEffect(EgoWeaponsEffects.EGO_ATTUNEMENT_ARDOR_BLOSSOM.get())) {
-                                ResourceLocation wingTexture = this.getWearableTexture(entity, wingRenderer);
-                                ClientModel wingModel = this.getWearableModel(wingRenderer, entity, ardorWingLoc, wingTexture, true, partialTicks);
-                                IVertexBuilder wingVertex = getArmorVertexBuilder(buf, getFullbrightAnimatedArmor(wingTexture));
-
-
-
-
-                                this.renderWearable(poseStack, buf, packedLightIn, hasEffect, wingModel, 1.0F, 1.0F, 1.0F, wingTexture, poses, wingVertex);
+                                renderWearableModel(emAccessoryRenderLayer.getRenderer("ardor_blossom_wings"), entity, buf, ValidRenderTypes.FULLBRIGHT, poseStack, packedLightIn, poses, netYawHead, pitchHead, partialTicks);
                                 if (burnPotency >= 10) {
-                                    this.renderWearable(poseStack, buf, packedLightIn, hasEffect, wingModel, 1.0F, 1.0F, 1.0F, wingTexture, poses, buf.getBuffer(EgoWeaponsRenderTypes.getFireGlintDirect()));
+                                    renderWearableModel(emAccessoryRenderLayer.getRenderer("ardor_blossom_wings"), entity, buf, ValidRenderTypes.FIRE_GLINT, poseStack, packedLightIn, poses, netYawHead, pitchHead, partialTicks);
                                 }
                             }
-
-
 
                             break;
 
@@ -107,7 +86,18 @@ public class PatchedAccessoryRenderLayer<E extends LivingEntity, T extends Livin
 
                 }
 
+                if (entity.getItemBySlot(EquipmentSlotType.HEAD).getItem().getRegistryName() != null) {
+                    String equippedItemHead = entity.getItemBySlot(EquipmentSlotType.HEAD).getItem().getRegistryName().getPath();
 
+                    if (entity.hasEffect(EgoWeaponsEffects.UDJAT_VANGUARD.get())) {
+                        if (!equippedItemHead.equals("lca_udjat_mask")) {
+                            renderWearableModel(emAccessoryRenderLayer.getRenderer("udjat_mask"), entity, buf, ValidRenderTypes.DEFAULT, poseStack, packedLightIn, poses, netYawHead, pitchHead, partialTicks);
+
+                        }
+                        renderWearableModel(emAccessoryRenderLayer.getRenderer("udjat_eye_glow"), entity, buf, ValidRenderTypes.FULLBRIGHT, poseStack, packedLightIn, poses, netYawHead, pitchHead, partialTicks);
+
+                    }
+                }
             }
 
 
@@ -117,7 +107,27 @@ public class PatchedAccessoryRenderLayer<E extends LivingEntity, T extends Livin
     }
 
 
+    private IVertexBuilder getBuilderFor(ValidRenderTypes builderType, ResourceLocation inTexture, IRenderTypeBuffer buf) {
 
+        switch (builderType) {
+            default:
+            case DEFAULT:
+                return getArmorVertexBuilder(buf, EpicFightRenderTypes.animatedArmor(inTexture, false));
+            case FULLBRIGHT:
+                return getArmorVertexBuilder(buf, getFullbrightAnimatedArmor(inTexture));
+            case FIRE_GLINT:
+                return buf.getBuffer(EgoWeaponsRenderTypes.getFireGlintDirect());
+        }
+
+
+    }
+    private void renderWearableModel(WearableRenderer<?,?,?> renderer, E entity, IRenderTypeBuffer buf, ValidRenderTypes builderType, MatrixStack poseStack, int packedLightIn, OpenMatrix4f[] poses, float netYawHead, float pitchHead, float partialTicks) {
+        ResourceLocation renderTexture = this.getWearableTexture(entity, renderer);
+        ClientModel renderModel = this.getWearableModel(renderer, entity, renderer.getRendererLocation(), renderTexture, true, partialTicks);
+        IVertexBuilder renderVertex = getBuilderFor(builderType, renderTexture, buf);
+
+        this.renderWearable(poseStack, buf, packedLightIn, true, renderModel, 1.0F, 1.0F, 1.0F, renderTexture, poses, renderVertex);
+    }
 
     public PatchedAccessoryRenderLayer(boolean doNotRenderHelment) {
         this.doNotRenderHelment = doNotRenderHelment;

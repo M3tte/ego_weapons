@@ -2,15 +2,15 @@
 package net.m3tte.ego_weapons.item.firefist;
 
 import net.m3tte.ego_weapons.*;
-import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
-import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
 import net.m3tte.ego_weapons.gameasset.movesets.FirefistMovesetAnims;
 import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
+import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
+import net.m3tte.ego_weapons.world.capabilities.UtilitySystems;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -18,7 +18,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
@@ -34,12 +33,10 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.PacketDistributor;
-import yesman.epicfight.api.animation.types.AttackAnimation;
 import yesman.epicfight.api.animation.types.DynamicAnimation;
 import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
-import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 import yesman.epicfight.world.effect.EpicFightMobEffects;
 
 import java.util.List;
@@ -47,8 +44,8 @@ import java.util.List;
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 import static net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations.spawnArmatureParticle;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
+import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.generateAttackContext;
 
 public class FirefistGauntlet extends EgoWeaponsWeapon {
 
@@ -96,7 +93,7 @@ public class FirefistGauntlet extends EgoWeaponsWeapon {
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
-		list.add(new StringTextComponent("A gauntlet manufactured by a no-name district 12 Workshop.").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+		TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.firefist_gauntlet.desc");
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -137,7 +134,7 @@ public class FirefistGauntlet extends EgoWeaponsWeapon {
 					generateDescription(list,"firefist_gauntlet", "guard", 3);
 		}
 
-		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+		generateStatusHelp(list);
 	}
 
 
@@ -162,7 +159,7 @@ public class FirefistGauntlet extends EgoWeaponsWeapon {
 
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
-		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
+		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
 
 
 		/*if (sourceentity.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.FIREFIST_SUIT.get())) {
@@ -173,33 +170,20 @@ public class FirefistGauntlet extends EgoWeaponsWeapon {
 
 
 
-		if (currentanim.getRealAnimation() instanceof BasicEgoAttackAnimation || currentanim.getRealAnimation() instanceof EgoAttackAnimation) {
+		if (context.isValidEgoAnimation()) {
 			//System.out.println("IS BASIC EGO ATTACK ANIM" + (currentanim.getRealAnimation()).getProperty(BasicEgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER));
 
-			String weaponIdentifier = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
 
 			int fuel = getFuel(sourceentity);
 
-			AttackAnimation.Phase phase = null;
-			if (currentanim instanceof EgoAttackAnimation) {
-				phase = ((EgoAttackAnimation)currentanim).getPhaseByTime(entitypatch.getAnimator().getPlayerFor(currentanim).getElapsedTime());
-			}
-
-			if (phase instanceof EgoAttackAnimation.EgoAttackPhase) {
-				String elp = ((EgoAttackAnimation.EgoAttackPhase) phase).getProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER).orElse(null);
-
-				if (elp != null)
-					weaponIdentifier = elp;
-			}
-
-			switch (weaponIdentifier) {
+			switch (context.getAnimationIdentifier()) {
 
 
                 case "firefist_innate_b":
                     EgoWeaponsEffects.BURN.get().increment(target, 1, 2);
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_S6_AUTO_SIDE.get().getRegistryName()));
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_PUNCH_SHOCKWAVE.get().getRegistryName()));
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 8, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_S6_AUTO_SIDE.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_PUNCH_SHOCKWAVE.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 8, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
 
 					break;
 
@@ -209,8 +193,8 @@ public class FirefistGauntlet extends EgoWeaponsWeapon {
 					if (fuel >= 15) {
 						reduceFuel(sourceentity, 15, entityData, 4);
 						EgoWeaponsEffects.BURN.get().increment(target, 1, 2);
-						EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_PUNCH_SHOCKWAVE.get().getRegistryName()));
-						EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 8, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
+						EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_PUNCH_SHOCKWAVE.get().getRegistryName()));
+						EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 8, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
 
 					} else {
 						EgoWeaponsEffects.BURN.get().increment(target, 0, 1);
@@ -225,25 +209,25 @@ public class FirefistGauntlet extends EgoWeaponsWeapon {
 				case "firefist_dash":
 					// Delegate to modify damage to give 15% dmg
 					EgoWeaponsEffects.BURN.get().increment(target, 0, 1);
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_PUNCH_SHOCKWAVE.get().getRegistryName()));
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 8, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_PUNCH_SHOCKWAVE.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 8, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
 
 				break;
 				case "firefist_auto1":
 				case "firefist_auto2":
 					EgoWeaponsEffects.BURN.get().increment(target, 0, 1);
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_S6_AUTO_SIDE.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_S6_AUTO_SIDE.get().getRegistryName()));
 				break;
                 case "firefist_innate_a_final":
                 case "firefist_innate_a_start":
                     EgoWeaponsEffects.BURN.get().increment(target, 1, 2);
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 8, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 8, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
 
 					break;
                 case "firefist_sp1":
 				case "firefist_sp2":
 					if (!world.isClientSide()) {
-						if (weaponIdentifier.equals("firefist_sp1"))
+						if (context.getAnimationIdentifier().equals("firefist_sp1"))
 							world.playSound(null, new BlockPos(sourceentity.getX(), sourceentity.getY(), sourceentity.getZ()),
 									EgoWeaponsSounds.FIREFIST_SPECIAL_GROAN_1,
 									SoundCategory.PLAYERS, 1f, (float) 1);
@@ -254,16 +238,16 @@ public class FirefistGauntlet extends EgoWeaponsWeapon {
 					}
 					SharedFunctions.forLivingEntity(target, (targetp) -> SharedFunctions.hitstunEntity(targetp, 1, false, 0));
 					EgoWeaponsEffects.BURN.get().increment(target, 0, 2);
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_S6_AUTO_SIDE.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_S6_AUTO_SIDE.get().getRegistryName()));
 					entitypatch.getValidItemInHand(Hand.MAIN_HAND).getOrCreateTag().putBoolean("ff_gauntlet_hit", true);
 					break;
 				case "firefist_sp3":
 
 					EgoWeaponsEffects.BURN.get().increment(target, 3, 2);
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_S6_AUTO_SIDE.get().getRegistryName()));
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_PUNCH_SHOCKWAVE.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_S6_AUTO_SIDE.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_PUNCH_SHOCKWAVE.get().getRegistryName()));
 					target.setDeltaMovement(target.getDeltaMovement().add(0,0.3,0));
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 10, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 10, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
 
 					break;
 			}

@@ -12,7 +12,8 @@ import net.minecraftforge.fml.network.NetworkEvent;
 import java.util.function.Supplier;
 
 import static net.m3tte.ego_weapons.gameasset.abilities.ArmorAbilityProcedure.runArmorAbility;
-import static net.m3tte.ego_weapons.gameasset.abilities.ReloadAbilityProcedure.runReloadAbility;
+import static net.m3tte.ego_weapons.gameasset.abilities.ReloadAbilityProcedure.*;
+import static net.m3tte.ego_weapons.gameasset.abilities.WeaponAbilityProcedure.runAltWeaponAbility;
 import static net.m3tte.ego_weapons.gameasset.abilities.WeaponAbilityProcedure.runWeaponAbility;
 
 public class KeybindPackages {
@@ -65,6 +66,12 @@ public class KeybindPackages {
             case 3:
                 swapFireMode(entity);
                 break;
+            case 8:
+                runAltWeaponAbility(entity);
+                break;
+            case 9:
+                runAltReloadAbility(entity);
+                break;
         }
     }
 
@@ -76,6 +83,15 @@ public class KeybindPackages {
                 EgoWeaponsSounds.CLICK,
                 SoundCategory.NEUTRAL, (float) 1, vars.firingMode ? 0.5f : 1.5f);
         vars.syncPlayerVariables(entity);
+    }
+
+    public static boolean getFireMode(PlayerEntity entity) {
+        EgoWeaponsModVars.PlayerVariables vars = entity.getCapability(EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY, null)
+                .orElse(new EgoWeaponsModVars.PlayerVariables());
+
+        if (vars != null)
+            return vars.firingMode;
+        return false;
     }
 
 

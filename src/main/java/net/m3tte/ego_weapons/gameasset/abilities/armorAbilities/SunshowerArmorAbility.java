@@ -38,7 +38,7 @@ public class SunshowerArmorAbility extends ItemAbility {
     }
 
     @Override
-    public AbilityTier getAbilityTier() {
+    public AbilityTier getAbilityTier(PlayerEntity player, PlayerVariables playerVars) {
         return AbilityTier.HE;
     }
 
@@ -49,7 +49,7 @@ public class SunshowerArmorAbility extends ItemAbility {
 
     @Override
     public float getAvailability(PlayerEntity player, PlayerVariables playerVars) {
-        if (playerVars.light < getBlipCost(player, playerVars)) {
+        if (canTrigger(player, playerVars)) {
             return (float) (playerVars.light / getBlipCost(player, playerVars));
         }
 

@@ -6,8 +6,6 @@ import net.m3tte.ego_weapons.gameasset.AttackCycleType;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
-import net.m3tte.ego_weapons.item.oeufi.OeufiHalberd;
-import net.m3tte.ego_weapons.item.sunshower.Sunshower;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.AttackTypes;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.DamageTypes;
@@ -21,7 +19,6 @@ import yesman.epicfight.gameasset.EpicFightSounds;
 
 import static net.m3tte.ego_weapons.item.liu.LiuFireGauntlet.focusEmbers;
 import static net.m3tte.ego_weapons.item.liu.LiuFireGauntlet.specialHitEvent;
-import static net.m3tte.ego_weapons.item.oeufi.OeufiHalberd.*;
 
 public class LiuSouth6MovesetAnims {
 
@@ -70,7 +67,7 @@ public class LiuSouth6MovesetAnims {
         LIU_S6_SNEAK = new MovementAnimation(true, "biped/liu_south_6/sneak", biped);
         LIU_S6_JUMP = new StaticAnimation(false, "biped/liu_south_6/jump", biped);
 
-        LIU_S6_DASH = new BasicEgoAttackAnimation(0.08F, 0.45F, 0.45F, 0.75F, 1.5F, null, "Tool_R", "biped/liu_south_6/dash", biped)
+        LIU_S6_DASH = new BasicEgoAttackAnimation(0.08F, 0.45F, 0.45F, 0.85F, 1.5F, null, "Tool_R", "biped/liu_south_6/dash", biped)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "liu_s6_auto1")
@@ -114,10 +111,10 @@ public class LiuSouth6MovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.95F);
 
         LIU_S6_AUTO_3 = new BasicEgoAttackAnimation(0.08F, 0.08F, 0.25F, 0.45F, 1F, null, "Tool_R", "biped/liu_south_6/auto_3", biped)
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
-                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "liu_s6_auto3")
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.LIU_S6_AUTO_3)
@@ -148,7 +145,7 @@ public class LiuSouth6MovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.2F);
 
         LIU_S6_INNATE_2 = new EgoAttackAnimation(0.1F, 0.1F, 0.15F, 0.66F, 1.1F, null, "Tool_R", "biped/liu_south_6/innate_2", biped)
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "liu_s6_innate2")
@@ -212,7 +209,7 @@ public class LiuSouth6MovesetAnims {
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, specialHitEvent(2, 1f));
 
         LIU_S6_SPECIAL_4 = new BasicEgoAttackAnimation(0.01F, 0.1F, 0.3F, 0.7F, 1.5F, null, "Tool_R", "biped/liu_south_6/special_4", biped)
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "liu_s6_sp4")

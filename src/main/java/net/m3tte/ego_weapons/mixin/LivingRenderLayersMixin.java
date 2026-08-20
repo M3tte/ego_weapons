@@ -3,6 +3,7 @@ package net.m3tte.ego_weapons.mixin;
 import net.m3tte.ego_weapons.client.renderLayers.FullstopSuitcaseRenderer;
 import net.m3tte.ego_weapons.client.renderLayers.JustitiaRopeRenderer;
 import net.m3tte.ego_weapons.client.renderLayers.SunshowerFoxRenderLayer;
+import net.m3tte.ego_weapons.client.renderLayers.UdjatKhopeshRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.LivingRenderer;
@@ -28,6 +29,7 @@ public class LivingRenderLayersMixin {
 
             if (val instanceof LivingRenderer<?,?>) {
                 ((LivingRenderer<?,?>)val).addLayer(new JustitiaRopeRenderer<>((IEntityRenderer)val));
+                ((LivingRenderer<?,?>)val).addLayer(new UdjatKhopeshRenderer<>((IEntityRenderer)val));
             }
 
         });

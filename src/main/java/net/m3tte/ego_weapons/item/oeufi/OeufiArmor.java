@@ -4,13 +4,12 @@ package net.m3tte.ego_weapons.item.oeufi;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
-import net.m3tte.ego_weapons.EgoWeaponsEffects;
-import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoWeaponsArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
@@ -38,8 +37,7 @@ import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 import java.util.List;
 
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
 
 public class OeufiArmor extends GenericEgoWeaponsArmor {
 
@@ -92,7 +90,7 @@ public class OeufiArmor extends GenericEgoWeaponsArmor {
 
 		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
 
-		boolean finale = (currentanim.getRealAnimation()).getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LAST_OF_COMBO).orElse(false);
+		boolean finale = (currentanim.getRealAnimation()).getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.FINAL_COIN).orElse(false);
 
 		TremorEffect tremor = TremorEffect.detectTremorType(target);
 		if (tremor != null) {
@@ -154,7 +152,7 @@ public class OeufiArmor extends GenericEgoWeaponsArmor {
 		@Override
 		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.appendHoverText(itemstack, world, list, flag);
-			list.add(new StringTextComponent("Manufactured by Kai Atelier").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+			TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.oufi_armor.desc");
 			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 3) + 1) + "/3] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -178,7 +176,7 @@ public class OeufiArmor extends GenericEgoWeaponsArmor {
 					break;
 			}
 
-			list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+			generateStatusHelp(list);
 		}
 
 	};

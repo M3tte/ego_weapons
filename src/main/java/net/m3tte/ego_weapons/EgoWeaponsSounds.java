@@ -26,8 +26,8 @@ public class EgoWeaponsSounds {
         for (Map.Entry<ResourceLocation, net.minecraft.util.SoundEvent> sound : SOUNDS.entrySet())
             event.getRegistry().register(sound.getValue().setRegistryName(sound.getKey()));
     }
-
     public static SoundEvent FIRST_WARNING = generateSoundEvent(locationFrom("first_warning"));
+    public static SoundEvent C9BOSS10 = generateSoundEvent(locationFrom("muga"));
     public static SoundEvent SECOND_WARNING = generateSoundEvent(locationFrom("second_warning"));
     public static SoundEvent THIRD_WARNING = generateSoundEvent(locationFrom("third_warning"));
     public static SoundEvent FOURTH_WARNING = generateSoundEvent(locationFrom("fourth_warning"));
@@ -302,8 +302,37 @@ public class EgoWeaponsSounds {
     public static SoundEvent UDJAT_COMMAND = generateSoundEvent(locationFrom("udjat.command"));
     public static SoundEvent UDJAT_MIRAGE = generateSoundEvent(locationFrom("udjat.mirage"));
     public static SoundEvent UDJAT_SPECIAL_REUSE = generateSoundEvent(locationFrom("udjat.special_reuse"));
+    public static SoundEvent UDJAT_RIFLE_AIM = generateSoundEvent(locationFrom("udjat.rifle.aim"));
+    public static SoundEvent UDJAT_RIFLE_FIRE = generateSoundEvent(locationFrom("udjat.rifle.fire"));
+    public static SoundEvent UDJAT_RIFLE_HIT_BULLET = generateSoundEvent(locationFrom("udjat.rifle.hit"));
 
-    // udjat.khopesh.innate.hit
-    // udjat.khopesh.auto
+    public static SoundEvent UDJAT_LCA_KHOPESH_THROW = generateSoundEvent(locationFrom("udjat.lca_khopesh.throw"));
+    public static SoundEvent UDJAT_LCA_KHOPESH_THROW_HIT = generateSoundEvent(locationFrom("udjat.lca_khopesh.throw.hit"));
+    public static SoundEvent UDJAT_LCA_KHOPESH_THROW_RIPOUT = generateSoundEvent(locationFrom("udjat.lca_khopesh.throw.ripout"));
+    public static SoundEvent UDJAT_DIALOGUE_STAGGER = generateSoundEvent(locationFrom("udjat.dialogue.stagger"));
+    public static SoundEvent UDJAT_DIALOGUE_SEVERE_DAMAGE = generateSoundEvent(locationFrom("udjat.dialogue.severe_damage"));
+    public static SoundEvent UDJAT_DIALOGUE_RELOADING = generateSoundEvent(locationFrom("udjat.dialogue.reloading"));
+    public static SoundEvent UDJAT_DIALOGUE_GAIN_UDJAT = generateSoundEvent(locationFrom("udjat.dialogue.gain_udjat"));
+    public static SoundEvent UDJAT_DIALOGUE_S3_CHARGE = generateSoundEvent(locationFrom("udjat.dialogue.s3.charge"));
+    public static SoundEvent UDJAT_DIALOGUE_S3_FIRE = generateSoundEvent(locationFrom("udjat.dialogue.s3.fire"));
+    public static SoundEvent ARAYASHIKI_HIT_1 = generateSoundEvent(locationFrom("arayashiki.sheath.hit.1"));
+    public static SoundEvent ARAYASHIKI_HIT_2 = generateSoundEvent(locationFrom("arayashiki.sheath.hit.2"));
+    public static SoundEvent ARAYASHIKI_HIT_3 = generateSoundEvent(locationFrom("arayashiki.sheath.hit.3"));
+    public static SoundEvent ARAYASHIKI_SPECIAL_CRIT_HIT = generateSoundEvent(locationFrom("arayashiki.sheath.special.hit"));
+    public static SoundEvent ARAYASHIKI_SPECIAL_SHEATH = generateSoundEvent(locationFrom("arayashiki.sheath.special.sheathe"));
+    public static SoundEvent ARAYASHIKI_UNSHEATH = generateSoundEvent(locationFrom("arayashiki.unsheath"));
+    public static SoundEvent ARAYASHIKI_UNSHEATH_SLASH_HIT = generateSoundEvent(locationFrom("arayashiki.unsheath.slash.hit"));
+    public static SoundEvent ARAYASHIKI_SHEATHE = generateSoundEvent(locationFrom("arayashiki.unsheath.sheathe"));
+    public static SoundEvent ARAYASHIKI_UNSHEATH_SEVER_HIT = generateSoundEvent(locationFrom("arayashiki.unsheath.sever.hit"));
+    public static SoundEvent ARAYASHIKI_UNSHEATH_PARRY = generateSoundEvent(locationFrom("arayashiki.unsheath.parry"));
+    public static SoundEvent ARAYASHIKI_UNSHEATH_HEAVY_SLASH = generateSoundEvent(locationFrom("arayashiki.unsheath.heavy_slash"));
+    public static SoundEvent ARAYASHIKI_UNSHEATH_HEAVY_SLASH_HIT = generateSoundEvent(locationFrom("arayashiki.unsheath.heavy_slash.hit"));
+    public static SoundEvent ARAYASHIKI_UNSHEATH_ERASE = generateSoundEvent(locationFrom("arayashiki.unsheath.erase.hit"));
+    public static SoundEvent ARAYASHIKI_VOICE_UNSHEATH_TRIGGER = generateSoundEvent(locationFrom("arayashiki.unsheath.trigger_v"));
+    public static SoundEvent ARAYASHIKI_GRAB_SCABBARD = generateSoundEvent(locationFrom("arayashiki.grab_scabbard"));
+    public static SoundEvent ARAYASHIKI_UNSHEATH_WOOSH = generateSoundEvent(locationFrom("arayashiki.unsheath.woosh"));
+
+
+
 
 }

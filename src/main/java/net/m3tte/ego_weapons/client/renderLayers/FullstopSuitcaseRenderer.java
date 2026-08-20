@@ -52,7 +52,7 @@ public class FullstopSuitcaseRenderer<T extends LivingEntity, M extends EntityMo
     }
 
     private void renderItem(LivingEntity entity, ItemStack item, ItemCameraTransforms.TransformType transformType, MatrixStack matrixStack, IRenderTypeBuffer itemBuffer, int p_229135_7_) {
-        if (!item.isEmpty()) {
+        if (EgoWeaponsItems.FULLSTOP_SNIPER_RAILGUN.get().equals(item.getItem())) {
             matrixStack.pushPose();
             matrixStack.translate(0.5, -0.05, -0.9);
             matrixStack.pushPose();
@@ -61,8 +61,6 @@ public class FullstopSuitcaseRenderer<T extends LivingEntity, M extends EntityMo
             matrixStack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
             matrixStack.scale(0.95f, 1.1f, 1.1f);
             Minecraft.getInstance().getItemRenderer().renderStatic(entity, item, transformType, false, matrixStack, itemBuffer, entity.level, p_229135_7_, OverlayTexture.NO_OVERLAY);
-            //Minecraft.getInstance().getItemRenderer().renderStatic(item, transformType, p_229135_7_, OverlayTexture.NO_OVERLAY, matrixStack, itemBuffer);
-            //Minecraft.getInstance().getItemInHandRenderer().renderItem(entity, item, transformType, false, matrixStack, itemBuffer, p_229135_7_);
             matrixStack.popPose();
             matrixStack.popPose();
         }

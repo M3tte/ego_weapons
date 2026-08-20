@@ -5,18 +5,17 @@ import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
-import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
-import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
-import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
 import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
+import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.procedures.DelayedEvent;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.specialParticles.numberParticle.NumberParticleTypes;
 import net.m3tte.ego_weapons.world.capabilities.DamageResistanceSystem;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
+import net.m3tte.ego_weapons.world.capabilities.UtilitySystems;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.m3tte.ego_weapons.world.capabilities.damage.SimpleEgoDamageSource;
 import net.minecraft.client.Minecraft;
@@ -27,24 +26,20 @@ import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
 import yesman.epicfight.api.animation.types.AttackAnimation;
-import yesman.epicfight.api.animation.types.DynamicAnimation;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 import java.util.List;
 
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
+import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.generateAttackContext;
 
 public class ArdorBlossomBat extends EgoWeaponsWeapon {
 	private static IItemTier ardorBlossomTier = new IItemTier() {
@@ -91,7 +86,7 @@ public class ArdorBlossomBat extends EgoWeaponsWeapon {
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
-		list.add(new TranslationTextComponent("desc.ego_weapons.ardor_blossom_bat.desc"));
+		TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.ardor_blossom_bat.desc");
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -147,7 +142,7 @@ public class ArdorBlossomBat extends EgoWeaponsWeapon {
 				break;
 		}
 
-		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+		generateStatusHelp(list);
 	}
 
 
@@ -164,28 +159,17 @@ public class ArdorBlossomBat extends EgoWeaponsWeapon {
 
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
-		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
+		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
 
-		if (currentanim.getRealAnimation() instanceof BasicEgoAttackAnimation || currentanim.getRealAnimation() instanceof EgoAttackAnimation) {
+		if (context.isValidEgoAnimation()) {
 			//System.out.println("IS BASIC EGO ATTACK ANIM" + (currentanim.getRealAnimation()).getProperty(BasicEgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER));
 
-			String weaponIdentifier = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
-
 			AttackAnimation.Phase phase = null;
-			if (currentanim instanceof EgoAttackAnimation) {
-				phase = ((EgoAttackAnimation)currentanim).getPhaseByTime(entitypatch.getAnimator().getPlayerFor(currentanim).getElapsedTime());
-			}
 
-			if (phase instanceof EgoAttackAnimation.EgoAttackPhase) {
-				String elp = ((EgoAttackAnimation.EgoAttackPhase) phase).getProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER).orElse(null);
-
-				if (elp != null)
-					weaponIdentifier = elp;
-			}
 
 			LivingEntityPatch<?> targetPatch = (LivingEntityPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
-			switch (weaponIdentifier) {
+			switch (context.getAnimationIdentifier()) {
 
 				case "ardor_blossom_innate_1":
 				case "ardor_blossom_innate_2":
@@ -209,12 +193,15 @@ public class ArdorBlossomBat extends EgoWeaponsWeapon {
 
 	public static void triggerEmbersEffect(LivingEntity target, int delay, boolean hit, LivingEntity source) {
 
+		LivingEntityPatch<?> targetPatch = (LivingEntityPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 		if (!target.level.isClientSide())
-			EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 20, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 1.5f, 1.5f, 10, 0,0,0));
+			EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 20, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 1.5f, 1.5f, 10, 0,0,0));
 
+		if (targetPatch == null)
+			return;
 
-		new DelayedEvent(delay, (e) -> {
+		DelayedEvent.animDelayEvent(targetPatch, delay, (e) -> {
 			if (target.hasEffect(EgoWeaponsEffects.EMBERS.get())) {
 
 				if (!target.level.isClientSide()) {
@@ -227,7 +214,7 @@ public class ArdorBlossomBat extends EgoWeaponsWeapon {
 					target.hurt(src, (float) burnPotency);
 
 
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.NumberLabelParticle(target.position().add(target.getRandom().nextFloat() - 0.5f,1,target.getRandom().nextFloat() - 0.5f), NumberParticleTypes.EMBERS, DamageResistanceSystem.processDamageForEntity(target, null, 1, src, StaggerSystem.isStaggered(target)) * burnPotency));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.NumberLabelParticle(target.position().add(target.getRandom().nextFloat() - 0.5f,1,target.getRandom().nextFloat() - 0.5f), NumberParticleTypes.EMBERS, DamageResistanceSystem.processDamageForEntity(target, null, 1, src, StaggerSystem.isStaggered(target)) * burnPotency));
 
 					EgoWeaponsEffects.EMBERS.get().decrement(target, 0, 1);
 					target.playSound(EgoWeaponsSounds.ARDOR_BLOSSOM_INNATE_HIT_3, 1f, 1f);
@@ -240,7 +227,7 @@ public class ArdorBlossomBat extends EgoWeaponsWeapon {
 				DamageSource src1 = new SimpleEgoDamageSource("", source, GenericEgoDamage.AttackTypes.BLUNT, GenericEgoDamage.DamageTypes.RED, "ardor_blossom_sp_b_3");
 				target.hurt(src1, (float) 15);
 			}
-		});
+		}, "Ardor Blossom Effect");
 
 	}
 
@@ -249,7 +236,6 @@ public class ArdorBlossomBat extends EgoWeaponsWeapon {
 
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) source.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
-		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
 
 
 		System.out.println("MODIFY DAMAGE CALLED ON : "+target);
@@ -263,25 +249,14 @@ public class ArdorBlossomBat extends EgoWeaponsWeapon {
 		int burnCSelf = EgoWeaponsEffects.BURN.get().getCount(source);
 
 		if (!target.level.isClientSide())
-			EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 8, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
+			EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 8, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
 
+		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
 
-		if (currentanim.getRealAnimation() instanceof BasicEgoAttackAnimation || currentanim.getRealAnimation() instanceof EgoAttackAnimation) {
+		if (context.isValidEgoAnimation()) {
 			//System.out.println("IS BASIC EGO ATTACK ANIM" + (currentanim.getRealAnimation()).getProperty(BasicEgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER));
 
-			String weaponIdentifier = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
 
-			AttackAnimation.Phase phase = null;
-			if (currentanim instanceof EgoAttackAnimation) {
-				phase = ((EgoAttackAnimation)currentanim).getPhaseByTime(entitypatch.getAnimator().getPlayerFor(currentanim).getElapsedTime());
-			}
-
-			if (phase instanceof EgoAttackAnimation.EgoAttackPhase) {
-				String elp = ((EgoAttackAnimation.EgoAttackPhase) phase).getProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER).orElse(null);
-
-				if (elp != null)
-					weaponIdentifier = elp;
-			}
 
 			LivingEntityPatch<?> targetPatch = (LivingEntityPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
@@ -291,8 +266,8 @@ public class ArdorBlossomBat extends EgoWeaponsWeapon {
 			if (source instanceof PlayerEntity) {
 				emotionLevel = EmotionSystem.getEmotionLevel((PlayerEntity) source);
 			}
-			System.out.println("WEAPON IDENTIFIER IS : "+weaponIdentifier);
-			switch (weaponIdentifier) {
+
+			switch (context.getAnimationIdentifier()) {
 				case "ardor_blossom_auto_2":
 					EgoWeaponsEffects.BURN.get().increment(source, 0, 1);
 				case "ardor_blossom_auto_1":
@@ -323,7 +298,7 @@ public class ArdorBlossomBat extends EgoWeaponsWeapon {
 				case "ardor_blossom_innate_3":
 					EgoWeaponsEffects.BURN.get().increment(target, 2, 1);
 					EgoWeaponsEffects.BURN.get().increment(source, 2, 0);
-					if (target.hasEffect(EgoWeaponsEffects.EMBERS.get())) triggerEmbersEffect(target, 10, false, source);
+					if (target.hasEffect(EgoWeaponsEffects.EMBERS.get())) triggerEmbersEffect(target, 30, false, source);
 					if (targetPatch != null) targetPatch.knockBackEntity(source.position(), 0.4f);
 
 					mult += SharedFunctions.incrementBonusDamage(damageSource, 0.4f);
@@ -347,7 +322,7 @@ public class ArdorBlossomBat extends EgoWeaponsWeapon {
 				case "ardor_blossom_sp_b_2":
 					EgoWeaponsEffects.BURN.get().increment(target, 1, 2 + Math.min(2, burnSelf/10));
 					EgoWeaponsEffects.BURN.get().increment(source, 0, 2);
-					if (target.hasEffect(EgoWeaponsEffects.EMBERS.get())) triggerEmbersEffect(target, 20, true, source);
+					if (target.hasEffect(EgoWeaponsEffects.EMBERS.get())) triggerEmbersEffect(target, 22, true, source);
 					break;
 
 				case "ardor_blossom_sp_b_3":

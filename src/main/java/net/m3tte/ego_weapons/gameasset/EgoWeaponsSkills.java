@@ -15,6 +15,9 @@ import net.m3tte.ego_weapons.skill.AtelierShotgun.AtelierShotgunPassive;
 import net.m3tte.ego_weapons.skill.*;
 import net.m3tte.ego_weapons.skill.allas.AllasPassive;
 import net.m3tte.ego_weapons.skill.allas.BlackSilenceAllasGuard;
+import net.m3tte.ego_weapons.skill.arayashiki.ArayashikiActiveGuard;
+import net.m3tte.ego_weapons.skill.arayashiki.ArayashikiInnateSkill;
+import net.m3tte.ego_weapons.skill.arayashiki.ArayashikiPassive;
 import net.m3tte.ego_weapons.skill.ardorBlossom.ABSActiveGuard;
 import net.m3tte.ego_weapons.skill.ardorBlossom.ABSEngagementSkill;
 import net.m3tte.ego_weapons.skill.ardorBlossom.ABSPassive;
@@ -53,6 +56,7 @@ import net.m3tte.ego_weapons.skill.stigmaSword.SunsetBladeSkill;
 import net.m3tte.ego_weapons.skill.sunshower.SunshowerActiveGuard;
 import net.m3tte.ego_weapons.skill.sunshower.SunshowerPassive;
 import net.m3tte.ego_weapons.skill.sunshower.SunshowerPuddleStomp;
+import net.m3tte.ego_weapons.skill.udjat.BurstFireSkill;
 import net.m3tte.ego_weapons.skill.udjat.UdjatKhopeshGuard;
 import net.m3tte.ego_weapons.skill.udjat.UdjatKhopeshPassive;
 import net.m3tte.ego_weapons.skill.wheels.WheelsCounterGuard;
@@ -74,6 +78,7 @@ public class EgoWeaponsSkills {
     public static Skill DURANDAL_CLEAVE;
     public static Skill GREATER_SPLIT_VERTICAL;
     public static Skill HELLO;
+    public static Skill SEVER_THREAD;
 
     public static Skill WHEELS_SMASH;
     public static Skill CRYSTAL_ATELIER;
@@ -170,6 +175,10 @@ public class EgoWeaponsSkills {
 
     public static Skill UDJAT_KH_GUARD;
     public static Skill UDJAT_KH_PASSIVE;
+    public static Skill LCA_RIFLE_BURST;
+    public static Skill ARAYASHIKI_INNATE;
+    public static Skill ARAYASHIKI_PASSIVE;
+    public static Skill ARAYASHIKI_GUARD;
     public EgoWeaponsSkills() {
     }
 
@@ -189,6 +198,10 @@ public class EgoWeaponsSkills {
                         .setConsumption(70.0F).setAnimations(MimicryMovesetAnims.MIMICRY_HELLO)))
                 .newPropertyLine().addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.adder(6.0F)), false);
 
+        SEVER_THREAD = event.registerSkill((
+                new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "arayashiki_innate"))
+                        .setConsumption(10.0F).setAnimations(ArayashikiMovesetAnims.ARAYASHIKI_INNATE)))
+                .newPropertyLine().addProperty(AttackPhaseProperty.MAX_STRIKES, ValueCorrector.adder(6.0F)), false);
 
         SOLEMN_LAMENT_BURST = event.registerSkill((
                 new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "solemn_burst"))
@@ -348,6 +361,11 @@ public class EgoWeaponsSkills {
 
         UDJAT_KH_PASSIVE = event.registerSkill(new UdjatKhopeshPassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "udjat_kh_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
         UDJAT_KH_GUARD = event.registerSkill(new UdjatKhopeshGuard(UdjatKhopeshGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "udjat_kh_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
+        LCA_RIFLE_BURST = event.registerSkill(new BurstFireSkill(SpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "lca_burst")).setConsumption(20.0F).setMaxStack(3)), false);
+
+        ARAYASHIKI_INNATE = event.registerSkill(new ArayashikiInnateSkill(SpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "lca_burst")).setConsumption(20.0F).setMaxStack(2)), false);
+        ARAYASHIKI_PASSIVE = event.registerSkill(new ArayashikiPassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "arayashiki_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
+        ARAYASHIKI_GUARD = event.registerSkill(new ArayashikiActiveGuard(ArayashikiActiveGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "arayashiki_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
 
     }
 }

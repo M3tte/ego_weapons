@@ -1,17 +1,13 @@
 package net.m3tte.ego_weapons.skill.magic_bullet;
 
 import net.m3tte.ego_weapons.*;
-import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.gameasset.movesets.MagicBulletMovesetAnims;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
-import net.m3tte.ego_weapons.potion.MagicBulletPotionEffect;
+import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCategories;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
@@ -108,7 +104,7 @@ public class MagicBulletGuard extends EnergizingGuardSkill {
             EpicFightParticles.HIT_BLUNT.get().spawnParticleWithArgument(((ServerWorld)serverPlayer.level), HitParticleType.FRONT_OF_EYES, HitParticleType.ZERO, serverPlayer, damageSource.getDirectEntity());
 
             if (!serverPlayer.level.isClientSide()) {
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(serverPlayer.getId(), serverPlayer.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(serverPlayer.getId(), serverPlayer.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
             }
 
             handleKnockback(event, knockback, false, 0.3f, 0.3f);

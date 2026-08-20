@@ -1,0 +1,17 @@
+{
+  "targets": [
+    "swap7"
+  ],
+  "passes": [
+    {
+      "name": "ego_weapons:shockwave_distortion",
+      "intarget": "minecraft:main",
+      "outtarget": "swap7"
+    },
+    {
+      "name": "blit",
+      "intarget": "swap7",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}

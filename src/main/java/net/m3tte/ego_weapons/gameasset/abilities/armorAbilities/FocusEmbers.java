@@ -28,7 +28,7 @@ public class FocusEmbers extends ItemAbility {
     }
 
     @Override
-    public AbilityTier getAbilityTier() {
+    public AbilityTier getAbilityTier(PlayerEntity player, PlayerVariables playerVars) {
         return AbilityTier.ZAYIN;
     }
 
@@ -40,7 +40,7 @@ public class FocusEmbers extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.light >= 4) {
+        if (canTrigger(player, playerVars)) {
             LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
             EgoWeaponsEffects.DEFENSE_LEVEL_UP.get().increment(player, 0, 3);
             entitypatch.playAnimationSynchronized(LiuSouth6MovesetAnims.LIU_S6_FOCUS_EMBERS, 0.1f);

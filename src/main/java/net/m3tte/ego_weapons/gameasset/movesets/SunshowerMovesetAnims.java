@@ -8,10 +8,8 @@ import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.item.sunshower.Sunshower;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
-import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets;
 import yesman.epicfight.api.animation.property.AnimationProperty;
 import yesman.epicfight.api.animation.types.*;
-import yesman.epicfight.api.collider.Collider;
 import yesman.epicfight.api.model.Model;
 import yesman.epicfight.api.utils.ExtendedDamageSource;
 import yesman.epicfight.api.utils.math.ValueCorrector;
@@ -108,7 +106,7 @@ public class SunshowerMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.SWING_EFFECT, SharedFunctions.basicSwingEvent)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.WHITE)
-                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "sunshower_auto_4")
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EpicFightSounds.BLUNT_HIT_HARD)
@@ -200,7 +198,7 @@ public class SunshowerMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.WHITE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
-                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DISABLE_COLLISION, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.CLASH_KNOCK, false)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "sunshower_puddle_stomp_2")
@@ -269,7 +267,7 @@ public class SunshowerMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.WHITE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
-                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "sunshower_spread_out_3")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DISABLE_COLLISION, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)

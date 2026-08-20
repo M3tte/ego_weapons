@@ -32,7 +32,7 @@ public class MagicBulletPipe extends ItemAbility {
     }
 
     @Override
-    public AbilityTier getAbilityTier() {
+    public AbilityTier getAbilityTier(PlayerEntity player, PlayerVariables playerVars) {
         return AbilityTier.WAW;
     }
 
@@ -45,7 +45,7 @@ public class MagicBulletPipe extends ItemAbility {
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
         int blipCost = getBlipCost(player, playerVars);
-        if (playerVars.light >= blipCost) {
+        if (canTrigger(player, playerVars)) {
             LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
             entitypatch.playAnimationSynchronized(MagicBulletMovesetAnims.MAGIC_BULLET_PIPE, 0.1f);

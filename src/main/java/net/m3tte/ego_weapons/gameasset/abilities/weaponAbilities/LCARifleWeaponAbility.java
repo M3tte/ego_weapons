@@ -1,0 +1,137 @@
+package net.m3tte.ego_weapons.gameasset.abilities.weaponAbilities;
+
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
+import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
+import net.m3tte.ego_weapons.EgoWeaponsParticles;
+import net.m3tte.ego_weapons.EgoWeaponsSounds;
+import net.m3tte.ego_weapons.gameasset.EgoWeaponsSkills;
+import net.m3tte.ego_weapons.gameasset.abilities.AbilityTier;
+import net.m3tte.ego_weapons.gameasset.abilities.AbilityUtils;
+import net.m3tte.ego_weapons.gameasset.abilities.ItemAbility;
+import net.m3tte.ego_weapons.gameasset.movesets.LCARifleMovesetAnims;
+import net.m3tte.ego_weapons.gameasset.movesets.UdjatKhopeshMovesetAnims;
+import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.procedures.TeamLockedPredicate;
+import net.m3tte.ego_weapons.specialParticles.texturedAfterImage.TexturedAfterImagePresets;
+import net.m3tte.ego_weapons.world.capabilities.AmmoSystem;
+import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.registries.ForgeRegistries;
+import yesman.epicfight.world.capabilities.EpicFightCapabilities;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
+import yesman.epicfight.world.effect.EpicFightMobEffects;
+
+import java.util.List;
+
+public class LCARifleWeaponAbility extends ItemAbility {
+
+
+
+    @Override
+    public int getBlipCost(PlayerEntity player, PlayerVariables playerVars) {
+        int extra = 0;
+
+        return deductLightDecreases(player, AbilityUtils.AbilityType.WEAPON,5);
+    }
+
+    @Override
+    public ResourceLocation getIconLocation(PlayerEntity player, PlayerVariables vars) {
+        return AbilityUtils.getAbilityIcon("lca_rifle_sp");
+
+    }
+
+    @Override
+    public ResourceLocation getOverlay(PlayerEntity player, PlayerVariables playerVars) {
+
+        return super.getOverlay(player, playerVars);
+    }
+
+    @Override
+    public AbilityTier getAbilityTier(PlayerEntity player, PlayerVariables playerVars) {
+        return AbilityTier.ALEPH;
+    }
+
+    @Override
+    public String getName(PlayerEntity player, PlayerVariables playerVars) {
+        return "Jamadhar";
+    }
+
+    @Override
+    public float getAvailability(PlayerEntity player, PlayerVariables playerVars) {
+        if (playerVars.light < getBlipCost(player, playerVars)) {
+            return (float) (playerVars.light / getBlipCost(player, playerVars));
+        }
+
+        return 1.0f;
+    }
+
+    @Override
+    public void trigger(PlayerEntity player, PlayerVariables playerVars) {
+
+        if (canTrigger(player, playerVars)) {
+
+
+            playerVars.light -= getBlipCost(player, playerVars);
+            World world = player.level;
+            double x = player.getX();
+            double y = player.getY();
+            double z = player.getZ();
+            int potency = 1;
+            if (world instanceof ServerWorld) {
+                ((ServerWorld) world).sendParticles(EgoWeaponsParticles.EXPEND_LIGHT_PARTICLE.get(), x, (y + 1), z, this.getBlipCost(player, playerVars), 0, 0.3, 0, 0.05);
+            }
+
+            LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+            playerVars.globalcooldown = 100;
+
+
+
+
+
+            if (player.hasEffect(EgoWeaponsEffects.UDJAT_VANGUARD.get())) {
+                int ammo = AmmoSystem.getAmmoCount(player.getItemInHand(Hand.MAIN_HAND));
+
+                System.out.println("AMMO LIST IS : "+ammo);
+
+                if (ammo < 4) {
+
+                    DialogueSystem.speakEvalDialogue(player, "dialogue.ego_weapons.skills.lca_rifle.reload", DialogueSystem.DialogueTypes.SKILL, TextFormatting.WHITE);
+                    if (!world.isClientSide()) {
+                        world.playSound(null, new BlockPos(x, y, z),
+                                EgoWeaponsSounds.UDJAT_DIALOGUE_RELOADING,
+                                SoundCategory.PLAYERS, (float) 1, (float) 1);
+                    }
+
+                    AmmoSystem.reloadGun(player.getItemInHand(Hand.MAIN_HAND), null, player, 4);
+                }
+
+                if (!world.isClientSide()) {
+                    world.playSound(null, new BlockPos(x, y, z),
+                            EgoWeaponsSounds.FULLSTOP_REP_RELOAD,
+                            SoundCategory.PLAYERS, (float) 1, (float) 1.5);
+                }
+            }
+
+
+            player.addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 20, 0));
+            entitypatch.playAnimationSynchronized(LCARifleMovesetAnims.LCA_RIFLE_SPECIAL_1, 0.1f);
+            /*if (world instanceof ServerWorld) {
+                ((ServerWorld) world).sendParticles(DamagefxParticle.particle, x, (y + 1), z, (int) 4, 0.4, 0.6, 0.4, 0);
+            }*/
+            AbilityUtils.applyBlipCooldown(8, playerVars);
+            playerVars.syncPlayerVariables(player);
+
+        }
+    }
+
+
+}

@@ -3,7 +3,7 @@ package net.m3tte.ego_weapons.world.capabilities;
 import net.m3tte.ego_weapons.*;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.item.sunshower.Sunshower;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
+import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.potion.Panic;
 import net.m3tte.ego_weapons.procedures.DelayedEvent;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,14 +11,10 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.PacketDistributor;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import yesman.epicfight.world.effect.EpicFightMobEffects;
-
-import java.util.function.Supplier;
 
 import static net.m3tte.ego_weapons.world.capabilities.DialogueSystem.onHitSanityDialogueEvaluation;
 
@@ -36,11 +32,22 @@ public class SanitySystem {
             amnt *= 0.5f;
         }
 
+        if (player.hasEffect(EgoWeaponsEffects.LOSS_OF_SELF.get())) {
+            int lossOfSelfPotency = EgoWeaponsEffects.LOSS_OF_SELF.get().getPotency(player);
+
+            amnt *= (1 - 0.006f * lossOfSelfPotency);
+        }
+
 
         if (player.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.UDJAT_SUIT.get())) {
             int protection = Math.min(5, EgoWeaponsEffects.PROTECTION.get().getPotency(player));
-
             amnt *= (1 - 0.05f * protection);
+        }
+
+        if (player.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.LCA_UDJAT_SUIT.get())) {
+            if (player.hasEffect(EgoWeaponsEffects.UDJAT_VANGUARD.get())) {
+                amnt *= 0.75f;
+            }
         }
 
         playerVariables.sanity -= amnt;
@@ -78,7 +85,7 @@ public class SanitySystem {
 
             if (entity instanceof ServerPlayerEntity) {
 
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) entity), new ParticlePackages.SendInsanityMessage(entity.getId()));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) entity), new VFXPackages.SendInsanityMessage(entity.getId()));
             }
         }
 

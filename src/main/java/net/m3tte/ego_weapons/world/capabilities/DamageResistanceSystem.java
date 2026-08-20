@@ -184,14 +184,23 @@ public class DamageResistanceSystem {
 
         float extraAttackTypeResistance = 0;
 
-        /*
-            When wearing justitia. Players with SIN take 0.1x more damage per stack.
-             */
-        if (target.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.JUSTITIA_CLOAK.get())) {
-            int sinEffect = EgoWeaponsEffects.SIN.get().getPotency(target);
 
-            extraAttackTypeResistance += (float) (sinEffect * 0.1);
 
+        if (!target.getItemBySlot(EquipmentSlotType.CHEST).isEmpty()) {
+            switch (target.getItemBySlot(EquipmentSlotType.CHEST).getItem().getRegistryName().getPath()) {
+                // When wearing justitia. Players with SIN take 0.1x more damage per stack.
+                case "justitia_cloak":
+                    int sinEffect = EgoWeaponsEffects.SIN.get().getPotency(target);
+
+                    extraAttackTypeResistance += (float) (sinEffect * 0.1);
+                    break;
+                // When wearing LCA Udjat. Players with vanguard take 0.15x less white damage.
+                case "lca_udjat_suit":
+                    if (target.hasEffect(EgoWeaponsEffects.UDJAT_VANGUARD.get()) && damageType.equals(GenericEgoDamage.DamageTypes.WHITE))
+                        extraAttackTypeResistance -= 0.15f;
+
+                    break;
+            }
         }
 
 

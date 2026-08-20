@@ -26,8 +26,8 @@ public class BetaSuitArmorAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) { // TODO: Improve / Update / Fix
 
-        if (playerVars.light > 9) {
-            playerVars.light -= 9;
+        if (canTrigger(player, playerVars)) {
+            playerVars.light -= getBlipCost(player, playerVars);
             World world = player.level;
             double x = player.getX();
             double y = player.getY();

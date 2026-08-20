@@ -3,6 +3,7 @@ package net.m3tte.ego_weapons.gameasset.abilities.armorAbilities;
 import net.m3tte.ego_weapons.EgoWeaponsAttributes;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
+import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.gameasset.abilities.AbilityUtils;
 import net.m3tte.ego_weapons.gameasset.abilities.ItemAbility;
 import net.m3tte.ego_weapons.particle.BlipeffectParticle;
@@ -36,7 +37,7 @@ public class BluntRatArmorAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.light >= 4) {
+        if (canTrigger(player, playerVars)) {
 
             PlayerPatch<?> playerPatch = (PlayerPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
@@ -45,6 +46,7 @@ public class BluntRatArmorAbility extends ItemAbility {
             EgoWeaponsEffects.OFFENSE_LEVEL_DOWN.get().increment(player, 0, 3);
             playerPatch.setStamina(playerPatch.getMaxStamina());
             StaggerSystem.healStagger(player, EgoWeaponsAttributes.getMaxStagger(player) * 0.33f);
+            player.playSound(EgoWeaponsSounds.DICE_ROLL, 1, 1);
 
             if (player.level instanceof ServerWorld) {
                 ((ServerWorld) player.level).sendParticles(BlipeffectParticle.particle, player.getX(), (player.getY() + 1), player.getZ(), (int) 8, 0.4, 0.6, 0.4, 0);

@@ -10,7 +10,7 @@ import net.m3tte.ego_weapons.entities.AtelierShotgunBullet;
 import net.m3tte.ego_weapons.execFunctions.AtelierCooldownHandler;
 import net.m3tte.ego_weapons.execFunctions.BlackSilenceEvaluator;
 import net.m3tte.ego_weapons.gameasset.movesets.*;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
+import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.particle.BlacksilenceshadowParticle;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -109,10 +109,12 @@ public class EgoWeaponsAnimations {
         SunshowerMovesetAnims.build(biped);
         MimicryMovesetAnims.build(biped);
         FirefistMovesetAnims.build(biped);
+        ArayashikiMovesetAnims.build(biped);
         StigmaWorkshopMovesetAnims.build(biped);
         HeishouMaoBranchAnims.build(biped);
         RatShankMovesetAnims.build(biped);
         UdjatKhopeshMovesetAnims.build(biped);
+        LCARifleMovesetAnims.build(biped);
         RatPipeMovesetAnims.build(biped);
         JustitiaMovesetAnims.build(biped);
         ArdorBlossomMovesetAnims.build(biped);
@@ -217,7 +219,7 @@ public class EgoWeaponsAnimations {
                 l.addParticle(particle, particlePos.x, particlePos.y, particlePos.z, speedOffsets.x, speedOffsets.y, speedOffsets.z); //r.nextFloat() * 0.2 - 0.1, r.nextFloat() * 0.2 - 0.1, );
             } else if (acceptServerSide) {
                 if (!source.level.isClientSide())
-                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.UDJAT_SAND.get(), amount, particlePos.x, particlePos.y, particlePos.z, speedOffsets.x, speedOffsets.y, speedOffsets.z, 0,0,0));
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.UDJAT_SAND.get(), amount, particlePos.x, particlePos.y, particlePos.z, speedOffsets.x, speedOffsets.y, speedOffsets.z, 0,0,0));
 
             }
         }

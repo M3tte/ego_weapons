@@ -1,0 +1,17 @@
+{
+  "targets": [
+    "swap5"
+  ],
+  "passes": [
+    {
+      "name": "ego_weapons:terror_fx",
+      "intarget": "minecraft:main",
+      "outtarget": "swap5"
+    },
+    {
+      "name": "blit",
+      "intarget": "swap5",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}

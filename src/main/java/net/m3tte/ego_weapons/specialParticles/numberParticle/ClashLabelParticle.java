@@ -190,7 +190,6 @@ public final class ClashLabelParticle extends TexturedParticle {
 
         @Override
         public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-            System.out.println("CREATING PARTICLE WITH DATA : "+xSpeed+" "+ySpeed+" "+zSpeed);
             ClashLabelParticle particle = new ClashLabelParticle(worldIn, x, y, z, (float) xSpeed, (int)ySpeed, zSpeed > 0);
             return particle;
         }

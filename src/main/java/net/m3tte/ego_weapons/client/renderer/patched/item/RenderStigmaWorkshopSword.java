@@ -42,14 +42,6 @@ public class RenderStigmaWorkshopSword extends RenderItemBase {
         Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.THIRD_PERSON_RIGHT_HAND, packedLight, OverlayTexture.NO_OVERLAY, poseStack, buffer);
         poseStack.popPose();
 
-        modelMatrix = new OpenMatrix4f(this.mainhandcorrectionMatrix);
-        modelMatrix.mulFront(((ClientModel)entitypatch.getEntityModel(ClientModels.LOGICAL_CLIENT)).getArmature().searchJointByName("Torso").getAnimatedTransform());
-        poseStack.pushPose();
-        this.mulPoseStack(poseStack, modelMatrix);
-        poseStack.translate(0.26f,0.30f,0.25);
-        poseStack.mulPose(Vector3f.XP.rotationDegrees(200.0F));
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(5.0F));
-        Minecraft.getInstance().getItemRenderer().renderStatic(this.sheathStack, TransformType.THIRD_PERSON_RIGHT_HAND, packedLight, OverlayTexture.NO_OVERLAY, poseStack, buffer);
-        poseStack.popPose();
+        System.out.println("RENDERING OFFHAND ITEM TEST");
     }
 }

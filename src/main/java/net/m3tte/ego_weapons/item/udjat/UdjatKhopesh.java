@@ -4,36 +4,27 @@ package net.m3tte.ego_weapons.item.udjat;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
-import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
 import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
-import net.m3tte.ego_weapons.procedures.DelayedEvent;
+import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
-import net.m3tte.ego_weapons.specialParticles.numberParticle.NumberParticleTypes;
-import net.m3tte.ego_weapons.world.capabilities.DamageResistanceSystem;
-import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
-import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
-import net.m3tte.ego_weapons.world.capabilities.damage.SimpleEgoDamageSource;
-import net.minecraft.client.Minecraft;
+import net.m3tte.ego_weapons.world.capabilities.UtilitySystems;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -44,8 +35,8 @@ import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 import java.util.List;
 
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
+import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.generateAttackContext;
 
 public class UdjatKhopesh extends EgoWeaponsWeapon {
 	private static IItemTier ardorBlossomTier = new IItemTier() {
@@ -92,7 +83,7 @@ public class UdjatKhopesh extends EgoWeaponsWeapon {
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
-		list.add(new TranslationTextComponent("desc.ego_weapons.udjat_khopesh.desc"));
+		TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.udjat_khopesh.desc");
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -135,7 +126,7 @@ public class UdjatKhopesh extends EgoWeaponsWeapon {
 				break;
 		}
 
-		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+		generateStatusHelp(list);
 	}
 
 
@@ -152,33 +143,20 @@ public class UdjatKhopesh extends EgoWeaponsWeapon {
 
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
-		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
+		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
 
 
 		if (!target.level.isClientSide())
-			EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.UDJAT_SAND.get(), 10, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 0f, 0.6f, 0.5, 0,0,0));
+			EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.UDJAT_SAND.get(), 10, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 0f, 0.6f, 0.5, 0,0,0));
 
 
-		if (currentanim.getRealAnimation() instanceof BasicEgoAttackAnimation || currentanim.getRealAnimation() instanceof EgoAttackAnimation) {
+		if (context.isValidEgoAnimation()) {
 			//System.out.println("IS BASIC EGO ATTACK ANIM" + (currentanim.getRealAnimation()).getProperty(BasicEgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER));
 
-			String weaponIdentifier = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
-
-			AttackAnimation.Phase phase = null;
-			if (currentanim instanceof EgoAttackAnimation) {
-				phase = ((EgoAttackAnimation)currentanim).getPhaseByTime(entitypatch.getAnimator().getPlayerFor(currentanim).getElapsedTime());
-			}
-
-			if (phase instanceof EgoAttackAnimation.EgoAttackPhase) {
-				String elp = ((EgoAttackAnimation.EgoAttackPhase) phase).getProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER).orElse(null);
-
-				if (elp != null)
-					weaponIdentifier = elp;
-			}
 
 			LivingEntityPatch<?> targetPatch = (LivingEntityPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
-			switch (weaponIdentifier) {
+			switch (context.getAnimationIdentifier()) {
 
 				case "khopesh_innate":
 					EgoWeaponsEffects.PROTECTION.get().increment(sourceentity, 5, 1);
@@ -189,7 +167,7 @@ public class UdjatKhopesh extends EgoWeaponsWeapon {
 					break;
 				case "khopesh_auto_3f":
 					if (!sourceentity.level.isClientSide())
-						EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendShakeMessage(target.getId(), 3));
+						EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendShakeMessage(target.getId(), 3));
 
 					EgoWeaponsEffects.DEFENSE_LEVEL_UP.get().increment(sourceentity, 0, 1);
 					break;
@@ -212,7 +190,7 @@ public class UdjatKhopesh extends EgoWeaponsWeapon {
 
 				case "khopesh_special_3":
 					if (!sourceentity.level.isClientSide())
-						EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendShakeMessage(target.getId(), 2));
+						EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendShakeMessage(target.getId(), 2));
 					break;
 			}
 		}

@@ -52,6 +52,14 @@ public class EgoAttackAnimation extends AttackAnimation {
         if (source instanceof EpicFightDamageSource) {
             EpicFightDamageSource EFsource = (EpicFightDamageSource) source;
             AttackLogicPredicate predicate = (AttackLogicPredicate) this.properties.getOrDefault(EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.DEFAULT);
+            boolean setMagic = (boolean) this.properties.getOrDefault(EgoWeaponsAttackProperty.BYPASS_GUARD_AND_DODGE, false);
+
+            if (phase instanceof EgoAttackPhase) {
+                setMagic = ((EgoAttackPhase) phase).getProperty(EgoAttackPhase.EgoWeaponsAttackPhaseProperty.BYPASS_GUARD_AND_DODGE).orElse(setMagic);
+            }
+
+            if (setMagic)
+                EFsource.setMagic();
 
             switch (predicate) {
                 case GSH:
@@ -74,7 +82,7 @@ public class EgoAttackAnimation extends AttackAnimation {
 
 
             if (entitypatch.getOriginal().getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.SUIT_OF_THE_BLACK_SILENCE.get())) {
-                if (this.properties.getOrDefault(EgoWeaponsAttackProperty.LAST_OF_COMBO, false).equals(true)) {
+                if (this.properties.getOrDefault(EgoWeaponsAttackProperty.FINAL_COIN, false).equals(true)) {
                     EFsource.setMagic();
                     // Applies cooldown after. Locks all other on hit effects from triggering as well.
                     if (entitypatch.getOriginal() instanceof PlayerEntity) {
@@ -141,8 +149,9 @@ public class EgoAttackAnimation extends AttackAnimation {
         public static final EgoWeaponsAttackProperty<AttackCycleType> ATTACK_CYCLE_TYPE = new EgoWeaponsAttackProperty<>();
         public static final EgoWeaponsAttackProperty<Boolean> TRIGGERS_EFFECTS = new EgoWeaponsAttackProperty<>();
         public static final EgoWeaponsAttackProperty<String> IDENTIFIER = new EgoWeaponsAttackProperty<>();
-        public static final EgoWeaponsAttackProperty<Boolean> LAST_OF_COMBO = new EgoWeaponsAttackProperty<>();
+        public static final EgoWeaponsAttackProperty<Boolean> FINAL_COIN = new EgoWeaponsAttackProperty<>();
         public static final EgoWeaponsAttackProperty<Boolean> CONSUMES_AMMO = new EgoWeaponsAttackProperty<>();
+        public static final EgoWeaponsAttackProperty<Hand> TARGET_HAND = new EgoWeaponsAttackProperty<>();
         public static final EgoWeaponsAttackProperty<AttackMoveType> ATTACK_MOVE_TYPE = new EgoWeaponsAttackProperty<>();
         public static final EgoWeaponsAttackProperty<AttackTypes> ATTACK_TYPE = new EgoWeaponsAttackProperty<>();
         public static final EgoWeaponsAttackProperty<DamageTypes> DAMAGE_TYPE = new EgoWeaponsAttackProperty<>();
@@ -151,6 +160,7 @@ public class EgoAttackAnimation extends AttackAnimation {
         public static final EgoWeaponsAttackProperty<Boolean> CLASH_KNOCK = new EgoWeaponsAttackProperty<>();
         public static final EgoWeaponsAttackProperty<String> DEATH_MESSAGE = new EgoWeaponsAttackProperty<>();
         public static final EgoWeaponsAttackProperty<Boolean> DISABLE_COLLISION = new EgoWeaponsAttackProperty<>();
+        public static final EgoWeaponsAttackProperty<Boolean> BYPASS_GUARD_AND_DODGE = new EgoWeaponsAttackProperty<>();
 
         public EgoWeaponsAttackProperty() {
         }
@@ -168,8 +178,9 @@ public class EgoAttackAnimation extends AttackAnimation {
         public static class EgoWeaponsAttackPhaseProperty<T> extends AttackPhaseProperty<T> {
             public static final EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<Boolean> TRIGGERS_EFFECTS = new EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<>();
             public static final EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<Consumer<LivingEntityPatch<?>>> SWING_EFFECT = new EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<>();
+            public static final EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<Hand> TARGET_HAND = new EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<>();
             public static final EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<String> IDENTIFIER = new EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<>();
-            public static final EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<Boolean> LAST_OF_COMBO = new EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<>();
+            public static final EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<Boolean> FINAL_COIN = new EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<>();
             public static final EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<Boolean> CONSUMES_AMMO = new EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<>();
             public static final EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<AttackMoveType> ATTACK_MOVE_TYPE = new EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<>();
             public static final EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<AttackTypes> ATTACK_TYPE = new EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<>();
@@ -178,6 +189,8 @@ public class EgoAttackAnimation extends AttackAnimation {
             public static final  EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<Boolean> CLASH_KNOCK = new EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<>();
             public static final EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<AttackLogicPredicate> LOGIC_PREDICATE = new EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<>();
             public static final  EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<String> DEATH_MESSAGE = new EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<>();
+            public static final  EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<Boolean> BYPASS_GUARD_AND_DODGE = new EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty<>();
+
         }
 
         public EgoAttackPhase(float start, float antic, float contact, float recovery, float end, String jointName, Collider collider) {

@@ -4,15 +4,14 @@ package net.m3tte.ego_weapons.gui.overlay;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.m3tte.ego_weapons.*;
+import net.m3tte.ego_weapons.gameasset.abilities.AbilityTier;
+import net.m3tte.ego_weapons.gameasset.abilities.ArmorAbilityProcedure;
+import net.m3tte.ego_weapons.gameasset.abilities.ItemAbility;
+import net.m3tte.ego_weapons.gameasset.abilities.WeaponAbilityProcedure;
 import net.m3tte.ego_weapons.gui.UIBubble;
 import net.m3tte.ego_weapons.item.guns.GunItem;
-import net.m3tte.ego_weapons.potion.countEffects.Shell;
+import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.potion.SolemnLamentEffects;
-import net.m3tte.ego_weapons.procedures.legacy.BlipwarninghandlerProcedure;
-import net.m3tte.ego_weapons.gameasset.abilities.AbilityTier;
-import net.m3tte.ego_weapons.gameasset.abilities.WeaponAbilityProcedure;
-import net.m3tte.ego_weapons.gameasset.abilities.ItemAbility;
-import net.m3tte.ego_weapons.gameasset.abilities.ArmorAbilityProcedure;
 import net.m3tte.ego_weapons.world.capabilities.AmmoType;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.minecraft.client.Minecraft;
@@ -33,9 +32,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 import yesman.epicfight.client.gui.ModIngameGui;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import static net.m3tte.ego_weapons.gameasset.abilities.WeaponAbilityProcedure.NO_ITEM_ABILITY;
 
 
 @Mod.EventBusSubscriber({Dist.CLIENT})
@@ -79,7 +82,6 @@ public class GenericOverlay extends ModIngameGui {
 	final static ResourceLocation d10fuel_ignited = new ResourceLocation("ego_weapons:textures/screens/gui/firefist/burning_district_10_fuel.png");
 
 	final static ResourceLocation lightTextureMap = new ResourceLocation("ego_weapons:textures/screens/light_texmap.png");
-
 	static ResourceLocation[] shellLeft = parseMultiStateTexture(1 ,5, "overlay/shell/shell_left");
 	static ResourceLocation[] shellRight = parseMultiStateTexture(1 ,5, "overlay/shell/shell_right");
 	static ResourceLocation[] shellHealthbar = parseMultiStateTexture(1 ,5, "overlay/shell/ui/healthbar_shell");
@@ -182,16 +184,19 @@ public class GenericOverlay extends ModIngameGui {
 
 		int fixedOffset = -12 * (maxLight/lightsPerLine);
 
+		int textureVariant = entity.hasEffect(EgoWeaponsEffects.SEALED.get()) ? 1 : 0;
+
+
 		for (int n = 0; n < maxLight; n++) {
 
-			int lightOffset = (light - n - 1) >= 0 ? 24 : 48;
+			int variantTextureOffset = (light - n - 1) >= 0 ? 24 : 48;
 
 
 			if ((maxLight - (n / lightsPerLine)*8) >= lightsPerLine) {
-				blit(event.getMatrixStack(), 22 * (n % lightsPerLine), -23 * (n / lightsPerLine) - fixedOffset, 0, 0, 24, 24, 24, 72);
+				blit(event.getMatrixStack(), 22 * (n % lightsPerLine), -23 * (n / lightsPerLine) - fixedOffset, 24 * textureVariant, 0, 24, 24, 48, 72);
 
 				if (n + 0.5f <= light) {
-					blit(event.getMatrixStack(), 22 * (n % lightsPerLine), -23 * (n / lightsPerLine) - fixedOffset, 0, lightOffset, 24, 24, 24, 72);
+					blit(event.getMatrixStack(), 22 * (n % lightsPerLine), -23 * (n / lightsPerLine) - fixedOffset, 24 * textureVariant, variantTextureOffset, 24, 24, 48, 72);
 				}
 
 			} else {
@@ -199,10 +204,10 @@ public class GenericOverlay extends ModIngameGui {
 				int inCurrLine = maxLight % lightsPerLine;
 				float offsetScale = (lightsPerLine - inCurrLine) / 2f;
 
-				blit(event.getMatrixStack(),  (int)(22f * (offsetScale + (n%lightsPerLine))), -23 * (n / lightsPerLine) - fixedOffset, 0, 0, 24, 24, 24, 72);
+				blit(event.getMatrixStack(),  (int)(22f * (offsetScale + (n%lightsPerLine))), -23 * (n / lightsPerLine) - fixedOffset, 24 * textureVariant, 0, 24, 24, 48, 72);
 
 				if (n + 0.5f <= light) {
-					blit(event.getMatrixStack(), (int)(22f * (offsetScale + (n%lightsPerLine))), -23 * (n / lightsPerLine) - fixedOffset, 0, lightOffset, 24, 24, 24, 72);
+					blit(event.getMatrixStack(), (int)(22f * (offsetScale + (n%lightsPerLine))), -23 * (n / lightsPerLine) - fixedOffset, 24 * textureVariant, variantTextureOffset, 24, 24, 48, 72);
 				}
 			}
 		}
@@ -235,7 +240,8 @@ public class GenericOverlay extends ModIngameGui {
 			}
 		}*/
 		ItemStack equippedArmor = entity.getItemBySlot(EquipmentSlotType.CHEST);
-		ItemStack equippedItem = entity.getItemBySlot(EquipmentSlotType.MAINHAND);
+		ItemStack mainhandItem = entity.getItemBySlot(EquipmentSlotType.MAINHAND);
+		ItemStack offHandItem = entity.getItemBySlot(EquipmentSlotType.OFFHAND);
 
 		// Main UI
 
@@ -250,7 +256,7 @@ public class GenericOverlay extends ModIngameGui {
 		if (entity.getItemInHand(Hand.MAIN_HAND).getItem() instanceof GunItem)
 			renderGunAmmo(w - 40, posY+ 78, entity, event, entity.getItemInHand(Hand.MAIN_HAND));
 
-		if (entity.getItemInHand(Hand.MAIN_HAND).getItem() instanceof GunItem)
+		if (entity.getItemInHand(Hand.OFF_HAND).getItem() instanceof GunItem)
 			renderGunAmmo(w- 60, posY+ 78, entity, event, entity.getItemInHand(Hand.OFF_HAND));
 
 		// Calculate Widget for D10 Fuel
@@ -281,20 +287,39 @@ public class GenericOverlay extends ModIngameGui {
 					hasPlayedUnready = false;
 				}
 
-				renderAbility(ability, -13, entity, playerVariables, event, h, icon, overlay, flashProgress);
+				renderAbility(ability, 0, 0, -13, entity, playerVariables, event, h, icon, overlay, flashProgress);
 			}
 		}
 
-		if (!equippedItem.isEmpty()) { // Calculate Ability Widget
+		ItemAbility mainhandAbility = WeaponAbilityProcedure.getForItem(mainhandItem.getItem());
+		ItemAbility offhandAbility = WeaponAbilityProcedure.getAltForItem(offHandItem.getItem());
 
-			ItemAbility ability = null;
+		ItemAbility ability = EgoWeaponsKeybinds.isHoldingAltAbility() ? offhandAbility : mainhandAbility;
+		ItemAbility secAbility = EgoWeaponsKeybinds.isHoldingAltAbility() ? mainhandAbility : offhandAbility;
 
-			if (entity.hasEffect(EgoWeaponsEffects.ASSIST_FIRE.get())) {
-				ability = WeaponAbilityProcedure.getAssistForItem(equippedItem.getItem());
+		if (ability.equals(NO_ITEM_ABILITY) && !secAbility.equals(NO_ITEM_ABILITY)) {
+			ability = secAbility;
+			secAbility = NO_ITEM_ABILITY;
+
+		}
+
+		if (!secAbility.equals(NO_ITEM_ABILITY)) { // Calculate Inactive Ability Widget
+
+			ResourceLocation icon = secAbility.getIconLocation(entity, playerVariables);
+			ResourceLocation overlay = secAbility.getOverlay(entity, playerVariables);
+
+			if (icon != null) {
+				float flashProgress = 1;
+
+				renderAbility(secAbility, 0.1f, -5, -68, entity, playerVariables, event, h, icon, overlay, flashProgress);
 			}
+		}
 
-			if (ability == null)
-				ability = WeaponAbilityProcedure.getForItem(equippedItem.getItem());
+		if (entity.hasEffect(EgoWeaponsEffects.ASSIST_FIRE.get()) && ability.equals(mainhandAbility)) {
+			ability = WeaponAbilityProcedure.getAltForItem(EgoWeaponsKeybinds.isHoldingAltAbility() ? offHandItem.getItem() : mainhandItem.getItem());
+		}
+
+		if (!ability.equals(NO_ITEM_ABILITY)) { // Calculate Ability Widget
 
 			ResourceLocation icon = ability.getIconLocation(entity, playerVariables);
 			ResourceLocation overlay = ability.getOverlay(entity, playerVariables);
@@ -318,9 +343,11 @@ public class GenericOverlay extends ModIngameGui {
 					hasPlayedWeaponUnready = false;
 				}
 
-				renderAbility(ability, -63, entity, playerVariables, event, h, icon, overlay, flashProgress);
+				renderAbility(ability, 0, 0, -63, entity, playerVariables, event, h, icon, overlay, flashProgress);
 			}
 		}
+
+
 
 
 		if (entity.getItemInHand(Hand.MAIN_HAND).getItem().equals(EgoWeaponsItems.MAGIC_BULLET.get())) {
@@ -331,8 +358,8 @@ public class GenericOverlay extends ModIngameGui {
 
 		// Overlays
 
-		if (entity.hasEffect(Shell.get())) {
-			int level = entity.getEffect(Shell.get()).getAmplifier();
+		int level = EgoWeaponsEffects.SHELL.get().getPotency(entity) - 1;
+		if (level >= 0) {
 			if (level > 4) level = 4;
 			Minecraft.getInstance().getTextureManager().bind(shellLeft[level]);
 			blit(event.getMatrixStack(), 0, 0, 0, 0, (int)(60 * ((float)h/90)), h, (int)(60 * ((float)h/90)), h);
@@ -448,7 +475,7 @@ public class GenericOverlay extends ModIngameGui {
 	private static void renderArmor(int offsetY, int offsetX, PlayerEntity player, RenderGameOverlayEvent.Pre event) {
 		double armor = 0;
 
-		armor = player.getAttributeValue(Attributes.ARMOR);
+		armor = Math.round(player.getAttributeValue(Attributes.ARMOR) * 10) / 10D;
 
 		GL11.glPushMatrix();
 		GL11.glTranslated(offsetX, offsetY,0); // -265,245
@@ -625,8 +652,8 @@ public class GenericOverlay extends ModIngameGui {
 
 
 	private static void renderHealthbarOverlays(int offsetX, int offsetY, PlayerEntity player, RenderGameOverlayEvent.Pre event) {
-		if (player.hasEffect(Shell.get())) {
-			Minecraft.getInstance().getTextureManager().bind(shellHealthbar[Math.max(Math.min(player.getEffect(Shell.get()).getAmplifier(),4),0)]);
+		if (player.hasEffect(EgoWeaponsEffects.SHELL.get())) {
+			Minecraft.getInstance().getTextureManager().bind(shellHealthbar[Math.max(Math.min(EgoWeaponsEffects.SHELL.get().getPotency(player)-1,4),0)]);
 			blit(event.getMatrixStack(), offsetX+ 29, offsetY + 8, 0, 0, 154, 11, 154, 11);
 		}
 
@@ -717,7 +744,7 @@ public class GenericOverlay extends ModIngameGui {
 			default:
 				Minecraft.getInstance().getTextureManager().bind(EMPTY_BULLET);
 				break;
-			case SNIPER:
+			case RIFLE:
 				Minecraft.getInstance().getTextureManager().bind(EMPTY_RIFLE_BULLET);
 				break;
 		}
@@ -745,7 +772,7 @@ public class GenericOverlay extends ModIngameGui {
 	}
 
 
-	private static void renderAbility(ItemAbility ability, int offsetY, PlayerEntity entity, EgoWeaponsModVars.PlayerVariables playerVariables, RenderGameOverlayEvent.Pre event, int h, ResourceLocation icon, ResourceLocation overlay, float flashProgress) {
+	private static void renderAbility(ItemAbility ability, float additionalDarkening, int offsetX, int offsetY, PlayerEntity entity, EgoWeaponsModVars.PlayerVariables playerVariables, RenderGameOverlayEvent.Pre event, int h, ResourceLocation icon, ResourceLocation overlay, float flashProgress) {
 
 		float availability = ability.getAvailability(entity, playerVariables);
 
@@ -756,12 +783,14 @@ public class GenericOverlay extends ModIngameGui {
 
 			if (availability < 1) {
 				GL11.glTranslated(-25,0, 0);
-				GL11.glColor4f(0.8f,0.8f,0.8f, 1);
+				GL11.glColor4f(0.8f - additionalDarkening,0.8f - additionalDarkening,0.8f - additionalDarkening, 1);
 			}
 
 			GL11.glPushMatrix();
-			GL11.glTranslated(0,offsetY,0);
-			if (flashProgress > 0) {
+			if (additionalDarkening != 0)
+				GL11.glColor4f(additionalDarkening,additionalDarkening,additionalDarkening, 1);
+			GL11.glTranslated(offsetX,offsetY,0);
+			if (flashProgress > 0 && flashProgress < 1) {
 				GL11.glTranslated(32 * flashProgress,-20 * flashProgress,0);
 				GL11.glRotated(10 * flashProgress, 0,0,1);
 				GL11.glScaled(1.2 + 0.15f * flashProgress,1.2f + 0.15f * flashProgress,1.2f + 0.15f * flashProgress);
@@ -779,11 +808,11 @@ public class GenericOverlay extends ModIngameGui {
 			Minecraft.getInstance().getTextureManager().bind(AbilityTier.baseBG);
 			blit(event.getMatrixStack(), 10, (int)(h / 1.2f) - 40  - 48, 0, 0, 64, 48, 64, 48);
 			if (availability >= 1) {
-				Minecraft.getInstance().getTextureManager().bind(ability.getAbilityTier().getBackground());
+				Minecraft.getInstance().getTextureManager().bind(ability.getAbilityTier(entity, playerVariables).getBackground());
 				blit(event.getMatrixStack(), 10, (int)(h / 1.2f) - 40  - 48, 0, 0, 64, 48, 64, 48);
 			}
 			else if ( availability > 0) {
-				Minecraft.getInstance().getTextureManager().bind(ability.getAbilityTier().getBackground());
+				Minecraft.getInstance().getTextureManager().bind(ability.getAbilityTier(entity, playerVariables).getBackground());
 				blit(event.getMatrixStack(), 10, (int)(h / 1.2 - 40 - Math.ceil(48 * availability)), 0, (int)(48 - 48 * availability), 64, (int)(48 * (availability)), 64, 48);
 			}
 			Minecraft.getInstance().getTextureManager().bind(icon);

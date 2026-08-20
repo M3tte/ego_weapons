@@ -2,6 +2,7 @@ package net.m3tte.ego_weapons.mixin.epicfight;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.m3tte.ego_weapons.client.renderer.EntityShake;
+import net.m3tte.ego_weapons.client.renderer.SetupShaderGroup;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.entity.LivingEntity;
@@ -22,9 +23,14 @@ public class PatchedEntityRendererMixin <E extends LivingEntity, T extends Livin
     @Inject(at = @At(value = "HEAD"), method = "mulPoseStack(Lcom/mojang/blaze3d/matrix/MatrixStack;Lyesman/epicfight/api/model/Armature;Lnet/minecraft/entity/LivingEntity;Lyesman/epicfight/world/capabilities/entitypatch/LivingEntityPatch;F)V")
     public void modifyPosestackMixin(MatrixStack poseStack, Armature armature, E entityIn, T entitypatch, float partialTicks, CallbackInfo ci) {
 
+        if (entityIn.isDeadOrDying()) {
+            if (SharedFunctions.getToHideEntities().contains(entityIn.getId())) {
+                poseStack.translate(0,-50,0);
+            }
+        }
         if (entityIn.getPersistentData().contains("shakeEffect")) {
             float value = entityIn.getPersistentData().getFloat("shakeEffect");
-            value -= 0.035f;
+            value -= 0.033f;
 
             if (value > 0) {
                 entityIn.getPersistentData().putFloat("shakeEffect", value);
@@ -34,10 +40,9 @@ public class PatchedEntityRendererMixin <E extends LivingEntity, T extends Livin
 
             poseStack.translate(0, EntityShake.evaluateShakeFromValue(value), 0);
 
-            if (entityIn.getPersistentData().getBoolean("hiddenModel")) {
-                poseStack.translate(0,-50,0);
-            }
+
         }
+
 
     }
 }

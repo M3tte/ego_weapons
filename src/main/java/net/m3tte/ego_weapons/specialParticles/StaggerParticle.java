@@ -75,6 +75,13 @@ public class StaggerParticle extends HitParticle {
 			this.y = newPos.y + boundEntity.getBbHeight() * 0.7f;
 			this.z = newPos.z;
 		}
+		if (boundEntity == null) {
+			this.remove();
+		}
+		else if (!boundEntity.isAlive()) {
+			if (this.age < 50)
+				this.age = 50;
+		}
 
 
 	}

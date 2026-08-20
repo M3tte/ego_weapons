@@ -13,7 +13,9 @@ import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.potion.OrlandoPotionEffect;
 import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
+import net.m3tte.ego_weapons.world.capabilities.UtilitySystems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -40,8 +42,8 @@ import java.util.List;
 
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
+import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.generateAttackContext;
 
 public class RatPipe extends EgoWeaponsWeapon {
 
@@ -91,7 +93,7 @@ public class RatPipe extends EgoWeaponsWeapon {
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
-		list.add(new StringTextComponent("A crude pipe... good enough?").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+		TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.rat_pipe.desc");
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 6) + 1) + "/6] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -142,7 +144,7 @@ public class RatPipe extends EgoWeaponsWeapon {
 					generateDescription(list,"rat_pipe", "guard", 5);
 		}
 
-		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+		generateStatusHelp(list);
 	}
 
 
@@ -179,18 +181,17 @@ public class RatPipe extends EgoWeaponsWeapon {
 
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
-		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
+		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
 
 		LivingEntityPatch<?> targetPatch = (LivingEntityPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 
-		if (currentanim.getRealAnimation() instanceof BasicEgoAttackAnimation || currentanim.getRealAnimation() instanceof EgoAttackAnimation) {
+		if (context.isValidEgoAnimation()) {
 			//System.out.println("IS BASIC EGO ATTACK ANIM" + (currentanim.getRealAnimation()).getProperty(BasicEgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER));
 
-			String attackIdentifier = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
 
 			// Different animation effects
-			switch (attackIdentifier) {
+			switch (context.getAnimationIdentifier()) {
 				case "rat_pipe_sp_1":
 					SharedFunctions.hitstunEntity(targetPatch, 3, false, 0.5f);
 					EgoWeaponsEffects.TREMOR.get().increment(target, 0, 2);
@@ -198,7 +199,7 @@ public class RatPipe extends EgoWeaponsWeapon {
 					break;
 				case "rat_pipe_sp_2":
 					itemstack.getOrCreateTag().putInt("followUpHit", 1);
-					SharedFunctions.pummelDownEntity(targetPatch, 3);
+					SharedFunctions.pummelDownEntity(targetPatch, 3, true);
 					break;
 				case "rat_pipe_sp_3":
 					TremorEffect.burstTremor(target, true);
@@ -246,9 +247,7 @@ public class RatPipe extends EgoWeaponsWeapon {
 
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) source.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
-		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
-
-		String weaponIdentifier = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
+		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
 
 		PlayerVariables entityData = source.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
@@ -266,7 +265,7 @@ public class RatPipe extends EgoWeaponsWeapon {
 			mult += Math.min(0.2f, 0.03f * selfTremor);
 		}
 
-		switch (weaponIdentifier) {
+		switch (context.getAnimationIdentifier()) {
 			case "rat_pipe_innate":
 				if (targetTremor > 5 || StaggerSystem.isStaggered(target)) {
 					SharedFunctions.incrementBonusDamage(damageSource, 0.25f);

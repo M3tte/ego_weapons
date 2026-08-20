@@ -36,7 +36,7 @@ public class RedMistArmorAbility extends ItemAbility {
     }
 
     @Override
-    public AbilityTier getAbilityTier() {
+    public AbilityTier getAbilityTier(PlayerEntity player, PlayerVariables playerVars) {
         return AbilityTier.ALEPH;
     }
 
@@ -48,7 +48,7 @@ public class RedMistArmorAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.light >= 10) {
+        if (canTrigger(player, playerVars)) {
             manifestEGO(player);
             playerVars.syncPlayerVariables(player);
         }

@@ -9,17 +9,13 @@ import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.item.blackSilence.weapons.AtelierLogicRevolver;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 import yesman.epicfight.api.animation.property.AnimationProperty;
 import yesman.epicfight.api.animation.types.*;
-import yesman.epicfight.api.client.model.ClientModels;
 import yesman.epicfight.api.model.Model;
 import yesman.epicfight.api.utils.ExtendedDamageSource;
 import yesman.epicfight.api.utils.math.ValueCorrector;
 import yesman.epicfight.gameasset.ColliderPreset;
 import yesman.epicfight.gameasset.EpicFightSounds;
-import yesman.epicfight.gameasset.Models;
 import yesman.epicfight.particle.EpicFightParticles;
 
 import static net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations.atelierShotgunEvent;
@@ -144,7 +140,7 @@ public class AtelierLogicMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
-                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.BLACK_SILENCE_ATELIER_REVOLVER)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.BULLET_CRIT)
@@ -185,7 +181,7 @@ public class AtelierLogicMovesetAnims {
 
         ATELIER_REVOLVER_SPECIAL = (new EgoAttackAnimation(0.1F, "biped/atelier_revolver/special", biped,
                 new AttackAnimation.Phase(0.0F, 0.1F, 0.5F, 0.55F, 2F, 2F, "Tool_L", EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX_EXT),
-                new EgoAttackAnimation.EgoAttackPhase(0.63F, 0.65F, 0.71F, 0.75F, 2F, 2F, "Tool_R", EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX_EXT).addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.LAST_OF_COMBO, true))
+                new EgoAttackAnimation.EgoAttackPhase(0.63F, 0.65F, 0.71F, 0.75F, 2F, 2F, "Tool_R", EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX_EXT).addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.FINAL_COIN, true))
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
@@ -226,7 +222,7 @@ public class AtelierLogicMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.MELEE)
-                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(2))

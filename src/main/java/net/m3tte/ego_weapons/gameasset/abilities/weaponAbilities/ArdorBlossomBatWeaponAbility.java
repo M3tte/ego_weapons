@@ -7,13 +7,12 @@ import net.m3tte.ego_weapons.gameasset.abilities.AbilityUtils;
 import net.m3tte.ego_weapons.gameasset.abilities.ItemAbility;
 import net.m3tte.ego_weapons.gameasset.movesets.ArdorBlossomMovesetAnims;
 import net.m3tte.ego_weapons.item.ardor_blossom.ArdorBlossomBat;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
+import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TeamLockedPredicate;
 import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
-import net.m3tte.ego_weapons.world.capabilities.damage.DirectEgoDamageSource;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.m3tte.ego_weapons.world.capabilities.damage.SimpleEgoDamageSource;
 import net.minecraft.entity.LivingEntity;
@@ -26,7 +25,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.PacketDistributor;
-import yesman.epicfight.api.utils.ExtendedDamageSource;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import yesman.epicfight.world.effect.EpicFightMobEffects;
@@ -63,7 +61,7 @@ public class ArdorBlossomBatWeaponAbility extends ItemAbility {
     }
 
     @Override
-    public AbilityTier getAbilityTier() {
+    public AbilityTier getAbilityTier(PlayerEntity player, PlayerVariables playerVars) {
         return AbilityTier.WAW;
     }
 
@@ -84,7 +82,7 @@ public class ArdorBlossomBatWeaponAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.light >= getBlipCost(player, playerVars)) {
+        if (canTrigger(player, playerVars)) {
             int potency = EgoWeaponsEffects.BURN.get().getPotency(player);
             if (potency >= 10) {
                 if (potency >= 25) useSpecial2(player, playerVars); else useSpecial1(player,playerVars);
@@ -202,19 +200,19 @@ public class ArdorBlossomBatWeaponAbility extends ItemAbility {
             patch.playSound(EgoWeaponsSounds.ARDOR_BLOSSOM_INNATE_HIT_3, 1, 1);
 
 
-            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), EgoWeaponsEffects.BURN.get().getPotency(entity), entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 0.01, 0.3f, 0.5f, 0.5f, 1f, 0.5f));
+            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), EgoWeaponsEffects.BURN.get().getPotency(entity), entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 0.01, 0.3f, 0.5f, 0.5f, 1f, 0.5f));
         }
 
         if (entity.hasEffect(EgoWeaponsEffects.EGO_ATTUNEMENT_ARDOR_BLOSSOM.get()) || force) {
             if (entity.level instanceof ServerWorld) {
 
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.ARDOR_BLOSSOM_IMPACT.get(), EgoWeaponsEffects.BURN.get().getPotency(entity), entity.getX(), entity.getY() + 0.05, entity.getZ(), 0, 0f, 0f, 0f, 0f, 0f));
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.SLASH_SHOCKWAVE.get().getRegistryName()));
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.SLASH_SHOCKWAVE.get().getRegistryName()));
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.ARDOR_BLOSSOM_IMPACT.get(), EgoWeaponsEffects.BURN.get().getPotency(entity), entity.getX(), entity.getY() + 0.05, entity.getZ(), 0, 0f, 0f, 0f, 0f, 0f));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.SLASH_SHOCKWAVE.get().getRegistryName()));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.SLASH_SHOCKWAVE.get().getRegistryName()));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
 
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), EgoWeaponsEffects.BURN.get().getPotency(entity), entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 0.01, 0.3f, 0.5f, 0.5f, 1f, 0.5f));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), EgoWeaponsEffects.BURN.get().getPotency(entity), entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 0.01, 0.3f, 0.5f, 0.5f, 1f, 0.5f));
                 castBurnExplosion(patch, entity, EgoWeaponsEffects.EGO_ATTUNEMENT_ARDOR_BLOSSOM.get().getPotency(entity));
             }
 
@@ -249,17 +247,17 @@ public class ArdorBlossomBatWeaponAbility extends ItemAbility {
         System.out.println("CASTING BURN EXPLOSION ON ENTITIES : "+targets);
 
         if (!entity.level.isClientSide()) {
-            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.OUTGOING_EMBER.get(), 70, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 4f, 4f, 20, 0,0,0));
+            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.OUTGOING_EMBER.get(), 70, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 4f, 4f, 20, 0,0,0));
 
             patch.playSound(EgoWeaponsSounds.ARDOR_BLOSSOM_EXPLODE, 1f, 1, 1f);
 
-            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.FIREFIST_STRIKE.get(), 1, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 4f, 4f, 20, 0,0,0));
-            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.FIRE_SHOCKWAVE.get().getRegistryName()));
-            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.FIRE_SHOCKWAVE.get().getRegistryName()));
-            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
-            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
-            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
-            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
+            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.FIREFIST_STRIKE.get(), 1, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 4f, 4f, 20, 0,0,0));
+            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.FIRE_SHOCKWAVE.get().getRegistryName()));
+            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.FIRE_SHOCKWAVE.get().getRegistryName()));
+            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
+            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
+            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
+            EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(entity.getId(), entity.getId(), EgoWeaponsParticles.HORIZONTAL_SHOCKWAVE.get().getRegistryName()));
 
         }
 

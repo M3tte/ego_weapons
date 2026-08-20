@@ -7,12 +7,11 @@ import net.m3tte.ego_weapons.*;
 import net.m3tte.ego_weapons.gameasset.AttackCycleType;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
-import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
-import net.m3tte.ego_weapons.item.magic_bullet.MagicBulletArmor;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
+import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.procedures.DelayedEvent;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoWeaponsArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
@@ -45,10 +44,8 @@ import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 import java.util.List;
-import java.util.function.Consumer;
 
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
 
 public class ArdorBlossomSuit extends GenericEgoWeaponsArmor {
 
@@ -233,7 +230,7 @@ public class ArdorBlossomSuit extends GenericEgoWeaponsArmor {
 
 			if (serverLVL != null && wearer.tickCount % Math.max(1, 4 - potInc) == 0) {
 
-				EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), Math.min(1, potInc - 2), wearer.getX(), wearer.getY() + wearer.getBbHeight()/2, wearer.getZ(), 0.01, 0.3f, 0.5f, 0.5f, 1f, 0.5f));
+				EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), Math.min(1, potInc - 2), wearer.getX(), wearer.getY() + wearer.getBbHeight()/2, wearer.getZ(), 0.01, 0.3f, 0.5f, 0.5f, 1f, 0.5f));
 			}
 		}
 
@@ -283,7 +280,7 @@ public class ArdorBlossomSuit extends GenericEgoWeaponsArmor {
 		@Override
 		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.appendHoverText(itemstack, world, list, flag);
-			list.add(new TranslationTextComponent("desc.ego_weapons.ardor_blossom_suit.desc"));
+			TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.ardor_blossom_suit.desc");
 			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 			list.add(new StringTextComponent("= - - - - - - - [Page: " + ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -322,7 +319,7 @@ public class ArdorBlossomSuit extends GenericEgoWeaponsArmor {
 					break;
 			}
 
-			list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+			generateStatusHelp(list);
 		}
 
 	};

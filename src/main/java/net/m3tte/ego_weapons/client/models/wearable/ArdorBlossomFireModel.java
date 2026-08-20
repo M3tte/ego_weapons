@@ -73,7 +73,12 @@ public class ArdorBlossomFireModel<T extends LivingEntity> extends BipedModel<T>
     }
 
     @Override
-    public String getTag() {
+    public String getModelIdentity() {
+        return "basic_torso";
+    }
+
+    @Override
+    public String getIdentifier() {
         return "ardor_blossom_fire";
     }
 }

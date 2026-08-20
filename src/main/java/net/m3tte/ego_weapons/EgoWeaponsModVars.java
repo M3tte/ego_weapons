@@ -1,6 +1,7 @@
 package net.m3tte.ego_weapons;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -660,6 +661,17 @@ public class EgoWeaponsModVars {
 			this.targetID = buffer.readInt();
 		}
 
+		// For Removing an effect
+		public SyncCountEffectMessage(LivingEntity entity, Effect effect) {
+
+			if (effect != null) {
+				this.effect = effect.getRegistryName();
+			}
+			this.effectDuration = 0;
+			this.effectPotency = 0;
+
+			this.targetID = entity != null ? entity.getId() : 0;
+		}
 		public SyncCountEffectMessage(LivingEntity entity, EffectInstance instance) {
 
 			if (instance == null) {
@@ -697,8 +709,14 @@ public class EgoWeaponsModVars {
 					if (entity != null) {
 						if (ForgeRegistries.POTIONS.getValue(message.effect) != null) {
 							if (entity instanceof LivingEntity) {
+								System.out.println("SYNCING EFFECT : "+message.effect+" WITH POT "+message.effectPotency+" AND DUR "+message.effectDuration);
 								((LivingEntity) entity).removeEffect(ForgeRegistries.POTIONS.getValue(message.effect));
-								((LivingEntity) entity).addEffect(new EffectInstance(ForgeRegistries.POTIONS.getValue(message.effect), message.effectDuration, message.effectPotency));
+
+								if (message.effectDuration > 0 || message.effectPotency >= 0) {
+									((LivingEntity) entity).addEffect(new EffectInstance(ForgeRegistries.POTIONS.getValue(message.effect), message.effectDuration, message.effectPotency));
+								}
+
+
 							}
 						}
 					}

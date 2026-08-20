@@ -20,7 +20,7 @@ public class SlashDownInvert extends RotationAttackParticle {
         this.flipX = true;
         this.quadSize = quadsize;
         this.lifetime = lifetime;
-        this.offset = offset;
+        this.offset = offset.copy();
         this.offsetRate = offsetRate;
         this.glowRenderType = glow;
     }
@@ -40,7 +40,7 @@ public class SlashDownInvert extends RotationAttackParticle {
             this.spriteSet = spriteSet;
             this.quadSize = quadSize; //2.5f;
             this.lifetime = lifeTime; // 5;
-            this.offset = offsets; // new Vector3f(0.3f,1f,0);
+            this.offset = offsets.copy(); // new Vector3f(0.3f,1f,0);
             this.offsetRate = new Vector3f(0.1f,0,0);
         }
 
@@ -48,7 +48,7 @@ public class SlashDownInvert extends RotationAttackParticle {
             this.spriteSet = spriteSet;
             this.quadSize = quadSize; //2.5f;
             this.lifetime = lifeTime; // 5;
-            this.offset = offsets; // new Vector3f(0.3f,1f,0);
+            this.offset = offsets.copy(); // new Vector3f(0.3f,1f,0);
             this.offsetRate = new Vector3f(0.1f,0,0);
             this.glow = glow;
         }

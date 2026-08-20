@@ -2,30 +2,22 @@
 package net.m3tte.ego_weapons.item.stigma_workshop;
 
 import net.m3tte.ego_weapons.*;
-import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
-import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
-import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
-import net.m3tte.ego_weapons.gameasset.movesets.FirefistMovesetAnims;
 import net.m3tte.ego_weapons.gameasset.movesets.StigmaWorkshopMovesetAnims;
 import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
+import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
+import net.m3tte.ego_weapons.world.capabilities.UtilitySystems;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
@@ -34,21 +26,17 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.PacketDistributor;
-import yesman.epicfight.api.animation.types.AttackAnimation;
-import yesman.epicfight.api.animation.types.DynamicAnimation;
 import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
-import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
-import yesman.epicfight.world.effect.EpicFightMobEffects;
 
 import java.util.List;
 
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 import static net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations.spawnArmatureParticle;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
+import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.generateAttackContext;
 
 public class StigmaWorkshopSword extends EgoWeaponsWeapon {
 
@@ -96,7 +84,7 @@ public class StigmaWorkshopSword extends EgoWeaponsWeapon {
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
-		list.add(new TranslationTextComponent("desc.ego_weapons.stigma_workshop_sword.desc"));
+		TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.stigma_workshop_sword.desc");
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -136,7 +124,7 @@ public class StigmaWorkshopSword extends EgoWeaponsWeapon {
 					generateDescription(list,"stigma_workshop_sword", "dash", 2);
 		}
 
-		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+		generateStatusHelp(list);
 	}
 
 
@@ -161,34 +149,21 @@ public class StigmaWorkshopSword extends EgoWeaponsWeapon {
 
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
-		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
+		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
 
-		EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 8, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
+		EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.SIMPLE_EMBER.get(), 8, target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), 0.05, 0.6f, 1.5f, 0.5f, 1f, 0.5f));
 
 
-		if (currentanim.getRealAnimation() instanceof BasicEgoAttackAnimation || currentanim.getRealAnimation() instanceof EgoAttackAnimation) {
+		if (context.isValidEgoAnimation()) {
 			//System.out.println("IS BASIC EGO ATTACK ANIM" + (currentanim.getRealAnimation()).getProperty(BasicEgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER));
 
-			String weaponIdentifier = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
-
-			AttackAnimation.Phase phase = null;
-			if (currentanim instanceof EgoAttackAnimation) {
-				phase = ((EgoAttackAnimation)currentanim).getPhaseByTime(entitypatch.getAnimator().getPlayerFor(currentanim).getElapsedTime());
-			}
-
-			if (phase instanceof EgoAttackAnimation.EgoAttackPhase) {
-				String elp = ((EgoAttackAnimation.EgoAttackPhase) phase).getProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER).orElse(null);
-
-				if (elp != null)
-					weaponIdentifier = elp;
-			}
 			int brandingBladeBuff = sourceentity.hasEffect(EgoWeaponsEffects.BRANDING_BLADE.get()) ? 1 : 0;
 
-			switch (weaponIdentifier) {
+			switch (context.getAnimationIdentifier()) {
 				case "stigma_w_s_sp_1":
 				case "stigma_w_s_sp_2":
 					EgoWeaponsEffects.BURN.get().increment(target, brandingBladeBuff, 2 + brandingBladeBuff);
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_S6_AUTO_SIDE.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_S6_AUTO_SIDE.get().getRegistryName()));
 
 					break;
 				case "stigma_w_s_innate_1":
@@ -196,12 +171,12 @@ public class StigmaWorkshopSword extends EgoWeaponsWeapon {
 				case "stigma_w_s_innate_3":
 					EgoWeaponsEffects.BURN.get().increment(target, 1, brandingBladeBuff);
 					if (!sourceentity.level.isClientSide()) {
-						if (weaponIdentifier.equals("stigma_w_s_innate_2")) {
+						if (context.getAnimationIdentifier().equals("stigma_w_s_innate_2")) {
 							System.out.println("DOWN");
-							EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.STIGMA_WORKSHOP_SLASH_DOWN.get().getRegistryName()));
+							EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.STIGMA_WORKSHOP_SLASH_DOWN.get().getRegistryName()));
 						} else {
 							System.out.println("UP");
-							EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.STIGMA_WORKSHOP_SLASH_UP.get().getRegistryName()));
+							EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.STIGMA_WORKSHOP_SLASH_UP.get().getRegistryName()));
 
 						}
 					}
@@ -209,7 +184,7 @@ public class StigmaWorkshopSword extends EgoWeaponsWeapon {
 
 					break;
 				case "stigma_w_s_dash":
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_S6_AUTO_SIDE.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.LIU_S6_AUTO_SIDE.get().getRegistryName()));
 
 				case "stigma_w_s_auto3":
 				case "stigma_w_s_auto2":
@@ -226,19 +201,17 @@ public class StigmaWorkshopSword extends EgoWeaponsWeapon {
 
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) source.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
-		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
-
-		String weaponIdentifier = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
 
 		PlayerVariables entityData = source.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
+		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
 
 		if (source.hasEffect(EgoWeaponsEffects.BRANDING_BLADE.get())) {
 			SharedFunctions.incrementBonusDamage(damageSource, 0.1f);
 			mult += 0.1f;
 		}
 
-		switch (weaponIdentifier) {
+		switch (context.getAnimationIdentifier()) {
 			case "stigma_w_s_sp_1":
 			case "stigma_w_s_sp_2":
 				int burnMult = EgoWeaponsEffects.BURN.get().getPotency(target) / 4;
@@ -293,7 +266,7 @@ public class StigmaWorkshopSword extends EgoWeaponsWeapon {
 				spawnArmatureParticle(entitypatch, 0, new Vector3d(-0.05,0.15,-0.3), 1, EgoWeaponsParticles.STIGMA_WORKSHOP_SWORD_IGNITE.get(), 0, "Tool_R", false);
 				spawnArmatureParticle(entitypatch, 0, new Vector3d(-0.05,0.15,-0.6), 1, EgoWeaponsParticles.STIGMA_WORKSHOP_SWORD_IGNITE.get(), 0, "Tool_R", false);
 
-				spawnArmatureParticle(entitypatch, 0, new Vector3d(-0.03,0.15,-0.6), 1, EgoWeaponsParticles.STIGMA_WORKSHOP_SWORD_IGNITE_SIDE.get(), new Vector3f(0, entitypatch.getOriginal().getId(), entitypatch.getOriginal().getId()), "Tool_R");
+				spawnArmatureParticle(entitypatch, 0, new Vector3d(-0.03,0,-0.6), 1, EgoWeaponsParticles.STIGMA_WORKSHOP_SWORD_IGNITE_SIDE.get(), new Vector3f(0, entitypatch.getOriginal().getId(), entitypatch.getOriginal().getId()), "Tool_R");
 				spawnArmatureParticle(entitypatch, 0, new Vector3d(-0.06,0.15,-0.6), 1, EgoWeaponsParticles.STIGMA_WORKSHOP_SWORD_IGNITE_SIDE.get(), new Vector3f(0, entitypatch.getOriginal().getId(), entitypatch.getOriginal().getId()), "Tool_R");
 				spawnArmatureParticle(entitypatch, 0, new Vector3d(0.0,0.15,-0.6), 1, EgoWeaponsParticles.STIGMA_WORKSHOP_SWORD_IGNITE_SIDE.get(), new Vector3f(0, entitypatch.getOriginal().getId(), entitypatch.getOriginal().getId()), "Tool_R");
 

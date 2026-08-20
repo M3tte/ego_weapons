@@ -1,6 +1,5 @@
 package net.m3tte.ego_weapons.gameasset.movesets;
 
-import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.gameasset.AttackCycleType;
@@ -183,7 +182,7 @@ public class RatPipeMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.3F);
 
         RAT_PIPE_AUTO_3 = new BasicEgoAttackAnimation(0.01F, 0.08F, 0.5f, 0.75F, 1.33f, null, "Tool_R", "biped/rat_pipe/auto_3", biped)
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.BLUNT)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "rat_pipe_auto3")

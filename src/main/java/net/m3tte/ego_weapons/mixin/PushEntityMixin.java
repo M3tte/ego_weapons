@@ -1,26 +1,15 @@
 package net.m3tte.ego_weapons.mixin;
 
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
-import net.m3tte.ego_weapons.procedures.SharedFunctions;
-import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
-import net.m3tte.ego_weapons.world.capabilities.EgoWeaponsAttributeSupplier;
-import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import yesman.epicfight.api.animation.types.DynamicAnimation;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
-
-import static net.m3tte.ego_weapons.procedures.SharedFunctions.applyStaggerDamageGeneric;
-import static net.m3tte.ego_weapons.procedures.SharedFunctions.evaluateDamageSource;
 
 @Mixin(LivingEntity.class)
 public abstract class PushEntityMixin {

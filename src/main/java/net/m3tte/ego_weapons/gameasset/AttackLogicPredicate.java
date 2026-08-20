@@ -6,6 +6,8 @@ public enum AttackLogicPredicate {
     GSH,
     PIERCE_GUARD_DODGE,
     FIREFIST_3,
+    MUGA,
+    MEAT_EXPLOSION_KILL,
     FULLSTOP_INNATE,
     UDJAT_KHOPESH
 }

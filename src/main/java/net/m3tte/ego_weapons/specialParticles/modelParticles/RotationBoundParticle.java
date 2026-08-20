@@ -2,6 +2,7 @@ package net.m3tte.ego_weapons.specialParticles.modelParticles;
 
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.mojang.blaze3d.vertex.VertexBuilderUtils;
+import net.m3tte.ego_weapons.client.renderer.EgoWeaponsRenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.renderer.ActiveRenderInfo;
@@ -14,6 +15,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.util.math.vector.Vector4f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
@@ -52,7 +54,7 @@ public class RotationBoundParticle extends SpriteTexturedParticle {
     Entity boundEntity = null;
 
 
-    private void resolveBoundEntity(int entityUUID, ClientWorld world) {
+    public void resolveBoundEntity(int entityUUID, ClientWorld world) {
         if (entityUUID == 0) {
             if (world.isClientSide()) {
                 boundEntity = Minecraft.getInstance().player;
@@ -181,10 +183,16 @@ public class RotationBoundParticle extends SpriteTexturedParticle {
             maxV = plc;
         }
 
-        vertexBuilder.vertex(Vector3fs[0].x(), Vector3fs[0].y(), Vector3fs[0].z()).uv(minU, maxV).color(rCol, gCol, bCol, alpha).uv2(l).endVertex();
-        vertexBuilder.vertex(Vector3fs[1].x(), Vector3fs[1].y(), Vector3fs[1].z()).uv(minU, minV).color(rCol, gCol, bCol, alpha).uv2(l).endVertex();
-        vertexBuilder.vertex(Vector3fs[2].x(), Vector3fs[2].y(), Vector3fs[2].z()).uv(maxU, minV).color(rCol, gCol, bCol, alpha).uv2(l).endVertex();
-        vertexBuilder.vertex(Vector3fs[3].x(), Vector3fs[3].y(), Vector3fs[3].z()).uv(maxU, maxV).color(rCol, gCol, bCol, alpha).uv2(l).endVertex();
+        boolean renderState = EgoWeaponsRenderSystem.getRenderColorOverrideState();
+        float instRCol = getRCol(renderState);
+        float instGCol = getGCol(renderState);
+        float instBCol = getBCol(renderState);
+        float instACol = getACol(renderState);
+
+        vertexBuilder.vertex(Vector3fs[0].x(), Vector3fs[0].y(), Vector3fs[0].z()).uv(minU, maxV).color(instRCol, instGCol, instBCol, instACol).uv2(l).endVertex();
+        vertexBuilder.vertex(Vector3fs[1].x(), Vector3fs[1].y(), Vector3fs[1].z()).uv(minU, minV).color(instRCol, instGCol, instBCol, instACol).uv2(l).endVertex();
+        vertexBuilder.vertex(Vector3fs[2].x(), Vector3fs[2].y(), Vector3fs[2].z()).uv(maxU, minV).color(instRCol, instGCol, instBCol, instACol).uv2(l).endVertex();
+        vertexBuilder.vertex(Vector3fs[3].x(), Vector3fs[3].y(), Vector3fs[3].z()).uv(maxU, maxV).color(instRCol, instGCol, instBCol, instACol).uv2(l).endVertex();
 
         if (invertX) {
             float plc = minU;
@@ -197,10 +205,26 @@ public class RotationBoundParticle extends SpriteTexturedParticle {
             maxV = plc;
         }
 
-        vertexBuilder.vertex(Vector3fs[3].x(), Vector3fs[3].y(), Vector3fs[3].z()).uv(maxU, maxV).color(rCol, gCol, bCol, alpha).uv2(l).endVertex();
-        vertexBuilder.vertex(Vector3fs[2].x(), Vector3fs[2].y(), Vector3fs[2].z()).uv(maxU, minV).color(rCol, gCol, bCol, alpha).uv2(l).endVertex();
-        vertexBuilder.vertex(Vector3fs[1].x(), Vector3fs[1].y(), Vector3fs[1].z()).uv(minU, minV).color(rCol, gCol, bCol, alpha).uv2(l).endVertex();
-        vertexBuilder.vertex(Vector3fs[0].x(), Vector3fs[0].y(), Vector3fs[0].z()).uv(minU, maxV).color(rCol, gCol, bCol, alpha).uv2(l).endVertex();
+        vertexBuilder.vertex(Vector3fs[3].x(), Vector3fs[3].y(), Vector3fs[3].z()).uv(maxU, maxV).color(instRCol, instGCol, instBCol, instACol).uv2(l).endVertex();
+        vertexBuilder.vertex(Vector3fs[2].x(), Vector3fs[2].y(), Vector3fs[2].z()).uv(maxU, minV).color(instRCol, instGCol, instBCol, instACol).uv2(l).endVertex();
+        vertexBuilder.vertex(Vector3fs[1].x(), Vector3fs[1].y(), Vector3fs[1].z()).uv(minU, minV).color(instRCol, instGCol, instBCol, instACol).uv2(l).endVertex();
+        vertexBuilder.vertex(Vector3fs[0].x(), Vector3fs[0].y(), Vector3fs[0].z()).uv(minU, maxV).color(instRCol, instGCol, instBCol, instACol).uv2(l).endVertex();
+    }
+
+    public float getRCol(boolean renderState) {
+        return this.rCol;
+    }
+
+    public float getGCol(boolean renderState) {
+        return this.gCol;
+    }
+
+    public float getBCol(boolean renderState) {
+        return this.bCol;
+    }
+
+    public float getACol(boolean renderState) {
+        return this.alpha;
     }
 
     @OnlyIn(Dist.CLIENT)

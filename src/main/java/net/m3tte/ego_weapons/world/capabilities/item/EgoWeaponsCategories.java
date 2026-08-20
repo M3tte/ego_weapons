@@ -13,6 +13,7 @@ public enum EgoWeaponsCategories implements WeaponCategory {
     ZELKOVA_AXE,
     ZELKOVA_MACE,
     DURANDAL,
+    ARAYASHIKI,
     RANGA,
     RANGA_DAGGER,
     ALLAS_WORKSHOP,

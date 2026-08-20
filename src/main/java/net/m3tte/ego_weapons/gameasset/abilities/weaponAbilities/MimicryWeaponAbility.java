@@ -43,7 +43,7 @@ public class MimicryWeaponAbility extends ItemAbility {
 
     @Override
     public int getBlipCost(PlayerEntity player, PlayerVariables playerVars) {
-        return isWearingKali(player) ? 7 : 6;
+        return deductLightDecreases(player, AbilityUtils.AbilityType.WEAPON,isWearingKali(player) ? 7 : 6);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class MimicryWeaponAbility extends ItemAbility {
     }
 
     @Override
-    public AbilityTier getAbilityTier() {
+    public AbilityTier getAbilityTier(PlayerEntity player, PlayerVariables playerVars) {
         return AbilityTier.ALEPH;
     }
 
@@ -83,7 +83,7 @@ public class MimicryWeaponAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.light >= getBlipCost(player, playerVars)) {
+        if (canTrigger(player, playerVars)) {
 
             if (isWearingKali(player)) {
                 playerVars.light -= getBlipCost(player, playerVars);

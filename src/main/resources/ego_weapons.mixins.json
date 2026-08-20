@@ -19,6 +19,7 @@
   ],
   "client": [
     "EntityPredicatesMixin",
+    "LanguageMapMixin",
     "HotbarRenderMixin",
     "ItemStackMixin",
     "LivingRenderLayersMixin",
@@ -30,8 +31,10 @@
     "epicfight.ItemInHandLayerMixin",
     "epicfight.PatchedEntityRendererMixin",
     "epicfight.PHumanoidMixin",
+    "rendering.GameRendererMixin",
     "rendering.LivingRendererInvoker",
     "rendering.LivingRendererMixin",
+    "rendering.ParticleManagerMixin",
     "rendering.RenderBuffersMixin",
     "rendering.RenderWearableInvoker",
     "rendering.RenderWearableItemMixin"

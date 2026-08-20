@@ -62,12 +62,13 @@ public class FirefistMovesetAnims {
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, FirefistGauntlet.ignitionEvent())
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 0.95f);
 
-        FIREFIST_DASH = new BasicEgoAttackAnimation(0.08F, 0.45F, 0.45F, 0.75F, 1.5F, null, "Tool_R", "biped/firefist/dash", biped)
+        FIREFIST_DASH = new BasicEgoAttackAnimation(0.08F, 0.45F, 0.45F, 0.85F, 1.5F, null, "Tool_R", "biped/firefist/dash", biped)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.BLUNT)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "firefist_dash")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.DASH)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.FIREFIST_AUTO_LIGHT_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH)
@@ -106,7 +107,7 @@ public class FirefistMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.4F);
 
         FIREFIST_AUTO_3 = new BasicEgoAttackAnimation(0.01F, 0.08F, 0.5F, 0.65F, 1.5F, null, "Tool_R", "biped/firefist/auto_3", biped)
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.BLUNT)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "firefist_auto3")
@@ -123,7 +124,7 @@ public class FirefistMovesetAnims {
         FIREFIST_GUARD_HIT = new GuardAnimation(0.05f,0.6f, "biped/firefist/guard_hit", biped);
         FIREFIST_PARRY = new GuardAnimation(0.05f,0.3f, "biped/firefist/guard_parry", biped).addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f);
         FIREFIST_COUNTER = new BasicEgoAttackAnimation(0.01F, 0.08F, 0.3F, 0.5F, 1.25F, null, "Tool_R", "biped/firefist/counter", biped)
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.BLUNT)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.DEFENSIVE)

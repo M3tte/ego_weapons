@@ -15,38 +15,13 @@ import net.minecraft.potion.EffectType;
 
 import java.util.UUID;
 
-public class SpeedDownEffect extends CountPotencyStatus {
+public class SpeedDownEffect extends PotencyOnlyStatus {
     public SpeedDownEffect() {
-        super(EffectType.HARMFUL, "speed_down",-16777216);
-    }
-
-    @Override
-    public String getDescriptionId() {
-        return "effect.speed_down";
+        super(EffectType.HARMFUL, "speed_down",-16777216, false, 99, 300);
     }
 
     @Override
     public boolean isBeneficial() {
-        return true;
-    }
-
-    @Override
-    public boolean isInstantenous() {
-        return false;
-    }
-
-    @Override
-    public boolean shouldRenderInvText(EffectInstance effect) {
-        return true;
-    }
-
-    @Override
-    public boolean shouldRender(EffectInstance effect) {
-        return true;
-    }
-
-    @Override
-    public boolean shouldRenderHUD(EffectInstance effect) {
         return true;
     }
 
@@ -55,8 +30,6 @@ public class SpeedDownEffect extends CountPotencyStatus {
     @Override
     public void addAttributeModifiers(LivingEntity living, AttributeModifierManager attrman, int amplifier) {
         super.addAttributeModifiers(living, attrman, amplifier);
-
-
 
         ModifiableAttributeInstance speedInst = attrman.getInstance(Attributes.MOVEMENT_SPEED);
 
@@ -87,56 +60,5 @@ public class SpeedDownEffect extends CountPotencyStatus {
             speedInst.removeModifier(speedModifier);
 
         attrman.save();
-    }
-
-
-    @Override
-    public void applyEffectTick(LivingEntity entity, int amplifier) {
-        // No ticking needed as time is handled normally.
-    }
-
-    @Override
-    public void increment(LivingEntity entity, int limit, int potency) {
-        if (entity.level.isClientSide)
-            return;
-
-        if (limit == 0)
-            limit = 98;
-
-        if (potency > limit)
-            potency = limit;
-
-        if (!entity.hasEffect(this)) {
-            entity.addEffect(new EffectInstance(this, 300, potency-1));
-        } else {
-            entity.getEffect(this).update(new EffectInstance(this, entity.getEffect(this).getDuration(), Math.min(entity.getEffect(this).getAmplifier() + potency, limit-1)));
-        }
-        syncEffect(entity);
-    }
-
-    @Override
-    public void decrement(LivingEntity entity, int limit, int potency) {
-        if (entity.level.isClientSide)
-            return;
-
-        int previousPotency = 0;
-        if (entity.hasEffect(this)) {
-            previousPotency = entity.getEffect(this).getAmplifier()+1;
-            entity.removeEffect(this);
-        }
-
-        if ((previousPotency - potency) > 0) {
-            entity.addEffect(new EffectInstance(this, 300, potency-1));
-        }
-    }
-
-    @Override
-    public boolean isDurationEffectTick(int duration, int amplifier) {
-        return true;
-    }
-
-    @Override
-    public int getCount(EffectInstance ef) {
-        return 0;
     }
 }

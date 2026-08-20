@@ -32,7 +32,7 @@ public class MagicBulletWeaponAbility extends ItemAbility {
         int extra = 0;
 
         extra = EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(player) / 2;
-        return 6 + extra;
+        return deductLightDecreases(player, AbilityUtils.AbilityType.WEAPON,6 + extra);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class MagicBulletWeaponAbility extends ItemAbility {
     }
 
     @Override
-    public AbilityTier getAbilityTier() {
+    public AbilityTier getAbilityTier(PlayerEntity player, PlayerVariables playerVars) {
         return AbilityTier.WAW;
     }
 
@@ -74,7 +74,7 @@ public class MagicBulletWeaponAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.light >= getBlipCost(player, playerVars)) {
+        if (canTrigger(player, playerVars)) {
 
             playerVars.light -= getBlipCost(player, playerVars);
             World world = player.level;

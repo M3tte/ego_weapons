@@ -10,6 +10,7 @@ import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.procedures.EntityTick;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.procedures.legacy.MimicryhitentityProcedure;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
@@ -41,8 +42,7 @@ import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILIT
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 import static net.m3tte.ego_weapons.execFunctions.HitProcedure.hitStunEffect;
 import static net.m3tte.ego_weapons.procedures.SharedFunctions.pummelDownEntity;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
 
 public class MimicryItem extends EgoWeaponsWeapon {
 
@@ -85,7 +85,7 @@ public class MimicryItem extends EgoWeaponsWeapon {
 	}
 
 	public void appendHoverTextALT(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
-		list.add(new StringTextComponent("I can't stop here...").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+		TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.kali_mimicry.desc");
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 7) + 1) + "/7] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -139,7 +139,7 @@ public class MimicryItem extends EgoWeaponsWeapon {
 				}
 				break;
 		}
-		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+		generateStatusHelp(list);
 	}
 
 	@Override
@@ -154,7 +154,7 @@ public class MimicryItem extends EgoWeaponsWeapon {
 			}
 		}
 
-		list.add(new StringTextComponent("And the many shells cried out one word...").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+		TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.mimicry.desc");
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -212,6 +212,7 @@ public class MimicryItem extends EgoWeaponsWeapon {
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
+
 		if (currentanim instanceof StaticAnimation) {
 			String weaponIdentifier = currentanim.getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
 			String secondIdentifier = "";
@@ -225,6 +226,7 @@ public class MimicryItem extends EgoWeaponsWeapon {
 				}
 			}
 
+			LivingEntityPatch<?> targetentitypatch = (LivingEntityPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 
 			switch (weaponIdentifier) {
@@ -249,10 +251,9 @@ public class MimicryItem extends EgoWeaponsWeapon {
 						entitypatch.playAnimationSynchronized(MimicryMovesetAnims.KALI_IMPACT, 0);
 					}
 
-					LivingEntityPatch<?> targetentitypatch = (LivingEntityPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 					if (targetentitypatch != null) {
-						pummelDownEntity(targetentitypatch, 2);
+						pummelDownEntity(targetentitypatch, 2, true);
 					}
 
 					EgoWeaponsEffects.BLEED.get().increment(target, 0, 1);
@@ -306,6 +307,9 @@ public class MimicryItem extends EgoWeaponsWeapon {
 					break;
 
 				case "kali_great_split_vertical":
+					if (targetentitypatch != null) {
+						SharedFunctions.hitstunEntity(targetentitypatch, 1, false, 0.1f);
+					}
 						switch (secondIdentifier) {
 							case "kali_great_split_vertical_1":
 							case "kali_great_split_vertical_2":

@@ -14,6 +14,9 @@ import net.minecraft.util.ResourceLocation;
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
 
 public class ArdorBlossomFireRenderer<R extends LivingEntity, M extends BipedModel<R>> extends WearableRenderer<R, M, ArdorBlossomFireModel<R>> {
+
+    ResourceLocation location = new ResourceLocation("ego_weapons","ardor_blossom_fire_loc");
+
     private static final ResourceLocation TEX_1 = new ResourceLocation("ego_weapons", "textures/entities/ardor_blossom/ardor_blossom_fire_1.png");
     private static final ResourceLocation TEX_2 = new ResourceLocation("ego_weapons", "textures/entities/ardor_blossom/ardor_blossom_fire_2.png");
     private static final ResourceLocation TEX_3 = new ResourceLocation("ego_weapons", "textures/entities/ardor_blossom/ardor_blossom_fire_3.png");
@@ -50,5 +53,10 @@ public class ArdorBlossomFireRenderer<R extends LivingEntity, M extends BipedMod
 
 
         return TEX_1;
+    }
+
+    @Override
+    public ResourceLocation getRendererLocation() {
+        return location;
     }
 }

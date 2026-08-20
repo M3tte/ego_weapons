@@ -8,7 +8,6 @@ import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
 import net.m3tte.ego_weapons.item.oeufi.OeufiHalberd;
-import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.AttackTypes;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.DamageTypes;
 import yesman.epicfight.api.animation.property.AnimationProperty;
@@ -19,7 +18,6 @@ import yesman.epicfight.api.utils.math.ValueCorrector;
 import yesman.epicfight.gameasset.EpicFightSounds;
 
 import static net.m3tte.ego_weapons.item.oeufi.OeufiHalberd.*;
-import static net.m3tte.ego_weapons.item.sunshower.Sunshower.getAwayEvent;
 
 public class OeufiAssocMovesetAnims {
 
@@ -93,7 +91,7 @@ public class OeufiAssocMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.PIERCE)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "oeufi_auto3")
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.OUFI_PIERCE)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.OUFI_SWING_PIERCE)
@@ -135,14 +133,13 @@ public class OeufiAssocMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "oeufi_innate_2")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.PIERCE)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.OUFI_IMPACT_DOWN)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.OUFI_SWING_PIERCE)
                 .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(2))
                 .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.adder(2f))
-                .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(2f))
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.OUFI_DASH_HIT)
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1F);
 
@@ -185,7 +182,7 @@ public class OeufiAssocMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "special3")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.PIERCE)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "oeufi_halberd_special")
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
@@ -208,7 +205,7 @@ public class OeufiAssocMovesetAnims {
 
         OEUFI_PARRY_COUNTER_ATTACK = new BasicEgoAttackAnimation(0.08F, 0.05F, 0.33F, 0.75F, 1.33F, null, "Tool_R", "biped/oeufi/parry_counter_2", biped)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "oeufi_counter_2")
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.BLUNT)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.DEFENSIVE)

@@ -18,11 +18,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import yesman.epicfight.api.animation.types.DynamicAnimation;
-import yesman.epicfight.world.capabilities.EpicFightCapabilities;
-import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
-
-import static net.m3tte.ego_weapons.procedures.SharedFunctions.applyStaggerDamageGeneric;
 import static net.m3tte.ego_weapons.procedures.SharedFunctions.evaluateDamageSource;
 
 @Mixin(LivingEntity.class)

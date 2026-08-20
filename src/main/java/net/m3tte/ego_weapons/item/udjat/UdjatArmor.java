@@ -10,6 +10,7 @@ import net.m3tte.ego_weapons.item.oeufi.OeufiArmor;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.potion.OrlandoPotionEffect;
 import net.m3tte.ego_weapons.procedures.EntityTick;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoWeaponsArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
@@ -37,8 +38,8 @@ import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 import java.util.List;
 
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.EgoWeaponsCreativeTabs.EGO_WEAPONS;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
 
 public class UdjatArmor extends GenericEgoWeaponsArmor {
 
@@ -131,11 +132,7 @@ public class UdjatArmor extends GenericEgoWeaponsArmor {
 
 		int protPotency = EgoWeaponsEffects.PROTECTION.get().getPotency(entity);
 
-
-
 		if (protPotency >= 5) {
-
-
 			entity.playSound(EgoWeaponsSounds.UDJAT_MIRAGE, 1, 1);
 
 			entity.removeEffect(EgoWeaponsEffects.PROTECTION.get());
@@ -175,7 +172,7 @@ public class UdjatArmor extends GenericEgoWeaponsArmor {
 		}
 	}
 
-	static Item pants = new UdjatArmor(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.LEGS, new Properties().tab(ItemGroup.TAB_SEARCH)) {
+	static Item pants = new UdjatArmor(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.LEGS, new Properties().tab(EGO_WEAPONS)) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -200,7 +197,7 @@ public class UdjatArmor extends GenericEgoWeaponsArmor {
 	public UdjatArmor(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity) {
 		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
 	}
-	static Item chest = new UdjatArmor(udjatArmor, EquipmentSlotType.CHEST, new Properties().tab(ItemGroup.TAB_SEARCH), 0.7f, 1f, 0.5f ,1.2f, 0.8f, 1.3f, 0.8f, 5, -5) {
+	static Item chest = new UdjatArmor(udjatArmor, EquipmentSlotType.CHEST, new Properties().tab(EGO_WEAPONS), 1f, 0.8f, 0.7f ,1.4f, 1.1f, 1.1f, 0.9f, 5, -5) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -221,13 +218,13 @@ public class UdjatArmor extends GenericEgoWeaponsArmor {
 		@Override
 		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.appendHoverText(itemstack, world, list, flag);
-			list.add(new TranslationTextComponent("desc.ego_weapons.udjat_suit.desc"));
+			TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.udjat_suit.desc");
 			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
-			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 6) + 1) + "/6] - - - - - - - =").withStyle(TextFormatting.GRAY));
+			list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
 			list.add(new TranslationTextComponent("desc.ego_weapons.risk.3"));
 			list.add(new StringTextComponent(" "));
-			switch (EgoWeaponsKeybinds.getUiPage() % 6) {
+			switch (EgoWeaponsKeybinds.getUiPage() % 5) {
 				case 0:
 					resistanceMods(itemstack, world, list, flag);
 					break;
@@ -257,10 +254,10 @@ public class UdjatArmor extends GenericEgoWeaponsArmor {
 					break;
 			}
 
-			list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+			generateStatusHelp(list);
 		}
 	};
-	static Item mask = new UdjatArmor(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Properties().tab(ItemGroup.TAB_SEARCH)) {
+	static Item mask = new UdjatArmor(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Properties().tab(EGO_WEAPONS)) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -344,8 +341,8 @@ public class UdjatArmor extends GenericEgoWeaponsArmor {
 			Head = new ModelRenderer(this);
 			Head.setPos(0.0F, 0.0F, 0.0F);
 			setRotationAngle(Head, -0.1047F, 0.0873F, 0.0F);
-			Head.texOffs(6, 70).addBox(-4.0F, -8.0F, -4.2F, 8.0F, 8.0F, 2.0F, 0.1F, false);
-			Head.texOffs(40, 63).addBox(-5.0F, -9.25F, -5.625F, 10.0F, 10.0F, 7.0F, -1.3F, false);
+			Head.texOffs(6, 70).addBox(-4.0F, -8.0F, -4.5F, 8.0F, 8.0F, 2.0F, 0.1F, false);
+			Head.texOffs(40, 63).addBox(-5.0F, -9.25F, -5.925F, 10.0F, 10.0F, 7.0F, -1.3F, false);
 
 			RightLegLayer = new ModelRenderer(this);
 			RightLegLayer.setPos(-1.5F, 12.0F, 0.0F);

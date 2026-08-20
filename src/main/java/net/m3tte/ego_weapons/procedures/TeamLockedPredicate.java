@@ -9,6 +9,7 @@ public class TeamLockedPredicate extends EntityPredicate {
 
     public static final TeamLockedPredicate ONLY_ALLIES = new TeamLockedPredicate(true, false);
     public static final TeamLockedPredicate ONLY_HOSTILES = new TeamLockedPredicate(false, true);
+    public static final TeamLockedPredicate EVERYONE_AND_ANYONE = new TeamLockedPredicate(true, true);
 
     boolean acceptAllies = false;
     boolean acceptHostiles = false;

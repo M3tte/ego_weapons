@@ -26,7 +26,7 @@ public class HeishouMaoArmorAbility extends ItemAbility {
     }
 
     @Override
-    public AbilityTier getAbilityTier() {
+    public AbilityTier getAbilityTier(PlayerEntity player, PlayerVariables playerVars) {
         return AbilityTier.HE;
     }
 
@@ -38,7 +38,7 @@ public class HeishouMaoArmorAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.light >= 4) {
+        if (canTrigger(player, playerVars)) {
             LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
             entitypatch.playAnimationSynchronized(HeishouMaoBranchAnims.HEISHOU_MAO_STRIDER_MAO, 0.1f);
 

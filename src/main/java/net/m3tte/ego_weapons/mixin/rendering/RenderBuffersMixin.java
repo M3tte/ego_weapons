@@ -40,6 +40,7 @@ public class RenderBuffersMixin {
             put(fixedBuffers, EgoWeaponsRenderTypes.entityBloodOverlay(3));
             put(fixedBuffers, EgoWeaponsRenderTypes.entityBloodOverlay(4));
             put(fixedBuffers, EgoWeaponsRenderTypes.getFireGlintDirect());
+            // put(fixedBuffers, EgoWeaponsRenderTypes.fireGlintParticle());
             savedBufferSource = immediateWithBuffers(fixedBuffers, new BufferBuilder(256));
             savedOutlineBuffers = new OutlineLayerBuffer(savedBufferSource);
         }

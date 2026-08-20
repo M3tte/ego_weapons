@@ -4,11 +4,10 @@ import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
-import net.m3tte.ego_weapons.entities.MagicBulletProjectile;
 import net.m3tte.ego_weapons.gameasset.*;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
+import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.particle.MagicBulletShell;
 import net.m3tte.ego_weapons.potion.countEffects.DarkFlameEffect;
 import net.m3tte.ego_weapons.gameasset.abilities.assistAttacks.MagicBulletAssistAttack;
@@ -20,7 +19,6 @@ import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
@@ -148,7 +146,7 @@ public class MagicBulletMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.SWING_EFFECT, basicSwingEvent)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
-                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.MAGIC_BULLET_HIT_2)
                 .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(3))
@@ -196,7 +194,7 @@ public class MagicBulletMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
                 .addProperty(EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.MAGIC_BULLET_FIRE)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
-                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "magic_bullet_special")
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, false)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MAGIC_BULLET_IMPACT_HIT)
@@ -216,7 +214,7 @@ public class MagicBulletMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
                 .addProperty(EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.MAGIC_BULLET_FIRE)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
-                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "magic_bullet_special")
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, false)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MAGIC_BULLET_IMPACT_HIT)
@@ -268,7 +266,7 @@ public class MagicBulletMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
-                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.MAGIC_BULLET_SPIN_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.WOOSH)
@@ -424,16 +422,16 @@ public class MagicBulletMovesetAnims {
             int ampl = EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(entity);
 
             if (!entitypatch.getOriginal().level.isClientSide()) {
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.MagicBulletAimPacket(entity.getId(), 2.3f, 0.8f, EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_SHORT.get().getRegistryName()));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.MagicBulletAimPacket(entity.getId(), 2.3f, 0.8f, EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_SHORT.get().getRegistryName()));
 
                 if (ampl >= 3) {
-                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.MagicBulletAimPacket(entity.getId(), 3.1f, 0.65f, EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_SHORT.get().getRegistryName()));
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.MagicBulletAimPacket(entity.getId(), 3.1f, 0.65f, EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_SHORT.get().getRegistryName()));
                 }
 
                 if (entity instanceof PlayerEntity) {
                     if (SanitySystem.getSanity((PlayerEntity) entity) < ampl * 1.5f) {
-                        EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.MagicBulletAimPacket(entity.getId(), -3f, 0.8f, EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_SHORT.get().getRegistryName()));
-                        EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.MagicBulletAimPacket(entity.getId(), -3.8f, 0.6f, EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_SHORT.get().getRegistryName()));
+                        EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.MagicBulletAimPacket(entity.getId(), -3f, 0.8f, EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_SHORT.get().getRegistryName()));
+                        EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.MagicBulletAimPacket(entity.getId(), -3.8f, 0.6f, EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_SHORT.get().getRegistryName()));
                     }
                 }
 
@@ -527,17 +525,17 @@ public class MagicBulletMovesetAnims {
             int ampl = EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(entity);
 
             if (!entitypatch.getOriginal().level.isClientSide()) {
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.MagicBulletAimPacket(entity.getId(), 2.3f, 0.65f, EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_LONG.get().getRegistryName()));
-                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.MagicBulletAimPacket(entity.getId(), 3.1f, 0.9f, EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_LONG.get().getRegistryName()));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.MagicBulletAimPacket(entity.getId(), 2.3f, 0.65f, EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_LONG.get().getRegistryName()));
+                EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.MagicBulletAimPacket(entity.getId(), 3.1f, 0.9f, EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_LONG.get().getRegistryName()));
 
                 if (ampl >= 6) {
-                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.MagicBulletAimPacket(entity.getId(), 3.9f, 0.65f, EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_LONG.get().getRegistryName()));
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.MagicBulletAimPacket(entity.getId(), 3.9f, 0.65f, EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_LONG.get().getRegistryName()));
                 }
 
                 if (entity instanceof PlayerEntity) {
                     if (SanitySystem.getSanity((PlayerEntity) entity) < ampl * 1.5f) {
-                        EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.MagicBulletAimPacket(entity.getId(), -3f, 0.8f, EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_LONG.get().getRegistryName()));
-                        EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.MagicBulletAimPacket(entity.getId(), -3.8f, 0.6f, EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_LONG.get().getRegistryName()));
+                        EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.MagicBulletAimPacket(entity.getId(), -3f, 0.8f, EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_LONG.get().getRegistryName()));
+                        EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.MagicBulletAimPacket(entity.getId(), -3.8f, 0.6f, EgoWeaponsParticles.MAGIC_BULLET_CIRCLE_LONG.get().getRegistryName()));
                     }
                 }
             }

@@ -7,6 +7,7 @@ import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
 import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.*;
@@ -24,8 +25,7 @@ import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
 
 public class WheelsIndustry extends EgoWeaponsWeapon {
 	public WheelsIndustry(int p_i48460_2_, float p_i48460_3_, Properties p_i48460_4_) {
@@ -36,7 +36,7 @@ public class WheelsIndustry extends EgoWeaponsWeapon {
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
-		list.add(new StringTextComponent("Manufactured by Wheels Industry").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+		TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.wheels_industry.desc");
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -68,7 +68,7 @@ public class WheelsIndustry extends EgoWeaponsWeapon {
 					generateDescription(list,"wheels_industry", "guard", 2);
 		}
 
-		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+		generateStatusHelp(list);
 	}
 
 	@Override

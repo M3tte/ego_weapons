@@ -2,10 +2,9 @@ package net.m3tte.ego_weapons.procedures;
 
 import net.m3tte.ego_weapons.*;
 import net.m3tte.ego_weapons.item.ardor_blossom.ArdorBlossomSuit;
-import net.m3tte.ego_weapons.network.packages.AbilityPackages;
+import net.m3tte.ego_weapons.network.packages.CapabilityPackages;
 import net.m3tte.ego_weapons.potion.EnergyboostPotionEffect;
 import net.m3tte.ego_weapons.potion.EnergyfatiguePotionEffect;
-import net.m3tte.ego_weapons.potion.Terror;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
 import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
@@ -14,6 +13,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
@@ -69,6 +69,10 @@ public class EntityTick {
 	public static void regenerateLight(PlayerEntity player, EgoWeaponsModVars.PlayerVariables vars, double amount, boolean sfx) {
 		float multiplier = 1;
 		float pitch = 1;
+
+		if (player.hasEffect(EgoWeaponsEffects.SEALED.get()))
+			return;
+
 
 		if (EgoWeaponsItems.MAGIC_BULLET_CLOAK.get().equals(player.getItemBySlot(EquipmentSlotType.CHEST).getItem())) {
 
@@ -194,8 +198,8 @@ public class EntityTick {
 				entityData.stagger = EgoWeaponsAttributes.getMaxStagger(entity);
 			}
 
-			if (entity.hasEffect(Terror.get())) {
-				SanitySystem.damageSanity(entity, 0.1f);
+			if (entity.hasEffect(EgoWeaponsEffects.TERROR.get())) {
+				SanitySystem.damageSanity(entity, 0.25f);
 			} else {
 				if (entityData.sanity < EgoWeaponsAttributes.getMaxSanity(entity)) {
 					float sanityHeal = 0.1f;
@@ -237,26 +241,29 @@ public class EntityTick {
 				entityData.sanity = 0;
 			}
 
-			if (entityData.light < maxEnergy) {
-				if (entityData.blipcooldown <= 0 && !entity.hasEffect(Terror.get())) {
+			if (!entity.hasEffect(EgoWeaponsEffects.SEALED.get())) {
+				if (entityData.light < maxEnergy) {
+					if (entityData.blipcooldown <= 0 && !entity.hasEffect(EgoWeaponsEffects.TERROR.get())) {
 
-					double baseblipregen = 0.07 + 0.32 * entityData.determination / 150;
+						double baseblipregen = processPassiveLightRegen(entity, entityData);
 
-					if (entity.hasEffect(EnergyfatiguePotionEffect.get())) {
-						baseblipregen /= (1 + 0.4*entity.getEffect(EnergyfatiguePotionEffect.get()).getAmplifier());
+						if (entity.hasEffect(EnergyfatiguePotionEffect.get())) {
+							baseblipregen /= (1 + 0.4*entity.getEffect(EnergyfatiguePotionEffect.get()).getAmplifier());
+						}
+
+						if (entity.hasEffect(EnergyboostPotionEffect.get())) {
+							baseblipregen *= (1 + 0.5*entity.getEffect(EnergyboostPotionEffect.get()).getAmplifier());
+						}
+						entityData.light = Math.min(entityData.light + baseblipregen, maxEnergy);
+
+					} else {
+						entityData.blipcooldown -= 1;
 					}
-
-					if (entity.hasEffect(EnergyboostPotionEffect.get())) {
-						baseblipregen *= (1 + 0.5*entity.getEffect(EnergyboostPotionEffect.get()).getAmplifier());
-					}
-					entityData.light = Math.min(entityData.light + baseblipregen, maxEnergy);
-
-				} else {
-					entityData.blipcooldown -= 1;
+				} else if (entityData.light > maxEnergy) {
+					entityData.light = maxEnergy;
 				}
-			} else if (entityData.light > maxEnergy) {
-				entityData.light = maxEnergy;
 			}
+
 
 			if (entity.getPersistentData().contains("onrushChain") && entity.tickCount % 20 == 0) {
 				int onrushLeft = entity.getPersistentData().getInt("onrushChain") - 1;
@@ -268,7 +275,7 @@ public class EntityTick {
 				}
 
 				EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(),
-						new AbilityPackages.SyncOnrushData(entity.getId(), onrushLeft));
+						new CapabilityPackages.SyncOnrushData(entity.getId(), onrushLeft));
 			}
 		}
 
@@ -278,5 +285,25 @@ public class EntityTick {
 			entityData.onHitCounter--;
 		entityData.syncPlayerVariables(entity);
 
+	}
+
+	public static double processPassiveLightRegen(PlayerEntity entity, EgoWeaponsModVars.PlayerVariables entityData) {
+		double val = 0.07 + 0.32 * entityData.determination / 150;
+
+		Item chestItem = (entity).getItemBySlot(EquipmentSlotType.CHEST).getItem();
+		if (chestItem != null) {
+			if (chestItem.getRegistryName() != null) {
+				switch (chestItem.getRegistryName().getPath()) {
+					case "heishou_mao_robe":
+						int playerSpeed = EgoWeaponsEffects.speedMult(entity);
+						val *= 1 + Math.min(0.3f, 0.03f * playerSpeed);
+
+
+						break;
+				}
+			}
+		}
+
+		return val;
 	}
 }

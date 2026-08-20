@@ -1,5 +1,6 @@
 package net.m3tte.ego_weapons;
 
+import net.m3tte.ego_weapons.item.ChesedsLatencyItem;
 import net.m3tte.ego_weapons.item.SuitItem;
 import net.m3tte.ego_weapons.item.ZweiSwordItem;
 import net.m3tte.ego_weapons.item.ardor_blossom.ArdorBlossomBat;
@@ -11,8 +12,8 @@ import net.m3tte.ego_weapons.item.firefist.FirefistGauntlet;
 import net.m3tte.ego_weapons.item.fullstop_rep.FullstopRepArmor;
 import net.m3tte.ego_weapons.item.fullstop_rep.FullstopRepWeapon;
 import net.m3tte.ego_weapons.item.fullstop_sniper.FullstopSniperArmor;
-import net.m3tte.ego_weapons.item.fullstop_sniper.GenericCosmeticItem;
 import net.m3tte.ego_weapons.item.fullstop_sniper.FullstopSniperWeapon;
+import net.m3tte.ego_weapons.item.fullstop_sniper.GenericCosmeticItem;
 import net.m3tte.ego_weapons.item.guns.AmmoItem;
 import net.m3tte.ego_weapons.item.guns.GunCaliber;
 import net.m3tte.ego_weapons.item.heishou_mao.HeishouMaoRobe;
@@ -34,19 +35,17 @@ import net.m3tte.ego_weapons.item.rat.RatKnife;
 import net.m3tte.ego_weapons.item.rat.RatPipe;
 import net.m3tte.ego_weapons.item.redmist.RedMistEGOSuit;
 import net.m3tte.ego_weapons.item.redmist.RedMistJacket;
+import net.m3tte.ego_weapons.item.relics.Arayashiki;
+import net.m3tte.ego_weapons.item.relics.SpidersTracksuit;
 import net.m3tte.ego_weapons.item.solemn_lament.SolemnLament;
 import net.m3tte.ego_weapons.item.solemn_lament.SolemnLamentArmor;
 import net.m3tte.ego_weapons.item.stigma_workshop.StigmaWorkshopSuit;
 import net.m3tte.ego_weapons.item.stigma_workshop.StigmaWorkshopSword;
 import net.m3tte.ego_weapons.item.sunshower.Sunshower;
 import net.m3tte.ego_weapons.item.sunshower.SunshowerArmor;
-import net.m3tte.ego_weapons.item.udjat.UdjatArmor;
-import net.m3tte.ego_weapons.item.udjat.UdjatKhopesh;
-import net.m3tte.ego_weapons.world.capabilities.item.DisabledItem;
+import net.m3tte.ego_weapons.item.udjat.*;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -120,21 +119,22 @@ public class EgoWeaponsItems {
     public static RegistryObject<Item> OEUFI_HALBERD = registerItem("oeufi_association_halberd", new OeufiHalberd( 4, -2.6f, new Item.Properties().tab(EGO_WEAPONS)));
     public static RegistryObject<Item> OEUFI_CONTRACT = registerItem("oeufi_contract", new OeufiContractItem());
 
-    public static RegistryObject<Item> FULLSTOP_REP_PISTOL = registerItem("fullstop_atelier_pistol", new FullstopRepWeapon( 5, -2.3f, new Item.Properties().tab(EGO_WEAPONS), GunCaliber.PISTOL, 9));
+    public static RegistryObject<Item> FULLSTOP_REP_PISTOL = registerItem("fullstop_atelier_pistol", new FullstopRepWeapon( 5, -2.3f, new Item.Properties().tab(EGO_WEAPONS), GunCaliber.LIGHT, 9));
     public static RegistryObject<Item> FULLSTOP_REP_MACHETE = registerItem("fullstop_machete", new FullstopRepWeapon( 5, -2.3f, new Item.Properties().tab(EGO_WEAPONS), GunCaliber.NONE, 0));
 
     public static RegistryObject<Item> FULLSTOP_EARPIECE = registerItem("fullstop_office_earpiece", FullstopRepArmor.getArmorForSlot(EquipmentSlotType.HEAD));
     public static RegistryObject<Item> FULLSTOP_REP_CLOAK = registerItem("fullstop_office_rep_cloak", FullstopRepArmor.getArmorForSlot(EquipmentSlotType.CHEST));
     public static RegistryObject<Item> FULLSTOP_REP_PANTS = registerItem("fullstop_office_rep_pants", FullstopRepArmor.getArmorForSlot(EquipmentSlotType.LEGS));
 
-    public static RegistryObject<Item> BASIC_LIGHT_BULLET = registerItem("basic_light_bullet", new AmmoItem( new Item.Properties().tab(EGO_WEAPONS), 0, GunCaliber.PISTOL));
-    public static RegistryObject<Item> INC_LIGHT_BULLET = registerItem("incendiary_light_bullet", new AmmoItem( new Item.Properties().tab(EGO_WEAPONS), 1, GunCaliber.PISTOL));
-    public static RegistryObject<Item> MOONST_LIGHT_BULLET = registerItem("moonstone_light_bullet", new AmmoItem( new Item.Properties().tab(EGO_WEAPONS), 2, GunCaliber.PISTOL));
+    public static RegistryObject<Item> BASIC_LIGHT_BULLET = registerItem("basic_light_bullet", new AmmoItem( new Item.Properties().tab(EGO_WEAPONS), GunCaliber.LIGHT, 0,  new String[]{"red", "ammo"}, 1, "basic_light_bullet", true));
+    public static RegistryObject<Item> INC_LIGHT_BULLET = registerItem("incendiary_light_bullet", new AmmoItem( new Item.Properties().tab(EGO_WEAPONS), GunCaliber.LIGHT, 1, new String[]{"red", "ammo", "burn"}, 4, "incendiary_light_bullet", true));
+    public static RegistryObject<Item> MOONST_LIGHT_BULLET = registerItem("moonstone_light_bullet", new AmmoItem( new Item.Properties().tab(EGO_WEAPONS), GunCaliber.LIGHT, 2, new String[]{"white", "ammo", "sinking"}, 5, "moonstone_light_bullet", true));
 
-    public static RegistryObject<Item> BASIC_RIFLE_BULLET = registerItem("basic_rifle_bullet", new AmmoItem( new Item.Properties().tab(EGO_WEAPONS), 3, GunCaliber.SNIPER));
-    public static RegistryObject<Item> AL_HV_PULVERIZATION_RIFLE_ROUND = registerItem("al_hv_pulverization_rifle_round", new AmmoItem( new Item.Properties().tab(EGO_WEAPONS), 4, GunCaliber.SNIPER));
+    public static RegistryObject<Item> BASIC_RIFLE_BULLET = registerItem("basic_rifle_bullet", new AmmoItem( new Item.Properties().tab(EGO_WEAPONS), GunCaliber.RIFLE, 3,  new String[]{"red", "ammo"}, 1, "basic_rifle_bullet", true));
+    public static RegistryObject<Item> AL_HV_PULVERIZATION_RIFLE_ROUND = registerItem("al_hv_pulverization_rifle_round", new AmmoItem( new Item.Properties().tab(EGO_WEAPONS), GunCaliber.RIFLE, 4,  new String[]{"red", "ammo", "poise"}, 5, "al_hv_pulv", true));
+    public static RegistryObject<Item> LCA_SHOCK_RIFLE_BULLET_W = registerItem("lca_fracture_rifle_round_w", new AmmoItem( new Item.Properties().tab(EGO_WEAPONS), GunCaliber.RIFLE, 5, new String[]{"white", "ammo", "tremor", "sinking"}, 6, "lca_fracture_rifle_round_w", true));
 
-    public static RegistryObject<Item> FULLSTOP_SNIPER_RAILGUN = registerItem("fullstop_office_railgun", new FullstopSniperWeapon( 7, -2.25f, new Item.Properties().tab(EGO_WEAPONS), GunCaliber.SNIPER, 8));
+    public static RegistryObject<Item> FULLSTOP_SNIPER_RAILGUN = registerItem("fullstop_office_railgun", new FullstopSniperWeapon( 7, -2.25f, new Item.Properties().tab(EGO_WEAPONS), GunCaliber.RIFLE, 8));
     public static RegistryObject<Item> FULLSTOP_SNIPER_SUITCASE = registerItem("fullstop_suitcase", new GenericCosmeticItem());
 
     public static RegistryObject<Item> FULLSTOP_SNIPER_SUIT = registerItem("fullstop_office_sniper_suit", FullstopSniperArmor.getArmorForSlot(EquipmentSlotType.CHEST));
@@ -183,13 +183,24 @@ public class EgoWeaponsItems {
     public static RegistryObject<Item> ARDOR_BLOSSOM_STAR_SUIT = registerItem("ardor_blossom_suit", ArdorBlossomSuit.getArmorForSlot(EquipmentSlotType.CHEST));
 
 
-    public static RegistryObject<Item> UDJAT_KHOPESH = registerItem("udjat_khopesh", new UdjatKhopesh( 2, -2.45f, new Item.Properties().tab(ItemGroup.TAB_SEARCH)));
+    public static RegistryObject<Item> UDJAT_KHOPESH = registerItem("udjat_khopesh", new UdjatKhopesh( 2, -2.45f, new Item.Properties().tab(EGO_WEAPONS)));
 
     public static RegistryObject<Item> UDJAT_SUIT = registerItem("udjat_suit", UdjatArmor.getArmorForSlot(EquipmentSlotType.CHEST));
     public static RegistryObject<Item> UDJAT_PANTS = registerItem("udjat_pants", UdjatArmor.getArmorForSlot(EquipmentSlotType.LEGS));
     public static RegistryObject<Item> UDJAT_HAT = registerItem("udjat_mask", UdjatArmor.getArmorForSlot(EquipmentSlotType.HEAD));
 
-    public static RegistryObject<Item> LCA_UDJAT_KHOPESH = registerItem("lca_udjat_khopesh", new UdjatKhopesh( 4, -2.35f, new Item.Properties().tab(ItemGroup.TAB_SEARCH)));
+    public static RegistryObject<Item> LCA_UDJAT_KHOPESH = registerItem("lca_khopesh", new LCAKhopesh( 4, -2.35f, new Item.Properties().tab(EGO_WEAPONS)));
+    public static RegistryObject<Item> LCA_RIFLE = registerItem("lca_rifle", new LCARifle( 10, -2.25f, new Item.Properties().tab(EGO_WEAPONS), GunCaliber.RIFLE, 12));
+
+    public static RegistryObject<Item> LCA_UDJAT_SUIT = registerItem("lca_udjat_suit", LCAUdjatArmor.getArmorForSlot(EquipmentSlotType.CHEST));
+    public static RegistryObject<Item> LCA_UDJAT_PANTS = registerItem("lca_udjat_pants", LCAUdjatArmor.getArmorForSlot(EquipmentSlotType.LEGS));
+    public static RegistryObject<Item> LCA_UDJAT_HAT = registerItem("lca_udjat_mask", LCAUdjatArmor.getArmorForSlot(EquipmentSlotType.HEAD));
+
+    public static RegistryObject<Item> ARAYASHIKI = registerItem("arayashiki", new Arayashiki( 3, -2.1f, new Item.Properties().tab(EGO_WEAPONS)));
+    public static RegistryObject<Item> ARAYASHIKI_SHEATH = registerItem("arayashiki_sheath", new MookSheath());
+    public static RegistryObject<Item> SPIDER_TRACKSUIT = registerItem("spider_tracksuit", SpidersTracksuit.getArmorForSlot(EquipmentSlotType.CHEST));
+    public static RegistryObject<Item> SPIDER_TRACKSUIT_PANTS = registerItem("spider_tracksuit_pants", SpidersTracksuit.getArmorForSlot(EquipmentSlotType.LEGS));
+    public static RegistryObject<Item> LATENCY_EMBLEM = registerItem("latency_emblem", new ChesedsLatencyItem());
 
     private static RegistryObject<Item> registerItem(String registryName, Item i) {
         return ITEMS.register(registryName, () -> i);

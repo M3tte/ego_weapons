@@ -63,14 +63,15 @@ public class ArmorAbilityProcedure {
 		armorAbilities.put(EgoWeaponsItems.JUSTITIA_CLOAK.get(), new JustitiaArmorAbility());
 		armorAbilities.put(EgoWeaponsItems.ARDOR_BLOSSOM_STAR_SUIT.get(), new ArdorBlossomArmorAbility());
 		armorAbilities.put(EgoWeaponsItems.UDJAT_SUIT.get(), new UdjatArmorAbility());
+		armorAbilities.put(EgoWeaponsItems.LCA_UDJAT_SUIT.get(), new LCAUdjatArmorAbility());
+		armorAbilities.put(EgoWeaponsItems.SPIDER_TRACKSUIT.get(), new TracksuitArmorAbility());
 
 	}
 
 	public static void runArmorAbility(PlayerEntity entity) {
 		EgoWeaponsModVars.PlayerVariables playerVars = entity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
-		if (playerVars.globalcooldown > 0)
-			return;
+
 
 		Item chestItem = entity.getItemBySlot(EquipmentSlotType.CHEST).getItem();
 

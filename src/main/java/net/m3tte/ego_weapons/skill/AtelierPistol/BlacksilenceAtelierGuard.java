@@ -37,6 +37,7 @@ import yesman.epicfight.world.capabilities.item.CapabilityItem;
 import yesman.epicfight.world.entity.eventlistener.HurtEvent;
 
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
+import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.calculateBlockDelay;
 import static yesman.epicfight.world.entity.eventlistener.PlayerEventListener.EventType;
 
 public class BlacksilenceAtelierGuard extends EnergizingGuardSkill {
@@ -130,7 +131,7 @@ public class BlacksilenceAtelierGuard extends EnergizingGuardSkill {
 
             float penalty = container.getDataManager().getDataValue(PENALTY) + this.getPenaltyMultiplier(itemCapapbility);
 
-            boolean successParrying = event.getPlayerPatch().getOriginal().tickCount - container.getDataManager().getDataValue(LAST_ACTIVE) < 6;
+            boolean successParrying = event.getPlayerPatch().getOriginal().tickCount - container.getDataManager().getDataValue(LAST_ACTIVE) < calculateBlockDelay(event.getPlayerPatch().getOriginal(),6);
 
 
 

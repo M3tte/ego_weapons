@@ -1,0 +1,17 @@
+{
+  "targets": [
+    "swap6"
+  ],
+  "passes": [
+    {
+      "name": "ego_weapons:rage",
+      "intarget": "minecraft:main",
+      "outtarget": "swap6"
+    },
+    {
+      "name": "blit",
+      "intarget": "swap6",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}

@@ -4,9 +4,8 @@ package net.m3tte.ego_weapons.potion;
 import net.m3tte.ego_weapons.EgoWeaponsAttributes;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
-import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
-import net.m3tte.ego_weapons.potion.countEffects.Shell;
+import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -90,22 +89,24 @@ public class ILoveYou {
 		if (sourceEntity instanceof LivingEntity) {
 			LivingEntity sourceLiving = (LivingEntity) sourceEntity;
 
-			System.out.println("Attack damage found is: "+sourceLiving.getAttributeValue(Attributes.ATTACK_DAMAGE));
+			// System.out.println("Attack damage found is: "+sourceLiving.getAttributeValue(Attributes.ATTACK_DAMAGE));
 			// 6, 12, 18, 24, 30
-			int result = (int)(sourceLiving.getAttributeValue(Attributes.ATTACK_DAMAGE) / 6);
+			int result = (int)(sourceLiving.getAttributeValue(Attributes.ATTACK_DAMAGE) / 5);
 			target.level.playSound(null,target.blockPosition(), EgoWeaponsSounds.RESULT_POSITIVE, SoundCategory.PLAYERS, 1, 1);
 			target.level.playSound(null,target.blockPosition(), EgoWeaponsSounds.METAL_CLASH, SoundCategory.PLAYERS, 1, 1);
 			if (result > 0) {
-				target.addEffect(new EffectInstance(Shell.get(),200, result-1));
-				EgoWeaponsEffects.IMITATION.get().increment(sourceLiving, 200, result-1);
+				EgoWeaponsEffects.SHELL.get().increment(target, result-1, result-1);
+				EgoWeaponsEffects.IMITATION.get().increment(target, 0, result-1);
 				target.addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(),30, result-1));
 			}
 
-			float healAmount = sourceLiving.getMaxHealth() * 0.25f;
-			if (healAmount > target.getMaxHealth() * 0.35)
-				healAmount = target.getMaxHealth() * 0.35f;
+			float healAmount = Math.min(target.getMaxHealth() * 0.35f, sourceLiving.getMaxHealth() * 0.25f);
+
 			target.heal(healAmount);
-			sourceLiving.addEffect(new EffectInstance(Terror.get(),300, 0));
+
+			int emotionLevel = target instanceof PlayerEntity ? EmotionSystem.getEmotionLevel((PlayerEntity) target) : 1;
+
+			EgoWeaponsEffects.TERROR.get().increment(sourceLiving, 3, emotionLevel);
 
 			if (target instanceof PlayerEntity) {
 				PlayerPatch<?> entitypatch = (PlayerPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);

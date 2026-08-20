@@ -70,7 +70,7 @@ public class FullstopRifleReloadAbility extends ReloadAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars, ItemStack ammoItem) {
 
-        if (playerVars.light >= 0) {
+        if (canTrigger(player, playerVars)) {
 
             World world = player.level;
             double x = player.getX();

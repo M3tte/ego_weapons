@@ -36,6 +36,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 import static net.m3tte.ego_weapons.skill.GenericActiveGuard.canParryHeavy;
+import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.calculateBlockDelay;
 
 
 public class JustitiaActiveGuard extends NonSpamGuardSkill {
@@ -57,7 +58,7 @@ public class JustitiaActiveGuard extends NonSpamGuardSkill {
             DamageSource damageSource = event.getDamageSource();
             if (this.isBlockableSource(damageSource, true)) {
                 ServerPlayerEntity playerentity = event.getPlayerPatch().getOriginal();
-                boolean successParrying = playerentity.tickCount     - container.getDataManager().getDataValue(this.getLastActive()) < 8 - (EgoWeaponsEffects.SIN.get().getPotency(playerentity) * 2);
+                boolean successParrying = playerentity.tickCount     - container.getDataManager().getDataValue(this.getLastActive()) < calculateBlockDelay(event.getPlayerPatch().getOriginal(),8) - (EgoWeaponsEffects.SIN.get().getPotency(playerentity) * 2);
                 float penalty = container.getDataManager().getDataValue(PENALTY);
 
                 if (successParrying) {
@@ -116,7 +117,7 @@ public class JustitiaActiveGuard extends NonSpamGuardSkill {
 
     @Override
     protected float getPenaltyMultiplier(CapabilityItem itemCapapbility) {
-        return itemCapapbility.getWeaponCategory().equals(EgoWeaponsCategories.SOLEMN_LAMENT) ? 1 : 0.6F;
+        return 1;
     }
 
     @Nullable

@@ -12,8 +12,10 @@ import net.m3tte.ego_weapons.item.guns.GunItem;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.procedures.EntityTick;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.AmmoSystem;
 import net.m3tte.ego_weapons.world.capabilities.AmmoType;
+import net.m3tte.ego_weapons.world.capabilities.UtilitySystems;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -46,8 +48,9 @@ import java.util.List;
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 import static net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations.spawnArmatureParticle;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
+import static net.m3tte.ego_weapons.world.capabilities.AmmoType.executeDefaultAmmoEffect;
+import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.generateAttackContext;
 
 public class FullstopSniperWeapon extends GunItem {
 
@@ -95,40 +98,46 @@ public class FullstopSniperWeapon extends GunItem {
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
-		list.add(new StringTextComponent("Manufactured by Atelier Logic").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+		TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.fullstop_sniper.desc");
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
-
-		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
+		appendAmmoDialogueLine(list);
+		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 5) + 1) + "/5] - - - - - - - =").withStyle(TextFormatting.GRAY));
 		list.add(new TranslationTextComponent("desc.ego_weapons.risk.3"));
 		list.add(new StringTextComponent(" "));
-		switch (EgoWeaponsKeybinds.getUiPage() % 4) {
+		switch (EgoWeaponsKeybinds.getUiPage() % 5) {
 			case 0:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"ammo"});
+				else
+					generateDescription(list, "fullstop_sniper", "reload", 2);
+				break;
+			case 1:
 				if (EgoWeaponsKeybinds.isHoldingShift())
 					generateStatusDescription(list, new String[]{"poise", "ammo", "target_marked"});
 				else
 					generateDescription(list, "fullstop_sniper", "passive", 6);
 				break;
-			case 1:
+			case 2:
 				if (EgoWeaponsKeybinds.isHoldingShift())
 					generateStatusDescription(list, new String[]{"poise", "ammo"});
 				else
 					generateDescription(list,"fullstop_sniper", "auto", 6);
 				break;
-			case 2:
+			case 3:
 				if (EgoWeaponsKeybinds.isHoldingShift())
 					generateStatusDescription(list, new String[]{"poise", "ammo", "target_marked"});
 				else
-					generateDescription(list,"fullstop_sniper", "innate", 4);
+					generateDescription(list,"fullstop_sniper", "innate", 5);
 				break;
-			case 3:
+			case 4:
 				if (EgoWeaponsKeybinds.isHoldingShift())
 					generateStatusDescription(list, new String[]{"poise", "ammo", "protection", "resilience"});
 				else {
-					generateDescription(list,"fullstop_sniper", "ability", 8);
+					generateDescription(list,"fullstop_sniper", "ability", 8, true);
 				}
 				break;
 			}
-		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+		generateStatusHelp(list);
 	}
 	public static void interruptedAttack(LivingEntity target) {
 
@@ -143,35 +152,17 @@ public class FullstopSniperWeapon extends GunItem {
 	@Override
 	public boolean hurtEnemy(ItemStack itemstack, LivingEntity target, LivingEntity sourceentity) {
 		boolean retval = super.hurtEnemy(itemstack, target, sourceentity);
-		double x = target.getX();
-		double y = target.getY();
-		double z = target.getZ();
-
-
-		World world = target.level;
-
-		Item chestItem = sourceentity.getItemBySlot(EquipmentSlotType.CHEST).getItem();
-
-		PlayerVariables entityData = sourceentity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
-		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
+		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
 
-		if (currentanim.getRealAnimation() instanceof BasicEgoAttackAnimation || currentanim.getRealAnimation() instanceof EgoAttackAnimation) {
+		if (context.isValidEgoAnimation()) {
 			//System.out.println("IS BASIC EGO ATTACK ANIM" + (currentanim.getRealAnimation()).getProperty(BasicEgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER));
 
-			String weaponIdentifier = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
-
-			boolean consumesAmmo = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.CONSUMES_AMMO).orElse(false);
-
-			boolean finale = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO).orElse(false);
 
 
-
-
-
-			if (consumesAmmo) {
+			if (context.isAmmoSkill()) {
 
 
 				AmmoType lastFired = AmmoType.values()[sourceentity.getItemInHand(Hand.MAIN_HAND).getOrCreateTag().getInt("lastFired")];
@@ -185,12 +176,8 @@ public class FullstopSniperWeapon extends GunItem {
 
 				if (sourceentity.level instanceof ServerWorld) {
 					((ServerWorld) sourceentity.level).sendParticles(lastFired.getHitParticle(), target.getX(), target.getY() + target.getBbHeight()/2, target.getZ(), (int) 1, 0, 0, 0, 0);
-					switch (lastFired) {
-						case Standard:
-							break;
-					}
-
 				}
+				executeDefaultAmmoEffect( lastFired, context.isFinalCoin(), sourceentity, target);
 			}
 
 		}
@@ -217,6 +204,7 @@ public class FullstopSniperWeapon extends GunItem {
 
 
 			if (consumesAmmo && sourcePatch.getOriginal().getItemInHand(Hand.MAIN_HAND).getOrCreateTag().contains("lastFired")) {
+
 				if (lastFired.equals(AmmoType.ALHVRifle)) {
 
 					target.setHealth(target.getHealth() - 2);

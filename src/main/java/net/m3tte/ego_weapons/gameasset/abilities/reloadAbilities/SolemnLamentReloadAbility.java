@@ -19,6 +19,7 @@ import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 import static net.m3tte.ego_weapons.gameasset.abilities.AbilityUtils.applyBlipCooldown;
+import static net.m3tte.ego_weapons.gameasset.abilities.ItemAbility.deductLightDecreases;
 
 public class SolemnLamentReloadAbility extends ReloadAbility {
 
@@ -28,7 +29,7 @@ public class SolemnLamentReloadAbility extends ReloadAbility {
     public int getBlipCost(PlayerEntity player, PlayerVariables playerVars) {
         int extra = 0;
 
-        return 4;
+        return deductLightDecreases(player, AbilityUtils.AbilityType.RELOAD,4);
     }
 
     @Override
@@ -65,7 +66,7 @@ public class SolemnLamentReloadAbility extends ReloadAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars, ItemStack ammoItem) {
 
-        if (playerVars.light >= getBlipCost(player, playerVars)) {
+        if (canTrigger(player, playerVars)) {
 
             playerVars.light -= getBlipCost(player, playerVars);
             World world = player.level;

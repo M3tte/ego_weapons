@@ -17,18 +17,16 @@
  */
 package net.m3tte.ego_weapons;
 
-import net.m3tte.ego_weapons.client.renderLayers.JustitiaRopeRenderer;
+import net.m3tte.ego_weapons.client.renderer.EgoWeaponsShaders;
 import net.m3tte.ego_weapons.event.ModelRegisterHandler;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsClientModels;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsModels;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
-import net.m3tte.ego_weapons.network.packages.PackageRegistry;
+import net.m3tte.ego_weapons.network.packages.EgoWeaponsPackageRegistry;
 import net.m3tte.ego_weapons.world.capabilities.gamerules.EgoWeaponsGamerules;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.LivingRenderer;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -40,12 +38,12 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.util.function.Supplier;
 
 @Mod("ego_weapons")
@@ -69,8 +67,8 @@ public class EgoWeaponsMod {
 		EgoWeaponsEffects.register(FMLJavaModLoadingContext.get().getModEventBus());
 		MinecraftForge.EVENT_BUS.register(new TcorpModFMLBusEvents(this)); // Modbusevents
 		MinecraftForge.EVENT_BUS.register(new EgoWeaponsModVars()); // Dynamic variable registry
-		MinecraftForge.EVENT_BUS.register(new PackageRegistry()); // Network packages
-
+		MinecraftForge.EVENT_BUS.register(new EgoWeaponsPackageRegistry()); // Network packages
+		MinecraftForge.EVENT_BUS.register(new EgoWeaponsCommands()); // Network packages
 
 
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientLoad);
@@ -92,8 +90,14 @@ public class EgoWeaponsMod {
 		EgoWeaponsClientModels.LOGICAL_CLIENT.loadArmatures(resourceManager);
 		EgoWeaponsGUIElements.registerClient();
 		MinecraftForge.EVENT_BUS.register(new EgoWeaponsKeybinds()); // Custom Keybinds
-
-
+		event.enqueueWork(() -> {
+			try {
+				EgoWeaponsShaders.init(Minecraft.getInstance().gameRenderer);
+			} catch (IOException e) {
+				LOGGER.fatal("FATAL ERROR : Something went wrong loading EGO Weapons Shaders:\n"+e.toString());
+				e.printStackTrace();
+			}
+		});
 	}
 
 	@SubscribeEvent

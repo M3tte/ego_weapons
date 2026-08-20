@@ -5,6 +5,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import yesman.epicfight.world.capabilities.EpicFightCapabilities;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 
@@ -33,6 +35,31 @@ public class ReloadAbility {
         }
 
         return 1.0f;
+    }
+
+    public boolean respectsEFStun(PlayerEntity player, PlayerVariables playerVars) {
+        return true;
+    }
+    public boolean respectsGlobalCooldown(PlayerEntity player, PlayerVariables playerVars) {
+        return true;
+    }
+
+    public boolean canTrigger(PlayerEntity player, PlayerVariables playerVars) {
+        if (playerVars.light < getBlipCost(player, playerVars))
+            return false;
+
+        if (playerVars.globalcooldown > 0 && respectsGlobalCooldown(player, playerVars))
+            return false;
+
+        LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+
+        if (entitypatch != null) {
+            if (!entitypatch.getEntityState().canUseSkill() && respectsEFStun(player, playerVars)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public ResourceLocation getIconLocation(PlayerEntity player, PlayerVariables vars) {

@@ -6,6 +6,8 @@ import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,6 +30,13 @@ public class GunItem extends EgoWeaponsWeapon {
         super(tier, p_i48460_2_, p_i48460_3_, props);
         this.maxAmmo = maxAmmo;
         this.caliber = caliber;
+    }
+
+
+    public void appendAmmoDialogueLine(List<ITextComponent> list) {
+        list.add(new TranslationTextComponent("desc.ego_weapons.ammo.top"));
+        list.add(new TranslationTextComponent("desc.ego_weapons.ammo").append(new TranslationTextComponent(this.caliber.getCaliber())));
+        list.add(new TranslationTextComponent("desc.ego_weapons.ammo.mag").append(new StringTextComponent(this.maxAmmo+"")));
     }
 
     @Override

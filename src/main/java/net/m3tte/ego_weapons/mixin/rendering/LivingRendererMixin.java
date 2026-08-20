@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.VertexBuilderUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayFIFOQueue;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.client.renderer.EgoWeaponsRenderTypes;
+import net.m3tte.ego_weapons.client.renderer.EgoWeaponsShaders;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.LivingRenderer;
@@ -108,7 +109,6 @@ public abstract class LivingRendererMixin<E extends LivingEntity, T extends Livi
                     ClientModel model = (ClientModel)entitypatch.getEntityModel(ClientModels.LOGICAL_CLIENT);
                     Armature armature = model.getArmature();
                     OpenMatrix4f[] poseMatrices = this.getPoseMatrices(entitypatch, armature, partialTicks);
-
                     model.drawAnimatedModel(poseStack, buffer.getBuffer(EgoWeaponsRenderTypes.entityBloodOverlay(bloodIDX)), packedLight, 1.0F, 1.0F, 1.0F, 1, ((LivingRendererInvoker) this).callGetOverlayCoord(entityIn, entitypatch, partialTicks), poseMatrices);
 
                 }

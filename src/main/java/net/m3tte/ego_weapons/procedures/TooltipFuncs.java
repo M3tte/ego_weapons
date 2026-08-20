@@ -1,8 +1,7 @@
 package net.m3tte.ego_weapons.procedures;
 
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.minecraft.util.text.*;
 
 import java.util.List;
 
@@ -16,7 +15,8 @@ public class TooltipFuncs {
 
         if (flavorText) {
             list.add(new StringTextComponent("   "));
-            list.add(new TranslationTextComponent("desc.ego_weapons."+weaponIdentifier+"."+typeIdentifier+".desc"));
+
+            list.add(new TranslationTextComponent("desc.ego_weapons."+weaponIdentifier+"."+typeIdentifier+".desc").withStyle(style -> style.withColor(Color.fromRgb(0x8c5c3c))));
         }
     }
 
@@ -24,14 +24,38 @@ public class TooltipFuncs {
         generateDescription(list, weaponIdentifier, typeIdentifier, maxIndices, false);
     }
 
+    public static void generateItemDescription(List<ITextComponent> list, String identifier) {
+        list.add(new TranslationTextComponent(identifier).withStyle(style -> style.withColor(Color.fromRgb(0x8c5c3c))));
+    }
 
+
+    public static void generateOffhandHelp(List<ITextComponent> list) {
+        list.add(new TranslationTextComponent("desc.ego_weapons.info.offh.1").append(new KeybindTextComponent("key.ego_weapons.alt_ability").withStyle(TextFormatting.ITALIC).withStyle(EgoWeaponsKeybinds.isHoldingAltAbility() ? TextFormatting.GREEN : TextFormatting.WHITE)).append(new TranslationTextComponent("desc.ego_weapons.info.offh.2")));
+    }
+
+    public static void generateStatusHelp(List<ITextComponent> list) {
+        list.add(new StringTextComponent("   "));
+        list.add(new TranslationTextComponent("desc.ego_weapons.info.status.1").append(new KeybindTextComponent("key.ego_weapons.status_detail").withStyle(TextFormatting.ITALIC).withStyle(EgoWeaponsKeybinds.isHoldingShift() ? TextFormatting.GREEN : TextFormatting.WHITE)).append(new TranslationTextComponent("desc.ego_weapons.info.status.2")));
+        list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+    }
 
     public static void generateStatusDescription(List<ITextComponent> list, String[] statuses) {
         list.add(new TranslationTextComponent("desc.ego_weapons.statuses.title"));
+
         for (String status : statuses) {
             list.add(new StringTextComponent("  "));
             switch (status) {
-                case "blue_sand": generateDescription(list, "statuses", "blue_sand", 6); break;
+                case "sealed": generateDescription(list, "statuses", "sealed", 2); break;
+                case "tianshia_star": generateDescription(list, "statuses", "tianshia_star", 4); break;
+                case "loss_of_self": generateDescription(list, "statuses", "loss_of_self", 3); break;
+                case "sever_the_thread": generateDescription(list, "statuses", "sever_the_thread", 3); break;
+                case "cheseds_latency": generateDescription(list, "statuses", "cheseds_latency", 3); break;
+                case "armor_regen_cycle": generateDescription(list, "statuses", "armor_regen_cycle", 3); break;
+                case "target_mark_udjat": generateDescription(list, "statuses", "target_mark_udjat", 2); break;
+                case "udjat_vanguard": generateDescription(list, "statuses", "udjat_vanguard", 9); break;
+                case "sheut_fracture": generateDescription(list, "statuses", "sheut_fracture", 7, true); break;
+                case "white_fragility": generateDescription(list, "statuses", "white_fragility", 2); break;
+                case "blue_sand": generateDescription(list, "statuses", "blue_sand", 5, true); break;
                 case "ego_att_ardor": generateDescription(list, "statuses", "ego_att_ardor", 5); break;
                 case "embers": generateDescription(list, "statuses", "embers", 4); break;
                 case "butterfly": generateDescription(list, "statuses", "butterfly", 10); break;
@@ -49,7 +73,7 @@ public class TooltipFuncs {
                 case "sin": generateDescription(list, "statuses", "sin", 4); break;
                 case "furioso": generateDescription(list, "statuses", "furioso", 6); break;
                 case "manifest_ego": generateDescription(list, "statuses", "manifest_ego", 2); break;
-                case "terror": generateDescription(list, "statuses", "terror", 3); break;
+                case "terror": generateDescription(list, "statuses", "terror", 3, true); break;
                 case "shell": generateDescription(list, "statuses", "shell", 2); break;
                 case "power_up": generateDescription(list, "statuses", "power_up", 2); break;
                 case "power_down": generateDescription(list, "statuses", "power_down", 2); break;
@@ -73,7 +97,7 @@ public class TooltipFuncs {
                 case "tremor_conversion": generateDescription(list, "statuses", "tremor_conversion", 1); break;
                 case "poise": generateDescription(list, "statuses", "poise", 2); break;
                 case "ammo": generateDescription(list, "statuses", "ammo", 2); break;
-                case "target_marked": generateDescription(list, "statuses", "target_marked", 1); break;
+                case "target_marked": generateDescription(list, "statuses", "target_marked", 2); break;
                 case "assist_fire": generateDescription(list, "statuses", "assist_fire", 2); break;
                 case "living_departed": generateDescription(list, "statuses", "living_departed", 4); break;
                 case "the_living": generateDescription(list, "statuses", "the_living", 2); break;

@@ -14,8 +14,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class DurandalSlashHorizontal extends RotationAttackParticle {
 
     private Entity sourceEntity;
-    public DurandalSlashHorizontal(ClientWorld world, double x, double y, double z, double xSpeed, double targetEntityID, double sourceID, IAnimatedSprite spriteProvider) {
-        super(world, x, y, z, xSpeed, targetEntityID, sourceID, spriteProvider);
+    public DurandalSlashHorizontal(ClientWorld world, double x, double y, double z, double xSpeed, double sourceID, double zSpeed, IAnimatedSprite spriteProvider) {
+        super(world, x, y, z, xSpeed, sourceID, zSpeed, spriteProvider);
         this.flipY = false;
         this.flipX = false;
         this.invertX = false;

@@ -2,18 +2,19 @@
 package net.m3tte.ego_weapons.item.oeufi;
 
 import net.m3tte.ego_weapons.*;
-import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
 import net.m3tte.ego_weapons.gameasset.movesets.OeufiAssocMovesetAnims;
 import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
+import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.potion.countEffects.TremorDecayEffect;
 import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
 import net.m3tte.ego_weapons.procedures.EntityTick;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
 import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
+import net.m3tte.ego_weapons.world.capabilities.UtilitySystems;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -41,8 +42,8 @@ import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILIT
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 import static net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations.spawnArmatureParticle;
 import static net.m3tte.ego_weapons.procedures.SharedFunctions.*;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
+import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.generateAttackContext;
 
 public class OeufiHalberd extends EgoWeaponsWeapon {
 
@@ -92,7 +93,7 @@ public class OeufiHalberd extends EgoWeaponsWeapon {
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
-		list.add(new StringTextComponent("Manufactured by Kai Atelier").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+		TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.oufi_halberd.desc");
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -124,7 +125,7 @@ public class OeufiHalberd extends EgoWeaponsWeapon {
 					generateDescription(list,"oufi_halberd", "guard", 3);
 		}
 
-		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+		generateStatusHelp(list);
 	}
 
 
@@ -151,19 +152,16 @@ public class OeufiHalberd extends EgoWeaponsWeapon {
 
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
-		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
-
-		final int anim_id = currentanim.getId();
+		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
 
 		LivingEntityPatch<?> targetPatch = (LivingEntityPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
-		if (currentanim.getRealAnimation() instanceof BasicEgoAttackAnimation) {
+		if (context.isValidEgoAnimation()) {
 			//System.out.println("IS BASIC EGO ATTACK ANIM" + (currentanim.getRealAnimation()).getProperty(BasicEgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER));
 
-			String attackIdentifier = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
 
 			// Different animation effects
-			switch (attackIdentifier) {
+			switch (context.getAnimationIdentifier()) {
 				case "oeufi_contract_counter":
 					TremorEffect tr = TremorEffect.incrementTremor(target, 3, 2);
 					TremorEffect.burstTremor(target, true);
@@ -177,6 +175,9 @@ public class OeufiHalberd extends EgoWeaponsWeapon {
 					}
 					break;
 				case "oeufi_auto1":
+					TremorEffect.incrementTremor(target, 0, 1);
+
+					break;
                 case "oeufi_innate":
 					if (targetPatch != null)
 						SharedFunctions.hitstunEntity(targetPatch, 3, false, 0);
@@ -188,11 +189,11 @@ public class OeufiHalberd extends EgoWeaponsWeapon {
                 case "oeufi_dash":
                 case "oeufi_auto3":
 					TremorEffect.incrementTremor(target, 1, 1);
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.OUFI_PIERCE.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.OUFI_PIERCE.get().getRegistryName()));
 					break;
                 case "oeufi_innate_2":
 					TremorEffect.burstTremor(target, true);
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.OUFI_SWIPE_DOWN.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.OUFI_SWIPE_DOWN.get().getRegistryName()));
 					if (TremorEffect.detectTremorType(target) instanceof TremorDecayEffect) {
 
 						if (sourceentity instanceof PlayerEntity) {
@@ -204,7 +205,7 @@ public class OeufiHalberd extends EgoWeaponsWeapon {
 
 
 					if (targetPatch != null)
-						pummelDownEntity(targetPatch, 2);
+						pummelDownEntity(targetPatch, 2, true);
 					break;
 				case "special1":
 					TremorEffect.incrementTremor(target, 0, 3);
@@ -220,7 +221,7 @@ public class OeufiHalberd extends EgoWeaponsWeapon {
 					break;
 				case "special3":
 
-					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.OUFI_PIERCE.get().getRegistryName()));
+					EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DirectionalAttackParticle(target.getId(), sourceentity.getId(), EgoWeaponsParticles.OUFI_PIERCE.get().getRegistryName()));
 					TremorEffect tremor = TremorEffect.detectTremorType(target);
 
 					if (tremor != null) {
@@ -256,7 +257,7 @@ public class OeufiHalberd extends EgoWeaponsWeapon {
 
 		DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
 
-		boolean finale = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO).orElse(false);
+		boolean finale = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.FINAL_COIN).orElse(false);
 
 		if (source.hasEffect(EgoWeaponsEffects.OBLIGATION_FULLFILLMENT.get())) {
 			if (target.hasEffect(EgoWeaponsEffects.TREMOR_DECAY.get()) && finale) {

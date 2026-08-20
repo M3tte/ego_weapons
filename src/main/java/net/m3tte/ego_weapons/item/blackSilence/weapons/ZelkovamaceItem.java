@@ -4,6 +4,7 @@ package net.m3tte.ego_weapons.item.blackSilence.weapons;
 import net.m3tte.ego_weapons.execFunctions.BlackSilenceEvaluator;
 import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.*;
 import net.minecraft.util.text.TextFormatting;
@@ -18,8 +19,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
 
 public class ZelkovamaceItem extends EgoWeaponsWeapon {
 	//@ObjectHolder("tcorp:zelkova_mace")
@@ -31,7 +31,7 @@ public class ZelkovamaceItem extends EgoWeaponsWeapon {
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
-		list.add(new StringTextComponent("Manufactured by Zelkova Workshop").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+		TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.zelkova.desc");
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
@@ -63,7 +63,7 @@ public class ZelkovamaceItem extends EgoWeaponsWeapon {
 					generateDescription(list,"zelkova", "jump", 3);
 		}
 
-		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+		generateStatusHelp(list);
 	}
 
 	@Override

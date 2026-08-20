@@ -29,13 +29,17 @@ public class JustitiaRopeRenderer<T extends LivingEntity, M extends EntityModel<
 
             ItemStack suitcaseStack = EgoWeaponsItems.JUSTITIA_ROPE.get().getDefaultInstance();
 
-            p_225628_1_.pushPose();
+            int diff = livingEntity.getPersistentData().getInt("justitiaRopeE") - livingEntity.tickCount;
 
-            float size = Math.min(1, livingEntity.tickCount - livingEntity.getPersistentData().getInt("justitiaRope") / 8);
+            if (diff < 210 && diff > 0) {
+                p_225628_1_.pushPose();
 
-            p_225628_1_.scale(size,size,size);
-            this.renderItem(livingEntity, suitcaseStack, ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, p_225628_1_, rtb, p_225628_3_);
-            p_225628_1_.popPose();
+                float size = Math.min(1, livingEntity.tickCount - livingEntity.getPersistentData().getInt("justitiaRope") / 8);
+
+                p_225628_1_.scale(size,size,size);
+                this.renderItem(livingEntity, suitcaseStack, ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, p_225628_1_, rtb, p_225628_3_);
+                p_225628_1_.popPose();
+            }
         }
 
 
@@ -47,7 +51,6 @@ public class JustitiaRopeRenderer<T extends LivingEntity, M extends EntityModel<
             float width = entity.getBbWidth() + 0.25f;
             float height = 1.15f;
 
-            System.out.println("EYE FOR "+entity+ " is : "+height);
 
             matrixStack.pushPose();
             matrixStack.translate(0, -height, 0);

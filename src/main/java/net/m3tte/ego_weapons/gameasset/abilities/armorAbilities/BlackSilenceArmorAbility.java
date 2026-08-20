@@ -46,7 +46,7 @@ public class BlackSilenceArmorAbility extends ItemAbility {
     }
 
     @Override
-    public AbilityTier getAbilityTier() {
+    public AbilityTier getAbilityTier(PlayerEntity player, PlayerVariables playerVars) {
         return AbilityTier.ALEPH;
     }
 
@@ -60,16 +60,17 @@ public class BlackSilenceArmorAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (player.hasEffect(OrlandoPotionEffect.potion) && playerVars.light >= 6) {
-            playerVars.light -= 6;
-            furiosoEffect(player, playerVars);
+        if (canTrigger(player, playerVars)) {
+            playerVars.light -= getBlipCost(player, playerVars);
             applyBlipCooldown(60, playerVars);
-
-            playerVars.syncPlayerVariables(player);
-        } else if (playerVars.light >= 9) {
-            orlandoEffect(player);
+            if (player.hasEffect(OrlandoPotionEffect.potion)) {
+                furiosoEffect(player, playerVars);
+            } else {
+                orlandoEffect(player);
+            }
             playerVars.syncPlayerVariables(player);
         }
+
     }
 
     private static void orlandoEffect(PlayerEntity player) {

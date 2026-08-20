@@ -1,0 +1,17 @@
+{
+  "targets": [
+    "swap8"
+  ],
+  "passes": [
+    {
+      "name": "ego_weapons:cctv",
+      "intarget": "minecraft:main",
+      "outtarget": "swap8"
+    },
+    {
+      "name": "blit",
+      "intarget": "swap8",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}

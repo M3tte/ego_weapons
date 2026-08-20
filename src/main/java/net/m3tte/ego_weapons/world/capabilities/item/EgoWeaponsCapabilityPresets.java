@@ -5,6 +5,7 @@
 
 package net.m3tte.ego_weapons.world.capabilities.item;
 
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsSkills;
@@ -40,19 +41,24 @@ public class EgoWeaponsCapabilityPresets {
     public static final Collider WHEELS_BLADE = new MultiOBBCollider(4, 0.4, 0.6, 1.1, 0.0, 0.0, -1);
     public static final Collider LONGER_BLADE = new MultiOBBCollider(4, 0.4, 0.6, 1, 0.0, 0.0, -0.9);
     public static final Collider EVEN_LONGER_BLADE = new MultiOBBCollider(4, 0.6, 0.8, 1.2, 0.0, 0.0, -0.9);
+    public static final Collider GRAB = new MultiOBBCollider(4, 0.6, 0.8, 2, 0.0, 0.0, -0);
     public static final Collider LARGE_BOX_ARDOR = new MultiOBBCollider(4, 1.6, 1.5, 2.8, 0, 0, -1);
     public static final Collider CURSEWRIT_BUTCHERBLADE = new MultiOBBCollider(4, 0.8, 0.8, 1.5, -0.15, -0.15, -1.1);
     public static final Collider SPLIT_HORIZONTAL = new MultiOBBCollider(4, 0.4, 1, 2, 0.0, 0.0, -2);
 
     public static final Collider SUNSHOWER_COL = new MultiOBBCollider(4, 0.4, 0.4, 0.75, 0.0, 0.0, -0.75);
     public static final Collider SUNSHOWER_COL_LARGE = new MultiOBBCollider(4, 0.8, 0.8, 0.6, 0.0, 0.0, -0.6);
+    public static final Collider NOTHING_THERE_CHARGE = new MultiOBBCollider(4, 1.3, 1.1, 1.3, 0.0, 0.0, -0.6);
+    public static final Collider DASH_COLLIDER = new MultiOBBCollider(4, 0.7, 0.6, 0.7, 0.0, 0.0, 0);
+    public static final Collider CUBE_1X = new MultiOBBCollider(4, 0.8, 0.8, 0.8, 0.0, 0.4f, -0.4);
     public static final Collider LARGE_CUBE = new MultiOBBCollider(4, 1.4, 1.4, 1.4, 0.0, 0.0, -0.6);
     public static final Collider OEUFI_HALBERD = new MultiOBBCollider(4, 0.4, 0.4, 1.1, 0.0, 0.0, -1.0);
 
     public static final Collider RIFLE = new MultiOBBCollider(4, 0.2, 1, 0.2, 0, 0.0, -0.4);
 
     public static final Collider DoubtBlade = new MultiOBBCollider(4, 0.2, 1.3, 0.2, 0, 0.3, 0);
-    public static final Collider NTBlade = new MultiOBBCollider(4, 0.7, 1.5, 1.3, 0, 0.3, 0);
+    public static final Collider NTBlade = new MultiOBBCollider(4, 1.2, 1.5, 1.3, 0, 0.3, 0);
+    public static final Collider NTBladePierce = new MultiOBBCollider(4, 0.3, 1.4, 0.3, 0, 0.3, 0);
     public static final Collider FirefistSpew = new MultiOBBCollider(4, 0.3, 2, 0.8, 0, -2, 0);
 
     public static final Collider FSTL_HITBOX = new MultiOBBCollider(4, 1.1, 1.5, 1.1, -0.1, -1.3, -0.1);
@@ -600,11 +606,14 @@ public class EgoWeaponsCapabilityPresets {
 
                 EgoWeaponsModVars.PlayerVariables entityData = playerpatch.getOriginal().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
-                if (entityData.firingMode) {
-                    if (AmmoSystem.getAmmoCount(playerpatch.getOriginal().getMainHandItem()) > 0) {
-                        return EgoWeaponsStyles.RIGHT_HANDED;
+                if (entityData != null) {
+                    if (entityData.firingMode) {
+                        if (AmmoSystem.getAmmoCount(playerpatch.getOriginal().getMainHandItem()) > 0) {
+                            return EgoWeaponsStyles.RIGHT_HANDED;
+                        }
                     }
                 }
+
 
 
                 return Styles.ONE_HAND;
@@ -679,40 +688,40 @@ public class EgoWeaponsCapabilityPresets {
     public static final Function<Item, CapabilityItem.Builder> STIGMA_WORKSHOP_SWORD = (item) -> WeaponCapability.builder()
             .category(EgoWeaponsCategories.STIGMA_WORKSHOP_SWORD)
             .styleProvider((playerpatch) -> {
-                return Styles.TWO_HAND;
+                return Styles.ONE_HAND;
             })
             .collider(ColliderPreset.SWORD)
             .hitSound(EpicFightSounds.BLADE_HIT)
-            .specialAttack(Styles.TWO_HAND, EgoWeaponsSkills.SUNSET_BLADE)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.IDLE, StigmaWorkshopMovesetAnims.STIGMA_SWORD_IDLE)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.WALK, StigmaWorkshopMovesetAnims.STIGMA_SWORD_WALK)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.SNEAK, StigmaWorkshopMovesetAnims.STIGMA_SWORD_SNEAK)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.KNEEL, StigmaWorkshopMovesetAnims.STIGMA_SWORD_KNEEL)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.RUN, StigmaWorkshopMovesetAnims.STIGMA_SWORD_RUN)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.JUMP, StigmaWorkshopMovesetAnims.STIGMA_SWORD_JUMP)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.BLOCK, StigmaWorkshopMovesetAnims.STIGMA_SWORD_GUARD)
+            .specialAttack(Styles.ONE_HAND, EgoWeaponsSkills.SUNSET_BLADE)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.IDLE, StigmaWorkshopMovesetAnims.STIGMA_SWORD_IDLE)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.WALK, StigmaWorkshopMovesetAnims.STIGMA_SWORD_WALK)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.SNEAK, StigmaWorkshopMovesetAnims.STIGMA_SWORD_SNEAK)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.KNEEL, StigmaWorkshopMovesetAnims.STIGMA_SWORD_KNEEL)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.RUN, StigmaWorkshopMovesetAnims.STIGMA_SWORD_RUN)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.JUMP, StigmaWorkshopMovesetAnims.STIGMA_SWORD_JUMP)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.BLOCK, StigmaWorkshopMovesetAnims.STIGMA_SWORD_GUARD)
             .passiveSkill(EgoWeaponsSkills.BASIC_BLOCKABLE_PASSIVE_STIGMA)
-            .newStyleCombo(Styles.TWO_HAND, StigmaWorkshopMovesetAnims.STIGMA_SWORD_AUTO_1, StigmaWorkshopMovesetAnims.STIGMA_SWORD_AUTO_2, StigmaWorkshopMovesetAnims.STIGMA_SWORD_AUTO_3, StigmaWorkshopMovesetAnims.STIGMA_SWORD_DASH, StigmaWorkshopMovesetAnims.STIGMA_SWORD_AUTO_1)
+            .newStyleCombo(Styles.ONE_HAND, StigmaWorkshopMovesetAnims.STIGMA_SWORD_AUTO_1, StigmaWorkshopMovesetAnims.STIGMA_SWORD_AUTO_2, StigmaWorkshopMovesetAnims.STIGMA_SWORD_AUTO_3, StigmaWorkshopMovesetAnims.STIGMA_SWORD_DASH, StigmaWorkshopMovesetAnims.STIGMA_SWORD_AUTO_1)
 
             .canBePlacedOffhand(false);
 
     public static final Function<Item, CapabilityItem.Builder> RAT_KNIFE = (item) -> WeaponCapability.builder()
             .category(EgoWeaponsCategories.RAT_KNIFE)
             .styleProvider((playerpatch) -> {
-                return Styles.TWO_HAND;
+                return Styles.ONE_HAND;
             })
             .collider(ColliderPreset.SWORD)
             .hitSound(EpicFightSounds.BLADE_HIT)
-            .specialAttack(Styles.TWO_HAND, EgoWeaponsSkills.RAT_KNIFE_INNATE)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.IDLE, RatShankMovesetAnims.RAT_KNIFE_IDLE)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.WALK, RatShankMovesetAnims.RAT_KNIFE_WALK)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.SNEAK, StigmaWorkshopMovesetAnims.STIGMA_SWORD_SNEAK)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.KNEEL, StigmaWorkshopMovesetAnims.STIGMA_SWORD_KNEEL)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.RUN, RatShankMovesetAnims.RAT_KNIFE_RUN)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.JUMP, RatShankMovesetAnims.RAT_KNIFE_JUMP)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.BLOCK, RatShankMovesetAnims.RAT_KNIFE_GUARD)
+            .specialAttack(Styles.ONE_HAND, EgoWeaponsSkills.RAT_KNIFE_INNATE)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.IDLE, RatShankMovesetAnims.RAT_KNIFE_IDLE)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.WALK, RatShankMovesetAnims.RAT_KNIFE_WALK)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.SNEAK, StigmaWorkshopMovesetAnims.STIGMA_SWORD_SNEAK)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.KNEEL, StigmaWorkshopMovesetAnims.STIGMA_SWORD_KNEEL)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.RUN, RatShankMovesetAnims.RAT_KNIFE_RUN)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.JUMP, RatShankMovesetAnims.RAT_KNIFE_JUMP)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.BLOCK, RatShankMovesetAnims.RAT_KNIFE_GUARD)
             .passiveSkill(EgoWeaponsSkills.RAT_KNIFE_PASSIVE)
-            .newStyleCombo(Styles.TWO_HAND, RatShankMovesetAnims.RAT_KNIFE_AUTO_1, RatShankMovesetAnims.RAT_KNIFE_AUTO_2, RatShankMovesetAnims.RAT_KNIFE_AUTO_3, RatShankMovesetAnims.RAT_KNIFE_DASH, RatShankMovesetAnims.RAT_KNIFE_JUMP_ATTACK)
+            .newStyleCombo(Styles.ONE_HAND, RatShankMovesetAnims.RAT_KNIFE_AUTO_1, RatShankMovesetAnims.RAT_KNIFE_AUTO_2, RatShankMovesetAnims.RAT_KNIFE_AUTO_3, RatShankMovesetAnims.RAT_KNIFE_DASH, RatShankMovesetAnims.RAT_KNIFE_JUMP_ATTACK)
 
             .canBePlacedOffhand(false);
 
@@ -778,62 +787,153 @@ public class EgoWeaponsCapabilityPresets {
     public static final Function<Item, CapabilityItem.Builder> JUSTITIA = (item) -> WeaponCapability.builder()
             .category(EgoWeaponsCategories.JUSTITIA)
             .styleProvider((playerpatch) -> {
-                return Styles.TWO_HAND;
+                return Styles.ONE_HAND;
             })
             .collider(LONGER_BLADE)
             .hitSound(EpicFightSounds.BLADE_HIT)
-            .specialAttack(Styles.TWO_HAND, EgoWeaponsSkills.JUSTITIA_INNATE)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.IDLE, JustitiaMovesetAnims.JUSTITIA_IDLE)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.WALK, JustitiaMovesetAnims.JUSTITIA_WALK)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.SNEAK, StigmaWorkshopMovesetAnims.STIGMA_SWORD_SNEAK)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.KNEEL, StigmaWorkshopMovesetAnims.STIGMA_SWORD_KNEEL)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.RUN, JustitiaMovesetAnims.JUSTITIA_RUN)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.JUMP, StigmaWorkshopMovesetAnims.STIGMA_SWORD_JUMP)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.BLOCK, JustitiaMovesetAnims.JUSTITIA_GUARD)
+            .specialAttack(Styles.ONE_HAND, EgoWeaponsSkills.JUSTITIA_INNATE)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.IDLE, JustitiaMovesetAnims.JUSTITIA_IDLE)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.WALK, JustitiaMovesetAnims.JUSTITIA_WALK)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.SNEAK, StigmaWorkshopMovesetAnims.STIGMA_SWORD_SNEAK)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.KNEEL, StigmaWorkshopMovesetAnims.STIGMA_SWORD_KNEEL)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.RUN, JustitiaMovesetAnims.JUSTITIA_RUN)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.JUMP, StigmaWorkshopMovesetAnims.STIGMA_SWORD_JUMP)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.BLOCK, JustitiaMovesetAnims.JUSTITIA_GUARD)
             .passiveSkill(EgoWeaponsSkills.JUSTITIA_PASSIVE)
-            .newStyleCombo(Styles.TWO_HAND, JustitiaMovesetAnims.JUSTITIA_AUTO_1, JustitiaMovesetAnims.JUSTITIA_AUTO_2, JustitiaMovesetAnims.JUSTITIA_AUTO_3, JustitiaMovesetAnims.JUSTITIA_AUTO_4, JustitiaMovesetAnims.JUSTITIA_DASH, JustitiaMovesetAnims.JUSTITIA_AUTO_JUMP)
+            .newStyleCombo(Styles.ONE_HAND, JustitiaMovesetAnims.JUSTITIA_AUTO_1, JustitiaMovesetAnims.JUSTITIA_AUTO_2, JustitiaMovesetAnims.JUSTITIA_AUTO_3, JustitiaMovesetAnims.JUSTITIA_AUTO_4, JustitiaMovesetAnims.JUSTITIA_DASH, JustitiaMovesetAnims.JUSTITIA_AUTO_JUMP)
 
             .canBePlacedOffhand(false);
 
     public static final Function<Item, CapabilityItem.Builder> ARDOR_BLOSSOM_BAT = (item) -> WeaponCapability.builder()
             .category(EgoWeaponsCategories.ARDOR_BLOSSOM_BLUNT)
             .styleProvider((playerpatch) -> {
-                return Styles.TWO_HAND;
+                return Styles.ONE_HAND;
             })
             .collider(ColliderPreset.SWORD)
             .hitSound(EpicFightSounds.BLADE_HIT)
-            .specialAttack(Styles.TWO_HAND, EgoWeaponsSkills.ARDOR_BLOSSOM_INNATE)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.IDLE, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_IDLE)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.WALK, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_WALK)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.SNEAK, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_SNEAK)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.KNEEL, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_KNEEL)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.RUN, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_RUN)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.JUMP, RatShankMovesetAnims.RAT_KNIFE_JUMP)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.BLOCK, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_GUARD)
+            .specialAttack(Styles.ONE_HAND, EgoWeaponsSkills.ARDOR_BLOSSOM_INNATE)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.IDLE, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_IDLE)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.WALK, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_WALK)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.SNEAK, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_SNEAK)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.KNEEL, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_KNEEL)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.RUN, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_RUN)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.JUMP, RatShankMovesetAnims.RAT_KNIFE_JUMP)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.BLOCK, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_GUARD)
             .passiveSkill(EgoWeaponsSkills.ARDOR_BLOSSOM_PASSIVE)
-            .newStyleCombo(Styles.TWO_HAND, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_AUTO_1, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_AUTO_2, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_AUTO_3, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_DASH, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_JUMP_ATTACK)
+            .newStyleCombo(Styles.ONE_HAND, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_AUTO_1, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_AUTO_2, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_AUTO_3, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_DASH, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_JUMP_ATTACK)
 
             .canBePlacedOffhand(false);
 
     public static final Function<Item, CapabilityItem.Builder> UDJAT_KHOPESH = (item) -> WeaponCapability.builder()
             .category(EgoWeaponsCategories.UDJAT_KHOPESH)
             .styleProvider((playerpatch) -> {
-                return Styles.TWO_HAND;
+                return Styles.ONE_HAND;
             })
             .collider(ColliderPreset.SWORD)
             .hitSound(EpicFightSounds.BLADE_HIT)
-            .specialAttack(Styles.TWO_HAND, EgoWeaponsSkills.UDJAT_KHOPESH_INNATE)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.IDLE, UdjatKhopeshMovesetAnims.KHOPESH_IDLE)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.WALK, UdjatKhopeshMovesetAnims.KHOPESH_WALK)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.SNEAK, UdjatKhopeshMovesetAnims.KHOPESH_SNEAK)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.KNEEL, UdjatKhopeshMovesetAnims.KHOPESH_KNEEL)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.RUN, UdjatKhopeshMovesetAnims.KHOPESH_RUN)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.JUMP, RatShankMovesetAnims.RAT_KNIFE_JUMP)
-            .livingMotionModifier(Styles.TWO_HAND, LivingMotions.BLOCK, UdjatKhopeshMovesetAnims.KHOPESH_GUARD)
+            .specialAttack(Styles.ONE_HAND, EgoWeaponsSkills.UDJAT_KHOPESH_INNATE)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.IDLE, UdjatKhopeshMovesetAnims.KHOPESH_IDLE)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.WALK, UdjatKhopeshMovesetAnims.KHOPESH_WALK)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.SNEAK, UdjatKhopeshMovesetAnims.KHOPESH_SNEAK)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.KNEEL, UdjatKhopeshMovesetAnims.KHOPESH_KNEEL)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.RUN, UdjatKhopeshMovesetAnims.KHOPESH_RUN)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.JUMP, RatShankMovesetAnims.RAT_KNIFE_JUMP)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.BLOCK, UdjatKhopeshMovesetAnims.KHOPESH_GUARD)
             .passiveSkill(EgoWeaponsSkills.UDJAT_KH_PASSIVE)
-            .newStyleCombo(Styles.TWO_HAND, UdjatKhopeshMovesetAnims.KHOPESH_AUTO_1, UdjatKhopeshMovesetAnims.KHOPESH_AUTO_2, UdjatKhopeshMovesetAnims.KHOPESH_AUTO_3, UdjatKhopeshMovesetAnims.KHOPESH_DASH, ArdorBlossomMovesetAnims.ARDOR_BLOSSOM_JUMP_ATTACK)
+            .newStyleCombo(Styles.ONE_HAND, UdjatKhopeshMovesetAnims.KHOPESH_AUTO_1, UdjatKhopeshMovesetAnims.KHOPESH_AUTO_2, UdjatKhopeshMovesetAnims.KHOPESH_AUTO_3, UdjatKhopeshMovesetAnims.KHOPESH_DASH, UdjatKhopeshMovesetAnims.KHOPESH_DASH)
 
             .canBePlacedOffhand(false);
+
+    public static final Function<Item, CapabilityItem.Builder> LCA_RIFLE = (item) -> WeaponCapability.builder()
+            .category(EgoWeaponsCategories.FULLSTOP_SNIPER)
+            .styleProvider((playerpatch) -> {
+
+                EgoWeaponsModVars.PlayerVariables entityData = playerpatch.getOriginal().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
+
+                if (entityData != null) {
+                    if (entityData.firingMode) {
+                        if (AmmoSystem.getAmmoCount(playerpatch.getOriginal().getMainHandItem()) > 0) {
+                            return EgoWeaponsStyles.RIGHT_HANDED;
+                        }
+                    }
+                }
+
+
+
+                return Styles.ONE_HAND;
+            })
+            .collider(SOLEMN_LAMENT_HITBOX_EXT)
+            .hitSound(EpicFightSounds.BLUNT_HIT)
+
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.IDLE, LCARifleMovesetAnims.LCA_RIFLE_IDLE)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.WALK, LCARifleMovesetAnims.LCA_RIFLE_WALK)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.SNEAK, LCARifleMovesetAnims.LCA_RIFLE_SNEAK)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.KNEEL, LCARifleMovesetAnims.LCA_RIFLE_KNEEL)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.RUN, LCARifleMovesetAnims.LCA_RIFLE_RUN)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.BLOCK, FullstopOfficeSniperMovesetAnims.FULLSTOP_SNIPER_GUARD)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.JUMP, FullstopOfficeSniperMovesetAnims.FULLSTOP_SNIPER_JUMP)
+
+            .livingMotionModifier(EgoWeaponsStyles.RIGHT_HANDED, LivingMotions.IDLE, LCARifleMovesetAnims.LCA_RIFLE_IDLE)
+            .livingMotionModifier(EgoWeaponsStyles.RIGHT_HANDED, LivingMotions.WALK, LCARifleMovesetAnims.LCA_RIFLE_WALK)
+            .livingMotionModifier(EgoWeaponsStyles.RIGHT_HANDED, LivingMotions.SNEAK, LCARifleMovesetAnims.LCA_RIFLE_SNEAK)
+            .livingMotionModifier(EgoWeaponsStyles.RIGHT_HANDED, LivingMotions.KNEEL, LCARifleMovesetAnims.LCA_RIFLE_KNEEL)
+            .livingMotionModifier(EgoWeaponsStyles.RIGHT_HANDED, LivingMotions.RUN, LCARifleMovesetAnims.LCA_RIFLE_RUN)
+            .livingMotionModifier(EgoWeaponsStyles.RIGHT_HANDED, LivingMotions.BLOCK, FullstopOfficeSniperMovesetAnims.FULLSTOP_SNIPER_GUARD)
+            .livingMotionModifier(EgoWeaponsStyles.RIGHT_HANDED, LivingMotions.JUMP, FullstopOfficeSniperMovesetAnims.FULLSTOP_SNIPER_JUMP)
+
+            .specialAttack(EgoWeaponsStyles.RIGHT_HANDED, EgoWeaponsSkills.LCA_RIFLE_BURST)
+            .specialAttack(Styles.ONE_HAND, EgoWeaponsSkills.LCA_RIFLE_BURST)
+            .passiveSkill(EgoWeaponsSkills.FULLSTOP_SNIPER_PASSIVE)
+            .newStyleCombo(EgoWeaponsStyles.RIGHT_HANDED, LCARifleMovesetAnims.LCA_RIFLE_AUTO_G_1, LCARifleMovesetAnims.LCA_RIFLE_AUTO_G_2, LCARifleMovesetAnims.LCA_RIFLE_AUTO_G_3, LCARifleMovesetAnims.LCA_RIFLE_DASH, LCARifleMovesetAnims.LCA_RIFLE_AUTO_G_1)
+            .newStyleCombo(Styles.ONE_HAND, LCARifleMovesetAnims.LCA_RIFLE_AUTO_M_1, LCARifleMovesetAnims.LCA_RIFLE_AUTO_M_2, LCARifleMovesetAnims.LCA_RIFLE_AUTO_M_1, LCARifleMovesetAnims.LCA_RIFLE_AUTO_M_1)
+            //.newStyleCombo(Styles.ONE_HAND, FullstopOfficeSniperMovesetAnims.FULLSTOP_SNIPER_IDLE)
+
+            .canBePlacedOffhand(true);
+
+
+    public static final Function<Item, CapabilityItem.Builder> ARAYASHIKI = (item) ->
+            WeaponCapability.builder().category(EgoWeaponsCategories.ARAYASHIKI).canBePlacedOffhand(false).styleProvider(
+                    (playerpatch) -> {
+
+                        EgoWeaponsModVars.PlayerVariables entityData = playerpatch.getOriginal().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
+
+                        if (entityData != null) {
+                            if (entityData.firingMode && playerpatch.getOriginal().hasEffect(EgoWeaponsEffects.TIANSHIA_STAR.get())) {
+                                return EgoWeaponsStyles.RIGHT_HANDED;
+                            }
+                        }
+
+
+                        return Styles.TWO_HAND;
+                    }
+                    )
+
+                    .livingMotionModifier(EgoWeaponsStyles.RIGHT_HANDED, LivingMotions.IDLE, ArayashikiMovesetAnims.ARAYASHIKI_IDLE)
+                    .livingMotionModifier(EgoWeaponsStyles.RIGHT_HANDED, LivingMotions.WALK, ArayashikiMovesetAnims.ARAYASHIKI_WALK)
+                    .livingMotionModifier(EgoWeaponsStyles.RIGHT_HANDED, LivingMotions.RUN, ArayashikiMovesetAnims.ARAYASHIKI_RUN)
+                    .livingMotionModifier(EgoWeaponsStyles.RIGHT_HANDED, LivingMotions.KNEEL, ArayashikiMovesetAnims.ARAYASHIKI_S_KNEEL)
+                    .livingMotionModifier(EgoWeaponsStyles.RIGHT_HANDED, LivingMotions.SNEAK, ArayashikiMovesetAnims.ARAYASHIKI_S_SNEAK)
+                    .livingMotionModifier(EgoWeaponsStyles.RIGHT_HANDED, LivingMotions.BLOCK, ArayashikiMovesetAnims.ARAYASHIKI_GUARD)
+
+                    .livingMotionModifier(Styles.TWO_HAND, LivingMotions.IDLE, ArayashikiMovesetAnims.ARAYASHIKI_IDLE)
+                    .livingMotionModifier(Styles.TWO_HAND, LivingMotions.WALK, ArayashikiMovesetAnims.ARAYASHIKI_WALK)
+                    .livingMotionModifier(Styles.TWO_HAND, LivingMotions.RUN, ArayashikiMovesetAnims.ARAYASHIKI_RUN)
+                    .livingMotionModifier(Styles.TWO_HAND, LivingMotions.KNEEL, ArayashikiMovesetAnims.ARAYASHIKI_S_KNEEL)
+                    .livingMotionModifier(Styles.TWO_HAND, LivingMotions.SNEAK, ArayashikiMovesetAnims.ARAYASHIKI_S_SNEAK)
+                    .livingMotionModifier(Styles.TWO_HAND, LivingMotions.BLOCK, ArayashikiMovesetAnims.ARAYASHIKI_GUARD)
+
+                    .collider(LONGER_BLADE)
+                    .passiveSkill(EgoWeaponsSkills.ARAYASHIKI_PASSIVE)
+                    .specialAttack(Styles.TWO_HAND, EgoWeaponsSkills.ARAYASHIKI_INNATE)
+                    .newStyleCombo(Styles.TWO_HAND, ArayashikiMovesetAnims.ARAYASHIKI_AUTO_1_S, ArayashikiMovesetAnims.ARAYASHIKI_AUTO_2_S, ArayashikiMovesetAnims.ARAYASHIKI_AUTO_3_S, ArayashikiMovesetAnims.ARAYASHIKI_DASH_S, ArayashikiMovesetAnims.ARAYASHIKI_AUTO_3_S)
+
+                    .specialAttack(EgoWeaponsStyles.RIGHT_HANDED, EgoWeaponsSkills.ARAYASHIKI_INNATE)
+                    .newStyleCombo(EgoWeaponsStyles.RIGHT_HANDED, ArayashikiMovesetAnims.ARAYASHIKI_AUTO_1_U, ArayashikiMovesetAnims.ARAYASHIKI_AUTO_2_U, ArayashikiMovesetAnims.ARAYASHIKI_AUTO_3_U, ArayashikiMovesetAnims.ARAYASHIKI_DASH_S, ArayashikiMovesetAnims.ARAYASHIKI_AUTO_3_S)
+
+                    .hitSound(EpicFightSounds.BLADE_HIT)
+                    .newStyleCombo(Styles.MOUNT, Animations.SWORD_MOUNT_ATTACK);
+
+
 
     public EgoWeaponsCapabilityPresets() {
     }
@@ -866,6 +966,8 @@ public class EgoWeaponsCapabilityPresets {
         event.getTypeEntry().put("rat_pipe", RAT_PIPE);
         event.getTypeEntry().put("ardor_blossom_bat", ARDOR_BLOSSOM_BAT);
         event.getTypeEntry().put("udjat_khopesh", UDJAT_KHOPESH);
+        event.getTypeEntry().put("lca_rifle", LCA_RIFLE);
         event.getTypeEntry().put("justitia", JUSTITIA);
+        event.getTypeEntry().put("arayashiki", ARAYASHIKI);
     }
 }

@@ -6,15 +6,10 @@ import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.gameasset.*;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
-import net.m3tte.ego_weapons.gameasset.abilities.armorAbilities.ArdorBlossomArmorAbility;
-import net.m3tte.ego_weapons.gameasset.abilities.weaponAbilities.ArdorBlossomBatWeaponAbility;
-import net.m3tte.ego_weapons.item.ardor_blossom.ArdorBlossomSuit;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
+import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.procedures.EntityTick;
-import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.specialParticles.texturedAfterImage.TexturedAfterImagePresets;
 import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
-import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.AttackTypes;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.DamageTypes;
@@ -24,23 +19,17 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.network.PacketDistributor;
 import yesman.epicfight.api.animation.property.AnimationProperty;
 import yesman.epicfight.api.animation.types.*;
 import yesman.epicfight.api.model.Model;
 import yesman.epicfight.api.utils.ExtendedDamageSource;
 import yesman.epicfight.api.utils.math.ValueCorrector;
-import yesman.epicfight.gameasset.ColliderPreset;
-import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.world.effect.EpicFightMobEffects;
 
 import static net.m3tte.ego_weapons.gameasset.abilities.armorAbilities.UdjatArmorAbility.activateUdjatArmor;
-import static net.m3tte.ego_weapons.gameasset.abilities.weaponAbilities.ArdorBlossomBatWeaponAbility.castOverclockExplosion;
 import static net.m3tte.ego_weapons.procedures.SharedFunctions.basicSwingEvent;
 import static net.m3tte.ego_weapons.procedures.SharedFunctions.vertSwingEvent;
 
@@ -107,6 +96,7 @@ public class UdjatKhopeshMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.WHITE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.SWING_EFFECT, vertSwingEvent)
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.AUTO)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "khopesh_auto_1")
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.UDJAT_KHOPESH_AUTO)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
@@ -119,6 +109,7 @@ public class UdjatKhopeshMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.UDJAT_KHOPESH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.WHITE)
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.SWING_EFFECT, vertSwingEvent)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "khopesh_innate")
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.UDJAT_KHOPESH_INNATE_HIT)
@@ -136,6 +127,7 @@ public class UdjatKhopeshMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.WHITE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.SWING_EFFECT, vertSwingEvent)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "khopesh_auto_2")
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.AUTO)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.UDJAT_KHOPESH_AUTO)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
                 //.addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.KHOPESH_SWING)
@@ -148,6 +140,7 @@ public class UdjatKhopeshMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.WHITE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.SWING_EFFECT, basicSwingEvent)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "khopesh_auto_3")
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.AUTO)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.UDJAT_KHOPESH_AUTO)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
                 //.addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.KHOPESH_SWING)
@@ -159,7 +152,8 @@ public class UdjatKhopeshMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.PIERCE)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.WHITE)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "khopesh_auto_3f")
-                .addProperty(EgoWeaponsAttackProperty.LAST_OF_COMBO, true)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.AUTO)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.UDJAT_KHOPESH_AUTO)
@@ -188,6 +182,7 @@ public class UdjatKhopeshMovesetAnims {
         KHOPESH_SPECIAL_1 = new BasicEgoAttackAnimation(0.05F, 0.2F, 0.35f, 0.5F, 1.1F, null, "Tool_R", "biped/udjat/special_1", biped)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.WHITE)
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.SWING_EFFECT, vertSwingEvent)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "khopesh_special_1")
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.UDJAT_KHOPESH_INNATE_HIT)
@@ -198,7 +193,7 @@ public class UdjatKhopeshMovesetAnims {
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, special1Event());
 
         KHOPESH_SPECIAL_2 = new EgoAttackAnimation(0.0F, "biped/udjat/special_2", biped,
-                new EgoAttackAnimation.EgoAttackPhase(0.0F, 0.1F, 0.18f, 0.41666666f, 0.43f, 0.43f, "Tool_R", null)
+                new EgoAttackAnimation.EgoAttackPhase(0.0F, 0.1F, 0.18f, 0.40f, 0.42f, 0.43f, "Tool_R", null)
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER, "khopesh_special_2_a")
                         .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.UDJAT_KH_HIT)
                         .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(1.5f))
@@ -226,6 +221,7 @@ public class UdjatKhopeshMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.DISABLE_COLLISION, true)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "khopesh_special_2")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.SLASH)
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.PIERCE_GUARD_DODGE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "khopesh_special")
@@ -235,12 +231,13 @@ public class UdjatKhopeshMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(2))
                 .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(1.3f))
-                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.65F)
+                .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.8F)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, special2Event());
 
         KHOPESH_SPECIAL_3 = new BasicEgoAttackAnimation(0.05F, 0.2F, 0.55f, 0.75F, 1.4F, null, "Tool_R", "biped/udjat/special_3", biped)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.PIERCE)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.WHITE)
+                .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.SWING_EFFECT, vertSwingEvent)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "khopesh_special_3")
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.UDJAT_KHOPESH_INNATE_HIT)
@@ -377,7 +374,7 @@ public class UdjatKhopeshMovesetAnims {
                     entitypatch.playSound(EgoWeaponsSounds.UDJAT_MIRAGE, 1, 1, 1);
 
                     entitypatch.playSound(EgoWeaponsSounds.BLACK_SILENCE_EVADE, 1, 1, 1);
-                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.UDJAT_SAND.get(), 10, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 0f, 0.2f, 0.5f, 0,0.4f,0));
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.UDJAT_SAND.get(), 10, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 0f, 0.2f, 0.5f, 0,0.4f,0));
 
                 } else {
                     entity.level.addParticle(EgoWeaponsParticles.TEXTURED_AFTER_IMAGE.get(), entity.getX(), entity.getY(), entity.getZ(), Double.longBitsToDouble(entity.getId()), TexturedAfterImagePresets.UDJAT.ordinal(), 0);
@@ -394,7 +391,7 @@ public class UdjatKhopeshMovesetAnims {
 
 
                 if (!entity.level.isClientSide()) {
-                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.UDJAT_SAND.get(), 20, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 0.2f, 0.25f, 0.5f, 0,0,0));
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.UDJAT_SAND.get(), 20, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 0.2f, 0.25f, 0.5f, 0,0,0));
 
                 }
 
@@ -409,7 +406,7 @@ public class UdjatKhopeshMovesetAnims {
 
 
                 if (!entity.level.isClientSide()) {
-                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new ParticlePackages.SendParticlesVelocity(EgoWeaponsParticles.UDJAT_SAND.get(), 20, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 0.2f, 0.25f, 0.5f, 0,0,0));
+                    EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.SendParticlesVelocity(EgoWeaponsParticles.UDJAT_SAND.get(), 20, entity.getX(), entity.getY() + entity.getBbHeight()/2, entity.getZ(), 0.2f, 0.25f, 0.5f, 0,0,0));
                 }
 
             }

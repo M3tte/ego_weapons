@@ -27,7 +27,7 @@ public class RatPipeWeaponAbility extends ItemAbility {
     public int getBlipCost(PlayerEntity player, PlayerVariables playerVars) {
         int extra = 0;
 
-        return 6;
+        return deductLightDecreases(player, AbilityUtils.AbilityType.WEAPON,6);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class RatPipeWeaponAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.light >= getBlipCost(player, playerVars)) {
+        if (canTrigger(player, playerVars)) {
 
 
             playerVars.light -= getBlipCost(player, playerVars);

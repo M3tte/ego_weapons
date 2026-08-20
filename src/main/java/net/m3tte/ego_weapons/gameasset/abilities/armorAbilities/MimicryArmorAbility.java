@@ -20,7 +20,7 @@ public class MimicryArmorAbility extends ItemAbility {
 
     @Override
     public int getBlipCost(PlayerEntity player, PlayerVariables playerVars) {
-        return 8;
+        return 6;
     }
 
     @Override
@@ -29,7 +29,7 @@ public class MimicryArmorAbility extends ItemAbility {
     }
 
     @Override
-    public AbilityTier getAbilityTier() {
+    public AbilityTier getAbilityTier(PlayerEntity player, PlayerVariables playerVars) {
         return AbilityTier.ALEPH;
     }
 
@@ -41,8 +41,8 @@ public class MimicryArmorAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.light >= 10) {
-            playerVars.light -= 10;
+        if (canTrigger(player, playerVars)) {
+            playerVars.light -= getBlipCost(player, playerVars);
             AbilityUtils.applyBlipCooldown(40, playerVars);
             giveEffect(player);
             playerVars.syncPlayerVariables(player);

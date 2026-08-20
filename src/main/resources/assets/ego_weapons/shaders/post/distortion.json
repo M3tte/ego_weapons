@@ -1,0 +1,20 @@
+{
+  "targets": [
+    "swap3"
+  ],
+  "passes": [
+    {
+      "name": "ego_weapons:distortion",
+      "intarget": "minecraft:main",
+      "outtarget": "swap3",
+      "uniforms": [
+
+      ]
+    },
+    {
+      "name": "blit",
+      "intarget": "swap3",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}

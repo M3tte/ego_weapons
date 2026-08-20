@@ -6,29 +6,19 @@
 package net.m3tte.ego_weapons.potion.countEffects;
 
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
-import net.m3tte.ego_weapons.EgoWeaponsMod;
-import net.m3tte.ego_weapons.EgoWeaponsParticles;
-import net.m3tte.ego_weapons.network.packages.ParticlePackages;
-import net.m3tte.ego_weapons.particle.ShadowpuffParticle;
-import net.m3tte.ego_weapons.specialParticles.numberParticle.NumberParticleTypes;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifierManager;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.item.MilkBucketItem;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fml.network.PacketDistributor;
-import yesman.epicfight.api.animation.types.DodgeAnimation;
 import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 
 import java.util.Objects;
 import java.util.UUID;
 
 import static net.m3tte.ego_weapons.EgoWeaponsEffects.SHORTER_TURN_DURATION;
-import static net.m3tte.ego_weapons.EgoWeaponsEffects.TURN_DURATION;
 
 public class DarkFlameEffect extends CountPotencyStatus {
     public DarkFlameEffect() {
@@ -155,6 +145,7 @@ public class DarkFlameEffect extends CountPotencyStatus {
 
         } else {
             entity.removeEffect(this);
+            this.syncEffect(entity);
         }
 
     }

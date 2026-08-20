@@ -33,7 +33,7 @@ public class RatArmorAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.light >= 4) {
+        if (canTrigger(player, playerVars)) {
 
             EgoWeaponsEffects.SPEED_UP.get().increment(player, 0, 1);
             EgoWeaponsEffects.DEFENSE_LEVEL_DOWN.get().increment(player, 0, 3);

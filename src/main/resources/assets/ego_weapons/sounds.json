@@ -96,6 +96,114 @@
       }
     ]
   },
+  "udjat.dialogue.s3.charge": {
+    "category": "player",
+    "subtitle": "udjat.dialogue",
+    "sounds": [
+      {
+        "name": "ego_weapons:udjat/vc_s3_charge"
+      }
+    ]
+  },
+  "udjat.dialogue.s3.fire": {
+    "category": "player",
+    "subtitle": "udjat.dialogue",
+    "sounds": [
+      {
+        "name": "ego_weapons:udjat/vc_s3_fire"
+      }
+    ]
+  },
+  "udjat.dialogue.gain_udjat": {
+    "category": "player",
+    "subtitle": "udjat.dialogue",
+    "sounds": [
+      {
+        "name": "ego_weapons:udjat/vc_gain_udjat"
+      }
+    ]
+  },
+  "udjat.dialogue.reloading": {
+    "category": "player",
+    "subtitle": "udjat.dialogue",
+    "sounds": [
+      {
+        "name": "ego_weapons:udjat/vc_reloading"
+      }
+    ]
+  },
+  "udjat.dialogue.severe_damage": {
+    "category": "player",
+    "subtitle": "udjat.dialogue",
+    "sounds": [
+      {
+        "name": "ego_weapons:udjat/vc_severe_damage_taken"
+      }
+    ]
+  },
+  "udjat.dialogue.stagger": {
+    "category": "player",
+    "subtitle": "udjat.dialogue",
+    "sounds": [
+      {
+        "name": "ego_weapons:udjat/vc_stagger"
+      }
+    ]
+  },
+  "udjat.lca_khopesh.throw": {
+    "category": "player",
+    "subtitle": "udjat.rifle",
+    "sounds": [
+      {
+        "name": "ego_weapons:udjat/udjat_throw"
+      }
+    ]
+  },
+  "udjat.lca_khopesh.throw.hit": {
+    "category": "player",
+    "subtitle": "udjat.rifle",
+    "sounds": [
+      {
+        "name": "ego_weapons:udjat/udjat_throw_hit"
+      }
+    ]
+  },
+  "udjat.lca_khopesh.throw.ripout": {
+    "category": "player",
+    "subtitle": "udjat.rifle",
+    "sounds": [
+      {
+        "name": "ego_weapons:udjat/udjat_ripout"
+      }
+    ]
+  },
+  "udjat.rifle.aim": {
+    "category": "player",
+    "subtitle": "udjat.rifle",
+    "sounds": [
+      {
+        "name": "ego_weapons:udjat/aim"
+      }
+    ]
+  },
+  "udjat.rifle.fire": {
+    "category": "player",
+    "subtitle": "udjat.rifle",
+    "sounds": [
+      {
+        "name": "ego_weapons:udjat/fire"
+      }
+    ]
+  },
+  "udjat.rifle.hit": {
+    "category": "player",
+    "subtitle": "udjat.rifle",
+    "sounds": [
+      {
+        "name": "ego_weapons:udjat/bullet_hit"
+      }
+    ]
+  },
   "udjat.mirage": {
     "category": "player",
     "subtitle": "udjat.mirage",
@@ -135,6 +243,153 @@
       },
       {
         "name": "ego_weapons:udjat/auto_3"
+      }
+    ]
+  },
+  "arayashiki.unsheath": {
+    "category": "player",
+    "subtitle": "arayashiki.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:arayashiki/unsheath/unsheathe_1"
+      }
+    ]
+  },
+  "arayashiki.unsheath.slash.hit": {
+    "category": "player",
+    "subtitle": "arayashiki.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:arayashiki/unsheath/slash_hit"
+      }
+    ]
+  },
+  "arayashiki.unsheath.sheathe": {
+    "category": "player",
+    "subtitle": "arayashiki.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:arayashiki/unsheath/sheathe"
+      }
+    ]
+  },
+  "arayashiki.grab_scabbard": {
+    "category": "player",
+    "subtitle": "arayashiki.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:arayashiki/grab_scabbard"
+      }
+    ]
+  },
+  "arayashiki.unsheath.woosh": {
+    "category": "player",
+    "subtitle": "arayashiki.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:arayashiki/unsheath/woosh"
+      }
+    ]
+  },
+  "arayashiki.unsheath.trigger_v": {
+    "category": "player",
+    "subtitle": "arayashiki.trigger.unsheath",
+    "sounds": [
+      {
+        "name": "ego_weapons:arayashiki/unsheath/trigger_special_s3_v"
+      }
+    ]
+  },
+  "arayashiki.unsheath.sever.hit": {
+    "category": "player",
+    "subtitle": "arayashiki.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:arayashiki/unsheath/sever_hit"
+      }
+    ]
+  },
+  "arayashiki.unsheath.parry": {
+    "category": "player",
+    "subtitle": "arayashiki.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:arayashiki/unsheath/parry_1"
+      },
+      {
+        "name": "ego_weapons:arayashiki/unsheath/parry_2"
+      }
+    ]
+  },
+  "arayashiki.unsheath.heavy_slash": {
+    "category": "player",
+    "subtitle": "arayashiki.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:arayashiki/unsheath/heavy_slash"
+      }
+    ]
+  },
+  "arayashiki.unsheath.heavy_slash.hit": {
+    "category": "player",
+    "subtitle": "arayashiki.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:arayashiki/unsheath/heavy_slash_hit"
+      }
+    ]
+  },
+  "arayashiki.unsheath.erase.hit": {
+    "category": "player",
+    "subtitle": "arayashiki.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:arayashiki/unsheath/erase_hit"
+      }
+    ]
+  },
+  "arayashiki.sheath.special.hit": {
+    "category": "player",
+    "subtitle": "arayashiki.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:arayashiki/special_crit_hit"
+      }
+    ]
+  },
+  "arayashiki.sheath.special.sheathe": {
+    "category": "player",
+    "subtitle": "arayashiki.special",
+    "sounds": [
+      {
+        "name": "ego_weapons:arayashiki/special_sheathe"
+      }
+    ]
+  },
+  "arayashiki.sheath.hit.1": {
+    "category": "player",
+    "subtitle": "arayashiki.hit",
+    "sounds": [
+      {
+        "name": "ego_weapons:arayashiki/ryoshu_1_1"
+      }
+    ]
+  },
+  "arayashiki.sheath.hit.2": {
+    "category": "player",
+    "subtitle": "arayashiki.hit",
+    "sounds": [
+      {
+        "name": "ego_weapons:arayashiki/ryoshu_2_1"
+      }
+    ]
+  },
+  "arayashiki.sheath.hit.3": {
+    "category": "player",
+    "subtitle": "arayashiki.hit",
+    "sounds": [
+      {
+        "name": "ego_weapons:arayashiki/ryoshu_3_1"
       }
     ]
   },
@@ -1397,6 +1652,16 @@
     "sounds": [
       {
         "name": "ego_weapons:sunshower/auto_4"
+      }
+    ]
+  },
+  "muga": {
+    "category": "music",
+    "subtitle": "subtitles.muga",
+    "sounds": [
+      {
+        "name": "ego_weapons:music/c9boss10",
+        "stream": true
       }
     ]
   },

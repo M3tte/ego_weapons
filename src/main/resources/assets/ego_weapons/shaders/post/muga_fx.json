@@ -1,0 +1,17 @@
+{
+  "targets": [
+    "swap4"
+  ],
+  "passes": [
+    {
+      "name": "ego_weapons:muga",
+      "intarget": "minecraft:main",
+      "outtarget": "swap4"
+    },
+    {
+      "name": "blit",
+      "intarget": "swap4",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}

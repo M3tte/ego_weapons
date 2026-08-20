@@ -10,6 +10,13 @@ import net.minecraft.world.World;
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 
 public class AbilityUtils {
+
+    public static enum AbilityType {
+        WEAPON,
+        ARMOR,
+        RELOAD
+    }
+
     public static boolean applyBlipCooldown(int threshold, PlayerVariables vars) {
         if (vars.blipcooldown < threshold) {
             vars.blipcooldown = threshold;
