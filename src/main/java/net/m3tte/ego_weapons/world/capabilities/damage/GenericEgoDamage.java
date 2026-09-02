@@ -28,7 +28,7 @@ public interface GenericEgoDamage {
         String icon;
 
         public static AttackTypes fromString(String str) {
-            switch (str) {
+            switch (str.toLowerCase()) {
                 case "generic":
                     return GENERIC;
                 case "slash":

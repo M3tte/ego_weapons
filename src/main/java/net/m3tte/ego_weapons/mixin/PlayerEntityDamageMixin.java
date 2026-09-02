@@ -46,6 +46,9 @@ public class PlayerEntityDamageMixin {
 
         LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
+        if (self.level.isClientSide())
+            return;
+
         DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
 
         EgoWeaponsModVars.PlayerVariables entityData = self.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);

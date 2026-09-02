@@ -1461,7 +1461,8 @@ public class SharedFunctions {
                 }
 
                 // Update new amount
-                evt.setAmount(newAmount);
+                if (newAmount > 0 || convAmount > 0)
+                    evt.setAmount(newAmount);
             }
 
             if (conv.getDamageType().equals(DamageTypes.PALE) && self instanceof PlayerEntity) {

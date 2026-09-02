@@ -10,6 +10,7 @@ public class EgoWeaponsCommands {
     public void register(RegisterCommandsEvent event) {
         EgoWeaponsMod.LOGGER.info("Registering E.G.O Weapons Commands");
         StatusEffectCommands.register(event.getDispatcher());
+        UtilityCommands.register(event.getDispatcher());
         StaggerCommands.register(event.getDispatcher());
         SetWarningLevel.register(event.getDispatcher());
         SetteamCommand.register(event.getDispatcher());

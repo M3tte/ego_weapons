@@ -2361,11 +2361,16 @@
   "death.attack.egoweapons.burn.player": "%1$s was charred to a crisp by %2$s.",
   "death.attack.egoweapons.burn": "%1$s was charred to a crisp.",
 
-  "commands.ego_weapons.errors.formatting": "Error Executing Command. Formatting has to be one of the following: ",
-  "commands.ego_weapons.errors.no_effect": "Error Executing Command. No such status effect exists. Example: ego_weapons:sinking",
-  "commands.ego_weapons.errors.should_be_positive.incr": "Error Executing Command. Cannot increment negative values. use /decrementStatus instead.",
-  "commands.ego_weapons.errors.should_be_positive.decr": "Error Executing Command. Cannot decrement negative values. use /incrementStatus instead.",
+  "commands.ego_weapons.errors.generic": "Error Executing Command: Unexpected error: ",
+  "commands.ego_weapons.errors.no_targets": "No valid targets found for command. (Out of %s)",
+  "commands.ego_weapons.errors.formatting": "Error Executing Command: Formatting has to be one of the following: ",
+  "commands.ego_weapons.errors.no_effect": "Error Executing Command: No such status effect exists. Example: ego_weapons:sinking",
+  "commands.ego_weapons.errors.should_be_positive.incr": "Error Executing Command: Cannot increment negative values. use /decrementStatus instead.",
+  "commands.ego_weapons.errors.should_be_positive.decr": "Error Executing Command: Cannot decrement negative values. use /incrementStatus instead.",
+  "commands.ego_weapons.errors.should_be_positive.damage": "Error Executing Command: Damage should be a positive number.",
 
+  "commands.ego_weapons.errors.invalid_parameter.attack_type": "Error Executing Command: Attack Type is Invalid",
+  "commands.ego_weapons.errors.invalid_parameter.damage_type": "Error Executing Command: Damage Type is Invalid",
 
   "commands.ego_weapons.success.fillLight.1": "Successfully refilled light for %s player%s.",
 
@@ -2373,12 +2378,13 @@
 
   "commands.ego_weapons.success.setEmotionLevel.1": "Successfully set Emotion Level to %s for %s player%s.",
 
-  "commands.ego_weapons.success.incrementStatus.1": "Successfully incremented %s for %s player%s.",
-  "commands.ego_weapons.success.decrementStatus.1": "Successfully decremented %s for %s player%s.",
+  "commands.ego_weapons.success.incrementStatus.1": "Successfully incremented %s by %s for %s entit%s.",
+  "commands.ego_weapons.success.decrementStatus.1": "Successfully decremented %s by %s for %s entit%s.",
 
   "commands.ego_weapons.success.sanity.1": "Successfully modified sanity by %s for %s player%s.",
-  "commands.ego_weapons.success.stagger.1": "Successfully modified stagger by %s for %s player%s.",
+  "commands.ego_weapons.success.stagger.1": "Successfully modified stagger by %s for %s entit%s.",
 
+  "commands.ego_weapons.success.egodamage.1": "Successfully dealt %s damage to %s entit%s of type: %s / %s%s",
 
   "dialogue.ego_weapons.skills.arayashiki.trigger_unsheath": "Easy...|| It’s not done yet.",
 

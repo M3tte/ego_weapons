@@ -66,7 +66,7 @@ public class StatusEffectCommands {
 								src.sendFailure(new TranslationTextComponent("commands.ego_weapons.errors.should_be_positive.incr"));
 								return 0;
 							}
-
+							int affected = 0;
 							try {
 								Effect effect = ForgeRegistries.POTIONS.getValue(status);
 
@@ -77,15 +77,20 @@ public class StatusEffectCommands {
 
 
 								for (Entity target : targets) {
-									if (target instanceof LivingEntity)
+									if (target instanceof LivingEntity) {
+										affected++;
 										((CountPotencyStatus) effect).increment((LivingEntity) target, count, potency);
+									}
 								}
 
 							} catch (Exception e) {
 								src.sendFailure(new TranslationTextComponent("commands.ego_weapons.errors.no_effect"));
 							}
 
-							arguments.getSource().sendSuccess(new TranslationTextComponent("commands.ego_weapons.success.incrementStatus.1", status.getPath(),targets.size(), targets.size()==1?"":"s"), true);
+							if (affected > 0)
+								arguments.getSource().sendSuccess(new TranslationTextComponent("commands.ego_weapons.success.incrementStatus.1", status.getPath(), affected, affected==1?"y":"ies"), true);
+							else
+								arguments.getSource().sendSuccess(new TranslationTextComponent("commands.ego_weapons.errors.no_targets", targets.size()), true);
 
 					return 1;
 				}))))));
@@ -108,7 +113,7 @@ public class StatusEffectCommands {
 							}
 
 							ResourceLocation status = ResourceLocationArgument.getId(arguments, "status_effect");
-
+							int affected = 0;
 							try {
 								Effect effect = ForgeRegistries.POTIONS.getValue(status);
 
@@ -117,8 +122,9 @@ public class StatusEffectCommands {
 									return 0;
 								}
 
-								for (ServerPlayerEntity target : targets) {
+								for (LivingEntity target : targets) {
 									((CountPotencyStatus) effect).decrement(target, count, potency);
+									affected++;
 								}
 
 							} catch (Exception e) {
@@ -126,7 +132,10 @@ public class StatusEffectCommands {
 								return 0;
 							}
 
-							arguments.getSource().sendSuccess(new TranslationTextComponent("commands.ego_weapons.success.decrementStatus.1", status.getPath(),targets.size(), targets.size()==1?"":"s"), true);
+							if (affected > 0)
+								arguments.getSource().sendSuccess(new TranslationTextComponent("commands.ego_weapons.success.decrementStatus.1", status.getPath(),affected, affected==1?"y":"ies"), true);
+							else
+								arguments.getSource().sendSuccess(new TranslationTextComponent("commands.ego_weapons.errors.no_targets", targets.size()), true);
 
 							return 1;
 						}))))));

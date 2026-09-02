@@ -1,11 +1,8 @@
 package net.m3tte.ego_weapons.specialParticles.modelParticles;
 
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import javafx.scene.effect.Glow;
-import net.m3tte.ego_weapons.client.renderer.EgoWeaponsRenderTypes;
 import net.minecraft.client.particle.IAnimatedSprite;
 import net.minecraft.client.particle.IParticleFactory;
-import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.world.ClientWorld;
@@ -14,7 +11,6 @@ import net.minecraft.particles.BasicParticleType;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 

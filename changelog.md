@@ -1,3 +1,12 @@
+# ..v1.01.xx
++ Fixed previous issue with red damage not being functional while "Lore Accurate Damage Types" > 0.
++ Fixed crash during friendly fire override when firing arrows at player entities.
++ ~ Reworked status and stagger effects to allow for targeting non players and improved their feedback.
++ Added /EGODamage command that allows for dealing highly customizable damage
+  + The above commands (EGODamage, stagger and status) give feedback how many entities were affected and a different message if no valid entities were found.
+  
+
+# ..v1.01.19
 + Added Udjat Khopesh + Translations
 + Added LCA Khopesh + Translations
 + Added LCA Rifle + Translations
