@@ -179,20 +179,16 @@ public class EgoWeaponsRenderSystem {
         }
 
 
-        // Time and deltatime should always run
-        float time = (System.currentTimeMillis() % 1000000L) / 1000.0F;
 
         // Dont render if no post processing is to happen.
         if (toProcessGroups.isEmpty())
             return;
 
-
-
+        // Calculate render data
+        float time = (System.currentTimeMillis() % 1_000_000L) / 1000f;
         SetupShaderGroup.ShaderData data = new SetupShaderGroup.ShaderData(time, Minecraft.getInstance().getDeltaFrameTime());
 
-
         // Wrap up collection and render the overlays
-
         RenderSystem.pushMatrix();
         for (ShaderGroup group : toProcessGroups) {
             if (group instanceof SetupShaderGroup) {

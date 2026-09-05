@@ -1,0 +1,285 @@
+package net.m3tte.ego_weapons.skill;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import net.m3tte.ego_weapons.EgoWeaponsMod;
+import net.m3tte.ego_weapons.EgoWeaponsSounds;
+import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
+import net.m3tte.ego_weapons.gameasset.movesets.DurandalMovesetAnims;
+import net.m3tte.ego_weapons.gameasset.movesets.MimicryMovesetAnims;
+import net.m3tte.ego_weapons.gameasset.movesets.StigmaWorkshopMovesetAnims;
+import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
+import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCategories;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import yesman.epicfight.api.animation.types.StaticAnimation;
+import yesman.epicfight.gameasset.Animations;
+import yesman.epicfight.gameasset.EpicFightSounds;
+import yesman.epicfight.gameasset.Skills;
+import yesman.epicfight.particle.EpicFightParticles;
+import yesman.epicfight.particle.HitParticleType;
+import yesman.epicfight.skill.*;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
+import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
+import yesman.epicfight.world.capabilities.entitypatch.player.ServerPlayerPatch;
+import yesman.epicfight.world.capabilities.item.CapabilityItem;
+import yesman.epicfight.world.capabilities.item.WeaponCategory;
+import yesman.epicfight.world.entity.eventlistener.HurtEvent;
+import yesman.epicfight.world.entity.eventlistener.PlayerEventListener;
+
+import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.BiFunction;
+
+import static net.m3tte.ego_weapons.skill.NonSpamGuardSkill.handleKnockback;
+import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.calculateBlockDelay;
+
+
+public class EGOWeaponsGuardSkill extends GuardSkill {
+    public EGOWeaponsGuardSkill(Builder builder) {
+        super(builder);
+
+        if (builder instanceof ExtendedBuilder) {
+            this.guardReactMotions = ((ExtendedBuilder) builder).guardReactMotions;
+        }
+
+    }
+
+    private HashMap<WeaponCategory, BiFunction<CapabilityItem, PlayerPatch<?>, ?>>[] guardReactMotions = new HashMap[9];
+
+
+    private static final SkillDataManager.SkillDataKey<Integer> LAST_ACTIVE;
+    private static final SkillDataManager.SkillDataKey<Integer> PARRY_MOTION_COUNTER;
+
+    private static final StaticAnimation[] STIGMA_WORKSHOP_GUARDS = {StigmaWorkshopMovesetAnims.STIGMA_SWORD_PARRY_1, StigmaWorkshopMovesetAnims.STIGMA_SWORD_PARRY_2, StigmaWorkshopMovesetAnims.STIGMA_SWORD_PARRY_1, StigmaWorkshopMovesetAnims.STIGMA_SWORD_PARRY_2, StigmaWorkshopMovesetAnims.STIGMA_SWORD_EVADE};
+    private static final StaticAnimation[] MIMICRY_GUARDS = {MimicryMovesetAnims.KALI_PARRY_1, MimicryMovesetAnims.KALI_PARRY_2};
+    public static Builder createBuilder(ResourceLocation resourceLocation) {
+        return createExtendedBuilder(resourceLocation)
+                .addAdvancedGuardMotion(EgoWeaponsCategories.DURANDAL, (item, player) -> DurandalMovesetAnims.DURANDAL_GUARD_COUNTER)
+                .addGuardMotion(EgoWeaponsCategories.DURANDAL, (item, player) -> DurandalMovesetAnims.DURANDAL_GUARD_HIT)
+                .addGuardBreakMotion(EgoWeaponsCategories.DURANDAL, (item, player) -> BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER)
+
+                .addAdvancedGuardMotion(EgoWeaponsCategories.MOOK_WORKSHOP, (item, player) -> BlackSilenceMovesetAnims.MOOK_GUARD_HIT_PARRY)
+                .addGuardMotion(EgoWeaponsCategories.MOOK_WORKSHOP, (item, player) -> BlackSilenceMovesetAnims.MOOK_GUARD_HIT)
+                .addGuardBreakMotion(EgoWeaponsCategories.MOOK_WORKSHOP, (item, player) -> BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER)
+                .addAdvancedGuardMotion(EgoWeaponsCategories.STIGMA_WORKSHOP_SWORD, (item, player) ->  STIGMA_WORKSHOP_GUARDS[player.getOriginal().getRandom().nextInt(5)])
+                .addGuardMotion(EgoWeaponsCategories.STIGMA_WORKSHOP_SWORD, (item, player) -> StigmaWorkshopMovesetAnims.STIGMA_SWORD_GUARD_HIT)
+                .addGuardBreakMotion(EgoWeaponsCategories.STIGMA_WORKSHOP_SWORD, (item, player) -> BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER)
+                .addGuardMotion(EgoWeaponsCategories.MIMICRY, (item, player) -> MimicryMovesetAnims.KALI_GUARD_HIT)
+                .addGuardBreakMotion(EgoWeaponsCategories.MIMICRY, (item, player) -> BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER)
+                .addAdvancedGuardMotion(EgoWeaponsCategories.MIMICRY, (item, player) ->   MIMICRY_GUARDS[player.getOriginal().getRandom().nextInt(2)])
+                .addAdvancedGuardMotion(EgoWeaponsCategories.CRYSTAL_ATELIER, (item, player) -> Animations.SWORD_GUARD_ACTIVE_HIT1)
+                .addGuardMotion(EgoWeaponsCategories.CRYSTAL_ATELIER, (item, player) -> Animations.SWORD_DUAL_GUARD_HIT)
+                .addGuardBreakMotion(EgoWeaponsCategories.CRYSTAL_ATELIER, (item, player) -> BlackSilenceMovesetAnims.RANGA_GUARD_STAGGER);
+    }
+
+    public static ExtendedBuilder createExtendedBuilder(ResourceLocation resLoc) {
+        return (ExtendedBuilder) (new ExtendedBuilder(resLoc)).setCategory(SkillCategories.GUARD).setMaxStack(0).setActivateType(ActivateType.ONE_SHOT).setResource(Resource.STAMINA);
+    }
+
+    // Ensures the last active is actually applied
+    public void onInitiate(SkillContainer container) {
+        super.onInitiate(container);
+        container.getDataManager().registerData(LAST_ACTIVE);
+        container.getDataManager().registerData(PARRY_MOTION_COUNTER);
+        container.getExecuter().getEventListener().addEventListener(PlayerEventListener.EventType.SERVER_ITEM_USE_EVENT, EVENT_UUID, (event) -> {
+            CapabilityItem itemCapability = event.getPlayerPatch().getHoldingItemCapability(Hand.MAIN_HAND);
+            if (this.isHoldingWeaponAvailable(event.getPlayerPatch(), itemCapability, BlockType.GUARD) && this.isExecutableState(event.getPlayerPatch())) {
+                event.getPlayerPatch().getOriginal().startUsingItem(Hand.MAIN_HAND);
+            }
+
+            container.getDataManager().setData(LAST_ACTIVE, event.getPlayerPatch().getOriginal().tickCount);
+        });
+        container.getExecuter().getEventListener().addEventListener(PlayerEventListener.EventType.DEALT_DAMAGE_EVENT_POST, EVENT_UUID, (event) -> {
+            container.getDataManager().setDataSync(PENALTY, Math.max(0, container.getDataManager().getDataValue(PENALTY) / 2 - 0.5f), (ServerPlayerEntity)((ServerPlayerPatch)event.getPlayerPatch()).getOriginal());
+        });
+    }
+
+
+
+    public void guard(SkillContainer container, CapabilityItem itemCapability, HurtEvent.Pre event, float knockback, float impact, boolean advanced) {
+        if (this.isHoldingWeaponAvailable(event.getPlayerPatch(), itemCapability, BlockType.ADVANCED_GUARD)) {
+            DamageSource damageSource = event.getDamageSource();
+            if (this.isBlockableSource(damageSource, true)) {
+                ServerPlayerEntity playerentity = event.getPlayerPatch().getOriginal();
+                boolean successParrying = playerentity.tickCount     - container.getDataManager().getDataValue(LAST_ACTIVE) < calculateBlockDelay(event.getPlayerPatch().getOriginal(),8);
+                float penalty = container.getDataManager().getDataValue(PENALTY);
+
+                WeaponCategory cat = itemCapability.getWeaponCategory();
+                SoundEvent parrySound = EpicFightSounds.CLASH;
+                if (cat.equals(EgoWeaponsCategories.STIGMA_WORKSHOP_SWORD))
+                    parrySound = EgoWeaponsSounds.STIGMA_WORKSHOP_SWORD_PARRY;
+
+                event.getPlayerPatch().playSound(parrySound, -0.05F, 0.1F);
+                EpicFightParticles.HIT_BLUNT.get().spawnParticleWithArgument((ServerWorld)playerentity.level, HitParticleType.FRONT_OF_EYES, HitParticleType.ZERO, playerentity, damageSource.getDirectEntity());
+                if (successParrying) {
+                    knockback *= 0.4F;
+
+                    if (itemCapability.getWeaponCategory().equals(EgoWeaponsCategories.MOOK_WORKSHOP)) {
+                        if (penalty >= 1)
+                            penalty -= 0.1f;
+                        else
+                            penalty += 0.2f;
+                    } else
+                        penalty += 0.1F;
+
+                } else {
+                    penalty += this.getPenaltyMultiplier(itemCapability);
+                }
+                container.getDataManager().setDataSync(PENALTY, penalty, playerentity);
+
+                handleKnockback(event, knockback, successParrying, 0.5f, 0.5f);
+
+                float stamina = event.getPlayerPatch().getStamina();
+
+                if (itemCapability.getWeaponCategory().equals(EgoWeaponsCategories.MOOK_WORKSHOP) && successParrying) {
+                    stamina += 0.1f + 1.5f / (1 + penalty * penalty * penalty);
+
+                    if (stamina > event.getPlayerPatch().getMaxStamina()) {
+                        stamina = event.getPlayerPatch().getMaxStamina();
+                        event.getPlayerPatch().getOriginal().addEffect(new EffectInstance(Effects.DIG_SPEED, 30, 0));
+                    }
+                } else {
+                    if (itemCapability.getWeaponCategory().equals(EgoWeaponsCategories.MOOK_WORKSHOP))
+                        stamina -= 0.3f * penalty;
+
+                    stamina -= penalty * impact;
+                }
+
+                event.getPlayerPatch().setStamina(stamina);
+                BlockType blockType = successParrying ? BlockType.ADVANCED_GUARD : (stamina >= 0.0F ? BlockType.GUARD : BlockType.GUARD_BREAK);
+
+                // Part condition. Strong attacks cannot be parried if stamina were to reach 0
+                blockType = canParryHeavy(successParrying, event.getPlayerPatch(), blockType, stamina, impact, event, penalty);
+                if (blockType.equals(BlockType.GUARD_BREAK))
+                    successParrying = false;
+                StaticAnimation animation = this.getGuardMotion(event.getPlayerPatch(), itemCapability, blockType);
+                if (animation != null) {
+                    event.getPlayerPatch().playAnimationSynchronized(animation, 0.0F);
+                }
+
+
+                EmotionSystem.handleGuard(playerentity, event.getAmount(), impact, successParrying, event.getDamageSource().getEntity());
+                this.dealEvent(event.getPlayerPatch(), event);
+                return;
+            }
+        }
+
+        super.guard(container, itemCapability, event, knockback, impact, false);
+    }
+
+
+    public static BlockType canParryHeavy(boolean successParry, LivingEntityPatch<?> target, BlockType blockType, float stamina, float impact, HurtEvent.Pre event, float penalty) {
+        // Part condition. Strong attacks cannot be parried if stamina were to reach 0.
+        // Strong attacks are attacks with more impact than the targets.
+
+
+
+        if (blockType == BlockType.GUARD_BREAK || (stamina <= 0.001 && impact > target.getImpact(Hand.MAIN_HAND) + 0.5f - penalty / 2.5f)) {
+            event.getPlayerPatch().playSound(EgoWeaponsSounds.STAGGER, 3.0F, 0.0F, 0.1F);
+            return BlockType.GUARD_BREAK;
+        }
+        return blockType;
+    }
+
+    protected boolean isBlockableSource(DamageSource damageSource, boolean advanced) {
+        return damageSource.isProjectile() && advanced || super.isBlockableSource(damageSource, false);
+    }
+
+    @Override
+    protected float getPenaltyMultiplier(CapabilityItem itemCapapbility) {
+        return itemCapapbility.getWeaponCategory().equals(EgoWeaponsCategories.MOOK_WORKSHOP) ? 1 : 0.6F;
+    }
+
+
+    protected StaticAnimation getGuardMotion(PlayerPatch<?> playerpatch, CapabilityItem itemCapability, ExtendedBlockTypes blockType) {
+        if (this.guardReactMotions[blockType.ordinal()] == null) {
+            EgoWeaponsMod.LOGGER.warn("NO BLOCK MOTIONS FOUND FOR : "+this.getClass().getName());
+            return null;
+        }
+        StaticAnimation resolvedAnimation = null;
+        StaticAnimation[] resolvedGuardMotions = (StaticAnimation[]) this.guardReactMotions[blockType.ordinal()].getOrDefault(itemCapability.getWeaponCategory(), (a, b) -> null).apply(itemCapability, playerpatch);
+
+        if (resolvedGuardMotions == null)
+            resolvedGuardMotions = (StaticAnimation[]) this.guardReactMotions[blockType.ordinal() + blockType.unresolvedOffset()].getOrDefault(itemCapability.getWeaponCategory(), (a, b) -> null).apply(itemCapability, playerpatch);
+
+        if (resolvedGuardMotions != null) {
+            SkillDataManager dataManager = playerpatch.getSkill(this.getCategory()).getDataManager();
+            int motionCounter = dataManager.getDataValue(PARRY_MOTION_COUNTER);
+            dataManager.setDataF(PARRY_MOTION_COUNTER, (v) -> v + 1);
+            motionCounter %= resolvedGuardMotions.length + 1;
+
+            if (motionCounter == resolvedGuardMotions.length) {
+                resolvedAnimation = onFinalGuardTrigger(playerpatch, itemCapability, blockType, resolvedGuardMotions);
+            } else {
+                resolvedAnimation = resolvedGuardMotions[motionCounter];
+            }
+
+        }
+
+        return resolvedAnimation;
+    }
+
+    protected StaticAnimation onFinalGuardTrigger(PlayerPatch<?> playerpatch, CapabilityItem itemCapability, ExtendedBlockTypes blockType, StaticAnimation[] resolvedGuardMotions) {
+        return resolvedGuardMotions[resolvedGuardMotions.length-1];
+    }
+
+
+
+    public Skill getPriorSkill() {
+        return Skills.GUARD;
+    }
+
+    protected boolean isAdvancedGuard() {
+        return true;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public List<Object> getTooltipArgs() {
+        return Lists.newArrayList();
+    }
+
+    static {
+        LAST_ACTIVE = SkillDataManager.SkillDataKey.createDataKey(SkillDataManager.ValueType.INTEGER);
+        PARRY_MOTION_COUNTER = SkillDataManager.SkillDataKey.createDataKey(SkillDataManager.ValueType.INTEGER);
+    }
+
+
+
+    public static class ExtendedBuilder extends Builder {
+
+        protected final HashMap<WeaponCategory, BiFunction<CapabilityItem, PlayerPatch<?>, ?>>[] guardReactMotions = new HashMap[9];
+
+
+        public ExtendedBuilder(ResourceLocation resourceLocation) {
+            super(resourceLocation);
+
+            for (int i = 0; i < guardReactMotions.length; i++ ) {
+                guardReactMotions[0] = new HashMap<>();
+            }
+
+        }
+
+        public Map<WeaponCategory, BiFunction<CapabilityItem, PlayerPatch<?>, ?>> getGuardMotions(ExtendedBlockTypes blockTypes) {
+            return guardReactMotions[blockTypes.ordinal()];
+        }
+
+        public Builder addGuardMotion(WeaponCategory weaponCategory, ExtendedBlockTypes blockType, BiFunction<CapabilityItem, PlayerPatch<?>, StaticAnimation> function) {
+            guardReactMotions[blockType.ordinal()].put(weaponCategory, function);
+
+            return this;
+        }
+    }
+
+}

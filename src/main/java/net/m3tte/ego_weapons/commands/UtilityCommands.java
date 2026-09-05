@@ -110,7 +110,6 @@ public class UtilityCommands {
 							return resolveDamageCommand(arguments, targets, damage, attackTypeIdent, damageTypeIdent, null, "");
 						}).then(Commands.argument("source", EntityArgument.entity())
 						.executes(arguments -> {
-							System.out.println("REACHED SECOND CMD");
 							Collection<? extends Entity> targets = EntityArgument.getEntities(arguments, "target");
 							Entity source = EntityArgument.getEntity(arguments, "source");
 							float damage = FloatArgumentType.getFloat(arguments, "damage");
