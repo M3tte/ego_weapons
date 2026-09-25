@@ -20,6 +20,7 @@ import net.m3tte.ego_weapons.item.heishou_mao.HeishouMaoRobe;
 import net.m3tte.ego_weapons.item.heishou_mao.HeishouMaoSword;
 import net.m3tte.ego_weapons.item.justitia.JustitiaCloak;
 import net.m3tte.ego_weapons.item.justitia.JustitiaSword;
+import net.m3tte.ego_weapons.item.lamp.LampEGOSuit;
 import net.m3tte.ego_weapons.item.liu.LiuFireGauntlet;
 import net.m3tte.ego_weapons.item.liu.LiuSection6Armor;
 import net.m3tte.ego_weapons.item.magic_bullet.MagicBullet;
@@ -201,6 +202,8 @@ public class EgoWeaponsItems {
     public static RegistryObject<Item> SPIDER_TRACKSUIT = registerItem("spider_tracksuit", SpidersTracksuit.getArmorForSlot(EquipmentSlotType.CHEST));
     public static RegistryObject<Item> SPIDER_TRACKSUIT_PANTS = registerItem("spider_tracksuit_pants", SpidersTracksuit.getArmorForSlot(EquipmentSlotType.LEGS));
     public static RegistryObject<Item> LATENCY_EMBLEM = registerItem("latency_emblem", new ChesedsLatencyItem());
+    public static RegistryObject<Item> LAMP_SUIT = registerItem("lamp_suit", LampEGOSuit.getArmorForSlot(EquipmentSlotType.CHEST));
+    public static RegistryObject<Item> LAMP_PANTS = registerItem("lamp_pants", LampEGOSuit.getArmorForSlot(EquipmentSlotType.LEGS));
 
     private static RegistryObject<Item> registerItem(String registryName, Item i) {
         return ITEMS.register(registryName, () -> i);

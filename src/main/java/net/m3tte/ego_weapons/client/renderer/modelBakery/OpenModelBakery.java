@@ -104,16 +104,16 @@ public class OpenModelBakery extends CustomModelBakery {
                     boxes.add(new OpenModelPartition(CHEST, CHEST_CHILD, model.body));
                     boxes.add(new OpenModelPartition(LEFT_LEG, LEFT_LEG_CHILD, model.leftLeg));
                     boxes.add(new OpenModelPartition(RIGHT_LEG, RIGHT_LEG_CHILD, model.rightLeg));
-                    boxes.add(new OpenModelPartition(RIGHT_ARM, LEFT_LEG_CHILD, model.rightArm));
-                    boxes.add(new OpenModelPartition(LEFT_ARM, RIGHT_LEG_CHILD, model.leftArm));
+                    boxes.add(new OpenModelPartition(RIGHT_ARM, RIGHT_ARM_CHILD, model.rightArm));
+                    boxes.add(new OpenModelPartition(LEFT_ARM, LEFT_ARM_CHILD, model.leftArm));
                     boxes.add(new OpenModelPartition(HEAD, RIGHT_LEG_CHILD, model.head));
 
 
                     break;
                 case "basic_torso":
                     boxes.add(new OpenModelPartition(CHEST, CHEST_CHILD, model.body));
-                    boxes.add(new OpenModelPartition(RIGHT_ARM, LEFT_LEG_CHILD, model.rightArm));
-                    boxes.add(new OpenModelPartition(LEFT_ARM, RIGHT_LEG_CHILD, model.leftArm));
+                    boxes.add(new OpenModelPartition(RIGHT_ARM, RIGHT_ARM_CHILD, model.rightArm));
+                    boxes.add(new OpenModelPartition(LEFT_ARM, LEFT_ARM_CHILD, model.leftArm));
                     break;
 
                 case "basic_hat":

@@ -77,34 +77,10 @@ public class DarkFlameEffect extends CountPotencyStatus {
 
 
 
-    @Override
-    public String getDescriptionId() {
-        return "effect.dark_burn";
-    }
 
     @Override
     public boolean isBeneficial() {
         return false;
-    }
-
-    @Override
-    public boolean isInstantenous() {
-        return false;
-    }
-
-    @Override
-    public boolean shouldRenderInvText(EffectInstance effect) {
-        return true;
-    }
-
-    @Override
-    public boolean shouldRender(EffectInstance effect) {
-        return true;
-    }
-
-    @Override
-    public boolean shouldRenderHUD(EffectInstance effect) {
-        return true;
     }
 
     @Override

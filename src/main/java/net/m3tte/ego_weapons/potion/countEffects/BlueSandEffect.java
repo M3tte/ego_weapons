@@ -24,10 +24,6 @@ public class BlueSandEffect extends PotencyOnlyStatus {
     public BlueSandEffect() {
         super(EffectType.HARMFUL, "blue_sand",-16777216, true, 3, 300);
     }
-    @Override
-    public String getDescriptionId() {
-        return "effect.blue_sand";
-    }
 
     @Override
     public boolean isBeneficial() {

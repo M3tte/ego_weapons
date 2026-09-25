@@ -24,10 +24,6 @@ public class TheDepartedButterflyEffect extends CountPotencyStatus {
         super(EffectType.HARMFUL, "the_departed_b",-16777216);
     }
 
-    @Override
-    public String getDescriptionId() {
-        return "effect.butterfly_departed";
-    }
 
     @Override
     public boolean isBeneficial() {

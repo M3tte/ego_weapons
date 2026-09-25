@@ -13,6 +13,7 @@ import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
 import net.m3tte.ego_weapons.procedures.EntityTick;
+import net.m3tte.ego_weapons.world.capabilities.UtilitySystems;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCategories;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -34,35 +35,12 @@ public class TargetSpottedEffect extends CountPotencyStatus {
         super(EffectType.HARMFUL, "target_spotted",-16777216);
     }
 
-    @Override
-    public String getDescriptionId() {
-        return "effect.target_spotted";
-    }
 
     @Override
     public boolean isBeneficial() {
         return false;
     }
 
-    @Override
-    public boolean isInstantenous() {
-        return false;
-    }
-
-    @Override
-    public boolean shouldRenderInvText(EffectInstance effect) {
-        return true;
-    }
-
-    @Override
-    public boolean shouldRender(EffectInstance effect) {
-        return true;
-    }
-
-    @Override
-    public boolean shouldRenderHUD(EffectInstance effect) {
-        return true;
-    }
 
     @Override
     public int getCount(EffectInstance ef) {
@@ -89,23 +67,16 @@ public class TargetSpottedEffect extends CountPotencyStatus {
         return true;
     }
 
-    public static float applyOnHit(LivingEntityPatch<?> sourcePatch, LivingEntity target, float oldDamage, DamageSource src) {
+    public static float applyOnHit(LivingEntityPatch<?> sourcePatch, LivingEntity target, float oldMultFactor, DamageSource src) {
 
-        DynamicAnimation currentanim = sourcePatch.getServerAnimator().animationPlayer.getAnimation();
+       UtilitySystems.EGOAttackContext ctx = new UtilitySystems.EGOAttackContext(sourcePatch);
 
-        if (currentanim.getRealAnimation() instanceof BasicEgoAttackAnimation || currentanim.getRealAnimation() instanceof EgoAttackAnimation) {
+        if (ctx.isValidEgoAnimation()) {
             //System.out.println("IS BASIC EGO ATTACK ANIM" + (currentanim.getRealAnimation()).getProperty(BasicEgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER));
 
-            AttackMoveType attackType;
-            String weaponIdentifier;
-
-            //boolean consumesAmmo;
-            //boolean finale;
-            attackType = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE).orElse(AttackMoveType.MELEE);
-            weaponIdentifier = (currentanim.getRealAnimation()).getProperty(EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
 
 
-            if (attackType.equals(AttackMoveType.RANGED)) {
+            if (ctx.getMoveType().equals(AttackMoveType.RANGED)) {
                 ((World) sourcePatch.getOriginal().level).playSound(null, sourcePatch.getOriginal().blockPosition(),
                         (net.minecraft.util.SoundEvent) EgoWeaponsSounds.TARGET_SPOTTED,
                         SoundCategory.PLAYERS, (float) 2, (float) 1);
@@ -116,7 +87,7 @@ public class TargetSpottedEffect extends CountPotencyStatus {
 
                 if (sourcePatch.getHoldingItemCapability(Hand.MAIN_HAND).getWeaponCategory().equals(EgoWeaponsCategories.FULLSTOP_SNIPER)) {
                     if (target.hasEffect(EgoWeaponsEffects.TARGET_SPOTTED.get()) && sourcePatch.getOriginal() instanceof PlayerEntity) {
-                        EntityTick.regenerateLight((PlayerEntity) sourcePatch.getOriginal(), weaponIdentifier.equals("fs_sn_innate") ? 1 : 0, true);
+                        EntityTick.regenerateLight((PlayerEntity) sourcePatch.getOriginal(), ctx.getAnimationIdentifier().equals("fs_sn_innate") ? 1 : 0, true);
                     }
                 }
 
@@ -131,13 +102,13 @@ public class TargetSpottedEffect extends CountPotencyStatus {
                         (target.getZ()), 1, 0, 0, 0, 0);
 
 
-                incrementBonusDamage(src, 0.2f);
 
 
-                return oldDamage * 1.2f;
+
+                return oldMultFactor + incrementBonusDamage(src, 0.2f);
             }
         }
 
-        return oldDamage;
+        return oldMultFactor;
     }
 }

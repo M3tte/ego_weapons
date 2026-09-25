@@ -20,10 +20,6 @@ public class ArmorRegenerativeCycle extends CountPotencyStatus {
     public ArmorRegenerativeCycle() {
         super(EffectType.BENEFICIAL, "alloy_regenerative_cycle",-16777216);
     }
-    @Override
-    public String getDescriptionId() {
-        return "effect.alloy_regenerative_cycle";
-    }
 
     @Override
     public boolean isBeneficial() {

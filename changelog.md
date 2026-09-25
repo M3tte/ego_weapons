@@ -4,7 +4,19 @@
 + ~ Reworked status and stagger effects to allow for targeting non players and improved their feedback.
 + Added /EGODamage command that allows for dealing highly customizable damage
   + The above commands (EGODamage, stagger and status) give feedback how many entities were affected and a different message if no valid entities were found.
-  
++ All statuses should now have respective translation names
++ **Overhauled nothing there AI.**
+  + Will now swap targets after certain skills.
+  + Skills now correctly apply statuses.
+  + New skills added
+  + Stagger Animation added
++ All abilities now have consolidated logic for when they can be executed.
+  + This means most abilities cannot be used while stunned or in an animation.
+  + Abilities such as solemn lament are an exception to this
++ Added correct translations to (hopefully) all potion effects added by the mod.
++ Implemented **Decentralized Status Icons**.
+  + The mod will now resolve status icons for descriptions where defined. This is "probably" slightly less performant than simply using unicode but bypasses the normal unicode limit.
+
 
 # ..v1.01.19
 + Added Udjat Khopesh + Translations
@@ -42,12 +54,11 @@
 + Hit effect for the SHELL status only triggers on damage sources that are caused by an entity and strong enough.
 + Added true stun for great split vertical
 + Eased imitation decay to take 2x longer than normal skills (30s per stack)
-+ Overhauled nothing there AI. Will now swap targets after certain skills.
 + Added new gamerule for converting damage types into lore accurate variants (white actually dealing sanity damage)
 + Added new gamerule for pale damage actually dealing percent damage to players
 
 ### TODO:
-- [ ] Go through effects and add names
+- [x] Go through effects and add names
 - [x] Add Cheseds Latency
 - [x] Round Defensive Value to one decimal
 - [x] Go over Udjat skills and passives
@@ -72,4 +83,6 @@
 - [x] Rework Shell and Terror into count potency effects
 - [x] Link skill usage with epic fight stuns
 - [x] Give nothing there shell and imitation gain on kill or when landing certain attacks. Enhanced unblockable goodbye at enough
-- [ ] Add command for dealing damage
+- [x] Add command for dealing damage
+- [x] Add target mark of the udjat
+- [x] Add stagger animation for nothing there

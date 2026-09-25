@@ -24,10 +24,6 @@ public class FuelIgnitionEffect extends CountPotencyStatus {
     public FuelIgnitionEffect() {
         super(EffectType.BENEFICIAL, "fuel_ignition",-16777216);
     }
-    @Override
-    public String getDescriptionId() {
-        return "effect.fuel_ignition";
-    }
 
     @Override
     public boolean isBeneficial() {

@@ -58,7 +58,7 @@ public class SolemnLamentEffects {
 
 		@Override
 		public String getDescriptionId() {
-			return "effect.magic_bullet";
+			return "effect.living_departed";
 		}
 
 		@Override

@@ -81,7 +81,9 @@ public class PatchedAccessoryRenderLayer<E extends LivingEntity, T extends Livin
                             }
 
                             break;
-
+                        case "lamp_suit":
+                            renderWearableModel(emAccessoryRenderLayer.getRenderer("lamp_ego_eyes"), entity, buf, ValidRenderTypes.FULLBRIGHT, poseStack, packedLightIn, poses, netYawHead, pitchHead, partialTicks);
+                            break;
                     }
 
                 }

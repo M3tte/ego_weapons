@@ -19,10 +19,6 @@ public class TheLivingButterflyEffect extends CountPotencyStatus {
         super(EffectType.HARMFUL, "the_living_b",-16777216);
     }
 
-    @Override
-    public String getDescriptionId() {
-        return "effect.butterfly_living";
-    }
 
     @Override
     public boolean isBeneficial() {

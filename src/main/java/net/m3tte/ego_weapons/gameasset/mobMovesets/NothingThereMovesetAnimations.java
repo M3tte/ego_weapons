@@ -72,6 +72,7 @@ public class NothingThereMovesetAnimations {
     public static StaticAnimation NT_CHARGE_B_2;
 
     public static StaticAnimation NT_CHARGE_RUN;
+    public static StaticAnimation NT_STAGGER;
 
     public static void build(Model nothing_there) {
         System.out.println("Building ENTITY Animations");
@@ -80,6 +81,8 @@ public class NothingThereMovesetAnimations {
 
         NT_WALK = new MovementAnimation(true, "nothing_there/walk", nothing_there)
                 .addProperty(StaticAnimationProperty.PLAY_SPEED, 1.7f);
+
+        NT_STAGGER = new LongHitAnimation(0.05f, "nothing_there/stagger", nothing_there);
 
         NT_AUTO_1 = (new BasicEgoAttackAnimation(0.02F, 0.03F, 0.2F, 0.6F, 1.2F, EgoWeaponsCapabilityPresets.DoubtBlade, "Left_Forearm", "nothing_there/attack_1", nothing_there))
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)

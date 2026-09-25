@@ -75,6 +75,7 @@ import yesman.epicfight.api.utils.IndirectEpicFightDamageSource;
 import yesman.epicfight.gameasset.Animations;
 import yesman.epicfight.gameasset.EpicFightSounds;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
+import yesman.epicfight.world.capabilities.entitypatch.EntityPatch;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 import yesman.epicfight.world.effect.EpicFightMobEffects;
@@ -453,11 +454,17 @@ public class SharedFunctions {
         // Calculate additional poise damage for movesets
         // Damage Increase for Target Spotted
         if (self.hasEffect(EgoWeaponsEffects.TARGET_SPOTTED.get()) && source.getEntity() != null) {
-
             LivingEntityPatch<?> sourcePatch = (LivingEntityPatch<?>) source.getEntity().getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-
             if (sourcePatch != null) {
                 multiplier = TargetSpottedEffect.applyOnHit(sourcePatch, self, multiplier, source);
+            }
+        }
+
+        // Damage increase for target spotted :: Udjat
+        if (self.hasEffect(EgoWeaponsEffects.TARGET_MARK_UDJAT.get()) && source.getEntity() != null) {
+            LivingEntityPatch<?> sourcePatch = (LivingEntityPatch<?>) source.getEntity().getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+            if (sourcePatch != null) {
+                multiplier = UdjatTargetMark.applyOnHit(sourcePatch, self, multiplier, source);
             }
         }
 
@@ -1293,6 +1300,7 @@ public class SharedFunctions {
 
         DynamicAnimation dynAnim = patch.getServerAnimator().animationPlayer.getAnimation().getRealAnimation();
 
+
         GenericEgoDamage.DamageTypes damageType = dynAnim.getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE).orElse(null);
 
         Hand hand = Hand.MAIN_HAND;
@@ -1439,8 +1447,6 @@ public class SharedFunctions {
 
             if (!conv.getAttackType().equals(AttackTypes.HIDDEN) && self.level.getGameRules().getBoolean(EgoWeaponsGamerules.ENABLE_DAMAGEINDICATORS))
                 EgoWeaponsMod.PACKET_HANDLER.send(PacketDistributor.ALL.noArg(), new VFXPackages.DamageLabelParticle(self.position().add(randomX,randomY,randomZ), conv.getDamageType(), conv.getAttackType(), conv.getCrit(), amount, conv.getResistanceMult(), conv.getBonusMult()));
-
-
 
             // Lore accurate damage types modifier
             int damageConv = self.level.getGameRules().getInt(EgoWeaponsGamerules.LORE_DAMAGE_CONVERSION);

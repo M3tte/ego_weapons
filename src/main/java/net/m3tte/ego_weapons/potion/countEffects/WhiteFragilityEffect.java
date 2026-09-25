@@ -19,10 +19,6 @@ public class WhiteFragilityEffect extends CountPotencyStatus {
     public WhiteFragilityEffect() {
         super(EffectType.HARMFUL, "white_fragility",-16777216);
     }
-    @Override
-    public String getDescriptionId() {
-        return "effect.white_fragility";
-    }
 
     @Override
     public boolean isBeneficial() {

@@ -1,8 +1,13 @@
 package net.m3tte.ego_weapons.procedures;
 
+import jdk.nashorn.internal.ir.annotations.Ignore;
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
+import net.m3tte.ego_weapons.client.renderer.StatusEffectIconHandler;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.minecraft.potion.Effect;
 import net.minecraft.util.text.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class TooltipFuncs {
@@ -20,6 +25,24 @@ public class TooltipFuncs {
         }
     }
 
+    // Same as above but inserts metadata. Seperate for organization sake
+    @Ignore()
+    public static void generateDescription(List<ITextComponent> list, String weaponIdentifier, String typeIdentifier, int maxIndices, boolean flavorText, Effect... effects) {
+        ITextComponent[] metaDatas = StatusEffectIconHandler.generateTranslateArguments(effects);
+
+        list.add(new TranslationTextComponent("desc.ego_weapons."+weaponIdentifier+"."+typeIdentifier+".title", (Object[]) metaDatas));
+
+
+        for (int i = 1; i <= maxIndices; i++)
+            list.add(new TranslationTextComponent("desc.ego_weapons."+weaponIdentifier+"."+typeIdentifier+"."+i, (Object[]) metaDatas));
+
+        if (flavorText) {
+            list.add(new StringTextComponent("   "));
+
+            list.add(new TranslationTextComponent("desc.ego_weapons."+weaponIdentifier+"."+typeIdentifier+".desc", (Object[]) metaDatas).withStyle(style -> style.withColor(Color.fromRgb(0x8c5c3c))));
+        }
+    }
+
     public static void generateDescription(List<ITextComponent> list, String weaponIdentifier, String typeIdentifier, int maxIndices) {
         generateDescription(list, weaponIdentifier, typeIdentifier, maxIndices, false);
     }
@@ -27,6 +50,15 @@ public class TooltipFuncs {
     public static void generateItemDescription(List<ITextComponent> list, String identifier) {
         list.add(new TranslationTextComponent(identifier).withStyle(style -> style.withColor(Color.fromRgb(0x8c5c3c))));
     }
+
+    public static void generateDescription(List<ITextComponent> list, String weaponIdentifier, String typeIdentifier, int maxIndices, Effect... effects) {
+        generateDescription(list, weaponIdentifier, typeIdentifier, maxIndices, false, effects);
+    }
+
+
+
+
+
 
 
     public static void generateOffhandHelp(List<ITextComponent> list) {
@@ -56,8 +88,8 @@ public class TooltipFuncs {
                 case "sheut_fracture": generateDescription(list, "statuses", "sheut_fracture", 7, true); break;
                 case "white_fragility": generateDescription(list, "statuses", "white_fragility", 2); break;
                 case "blue_sand": generateDescription(list, "statuses", "blue_sand", 5, true); break;
-                case "ego_att_ardor": generateDescription(list, "statuses", "ego_att_ardor", 5); break;
-                case "embers": generateDescription(list, "statuses", "embers", 4); break;
+                case "ego_att_ardor": generateDescription(list, "statuses", "ego_att_ardor", 5, EgoWeaponsEffects.EGO_ATTUNEMENT_ARDOR_BLOSSOM.get()); break;
+                case "embers": generateDescription(list, "statuses", "embers", 4, EgoWeaponsEffects.EMBERS.get()); break;
                 case "butterfly": generateDescription(list, "statuses", "butterfly", 10); break;
                 case "imitation": generateDescription(list, "statuses", "imitation", 2); break;
                 case "fragile": generateDescription(list, "statuses", "fragile", 2); break;

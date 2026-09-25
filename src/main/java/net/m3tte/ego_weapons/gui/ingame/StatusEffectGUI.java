@@ -51,7 +51,6 @@ public class StatusEffectGUI extends EntityIndicator {
     private ResourceLocation ammoRL = new ResourceLocation(EgoWeaponsMod.MODID, "textures/mob_effect/ammo.png");
     private ResourceLocation d10fuelRL = new ResourceLocation(EgoWeaponsMod.MODID, "textures/mob_effect/district_10_fuel.png");
     private ResourceLocation ov_d10fuelRL = new ResourceLocation(EgoWeaponsMod.MODID, "textures/mob_effect/overheated_district_10_fuel.png");
-
     private ResourceLocation solemnLamentEffectRL = new ResourceLocation(EgoWeaponsMod.MODID, "textures/mob_effect/living_departed.png");
 
     @Override

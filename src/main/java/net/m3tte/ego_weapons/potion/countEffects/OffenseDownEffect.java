@@ -24,10 +24,6 @@ public class OffenseDownEffect extends PotencyOnlyStatus {
         super(EffectType.HARMFUL, "offense_down",-16777216, false, 99, 300);
     }
 
-    @Override
-    public String getDescriptionId() {
-        return "effect.offense_down";
-    }
 
     static AttributeModifier damageMod = new AttributeModifier(UUID.fromString("fc414f98-920e-4b92-88d9-6ce88ebff984"), "offenseDownDamage", -0.03, AttributeModifier.Operation.MULTIPLY_BASE);
     static AttributeModifier attackSpeedMod = new AttributeModifier(UUID.fromString("fc414f98-920e-4b92-88d9-6ce88ebff984"), "offenseDownAttackSpeed", -0.035, AttributeModifier.Operation.ADDITION);

@@ -312,9 +312,9 @@ public class ArdorBlossomSuit extends GenericEgoWeaponsArmor {
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"offense_up", "burn", "ego_att_ardor"});
 					else {
-						generateDescription(list, "ardor_blossom_suit", "ability", 5, true);
+						generateDescription(list, "ardor_blossom_suit", "ability", 5, true, EgoWeaponsEffects.EGO_ATTUNEMENT_ARDOR_BLOSSOM.get());
 						list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
-						generateDescription(list, "ardor_blossom_suit", "ability2", 4);
+						generateDescription(list, "ardor_blossom_suit", "ability2", 4, EgoWeaponsEffects.EGO_ATTUNEMENT_ARDOR_BLOSSOM.get());
 					}
 					break;
 			}

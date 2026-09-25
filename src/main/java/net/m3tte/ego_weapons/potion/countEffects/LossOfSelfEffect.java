@@ -14,10 +14,6 @@ public class LossOfSelfEffect extends PotencyOnlyStatus {
     public LossOfSelfEffect() {
         super(EffectType.HARMFUL, "loss_of_self",-16777216, true, 99, 1000);
     }
-    @Override
-    public String getDescriptionId() {
-        return "effect.loss_of_self";
-    }
 
     @Override
     public boolean isBeneficial() {

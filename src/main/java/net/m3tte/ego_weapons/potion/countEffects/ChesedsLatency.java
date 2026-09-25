@@ -21,10 +21,6 @@ public class ChesedsLatency extends CountPotencyStatus {
         super(EffectType.BENEFICIAL, "cheseds_latency",-16777216);
     }
 
-    @Override
-    public String getDescriptionId() {
-        return "effect.cheseds_latency";
-    }
 
     @Override
     public boolean isBeneficial() {

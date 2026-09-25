@@ -23,35 +23,12 @@ public class BleedEffect extends CountPotencyStatus {
         super(EffectType.HARMFUL, "bleed",-16777216);
     }
 
-    @Override
-    public String getDescriptionId() {
-        return "effect.bleed";
-    }
 
     @Override
     public boolean isBeneficial() {
         return false;
     }
 
-    @Override
-    public boolean isInstantenous() {
-        return false;
-    }
-
-    @Override
-    public boolean shouldRenderInvText(EffectInstance effect) {
-        return true;
-    }
-
-    @Override
-    public boolean shouldRender(EffectInstance effect) {
-        return true;
-    }
-
-    @Override
-    public boolean shouldRenderHUD(EffectInstance effect) {
-        return true;
-    }
 
     public static void apply(LivingEntity target) {
         target.hurt(DamageSource.GENERIC,0.1f);

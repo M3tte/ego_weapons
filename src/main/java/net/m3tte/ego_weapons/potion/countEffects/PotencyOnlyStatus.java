@@ -68,7 +68,7 @@ public class PotencyOnlyStatus extends CountPotencyStatus {
         if (entity.level.isClientSide)
             return;
         if (!entity.hasEffect(this)) {
-            entity.addEffect(new EffectInstance(this, this.effectDuration, Math.min(Math.min(this.limit-1,cap-1),Math.max(potency,0))));
+            entity.addEffect(new EffectInstance(this, this.effectDuration, Math.min(Math.min(this.limit-1,cap-1),Math.max(potency-1,0))));
         } else {
             potency = Math.min(entity.getEffect(this).getAmplifier() + potency,Math.min(this.limit-1,cap-1));
 

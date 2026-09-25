@@ -20,10 +20,6 @@ public class ObligationFullfillmentEffect extends CountPotencyStatus {
     public ObligationFullfillmentEffect() {
         super(EffectType.BENEFICIAL, "obligation_fullfillment",-16777216);
     }
-    @Override
-    public String getDescriptionId() {
-        return "effect.obligation_fullfillment";
-    }
 
     @Override
     public boolean isBeneficial() {

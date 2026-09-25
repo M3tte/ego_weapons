@@ -43,6 +43,7 @@ public class AccessoryRenderLayer<T extends LivingEntity, M extends BipedModel<T
         registerModel("ardor_blossom_fire", new ArdorBlossomFireRenderer());
         registerModel("ardor_blossom_wings", new ArdorBlossomWingRenderer());
         registerModel("udjat_eye_glow", new LCAUdjatEyeGlowRenderer());
+        registerModel("lamp_ego_eyes", new LampEgoEyesRenderer());
         registerModel("udjat_mask", new LCAUdjatMaskRenderer());
     }
 
@@ -59,8 +60,11 @@ public class AccessoryRenderLayer<T extends LivingEntity, M extends BipedModel<T
                         if (entity.hasEffect(EgoWeaponsEffects.EGO_ATTUNEMENT_ARDOR_BLOSSOM.get()))
                             getRenderer("ardor_blossom_wings").render(entity, null, this.getParentModel(), matrixStack, buffer, combinedLight, animationPosition, animationSpeed, partialTick);
                         break;
-                }
+                    case "lamp_suit":
+                        getRenderer("lamp_ego_eyes").render(entity, null, this.getParentModel(), matrixStack, buffer, combinedLight, animationPosition, animationSpeed, partialTick);
 
+                        break;
+                }
             }
 
             if (entity.getItemBySlot(EquipmentSlotType.HEAD).getItem().getRegistryName() != null) {

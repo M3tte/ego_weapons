@@ -45,6 +45,7 @@ public class EgoWeaponsEffects {
     public static final RegistryObject<CountPotencyStatus> MAGIC_BULLET = registerEffect("magic_bullet", new MagicBulletEffect());
     public static final RegistryObject<CountPotencyStatus> POISE = registerEffect("poise", new PoiseEffect());
     public static final RegistryObject<CountPotencyStatus> TARGET_SPOTTED = registerEffect("target_spotted", new TargetSpottedEffect());
+    public static final RegistryObject<CountPotencyStatus> TARGET_MARK_UDJAT = registerEffect("target_mark_udjat", new UdjatTargetMark());
     public static final RegistryObject<CountPotencyStatus> ASSIST_FIRE = registerEffect("assist_fire", new AssistFireEffect());
 
     public static final RegistryObject<CountPotencyStatus> OFFENSE_LEVEL_DOWN = registerEffect("offense_down", new OffenseDownEffect());

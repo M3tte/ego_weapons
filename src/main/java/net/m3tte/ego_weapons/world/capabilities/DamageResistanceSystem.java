@@ -54,6 +54,22 @@ public class DamageResistanceSystem {
         return inValue;
     }
 
+    public static GenericEgoDamage.DamageTypes getWeakestDamageType(LivingEntity entity, boolean includePale) {
+        float weakestVal = 0;
+        GenericEgoDamage.DamageTypes type = GenericEgoDamage.DamageTypes.RED;
+
+        for (GenericEgoDamage.DamageTypes t : GenericEgoDamage.DamageTypes.values()) {
+            float val = EgoWeaponsAttributes.getDamageTypeResistance(t, entity);
+
+            if (val > weakestVal && ((!t.equals(GenericEgoDamage.DamageTypes.PALE)) || includePale)) {
+                type = t;
+                weakestVal = val;
+            }
+        }
+
+        return type;
+    }
+
     public static float calculateBurnResistanceFor(LivingEntity entity, float inValue) {
         Item chestItem = entity.getItemBySlot(EquipmentSlotType.CHEST).getItem();
 

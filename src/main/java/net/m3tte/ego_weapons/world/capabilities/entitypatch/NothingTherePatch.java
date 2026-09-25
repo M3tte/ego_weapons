@@ -146,7 +146,7 @@ public class NothingTherePatch extends MobPatch<NothingThere2Entity> implements 
         this.original.getAttribute(EpicFightAttributes.IMPACT.get()).setBaseValue(5.0D);
         this.original.getAttribute(EpicFightAttributes.WEIGHT.get()).setBaseValue(999.0D);
         this.original.getAttribute(EpicFightAttributes.STUN_ARMOR.get()).setBaseValue(6.0D);
-        this.original.getAttribute(EgoWeaponsAttributes.MAX_STAGGER.get()).setBaseValue(60.0D);
+        this.original.getAttribute(EgoWeaponsAttributes.MAX_STAGGER.get()).setBaseValue(150.0D);
 
         this.original.getAttribute(EgoWeaponsAttributes.BLUNT_RESISTANCE.get()).setBaseValue(0.7D);
         this.original.getAttribute(EgoWeaponsAttributes.PIERCE_RESISTANCE.get()).setBaseValue(0.9D);
@@ -167,7 +167,7 @@ public class NothingTherePatch extends MobPatch<NothingThere2Entity> implements 
 
     @Override
     public StaticAnimation getStaggerAnimation() {
-        return null;
+        return NothingThereMovesetAnimations.NT_STAGGER;
     }
 
     @Override

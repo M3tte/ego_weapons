@@ -1,9 +1,6 @@
 package net.m3tte.ego_weapons.mixin.epicfight;
 
-import net.m3tte.ego_weapons.gui.ingame.DialogueGUI;
-import net.m3tte.ego_weapons.gui.ingame.PlayerStatsIndicator;
-import net.m3tte.ego_weapons.gui.ingame.StatusEffectGUI;
-import net.m3tte.ego_weapons.gui.ingame.ThreatLevelGUI;
+import net.m3tte.ego_weapons.gui.ingame.*;
 import net.m3tte.ego_weapons.world.capabilities.threatlevel.ThreatLevelSystem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,5 +19,6 @@ public class EntityIndicatorMixin {
         new PlayerStatsIndicator();
         new StatusEffectGUI();
         new DialogueGUI();
+        new UtilityOverlays();
     }
 }

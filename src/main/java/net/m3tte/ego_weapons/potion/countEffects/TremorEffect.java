@@ -32,10 +32,6 @@ public class TremorEffect extends CountPotencyStatus {
         super(effectType, name, i);
     }
 
-    @Override
-    public String getDescriptionId() {
-        return "effect.tremor";
-    }
 
     @Override
     public boolean isBeneficial() {

@@ -13,9 +13,6 @@ public class SinEffect extends PotencyOnlyStatus {
     public SinEffect() {
         super(EffectType.HARMFUL, "sin",-16777216, true, 7, 800);
     }
-    @Override
-    public String getDescriptionId() {
-        return "effect.sin";
-    }
+
 
 }

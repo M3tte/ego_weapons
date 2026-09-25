@@ -97,7 +97,7 @@ public class ArdorBlossomBat extends EgoWeaponsWeapon {
 				if (EgoWeaponsKeybinds.isHoldingShift())
 					generateStatusDescription(list, new String[]{"red", "burn", "embers"});
 				else
-					generateDescription(list,"ardor_blossom_bat", "passive", 3);
+					generateDescription(list,"ardor_blossom_bat", "passive", 3, EgoWeaponsEffects.EMBERS.get(), EgoWeaponsEffects.EGO_ATTUNEMENT_ARDOR_BLOSSOM.get());
 				break;
 			case 1:
 				boolean swap = false;
@@ -111,12 +111,12 @@ public class ArdorBlossomBat extends EgoWeaponsWeapon {
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"red", "burn", "embers", "ego_att_ardor", "fragile"});
 					else
-						generateDescription(list, "ardor_blossom_bat", "ability2", 15, true);
+						generateDescription(list, "ardor_blossom_bat", "ability2", 15, true, EgoWeaponsEffects.EMBERS.get());
 				} else {
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"red", "burn", "embers", "ego_att_ardor"});
 					else
-						generateDescription(list, "ardor_blossom_bat", "ability1", 10, true);
+						generateDescription(list, "ardor_blossom_bat", "ability1", 10, true, EgoWeaponsEffects.EMBERS.get(), EgoWeaponsEffects.EGO_ATTUNEMENT_ARDOR_BLOSSOM.get());
 				}
 
 				break;
@@ -124,13 +124,13 @@ public class ArdorBlossomBat extends EgoWeaponsWeapon {
                 if (EgoWeaponsKeybinds.isHoldingShift())
                     generateStatusDescription(list, new String[]{"red", "burn", "embers"});
                 else
-                    generateDescription(list, "ardor_blossom_bat", "ability", 9, true);
+                    generateDescription(list, "ardor_blossom_bat", "ability", 9, true, EgoWeaponsEffects.EMBERS.get());
                 break;
 			case 3:
 				if (EgoWeaponsKeybinds.isHoldingShift())
 					generateStatusDescription(list, new String[]{"red", "burn", "embers"});
 				else {
-					generateDescription(list,"ardor_blossom_bat", "innate", 9, true);
+					generateDescription(list,"ardor_blossom_bat", "innate", 9, true, EgoWeaponsEffects.EMBERS.get());
 				}
 
 				break;
@@ -138,7 +138,7 @@ public class ArdorBlossomBat extends EgoWeaponsWeapon {
 				if (EgoWeaponsKeybinds.isHoldingShift())
 					generateStatusDescription(list, new String[]{"red", "burn", "embers"});
 				else
-					generateDescription(list,"ardor_blossom_bat", "auto", 6);
+					generateDescription(list,"ardor_blossom_bat", "auto", 6, EgoWeaponsEffects.EMBERS.get());
 				break;
 		}
 

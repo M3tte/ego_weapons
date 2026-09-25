@@ -22,10 +22,6 @@ public class RuptureEffect extends CountPotencyStatus {
         super(EffectType.HARMFUL, "rupture",-16777216);
     }
 
-    @Override
-    public String getDescriptionId() {
-        return "effect.rupture";
-    }
 
     @Override
     public boolean isBeneficial() {

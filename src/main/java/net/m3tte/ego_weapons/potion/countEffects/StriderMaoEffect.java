@@ -19,10 +19,6 @@ public class StriderMaoEffect extends PotencyOnlyStatus {
         super(EffectType.BENEFICIAL, "strider_mao",-16777216, false, 3, 999999);
     }
 
-    @Override
-    public String getDescriptionId() {
-        return "effect.strider_mao";
-    }
 
     @Override
     public boolean isBeneficial() {

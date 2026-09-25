@@ -75,11 +75,6 @@ public class TremorDecayEffect extends TremorEffect {
         attrman.save();
     }
 
-    @Override
-    public String getDescriptionId() {
-        return "effect.tremor_decay";
-    }
-
 
 
 }

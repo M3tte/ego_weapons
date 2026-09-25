@@ -3,6 +3,7 @@ package net.m3tte.ego_weapons.world.capabilities;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.gameasset.AttackLogicPredicate;
+import net.m3tte.ego_weapons.gameasset.AttackMoveType;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.network.packages.VFXPackages;
@@ -133,6 +134,7 @@ public class UtilitySystems {
 
         boolean validEgoAnimation = false;
         DynamicAnimation animation = null;
+        AttackMoveType moveType = AttackMoveType.MELEE;
         AttackLogicPredicate logicPredicate = AttackLogicPredicate.DEFAULT;
 
         public EGOAttackContext(LivingEntityPatch<?> entityPatch) {
@@ -147,6 +149,7 @@ public class UtilitySystems {
                 String animIdent = (currentanim.getRealAnimation()).getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER).orElse("");
                 boolean consumesAmmo = (currentanim.getRealAnimation()).getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.CONSUMES_AMMO).orElse(false);
                 boolean finalOfCombo = (currentanim.getRealAnimation()).getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.FINAL_COIN).orElse(false);
+                AttackMoveType attackMoveType = (currentanim.getRealAnimation()).getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE).orElse(AttackMoveType.MELEE);
                 boolean triggersFX = (currentanim.getRealAnimation()).getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.TRIGGERS_EFFECTS).orElse(true);
                 AttackLogicPredicate logicPredicate = (currentanim.getRealAnimation()).getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LOGIC_PREDICATE).orElse(AttackLogicPredicate.DEFAULT);
 
@@ -160,6 +163,7 @@ public class UtilitySystems {
                     consumesAmmo = ((EgoAttackAnimation.EgoAttackPhase) phase).getProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.CONSUMES_AMMO).orElse(consumesAmmo);
                     finalOfCombo = ((EgoAttackAnimation.EgoAttackPhase) phase).getProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.FINAL_COIN).orElse(finalOfCombo);
                     triggersFX = ((EgoAttackAnimation.EgoAttackPhase) phase).getProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.TRIGGERS_EFFECTS).orElse(triggersFX);
+                    attackMoveType = ((EgoAttackAnimation.EgoAttackPhase) phase).getProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.ATTACK_MOVE_TYPE).orElse(attackMoveType);
                     logicPredicate = ((EgoAttackAnimation.EgoAttackPhase) phase).getProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.LOGIC_PREDICATE).orElse(logicPredicate);
                 }
 
@@ -168,6 +172,7 @@ public class UtilitySystems {
                 this.finalCoin = finalOfCombo;
                 this.triggersEffects = triggersFX;
                 this.logicPredicate = logicPredicate;
+                this.moveType = attackMoveType;
             }
         }
 
@@ -189,6 +194,10 @@ public class UtilitySystems {
 
         public boolean isValidEgoAnimation() {
             return validEgoAnimation;
+        }
+
+        public AttackMoveType getMoveType() {
+            return moveType;
         }
 
         public AttackLogicPredicate getLogicPredicate() {

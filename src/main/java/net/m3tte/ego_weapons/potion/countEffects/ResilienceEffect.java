@@ -19,10 +19,6 @@ public class ResilienceEffect extends CountPotencyStatus {
         super(EffectType.BENEFICIAL, "resilience",-16777216);
     }
 
-    @Override
-    public String getDescriptionId() {
-        return "effect.resilience";
-    }
 
     @Override
     public boolean isBeneficial() {

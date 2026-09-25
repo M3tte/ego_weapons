@@ -15,10 +15,6 @@ public class AssistFireEffect extends CountPotencyStatus {
         super(EffectType.HARMFUL, "assist_fire",-16777216);
     }
 
-    @Override
-    public String getDescriptionId() {
-        return "effect.assist_fire";
-    }
 
     @Override
     public boolean isBeneficial() {

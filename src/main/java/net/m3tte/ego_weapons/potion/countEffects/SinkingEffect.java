@@ -24,10 +24,6 @@ public class SinkingEffect extends CountPotencyStatus {
         super(EffectType.HARMFUL, "sinking",-16777216);
     }
 
-    @Override
-    public String getDescriptionId() {
-        return "effect.sinking";
-    }
 
     @Override
     public boolean isBeneficial() {

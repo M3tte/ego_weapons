@@ -14,10 +14,6 @@ public class SealedEffect extends CountPotencyStatus {
     public SealedEffect() {
         super(EffectType.HARMFUL, "sealed",-16777216);
     }
-    @Override
-    public String getDescriptionId() {
-        return "effect.sealed";
-    }
 
     @Override
     public boolean isBeneficial() {

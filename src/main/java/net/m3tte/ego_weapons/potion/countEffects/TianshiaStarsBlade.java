@@ -22,10 +22,6 @@ public class TianshiaStarsBlade extends CountPotencyStatus {
     public TianshiaStarsBlade() {
         super(EffectType.BENEFICIAL, "tianshia_star",-16777216);
     }
-    @Override
-    public String getDescriptionId() {
-        return "effect.tianshia_star";
-    }
 
     @Override
     public boolean isBeneficial() {

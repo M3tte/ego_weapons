@@ -521,12 +521,26 @@ public class LCARifleMovesetAnims {
         return events;
     }
 
+    private static void applyDebuffsToNearbyEnemies(LivingEntity source) {
+        List<LivingEntity> nearbyHostiles = SharedFunctions.getNearbyEntities(source, 24, 4, TeamLockedPredicate.ONLY_HOSTILES);
+
+        System.out.println("Applying debuffs : "+nearbyHostiles.size());
+
+        LivingEntity highestHealthEntity = nearbyHostiles.stream().findFirst().orElse(null);
+
+        for (LivingEntity ent : nearbyHostiles) {
+            if (ent.getHealth() > highestHealthEntity.getHealth())
+                highestHealthEntity = ent;
+        }
+
+        if (highestHealthEntity != null) {
+            EgoWeaponsEffects.SPEED_DOWN.get().increment(highestHealthEntity, 0, 2);
+            EgoWeaponsEffects.TARGET_MARK_UDJAT.get().increment(highestHealthEntity, 0, 1);
+        }
+    }
     private static void applyBuffsToNearbyAllies(LivingEntity source, int amount) {
         List<LivingEntity> nearbyFriendlies = SharedFunctions.getNearbyEntities(source, 16, 4, TeamLockedPredicate.ONLY_ALLIES);
         nearbyFriendlies.add(source);
-
-
-
 
         if (nearbyFriendlies.isEmpty())
             return;
@@ -552,9 +566,9 @@ public class LCARifleMovesetAnims {
                     emotionLevel = EmotionSystem.getEmotionLevel((PlayerEntity) entity);
                 }
 
+                applyDebuffsToNearbyEnemies(entity);
                 if (emotionLevel > 0) {
                     int excess = emotionLevel + EgoWeaponsEffects.UDJAT_VANGUARD.get().getPotency(entity) - 3;
-
                     EgoWeaponsEffects.UDJAT_VANGUARD.get().increment(entity, 3, emotionLevel);
 
                     if (excess > 0) {

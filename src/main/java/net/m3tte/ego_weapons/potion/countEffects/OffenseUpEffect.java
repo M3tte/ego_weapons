@@ -21,10 +21,6 @@ public class OffenseUpEffect extends PotencyOnlyStatus {
         super(EffectType.BENEFICIAL, "offense_up",-16777216, false, 99, 300);
     }
 
-    @Override
-    public String getDescriptionId() {
-        return "effect.offense_up";
-    }
 
     @Override
     public boolean isBeneficial() {

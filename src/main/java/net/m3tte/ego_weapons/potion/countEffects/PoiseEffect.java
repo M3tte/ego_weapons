@@ -19,10 +19,6 @@ public class PoiseEffect extends CountPotencyStatus {
         super(EffectType.BENEFICIAL, "poise",-16777216);
     }
 
-    @Override
-    public String getDescriptionId() {
-        return "effect.poise";
-    }
 
     @Override
     public boolean isBeneficial() {

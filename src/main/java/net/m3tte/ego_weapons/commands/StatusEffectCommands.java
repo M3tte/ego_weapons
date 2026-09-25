@@ -88,7 +88,7 @@ public class StatusEffectCommands {
 							}
 
 							if (affected > 0)
-								arguments.getSource().sendSuccess(new TranslationTextComponent("commands.ego_weapons.success.incrementStatus.1", status.getPath(), affected, affected==1?"y":"ies"), true);
+								arguments.getSource().sendSuccess(new TranslationTextComponent("commands.ego_weapons.success.incrementStatus.1", "§c"+status.getPath().toUpperCase(), potency+"/"+count, affected, affected==1?"y":"ies"), true);
 							else
 								arguments.getSource().sendSuccess(new TranslationTextComponent("commands.ego_weapons.errors.no_targets", targets.size()), true);
 
@@ -133,7 +133,7 @@ public class StatusEffectCommands {
 							}
 
 							if (affected > 0)
-								arguments.getSource().sendSuccess(new TranslationTextComponent("commands.ego_weapons.success.decrementStatus.1", status.getPath(),affected, affected==1?"y":"ies"), true);
+								arguments.getSource().sendSuccess(new TranslationTextComponent("commands.ego_weapons.success.decrementStatus.1", status.getPath().toUpperCase(),potency+"/"+count,affected, affected==1?"y":"ies"), true);
 							else
 								arguments.getSource().sendSuccess(new TranslationTextComponent("commands.ego_weapons.errors.no_targets", targets.size()), true);
 

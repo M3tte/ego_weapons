@@ -21,10 +21,6 @@ public class SeverTheThreadEffect extends CountPotencyStatus {
     public SeverTheThreadEffect() {
         super(EffectType.HARMFUL, "sever_the_thread",-16777216);
     }
-    @Override
-    public String getDescriptionId() {
-        return "effect.sever_the_thread";
-    }
 
     @Override
     public boolean isBeneficial() {

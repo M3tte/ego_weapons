@@ -345,20 +345,6 @@
     },
     {
       "type": "bitmap",
-      "file": "ego_weapons:mob_effect/ego_att_ardor.png",
-      "ascent": 8,
-      "height": 9,
-      "chars": ["\uE050"]
-    },
-    {
-      "type": "bitmap",
-      "file": "ego_weapons:mob_effect/embers.png",
-      "ascent": 8,
-      "height": 9,
-      "chars": ["\uE051"]
-    },
-    {
-      "type": "bitmap",
       "file": "ego_weapons:mob_effect/blue_sand.png",
       "ascent": 8,
       "height": 9,
@@ -387,7 +373,7 @@
     },
     {
       "type": "bitmap",
-      "file": "ego_weapons:mob_effect/udjat_mark.png",
+      "file": "ego_weapons:mob_effect/target_mark_udjat.png",
       "ascent": 8,
       "height": 9,
       "chars": ["\uE056"]

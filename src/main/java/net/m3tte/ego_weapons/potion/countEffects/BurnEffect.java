@@ -31,10 +31,6 @@ public class BurnEffect extends CountPotencyStatus {
         super(EffectType.HARMFUL, "burn",-16777216);
     }
 
-    @Override
-    public String getDescriptionId() {
-        return "effect.burn";
-    }
 
     @Override
     public boolean isBeneficial() {

@@ -42,7 +42,7 @@ public class FuriosoPotionEffect {
 
 		@Override
 		public String getDescriptionId() {
-			return "effect.furioso";
+			return "effect.ego_weapons.furioso";
 		}
 
 		@Override

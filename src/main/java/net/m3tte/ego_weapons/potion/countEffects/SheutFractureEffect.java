@@ -29,10 +29,6 @@ public class SheutFractureEffect extends CountPotencyStatus {
     public SheutFractureEffect() {
         super(EffectType.HARMFUL, "sheut_fracture",-16777216);
     }
-    @Override
-    public String getDescriptionId() {
-        return "effect.sheut_fracture";
-    }
 
     @Override
     public boolean isBeneficial() {

@@ -15,10 +15,6 @@ public class BrandingBladeEffect extends CountPotencyStatus {
     public BrandingBladeEffect() {
         super(EffectType.BENEFICIAL, "branding_blade",-16777216);
     }
-    @Override
-    public String getDescriptionId() {
-        return "effect.branding_blade";
-    }
 
     @Override
     public boolean isBeneficial() {

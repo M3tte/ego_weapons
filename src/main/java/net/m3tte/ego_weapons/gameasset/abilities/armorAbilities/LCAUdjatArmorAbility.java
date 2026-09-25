@@ -77,53 +77,9 @@ public class LCAUdjatArmorAbility extends ItemAbility {
         }
     }
 
-    public static StaticAnimation.Event[] activateUdjatArmor() {
-        StaticAnimation.Event[] events = new StaticAnimation.Event[1];
-        events[0] = StaticAnimation.Event.create(0.5f, (entitypatch) -> {
-            if (entitypatch.getOriginal() != null) {
-                LivingEntity entity = entitypatch.getOriginal();
-
-                EgoWeaponsEffects.PROTECTION.get().increment(entity, 5, 2);
-                applyBuffsToNearbyAllies(entity);
-
-                if (!entity.level.isClientSide())
-                    entitypatch.playSound(SoundEvents.BELL_RESONATE, 1, 1, 1);
-            }
 
 
 
-        }, StaticAnimation.Event.Side.BOTH);
-        return events;
-    }
-
-
-
-    private static void applyBuffsToNearbyAllies(LivingEntity source) {
-        List<LivingEntity> nearbyFriendlies = SharedFunctions.getNearbyEntities(source, 16, 4, TeamLockedPredicate.ONLY_ALLIES);
-        //nearbyFriendlies.add(source);
-
-
-
-        EgoWeaponsEffects.POWER_UP.get().increment(source, 0, 1);
-        int protection = EgoWeaponsEffects.PROTECTION.get().getPotency(source);
-        EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(source, 0, protection);
-
-        if (nearbyFriendlies.isEmpty())
-            return;
-
-        for (LivingEntity ent : nearbyFriendlies) {
-            if (ent != source) {
-
-                boolean udjatGear = ent.getItemBySlot(EquipmentSlotType.CHEST).getItem().equals(EgoWeaponsItems.UDJAT_SUIT.get());
-                EgoWeaponsEffects.PROTECTION.get().increment(ent, 5, udjatGear ? 2 : 1);
-                EgoWeaponsEffects.OFFENSE_LEVEL_UP.get().increment(ent, 0, protection);
-
-                if (udjatGear)
-                    EgoWeaponsEffects.POWER_UP.get().increment(ent, 0, 1);
-            }
-        }
-
-    }
 
 
 

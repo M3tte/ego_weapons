@@ -28,10 +28,6 @@ public class UdjatVanguard extends CountPotencyStatus {
         super(EffectType.BENEFICIAL, "udjat_vanguard",-16777216);
     }
 
-    @Override
-    public String getDescriptionId() {
-        return "effect.udjat_vanguard";
-    }
 
     @Override
     public boolean isBeneficial() {
