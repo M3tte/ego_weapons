@@ -890,7 +890,51 @@ public class EgoWeaponsCapabilityPresets {
 
             .canBePlacedOffhand(true);
 
+    public static final Function<Item, CapabilityItem.Builder> LAMP_CROSSBOW = (item) -> WeaponCapability.builder()
+            .category(EgoWeaponsCategories.LAMP_CROSSBOW)
+            .styleProvider((playerpatch) -> {
 
+                EgoWeaponsModVars.PlayerVariables entityData = playerpatch.getOriginal().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
+
+                if (entityData != null) {
+                    if (entityData.firingMode) {
+                        if (AmmoSystem.getAmmoCount(playerpatch.getOriginal().getMainHandItem()) > 0) {
+                            return EgoWeaponsStyles.RIGHT_HANDED;
+                        }
+                    }
+                }
+
+
+
+                return Styles.ONE_HAND;
+            })
+            .collider(SOLEMN_LAMENT_HITBOX_EXT)
+            .hitSound(EpicFightSounds.BLUNT_HIT)
+
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.IDLE, LampCrossbowMovesetAnims.LAMP_CB_IDLE)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.WALK, LampCrossbowMovesetAnims.LAMP_CB_WALK)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.SNEAK, LampCrossbowMovesetAnims.LAMP_CB_SNEAK)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.KNEEL, LampCrossbowMovesetAnims.LAMP_CB_KNEEL)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.RUN, LampCrossbowMovesetAnims.LAMP_CB_RUN)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.BLOCK, LampCrossbowMovesetAnims.LAMP_CB_GUARD)
+            .livingMotionModifier(Styles.ONE_HAND, LivingMotions.JUMP, FullstopOfficeSniperMovesetAnims.FULLSTOP_SNIPER_JUMP)
+
+            .livingMotionModifier(EgoWeaponsStyles.RIGHT_HANDED, LivingMotions.IDLE, LampCrossbowMovesetAnims.LAMP_CB_IDLE)
+            .livingMotionModifier(EgoWeaponsStyles.RIGHT_HANDED, LivingMotions.WALK, LampCrossbowMovesetAnims.LAMP_CB_WALK)
+            .livingMotionModifier(EgoWeaponsStyles.RIGHT_HANDED, LivingMotions.SNEAK, LampCrossbowMovesetAnims.LAMP_CB_SNEAK)
+            .livingMotionModifier(EgoWeaponsStyles.RIGHT_HANDED, LivingMotions.KNEEL, LampCrossbowMovesetAnims.LAMP_CB_KNEEL)
+            .livingMotionModifier(EgoWeaponsStyles.RIGHT_HANDED, LivingMotions.RUN, LampCrossbowMovesetAnims.LAMP_CB_RUN)
+            .livingMotionModifier(EgoWeaponsStyles.RIGHT_HANDED, LivingMotions.BLOCK, LampCrossbowMovesetAnims.LAMP_CB_GUARD)
+            .livingMotionModifier(EgoWeaponsStyles.RIGHT_HANDED, LivingMotions.JUMP, FullstopOfficeSniperMovesetAnims.FULLSTOP_SNIPER_JUMP)
+
+            .specialAttack(EgoWeaponsStyles.RIGHT_HANDED, EgoWeaponsSkills.LCA_RIFLE_BURST)
+            .specialAttack(Styles.ONE_HAND, EgoWeaponsSkills.LCA_RIFLE_BURST)
+            .passiveSkill(EgoWeaponsSkills.FULLSTOP_SNIPER_PASSIVE)
+            .newStyleCombo(EgoWeaponsStyles.RIGHT_HANDED, LampCrossbowMovesetAnims.LAMP_CB_AUTO_R_1, LampCrossbowMovesetAnims.LAMP_CB_AUTO_R_2, LampCrossbowMovesetAnims.LAMP_CB_AUTO_R_3, LCARifleMovesetAnims.LCA_RIFLE_DASH, LCARifleMovesetAnims.LCA_RIFLE_AUTO_G_1)
+            .newStyleCombo(Styles.ONE_HAND, LampCrossbowMovesetAnims.LAMP_CB_AUTO_M_1, LampCrossbowMovesetAnims.LAMP_CB_AUTO_M_2, LCARifleMovesetAnims.LCA_RIFLE_AUTO_M_1, LCARifleMovesetAnims.LCA_RIFLE_AUTO_M_1)
+            //.newStyleCombo(Styles.ONE_HAND, FullstopOfficeSniperMovesetAnims.FULLSTOP_SNIPER_IDLE)
+
+            .canBePlacedOffhand(false);
     public static final Function<Item, CapabilityItem.Builder> ARAYASHIKI = (item) ->
             WeaponCapability.builder().category(EgoWeaponsCategories.ARAYASHIKI).canBePlacedOffhand(false).styleProvider(
                     (playerpatch) -> {
@@ -969,5 +1013,6 @@ public class EgoWeaponsCapabilityPresets {
         event.getTypeEntry().put("lca_rifle", LCA_RIFLE);
         event.getTypeEntry().put("justitia", JUSTITIA);
         event.getTypeEntry().put("arayashiki", ARAYASHIKI);
+        event.getTypeEntry().put("lamp_crossbow", LAMP_CROSSBOW);
     }
 }

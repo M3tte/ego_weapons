@@ -20,6 +20,7 @@ import net.m3tte.ego_weapons.item.heishou_mao.HeishouMaoRobe;
 import net.m3tte.ego_weapons.item.heishou_mao.HeishouMaoSword;
 import net.m3tte.ego_weapons.item.justitia.JustitiaCloak;
 import net.m3tte.ego_weapons.item.justitia.JustitiaSword;
+import net.m3tte.ego_weapons.item.lamp.LampCrossbow;
 import net.m3tte.ego_weapons.item.lamp.LampEGOSuit;
 import net.m3tte.ego_weapons.item.liu.LiuFireGauntlet;
 import net.m3tte.ego_weapons.item.liu.LiuSection6Armor;
@@ -46,7 +47,9 @@ import net.m3tte.ego_weapons.item.sunshower.Sunshower;
 import net.m3tte.ego_weapons.item.sunshower.SunshowerArmor;
 import net.m3tte.ego_weapons.item.udjat.*;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -60,7 +63,37 @@ public class EgoWeaponsItems {
 
     public static RegistryObject<Item>  ICON_ITEM = registerItem("icon_item", new Item(new Item.Properties()));
 
+    public static IItemTier genericEgoItemTier = new IItemTier() {
+        @Override
+        public int getUses() {
+            return 0;
+        }
 
+        @Override
+        public float getSpeed() {
+            return 0f;
+        }
+
+        @Override
+        public float getAttackDamageBonus() {
+            return 0f;
+        }
+
+        @Override
+        public int getLevel() {
+            return 1;
+        }
+
+        @Override
+        public int getEnchantmentValue() {
+            return 0;
+        }
+
+        @Override
+        public Ingredient getRepairIngredient() {
+            return Ingredient.EMPTY;
+        }
+    };
 
     public static RegistryObject<Item>  ZWEI_ASSOCIATION_LONGSWORD = registerItem("zweilongsword", new ZweiSwordItem(ZweiSwordItem.zweiItemTier, 3, -2.7f, new Item.Properties().tab(EGO_WEAPONS)));
     public static RegistryObject<Item>  MIMICRY = registerItem("mimicry", new MimicryItem(4, -2.65f, new Item.Properties().tab(EGO_WEAPONS)));
@@ -204,6 +237,7 @@ public class EgoWeaponsItems {
     public static RegistryObject<Item> LATENCY_EMBLEM = registerItem("latency_emblem", new ChesedsLatencyItem());
     public static RegistryObject<Item> LAMP_SUIT = registerItem("lamp_suit", LampEGOSuit.getArmorForSlot(EquipmentSlotType.CHEST));
     public static RegistryObject<Item> LAMP_PANTS = registerItem("lamp_pants", LampEGOSuit.getArmorForSlot(EquipmentSlotType.LEGS));
+    public static RegistryObject<Item> LAMP_CROSSBOW = registerItem("lamp_crossbow", new LampCrossbow( genericEgoItemTier, 13, 2f, new Item.Properties().tab(EGO_WEAPONS)));
 
     private static RegistryObject<Item> registerItem(String registryName, Item i) {
         return ITEMS.register(registryName, () -> i);

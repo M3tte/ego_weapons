@@ -118,6 +118,7 @@ public class EgoWeaponsAnimations {
         RatPipeMovesetAnims.build(biped);
         JustitiaMovesetAnims.build(biped);
         ArdorBlossomMovesetAnims.build(biped);
+        LampCrossbowMovesetAnims.build(biped);
 
         PUMMEL_DOWN = new PushDownAnimation(0.05f, "biped/generic/pummel_down", biped).addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 0.7f);
 
