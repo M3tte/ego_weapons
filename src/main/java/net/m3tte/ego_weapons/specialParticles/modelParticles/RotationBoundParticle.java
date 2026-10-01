@@ -3,6 +3,7 @@ package net.m3tte.ego_weapons.specialParticles.modelParticles;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.mojang.blaze3d.vertex.VertexBuilderUtils;
 import net.m3tte.ego_weapons.client.renderer.EgoWeaponsRenderSystem;
+import net.m3tte.ego_weapons.client.renderer.RenderOverrideStates;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.renderer.ActiveRenderInfo;
@@ -183,7 +184,7 @@ public class RotationBoundParticle extends SpriteTexturedParticle {
             maxV = plc;
         }
 
-        boolean renderState = EgoWeaponsRenderSystem.getRenderColorOverrideState();
+        boolean renderState = EgoWeaponsRenderSystem.getRenderColorOverrideState().equals(RenderOverrideStates.DISTORTION);
         float instRCol = getRCol(renderState);
         float instGCol = getGCol(renderState);
         float instBCol = getBCol(renderState);

@@ -1,6 +1,7 @@
 package net.m3tte.ego_weapons.client.renderer.wearable;
 
 import net.m3tte.ego_weapons.client.models.wearable.LCAUdjatMaskModel;
+import net.m3tte.ego_weapons.client.renderer.EgoWeaponsRenderSystem;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.ResourceLocation;
@@ -20,9 +21,12 @@ public class LCAUdjatMaskRenderer<R extends LivingEntity, M extends BipedModel<R
     }
 
     public ResourceLocation getWearableTexture(R living) {
-
         return TEX_1;
+
+
     }
+
+
 
     @Override
     public ResourceLocation getRendererLocation() {

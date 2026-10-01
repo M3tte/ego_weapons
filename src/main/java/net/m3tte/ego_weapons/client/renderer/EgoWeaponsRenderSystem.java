@@ -65,7 +65,7 @@ public class EgoWeaponsRenderSystem {
     }
 
 
-    private static boolean renderColorOverrideState = false;
+    private static RenderOverrideStates renderColorOverrideState = RenderOverrideStates.NONE;
 
 
     /***
@@ -74,7 +74,7 @@ public class EgoWeaponsRenderSystem {
      * false - Current render state is the default. Normal colors should be used.
      * @return
      */
-    public static boolean getRenderColorOverrideState() {
+    public static RenderOverrideStates getRenderColorOverrideState() {
         return renderColorOverrideState;
     }
 
@@ -85,11 +85,13 @@ public class EgoWeaponsRenderSystem {
      * true - Current render state is override so different colors may be used.
      * false - Current render state is the default. Normal colors should be used.
      */
-    public static void toggleRenderColorOverrideState(boolean newState) {
+    public static void toggleRenderColorOverrideState(RenderOverrideStates newState) {
         renderColorOverrideState = newState;
     }
 
-
+    public static void clearRenderOverrideState() {
+        renderColorOverrideState = RenderOverrideStates.NONE;
+    }
     public static Queue<Particle> getDistortionParticles() {
         return distortionParticles;
     }
@@ -247,7 +249,7 @@ public class EgoWeaponsRenderSystem {
 
         RenderSystem.clearColor(0.5f, 0.5f, 0.5f, 1);
         RenderSystem.clear(GL11.GL_COLOR_BUFFER_BIT, false);
-        toggleRenderColorOverrideState(true);
+        toggleRenderColorOverrideState(RenderOverrideStates.DISTORTION);
         //getDistortionMask().copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
 
         Runnable enable = () -> {
@@ -305,7 +307,7 @@ public class EgoWeaponsRenderSystem {
         RenderSystem.disableFog();*/
 
         getDistortionMask().unbindWrite();
-        toggleRenderColorOverrideState(false);
+        clearRenderOverrideState();
 
         Minecraft.getInstance().getMainRenderTarget().bindWrite(true);
 
