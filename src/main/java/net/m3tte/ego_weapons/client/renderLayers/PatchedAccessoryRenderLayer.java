@@ -123,7 +123,7 @@ public class PatchedAccessoryRenderLayer<E extends LivingEntity, T extends Livin
 
 
     }
-    private void renderWearableModel(WearableRenderer<?,?,?> renderer, E entity, IRenderTypeBuffer buf, ValidRenderTypes builderType, MatrixStack poseStack, int packedLightIn, OpenMatrix4f[] poses, float netYawHead, float pitchHead, float partialTicks) {
+    public void renderWearableModel(WearableRenderer<?,?,?> renderer, E entity, IRenderTypeBuffer buf, ValidRenderTypes builderType, MatrixStack poseStack, int packedLightIn, OpenMatrix4f[] poses, float netYawHead, float pitchHead, float partialTicks) {
         ResourceLocation renderTexture = this.getWearableTexture(entity, renderer);
         ClientModel renderModel = this.getWearableModel(renderer, entity, renderer.getRendererLocation(), renderTexture, true, partialTicks);
         IVertexBuilder renderVertex = getBuilderFor(builderType, renderTexture, buf);
