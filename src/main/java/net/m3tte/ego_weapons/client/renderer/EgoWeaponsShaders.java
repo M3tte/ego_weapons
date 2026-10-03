@@ -28,6 +28,8 @@ public class EgoWeaponsShaders {
     public static SetupShaderGroup MUGA_GROUP;
     public static SetupShaderGroup PANIC_EFFECT_GROUP;
     public static SetupShaderGroup SHOCKWAVE_DISTORTION_GROUP;
+    public static SetupShaderGroup DAZZLE_GROUP;
+    public static SetupShaderGroup HORIZONTAL_BLOOM_GROUP;
 
     public static boolean setupCompleted = false;
     public static ResourceLocation PORTAL_EFFECT;
@@ -41,6 +43,9 @@ public class EgoWeaponsShaders {
     public static void resizeScreens(int w, int h) {
         if (DISTORT_GROUP != null)
             DISTORT_GROUP.resize(w, h);
+
+        if (HORIZONTAL_BLOOM_GROUP != null)
+            HORIZONTAL_BLOOM_GROUP.resize(w, h);
 
         if (UDJAT_CCTV_GROUP != null)
             UDJAT_CCTV_GROUP.resize(w, h);
@@ -62,6 +67,9 @@ public class EgoWeaponsShaders {
 
         if (SHOCKWAVE_DISTORTION_GROUP != null)
             SHOCKWAVE_DISTORTION_GROUP.resize(w, h);
+
+        if (DAZZLE_GROUP != null)
+            DAZZLE_GROUP.resize(w, h);
     }
 
     public static void init(GameRenderer renderer) throws IOException {
@@ -77,7 +85,15 @@ public class EgoWeaponsShaders {
                 new ResourceLocation("ego_weapons", "shaders/post/distortion.json"),
                 (a, self) -> {
                     ShaderInstance shaderInst = self.passes.get(0).getEffect();
-                    shaderInst.setSampler("MaskSampler", getDistortionMask()::getColorTextureId);
+                    shaderInst.setSampler("MaskSampler", FramebufferHandlers.getDistortionMask()::getColorTextureId);
+                }
+        );
+
+        HORIZONTAL_BLOOM_GROUP = new SetupShaderGroup(
+                new ResourceLocation("ego_weapons", "shaders/post/hor_bloom.json"),
+                (a, self) -> {
+                    ShaderInstance shaderInst = self.passes.get(0).getEffect();
+                    shaderInst.setSampler("MaskSampler", FramebufferHandlers.getBloomMask()::getColorTextureId);
                 }
         );
 
@@ -111,6 +127,11 @@ public class EgoWeaponsShaders {
 
         BLACK_SILENCE_GROUP = new SetupShaderGroup(
                 new ResourceLocation("ego_weapons", "shaders/post/black_silence_fog.json"),
+                defaultGametimeConsumer
+        );
+
+        DAZZLE_GROUP = new SetupShaderGroup(
+                new ResourceLocation("ego_weapons", "shaders/post/dazzle_fog.json"),
                 defaultGametimeConsumer
         );
 
@@ -149,7 +170,7 @@ public class EgoWeaponsShaders {
         resizeScreens(Minecraft.getInstance().getWindow().getWidth(), Minecraft.getInstance().getWindow().getHeight());
 
         ShaderInstance shaderInst = EgoWeaponsShaders.DISTORT_GROUP.passes.get(0).getEffect();
-        shaderInst.setSampler("MaskSampler", getDistortionMask()::getColorTextureId);
+        shaderInst.setSampler("MaskSampler", FramebufferHandlers.getDistortionMask()::getColorTextureId);
 
         // Setup Portal Effect
         PORTAL_EFFECT = new ResourceLocation(EgoWeaponsMod.MODID, "textures/shaders/star_particle.png");

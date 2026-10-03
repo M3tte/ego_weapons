@@ -86,8 +86,8 @@ public class LCAReloadAbility extends ReloadAbility {
             LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
             playerVars.globalcooldown = 100;
 
-            DialogueSystem.speakEvalDialogue(player, "dialogue.ego_weapons.skills.lca_rifle.reload", DialogueSystem.DialogueTypes.SKILL, TextFormatting.WHITE);
-            if (!world.isClientSide()) {
+            boolean dialogueSuccess = DialogueSystem.speakEvalDialogue(player, "dialogue.ego_weapons.skills.lca_rifle.reload", DialogueSystem.DialogueTypes.SKILL, TextFormatting.WHITE);
+            if (!world.isClientSide() && dialogueSuccess) {
                 world.playSound(null, new BlockPos(x, y, z),
                         EgoWeaponsSounds.UDJAT_DIALOGUE_RELOADING,
                         SoundCategory.PLAYERS, (float) 1, (float) 1);

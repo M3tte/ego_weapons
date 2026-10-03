@@ -237,7 +237,7 @@ public class EgoWeaponsItems {
     public static RegistryObject<Item> LATENCY_EMBLEM = registerItem("latency_emblem", new ChesedsLatencyItem());
     public static RegistryObject<Item> LAMP_SUIT = registerItem("lamp_suit", LampEGOSuit.getArmorForSlot(EquipmentSlotType.CHEST));
     public static RegistryObject<Item> LAMP_PANTS = registerItem("lamp_pants", LampEGOSuit.getArmorForSlot(EquipmentSlotType.LEGS));
-    public static RegistryObject<Item> LAMP_CROSSBOW = registerItem("lamp_crossbow", new LampCrossbow( genericEgoItemTier, 13, 2f, new Item.Properties().tab(EGO_WEAPONS)));
+    public static RegistryObject<Item> LAMP_CROSSBOW = registerItem("lamp_crossbow", new LampCrossbow( genericEgoItemTier, 13, -0.8f, new Item.Properties().tab(EGO_WEAPONS), GunCaliber.UNIQUE, 8));
 
     private static RegistryObject<Item> registerItem(String registryName, Item i) {
         return ITEMS.register(registryName, () -> i);

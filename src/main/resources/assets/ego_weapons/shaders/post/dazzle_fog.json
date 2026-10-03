@@ -1,0 +1,17 @@
+{
+  "targets": [
+    "swap9"
+  ],
+  "passes": [
+    {
+      "name": "ego_weapons:dazzle_fog",
+      "intarget": "minecraft:main",
+      "outtarget": "swap9"
+    },
+    {
+      "name": "blit",
+      "intarget": "swap9",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}

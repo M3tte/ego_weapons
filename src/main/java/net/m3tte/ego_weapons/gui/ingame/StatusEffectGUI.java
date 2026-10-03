@@ -48,7 +48,6 @@ public class StatusEffectGUI extends EntityIndicator {
     }
 
     private ResourceLocation solemnLamentButterflyRL = new ResourceLocation(EgoWeaponsMod.MODID, "textures/mob_effect/living_and_departed.png");
-    private ResourceLocation ammoRL = new ResourceLocation(EgoWeaponsMod.MODID, "textures/mob_effect/ammo.png");
     private ResourceLocation d10fuelRL = new ResourceLocation(EgoWeaponsMod.MODID, "textures/mob_effect/district_10_fuel.png");
     private ResourceLocation ov_d10fuelRL = new ResourceLocation(EgoWeaponsMod.MODID, "textures/mob_effect/overheated_district_10_fuel.png");
     private ResourceLocation solemnLamentEffectRL = new ResourceLocation(EgoWeaponsMod.MODID, "textures/mob_effect/living_departed.png");
@@ -117,17 +116,47 @@ public class StatusEffectGUI extends EntityIndicator {
             if (entityIn.getItemInHand(Hand.MAIN_HAND).getItem() instanceof GunItem || entityIn.getItemInHand(Hand.OFF_HAND).getItem() instanceof GunItem) {
                 ItemStack mainHandWeapon = (entityIn.getItemInHand(Hand.MAIN_HAND));
                 ItemStack offHandWeapon = (entityIn.getItemInHand(Hand.OFF_HAND));
-                int ammo = 0;
+                int ammoMainhand = 0;
+                int ammoOffhand = 0;
+                ResourceLocation mainhandRL = null;
+                ResourceLocation offhandRL = null;
 
-                if (mainHandWeapon.getItem() instanceof GunItem)
-                    ammo += AmmoSystem.getAmmoCount(mainHandWeapon);
+                if (mainHandWeapon.getItem() instanceof GunItem) {
+                    ammoMainhand = AmmoSystem.getAmmoCount(mainHandWeapon);
+                    mainhandRL = ((GunItem) mainHandWeapon.getItem()).getAmmoRL();
+                }
 
-                if (offHandWeapon.getItem() instanceof GunItem)
-                    ammo += AmmoSystem.getAmmoCount(offHandWeapon);
+                if (offHandWeapon.getItem() instanceof GunItem) {
+                    ammoOffhand = AmmoSystem.getAmmoCount(offHandWeapon);
+                    offhandRL = ((GunItem) mainHandWeapon.getItem()).getAmmoRL();
+                }
 
-                renderEffect(ammoRL, prevActives, startX, startY, 0, ammo, bufferIn, mvMatrix, true, false);
+                boolean different = true;
 
+                if (mainhandRL != null && offhandRL != null)
+                    different = !mainhandRL.equals(offhandRL);
+
+
+                if (different) {
+                    if (mainhandRL != null) {
+                        renderEffect(mainhandRL, prevActives, startX, startY, 0, ammoMainhand, bufferIn, mvMatrix, true, false);
+                        prevActives++;
+                    }
+
+                    if (offhandRL != null) {
+                        renderEffect(offhandRL, prevActives, startX, startY, 0, ammoOffhand, bufferIn, mvMatrix, true, false);
+                        prevActives++;
+                    }
+                } else {
+                    renderEffect(offhandRL, prevActives, startX, startY, 0, ammoMainhand + ammoOffhand, bufferIn, mvMatrix, true, false);
+                    prevActives++;
+                }
                 prevActives++;
+
+
+
+
+
             }
 
 

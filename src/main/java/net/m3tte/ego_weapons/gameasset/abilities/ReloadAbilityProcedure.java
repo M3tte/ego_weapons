@@ -57,6 +57,7 @@ public class ReloadAbilityProcedure {
 		reloadAbilities.put(EgoWeaponsItems.SOLEMN_LAMENT_WHITE.get(), new SolemnLamentReloadAbility());
 		reloadAbilities.put(EgoWeaponsItems.SOLEMN_LAMENT_BLACK.get(), new SolemnLamentReloadAbility());
 		reloadAbilities.put(EgoWeaponsItems.LCA_RIFLE.get(), new LCAReloadAbility());
+		reloadAbilities.put(EgoWeaponsItems.LAMP_CROSSBOW.get(), new LampReloadAbility());
 
 	}
 

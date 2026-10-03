@@ -1,9 +1,12 @@
 package net.m3tte.ego_weapons.client.renderer;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsMod;
+import net.m3tte.ego_weapons.client.renderer.delegatedEntityRendering.RenderBatches;
+import net.m3tte.ego_weapons.client.renderer.delegatedEntityRendering.RenderRequest;
 import net.m3tte.ego_weapons.potion.ManifestEgoPotionEffect;
 import net.m3tte.ego_weapons.potion.OrlandoPotionEffect;
 import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
@@ -12,6 +15,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.client.renderer.texture.NativeImage;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.client.shader.ShaderGroup;
@@ -28,12 +32,18 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL30;
 
+import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Paths;
 import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Objects;
 import java.util.Queue;
 
 import static net.m3tte.ego_weapons.client.renderer.EgoWeaponsShaders.*;
+import static net.m3tte.ego_weapons.client.renderer.FramebufferHandlers.*;
 import static net.minecraft.client.gui.AbstractGui.blit;
 
 @Mod.EventBusSubscriber({Dist.CLIENT})
@@ -43,26 +53,9 @@ public class EgoWeaponsRenderSystem {
 
 
     private static Queue<Particle> distortionParticles = new ArrayDeque<>();
-    private static Framebuffer DISTORTION_MASK = null;
 
-    static int savedWidth = 0;
-    static int savedHeight = 0;
+
     public static ActiveRenderInfo savedRenderInfo = null;
-    public static Framebuffer getDistortionMask() {
-        if (DISTORTION_MASK == null) {
-            Framebuffer main = Minecraft.getInstance().getMainRenderTarget();
-            DISTORTION_MASK = new Framebuffer(main.width / 2, main.height / 2, true, Minecraft.ON_OSX);
-            savedWidth = Minecraft.getInstance().getWindow().getWidth();
-            savedHeight = Minecraft.getInstance().getWindow().getHeight();
-
-        }
-
-
-
-        return DISTORTION_MASK;
-
-
-    }
 
 
     private static RenderOverrideStates renderColorOverrideState = RenderOverrideStates.NONE;
@@ -98,7 +91,7 @@ public class EgoWeaponsRenderSystem {
 
 
     @SubscribeEvent
-    public static void renderEvent(RenderWorldLastEvent event) {
+    public static void renderEvent(RenderWorldLastEvent event) throws IOException {
 
         Framebuffer main = Minecraft.getInstance().getMainRenderTarget();
 
@@ -106,22 +99,23 @@ public class EgoWeaponsRenderSystem {
             return;
 
 
-        if (main.width != savedWidth || main.height != savedHeight) {
-            getDistortionMask().resize(main.width / 3, main.height / 3, Minecraft.ON_OSX);
-            savedHeight = main.height;
-            savedWidth = main.width;
-
-            resizeScreens(main.width, main.height);
-        }
+        handleResizes(main);
 
         if (!getDistortionParticles().isEmpty()) {
             renderDistortionParticles(event);
+        }
+        if (!RenderRequest.isBatchEmpty(RenderBatches.HOR_BLOOM)) {
+            renderHorizontalBloomBatch(event);
         }
 
 
         setupShaderData();
 
         renderOverlays(event);
+
+
+        RenderRequest.clearRenderBatch(RenderBatches.HOR_BLOOM);
+        //clearAccessoryBuffer();
     }
 
     private static void setupShaderData() {
@@ -167,6 +161,9 @@ public class EgoWeaponsRenderSystem {
         if (Minecraft.getInstance().player.hasEffect(OrlandoPotionEffect.potion))
             toProcessGroups.add(BLACK_SILENCE_GROUP);
 
+        if (Minecraft.getInstance().player.hasEffect(EgoWeaponsEffects.DAZZLE.get()))
+            toProcessGroups.add(DAZZLE_GROUP);
+
         if (Minecraft.getInstance().player.hasEffect(EgoWeaponsEffects.CHESEDS_LATENCY.get()))
             toProcessGroups.add(CHESED_GROUP);
 
@@ -180,7 +177,9 @@ public class EgoWeaponsRenderSystem {
             toProcessGroups.add(SHOCKWAVE_DISTORTION_GROUP);
         }
 
-
+        if (!RenderRequest.isBatchEmpty(RenderBatches.HOR_BLOOM)) {
+            toProcessGroups.add(HORIZONTAL_BLOOM_GROUP);
+        }
 
         // Dont render if no post processing is to happen.
         if (toProcessGroups.isEmpty())
@@ -238,6 +237,98 @@ public class EgoWeaponsRenderSystem {
         RenderSystem.enableTexture(); //FORGE: Fix MC-194675
         Minecraft.getInstance().getMainRenderTarget().bindWrite(true);
     }
+    static boolean depth = false;
+    private static void renderHorizontalBloomBatch(RenderWorldLastEvent event) throws IOException {
+
+        Framebuffer prev = Minecraft.getInstance().getMainRenderTarget();
+
+        prev.unbindWrite();
+        getBloomMask().bindWrite(true);
+        //getDistortionMask().setClearColor(0.5f, 0.5f, 0, 1);
+        //getDistortionMask().clear(false);
+
+
+
+        GlStateManager._glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER,
+                prev.frameBufferId);
+
+        GlStateManager._glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER,
+                getBloomMask().frameBufferId);
+
+        GlStateManager._glBlitFrameBuffer(
+                0, 0,
+                prev.viewWidth, prev.viewHeight,
+                0, 0,
+                getBloomMask().viewWidth, getBloomMask().viewHeight,
+                GL11.GL_DEPTH_BUFFER_BIT,
+                GL11.GL_NEAREST
+        );
+
+        RenderSystem.clearColor(0f, 0f, 0f, 0.5f);
+        RenderSystem.clear(GL11.GL_COLOR_BUFFER_BIT, false);
+
+        RenderSystem.enablePolygonOffset();
+        RenderSystem.polygonOffset(-5.0f, -5.0f);
+
+
+        //Minecraft.getInstance().getMainRenderTarget().blitToScreen(savedWidth,savedHeight);
+        toggleRenderColorOverrideState(RenderOverrideStates.NONE);
+
+        Runnable enable = () -> {
+            RenderSystem.enableAlphaTest();
+            RenderSystem.depthFunc(GL11.GL_GEQUAL);
+            RenderSystem.enableDepthTest();
+            RenderSystem.depthMask(false);
+            //RenderSystem.defaultAlphaFunc();
+            //RenderSystem.enableDepthTest();
+            //RenderSystem.enableFog();
+            //RenderSystem.activeTexture(org.lwjgl.opengl.GL13.GL_TEXTURE2);
+            //RenderSystem.enableTexture();
+            //RenderSystem.activeTexture(org.lwjgl.opengl.GL13.GL_TEXTURE0);
+            //RenderSystem.depthMask(true);
+            //RenderSystem.enableBlend();
+            //RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+            //RenderSystem.alphaFunc(516, 0.003921569F);
+        };
+
+        Tessellator tess =
+                Tessellator.getInstance();
+
+        BufferBuilder buffer =
+                tess.getBuilder();
+
+        MatrixStack stack = event.getMatrixStack();
+        Deque<RenderRequest> renderRequests = RenderRequest.getRenderRequests(RenderBatches.HOR_BLOOM);
+        System.out.println("Rendering "+renderRequests.size()+"x requests");
+        enable.run(); //Forge: MC-168672 Make sure all render types have the correct GL state.
+        IRenderTypeBuffer.Impl buf =
+                IRenderTypeBuffer.immediate(buffer);
+
+        //getBloomMask().copyDepthFrom(Minecraft.getInstance().getMainRenderTarget());
+        for (RenderRequest req : renderRequests) {
+            req.render(buf, stack);
+        }
+
+        buf.endBatch();
+
+
+        /*
+        RenderSystem.depthFunc(515);
+        RenderSystem.disableBlend();
+        RenderSystem.defaultAlphaFunc();
+        // event..turnOffLightLayer();
+        RenderSystem.disableFog();*/
+
+        getBloomMask().unbindWrite();
+        clearRenderOverrideState();
+
+        RenderSystem.disablePolygonOffset();
+        Minecraft.getInstance().getMainRenderTarget().bindWrite(true);
+
+        //getBloomMask().blitToScreen(savedWidth,savedHeight);
+        RenderSystem.disableAlphaTest();
+    }
+
 
     private static void renderDistortionParticles(RenderWorldLastEvent event) {
         Minecraft.getInstance().getMainRenderTarget().unbindWrite();
@@ -288,7 +379,6 @@ public class EgoWeaponsRenderSystem {
                 GL11.GL_QUADS,
                 DefaultVertexFormats.PARTICLE
         );
-
         enable.run(); //Forge: MC-168672 Make sure all render types have the correct GL state.
         for (Particle p : distortionParticles) {
             p.render(buffer, savedRenderInfo, event.getPartialTicks());
@@ -313,9 +403,9 @@ public class EgoWeaponsRenderSystem {
 
         /*
         if (!distortionParticles.isEmpty()) {
-            getDistortionMask().blitToScreen(savedWidth,savedHeight);
-        }*/
 
+        }*/
+        //getDistortionMask().blitToScreen(savedWidth,savedHeight);
         RenderSystem.disableAlphaTest();
     }
 

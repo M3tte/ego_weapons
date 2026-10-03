@@ -345,6 +345,20 @@
     },
     {
       "type": "bitmap",
+      "file": "ego_weapons:mob_effect/feather_wick_bolt.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE050"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/black_fragility.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE051"]
+    },
+    {
+      "type": "bitmap",
       "file": "ego_weapons:mob_effect/blue_sand.png",
       "ascent": 8,
       "height": 9,

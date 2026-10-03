@@ -69,6 +69,7 @@ public class EgoWeaponsEffects {
     public static final RegistryObject<CountPotencyStatus> BLUE_SAND = registerEffect("blue_sand", new BlueSandEffect());
     public static final RegistryObject<CountPotencyStatus> SHEUT_FRACTURE = registerEffect("sheut_fracture", new SheutFractureEffect());
     public static final RegistryObject<CountPotencyStatus> WHITE_FRAGILITY = registerEffect("white_fragility", new WhiteFragilityEffect());
+    public static final RegistryObject<CountPotencyStatus> BLACK_FRAGILITY = registerEffect("black_fragility", new BlackFragilityEffect());
     public static final RegistryObject<CountPotencyStatus> UDJAT_VANGUARD = registerEffect("udjat_vanguard", new UdjatVanguard());
     public static final RegistryObject<CountPotencyStatus> SHIELDING_ALLOY_REGENERATIVE_CYCLE = registerEffect("alloy_regenerative_cycle", new ArmorRegenerativeCycle());
     public static final RegistryObject<CountPotencyStatus> SEVER_THE_THREAD = registerEffect("sever_the_thread", new SeverTheThreadEffect());
@@ -78,6 +79,8 @@ public class EgoWeaponsEffects {
     public static final RegistryObject<CountPotencyStatus> SEALED = registerEffect("sealed", new SealedEffect());
     public static final RegistryObject<CountPotencyStatus> SHELL = registerEffect("shell", new ShellEffect());
     public static final RegistryObject<CountPotencyStatus> TERROR = registerEffect("terror", new TerrorEffect());
+    public static final RegistryObject<CountPotencyStatus> LAMP = registerEffect("lamp", new LampEffect());
+    public static final RegistryObject<CountPotencyStatus> DAZZLE = registerEffect("dazzle", new DazzleEffect());
 
 
     public static int speedMult(LivingEntity entity) {

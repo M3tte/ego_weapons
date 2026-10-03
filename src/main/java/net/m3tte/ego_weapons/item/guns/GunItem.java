@@ -1,10 +1,11 @@
 package net.m3tte.ego_weapons.item.guns;
 
+import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -14,6 +15,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class GunItem extends EgoWeaponsWeapon {
+
+    protected ResourceLocation ammoBGOverride = null;
+    public static final ResourceLocation BASE_AMMO_RESOURCE_LOCATION = new ResourceLocation(EgoWeaponsMod.MODID, "textures/mob_effect/ammo.png");
+    protected ResourceLocation ammoRL = BASE_AMMO_RESOURCE_LOCATION;
 
     private int maxAmmo;
     private GunCaliber caliber;
@@ -32,6 +37,13 @@ public class GunItem extends EgoWeaponsWeapon {
         this.caliber = caliber;
     }
 
+    public ResourceLocation getAmmoRL() {
+        return ammoRL;
+    }
+
+    public ResourceLocation getAmmoBGOverride() {
+        return ammoBGOverride;
+    }
 
     public void appendAmmoDialogueLine(List<ITextComponent> list) {
         list.add(new TranslationTextComponent("desc.ego_weapons.ammo.top"));

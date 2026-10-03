@@ -8,10 +8,7 @@ import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TeamLockedPredicate;
 import net.m3tte.ego_weapons.skill.udjat.BurstFireSkill;
 import net.m3tte.ego_weapons.specialParticles.texturedAfterImage.TexturedAfterImagePresets;
-import net.m3tte.ego_weapons.world.capabilities.AmmoSystem;
-import net.m3tte.ego_weapons.world.capabilities.AmmoType;
-import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
-import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
+import net.m3tte.ego_weapons.world.capabilities.*;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets;
 import net.minecraft.entity.Entity;
@@ -147,7 +144,7 @@ public class LCARifleMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "lca_rifle_innate_1")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.CONSUMES_AMMO, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
-                .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
+                .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, false).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.UDJAT_RIFLE_HIT_BULLET)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.CLICK)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLUNT)
@@ -162,7 +159,7 @@ public class LCARifleMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "lca_rifle_innate_2")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.CONSUMES_AMMO, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
-                .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
+                .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, false).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.UDJAT_RIFLE_HIT_BULLET)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.CLICK)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLUNT)
@@ -177,7 +174,7 @@ public class LCARifleMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "lca_rifle_innate_3")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.CONSUMES_AMMO, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
-                .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
+                .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, false).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.UDJAT_RIFLE_HIT_BULLET)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.CLICK)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLUNT)
@@ -226,7 +223,7 @@ public class LCARifleMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.CONSUMES_AMMO, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.PIERCE_GUARD_DODGE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
-                .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, false)
                 .addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.UDJAT_RIFLE_HIT_BULLET)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.CLICK)
@@ -290,7 +287,7 @@ public class LCARifleMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.CONSUMES_AMMO, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.TARGET_HAND, Hand.OFF_HAND)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
-                .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
+                .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, false).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.UDJAT_RIFLE_HIT_BULLET)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.CLICK)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLUNT)
@@ -306,7 +303,7 @@ public class LCARifleMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.CONSUMES_AMMO, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.TARGET_HAND, Hand.OFF_HAND)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
-                .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
+                .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, false).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.UDJAT_RIFLE_HIT_BULLET)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.CLICK)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLUNT)
@@ -322,7 +319,7 @@ public class LCARifleMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.CONSUMES_AMMO, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.TARGET_HAND, Hand.OFF_HAND)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
-                .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
+                .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, false).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.UDJAT_RIFLE_HIT_BULLET)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.CLICK)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.HIT_BLUNT)
@@ -611,6 +608,9 @@ public class LCARifleMovesetAnims {
 
             if (ammo != null) {
 
+                if (entity instanceof PlayerEntity) {
+                    UtilitySystems.sendShockwavePacket((PlayerEntity) entity, 0.6f, 0.4f, 0.6f, 0);
+                }
 
                 spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1.3,-0.15), 1, ammo.getFireParticle(), 0, "Tool_L", false);
                 spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1.3,-0.15), 1, ammo.getFireSideParticle(), new Vector3f(0, entity.getId(), entity.getId()), "Tool_L");
@@ -632,6 +632,9 @@ public class LCARifleMovesetAnims {
 
             if (ammo != null) {
 
+                if (entity instanceof PlayerEntity) {
+                    UtilitySystems.sendShockwavePacket((PlayerEntity) entity, 0.6f, 0.4f, 0.6f, 0);
+                }
 
                 spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1.3,-0.15), 1, ammo.getFireParticle(), 0, "Tool_L", false);
                 spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1.3,-0.15), 1, ammo.getFireSideParticle(), new Vector3f(0, entity.getId(), entity.getId()), "Tool_L");
@@ -808,6 +811,10 @@ public class LCARifleMovesetAnims {
 
             if (ammo != null) {
 
+                if (entity instanceof PlayerEntity) {
+                    UtilitySystems.sendShockwavePacket((PlayerEntity) entity, 0.8f, 0.6f, 0.6f, 0);
+                }
+
                 ItemStack weaponItem = entity.getItemInHand(Hand.OFF_HAND);
 
                 if (!weaponItem.isEmpty()) {
@@ -858,6 +865,9 @@ public class LCARifleMovesetAnims {
 
             if (ammo != null) {
 
+                if (entity instanceof PlayerEntity) {
+                    UtilitySystems.sendShockwavePacket((PlayerEntity) entity, 0.6f, 0.4f, 0.6f, 0);
+                }
 
                 spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1.3,-0.15), 1, ammo.getFireParticle(), 0, "Tool_R", false);
                 spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1.3,-0.15), 1, ammo.getFireSideParticle(), new Vector3f(0, entity.getId(), entity.getId()), "Tool_R");
@@ -879,6 +889,9 @@ public class LCARifleMovesetAnims {
 
             if (ammo != null) {
 
+                if (entity instanceof PlayerEntity) {
+                    UtilitySystems.sendShockwavePacket((PlayerEntity) entity, 0.6f, 0.4f, 0.6f, 0);
+                }
 
                 spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1.3,-0.15), 1, ammo.getFireParticle(), 0, "Tool_R", false);
                 spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1.3,-0.15), 1, ammo.getFireSideParticle(), new Vector3f(0, entity.getId(), entity.getId()), "Tool_R");
@@ -928,6 +941,9 @@ public class LCARifleMovesetAnims {
 
             if (ammo != null) {
 
+                if (entity instanceof PlayerEntity) {
+                    UtilitySystems.sendShockwavePacket((PlayerEntity) entity, 0.6f, 0.4f, 0.6f, 0);
+                }
 
                 spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1.3,-0.15), 1, ammo.getFireParticle(), 0, "Tool_R", false);
                 spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1.3,-0.15), 1, ammo.getFireSideParticle(), new Vector3f(0, entity.getId(), entity.getId()), "Tool_R");
@@ -1031,6 +1047,10 @@ public class LCARifleMovesetAnims {
 
                 ItemStack weaponItem = entity.getItemInHand(Hand.MAIN_HAND);
 
+                if (entity instanceof PlayerEntity) {
+                    UtilitySystems.sendShockwavePacket((PlayerEntity) entity, 0.7f, 0.6f, 0.6f, 0);
+                }
+
                 if (!weaponItem.isEmpty()) {
                     if (weaponItem.getOrCreateTag().contains("specialHitEntity")) {
                         Entity targetEntity = world.getEntity(weaponItem.getOrCreateTag().getInt("specialHitEntity"));
@@ -1081,6 +1101,10 @@ public class LCARifleMovesetAnims {
             AmmoType ammo = AmmoSystem.getAndRemovelastammo(entity.getItemInHand(Hand.MAIN_HAND), entity, true);
 
             if (ammo != null) {
+
+                if (entity instanceof PlayerEntity) {
+                    UtilitySystems.sendShockwavePacket((PlayerEntity) entity, 0.6f, 0.4f, 0.6f, 0);
+                }
 
                 spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1.3,-0.15), 1, ammo.getFireParticle(), 0, "Tool_R", false);
                 spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1.3,-0.15), 1, ammo.getFireSideParticle(), new Vector3f(0, entity.getId(), entity.getId()), "Tool_R");
@@ -1135,6 +1159,10 @@ public class LCARifleMovesetAnims {
 
             String handSel = offhandVer ? "Tool_L" : "Tool_R";
             if (ammo != null) {
+
+                if (entity instanceof PlayerEntity) {
+                    UtilitySystems.sendShockwavePacket((PlayerEntity) entity, 0.6f, 0.4f, 0.6f, 0);
+                }
 
                 spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1.3,-0.15), 1, ammo.getFireParticle(), 0, handSel, false);
                 spawnArmatureParticle(entitypatch, 0, new Vector3d(0,-1.3,-0.15), 1, ammo.getFireSideParticle(), new Vector3f(0, entity.getId(), entity.getId()), handSel);

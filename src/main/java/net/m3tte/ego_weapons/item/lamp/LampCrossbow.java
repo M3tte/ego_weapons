@@ -7,6 +7,8 @@ import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
 import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
+import net.m3tte.ego_weapons.item.guns.GunCaliber;
+import net.m3tte.ego_weapons.item.guns.GunItem;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.potion.countEffects.DarkFlameEffect;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
@@ -21,6 +23,7 @@ import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -40,7 +43,7 @@ import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
 import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.generateAttackContext;
 
 
-public class LampCrossbow extends EgoWeaponsWeapon {
+public class LampCrossbow extends GunItem {
 
 	@Override
 	public void appendHoverText(@NotNull ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
@@ -48,34 +51,46 @@ public class LampCrossbow extends EgoWeaponsWeapon {
 		TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.magic_bullet.desc");
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
-		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
+		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 6) + 1) + "/6] - - - - - - - =").withStyle(TextFormatting.GRAY));
 		list.add(new TranslationTextComponent("desc.ego_weapons.risk.waw"));
 		list.add(new StringTextComponent(" "));
-		switch (EgoWeaponsKeybinds.getUiPage() % 4) {
+		switch (EgoWeaponsKeybinds.getUiPage() % 6) {
 			case 0:
 				if (EgoWeaponsKeybinds.isHoldingShift())
 					generateStatusDescription(list, new String[]{"burn", "dark_flame"});
 				else
-					generateDescription(list,"magic_bullet", "auto", 5);
+					generateDescription(list,"lamp_crossbow", "sp", 6, EgoWeaponsEffects.LAMP.get());
 				break;
 			case 1:
 				if (EgoWeaponsKeybinds.isHoldingShift())
-					generateStatusDescription(list, new String[]{"burn", "dark_flame", "magic_bullet"});
+					generateStatusDescription(list, new String[]{"burn", "sinking", "feather_wick_bolt","lamp","black_fragility"});
 				else
-					generateDescription(list,"magic_bullet", "innate", 4);
+					generateDescription(list,"lamp_crossbow", "innate", 8, EgoWeaponsEffects.LAMP.get());
 				break;
 			case 2:
 				if (EgoWeaponsKeybinds.isHoldingShift())
-					generateStatusDescription(list, new String[]{"burn", "dark_flame", "magic_bullet"});
+					generateStatusDescription(list, new String[]{"burn", "sinking", "feather_wick_bolt","lamp"});
 				else {
-					generateDescription(list,"magic_bullet", "ability", 8);
+					generateDescription(list,"lamp_crossbow", "auto2", 9, EgoWeaponsEffects.LAMP.get());
 				}
 				break;
 			case 3:
 				if (EgoWeaponsKeybinds.isHoldingShift())
-					generateStatusDescription(list, new String[]{"magic_bullet"});
+					generateStatusDescription(list, new String[]{"burn", "sinking", "lamp"});
 				else
-					generateDescription(list,"magic_bullet", "guard", 2);
+					generateDescription(list,"lamp_crossbow", "auto", 4, EgoWeaponsEffects.LAMP.get());
+				break;
+			case 4:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"burn","sinking","dazzle"});
+				else
+					generateDescription(list,"lamp_crossbow", "passive2", 2, true, EgoWeaponsEffects.DAZZLE.get());
+				break;
+			case 5:
+				if (EgoWeaponsKeybinds.isHoldingShift())
+					generateStatusDescription(list, new String[]{"offense_up","lamp","dazzle"});
+				else
+					generateDescription(list,"lamp_crossbow", "passive", 6, true, EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.DAZZLE.get());
 				break;
 		}
 
@@ -203,9 +218,12 @@ public class LampCrossbow extends EgoWeaponsWeapon {
 	}
 
 
-
-	public LampCrossbow(IItemTier tier, int p_i48460_2_, float p_i48460_3_, Properties p_i48460_4_) {
-		super(tier, p_i48460_2_, p_i48460_3_, p_i48460_4_);
+	private final ResourceLocation featherWickBolt = new ResourceLocation(EgoWeaponsMod.MODID, "textures/mob_effect/feather_wick_bolt.png");;
+	private final ResourceLocation emptyBoltIcon = new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/gui/bullets/empty_bolt_lamp.png");;
+	public LampCrossbow(IItemTier tier, int p_i48460_2_, float p_i48460_3_, Properties p_i48460_4_, GunCaliber caliber, int capacity) {
+		super(tier, p_i48460_2_, p_i48460_3_, p_i48460_4_, capacity, caliber);
+		this.ammoRL = featherWickBolt;
+		this.ammoBGOverride = emptyBoltIcon;
 	}
 
 

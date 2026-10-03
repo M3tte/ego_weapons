@@ -15,7 +15,7 @@ import net.minecraft.potion.EffectType;
 
 import java.util.UUID;
 
-public class WhiteFragilityEffect extends CountPotencyStatus {
+public class WhiteFragilityEffect extends PotencyOnlyStatus {
     public WhiteFragilityEffect() {
         super(EffectType.HARMFUL, "white_fragility",-16777216);
     }
@@ -41,9 +41,6 @@ public class WhiteFragilityEffect extends CountPotencyStatus {
 
         ModifiableAttributeInstance whiteDMGInstance = attrman.getInstance(EgoWeaponsAttributes.WHITE_RESISTANCE.get());
 
-        System.out.println("UPDATING AMPLIFIER AT "+amplifier+" FOR CLIENT ? "+living.level.isClientSide());
-
-
         if (whiteDMGInstance != null) {
             whiteDMGInstance.removeModifier(whiteResistanceMod);
             whiteDMGInstance.addPermanentModifier(new AttributeModifier(whiteResistanceMod.getId(), this.getDescriptionId() + " " + 0, whiteResistanceMod.getAmount() * (amplifier + 1D), whiteResistanceMod.getOperation()));
@@ -62,55 +59,4 @@ public class WhiteFragilityEffect extends CountPotencyStatus {
 
         attrman.save();
     }
-
-
-    @Override
-    public void increment(LivingEntity entity, int cap, int potency) {
-        if (entity.level.isClientSide)
-            return;
-
-
-        if (!entity.hasEffect(this)) {
-            entity.addEffect(new EffectInstance(this, 300, Math.min(Math.min(9,cap),Math.max(potency-1,0))));
-            syncEffect(entity);
-        } else {
-            potency = Math.min(entity.getEffect(this).getAmplifier() + potency,Math.min(9,cap));
-
-            entity.removeEffect(this);
-            entity.addEffect(new EffectInstance(this, 300, potency));
-
-            syncEffect(entity);
-        }
-    }
-
-    @Override
-    public void decrement(LivingEntity entity, int cap, int potency) {
-        if (entity.level.isClientSide)
-            return;
-
-        if (entity.hasEffect(this)) {
-            potency = Math.min(entity.getEffect(this).getAmplifier() - potency,99);
-            entity.removeEffect(this);
-            if (potency >= 0) {
-                entity.addEffect(new EffectInstance(this, 200, potency));
-                syncEffect(entity);
-            }
-        }
-    }
-
-    @Override
-    public int getCount(LivingEntity entity) {
-        return super.getCount(entity);
-    }
-
-    @Override
-    public int getCount(EffectInstance ef) {
-        return 0;
-    }
-
-    @Override
-    public boolean isDurationEffectTick(int duration, int amplifier) {
-        return true;
-    }
-
 }

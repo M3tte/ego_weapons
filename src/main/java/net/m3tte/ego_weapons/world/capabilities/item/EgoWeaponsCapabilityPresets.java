@@ -57,6 +57,7 @@ public class EgoWeaponsCapabilityPresets {
     public static final Collider RIFLE = new MultiOBBCollider(4, 0.2, 1, 0.2, 0, 0.0, -0.4);
 
     public static final Collider DoubtBlade = new MultiOBBCollider(4, 0.2, 1.3, 0.2, 0, 0.3, 0);
+    public static final Collider LAMP_CROSSBOW_MELEE = new MultiOBBCollider(4, 0.6, 0.8, 0.2, 0, -0.4, 0);
     public static final Collider NTBlade = new MultiOBBCollider(4, 1.2, 1.5, 1.3, 0, 0.3, 0);
     public static final Collider NTBladePierce = new MultiOBBCollider(4, 0.3, 1.4, 0.3, 0, 0.3, 0);
     public static final Collider FirefistSpew = new MultiOBBCollider(4, 0.3, 2, 0.8, 0, -2, 0);
@@ -898,9 +899,7 @@ public class EgoWeaponsCapabilityPresets {
 
                 if (entityData != null) {
                     if (entityData.firingMode) {
-                        if (AmmoSystem.getAmmoCount(playerpatch.getOriginal().getMainHandItem()) > 0) {
-                            return EgoWeaponsStyles.RIGHT_HANDED;
-                        }
+                        return EgoWeaponsStyles.RIGHT_HANDED;
                     }
                 }
 
@@ -927,11 +926,11 @@ public class EgoWeaponsCapabilityPresets {
             .livingMotionModifier(EgoWeaponsStyles.RIGHT_HANDED, LivingMotions.BLOCK, LampCrossbowMovesetAnims.LAMP_CB_GUARD)
             .livingMotionModifier(EgoWeaponsStyles.RIGHT_HANDED, LivingMotions.JUMP, FullstopOfficeSniperMovesetAnims.FULLSTOP_SNIPER_JUMP)
 
-            .specialAttack(EgoWeaponsStyles.RIGHT_HANDED, EgoWeaponsSkills.LCA_RIFLE_BURST)
-            .specialAttack(Styles.ONE_HAND, EgoWeaponsSkills.LCA_RIFLE_BURST)
+            .specialAttack(EgoWeaponsStyles.RIGHT_HANDED, EgoWeaponsSkills.LAMP_CROSSBOW_INNATE)
+            .specialAttack(Styles.ONE_HAND, EgoWeaponsSkills.LAMP_CROSSBOW_INNATE)
             .passiveSkill(EgoWeaponsSkills.FULLSTOP_SNIPER_PASSIVE)
-            .newStyleCombo(EgoWeaponsStyles.RIGHT_HANDED, LampCrossbowMovesetAnims.LAMP_CB_AUTO_R_1, LampCrossbowMovesetAnims.LAMP_CB_AUTO_R_2, LampCrossbowMovesetAnims.LAMP_CB_AUTO_R_3, LCARifleMovesetAnims.LCA_RIFLE_DASH, LCARifleMovesetAnims.LCA_RIFLE_AUTO_G_1)
-            .newStyleCombo(Styles.ONE_HAND, LampCrossbowMovesetAnims.LAMP_CB_AUTO_M_1, LampCrossbowMovesetAnims.LAMP_CB_AUTO_M_2, LCARifleMovesetAnims.LCA_RIFLE_AUTO_M_1, LCARifleMovesetAnims.LCA_RIFLE_AUTO_M_1)
+            .newStyleCombo(EgoWeaponsStyles.RIGHT_HANDED, LampCrossbowMovesetAnims.LAMP_CB_AUTO_R_1, LampCrossbowMovesetAnims.LAMP_CB_AUTO_R_2, LampCrossbowMovesetAnims.LAMP_CB_AUTO_R_3, LampCrossbowMovesetAnims.LAMP_CB_AUTO_M_DASH, LCARifleMovesetAnims.LCA_RIFLE_AUTO_G_1)
+            .newStyleCombo(Styles.ONE_HAND, LampCrossbowMovesetAnims.LAMP_CB_AUTO_M_1, LampCrossbowMovesetAnims.LAMP_CB_AUTO_M_2, LampCrossbowMovesetAnims.LAMP_CB_AUTO_M_DASH, LCARifleMovesetAnims.LCA_RIFLE_AUTO_M_1)
             //.newStyleCombo(Styles.ONE_HAND, FullstopOfficeSniperMovesetAnims.FULLSTOP_SNIPER_IDLE)
 
             .canBePlacedOffhand(false);

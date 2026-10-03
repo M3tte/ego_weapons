@@ -77,6 +77,9 @@ public class TooltipFuncs {
         for (String status : statuses) {
             list.add(new StringTextComponent("  "));
             switch (status) {
+                case "feather_wick_bolt": generateDescription(list, "statuses", "feather_wick_bolt", 3); break;
+                case "dazzle": generateDescription(list, "statuses", "dazzle", 5, EgoWeaponsEffects.DAZZLE.get(), EgoWeaponsEffects.LAMP.get()); break;
+                case "lamp": generateDescription(list, "statuses", "lamp", 2, EgoWeaponsEffects.LAMP.get()); break;
                 case "sealed": generateDescription(list, "statuses", "sealed", 2); break;
                 case "tianshia_star": generateDescription(list, "statuses", "tianshia_star", 4); break;
                 case "loss_of_self": generateDescription(list, "statuses", "loss_of_self", 3); break;
@@ -87,6 +90,7 @@ public class TooltipFuncs {
                 case "udjat_vanguard": generateDescription(list, "statuses", "udjat_vanguard", 9); break;
                 case "sheut_fracture": generateDescription(list, "statuses", "sheut_fracture", 7, true); break;
                 case "white_fragility": generateDescription(list, "statuses", "white_fragility", 2); break;
+                case "black_fragility": generateDescription(list, "statuses", "black_fragility", 2); break;
                 case "blue_sand": generateDescription(list, "statuses", "blue_sand", 5, true); break;
                 case "ego_att_ardor": generateDescription(list, "statuses", "ego_att_ardor", 5, EgoWeaponsEffects.EGO_ATTUNEMENT_ARDOR_BLOSSOM.get()); break;
                 case "embers": generateDescription(list, "statuses", "embers", 4, EgoWeaponsEffects.EMBERS.get()); break;

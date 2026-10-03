@@ -1145,11 +1145,46 @@
   "item.ego_weapons.lamp_suit": "§f\uEC04 Lamp Suit",
   "item.ego_weapons.lamp_pants": "§fLamp Pants",
 
-  "desc.ego_weapons.lamp_suit.desc": "§o\"E.G.O Resonance seems to regularly have harmful effects to other employees. Especially with lower affinity agents.\"",
-  "desc.ego_weapons.lamp_suit.passive.title": "§b[Passive] §fSeeing Eyes",
-  "desc.ego_weapons.lamp_suit.passive.1": "§7Deal more damage to targets with §f%1$s",
-  "desc.ego_weapons.lamp_suit.passive.2": "§7Deal less damage to targets with §f%2$s §7but without §f%1$s",
+  "desc.ego_weapons.lamp_crossbow.passive.desc": "§o\"Should one peer into the lamplight too long...\"",
+  "desc.ego_weapons.lamp_crossbow.passive.title": "§b[Passive] §fA Dazzling Glow",
+  "desc.ego_weapons.lamp_crossbow.passive.1": "§7At §f20 %1$s§7. Consume all lamp to trigger the following:",
+  "desc.ego_weapons.lamp_crossbow.passive.2": "§7Gain §f2 \uE022 §cOffense Level Up§7.",
+  "desc.ego_weapons.lamp_crossbow.passive.3": "§7Inflict §f1 %2$s§7 on a hostile target with the most Max HP.",
+  "desc.ego_weapons.lamp_crossbow.passive.4": "§8§oThis effect stacks with similar passives.",
+  "desc.ego_weapons.lamp_crossbow.passive.5": "§8§oThis effect prioritizes targets of higher risk level.",
+  "desc.ego_weapons.lamp_crossbow.passive.6": "§8§oThe duration of %2$s §8§oscales with the targets §f\uE046 §bSanity§7.",
 
+  "desc.ego_weapons.lamp_crossbow.passive2.desc": "§oA lantern made of feathers formed into a wick...",
+  "desc.ego_weapons.lamp_crossbow.passive2.title": "§b[Passive] §fDon't blindly follow the light...",
+  "desc.ego_weapons.lamp_crossbow.passive2.1": "§7Deal §f+20%% §7Damage against targets with %1$s§7.",
+  "desc.ego_weapons.lamp_crossbow.passive2.2": "§7Deal §f+5% §7Damage for every §f5 \uE003 §cSinking §f+ \uE002 §cBurn§7 on Target. §8[Max +25%]",
+
+  "desc.ego_weapons.lamp_crossbow.auto.title": "§b[Melee Auto] §fIntense Stare - Zero Range §f\uED03",
+  "desc.ego_weapons.lamp_crossbow.auto.1": "    - = | \uED32  \uED32 | = -",
+  "desc.ego_weapons.lamp_crossbow.auto.2": "[I]   §7Inflict §f1 \uE002 §cBurn §7Potency.",
+  "desc.ego_weapons.lamp_crossbow.auto.3": "[II]   §7Inflict §f1 \uE002 §cBurn §7Potency.",
+  "desc.ego_weapons.lamp_crossbow.auto.4": "[II]   §7Gain §f1 %1$s§7.",
+
+  "desc.ego_weapons.lamp_crossbow.auto2.title": "§b[Ranged Auto] §fRapid Fire §f\uED03",
+  "desc.ego_weapons.lamp_crossbow.auto2.1": "    - = | \uED31  \uED31  \uED31 | = -",
+  "desc.ego_weapons.lamp_crossbow.auto2.2": "[I]   §7Consume §f1 \uE050 §cFeather-Wick Bolt§7.",
+  "desc.ego_weapons.lamp_crossbow.auto2.3": "[I]   §7Inflict §f1 \uE002 §cBurn §7Potency. §7Inflict §f1 \uE003 §cSinking §7Potency.",
+  "desc.ego_weapons.lamp_crossbow.auto2.4": "[II]  §7Consume §f1 \uE050 §cFeather-Wick Bolt§7.",
+  "desc.ego_weapons.lamp_crossbow.auto2.5": "[II]  §7Inflict §f1 \uE002 §cBurn §7Count. §7Inflict §f2 \uE003 §cSinking §7Count.",
+  "desc.ego_weapons.lamp_crossbow.auto2.6": "[III] §7Consume §f1 \uE050 §cFeather-Wick Bolt§7.",
+  "desc.ego_weapons.lamp_crossbow.auto2.7": "[III] §7Inflict §f1 \uE002 §cBurn §7Count. §7Inflict §f2 \uE003 §cSinking §7Count.",
+  "desc.ego_weapons.lamp_crossbow.auto2.8": "[III] §7Deal §f+3% §7Damage for every §f3 \uE003 §cSinking §f+ \uE002 §cBurn§7 on Target. §8[Max +21%]",
+  "desc.ego_weapons.lamp_crossbow.auto2.9": "[III] §7Gain §f2 %1$s§7.",
+
+  "desc.ego_weapons.lamp_crossbow.innate.title": "§b[Innate] §fPiercing Lamplight §f\uED03",
+  "desc.ego_weapons.lamp_crossbow.innate.1": "    - = | \uED31 | = -",
+  "desc.ego_weapons.lamp_crossbow.innate.2": "[I] §7Consume §f1 \uE050 §cFeather-Wick Bolt Bolt§7.",
+  "desc.ego_weapons.lamp_crossbow.innate.3": "[I] §7Inflict §f1 \uE002 §cBurn §7Potency. §7Inflict §f1 \uE003 §cSinking §7Potency.",
+  "desc.ego_weapons.lamp_crossbow.innate.4": "[I] §7Consume §f1 §7extra §f\uE050 §cFeather-Wick Bolt §7to empower:",
+  "desc.ego_weapons.lamp_crossbow.innate.5": "[I] §7Inflict §f2 \uE002 §cBurn §7Count. §7Inflict §f3 \uE003 §cSinking §7Count.",
+  "desc.ego_weapons.lamp_crossbow.innate.6": "[I] §7Inflict §f1 \uE051 §cBlack Fragility§7.",
+  "desc.ego_weapons.lamp_crossbow.innate.7": "[I] §7Deal §f+60% §7Damage",
+  "desc.ego_weapons.lamp_crossbow.innate.8": "[I] §7Gain §f2 %1$s§7.",
 
   "item.ego_weapons.justitia": "§f\uEC05 Justitia",
   "item.ego_weapons.justitia_cloak": "§f\uEC05 Justitia Cloak",
@@ -1836,6 +1871,10 @@
   "desc.ego_weapons.statuses.d10fuel.3": "§7Utilized by certain Skills",
   "desc.ego_weapons.statuses.d10fuel.4": "§7At <= §f50 Potency§7, turn into §f\uE035 §cOverheated Fuel",
 
+  "desc.ego_weapons.statuses.feather_wick_bolt.title": "\uE050 §cFeather-Wick Bolt",
+  "desc.ego_weapons.statuses.feather_wick_bolt.2": "  §8[Special §f\uE012 §6Ammo§8]",
+  "desc.ego_weapons.statuses.feather_wick_bolt.3": "§7Utilized by certain Skills",
+
   "desc.ego_weapons.statuses.firefist_overdrive.title": "\uE036 §cFirefist: Overdrive",
   "desc.ego_weapons.statuses.firefist_overdrive.1": "§7Decrements by 1 per second.",
   "desc.ego_weapons.statuses.firefist_overdrive.2": "§7Deal §f+1% §7Damage per §f\uE002 §cBurn §7on target. §8[Max 15%]",
@@ -1868,6 +1907,7 @@
   "desc.ego_weapons.ammo.none": "§fNONE",
   "desc.ego_weapons.ammo.light": "§fLight Bullets",
   "desc.ego_weapons.ammo.rifle": "§fRifle Bullets",
+  "desc.ego_weapons.ammo.unique": "§fUnique",
 
   "desc.ego_weapons.ammo.mag": "§7| Magazine Size: ",
 
@@ -2103,6 +2143,24 @@
   "desc.ego_weapons.statuses.white_fragility.title": "\uE054 §cWhite Fragility",
   "desc.ego_weapons.statuses.white_fragility.1": "§8[Max: 10]",
   "desc.ego_weapons.statuses.white_fragility.2": "§7Modify §f\uED02 §fWhite §7Resistance by §f+0.1x §7for every Stack",
+
+  "effect.ego_weapons.black_fragility": "Black Fragility",
+  "desc.ego_weapons.statuses.black_fragility.title": "\uE051 §cBlack Fragility",
+  "desc.ego_weapons.statuses.black_fragility.1": "§8[Max: 10]",
+  "desc.ego_weapons.statuses.black_fragility.2": "§7Modify §f\uED03 §5Black §7Resistance by §f+0.1x §7for every Stack",
+
+  "effect.ego_weapons.lamp": "Lamp",
+  "desc.ego_weapons.statuses.lamp.title": "%1$s §cLamp",
+  "desc.ego_weapons.statuses.lamp.1": "§8[Max: 20]",
+  "desc.ego_weapons.statuses.lamp.2": "§7Modify §f\uED03 §5Black §7Resistance by §f+0.1x §7for every Stack",
+
+  "effect.ego_weapons.dazzle": "Dazzle",
+  "desc.ego_weapons.statuses.dazzle.title": "%1$s",
+  "desc.ego_weapons.statuses.dazzle.1": "§8§oDuration scales with Sanity.",
+  "desc.ego_weapons.statuses.dazzle.2": "§8§oInstantly decays if there is no nearby hostile with %2$s",
+  "desc.ego_weapons.statuses.dazzle.3": "§7Gain §f3 \uE039 §cBind§7.",
+  "desc.ego_weapons.statuses.dazzle.4": "§7Deal §f-80%% §7Damage against targets without %2$s§7.",
+  "desc.ego_weapons.statuses.dazzle.5": "§7Disable §f\uE004 §6Light §7regeneration.",
 
   "effect.ego_weapons.terror": "Terror",
   "desc.ego_weapons.statuses.terror.title": "\uE027 §cTerror",
@@ -2414,6 +2472,8 @@
   "commands.ego_weapons.success.stagger.1": "Successfully modified stagger by %s for %s entit%s.",
 
   "commands.ego_weapons.success.egodamage.1": "Successfully dealt %s damage to %s entit%s of type: %s / %s%s",
+
+  "dialogue.ego_weapons.skills.lamp_crossbow.reload": "Sit still...",
 
   "dialogue.ego_weapons.skills.arayashiki.trigger_unsheath": "Easy...|| It’s not done yet.",
 

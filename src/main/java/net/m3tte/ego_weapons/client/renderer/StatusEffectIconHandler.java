@@ -29,6 +29,8 @@ public class StatusEffectIconHandler {
         effectRegistry = new HashMap<>();
 
         generateEffectRegistryEntry(EgoWeaponsEffects.BLEED.get(), ICONPAK1, '\uE001');
+        generateEffectRegistryEntry(EgoWeaponsEffects.LAMP.get(), ICONPAK1, '\uE002');
+        generateEffectRegistryEntry(EgoWeaponsEffects.DAZZLE.get(), ICONPAK1, '\uE003');
         generateEffectRegistryEntry(EgoWeaponsEffects.EGO_ATTUNEMENT_ARDOR_BLOSSOM.get(), ICONPAK1, '\uE050');
         generateEffectRegistryEntry(EgoWeaponsEffects.EMBERS.get(), ICONPAK1, '\uE051');
 

@@ -747,6 +747,15 @@ public class GenericOverlay extends ModIngameGui {
 			case RIFLE:
 				Minecraft.getInstance().getTextureManager().bind(EMPTY_RIFLE_BULLET);
 				break;
+			case UNIQUE:
+				ResourceLocation override = ((GunItem) item.getItem()).getAmmoBGOverride();
+
+				if (override == null) {
+					override = EMPTY_BULLET;
+				}
+
+				Minecraft.getInstance().getTextureManager().bind(override);
+				break;
 		}
 
 

@@ -332,6 +332,13 @@ public class EgoWeaponsSounds {
     public static SoundEvent ARAYASHIKI_GRAB_SCABBARD = generateSoundEvent(locationFrom("arayashiki.grab_scabbard"));
     public static SoundEvent ARAYASHIKI_UNSHEATH_WOOSH = generateSoundEvent(locationFrom("arayashiki.unsheath.woosh"));
 
+    public static SoundEvent LAMP_CROSSBOW_MELEE_HIT = generateSoundEvent(locationFrom("lamp.crossbow.melee.hit"));
+    public static SoundEvent LAMP_CROSSBOW_MELEE_SWING = generateSoundEvent(locationFrom("lamp.crossbow.melee.swing"));
+    public static SoundEvent LAMP_CROSSBOW_RANGED_SHOOT = generateSoundEvent(locationFrom("lamp.crossbow.ranged.shoot"));
+    public static SoundEvent LAMP_CROSSBOW_RANGED_HIT = generateSoundEvent(locationFrom("lamp.crossbow.ranged.hit"));
+    public static SoundEvent LAMP_CROSSBOW_RANGED_RELOAD = generateSoundEvent(locationFrom("lamp.crossbow.ranged.reload"));
+    public static SoundEvent LAMP_CROSSBOW_RANGED_CHARGED = generateSoundEvent(locationFrom("lamp.crossbow.ranged.charge"));
+    public static SoundEvent LAMP_CROSSBOW_VOICE_RELOAD = generateSoundEvent(locationFrom("lamp.crossbow.voice.reload"));
 
 
 

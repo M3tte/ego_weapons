@@ -87,6 +87,72 @@
       }
     ]
   },
+  "lamp.crossbow.melee.hit": {
+    "category": "player",
+    "subtitle": "lamp_crossbow",
+    "sounds": [
+      {
+        "name": "ego_weapons:lamp/melee_hit"
+      }
+    ]
+  },
+  "lamp.crossbow.melee.swing": {
+    "category": "player",
+    "subtitle": "lamp_crossbow",
+    "sounds": [
+      {
+        "name": "ego_weapons:lamp/swing"
+      }
+    ]
+  },
+  "lamp.crossbow.ranged.shoot": {
+    "category": "player",
+    "subtitle": "lamp_crossbow",
+    "sounds": [
+      {
+        "name": "ego_weapons:lamp/shoot"
+      },
+      {
+        "name": "ego_weapons:lamp/shoot_2"
+      }
+    ]
+  },
+  "lamp.crossbow.ranged.charge": {
+    "category": "player",
+    "subtitle": "lamp_crossbow",
+    "sounds": [
+      {
+        "name": "ego_weapons:lamp/charge"
+      }
+    ]
+  },
+  "lamp.crossbow.ranged.hit": {
+    "category": "player",
+    "subtitle": "lamp_crossbow",
+    "sounds": [
+      {
+        "name": "ego_weapons:lamp/ranged_hit"
+      }
+    ]
+  },
+  "lamp.crossbow.ranged.reload": {
+    "category": "player",
+    "subtitle": "lamp_crossbow",
+    "sounds": [
+      {
+        "name": "ego_weapons:lamp/reload_end"
+      }
+    ]
+  },
+  "lamp.crossbow.voice.reload": {
+    "category": "player",
+    "subtitle": "lamp_crossbow",
+    "sounds": [
+      {
+        "name": "ego_weapons:lamp/voice_reload"
+      }
+    ]
+  },
   "ardor_blossom.explode": {
     "category": "player",
     "subtitle": "ardor_blossom",

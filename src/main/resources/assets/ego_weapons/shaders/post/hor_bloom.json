@@ -1,0 +1,17 @@
+{
+  "targets": [
+    "swap10"
+  ],
+  "passes": [
+    {
+      "name": "ego_weapons:hor_bloom",
+      "intarget": "minecraft:main",
+      "outtarget": "swap10"
+    },
+    {
+      "name": "blit",
+      "intarget": "swap10",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}

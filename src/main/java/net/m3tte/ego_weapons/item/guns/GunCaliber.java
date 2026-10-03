@@ -3,7 +3,8 @@ package net.m3tte.ego_weapons.item.guns;
 public enum GunCaliber {
     NONE("desc.ego_weapons.ammo.none"),
     LIGHT("desc.ego_weapons.ammo.light"),
-    RIFLE("desc.ego_weapons.ammo.rifle");
+    RIFLE("desc.ego_weapons.ammo.rifle"),
+    UNIQUE("desc.ego_weapons.ammo.unique");
 
 
     private String caliberIdentifier = "none";

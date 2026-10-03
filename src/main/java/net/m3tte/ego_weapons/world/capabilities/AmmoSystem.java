@@ -180,6 +180,38 @@ public class AmmoSystem {
         return new int[]{0, 0};
 
     }
+
+    public static int forceReloadGun(LivingEntity target, ItemStack gunItem, AmmoType ammoType) {
+        return forceReloadGun(target, gunItem, 999, ammoType);
+    }
+    public static int forceReloadGun(LivingEntity target, ItemStack gunItem, int maxReload, AmmoType ammoType) {
+        int reloaded = 0;
+        if (gunItem.getItem() instanceof GunItem) {
+            GunItem gunType = (GunItem) gunItem.getItem();
+
+            int reloadCap = gunType.getMaxAmmo();
+
+            if (maxReload > 0)
+                reloadCap = Math.min(reloadCap, maxReload);
+
+            int[] oldAmmo = gunItem.getOrCreateTag().getIntArray("loadedAmmo");
+            LinkedList<Integer> newAmmo = new LinkedList<>();
+
+            for (int ammoIdx : oldAmmo)
+                newAmmo.add(ammoIdx);
+
+            while (newAmmo.size() < reloadCap) {
+                newAmmo.add(ammoType.ordinal());
+                reloaded++;
+            }
+
+            gunItem.getOrCreateTag().putIntArray("loadedAmmo", newAmmo);
+            if (target instanceof PlayerEntity)
+                ((PlayerEntity) target).inventory.setChanged();
+        }
+        return reloaded;
+    }
+
     public static void reloadGun(ItemStack gunItem, ItemStack ammoItem, LivingEntity target) {
         reloadGun(gunItem, ammoItem, target, -1);
     }
@@ -209,7 +241,6 @@ public class AmmoSystem {
             if (target instanceof PlayerEntity) {
                 int x = 0;
                 for (ItemStack it : ((PlayerEntity) target).inventory.items) {
-                    System.out.println("ITEM IN SLOT: "+x+" IS : "+it.toString());
                     int length = newAmmo.size();
 
                     if (it.getItem() instanceof AmmoItem) {

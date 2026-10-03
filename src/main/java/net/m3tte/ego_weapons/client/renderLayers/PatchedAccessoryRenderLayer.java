@@ -2,28 +2,30 @@ package net.m3tte.ego_weapons.client.renderLayers;
 
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import com.mojang.blaze3d.vertex.VertexBuilderUtils;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
-import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.client.renderer.EgoWeaponsRenderTypes;
+import net.m3tte.ego_weapons.client.renderer.FramebufferHandlers;
+import net.m3tte.ego_weapons.client.renderer.delegatedEntityRendering.AccessoryRenderLayerRequest;
+import net.m3tte.ego_weapons.client.renderer.delegatedEntityRendering.RenderBatches;
+import net.m3tte.ego_weapons.client.renderer.delegatedEntityRendering.RenderRequest;
 import net.m3tte.ego_weapons.client.renderer.modelBakery.OpenModelBakery;
-import net.m3tte.ego_weapons.client.renderer.wearable.BloodOverlayRenderer;
 import net.m3tte.ego_weapons.client.renderer.wearable.WearableRenderer;
+import net.minecraft.client.MainWindow;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.OutlineLayerBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.entity.Entity;
+import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.model.pipeline.VertexBufferConsumer;
 import yesman.epicfight.api.client.model.ClientModel;
 import yesman.epicfight.api.utils.math.OpenMatrix4f;
 import yesman.epicfight.client.ClientEngine;
@@ -34,10 +36,8 @@ import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import java.util.HashMap;
 import java.util.Map;
 
-import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
-import static net.m3tte.ego_weapons.client.renderer.EgoWeaponsRenderTypes.armorTranslucentNoCull;
 import static net.m3tte.ego_weapons.client.renderer.EgoWeaponsRenderTypes.getFullbrightAnimatedArmor;
-import static net.minecraft.client.renderer.RenderType.armorCutoutNoCull;
+import static net.m3tte.ego_weapons.client.renderer.FramebufferHandlers.getBloomMask;
 
 @OnlyIn(Dist.CLIENT)
 public class PatchedAccessoryRenderLayer<E extends LivingEntity, T extends LivingEntityPatch<E>, M extends BipedModel<E>> extends PatchedLayer<E, T, M, AccessoryRenderLayer<E, M>> {
@@ -53,6 +53,10 @@ public class PatchedAccessoryRenderLayer<E extends LivingEntity, T extends Livin
     public PatchedAccessoryRenderLayer() {
         this(false);
     }
+
+
+
+
 
     @Override
     public void renderLayer(T t, E entity, AccessoryRenderLayer<E, M> emAccessoryRenderLayer, MatrixStack poseStack, IRenderTypeBuffer buf, int packedLightIn, OpenMatrix4f[] poses, float netYawHead, float pitchHead, float partialTicks) {
@@ -82,7 +86,12 @@ public class PatchedAccessoryRenderLayer<E extends LivingEntity, T extends Livin
 
                             break;
                         case "lamp_suit":
+
+
                             renderWearableModel(emAccessoryRenderLayer.getRenderer("lamp_ego_eyes"), entity, buf, ValidRenderTypes.FULLBRIGHT, poseStack, packedLightIn, poses, netYawHead, pitchHead, partialTicks);
+
+                            RenderRequest.registerRequest(RenderBatches.HOR_BLOOM, new AccessoryRenderLayerRequest(this, emAccessoryRenderLayer, entity, ValidRenderTypes.FULLBRIGHT, poseStack, packedLightIn, poses, netYawHead, pitchHead, partialTicks, "lamp_ego_eyes"));
+
                             break;
                     }
 
@@ -101,8 +110,6 @@ public class PatchedAccessoryRenderLayer<E extends LivingEntity, T extends Livin
                     }
                 }
             }
-
-
 
 
         }

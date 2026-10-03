@@ -1,0 +1,9 @@
+{
+  "textures": [
+    "ego_weapons:ammo/lamp_crossbow_bolt/fire_side_0",
+    "ego_weapons:ammo/lamp_crossbow_bolt/fire_side_1",
+    "ego_weapons:ammo/lamp_crossbow_bolt/fire_side_2",
+    "ego_weapons:ammo/lamp_crossbow_bolt/fire_side_3",
+    "ego_weapons:ammo/lamp_crossbow_bolt/fire_side_4"
+  ]
+}

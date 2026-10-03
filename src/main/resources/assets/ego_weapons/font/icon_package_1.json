@@ -9,6 +9,20 @@
     },
     {
       "type": "bitmap",
+      "file": "ego_weapons:mob_effect/lamp.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE002"]
+    },
+    {
+      "type": "bitmap",
+      "file": "ego_weapons:mob_effect/dazzle.png",
+      "ascent": 8,
+      "height": 9,
+      "chars": ["\uE003"]
+    },
+    {
+      "type": "bitmap",
       "file": "ego_weapons:mob_effect/ego_att_ardor.png",
       "ascent": 8,
       "height": 9,

@@ -213,6 +213,12 @@ public class EgoWeaponsParticles {
     public static final RegistryObject<BasicParticleType> ARAYASHIKI_HOR_SLASH = PARTICLES.register("arayashiki_h_slash", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> ARAYASHIKI_CROSS_SLASH = PARTICLES.register("arayashiki_cross_slash", () -> new BasicParticleType(true));
     public static final RegistryObject<BasicParticleType> ARAYASHIKI_UNSHEATH_SPARKLE = PARTICLES.register("arayashiki_unsheath_sparkle", () -> new BasicParticleType(true));
-
     public static final RegistryObject<BasicParticleType> ARAYASHIKI_REND_TARGET = PARTICLES.register("rend_target", () -> new BasicParticleType(true));
+
+    public static final RegistryObject<BasicParticleType> LAMP_STRIKE = PARTICLES.register("lamp_strike", () -> new BasicParticleType(true));
+    public static final RegistryObject<HitParticleType> LAMP_HIT = PARTICLES.register("lamp_hit", () -> new HitParticleType(true, HitParticleType.CENTER_OF_TARGET, HitParticleType.ZERO));
+    public static final RegistryObject<BasicParticleType> LAMP_EMBERS = PARTICLES.register("lamp_embers", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> LAMP_EMBERS_INV = PARTICLES.register("lamp_embers_inv", () -> new BasicParticleType(true));
+    public static final RegistryObject<BasicParticleType> LAMP_BOLT_FIRE_SIDE = PARTICLES.register("lamp_bolt_fire_side", () -> new BasicParticleType(true));
+
 }

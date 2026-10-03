@@ -179,6 +179,8 @@ public class EgoWeaponsSkills {
     public static Skill ARAYASHIKI_INNATE;
     public static Skill ARAYASHIKI_PASSIVE;
     public static Skill ARAYASHIKI_GUARD;
+
+    public static Skill LAMP_CROSSBOW_INNATE;
     public EgoWeaponsSkills() {
     }
 
@@ -366,6 +368,9 @@ public class EgoWeaponsSkills {
         ARAYASHIKI_INNATE = event.registerSkill(new ArayashikiInnateSkill(SpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "lca_burst")).setConsumption(20.0F).setMaxStack(2)), false);
         ARAYASHIKI_PASSIVE = event.registerSkill(new ArayashikiPassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "arayashiki_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
         ARAYASHIKI_GUARD = event.registerSkill(new ArayashikiActiveGuard(ArayashikiActiveGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "arayashiki_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
+
+        LAMP_CROSSBOW_INNATE = event.registerSkill(new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "piercing_lamplight"))
+                .setConsumption(25.0F).setMaxStack(1).setAnimations(LampCrossbowMovesetAnims.LAMP_CB_INNATE)), false);
 
     }
 }
