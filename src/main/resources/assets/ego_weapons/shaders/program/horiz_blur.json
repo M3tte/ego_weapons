@@ -6,7 +6,7 @@
   },
 
   "vertex": "ego_weapons:basic",
-  "fragment": "ego_weapons:hor_bloom",
+  "fragment": "ego_weapons:horiz_blur",
 
   "samplers": [
     {

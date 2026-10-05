@@ -299,7 +299,7 @@ public class EgoWeaponsRenderSystem {
 
         MatrixStack stack = event.getMatrixStack();
         Deque<RenderRequest> renderRequests = RenderRequest.getRenderRequests(RenderBatches.HOR_BLOOM);
-        System.out.println("Rendering "+renderRequests.size()+"x requests");
+        //System.out.println("Rendering "+renderRequests.size()+"x requests");
         enable.run(); //Forge: MC-168672 Make sure all render types have the correct GL state.
         IRenderTypeBuffer.Impl buf =
                 IRenderTypeBuffer.immediate(buffer);

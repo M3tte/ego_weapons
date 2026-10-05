@@ -72,8 +72,6 @@ public class AccessoryRenderLayerRequest extends RenderRequest {
 
         float bodyYaw = entity.yBodyRotO;
 
-        System.out.println("ENTITY YROT IS : "+entity.yRot);
-
         poseStack.mulPose(
                 Vector3f.YP.rotationDegrees(180.0F - bodyYaw)
         );

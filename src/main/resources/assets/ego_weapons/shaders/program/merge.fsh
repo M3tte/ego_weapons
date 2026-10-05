@@ -18,5 +18,5 @@ void main() {
     colA += texture2D(MergeSampler, texCoord).rgba;
 
     // Add bloom on top of the original scene.
-    gl_FragColor = vec4(base.rgba + colA.rgba);
+    gl_FragColor = vec4(base.rgba);
 }
