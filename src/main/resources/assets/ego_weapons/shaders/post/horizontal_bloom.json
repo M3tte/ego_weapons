@@ -1,0 +1,23 @@
+{
+  "targets": [
+    "swapHorBlur"
+  ],
+  "passes": [
+    {
+      "name": "ego_weapons:horiz_blur",
+      "intarget": "minecraft:main",
+      "outtarget": "swapHorBlur"
+    },
+    {
+      "name": "ego_weapons:merge",
+      "intarget": "minecraft:main",
+      "outtarget": "minecraft:main",
+      "auxtargets": [
+        {
+          "name": "MergeSampler",
+          "id": "swapHorBlur"
+        }
+      ]
+    }
+  ]
+}

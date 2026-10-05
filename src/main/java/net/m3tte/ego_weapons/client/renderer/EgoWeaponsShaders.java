@@ -90,10 +90,13 @@ public class EgoWeaponsShaders {
         );
 
         HORIZONTAL_BLOOM_GROUP = new SetupShaderGroup(
-                new ResourceLocation("ego_weapons", "shaders/post/hor_bloom.json"),
+                new ResourceLocation("ego_weapons", "shaders/post/horizontal_bloom.json"),
                 (a, self) -> {
                     ShaderInstance shaderInst = self.passes.get(0).getEffect();
                     shaderInst.setSampler("MaskSampler", FramebufferHandlers.getBloomMask()::getColorTextureId);
+                    ShaderUniform uniform = self.passes.get(0).getEffect().getUniform("GameTime");
+                    if (uniform != null)
+                        uniform.set(FramebufferHandlers.getBloomMask().width, FramebufferHandlers.getBloomMask().height);
                 }
         );
 
