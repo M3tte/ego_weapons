@@ -53,8 +53,8 @@ public class LampEGOEyesModel<T extends LivingEntity> extends BipedModel<T> impl
 
     public LampEGOEyesModel() {
         super(0f);
-        texWidth = 128;
-        texHeight = 128;
+        texWidth = 64;
+        texHeight = 32;
 
         Body = new ModelRenderer(this);
         Body.setPos(0.0F, 0.0F, 0.0F);

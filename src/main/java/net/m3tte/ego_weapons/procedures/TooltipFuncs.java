@@ -2,12 +2,11 @@ package net.m3tte.ego_weapons.procedures;
 
 import jdk.nashorn.internal.ir.annotations.Ignore;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
-import net.m3tte.ego_weapons.client.renderer.StatusEffectIconHandler;
+import net.m3tte.ego_weapons.client.StatusEffectIconHandler;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.minecraft.potion.Effect;
 import net.minecraft.util.text.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class TooltipFuncs {
@@ -77,6 +76,8 @@ public class TooltipFuncs {
         for (String status : statuses) {
             list.add(new StringTextComponent("  "));
             switch (status) {
+                case "salvation": generateDescription(list, "statuses", "salvation", 7, true, EgoWeaponsEffects.SALVATION.get(), EgoWeaponsEffects.DAZZLE.get(), EgoWeaponsEffects.LAMP.get()); break;
+                case "guardian_of_the_forest": generateDescription(list, "statuses", "guardian_of_the_forest", 5, true, EgoWeaponsEffects.GUARDIAN_OF_THE_FOREST.get()); break;
                 case "feather_wick_bolt": generateDescription(list, "statuses", "feather_wick_bolt", 3); break;
                 case "dazzle": generateDescription(list, "statuses", "dazzle", 5, EgoWeaponsEffects.DAZZLE.get(), EgoWeaponsEffects.LAMP.get()); break;
                 case "lamp": generateDescription(list, "statuses", "lamp", 2, EgoWeaponsEffects.LAMP.get()); break;

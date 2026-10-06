@@ -1,4 +1,4 @@
-package net.m3tte.ego_weapons.client.renderer;
+package net.m3tte.ego_weapons.client;
 
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.minecraft.potion.Effect;
@@ -31,6 +31,8 @@ public class StatusEffectIconHandler {
         generateEffectRegistryEntry(EgoWeaponsEffects.BLEED.get(), ICONPAK1, '\uE001');
         generateEffectRegistryEntry(EgoWeaponsEffects.LAMP.get(), ICONPAK1, '\uE002');
         generateEffectRegistryEntry(EgoWeaponsEffects.DAZZLE.get(), ICONPAK1, '\uE003');
+        generateEffectRegistryEntry(EgoWeaponsEffects.GUARDIAN_OF_THE_FOREST.get(), ICONPAK1, '\uE004');
+        generateEffectRegistryEntry(EgoWeaponsEffects.SALVATION.get(), ICONPAK1, '\uE005');
         generateEffectRegistryEntry(EgoWeaponsEffects.EGO_ATTUNEMENT_ARDOR_BLOSSOM.get(), ICONPAK1, '\uE050');
         generateEffectRegistryEntry(EgoWeaponsEffects.EMBERS.get(), ICONPAK1, '\uE051');
 

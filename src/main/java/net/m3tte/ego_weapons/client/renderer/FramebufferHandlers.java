@@ -40,7 +40,7 @@ public class FramebufferHandlers {
 
         if (main.width != FramebufferHandlers.getSavedWidth() || main.height != FramebufferHandlers.getSavedHeight()) {
             getDistortionMask().resize(main.width / 2, main.height / 2, Minecraft.ON_OSX);
-            getBloomMask().resize(main.width / 1, main.height / 1, Minecraft.ON_OSX);
+            getBloomMask().resize(main.width / 2, main.height / 2, Minecraft.ON_OSX);
             FramebufferHandlers.setSavedHeight(main.height);
             FramebufferHandlers.setSavedWidth(main.width);
 
@@ -61,7 +61,7 @@ public class FramebufferHandlers {
     public static Framebuffer getBloomMask() {
         if (HORIZONTAL_BLOOM_MASK == null) {
             Framebuffer main = Minecraft.getInstance().getMainRenderTarget();
-            HORIZONTAL_BLOOM_MASK = new Framebuffer(main.width / 1, main.height / 1, true, Minecraft.ON_OSX);
+            HORIZONTAL_BLOOM_MASK = new Framebuffer(main.width / 2, main.height / 2, true, Minecraft.ON_OSX);
             savedWidth = Minecraft.getInstance().getWindow().getWidth();
             savedHeight = Minecraft.getInstance().getWindow().getHeight();
 

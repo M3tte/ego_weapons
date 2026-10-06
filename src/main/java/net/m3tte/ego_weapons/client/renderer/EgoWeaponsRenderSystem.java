@@ -248,7 +248,7 @@ public class EgoWeaponsRenderSystem {
         //getDistortionMask().clear(false);
 
 
-
+        EgoWeaponsRenderSystem.toggleRenderColorOverrideState(RenderOverrideStates.BLOOM);
         GlStateManager._glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER,
                 prev.frameBufferId);
 
@@ -272,8 +272,6 @@ public class EgoWeaponsRenderSystem {
 
 
         //Minecraft.getInstance().getMainRenderTarget().blitToScreen(savedWidth,savedHeight);
-        toggleRenderColorOverrideState(RenderOverrideStates.NONE);
-
         Runnable enable = () -> {
             RenderSystem.enableAlphaTest();
             RenderSystem.depthFunc(GL11.GL_GEQUAL);
@@ -325,6 +323,7 @@ public class EgoWeaponsRenderSystem {
         RenderSystem.disablePolygonOffset();
         Minecraft.getInstance().getMainRenderTarget().bindWrite(true);
 
+        EgoWeaponsRenderSystem.clearRenderOverrideState();
         //getBloomMask().blitToScreen(savedWidth,savedHeight);
         RenderSystem.disableAlphaTest();
     }

@@ -259,6 +259,7 @@ public class EgoWeaponsModVars {
 			nbt.putDouble("emotionLevelProgress", instance.emotionLevelProgress);
 			nbt.putInt("onHitCounter", instance.onHitCounter);
 			nbt.putString("personality", instance.personality);
+			nbt.putInt("eye_var", instance.eye_var);
 			nbt.putDouble("injury_threshold", instance.injury_threshold);
 			return nbt;
 		}
@@ -293,6 +294,7 @@ public class EgoWeaponsModVars {
 			instance.emotionLevelProgress = nbt.getDouble("emotionLevelProgress");
 			instance.onHitCounter = nbt.getInt("onHitCounter");
 			instance.personality = nbt.getString("personality");
+			instance.eye_var = nbt.getInt("eye_var");
 			instance.injury_threshold = nbt.getDouble("injury_threshold");
 		}
 	}
@@ -325,6 +327,7 @@ public class EgoWeaponsModVars {
 		public double sanity = 20;
 		public String personality = "default";
 		public double injury_threshold = 0;
+		public int eye_var = 0;
 
 		public int emotionLevel = 0;
 		public double emotionLevelProgress = 0;
@@ -413,6 +416,7 @@ public class EgoWeaponsModVars {
 		clone.blacksilence_ws = original.blacksilence_ws;
 		clone.onHitCounter = original.onHitCounter;
 		clone.personality = original.personality;
+		clone.eye_var = original.eye_var;
 		if (!event.isWasDeath()) {
 			clone.iFrames = original.iFrames;
 			// clone.maxStagger = original.maxStagger;
@@ -473,6 +477,7 @@ public class EgoWeaponsModVars {
 					variables.emotionLevelProgress = message.data.emotionLevelProgress;
 					variables.emotionLevel = message.data.emotionLevel;
 					variables.onHitCounter = message.data.onHitCounter;
+					variables.eye_var = message.data.eye_var;
 					variables.personality = message.data.personality;
 					variables.injury_threshold = message.data.injury_threshold;
 				}

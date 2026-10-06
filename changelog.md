@@ -16,6 +16,10 @@
 + Added correct translations to (hopefully) all potion effects added by the mod.
 + Implemented **Decentralized Status Icons**.
   + The mod will now resolve status icons for descriptions where defined. This is "probably" slightly less performant than simply using unicode but bypasses the normal unicode limit.
++ Implemented LAMP E.G.O with crossbow
+  + Added bloom VFX system for said E.G.O
+  + Added system for responsive VFX shaders
+  + Added scaling system for shaders to improve performance
 
 
 # ..v1.01.19

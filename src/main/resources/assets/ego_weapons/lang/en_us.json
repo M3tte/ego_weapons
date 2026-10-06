@@ -1186,6 +1186,35 @@
   "desc.ego_weapons.lamp_crossbow.innate.7": "[I] §7Deal §f+60% §7Damage",
   "desc.ego_weapons.lamp_crossbow.innate.8": "[I] §7Gain §f2 %1$s§7.",
 
+  "desc.ego_weapons.lamp_suit.passive.meta": "%1 - Lamp, %2 - Dazzled, %3 - Salvation",
+  "desc.ego_weapons.lamp_suit.passive.desc": "§o\"Should one peer into the lamplight too long...\"",
+  "desc.ego_weapons.lamp_suit.passive.title": "§b[Passive] §fEyes bright like lamps.",
+  "desc.ego_weapons.lamp_suit.passive.1": "§7Gain §f1 %1$s§7 on hit with final coins.",
+  "desc.ego_weapons.lamp_suit.passive.2": "§7At §f20 %1$s§7. Consume all lamp to trigger the following:",
+  "desc.ego_weapons.lamp_suit.passive.3": "§7Gain §f3 \uE024 §cDefense Level Up§7.",
+  "desc.ego_weapons.lamp_suit.passive.4": "§7Gain §f1 %3$s§7.",
+  "desc.ego_weapons.lamp_suit.passive.5": "§7Inflict §f1 %2$s§7 on a hostile target with the most Max HP.",
+  "desc.ego_weapons.lamp_suit.passive.6": "§8§oThis effect stacks with similar passives.",
+  "desc.ego_weapons.lamp_suit.passive.7": "§8§oThis effect prioritizes targets of higher risk level.",
+  "desc.ego_weapons.lamp_suit.passive.8": "§8§oThe duration of %2$s §8§oscales with the targets §f\uE046 §bSanity§7.",
+
+  "desc.ego_weapons.lamp_suit.passive2.meta": "%1 - Lamp, %2 - Salvation",
+  "desc.ego_weapons.lamp_suit.passive2.title": "§b[Passive] §fDazzling Lamp",
+  "desc.ego_weapons.lamp_suit.passive2.1": "§7Take §f-1%% §7Damage for every §f2 %1$s§7 on Self.",
+  "desc.ego_weapons.lamp_suit.passive2.2": "§7If §f%2$s §7is active:",
+  "desc.ego_weapons.lamp_suit.passive2.3": "§7Take §f-20%% §7Damage from targets with §f%3$s§7 instead.",
+  "desc.ego_weapons.lamp_suit.passive2.4": "§7Take §f+20%% §7Damage from targets without §f%3$s§7 instead.",
+
+  "desc.ego_weapons.lamp_suit.ability.meta": "%1 - Lamp, %2 - Dazzled, %3 - Guardian of the Forest",
+  "desc.ego_weapons.lamp_suit.ability.desc": "§o\"The eyes and lamp of Big Bird light up the dark chamber like stars.\"",
+  "desc.ego_weapons.lamp_suit.ability.title": "§b[Ability] §6Eyes Watching the Dark Forest §f- \uE004\uE004\uE004\uE004\uE004\uE004",
+  "desc.ego_weapons.lamp_suit.ability.1": "§7Gain §f6 %1$s§7.",
+  "desc.ego_weapons.lamp_suit.ability.2": "§7Inflict §f2 \uE043 §cFragile §7to one enemy with %2$s§7.",
+  "desc.ego_weapons.lamp_suit.ability.3": "§7Apply §f1 %3$s§7 to §f2 §7nearby allies.",
+  "desc.ego_weapons.lamp_suit.ability.4": "§7- The above effect prioritizes allies with §6[Bird E.G.O]",
+  "desc.ego_weapons.lamp_suit.ability.5": "§7- Said allies gain §f2 %3$s§7 instead.",
+  "desc.ego_weapons.lamp_suit.ability.6": "§7- Said allies gain §f1 \uE030 §cPower Up§7. §8[Max 3]",
+
   "item.ego_weapons.justitia": "§f\uEC05 Justitia",
   "item.ego_weapons.justitia_cloak": "§f\uEC05 Justitia Cloak",
   "item.ego_weapons.justitia_blindfold": "§fJustitia Blindfold",
@@ -1999,6 +2028,9 @@
   "desc.ego_weapons.statuses.speed.1": "§7Value is affected by effects like §f\uE038 §cHaste§7.",
   "desc.ego_weapons.statuses.speed.2": "§7Affects various attacks and movement speed.",
 
+
+
+
   "effect.ego_weapons.offense_up":"Offense Level Up",
   "desc.ego_weapons.statuses.offense_up.title": "\uE022 §cOffense Level Up",
   "desc.ego_weapons.statuses.offense_up.1": "§8§oExpires after 15 seconds ",
@@ -2149,10 +2181,33 @@
   "desc.ego_weapons.statuses.black_fragility.1": "§8[Max: 10]",
   "desc.ego_weapons.statuses.black_fragility.2": "§7Modify §f\uED03 §5Black §7Resistance by §f+0.1x §7for every Stack",
 
+
+  "effect.ego_weapons.salvation.meta":"%1 - Salvation, %2 - Dazzled, %3 - Lamp",
+  "effect.ego_weapons.salvation":"Salvation",
+  "desc.ego_weapons.statuses.salvation.title": "%1$s",
+  "desc.ego_weapons.statuses.salvation.1": "§8§oExpires after 15 seconds",
+  "desc.ego_weapons.statuses.salvation.2": "§8§oCannot gain %3$s §8§owhile this effect is active.",
+  "desc.ego_weapons.statuses.salvation.3": "§8§oThis effect counts as having %3$s §8§o.",
+  "desc.ego_weapons.statuses.salvation.4": "§7Gain §f+2 \uE022 §cOffense Level§7.",
+  "desc.ego_weapons.statuses.salvation.5": "§7Deal §f+15%% §7Damage against targets with %2$s",
+  "desc.ego_weapons.statuses.salvation.6": "[On Kill] §7If Target had §f%2$s§7: Gain §f2 \uE022 §cOffense Level Up§7.",
+  "desc.ego_weapons.statuses.salvation.7": "[On Kill] §7If Target had §f%2$s§7: §7Recover §f2 \uE004 §6Light§7.",
+  "desc.ego_weapons.statuses.salvation.desc": "§oAnd so the big birds eyes turned crimson...",
+
+  "effect.ego_weapons.guardian_of_the_forest.meta":"%1 - Guardian",
+  "effect.ego_weapons.guardian_of_the_forest":"Guardian of the Forest",
+  "desc.ego_weapons.statuses.guardian_of_the_forest.title": "%1$s",
+  "desc.ego_weapons.statuses.guardian_of_the_forest.1": "§8§oExpires after 15 seconds",
+  "desc.ego_weapons.statuses.guardian_of_the_forest.2": "§7Gain §f+3 \uE022 §cOffense Level§7.",
+  "desc.ego_weapons.statuses.guardian_of_the_forest.3": "§7Accelerate §f\uE004 §6Light§7 regeneration.",
+  "desc.ego_weapons.statuses.guardian_of_the_forest.4": "§7Accelerate §f\uE046 §bSanity§7 regeneration.",
+  "desc.ego_weapons.statuses.guardian_of_the_forest.5": "§r\uEC33 §6[Bird E.G.O] §7Take §f-20% §7Damage. §r\uEC33",
+  "desc.ego_weapons.statuses.guardian_of_the_forest.desc": "§oBig Bird's eyes can see very far, and things we can't see...",
+
   "effect.ego_weapons.lamp": "Lamp",
-  "desc.ego_weapons.statuses.lamp.title": "%1$s §cLamp",
+  "desc.ego_weapons.statuses.lamp.title": "%1$s",
   "desc.ego_weapons.statuses.lamp.1": "§8[Max: 20]",
-  "desc.ego_weapons.statuses.lamp.2": "§7Modify §f\uED03 §5Black §7Resistance by §f+0.1x §7for every Stack",
+  "desc.ego_weapons.statuses.lamp.2": "§7This effect is used by certain kits.",
 
   "effect.ego_weapons.dazzle": "Dazzle",
   "desc.ego_weapons.statuses.dazzle.title": "%1$s",
@@ -2465,8 +2520,8 @@
 
   "commands.ego_weapons.success.setEmotionLevel.1": "Successfully set Emotion Level to %s for %s player%s.",
 
-  "commands.ego_weapons.success.incrementStatus.1": "Successfully incremented §c\"%s§c\" §fby %s for %s entit%s.",
-  "commands.ego_weapons.success.decrementStatus.1": "Successfully decremented §c\"%s§c\" by %s for %s entit%s.",
+  "commands.ego_weapons.success.incrementStatus.1": "Successfully incremented §c\"%s§c\" §rby %s for %s entit%s.",
+  "commands.ego_weapons.success.decrementStatus.1": "Successfully decremented §c\"%s§c\" §rby %s for %s entit%s.",
 
   "commands.ego_weapons.success.sanity.1": "Successfully modified sanity by %s for %s player%s.",
   "commands.ego_weapons.success.stagger.1": "Successfully modified stagger by %s for %s entit%s.",

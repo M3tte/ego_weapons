@@ -90,7 +90,12 @@ public class PatchedAccessoryRenderLayer<E extends LivingEntity, T extends Livin
 
                             renderWearableModel(emAccessoryRenderLayer.getRenderer("lamp_ego_eyes"), entity, buf, ValidRenderTypes.FULLBRIGHT, poseStack, packedLightIn, poses, netYawHead, pitchHead, partialTicks);
 
-                            RenderRequest.registerRequest(RenderBatches.HOR_BLOOM, new AccessoryRenderLayerRequest(this, emAccessoryRenderLayer, entity, ValidRenderTypes.FULLBRIGHT, poseStack, packedLightIn, poses, netYawHead, pitchHead, partialTicks, "lamp_ego_eyes"));
+
+                            int lampStacks = EgoWeaponsEffects.LAMP.get().getPotency(entity);
+
+                            if (lampStacks >= 3 || entity.hasEffect(EgoWeaponsEffects.SALVATION.get())) {
+                                RenderRequest.registerRequest(RenderBatches.HOR_BLOOM, new AccessoryRenderLayerRequest(this, emAccessoryRenderLayer, entity, ValidRenderTypes.FULLBRIGHT, poseStack, packedLightIn, poses, netYawHead, pitchHead, partialTicks, "lamp_ego_eyes"));
+                            }
 
                             break;
                     }
