@@ -16,7 +16,7 @@ import yesman.epicfight.particle.EpicFightParticles;
 
 public class LampEffect extends PotencyOnlyStatus {
     public LampEffect() {
-        super(EffectType.BENEFICIAL, "lamp",-16777216, false, 10, 600);
+        super(EffectType.BENEFICIAL, "lamp",-16777216, false, 20, 600);
     }
 
     @Override

@@ -151,7 +151,6 @@ public class StatusEffectGUI extends EntityIndicator {
                     renderEffect(offhandRL, prevActives, startX, startY, 0, ammoMainhand + ammoOffhand, bufferIn, mvMatrix, true, false);
                     prevActives++;
                 }
-                prevActives++;
 
 
 

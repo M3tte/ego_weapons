@@ -1,23 +1,29 @@
 {
   "targets": [
-    "swapHorBlur"
+    "smallSwapBuffer",
+    "secondaryBuf"
   ],
   "passes": [
     {
       "name": "ego_weapons:horiz_blur",
-      "intarget": "minecraft:main",
-      "outtarget": "swapHorBlur"
+      "intarget": "smallSwapBuffer",
+      "outtarget": "smallSwapBuffer"
     },
     {
       "name": "ego_weapons:merge",
       "intarget": "minecraft:main",
-      "outtarget": "minecraft:main",
+      "outtarget": "secondaryBuf",
       "auxtargets": [
         {
           "name": "MergeSampler",
-          "id": "swapHorBlur"
+          "id": "smallSwapBuffer"
         }
       ]
+    },
+    {
+      "name": "blit",
+      "intarget": "secondaryBuf",
+      "outtarget": "minecraft:main"
     }
   ]
 }

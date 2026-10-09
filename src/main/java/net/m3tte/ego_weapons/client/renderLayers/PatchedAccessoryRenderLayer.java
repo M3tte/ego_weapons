@@ -2,24 +2,18 @@ package net.m3tte.ego_weapons.client.renderLayers;
 
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.client.renderer.EgoWeaponsRenderTypes;
-import net.m3tte.ego_weapons.client.renderer.FramebufferHandlers;
 import net.m3tte.ego_weapons.client.renderer.delegatedEntityRendering.AccessoryRenderLayerRequest;
 import net.m3tte.ego_weapons.client.renderer.delegatedEntityRendering.RenderBatches;
 import net.m3tte.ego_weapons.client.renderer.delegatedEntityRendering.RenderRequest;
 import net.m3tte.ego_weapons.client.renderer.modelBakery.OpenModelBakery;
 import net.m3tte.ego_weapons.client.renderer.wearable.WearableRenderer;
-import net.minecraft.client.MainWindow;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.shader.Framebuffer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -37,7 +31,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static net.m3tte.ego_weapons.client.renderer.EgoWeaponsRenderTypes.getFullbrightAnimatedArmor;
-import static net.m3tte.ego_weapons.client.renderer.FramebufferHandlers.getBloomMask;
 
 @OnlyIn(Dist.CLIENT)
 public class PatchedAccessoryRenderLayer<E extends LivingEntity, T extends LivingEntityPatch<E>, M extends BipedModel<E>> extends PatchedLayer<E, T, M, AccessoryRenderLayer<E, M>> {
@@ -90,11 +83,20 @@ public class PatchedAccessoryRenderLayer<E extends LivingEntity, T extends Livin
 
                             renderWearableModel(emAccessoryRenderLayer.getRenderer("lamp_ego_eyes"), entity, buf, ValidRenderTypes.FULLBRIGHT, poseStack, packedLightIn, poses, netYawHead, pitchHead, partialTicks);
 
-                            RenderRequest.registerRequest(RenderBatches.HOR_BLOOM, new AccessoryRenderLayerRequest(this, emAccessoryRenderLayer, entity, ValidRenderTypes.FULLBRIGHT, poseStack, packedLightIn, poses, netYawHead, pitchHead, partialTicks, "lamp_ego_eyes"));
+                            int lampStacks = EgoWeaponsEffects.LAMP.get().getPotency(entity);
+
+                            if (lampStacks >= 3 || entity.hasEffect(EgoWeaponsEffects.SALVATION.get())) {
+                                RenderRequest.registerRequest(RenderBatches.HOR_BLOOM, new AccessoryRenderLayerRequest(this, emAccessoryRenderLayer, entity, ValidRenderTypes.FULLBRIGHT, poseStack, packedLightIn, poses, netYawHead, pitchHead, partialTicks, "lamp_ego_eyes", -1, -5));
+                            }
 
                             break;
                     }
 
+                }
+
+                if (entity.hasEffect(EgoWeaponsEffects.MANG.get())) {
+                    // renderWearableModel(emAccessoryRenderLayer.getRenderer("mang_rings"), entity, buf, ValidRenderTypes.FULLBRIGHT, poseStack, packedLightIn, poses, netYawHead, pitchHead, partialTicks);
+                    RenderRequest.registerRequest(RenderBatches.HOR_BLOOM, new AccessoryRenderLayerRequest(this, emAccessoryRenderLayer, entity, ValidRenderTypes.FULLBRIGHT, poseStack, packedLightIn, poses, netYawHead, pitchHead, partialTicks, "mang_rings", 0, 0));
                 }
 
                 if (entity.getItemBySlot(EquipmentSlotType.HEAD).getItem().getRegistryName() != null) {

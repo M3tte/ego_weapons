@@ -89,15 +89,23 @@ public class EgoWeaponsShaders {
                 }
         );
 
+        DynamicFramebufferDef respFramebuf = new ResponsiveDynamicFramebuffer(1f,1f,"smallSwapBuffer", 200, 900, 1);
+
         HORIZONTAL_BLOOM_GROUP = new SetupShaderGroup(
                 new ResourceLocation("ego_weapons", "shaders/post/horizontal_bloom.json"),
                 (a, self) -> {
                     ShaderInstance shaderInst = self.passes.get(0).getEffect();
                     shaderInst.setSampler("MaskSampler", FramebufferHandlers.getBloomMask()::getColorTextureId);
-                    ShaderUniform uniform = self.passes.get(0).getEffect().getUniform("GameTime");
+                    ShaderUniform uniform = self.passes.get(0).getEffect().getUniform("BlurSize");
+                    ShaderUniform uniformS = self.passes.get(1).getEffect().getUniform("SizeDivider");
                     if (uniform != null)
                         uniform.set(FramebufferHandlers.getBloomMask().width, FramebufferHandlers.getBloomMask().height);
-                }
+                    if (uniformS != null) {
+                        uniformS.set(respFramebuf.getHeightDiv());
+                    }
+
+                },
+                respFramebuf
         );
 
         UDJAT_CCTV_GROUP = new SetupShaderGroup(

@@ -170,6 +170,7 @@ public class EgoWeaponsItems {
 
     public static RegistryObject<Item> FULLSTOP_SNIPER_RAILGUN = registerItem("fullstop_office_railgun", new FullstopSniperWeapon( 7, -2.25f, new Item.Properties().tab(EGO_WEAPONS), GunCaliber.RIFLE, 8));
     public static RegistryObject<Item> FULLSTOP_SNIPER_SUITCASE = registerItem("fullstop_suitcase", new GenericCosmeticItem());
+    public static RegistryObject<Item> MANG = registerItem("mang_ring", new GenericCosmeticItem());
 
     public static RegistryObject<Item> FULLSTOP_SNIPER_SUIT = registerItem("fullstop_office_sniper_suit", FullstopSniperArmor.getArmorForSlot(EquipmentSlotType.CHEST));
     public static RegistryObject<Item> FULLSTOP_SNIPER_PANTS = registerItem("fullstop_office_sniper_pants", FullstopSniperArmor.getArmorForSlot(EquipmentSlotType.LEGS));

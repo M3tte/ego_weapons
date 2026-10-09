@@ -81,6 +81,9 @@ public class EgoWeaponsEffects {
     public static final RegistryObject<CountPotencyStatus> TERROR = registerEffect("terror", new TerrorEffect());
     public static final RegistryObject<CountPotencyStatus> LAMP = registerEffect("lamp", new LampEffect());
     public static final RegistryObject<CountPotencyStatus> DAZZLE = registerEffect("dazzle", new DazzleEffect());
+    public static final RegistryObject<CountPotencyStatus> GUARDIAN_OF_THE_FOREST = registerEffect("guardian_of_the_forest", new GuardianOfTheForestEffect());
+    public static final RegistryObject<CountPotencyStatus> SALVATION = registerEffect("salvation", new SalvationEffect());
+    public static final RegistryObject<CountPotencyStatus> MANG = registerEffect("mang", new Mang());
 
 
     public static int speedMult(LivingEntity entity) {

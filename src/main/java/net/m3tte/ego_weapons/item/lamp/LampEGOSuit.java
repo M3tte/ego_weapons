@@ -152,7 +152,7 @@ public class LampEGOSuit extends GenericEgoWeaponsArmor {
 			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
 			list.add(new StringTextComponent("= - - - - - - - [Page: " + ((EgoWeaponsKeybinds.getUiPage() % 4) + 1) + "/4] - - - - - - - =").withStyle(TextFormatting.GRAY));
-			list.add(new TranslationTextComponent("desc.ego_weapons.risk.aleph"));
+			list.add(new TranslationTextComponent("desc.ego_weapons.risk.waw"));
 			list.add(new StringTextComponent(" "));
 			switch (EgoWeaponsKeybinds.getUiPage() % 4) {
 				case 0:
@@ -160,21 +160,21 @@ public class LampEGOSuit extends GenericEgoWeaponsArmor {
 					break;
 				case 1:
 					if (EgoWeaponsKeybinds.isHoldingShift())
-						generateStatusDescription(list, new String[]{"rupture", "speed"});
+						generateStatusDescription(list, new String[]{"lamp", "dazzle", "salvation", "defense_up"});
 					else
-						generateDescription(list, "lamp_suit", "passive", 2, true, EgoWeaponsEffects.BLEED.get(), EgoWeaponsEffects.BURN.get());
+						generateDescription(list, "lamp_suit", "passive", 8, true, EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.DAZZLE.get(), EgoWeaponsEffects.SALVATION.get());
 					break;
 				case 2:
 					if (EgoWeaponsKeybinds.isHoldingShift())
-						generateStatusDescription(list, new String[]{"speed_up"});
+						generateStatusDescription(list, new String[]{"lamp","salvation"});
 					else
-						generateDescription(list, "justitia_cloak", "passive2", 4);
+						generateDescription(list, "lamp_suit", "passive2", 4, false, EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.SALVATION.get(), EgoWeaponsEffects.DAZZLE.get());
 					break;
 				case 3:
 					if (EgoWeaponsKeybinds.isHoldingShift())
-						generateStatusDescription(list, new String[]{"speed_up","strider_mao"});
+						generateStatusDescription(list, new String[]{"lamp","dazzle","guardian_of_the_forest", "power_up"});
 					else
-						generateDescription(list, "justitia_cloak", "ability", 6);
+						generateDescription(list, "lamp_suit", "ability", 6, true, EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.DAZZLE.get(), EgoWeaponsEffects.GUARDIAN_OF_THE_FOREST.get());
 					break;
 			}
 

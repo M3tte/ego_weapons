@@ -45,6 +45,7 @@ public class AccessoryRenderLayer<T extends LivingEntity, M extends BipedModel<T
         registerModel("udjat_eye_glow", new LCAUdjatEyeGlowRenderer());
         registerModel("lamp_ego_eyes", new LampEgoEyesRenderer());
         registerModel("udjat_mask", new LCAUdjatMaskRenderer());
+        registerModel("mang_rings", new MangRingRenderer());
     }
 
     public void render(MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, T entity, float animationPosition, float animationSpeed, float partialTick, float viewBob, float yaw, float pitch) {
@@ -62,7 +63,6 @@ public class AccessoryRenderLayer<T extends LivingEntity, M extends BipedModel<T
                         break;
                     case "lamp_suit":
                         getRenderer("lamp_ego_eyes").render(entity, null, this.getParentModel(), matrixStack, buffer, combinedLight, animationPosition, animationSpeed, partialTick);
-
                         break;
                 }
             }
@@ -82,7 +82,10 @@ public class AccessoryRenderLayer<T extends LivingEntity, M extends BipedModel<T
                     }
                     getRenderer("udjat_eye_glow").render(entity, null, this.getParentModel(), matrixStack, buffer, combinedLight, animationPosition, animationSpeed, partialTick);
                 }
+            }
 
+            if (entity.hasEffect(EgoWeaponsEffects.MANG.get())) {
+                getRenderer("mang_rings").render(entity, null, this.getParentModel(), matrixStack, buffer, combinedLight, animationPosition, animationSpeed, partialTick);
 
             }
         }
