@@ -1,7 +1,5 @@
 package net.m3tte.ego_weapons.gameasset.abilities.armorAbilities;
 
-import net.m3tte.ego_weapons.EgoWeaponsEffects;
-import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsModVars.PlayerVariables;
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
@@ -9,25 +7,16 @@ import net.m3tte.ego_weapons.gameasset.abilities.AbilityTier;
 import net.m3tte.ego_weapons.gameasset.abilities.AbilityUtils;
 import net.m3tte.ego_weapons.gameasset.abilities.ItemAbility;
 import net.m3tte.ego_weapons.gameasset.movesets.LCARifleMovesetAnims;
-import net.m3tte.ego_weapons.gameasset.movesets.UdjatKhopeshMovesetAnims;
-import net.m3tte.ego_weapons.procedures.SharedFunctions;
-import net.m3tte.ego_weapons.procedures.TeamLockedPredicate;
 import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
-import java.util.List;
-
-public class LCAUdjatArmorAbility extends ItemAbility {
+public class LampSuitArmorAbility extends ItemAbility {
 
     @Override
     public int getBlipCost(PlayerEntity player, PlayerVariables playerVars) {
@@ -36,7 +25,7 @@ public class LCAUdjatArmorAbility extends ItemAbility {
 
     @Override
     public ResourceLocation getIconLocation(PlayerEntity player, PlayerVariables vars) {
-        return AbilityUtils.getAbilityIcon("eye_of_the_udjat");
+        return AbilityUtils.getAbilityIcon("eyes_watching_dark_forest");
     }
 
     @Override
@@ -46,7 +35,7 @@ public class LCAUdjatArmorAbility extends ItemAbility {
 
     @Override
     public String getName(PlayerEntity player, PlayerVariables playerVars) {
-        return "  Through the \nEye of the Udjat  ";
+        return "   Eyes watching  \nthe dark forest.  ";
     }
 
     @Override
@@ -62,7 +51,6 @@ public class LCAUdjatArmorAbility extends ItemAbility {
             if (world instanceof ServerWorld) {
                 ((ServerWorld) world).sendParticles(EgoWeaponsParticles.EXPEND_LIGHT_PARTICLE.get(), player.getX(), (player.getY() + 1), player.getZ(), this.getBlipCost(player, playerVars), 0, 0.3, 0, 0.05);
             }
-
 
 
             boolean dialogueSuccess = DialogueSystem.speakEvalDialogue(player, "dialogue.ego_weapons.skills.udjat_armor.special", DialogueSystem.DialogueTypes.SKILL, TextFormatting.WHITE);

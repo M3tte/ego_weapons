@@ -5,5 +5,17 @@ public enum ThreatLevels {
     TETH,
     HE,
     WAW,
-    ALEPH
+    ALEPH;
+
+    public static ThreatLevels getFromString(String str) {
+        switch (str) {
+            case "ZAYIN": return ZAYIN;
+            case "TETH": return TETH;
+            case "HE": return HE;
+            case "WAW": return WAW;
+            case "ALEPH": return ALEPH;
+        }
+
+        return null;
+    }
 }
