@@ -267,8 +267,10 @@ public class EgoWeaponsRenderSystem {
         RenderSystem.clearColor(0f, 0f, 0f, 0.5f);
         RenderSystem.clear(GL11.GL_COLOR_BUFFER_BIT, false);
 
+
+
         RenderSystem.enablePolygonOffset();
-        RenderSystem.polygonOffset(-5.0f, -5.0f);
+
 
 
         //Minecraft.getInstance().getMainRenderTarget().blitToScreen(savedWidth,savedHeight);
@@ -316,7 +318,7 @@ public class EgoWeaponsRenderSystem {
         RenderSystem.defaultAlphaFunc();
         // event..turnOffLightLayer();
         RenderSystem.disableFog();*/
-
+        RenderSystem.disablePolygonOffset();
         getBloomMask().unbindWrite();
         clearRenderOverrideState();
 

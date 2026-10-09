@@ -5,20 +5,12 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.m3tte.ego_weapons.client.renderLayers.AccessoryRenderLayer;
 import net.m3tte.ego_weapons.client.renderLayers.PatchedAccessoryRenderLayer;
 import net.m3tte.ego_weapons.client.renderLayers.ValidRenderTypes;
-import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.shader.Framebuffer;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
 import yesman.epicfight.api.utils.math.OpenMatrix4f;
-
-import static net.m3tte.ego_weapons.client.renderer.FramebufferHandlers.getBloomMask;
 
 public class AccessoryRenderLayerRequest extends RenderRequest {
 
@@ -34,11 +26,15 @@ public class AccessoryRenderLayerRequest extends RenderRequest {
     private float partialTicks;
     private String accessoryIdentifier;
 
+    float polygonOffsetFactor = 0;
+    float polygonOffsetUnits = 0;
+
+
     /*
     float netYawHead, float pitchHead, float partialTicks
      */
 
-    public AccessoryRenderLayerRequest(PatchedAccessoryRenderLayer savedRenderLayer, AccessoryRenderLayer renderLayer, LivingEntity entity, ValidRenderTypes renderType, MatrixStack poseStack, int packedLightIn, OpenMatrix4f[] poses, float netYawHead, float pitchHead, float partialTicks, String accessoryIdentifier) {
+    public AccessoryRenderLayerRequest(PatchedAccessoryRenderLayer savedRenderLayer, AccessoryRenderLayer renderLayer, LivingEntity entity, ValidRenderTypes renderType, MatrixStack poseStack, int packedLightIn, OpenMatrix4f[] poses, float netYawHead, float pitchHead, float partialTicks, String accessoryIdentifier, float polygonOffsetFactor, float polygonOffsetUnits) {
         this.savedRenderLayer = savedRenderLayer;
         this.renderLayer = renderLayer;
         this.entity = entity;
@@ -50,12 +46,14 @@ public class AccessoryRenderLayerRequest extends RenderRequest {
         this.pitchHead = pitchHead;
         this.partialTicks = partialTicks;
         this.accessoryIdentifier = accessoryIdentifier;
+        this.polygonOffsetFactor = polygonOffsetFactor;
+        this.polygonOffsetUnits = polygonOffsetUnits;
     }
 
     @Override
     public void render(IRenderTypeBuffer bufferIn, MatrixStack poseStack) {
-
-       Vector3d pos = this.entity.getPosition(this.partialTicks);
+        RenderSystem.polygonOffset(polygonOffsetFactor, polygonOffsetUnits);
+        Vector3d pos = this.entity.getPosition(this.partialTicks);
         Vector3d camera =
                 Minecraft.getInstance()
                         .gameRenderer

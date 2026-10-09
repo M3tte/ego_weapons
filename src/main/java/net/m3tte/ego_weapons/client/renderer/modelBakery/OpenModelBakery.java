@@ -5,12 +5,16 @@ import com.google.common.collect.Maps;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import it.unimi.dsi.fastutil.objects.ObjectListIterator;
 import net.m3tte.ego_weapons.client.models.wearable.ArdorBlossomWingsModel;
+import net.m3tte.ego_weapons.client.models.wearable.MangModel;
 import net.m3tte.ego_weapons.client.models.wearable.TaggedModel;
+import net.m3tte.ego_weapons.client.renderer.MangItemTransforms;
 import net.m3tte.ego_weapons.item.ardor_blossom.ArdorBlossomSuit;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -52,6 +56,9 @@ public class OpenModelBakery extends CustomModelBakery {
     static final ModelBaker RIGHT_LEG = new Limb(1, 2, 3, 6.0F, true);
     static final ModelBaker RIGHT_LEG_CHILD = new SimpleSeparateBaker(1, 2, 6.0F);
     static final ModelBaker CHEST = new Chest();
+
+    static final ModelBaker TOOL_R = new SimpleBaker(13);
+    static final ModelBaker TOOL_L = new SimpleBaker(18);
     static final ModelBaker CHEST_CHILD = new SimpleSeparateBaker(8, 7, 18.0F);
 
 
@@ -116,6 +123,29 @@ public class OpenModelBakery extends CustomModelBakery {
                     boxes.add(new OpenModelPartition(LEFT_ARM, LEFT_ARM_CHILD, model.leftArm));
                     break;
 
+                case "mang_ring":
+
+                    ItemStack mainHandItem = entity.getMainHandItem();
+
+                    boxes.add(new OpenModelPartition(TOOL_R, TOOL_R, model.rightArm));
+
+                    if (!mainHandItem.isEmpty()) {
+                        MangItemTransforms TOOL_TRANSFORM = MangItemTransforms.getSavedTransforms().getOrDefault(mainHandItem.getItem().toString(), MangItemTransforms.DEF_TOOL_TRANSFORM);
+
+                        if (model instanceof MangModel<?>) {
+                            MangModel<?> mangModel = (MangModel<?>) model;
+
+                            Vector3f rotOffs = TOOL_TRANSFORM.getRotationOffs();
+                            Vector3f posOffs = TOOL_TRANSFORM.getPositionOffs();
+                            mangModel.setRotationAngle(mangModel.Ring_R1, (float) ((rotOffs.x() * Math.PI) / 180), (float) ((rotOffs.y() * Math.PI) / 180), (float) ((rotOffs.z() * Math.PI) / 180));
+                            mangModel.Ring_R1.setPos(-5 + posOffs.x(), 2 + posOffs.y(), posOffs.z());
+                        }
+
+                    }
+
+
+                    break;
+
                 case "basic_hat":
 
                     if (Minecraft.getInstance().player.equals(entity)) {
@@ -160,7 +190,6 @@ public class OpenModelBakery extends CustomModelBakery {
 
 
                         }
-
 
                         ardorModel.setRotationAngle(ardorModel.BodyLayer_r2, 0.0F, (float) sourceRotation, 0.0F);
                         ardorModel.setRotationAngle(ardorModel.BodyLayer_r1, 0.0F, (float) sourceRotation * - 1, 0.0F);

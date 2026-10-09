@@ -140,6 +140,7 @@ public class EgoWeaponsAnimations {
     }
 
     public static void spawnArmatureParticle(LivingEntityPatch<?> entityPatch, int partialTicks, Vector3d offsets, int amount, IParticleData particle, float speedmult, String jointName) {
+
         spawnArmatureParticle(entityPatch,partialTicks,offsets,amount,particle,speedmult, jointName,false);
     }
 
@@ -164,7 +165,7 @@ public class EgoWeaponsAnimations {
 
         Vector3d particlePos = OpenMatrix4f.transform(middleJointTf, new Vector3d(0,0,0));
         l.playSound(null, new BlockPos(particlePos.x, particlePos.y, particlePos.z), sound, cat, 1, 1);
-        System.out.println("PLAYING SOUND AT: "+particlePos);
+
     }
 
     public static void spawnArmatureParticle(LivingEntityPatch<?> entityPatch, int partialTicks, Vector3d offsets, int amount, IParticleData particle, float speedmult, String jointName, boolean acceptServerSide) {
@@ -178,12 +179,25 @@ public class EgoWeaponsAnimations {
                 .mulBack(OpenMatrix4f.createRotatorDeg(180.0F, Vec3f.Y_AXIS)
                         .mulBack(entityPatch.getModelMatrix(partialTicks)));
         OpenMatrix4f middleJointTf;
-        if (l.isClientSide)
+        if (l.isClientSide) {
             middleJointTf = Animator.getBindedJointTransformByName(currentPose,entityPatch.getEntityModel(ClientModels.LOGICAL_CLIENT).getArmature(), jointName).mulFront(middleModelTf);
-        else
+            System.out.println("ARMATURE PARTICLE TEST : ID FOR : "+jointName+" "+entityPatch.getEntityModel(ClientModels.LOGICAL_CLIENT).getArmature().searchPathIndex(jointName));
+            System.out.println("ARMATURE PARTICLE TEST : ID FOR : "+"Leg_R"+" "+entityPatch.getEntityModel(ClientModels.LOGICAL_CLIENT).getArmature().searchPathIndex("Leg_R"));
+            System.out.println("ARMATURE PARTICLE TEST : ID FOR : "+"Thigh_R"+" "+entityPatch.getEntityModel(ClientModels.LOGICAL_CLIENT).getArmature().searchPathIndex("Thigh_R"));
+            System.out.println("ARMATURE PARTICLE TEST : ID FOR : "+"Knee_R"+" "+entityPatch.getEntityModel(ClientModels.LOGICAL_CLIENT).getArmature().searchPathIndex("Knee_R"));
+        }
+
+        else {
             middleJointTf = Animator.getBindedJointTransformByName(currentPose,entityPatch.getEntityModel(ClientModels.LOGICAL_SERVER).getArmature(), jointName).mulFront(middleModelTf);
+            System.out.println("ARMATURE PARTICLE TEST S : ID FOR : "+jointName+" "+entityPatch.getEntityModel(ClientModels.LOGICAL_SERVER).getArmature().searchPathIndex(jointName));
+            System.out.println("ARMATURE PARTICLE TEST S : ID FOR : "+"Leg_R"+" "+entityPatch.getEntityModel(ClientModels.LOGICAL_SERVER).getArmature().searchPathIndex("Leg_R"));
+            System.out.println("ARMATURE PARTICLE TEST S : ID FOR : "+"Thigh_R"+" "+entityPatch.getEntityModel(ClientModels.LOGICAL_SERVER).getArmature().searchPathIndex("Thigh_R"));
+            System.out.println("ARMATURE PARTICLE TEST S : ID FOR : "+"Knee_R"+" "+entityPatch.getEntityModel(ClientModels.LOGICAL_SERVER).getArmature().searchPathIndex("Knee_R"));
+
+        }
 
         //entityPatch.getAnimator().getPose((float) (i + r.nextInt(3) - 1) / 10F).getJointTransformData().get("Tool_R").toMatrix().mulFront(middleModelTf);
+
 
         Vector3d particlePos = OpenMatrix4f.transform(middleJointTf, offsets);
         for (int x = 0; x < amount; x++) {
