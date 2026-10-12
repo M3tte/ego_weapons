@@ -1145,6 +1145,7 @@
   "item.ego_weapons.lamp_suit": "§f\uEC04 Lamp Suit",
   "item.ego_weapons.lamp_pants": "§fLamp Pants",
 
+  "desc.ego_weapons.lamp_crossbow.passive.meta": "%1 - Lamp, %2 - Dazzled",
   "desc.ego_weapons.lamp_crossbow.passive.desc": "§o\"Should one peer into the lamplight too long...\"",
   "desc.ego_weapons.lamp_crossbow.passive.title": "§b[Passive] §fA Dazzling Glow",
   "desc.ego_weapons.lamp_crossbow.passive.1": "§7At §f20 %1$s§7. Consume all lamp to trigger the following:",
@@ -1154,17 +1155,20 @@
   "desc.ego_weapons.lamp_crossbow.passive.5": "§8§oThis effect prioritizes targets of higher risk level.",
   "desc.ego_weapons.lamp_crossbow.passive.6": "§8§oThe duration of %2$s §8§oscales with the targets §f\uE046 §bSanity§7.",
 
+  "desc.ego_weapons.lamp_crossbow.passive2.meta": "%1 - Lamp",
   "desc.ego_weapons.lamp_crossbow.passive2.desc": "§oA lantern made of feathers formed into a wick...",
   "desc.ego_weapons.lamp_crossbow.passive2.title": "§b[Passive] §fDon't blindly follow the light...",
   "desc.ego_weapons.lamp_crossbow.passive2.1": "§7Deal §f+20%% §7Damage against targets with %1$s§7.",
   "desc.ego_weapons.lamp_crossbow.passive2.2": "§7Deal §f+5% §7Damage for every §f5 \uE003 §cSinking §f+ \uE002 §cBurn§7 on Target. §8[Max +25%]",
 
+  "desc.ego_weapons.lamp_crossbow.auto.meta": "%1 - Lamp",
   "desc.ego_weapons.lamp_crossbow.auto.title": "§b[Melee Auto] §fIntense Stare - Zero Range §f\uED03",
   "desc.ego_weapons.lamp_crossbow.auto.1": "    - = | \uED32  \uED32 | = -",
   "desc.ego_weapons.lamp_crossbow.auto.2": "[I]   §7Inflict §f1 \uE002 §cBurn §7Potency.",
   "desc.ego_weapons.lamp_crossbow.auto.3": "[II]   §7Inflict §f1 \uE002 §cBurn §7Potency.",
   "desc.ego_weapons.lamp_crossbow.auto.4": "[II]   §7Gain §f1 %1$s§7.",
 
+  "desc.ego_weapons.lamp_crossbow.auto2.meta": "%1 - Lamp",
   "desc.ego_weapons.lamp_crossbow.auto2.title": "§b[Ranged Auto] §fRapid Fire §f\uED03",
   "desc.ego_weapons.lamp_crossbow.auto2.1": "    - = | \uED31  \uED31  \uED31 | = -",
   "desc.ego_weapons.lamp_crossbow.auto2.2": "[I]   §7Consume §f1 \uE050 §cFeather-Wick Bolt§7.",
@@ -1176,6 +1180,7 @@
   "desc.ego_weapons.lamp_crossbow.auto2.8": "[III] §7Deal §f+3% §7Damage for every §f3 \uE003 §cSinking §f+ \uE002 §cBurn§7 on Target. §8[Max +21%]",
   "desc.ego_weapons.lamp_crossbow.auto2.9": "[III] §7Gain §f2 %1$s§7.",
 
+  "desc.ego_weapons.lamp_crossbow.innate.meta": "%1 - Lamp",
   "desc.ego_weapons.lamp_crossbow.innate.title": "§b[Innate] §fPiercing Lamplight §f\uED03",
   "desc.ego_weapons.lamp_crossbow.innate.1": "    - = | \uED31 | = -",
   "desc.ego_weapons.lamp_crossbow.innate.2": "[I] §7Consume §f1 \uE050 §cFeather-Wick Bolt Bolt§7.",
@@ -2204,6 +2209,7 @@
   "desc.ego_weapons.statuses.guardian_of_the_forest.5": "§r\uEC33 §6[Bird E.G.O] §7Take §f-20% §7Damage. §r\uEC33",
   "desc.ego_weapons.statuses.guardian_of_the_forest.desc": "§oBig Bird's eyes can see very far, and things we can't see...",
 
+  "effect.ego_weapons.lamp.meta": "%1 - Lamp",
   "effect.ego_weapons.lamp": "Lamp",
   "desc.ego_weapons.statuses.lamp.title": "%1$s",
   "desc.ego_weapons.statuses.lamp.1": "§8[Max: 20]",

@@ -4,6 +4,8 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
 import net.m3tte.ego_weapons.client.models.wearable.ArdorBlossomFireModel;
 import net.m3tte.ego_weapons.client.models.wearable.BloodOverlayModel;
+import net.m3tte.ego_weapons.client.renderer.EgoWeaponsRenderSystem;
+import net.m3tte.ego_weapons.client.renderer.RenderOverrideStates;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.entity.LivingEntity;
@@ -22,6 +24,10 @@ public class ArdorBlossomFireRenderer<R extends LivingEntity, M extends BipedMod
     private static final ResourceLocation TEX_3 = new ResourceLocation("ego_weapons", "textures/entities/ardor_blossom/ardor_blossom_fire_3.png");
     private final ArdorBlossomFireModel<R> ardorFireModel = new ArdorBlossomFireModel();
 
+    private static final ResourceLocation TEX_1_S = new ResourceLocation("ego_weapons", "textures/entities/ardor_blossom/shader_variant/ardor_blossom_fire_1.png");
+    private static final ResourceLocation TEX_2_S = new ResourceLocation("ego_weapons", "textures/entities/ardor_blossom/shader_variant/ardor_blossom_fire_2.png");
+    private static final ResourceLocation TEX_3_S = new ResourceLocation("ego_weapons", "textures/entities/ardor_blossom/shader_variant/ardor_blossom_fire_3.png");
+
     public ArdorBlossomFireRenderer() {
     }
 
@@ -35,18 +41,20 @@ public class ArdorBlossomFireRenderer<R extends LivingEntity, M extends BipedMod
 
         EgoWeaponsModVars.PlayerVariables entityData = living.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
+        RenderOverrideStates state = EgoWeaponsRenderSystem.getRenderColorOverrideState();
+
         if (living instanceof LivingEntity) {
 
             int fact = 7;
 
             switch ((living.tickCount % (fact * 3)) / fact) {
                 case 0:
-                    return TEX_1;
+                    return state.equals(RenderOverrideStates.BLOOM) ? TEX_1_S : TEX_1;
                 case 1:
-                    return TEX_2;
+                    return state.equals(RenderOverrideStates.BLOOM) ? TEX_2_S : TEX_2;
                 default:
                 case 2:
-                    return TEX_3;
+                    return state.equals(RenderOverrideStates.BLOOM) ? TEX_3_S : TEX_3;
 
             }
         }

@@ -22,6 +22,7 @@ public class MangItemTransforms {
     public MangItemTransforms(Vector3f rotationOffs, Vector3f positionOffs, Hand hand) {
         this.rotationOffs = rotationOffs;
         this.positionOffs = positionOffs;
+        this.hand = hand;
     }
 
     public static MangItemTransforms BASE_TRANSFORM = new MangItemTransforms(new Vector3f(0,0,0),new Vector3f(0,0,0), Hand.MAIN_HAND);
@@ -39,5 +40,9 @@ public class MangItemTransforms {
     }
     public static void populateTransforms() {
 
+    }
+
+    public Hand getHand() {
+        return hand;
     }
 }

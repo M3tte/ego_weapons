@@ -17,6 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Matrix4f;
@@ -127,10 +128,12 @@ public class OpenModelBakery extends CustomModelBakery {
 
                     ItemStack mainHandItem = entity.getMainHandItem();
 
-                    boxes.add(new OpenModelPartition(TOOL_R, TOOL_R, model.rightArm));
 
                     if (!mainHandItem.isEmpty()) {
                         MangItemTransforms TOOL_TRANSFORM = MangItemTransforms.getSavedTransforms().getOrDefault(mainHandItem.getItem().toString(), MangItemTransforms.DEF_TOOL_TRANSFORM);
+
+                        boolean mainHand = TOOL_TRANSFORM.getHand().equals(Hand.MAIN_HAND);
+                        boxes.add(new OpenModelPartition(mainHand ? TOOL_R : TOOL_L, mainHand ? TOOL_R : TOOL_L, mainHand ? model.rightArm : model.leftArm));
 
                         if (model instanceof MangModel<?>) {
                             MangModel<?> mangModel = (MangModel<?>) model;
@@ -140,7 +143,6 @@ public class OpenModelBakery extends CustomModelBakery {
                             mangModel.setRotationAngle(mangModel.Ring_R1, (float) ((rotOffs.x() * Math.PI) / 180), (float) ((rotOffs.y() * Math.PI) / 180), (float) ((rotOffs.z() * Math.PI) / 180));
                             mangModel.Ring_R1.setPos(-5 + posOffs.x(), 2 + posOffs.y(), posOffs.z());
                         }
-
                     }
 
 

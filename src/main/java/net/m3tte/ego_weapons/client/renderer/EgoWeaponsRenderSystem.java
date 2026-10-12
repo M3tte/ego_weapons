@@ -50,7 +50,7 @@ import static net.minecraft.client.gui.AbstractGui.blit;
 @OnlyIn(Dist.CLIENT)
 public class EgoWeaponsRenderSystem {
 
-
+    public static long frames = 0;
 
     private static Queue<Particle> distortionParticles = new ArrayDeque<>();
 
@@ -115,6 +115,7 @@ public class EgoWeaponsRenderSystem {
 
 
         RenderRequest.clearRenderBatch(RenderBatches.HOR_BLOOM);
+        frames++;
         //clearAccessoryBuffer();
     }
 
@@ -326,7 +327,7 @@ public class EgoWeaponsRenderSystem {
         Minecraft.getInstance().getMainRenderTarget().bindWrite(true);
 
         EgoWeaponsRenderSystem.clearRenderOverrideState();
-        //getBloomMask().blitToScreen(savedWidth,savedHeight);
+        // getBloomMask().blitToScreen(savedWidth,savedHeight);
         RenderSystem.disableAlphaTest();
     }
 

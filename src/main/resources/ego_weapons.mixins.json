@@ -30,6 +30,7 @@
     "epicfight.HealthbarIndicatorMixin",
     "epicfight.ItemInHandLayerMixin",
     "epicfight.PatchedEntityRendererMixin",
+    "epicfight.PatchedLivingEntityRendererAccessor",
     "epicfight.PHumanoidMixin",
     "rendering.GameRendererMixin",
     "rendering.LivingRendererInvoker",

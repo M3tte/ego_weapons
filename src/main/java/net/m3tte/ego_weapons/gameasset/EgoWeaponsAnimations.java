@@ -181,18 +181,10 @@ public class EgoWeaponsAnimations {
         OpenMatrix4f middleJointTf;
         if (l.isClientSide) {
             middleJointTf = Animator.getBindedJointTransformByName(currentPose,entityPatch.getEntityModel(ClientModels.LOGICAL_CLIENT).getArmature(), jointName).mulFront(middleModelTf);
-            System.out.println("ARMATURE PARTICLE TEST : ID FOR : "+jointName+" "+entityPatch.getEntityModel(ClientModels.LOGICAL_CLIENT).getArmature().searchPathIndex(jointName));
-            System.out.println("ARMATURE PARTICLE TEST : ID FOR : "+"Leg_R"+" "+entityPatch.getEntityModel(ClientModels.LOGICAL_CLIENT).getArmature().searchPathIndex("Leg_R"));
-            System.out.println("ARMATURE PARTICLE TEST : ID FOR : "+"Thigh_R"+" "+entityPatch.getEntityModel(ClientModels.LOGICAL_CLIENT).getArmature().searchPathIndex("Thigh_R"));
-            System.out.println("ARMATURE PARTICLE TEST : ID FOR : "+"Knee_R"+" "+entityPatch.getEntityModel(ClientModels.LOGICAL_CLIENT).getArmature().searchPathIndex("Knee_R"));
         }
 
         else {
             middleJointTf = Animator.getBindedJointTransformByName(currentPose,entityPatch.getEntityModel(ClientModels.LOGICAL_SERVER).getArmature(), jointName).mulFront(middleModelTf);
-            System.out.println("ARMATURE PARTICLE TEST S : ID FOR : "+jointName+" "+entityPatch.getEntityModel(ClientModels.LOGICAL_SERVER).getArmature().searchPathIndex(jointName));
-            System.out.println("ARMATURE PARTICLE TEST S : ID FOR : "+"Leg_R"+" "+entityPatch.getEntityModel(ClientModels.LOGICAL_SERVER).getArmature().searchPathIndex("Leg_R"));
-            System.out.println("ARMATURE PARTICLE TEST S : ID FOR : "+"Thigh_R"+" "+entityPatch.getEntityModel(ClientModels.LOGICAL_SERVER).getArmature().searchPathIndex("Thigh_R"));
-            System.out.println("ARMATURE PARTICLE TEST S : ID FOR : "+"Knee_R"+" "+entityPatch.getEntityModel(ClientModels.LOGICAL_SERVER).getArmature().searchPathIndex("Knee_R"));
 
         }
 
