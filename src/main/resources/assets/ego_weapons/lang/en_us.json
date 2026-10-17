@@ -1159,7 +1159,7 @@
   "desc.ego_weapons.lamp_crossbow.passive2.desc": "§oA lantern made of feathers formed into a wick...",
   "desc.ego_weapons.lamp_crossbow.passive2.title": "§b[Passive] §fDon't blindly follow the light...",
   "desc.ego_weapons.lamp_crossbow.passive2.1": "§7Deal §f+20%% §7Damage against targets with %1$s§7.",
-  "desc.ego_weapons.lamp_crossbow.passive2.2": "§7Deal §f+5% §7Damage for every §f5 \uE003 §cSinking §f+ \uE002 §cBurn§7 on Target. §8[Max +25%]",
+  "desc.ego_weapons.lamp_crossbow.passive2.2": "§7Deal §f+5% §7Damage for every §f5 (\uE003 §cSinking §f+ \uE002 §cBurn§f)§7 on Target. §8[Max +25%]",
 
   "desc.ego_weapons.lamp_crossbow.auto.meta": "%1 - Lamp",
   "desc.ego_weapons.lamp_crossbow.auto.title": "§b[Melee Auto] §fIntense Stare - Zero Range §f\uED03",
@@ -1176,9 +1176,10 @@
   "desc.ego_weapons.lamp_crossbow.auto2.4": "[II]  §7Consume §f1 \uE050 §cFeather-Wick Bolt§7.",
   "desc.ego_weapons.lamp_crossbow.auto2.5": "[II]  §7Inflict §f1 \uE002 §cBurn §7Count. §7Inflict §f2 \uE003 §cSinking §7Count.",
   "desc.ego_weapons.lamp_crossbow.auto2.6": "[III] §7Consume §f1 \uE050 §cFeather-Wick Bolt§7.",
-  "desc.ego_weapons.lamp_crossbow.auto2.7": "[III] §7Inflict §f1 \uE002 §cBurn §7Count. §7Inflict §f2 \uE003 §cSinking §7Count.",
-  "desc.ego_weapons.lamp_crossbow.auto2.8": "[III] §7Deal §f+3% §7Damage for every §f3 \uE003 §cSinking §f+ \uE002 §cBurn§7 on Target. §8[Max +21%]",
-  "desc.ego_weapons.lamp_crossbow.auto2.9": "[III] §7Gain §f2 %1$s§7.",
+  "desc.ego_weapons.lamp_crossbow.auto2.7": "[III] §7Inflict §f1 \uE002 §cBurn §7Count. §7Inflict §f1 \uE002 §cBurn §7Potency.",
+  "desc.ego_weapons.lamp_crossbow.auto2.8": "[III] §7Inflict §f2 \uE003 §cSinking §7Count. §7Inflict §f2 \uE003 §cSinking §7Potency.",
+  "desc.ego_weapons.lamp_crossbow.auto2.9": "[III] §7Deal §f+3% §7Damage for every §f3 \uE003 §cSinking §f+ \uE002 §cBurn§7 on Target. §8[Max +21%]",
+  "desc.ego_weapons.lamp_crossbow.auto2.10": "[III] §7Gain §f2 %1$s§7.",
 
   "desc.ego_weapons.lamp_crossbow.innate.meta": "%1 - Lamp",
   "desc.ego_weapons.lamp_crossbow.innate.title": "§b[Innate] §fPiercing Lamplight §f\uED03",
@@ -1188,8 +1189,28 @@
   "desc.ego_weapons.lamp_crossbow.innate.4": "[I] §7Consume §f1 §7extra §f\uE050 §cFeather-Wick Bolt §7to empower:",
   "desc.ego_weapons.lamp_crossbow.innate.5": "[I] §7Inflict §f2 \uE002 §cBurn §7Count. §7Inflict §f3 \uE003 §cSinking §7Count.",
   "desc.ego_weapons.lamp_crossbow.innate.6": "[I] §7Inflict §f1 \uE051 §cBlack Fragility§7.",
-  "desc.ego_weapons.lamp_crossbow.innate.7": "[I] §7Deal §f+60% §7Damage",
+  "desc.ego_weapons.lamp_crossbow.innate.7": "[I] §7Deal §f+50% §7Damage",
   "desc.ego_weapons.lamp_crossbow.innate.8": "[I] §7Gain §f2 %1$s§7.",
+
+  "desc.ego_weapons.lamp_crossbow.ability.meta": "%1 - Lamp, %2 - Dazzled",
+  "desc.ego_weapons.lamp_crossbow.ability.title": "§b[Ability] §6Salvation for those enchanted by the Lamp §f- \uED03 \uE004\uE004\uE004\uE004\uE004\uE004",
+  "desc.ego_weapons.lamp_crossbow.ability.1": "    - = | \uED31 \uED31 \uED31 | = -",
+  "desc.ego_weapons.lamp_crossbow.ability.2": "§7Deal §f+3%% §7Damage for every §f%1$s §7on self.",
+  "desc.ego_weapons.lamp_crossbow.ability.3": "§7Deal §f+5% §7Damage for every §f5 \uE003 §cSinking §f+ \uE002 §cBurn§7 on Target. §8[Max +25%]",
+  "desc.ego_weapons.lamp_crossbow.ability.4": "§7At §f< 4 \uE050 §cFeather-Wick Bolt§7. Consume §f\uE047 §cSanity§7 to §6Reload §7to §f4 \uE050 §cFeather-Wick Bolt§7.",
+  "desc.ego_weapons.lamp_crossbow.ability.5": "§7If Target has §f%2$s§7, become §cEmpowered§7:",
+  "desc.ego_weapons.lamp_crossbow.ability.6": "- §7Become §f\uED41 §cUnbreakable§7.",
+  "desc.ego_weapons.lamp_crossbow.ability.7": "- §cStun §7the Target.",
+  "desc.ego_weapons.lamp_crossbow.ability.8": "- §7Deal §f+30% §7Damage.",
+  "desc.ego_weapons.lamp_crossbow.ability.9": "[I]   §7Consume §f1 \uE050 §cFeather-Wick Bolt§7.",
+  "desc.ego_weapons.lamp_crossbow.ability.10": "[I]   §7Inflict §f2 \uE002 §cBurn §7Count. §7Inflict §f4 \uE003 §cSinking §7Count.",
+  "desc.ego_weapons.lamp_crossbow.ability.11": "[II]  §7Consume §f1 \uE050 §cFeather-Wick Bolt§7.",
+  "desc.ego_weapons.lamp_crossbow.ability.12": "[II]  §7Inflict §f2 \uE002 §cBurn §7Potency. §7Inflict §f2 \uE003 §cSinking §7Potency.",
+  "desc.ego_weapons.lamp_crossbow.ability.13": "[III] §7Consume §f2 \uE050 §cFeather-Wick Bolt§7.",
+  "desc.ego_weapons.lamp_crossbow.ability.14": "[III] §7Inflict §f1 \uE051 §cBlack Fragility§7.",
+  "desc.ego_weapons.lamp_crossbow.ability.15": "[III] §7Deal §f\uED03 §5Black Damage §7by §f(\uE003 §cSinking §f+ \uE002 §cBurn§f)§7 on Target. §8[Max 15]",
+  "desc.ego_weapons.lamp_crossbow.ability.16": "[III] §7If §cEmpowered§7: Increase the above effect by §f50%%§7.",
+
 
   "desc.ego_weapons.lamp_suit.passive.meta": "%1 - Lamp, %2 - Dazzled, %3 - Salvation",
   "desc.ego_weapons.lamp_suit.passive.desc": "§o\"Should one peer into the lamplight too long...\"",
@@ -2535,6 +2556,9 @@
   "commands.ego_weapons.success.egodamage.1": "Successfully dealt %s damage to %s entit%s of type: %s / %s%s",
 
   "dialogue.ego_weapons.skills.lamp_crossbow.reload": "Sit still...",
+  "dialogue.ego_weapons.skills.lamp_crossbow.special": "I will brighten the road ahead,||so I can have a good view of the lives I must save.",
+  "dialogue.ego_weapons.skills.lamp_crossbow.special_dazzle": "Ngh... ||I see with such clarity... ||the life I must save!",
+
 
   "dialogue.ego_weapons.skills.arayashiki.trigger_unsheath": "Easy...|| It’s not done yet.",
 

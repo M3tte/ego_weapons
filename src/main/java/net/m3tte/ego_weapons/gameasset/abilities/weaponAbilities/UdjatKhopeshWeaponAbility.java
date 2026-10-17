@@ -131,8 +131,8 @@ public class UdjatKhopeshWeaponAbility extends ItemAbility {
             int ammo = AmmoSystem.getAmmoCount(player.getItemInHand(Hand.OFF_HAND));
 
 
-            DialogueSystem.speakEvalDialogue(player, "dialogue.ego_weapons.skills.lca_rifle.reload", DialogueSystem.DialogueTypes.SKILL, TextFormatting.WHITE);
-            if (!world.isClientSide()) {
+            boolean success = DialogueSystem.speakEvalDialogue(player, "dialogue.ego_weapons.skills.lca_rifle.reload", DialogueSystem.DialogueTypes.SKILL, TextFormatting.WHITE);
+            if (!world.isClientSide() && success) {
                 world.playSound(null, new BlockPos(x, y, z),
                         EgoWeaponsSounds.UDJAT_DIALOGUE_RELOADING,
                         SoundCategory.PLAYERS, (float) 1, (float) 1);

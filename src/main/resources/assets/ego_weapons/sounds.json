@@ -153,6 +153,33 @@
       }
     ]
   },
+  "lamp.crossbow.voice.trigger_dazzle": {
+    "category": "player",
+    "subtitle": "lamp_crossbow",
+    "sounds": [
+      {
+        "name": "ego_weapons:lamp/voice_dazzle_trigger"
+      }
+    ]
+  },
+  "lamp.crossbow.voice.special": {
+    "category": "player",
+    "subtitle": "lamp_crossbow",
+    "sounds": [
+      {
+        "name": "ego_weapons:lamp/voice_special"
+      }
+    ]
+  },
+  "lamp.crossbow.voice.special_dazzle": {
+    "category": "player",
+    "subtitle": "lamp_crossbow",
+    "sounds": [
+      {
+        "name": "ego_weapons:lamp/voice_special_dazzle"
+      }
+    ]
+  },
   "ardor_blossom.explode": {
     "category": "player",
     "subtitle": "ardor_blossom",

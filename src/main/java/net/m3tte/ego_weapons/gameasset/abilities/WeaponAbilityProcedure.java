@@ -104,6 +104,7 @@ public class WeaponAbilityProcedure {
 		weaponAbilities.put(EgoWeaponsItems.LCA_UDJAT_KHOPESH.get(), new UdjatKhopeshWeaponAbility());
 		weaponAbilities.put(EgoWeaponsItems.LCA_RIFLE.get(), new LCARifleWeaponAbility());
 		weaponAbilities.put(EgoWeaponsItems.ARAYASHIKI.get(), new ArayashikiWeaponAbility());
+		weaponAbilities.put(EgoWeaponsItems.LAMP_CROSSBOW.get(), new LampCrossbowWeaponAbility());
 	}
 
 	public static void runAltWeaponAbility(PlayerEntity entity) {

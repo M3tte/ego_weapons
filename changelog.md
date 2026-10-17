@@ -20,7 +20,8 @@
   + Added bloom VFX system for said E.G.O
   + Added system for responsive VFX shaders
   + Added scaling system for shaders to improve performance
-
++ Dealing "Generic" Red black white or pale damage now uses the damage type icon instead of the background.
++ Fixed opacity for chat bubbles. They now fade rather smoothly effectively scaling with amount of bubbles.
 
 # ..v1.01.19
 + Added Udjat Khopesh + Translations

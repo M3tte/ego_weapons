@@ -58,7 +58,7 @@ public class DialogueGUI extends EntityIndicator {
     @Override
     public void drawIndicator(LivingEntity entityIn, MatrixStack matStackIn, IRenderTypeBuffer bufferIn, float partialTicks) {
 
-        IVertexBuilder vertexBuilder = bufferIn.getBuffer(EgoWeaponsRenderTypes.overlayTextures(OVERLAY_TEXTURES));
+        IVertexBuilder vertexBuilder = bufferIn.getBuffer(EgoWeaponsRenderTypes.overlayTexturesCol(OVERLAY_TEXTURES));
 
         matStackIn.pushPose();
         matStackIn.scale(0.95f, 0.95f, 0.95f);
@@ -71,9 +71,10 @@ public class DialogueGUI extends EntityIndicator {
         RenderSystem.depthMask(true);
         RenderSystem.enableDepthTest();
         RenderSystem.disableAlphaTest();
+        RenderSystem.enableBlend();
         RenderSystem.defaultAlphaFunc();
         RenderSystem.defaultBlendFunc();
-        int tickCount = entityIn.tickCount;
+        float tickCount = entityIn.tickCount + Minecraft.getInstance().getFrameTime();
 
 
         if (entityIn.getPersistentData().contains("dialogueMetaData")) {
@@ -105,6 +106,7 @@ public class DialogueGUI extends EntityIndicator {
 
         float upOffset = 0.15f;
 
+        int ordinal = 0;
         for (DialogueEntry entry : toRenderDialogues) {
             float sizeMult = (1 + (float) entry.getLines().length / 4) / 2;
 
@@ -119,18 +121,20 @@ public class DialogueGUI extends EntityIndicator {
 
 
 
-
             if (alphaRed < 0.95f) {
                 GL11.glPushMatrix();
 
+                EgoWeaponsMod.LOGGER.warn("CHECKING FOR SLOT : "+ordinal+" ALPHARED = "+alphaRed );
+
                 float evalSize = Math.max(entry.getSize() - 1.3f, 0);
-                //GL11.glColor4f(1,1,1,1 - alphaRed);
-                this.drawTexturedModalRect3DPlane(mvMatrix, vertexBuilder, -0.4f - 0.5f*sizeMult - evalSize, -0.4f * sizeMult, -0.03f,0.4f + 0.5f*sizeMult + evalSize, 0.4f * sizeMult, -0.03f,0, 0, 256, 100);
+                GL11.glColor4f(1,1,1,Math.max(0,1 - alphaRed));
+                this.internDrawTexturedModalRect3DPlane(mvMatrix, vertexBuilder, -0.4f - 0.5f*sizeMult - evalSize, -0.4f * sizeMult, -0.03f,0.4f + 0.5f*sizeMult + evalSize, 0.4f * sizeMult, -0.03f,0, 0, 256, 100, (int)((1 - alphaRed) * 255));
+
                 GL11.glPopMatrix();
             }
 
 
-
+            ordinal++;
             upOffset += 0.65f * sizeMult;
         }
 
@@ -142,13 +146,18 @@ public class DialogueGUI extends EntityIndicator {
 
             float alphaRed = 0;
 
+            //  System.out.println("TIMESTAMP OF : "+entry.getSize()+" - "+entry.getTimeStamp());
+
             if (tickCount - entry.getTimeStamp() > 20 + 70 * entry.getSize() ) {
                 alphaRed = Math.min(1,(float) (tickCount - entry.getTimeStamp() - (20 + 70 * entry.getSize())) / 40);
             }
 
             if (alphaRed < 0.92f) {
                 for (String line : entry.getLines()) {
-                    renderNameTag(entityIn, new StringTextComponent(line).withStyle(TextFormatting.ITALIC).withStyle(entry.getFormatting()), matStackIn, bufferIn, (int) (230 + 150 * alphaRed), 16777215, upOffset ,  + secondUpOffs, 1);
+
+                    int colorWithTransparency = ((int)((1 - alphaRed) * 255) << 24) | 0x00FFFFFF;
+
+                    renderNameTag(entityIn, new StringTextComponent(line).withStyle(TextFormatting.ITALIC).withStyle(entry.getFormatting()), matStackIn, bufferIn, colorWithTransparency, (int)tickCount , upOffset ,  + secondUpOffs, 1);
                     secondUpOffs -= 0.1f;
                 }
             }
@@ -162,6 +171,7 @@ public class DialogueGUI extends EntityIndicator {
         RenderSystem.depthMask(true);
         RenderSystem.enableDepthTest();
         RenderSystem.enableAlphaTest();
+        RenderSystem.disableBlend();
         RenderSystem.defaultAlphaFunc();
         RenderSystem.defaultBlendFunc();
 
@@ -169,7 +179,7 @@ public class DialogueGUI extends EntityIndicator {
     }
 
 
-    protected void renderNameTag(LivingEntity ent, ITextComponent p_225629_2_, MatrixStack mtStack, IRenderTypeBuffer p_225629_4_, int noIdeaWhatThisParameterDoes, int color, float upOffs, float suboffset, float fillSize) {
+    protected void renderNameTag(LivingEntity ent, ITextComponent p_225629_2_, MatrixStack mtStack, IRenderTypeBuffer p_225629_4_, int color, int ticks, float upOffs, float suboffset, float fillSize) {
 
         EntityRendererManager entityRenderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
 
@@ -187,7 +197,7 @@ public class DialogueGUI extends EntityIndicator {
         float f1 = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
         FontRenderer fontrenderer = Minecraft.getInstance().font;
         float f2 = (float)(-fontrenderer.width(p_225629_2_) / 2);
-        fontrenderer.drawInBatch(p_225629_2_, f2, (float)suboffset * -100 * fillSize, color, false, matrix4f, p_225629_4_, false, 0, noIdeaWhatThisParameterDoes);
+        fontrenderer.drawInBatch(p_225629_2_, f2, (float)suboffset * -100 * fillSize, color, false, matrix4f, p_225629_4_, false, 0, 15728880);
 
         mtStack.popPose();
         mtStack.popPose();
@@ -211,6 +221,14 @@ public class DialogueGUI extends EntityIndicator {
 
     private void renderDigit(int digit, Matrix4f mvMatrix, IVertexBuilder vertexBuilder, float x, float y) {
         this.drawTexturedModalRect3DPlane(mvMatrix, vertexBuilder, x, y,0.05f, x+0.06f, y+0.1f, 0.05f,5*digit, 248, 5+5*digit, 256);
+    }
+
+    public void internDrawTexturedModalRect3DPlane(Matrix4f matrix, IVertexBuilder vertexBuilder, float minX, float minY, float minZ, float maxX, float maxY, float maxZ, float minTexU, float minTexV, float maxTexU, float maxTexV, int alpha) {
+        float cor = 0.00390625F;
+        vertexBuilder.vertex(matrix, minX, minY, maxZ).uv(minTexU * cor, maxTexV * cor).color(255,255,255,alpha).endVertex();
+        vertexBuilder.vertex(matrix, maxX, minY, maxZ).uv(maxTexU * cor, maxTexV * cor).color(255,255,255,alpha).endVertex();
+        vertexBuilder.vertex(matrix, maxX, maxY, minZ).uv(maxTexU * cor, minTexV * cor).color(255,255,255,alpha).endVertex();
+        vertexBuilder.vertex(matrix, minX, maxY, minZ).uv(minTexU * cor, minTexV * cor).color(255,255,255,alpha).endVertex();
     }
 }
 

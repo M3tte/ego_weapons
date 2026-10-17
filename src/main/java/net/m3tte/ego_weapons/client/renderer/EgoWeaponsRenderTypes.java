@@ -80,6 +80,7 @@ public class EgoWeaponsRenderTypes extends RenderType {
 
 
     private static final Function<ResourceLocation, RenderType> RISK_INDICATOR;
+    private static final Function<ResourceLocation, RenderType> RISK_INDICATOR_COL;
 
     private static final Function<ResourceLocation, RenderType> ARMOR_TRANSLUCENT_NO_CULL;
 
@@ -93,6 +94,10 @@ public class EgoWeaponsRenderTypes extends RenderType {
     }
     public static RenderType overlayTextures(ResourceLocation locationIn) {
         return RISK_INDICATOR.apply(locationIn);
+    }
+
+    public static RenderType overlayTexturesCol(ResourceLocation locationIn) {
+        return RISK_INDICATOR_COL.apply(locationIn);
     }
     public static RenderType bloodOverlay(int idx) {
         switch (idx) {
@@ -122,6 +127,11 @@ public class EgoWeaponsRenderTypes extends RenderType {
         RISK_INDICATOR = (textureLocation) -> {
             RenderType.State state = State.builder().setTextureState(new RenderState.TextureState(textureLocation, false, false)).setShadeModelState(FLAT_SHADE).setTransparencyState(RenderState.TRANSLUCENT_TRANSPARENCY).setLightmapState(RenderState.NO_LIGHTMAP).setAlphaState(MIDWAY_ALPHA).createCompositeState(true);
             return create("ego_weapons:risk_indicator", DefaultVertexFormats.POSITION_TEX, 7, 256, true, false, state);
+        };
+
+        RISK_INDICATOR_COL = (textureLocation) -> {
+            RenderType.State state = State.builder().setTextureState(new RenderState.TextureState(textureLocation, false, false)).setShadeModelState(FLAT_SHADE).setTransparencyState(RenderState.TRANSLUCENT_TRANSPARENCY).setLightmapState(RenderState.NO_LIGHTMAP).setAlphaState(MIDWAY_ALPHA).createCompositeState(true);
+            return create("ego_weapons:risk_indicator_col", DefaultVertexFormats.POSITION_TEX_COLOR, 7, 256, true, false, state);
         };
 
         ARMOR_TRANSLUCENT_NO_CULL = (textureLocation) -> {

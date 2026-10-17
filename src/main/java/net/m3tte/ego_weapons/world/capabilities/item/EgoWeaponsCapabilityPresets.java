@@ -68,6 +68,7 @@ public class EgoWeaponsCapabilityPresets {
 
     public static final Collider SOLEMN_LAMENT_HITBOX = new MultiOBBCollider(4, 0.6, 2.8, 0.6, 0, -2.5, 0);
     public static final Collider SOLEMN_LAMENT_HITBOX_EXT = new MultiOBBCollider(4, 0.6, 3.3, 0.6, 0, -3.3, 0);
+    public static final Collider LAMP_SPECIAL_HITBOX = new MultiOBBCollider(4, 0.6, 5.3, 0.6, 0, -5.3, 0);
     public static final Collider RAILGUN_HITBOX = new MultiOBBCollider(4, 0.3, 9.3, 0.3, 0, -9.3, 0);
     public static final Collider RAILGUN_HITBOX_SP = new MultiOBBCollider(4, 0.7, 14.3, 0.7, -0.3, -14.3, -0.3);
     public static final Function<Item, CapabilityItem.Builder> MOOK_WORKSHOP = (item) ->

@@ -22,15 +22,18 @@ public class EntityPredicatesMixin {
     @Inject(at = @At(value = "HEAD"), method = "pushableBy", cancellable = true)
     private static void pushable(Entity entity, CallbackInfoReturnable<Predicate<Entity>> cir) {
 
-        if (entity instanceof PlayerEntity) {
+        if (entity instanceof PlayerEntity && entity.canBeCollidedWith()) {
             LivingEntity otherEntity = (LivingEntity) entity;
 
             LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) otherEntity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
             if (entitypatch != null) {
                 DynamicAnimation currentanim = otherEntity.level.isClientSide() ? entitypatch.getClientAnimator().baseLayer.animationPlayer.getAnimation() : entitypatch.getServerAnimator().animationPlayer.getAnimation();
-                if (currentanim.getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DISABLE_COLLISION).orElse(false)) {
-                    cir.setReturnValue(entity1 -> false);
+
+                if (currentanim != null) {
+                    if (currentanim.getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DISABLE_COLLISION).orElse(false)) {
+                        cir.setReturnValue(entity1 -> false);
+                    }
                 }
             }
         }

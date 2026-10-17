@@ -339,6 +339,9 @@ public class EgoWeaponsSounds {
     public static SoundEvent LAMP_CROSSBOW_RANGED_RELOAD = generateSoundEvent(locationFrom("lamp.crossbow.ranged.reload"));
     public static SoundEvent LAMP_CROSSBOW_RANGED_CHARGED = generateSoundEvent(locationFrom("lamp.crossbow.ranged.charge"));
     public static SoundEvent LAMP_CROSSBOW_VOICE_RELOAD = generateSoundEvent(locationFrom("lamp.crossbow.voice.reload"));
+    public static SoundEvent LAMP_CROSSBOW_VOICE_TRIGGER_DAZZLE = generateSoundEvent(locationFrom("lamp.crossbow.voice.trigger_dazzle"));
+    public static SoundEvent LAMP_CROSSBOW_VOICE_SPECIAL = generateSoundEvent(locationFrom("lamp.crossbow.voice.special"));
+    public static SoundEvent LAMP_CROSSBOW_VOICE_SPECIAL_DAZZLE = generateSoundEvent(locationFrom("lamp.crossbow.voice.special_dazzle"));
 
 
 

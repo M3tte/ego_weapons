@@ -206,7 +206,6 @@ public class LCARifleMovesetAnims {
                         .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.UDJAT_RIFLE_HIT_BULLET)
 
         )
-                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DISABLE_COLLISION, false)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "lca_rifle_sp")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "lca_rifle_special")
@@ -351,7 +350,6 @@ public class LCARifleMovesetAnims {
                         .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.UDJAT_RIFLE_HIT_BULLET)
 
         )
-                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DISABLE_COLLISION, false)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "lca_rifle_sp_b")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.TARGET_HAND, Hand.OFF_HAND)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.PIERCE_GUARD_DODGE)
@@ -409,7 +407,6 @@ public class LCARifleMovesetAnims {
                         .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.UDJAT_RIFLE_HIT_BULLET)
 
         )
-                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DISABLE_COLLISION, false)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "lca_rifle_sp_b")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.PIERCE_GUARD_DODGE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)

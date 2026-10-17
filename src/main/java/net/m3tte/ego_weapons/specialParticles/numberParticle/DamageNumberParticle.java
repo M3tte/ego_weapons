@@ -1,6 +1,7 @@
 package net.m3tte.ego_weapons.specialParticles.numberParticle;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
@@ -69,7 +70,7 @@ public final class DamageNumberParticle extends TexturedParticle {
         //System.out.println("BonusMultiplierValue = "+this.bonusMultiplier);
 
         this.number = number;
-        this.lifetime = (int) (30 + Math.min(40, this.number));
+        this.lifetime = (int) (60 + Math.min(40, this.number));
         this.damageIdentifier = getDamageIdentifier((float) ((inMultiplier % 1000) * zeroMult));
 
     }
@@ -176,14 +177,15 @@ public final class DamageNumberParticle extends TexturedParticle {
         matrixStack.translate(0.4f, 0.4f, 0.4f);
         matrixStack.pushPose();
 
+        String icon = this.attackType.getIcon();
 
         matrixStack.pushPose();
         matrixStack.scale(1.4f,1.4f,1.4f);
-        textRenderer.draw(matrixStack, this.damageType.getDamageBorder(), -4, 0, 0);
+        textRenderer.draw(matrixStack, icon.isEmpty() ? this.damageType.getIcon() : this.damageType.getDamageBorder(), -4, 0, 0);
         matrixStack.pushPose();
         matrixStack.scale(0.9f,0.9f,0.9f);
         matrixStack.translate(0f, 0f, 0.05f);
-        textRenderer.draw(matrixStack, this.attackType.getIcon(), -4, 0, 0);
+        textRenderer.draw(matrixStack, icon, -4, 0, 0);
         matrixStack.popPose();
 
         matrixStack.popPose();
@@ -207,7 +209,7 @@ public final class DamageNumberParticle extends TexturedParticle {
 
         matrixStack.pushPose();
         matrixStack.scale(1.4f,1.4f,1.4f);
-        textRenderer.draw(matrixStack, this.damageType.getDamageBorder(), -4, 0, 16773613);
+        textRenderer.draw(matrixStack, icon.isEmpty() ? this.damageType.getIcon() : this.damageType.getDamageBorder(), -4, 0, 16773613);
         matrixStack.pushPose();
         matrixStack.scale(0.9f,0.9f,0.9f);
         matrixStack.translate(0f, 0f, -0.05f);

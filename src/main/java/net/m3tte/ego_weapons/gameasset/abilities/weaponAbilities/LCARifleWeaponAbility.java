@@ -100,12 +100,11 @@ public class LCARifleWeaponAbility extends ItemAbility {
             if (player.hasEffect(EgoWeaponsEffects.UDJAT_VANGUARD.get())) {
                 int ammo = AmmoSystem.getAmmoCount(player.getItemInHand(Hand.MAIN_HAND));
 
-                System.out.println("AMMO LIST IS : "+ammo);
 
                 if (ammo < 4) {
 
-                    DialogueSystem.speakEvalDialogue(player, "dialogue.ego_weapons.skills.lca_rifle.reload", DialogueSystem.DialogueTypes.SKILL, TextFormatting.WHITE);
-                    if (!world.isClientSide()) {
+                    boolean dialogue = DialogueSystem.speakEvalDialogue(player, "dialogue.ego_weapons.skills.lca_rifle.reload", DialogueSystem.DialogueTypes.SKILL, TextFormatting.WHITE);
+                    if (!world.isClientSide() && dialogue) {
                         world.playSound(null, new BlockPos(x, y, z),
                                 EgoWeaponsSounds.UDJAT_DIALOGUE_RELOADING,
                                 SoundCategory.PLAYERS, (float) 1, (float) 1);

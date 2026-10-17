@@ -4,7 +4,6 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "ego_weapons.mixins.refmap.json",
   "server": [
-    "EntityPredicatesMixinServer",
     "PushEntityMixinServer"
   ],
   "mixins": [
@@ -18,14 +17,13 @@
     "rendering.renderBufferInterface"
   ],
   "client": [
-    "EntityPredicatesMixin",
+    "PushEntityMixin",
     "HotbarRenderMixin",
     "ItemStackMixin",
     "LanguageMapMixin",
     "LivingRenderLayersMixin",
     "MusicTickerMixin",
     "PlayerRenderLayerMixin",
-    "PushEntityMixin",
     "epicfight.EntityIndicatorMixin",
     "epicfight.HealthbarIndicatorMixin",
     "epicfight.ItemInHandLayerMixin",

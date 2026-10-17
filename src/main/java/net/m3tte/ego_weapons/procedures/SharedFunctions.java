@@ -18,6 +18,7 @@ import net.m3tte.ego_weapons.item.fullstop_sniper.FullstopSniperArmor;
 import net.m3tte.ego_weapons.item.fullstop_sniper.FullstopSniperWeapon;
 import net.m3tte.ego_weapons.item.heishou_mao.HeishouMaoRobe;
 import net.m3tte.ego_weapons.item.heishou_mao.HeishouMaoSword;
+import net.m3tte.ego_weapons.item.lamp.LampCrossbow;
 import net.m3tte.ego_weapons.item.liu.LiuFireGauntlet;
 import net.m3tte.ego_weapons.item.magic_bullet.MagicBullet;
 import net.m3tte.ego_weapons.item.magic_bullet.MagicBulletArmor;
@@ -511,6 +512,7 @@ public class SharedFunctions {
                         case "lca_khopesh": multiplier = LCAKhopesh.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source); break;
                         case "lca_rifle": multiplier = LCARifle.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source); break;
                         case "arayashiki": multiplier = Arayashiki.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source, crit); break;
+                        case "lamp_crossbow": multiplier = LampCrossbow.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source); break;
 
                     }
                 }

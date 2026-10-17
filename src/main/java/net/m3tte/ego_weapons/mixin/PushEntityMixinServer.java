@@ -41,6 +41,19 @@ public abstract class PushEntityMixinServer {
             LivingEntity otherEntity = (LivingEntity) entity;
 
             LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) otherEntity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+            LivingEntityPatch<?> selfPatch = (LivingEntityPatch<?>) self.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+
+            if (selfPatch != null && !self.level.isClientSide()) {
+                DynamicAnimation currentanim = selfPatch.getServerAnimator().animationPlayer.getAnimation();
+
+
+                if (currentanim.getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DISABLE_COLLISION).orElse(false)) {
+                    //self.setDeltaMovement(0,0,0);
+                    //otherEntity.setDeltaMovement(0,0,0);
+                    ci.cancel();
+                    return;
+                }
+            }
 
             if (entitypatch != null && !self.level.isClientSide()) {
                  DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
@@ -52,6 +65,8 @@ public abstract class PushEntityMixinServer {
                     ci.cancel();
                 }
             }
+
+
         }
     }
 

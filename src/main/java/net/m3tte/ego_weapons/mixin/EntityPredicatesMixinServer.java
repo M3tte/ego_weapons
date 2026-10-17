@@ -1,5 +1,6 @@
 package net.m3tte.ego_weapons.mixin;
 
+import com.google.common.base.Predicates;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -22,15 +23,19 @@ public class EntityPredicatesMixinServer {
     @Inject(at = @At(value = "HEAD"), method = "pushableBy", cancellable = true)
     private static void pushable(Entity entity, CallbackInfoReturnable<Predicate<Entity>> cir) {
 
-        if (entity instanceof PlayerEntity) {
+
+
+        if (entity instanceof PlayerEntity && entity.canBeCollidedWith()) {
             LivingEntity otherEntity = (LivingEntity) entity;
 
             LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) otherEntity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
             if (entitypatch != null) {
                 DynamicAnimation currentanim = entitypatch.getServerAnimator().animationPlayer.getAnimation();
-                if (currentanim.getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DISABLE_COLLISION).orElse(false)) {
-                    cir.setReturnValue(entity1 -> false);
+                if (currentanim != null) {
+                    if (currentanim.getProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DISABLE_COLLISION).orElse(false)) {
+                        cir.setReturnValue(Predicates.alwaysFalse());
+                    }
                 }
             }
         }

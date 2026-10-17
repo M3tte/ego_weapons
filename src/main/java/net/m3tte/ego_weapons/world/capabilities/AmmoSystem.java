@@ -182,17 +182,20 @@ public class AmmoSystem {
     }
 
     public static int forceReloadGun(LivingEntity target, ItemStack gunItem, AmmoType ammoType) {
-        return forceReloadGun(target, gunItem, 999, ammoType);
+        return forceReloadGun(target, gunItem, 0, 0, ammoType);
     }
-    public static int forceReloadGun(LivingEntity target, ItemStack gunItem, int maxReload, AmmoType ammoType) {
+    public static int forceReloadGun(LivingEntity target, ItemStack gunItem, int bulletCap, int maxReload, AmmoType ammoType) {
         int reloaded = 0;
         if (gunItem.getItem() instanceof GunItem) {
             GunItem gunType = (GunItem) gunItem.getItem();
 
             int reloadCap = gunType.getMaxAmmo();
 
-            if (maxReload > 0)
-                reloadCap = Math.min(reloadCap, maxReload);
+            if (bulletCap > 0)
+                reloadCap = Math.min(reloadCap, bulletCap);
+
+            if (maxReload == 0)
+                maxReload = reloadCap;
 
             int[] oldAmmo = gunItem.getOrCreateTag().getIntArray("loadedAmmo");
             LinkedList<Integer> newAmmo = new LinkedList<>();
@@ -200,7 +203,7 @@ public class AmmoSystem {
             for (int ammoIdx : oldAmmo)
                 newAmmo.add(ammoIdx);
 
-            while (newAmmo.size() < reloadCap) {
+            while (newAmmo.size() < reloadCap && reloaded < maxReload) {
                 newAmmo.add(ammoType.ordinal());
                 reloaded++;
             }

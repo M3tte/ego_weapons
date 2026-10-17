@@ -6,17 +6,23 @@ import net.m3tte.ego_weapons.gameasset.AttackLogicPredicate;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
+import net.m3tte.ego_weapons.gameasset.movesets.JustitiaMovesetAnims;
+import net.m3tte.ego_weapons.gameasset.movesets.LampCrossbowMovesetAnims;
 import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.item.guns.GunCaliber;
 import net.m3tte.ego_weapons.item.guns.GunItem;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.potion.countEffects.DarkFlameEffect;
+import net.m3tte.ego_weapons.procedures.DelayedEvent;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
 import net.m3tte.ego_weapons.world.capabilities.UtilitySystems;
+import net.m3tte.ego_weapons.world.capabilities.damage.DirectEgoDamageSource;
+import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IItemTier;
@@ -32,6 +38,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import yesman.epicfight.api.animation.types.DynamicAnimation;
+import yesman.epicfight.api.utils.ExtendedDamageSource;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
@@ -57,9 +64,9 @@ public class LampCrossbow extends GunItem {
 		switch (EgoWeaponsKeybinds.getUiPage() % 6) {
 			case 0:
 				if (EgoWeaponsKeybinds.isHoldingShift())
-					generateStatusDescription(list, new String[]{"burn", "dark_flame"});
+					generateStatusDescription(list, new String[]{"burn", "sinking", "feather_wick_bolt","lamp","black_fragility"});
 				else
-					generateDescription(list,"lamp_crossbow", "sp", 6, EgoWeaponsEffects.LAMP.get());
+					generateDescription(list,"lamp_crossbow", "ability", 16, EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.DAZZLE.get());
 				break;
 			case 1:
 				if (EgoWeaponsKeybinds.isHoldingShift())
@@ -71,7 +78,7 @@ public class LampCrossbow extends GunItem {
 				if (EgoWeaponsKeybinds.isHoldingShift())
 					generateStatusDescription(list, new String[]{"burn", "sinking", "feather_wick_bolt","lamp"});
 				else {
-					generateDescription(list,"lamp_crossbow", "auto2", 9, EgoWeaponsEffects.LAMP.get());
+					generateDescription(list,"lamp_crossbow", "auto2", 10, EgoWeaponsEffects.LAMP.get());
 				}
 				break;
 			case 3:
@@ -140,12 +147,13 @@ public class LampCrossbow extends GunItem {
 	}
 
 	@Override
-	public boolean hurtEnemy(ItemStack itemstack, LivingEntity target, LivingEntity sourceentity){
-		boolean retval = super.hurtEnemy(itemstack, target, sourceentity);
+	public boolean hurtEnemy(ItemStack itemstack, LivingEntity target, LivingEntity source){
+		boolean retval = super.hurtEnemy(itemstack, target, source);
 
-		EgoWeaponsModVars.PlayerVariables entityData = sourceentity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
+		EgoWeaponsModVars.PlayerVariables entityData = source.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
 
-		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceentity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) source.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+		LivingEntityPatch<?> targetPatch = (LivingEntityPatch<?>) target.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 
 		if (entitypatch == null)
 			return retval;
@@ -156,67 +164,122 @@ public class LampCrossbow extends GunItem {
 		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
 
 
+		int burnSinking = EgoWeaponsEffects.BURN.get().getPotency(target) + EgoWeaponsEffects.SINKING.get().getPotency(target);
+		int FburnSinking = burnSinking / 5;
+		int lampOnSelf = EgoWeaponsEffects.LAMP.get().getPotency(source);
 
 		if (context.isValidEgoAnimation() && entityData != null) {
 
 			// Different animation effects
 			switch (context.getAnimationIdentifier()) {
-				case "magic_bullet_auto_1":
-				case "magic_bullet_auto_2":
-					EgoWeaponsEffects.BURN.get().increment(target, 0, 1);
+				case "lamp_cb_auto_m_2":
+					EgoWeaponsEffects.LAMP.get().increment(source, 0, 1);
 					break;
-				case "magic_bullet_auto_3":
-
-					EgoWeaponsEffects.DARK_BURN.get().increment(target, 1, 0);
-					if (sourceentity instanceof PlayerEntity) {
-						PlayerEntity sourcePlayer = (PlayerEntity) sourceentity;
-						if (!(sourcePlayer.getCooldowns().isOnCooldown(this.getItem()) && entityData.globalcooldown <= 0)) {
-							if (entitypatch instanceof PlayerPatch) {
-								((PlayerPatch<?>)entitypatch).setStamina(Math.min(((PlayerPatch<?>)entitypatch).getStamina() + 1f, ((PlayerPatch<?>)entitypatch).getMaxStamina()));
-
-							}
-							StaggerSystem.healStagger(sourceentity, 0.4f);
-
-							if (EgoWeaponsItems.MAGIC_BULLET_CLOAK.get().equals(sourcePlayer.getItemBySlot(EquipmentSlotType.CHEST).getItem())) {
-								sourceentity.level.playSound((PlayerEntity) null, sourcePlayer.getX(), sourcePlayer.getY(), sourcePlayer.getZ(),
-										EgoWeaponsSounds.RESULT_POSITIVE,
-										SoundCategory.PLAYERS, 1, 1.4f);
-								StaggerSystem.healStagger(sourceentity, 2);
-								entityData.light = Math.min(entityData.light + 1, EgoWeaponsAttributes.getMaxLight(sourcePlayer)); // Not affected by multipliers.
-							}
-							((PlayerEntity) sourceentity).getCooldowns().addCooldown(itemstack.getItem(), (int) 2);
-							entityData.globalcooldown = 2;
-						}
-					}
-
+				case "lamp_cb_auto_r_3":
+					EgoWeaponsEffects.LAMP.get().increment(source, 0, 2);
 					break;
-				case "magic_bullet_spin_1":
-
-					if (sourceentity.hasEffect(EgoWeaponsEffects.MAGIC_BULLET.get())) {
-						((DarkFlameEffect) EgoWeaponsEffects.DARK_BURN.get()).setPotency(target, Math.min(EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(sourceentity),4));
-					}
-
-					if (target.hasEffect(EgoWeaponsEffects.DARK_BURN.get())) {
-						EgoWeaponsEffects.BURN.get().increment(target, 1, Math.min(4,target.getEffect(EgoWeaponsEffects.DARK_BURN.get()).getDuration()/20));
-					}
+				case "lamp_cb_innate":
+					EgoWeaponsEffects.LAMP.get().increment(source, 0, 2);
 					break;
-				case "magic_bullet_fire_1":
-				case "magic_bullet_fire_2":
-						int ampl = EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(sourceentity);
-
-						if (ampl > 0) {
-							((DarkFlameEffect) EgoWeaponsEffects.DARK_BURN.get()).setPotency(target, (EgoWeaponsEffects.MAGIC_BULLET.get().getPotency(sourceentity)));
-						}
+				case "lamp_cb_sp_1b_1":
+				case "lamp_cb_sp_1b_2":
+				case "lamp_cb_sp_1":
+				case "lamp_cb_sp_2_1":
+					SharedFunctions.hitstunEntity(targetPatch, 3, false, 0.3f);
 					break;
 			}
 
 
 		}
 
-		entityData.syncPlayerVariables(sourceentity);
+		entityData.syncPlayerVariables(source);
 		return retval;
 	}
 
+	public static float modifyDamageAmount(LivingEntity target, LivingEntity source, float mult, DamageSource damageSource) {
+
+		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) source.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+
+		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
+
+		ItemStack mainhandItem = target.getMainHandItem();
+
+		int burnSinking = EgoWeaponsEffects.BURN.get().getPotency(target) + EgoWeaponsEffects.SINKING.get().getPotency(target);
+		int FburnSinking = burnSinking / 5;
+		int lampOnSelf = EgoWeaponsEffects.LAMP.get().getPotency(source);
+		float burstMult = 1.0f;
+		switch (context.getAnimationIdentifier()) {
+			case "lamp_cb_auto_m_dash":
+			case "lamp_cb_auto_m_1":
+			case "lamp_cb_auto_m_2":
+				EgoWeaponsEffects.BURN.get().increment(target, 0, 1);
+				break;
+			case "lamp_cb_auto_r_1":
+				EgoWeaponsEffects.BURN.get().increment(target, 0, 1);
+				EgoWeaponsEffects.SINKING.get().increment(target, 0, 1);
+				break;
+			case "lamp_cb_auto_r_2":
+				EgoWeaponsEffects.BURN.get().increment(target, 1, 0);
+				EgoWeaponsEffects.SINKING.get().increment(target, 2, 0);
+				break;
+			case "lamp_cb_auto_r_3":
+				EgoWeaponsEffects.BURN.get().increment(target, 1, 1);
+				EgoWeaponsEffects.SINKING.get().increment(target, 2, 2);
+				break;
+			case "lamp_cb_innate":
+
+				boolean isEmpowered = false;
+
+				if (mainhandItem.isEmpty())
+					mainhandItem.getOrCreateTag().getBoolean("empoweredInnate");
+
+				if (isEmpowered) {
+					EgoWeaponsEffects.BLACK_FRAGILITY.get().increment(target, 0, 1);
+					mult += SharedFunctions.incrementBonusDamage(damageSource, 0.5f);
+				}
+
+				EgoWeaponsEffects.BURN.get().increment(target, 1, 1);
+				EgoWeaponsEffects.SINKING.get().increment(target, 2, 2);
+				break;
+			case "lamp_cb_sp_1b_1":
+				mult += SharedFunctions.incrementBonusDamage(damageSource, 0.3f);
+			case "lamp_cb_sp_1":
+				EgoWeaponsEffects.BURN.get().increment(target, 2, 0);
+				EgoWeaponsEffects.SINKING.get().increment(target, 4, 0);
+
+				mult += SharedFunctions.incrementBonusDamage(damageSource, Math.min(FburnSinking * 0.05f, 0.25f));
+				mult += SharedFunctions.incrementBonusDamage(damageSource, lampOnSelf * 0.03f);
+				break;
+			case "lamp_cb_sp_1b_2":
+				mult += SharedFunctions.incrementBonusDamage(damageSource, 0.3f);
+			case "lamp_cb_sp_2_1":
+				EgoWeaponsEffects.BURN.get().increment(target, 0, 2);
+				EgoWeaponsEffects.SINKING.get().increment(target, 0, 2);
+				mult += SharedFunctions.incrementBonusDamage(damageSource, Math.min(FburnSinking * 0.05f, 0.25f));
+				mult += SharedFunctions.incrementBonusDamage(damageSource, lampOnSelf * 0.03f);
+				break;
+			case "lamp_cb_sp_2b":
+				burstMult = 1.5f;
+				mult += SharedFunctions.incrementBonusDamage(damageSource, 0.3f);
+			case "lamp_cb_sp_2_2":
+				EgoWeaponsEffects.BLACK_FRAGILITY.get().increment(target, 0, 1);
+				EgoWeaponsEffects.BURN.get().increment(target, 2, 0);
+				EgoWeaponsEffects.SINKING.get().increment(target, 4, 0);
+				mult += SharedFunctions.incrementBonusDamage(damageSource, Math.min(FburnSinking * 0.05f, 0.25f));
+				mult += SharedFunctions.incrementBonusDamage(damageSource, lampOnSelf * 0.03f);
+
+				float finalBurstMult = burstMult;
+				new DelayedEvent(20, (a) -> {
+
+					target.hurt(new DirectEgoDamageSource("", target, ExtendedDamageSource.StunType.NONE, LampCrossbowMovesetAnims.LAMP_CB_SP_2, GenericEgoDamage.AttackTypes.GENERIC, GenericEgoDamage.DamageTypes.BLACK, "lamp"), (int)Math.min(burnSinking * finalBurstMult, (15 * finalBurstMult)));
+				});
+				break;
+		}
+
+
+
+		return mult;
+	}
 
 	private final ResourceLocation featherWickBolt = new ResourceLocation(EgoWeaponsMod.MODID, "textures/mob_effect/feather_wick_bolt.png");;
 	private final ResourceLocation emptyBoltIcon = new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/gui/bullets/empty_bolt_lamp.png");;
