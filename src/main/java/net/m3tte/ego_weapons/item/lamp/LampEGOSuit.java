@@ -5,9 +5,12 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
+import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
+import net.m3tte.ego_weapons.world.capabilities.UtilitySystems;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoWeaponsArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
@@ -15,11 +18,14 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.CooldownTracker;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
@@ -30,10 +36,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
+import yesman.epicfight.world.capabilities.EpicFightCapabilities;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 import java.util.List;
 
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
+import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.generateAttackContext;
 
 public class LampEGOSuit extends GenericEgoWeaponsArmor {
 
@@ -88,6 +97,50 @@ public class LampEGOSuit extends GenericEgoWeaponsArmor {
 		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
 
 
+	}
+
+
+	public static float onHitTargetEffect(LivingEntity sourceEntity, LivingEntity targetEntity, float amount, float multiplier, DamageSource damageSource) {
+		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceEntity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
+
+		/*if (context != null) {
+			int targetSpeed = EgoWeaponsEffects.speedMult(targetEntity);
+			int sourceSpeed = EgoWeaponsEffects.speedMult(sourceEntity);
+
+			if (sourceSpeed - targetSpeed >= 7) {
+				if (context.triggersEffects()) {
+					EgoWeaponsEffects.RUPTURE.get().increment(targetEntity, 0, 1);
+				}
+			}
+		}*/
+
+		if (context.isValidEgoAnimation()) {
+			if (context.isFinalCoin()) {
+				if (targetEntity instanceof PlayerEntity) {
+					if (!((PlayerEntity) targetEntity).getCooldowns().isOnCooldown(EgoWeaponsItems.LAMP_SUIT.get())) {
+						((PlayerEntity) targetEntity).getCooldowns().addCooldown(EgoWeaponsItems.LAMP_SUIT.get(), 10);
+						EgoWeaponsEffects.LAMP.get().increment(sourceEntity, 0, 1);
+					}
+				}
+			}
+		}
+		return multiplier;
+	}
+
+	public static float onHitSelfEffect(LivingEntity sourceEntity, LivingEntity targetEntity, float amount, float multiplier, DamageSource damageSource) {
+		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceEntity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
+
+		/*if (context != null) {
+			int targetSpeed = EgoWeaponsEffects.speedMult(targetEntity);
+			int sourceSpeed = EgoWeaponsEffects.speedMult(sourceEntity);
+
+			if (targetSpeed - sourceSpeed >= 7) {
+				multiplier += SharedFunctions.incrementBonusDamage(damageSource, -0.1f);
+			}
+		}*/
+		return multiplier;
 	}
 
 	// Texture Override
@@ -162,7 +215,7 @@ public class LampEGOSuit extends GenericEgoWeaponsArmor {
 					if (EgoWeaponsKeybinds.isHoldingShift())
 						generateStatusDescription(list, new String[]{"lamp", "dazzle", "salvation", "defense_up"});
 					else
-						generateDescription(list, "lamp_suit", "passive", 8, true, EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.DAZZLE.get(), EgoWeaponsEffects.SALVATION.get());
+						generateDescription(list, "lamp_suit", "passive", 7, true, EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.DAZZLE.get(), EgoWeaponsEffects.SALVATION.get());
 					break;
 				case 2:
 					if (EgoWeaponsKeybinds.isHoldingShift())

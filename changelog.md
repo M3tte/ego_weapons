@@ -21,6 +21,7 @@
   + Added system for responsive VFX shaders
   + Added scaling system for shaders to improve performance
 + Dealing "Generic" Red black white or pale damage now uses the damage type icon instead of the background.
++ Optimizes no collision logic. Should be more compatible and such.
 + Fixed opacity for chat bubbles. They now fade rather smoothly effectively scaling with amount of bubbles.
 
 # ..v1.01.19

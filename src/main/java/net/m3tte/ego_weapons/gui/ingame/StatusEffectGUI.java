@@ -128,7 +128,7 @@ public class StatusEffectGUI extends EntityIndicator {
 
                 if (offHandWeapon.getItem() instanceof GunItem) {
                     ammoOffhand = AmmoSystem.getAmmoCount(offHandWeapon);
-                    offhandRL = ((GunItem) mainHandWeapon.getItem()).getAmmoRL();
+                    offhandRL = ((GunItem) offHandWeapon.getItem()).getAmmoRL();
                 }
 
                 boolean different = true;

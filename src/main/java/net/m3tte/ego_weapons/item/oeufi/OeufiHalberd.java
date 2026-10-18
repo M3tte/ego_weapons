@@ -170,7 +170,7 @@ public class OeufiHalberd extends EgoWeaponsWeapon {
 					TremorEffect ef = TremorEffect.incrementTremor(target, 2, 2);
 					if (!StaggerSystem.isStaggered(target)) {
 
-						if (targetPatch != null && ef.getPotency(target) > 10)
+						if (ef.getPotency(target) > 10)
 							staggerEntity(targetPatch, 2, false);
 					}
 					break;
@@ -179,8 +179,7 @@ public class OeufiHalberd extends EgoWeaponsWeapon {
 
 					break;
                 case "oeufi_innate":
-					if (targetPatch != null)
-						SharedFunctions.hitstunEntity(targetPatch, 3, false, 0);
+					SharedFunctions.hitstunEntity(targetPatch, 3, false, 0);
                     TremorEffect.incrementTremor(target, 0, 1);
 					break;
 				case "oeufi_auto2":

@@ -60,7 +60,6 @@ public class ArayashikiActiveGuard extends NonSpamGuardSkill {
 
                 if (motionCounter % 4 >= 2) {
                     event.getPlayerPatch().playSound(EgoWeaponsSounds.BLACK_SILENCE_EVADE, -0.05F, 0.1F);
-
                 } else {
                     event.getPlayerPatch().playSound(EpicFightSounds.CLASH, -0.05F, 0.1F);
                     EpicFightParticles.HIT_BLUNT.get().spawnParticleWithArgument((ServerWorld)playerentity.level, HitParticleType.FRONT_OF_EYES, HitParticleType.ZERO, playerentity, damageSource.getDirectEntity());

@@ -34,6 +34,8 @@ import net.m3tte.ego_weapons.skill.heishou_mao.HeishouMaoBlinkstep;
 import net.m3tte.ego_weapons.skill.heishou_mao.HeishouMaoPassive;
 import net.m3tte.ego_weapons.skill.justitia.JustitiaActiveGuard;
 import net.m3tte.ego_weapons.skill.justitia.JustitiaPassive;
+import net.m3tte.ego_weapons.skill.lamp.LampGuard;
+import net.m3tte.ego_weapons.skill.lamp.LampPassive;
 import net.m3tte.ego_weapons.skill.liu_s6.LiuS6Passive;
 import net.m3tte.ego_weapons.skill.liu_s6.LiuS6WeakGuard;
 import net.m3tte.ego_weapons.skill.magic_bullet.MagicBulletDetonate;
@@ -181,6 +183,8 @@ public class EgoWeaponsSkills {
     public static Skill ARAYASHIKI_GUARD;
 
     public static Skill LAMP_CROSSBOW_INNATE;
+    public static Skill LAMP_CROSSBOW_PASSIVE;
+    public static Skill LAMP_CROSSBOW_GUARD;
     public EgoWeaponsSkills() {
     }
 
@@ -371,6 +375,8 @@ public class EgoWeaponsSkills {
 
         LAMP_CROSSBOW_INNATE = event.registerSkill(new SimpleSpecialAttackSkill(SimpleSpecialAttackSkill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "piercing_lamplight"))
                 .setConsumption(25.0F).setMaxStack(1).setAnimations(LampCrossbowMovesetAnims.LAMP_CB_INNATE)), false);
+        LAMP_CROSSBOW_PASSIVE = event.registerSkill(new LampPassive(Skill.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "lamp_passive")).setCategory(SkillCategories.WEAPON_PASSIVE)), false);
+        LAMP_CROSSBOW_GUARD = event.registerSkill(new LampGuard(LampGuard.createBuilder(new ResourceLocation(EgoWeaponsMod.MODID, "lamp_guard")).setRequiredXp(0).setCategory(GenericSkill.TC_GUARD)), false);
 
     }
 }

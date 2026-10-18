@@ -393,7 +393,7 @@ public class LCARifleMovesetAnims {
                         .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(0.4f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(1f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.UDJAT_LCA_KHOPESH_THROW_RIPOUT),
-                new EgoAttackAnimation.EgoAttackPhase(1.6F, 1.7F, 2.12f, 2.33f, 3.66f, 3.66f, Hand.OFF_HAND, "Tool_L", EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX_EXT)
+                new EgoAttackAnimation.EgoAttackPhase(1.6F, 1.7F, 2.12f, 2.33f, 3.66f, 3.66f, Hand.OFF_HAND, "Tool_L", EgoWeaponsCapabilityPresets.GUN_SHORT_RANGE_PLUS)
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER, "lca_rifle_sp_b_5")
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.TARGET_HAND, Hand.OFF_HAND)
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.CONSUMES_AMMO, true)

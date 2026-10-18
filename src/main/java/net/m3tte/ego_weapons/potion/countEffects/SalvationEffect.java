@@ -5,19 +5,24 @@
 
 package net.m3tte.ego_weapons.potion.countEffects;
 
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifierManager;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.potion.EffectType;
+import net.minecraft.util.DamageSource;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import yesman.epicfight.world.entity.ai.attribute.EpicFightAttributes;
 
 import java.util.UUID;
 
+import static net.m3tte.ego_weapons.procedures.SharedFunctions.incrementBonusDamage;
+
 public class SalvationEffect extends PotencyOnlyStatus {
     public SalvationEffect() {
-        super(EffectType.BENEFICIAL, "salvation",-16777216, true, 3, 300);
+        super(EffectType.BENEFICIAL, "salvation",-16777216, true, 20, 32);
     }
 
 
@@ -27,42 +32,42 @@ public class SalvationEffect extends PotencyOnlyStatus {
     }
 
 
-    static AttributeModifier damageMod = new AttributeModifier(UUID.fromString("ff314f68-930e-4b92-88d9-6ce88ebff984"), "guardianDamage", 0.03, AttributeModifier.Operation.MULTIPLY_BASE);
-    static AttributeModifier attackSpeedMod = new AttributeModifier(UUID.fromString("ff314f68-930e-4b92-88d9-6ce88ebff984"), "guardianAttackSpeed", 0.045, AttributeModifier.Operation.ADDITION);
-    static AttributeModifier impactMod = new AttributeModifier(UUID.fromString("ff314f68-930e-4b92-88d9-6ce88ebff984"), "guardianImpact", 0.05, AttributeModifier.Operation.ADDITION);
+    static AttributeModifier stunresMod = new AttributeModifier(UUID.fromString("fc414f98-940e-4b92-88d9-6ce88ebff984"), "salvationStunres", 0.1, AttributeModifier.Operation.MULTIPLY_BASE);
+    static AttributeModifier armorMod = new AttributeModifier(UUID.fromString("fc414f98-940e-4c92-88d9-6ce88ebff984"), "salvationDefense", 1, AttributeModifier.Operation.ADDITION);
+    static AttributeModifier toughnessMod = new AttributeModifier(UUID.fromString("fc414f98-940e-4c92-88d9-6ce88ebff984"), "salvationToughness", 0.2, AttributeModifier.Operation.ADDITION);
 
+
+    public static float applyOnHit(LivingEntityPatch<?> sourcePatch, LivingEntity target, float oldMultFactor, DamageSource src) {
+        if (target.hasEffect(EgoWeaponsEffects.DAZZLE.get())) {
+            oldMultFactor += incrementBonusDamage(src, 0.15f);
+        }
+        return oldMultFactor;
+    }
     @Override
     public void addAttributeModifiers(LivingEntity living, AttributeModifierManager attrman, int amplifier) {
         super.addAttributeModifiers(living, attrman, amplifier);
 
 
 
-        ModifiableAttributeInstance damageInstance = attrman.getInstance(Attributes.ATTACK_DAMAGE);
-        ModifiableAttributeInstance attackSpeedInstance = attrman.getInstance(Attributes.ATTACK_SPEED);
-        ModifiableAttributeInstance impactInstance = attrman.getInstance(EpicFightAttributes.IMPACT.get());
-        ModifiableAttributeInstance offhandImpactInstance = attrman.getInstance(EpicFightAttributes.OFFHAND_IMPACT.get());
+        ModifiableAttributeInstance toughness = attrman.getInstance(Attributes.ARMOR_TOUGHNESS);
+        ModifiableAttributeInstance armor = attrman.getInstance(Attributes.ARMOR);
+        ModifiableAttributeInstance stunres = attrman.getInstance(EpicFightAttributes.STUN_ARMOR.get());
 
         float processedPotency = 1;
 
-
-        if (damageInstance != null) {
-            damageInstance.removeModifier(damageMod);
-            damageInstance.addPermanentModifier(new AttributeModifier(damageMod.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue((int) (processedPotency), damageMod), damageMod.getOperation()));
+        if (stunres != null) {
+            stunres.removeModifier(stunresMod);
+            stunres.addPermanentModifier(new AttributeModifier(stunresMod.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue((int) (processedPotency), stunresMod), stunresMod.getOperation()));
         }
 
-        if (attackSpeedInstance != null) {
-            attackSpeedInstance.removeModifier(attackSpeedMod);
-            attackSpeedInstance.addPermanentModifier(new AttributeModifier(attackSpeedMod.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue((int) (processedPotency), impactMod), impactMod.getOperation()));
+        if (armor != null) {
+            armor.removeModifier(armorMod);
+            armor.addPermanentModifier(new AttributeModifier(armorMod.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue((int) (processedPotency), armorMod), armorMod.getOperation()));
         }
 
-        if (impactInstance != null) {
-            impactInstance.removeModifier(impactMod);
-            impactInstance.addPermanentModifier(new AttributeModifier(impactMod.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue((int) (processedPotency), impactMod), impactMod.getOperation()));
-        }
-
-        if (offhandImpactInstance != null) {
-            offhandImpactInstance.removeModifier(impactMod);
-            offhandImpactInstance.addPermanentModifier(new AttributeModifier(impactMod.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue((int) (processedPotency), impactMod), impactMod.getOperation()));
+        if (toughness != null) {
+            toughness.removeModifier(toughnessMod);
+            toughness.addPermanentModifier(new AttributeModifier(toughnessMod.getId(), this.getDescriptionId() + " " + 0, this.getAttributeModifierValue((int) (processedPotency), toughnessMod), toughnessMod.getOperation()));
         }
 
         attrman.save();
@@ -71,27 +76,34 @@ public class SalvationEffect extends PotencyOnlyStatus {
     @Override
     public void removeAttributeModifiers(LivingEntity living, AttributeModifierManager attrman, int amplifier) {
         super.removeAttributeModifiers(living, attrman, amplifier);
-        ModifiableAttributeInstance damageInstance = attrman.getInstance(Attributes.ATTACK_DAMAGE);
-        ModifiableAttributeInstance attackSpeedInstance = attrman.getInstance(Attributes.ATTACK_SPEED);
-        ModifiableAttributeInstance impactInstance = attrman.getInstance(EpicFightAttributes.IMPACT.get());
-        ModifiableAttributeInstance offhandImpactInstance = attrman.getInstance(EpicFightAttributes.OFFHAND_IMPACT.get());
+        ModifiableAttributeInstance toughness = attrman.getInstance(Attributes.ARMOR_TOUGHNESS);
+        ModifiableAttributeInstance armor = attrman.getInstance(Attributes.ARMOR);
+        ModifiableAttributeInstance stunres = attrman.getInstance(EpicFightAttributes.STUN_ARMOR.get());
 
-        if (damageInstance != null)
-            damageInstance.removeModifier(damageMod);
-        if (attackSpeedInstance != null)
-            attackSpeedInstance.removeModifier(attackSpeedMod);
-        if (impactInstance != null)
-            impactInstance.removeModifier(impactMod);
-        if (offhandImpactInstance != null)
-            offhandImpactInstance.removeModifier(impactMod);
+        if (stunres != null)
+            stunres.removeModifier(stunresMod);
+        if (armor != null)
+            armor.removeModifier(armorMod);
+        if (toughness != null)
+            toughness.removeModifier(toughnessMod);
 
         attrman.save();
     }
 
+    @Override
+    public void expirationEffect(LivingEntity entity) {
+        EgoWeaponsEffects.LAMP.get().increment(entity, 1, 1);
+    }
 
     @Override
     public void applyEffectTick(LivingEntity entity, int amplifier) {
         // No ticking needed as time is handled normally.
+        super.applyEffectTick(entity,amplifier);
+        entity.removeEffect(EgoWeaponsEffects.LAMP.get());
     }
+
+
+
+
 
 }

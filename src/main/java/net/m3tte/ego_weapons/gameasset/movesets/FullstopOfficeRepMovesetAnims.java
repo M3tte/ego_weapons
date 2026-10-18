@@ -144,7 +144,7 @@ public class FullstopOfficeRepMovesetAnims {
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.FULLSTOP_MACHETE_HIT)
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.15F);
 
-        FULLSTOP_REP_AUTO_G_1 = (new BasicEgoAttackAnimation(0.16F, 0.2F, 0.5F, 0.55F, 1.1F, EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX, "Tool_L", "biped/fullstop_rep/auto_g1", biped))
+        FULLSTOP_REP_AUTO_G_1 = (new BasicEgoAttackAnimation(0.16F, 0.2F, 0.5F, 0.55F, 1.1F, EgoWeaponsCapabilityPresets.GUN_SHORT_RANGE, "Tool_L", "biped/fullstop_rep/auto_g1", biped))
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "fs_rep_auto_1_g")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
@@ -162,7 +162,7 @@ public class FullstopOfficeRepMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1f)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, fireGun(0.5f));
 
-        FULLSTOP_REP_AUTO_G_2 = (new BasicEgoAttackAnimation(0.01F, 0.1F, 0.116F, 0.26F, 0.5F, EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX, "Tool_L", "biped/fullstop_rep/auto_g2", biped))
+        FULLSTOP_REP_AUTO_G_2 = (new BasicEgoAttackAnimation(0.01F, 0.1F, 0.116F, 0.26F, 0.5F, EgoWeaponsCapabilityPresets.GUN_SHORT_RANGE, "Tool_L", "biped/fullstop_rep/auto_g2", biped))
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "fs_rep_auto_2_g")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
@@ -180,7 +180,7 @@ public class FullstopOfficeRepMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.9f)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, fireGun(0.116f));
 
-        FULLSTOP_REP_AUTO_G_3 = (new BasicEgoAttackAnimation(0.01F, 0.1F, 0.116F, 0.26F, 0.5F, EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX, "Tool_L", "biped/fullstop_rep/auto_g3", biped))
+        FULLSTOP_REP_AUTO_G_3 = (new BasicEgoAttackAnimation(0.01F, 0.1F, 0.116F, 0.26F, 0.5F, EgoWeaponsCapabilityPresets.GUN_SHORT_RANGE, "Tool_L", "biped/fullstop_rep/auto_g3", biped))
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "fs_rep_auto_3_g")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
@@ -198,7 +198,7 @@ public class FullstopOfficeRepMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.9f)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, fireGun(0.116f));
 
-        FULLSTOP_REP_AUTO_G_FINAL = (new BasicEgoAttackAnimation(0.1F, 0.3F, 0.45F, 0.5F, 1.5F, EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX_EXT, "Tool_L", "biped/fullstop_rep/auto_g_final", biped))
+        FULLSTOP_REP_AUTO_G_FINAL = (new BasicEgoAttackAnimation(0.1F, 0.3F, 0.45F, 0.5F, 1.5F, EgoWeaponsCapabilityPresets.GUN_SHORT_RANGE_PLUS, "Tool_L", "biped/fullstop_rep/auto_g_final", biped))
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "fs_rep_auto_4_g")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
@@ -216,7 +216,7 @@ public class FullstopOfficeRepMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1f)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, fireGun(0.45f));
 
-        FULLSTOP_REP_DASH_G = (new BasicEgoAttackAnimation(0.1F, 0.3F, 0.6F, 0.66F, 1.5F, EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX_EXT, "Tool_L", "biped/fullstop_rep/dash_g", biped))
+        FULLSTOP_REP_DASH_G = (new BasicEgoAttackAnimation(0.1F, 0.3F, 0.6F, 0.66F, 1.5F, EgoWeaponsCapabilityPresets.GUN_SHORT_RANGE_PLUS, "Tool_L", "biped/fullstop_rep/dash_g", biped))
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "fs_rep_dash_g")
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)

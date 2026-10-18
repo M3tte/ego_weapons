@@ -52,7 +52,7 @@ public class PotencyOnlyStatus extends CountPotencyStatus {
     @Override
     public void applyEffectTick(LivingEntity entity, int amplifier) {
         if (this.decrementsNormally) {
-            if (entity.getEffect(this).getDuration() <= 10 && amplifier > 0) {
+            if (entity.getEffect(this).getDuration() <= 2 && amplifier > 0) {
                 decrement(entity, 0, 1);
             }
         }

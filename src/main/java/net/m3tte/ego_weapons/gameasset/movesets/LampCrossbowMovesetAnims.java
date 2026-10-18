@@ -1,25 +1,17 @@
 package net.m3tte.ego_weapons.gameasset.movesets;
 
-import net.m3tte.ego_weapons.EgoWeaponsEffects;
-import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.gameasset.*;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
-import net.m3tte.ego_weapons.gameasset.abilities.armorAbilities.ArdorBlossomArmorAbility;
-import net.m3tte.ego_weapons.gameasset.abilities.weaponAbilities.ArdorBlossomBatWeaponAbility;
-import net.m3tte.ego_weapons.item.ardor_blossom.ArdorBlossomSuit;
-import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.potion.NoAmmo;
 import net.m3tte.ego_weapons.specialParticles.texturedAfterImage.TexturedAfterImagePresets;
 import net.m3tte.ego_weapons.world.capabilities.*;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.AttackTypes;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage.DamageTypes;
 import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCapabilityPresets;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
@@ -27,20 +19,14 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.network.PacketDistributor;
 import yesman.epicfight.api.animation.property.AnimationProperty;
 import yesman.epicfight.api.animation.types.*;
 import yesman.epicfight.api.model.Model;
 import yesman.epicfight.api.utils.ExtendedDamageSource;
 import yesman.epicfight.api.utils.math.ValueCorrector;
-import yesman.epicfight.gameasset.ColliderPreset;
-import yesman.epicfight.particle.EpicFightParticles;
-import yesman.epicfight.world.effect.EpicFightMobEffects;
 
 import static net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations.spawnArmatureParticle;
-import static net.m3tte.ego_weapons.gameasset.abilities.weaponAbilities.ArdorBlossomBatWeaponAbility.castOverclockExplosion;
 import static net.m3tte.ego_weapons.procedures.SharedFunctions.basicSwingEvent;
 
 public class LampCrossbowMovesetAnims {
@@ -76,6 +62,7 @@ public class LampCrossbowMovesetAnims {
     public static void build(Model biped) {
         System.out.println("Building LAMP_CROSSBOW Animations");
 
+
         LAMP_CB_IDLE = new StaticAnimation(true, "biped/lamp_cb/idle", biped);
         LAMP_CB_WALK = new MovementAnimation(true, "biped/lamp_cb/walk", biped);
         LAMP_CB_RUN = new MovementAnimation(true, "biped/lamp_cb/run", biped)
@@ -85,9 +72,9 @@ public class LampCrossbowMovesetAnims {
 
         LAMP_CB_GUARD = new StaticAnimation( true, "biped/lamp_cb/guard", biped);
         LAMP_CB_GUARD_HIT = new GuardAnimation(0.05f,0.6f, "biped/lamp_cb/guard_hit", biped);
-        LAMP_CB_PARRY_1 = new GuardAnimation(0.05f,0.3f, "biped/lamp_cb/parry_1", biped).addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f);
-        LAMP_CB_PARRY_2 = new GuardAnimation(0.05f,0.3f, "biped/lamp_cb/parry_2", biped).addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f);
-        LAMP_CB_PARRY_3 = new GuardAnimation(0.05f,0.3f, "biped/lamp_cb/parry_3", biped).addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f);
+        LAMP_CB_PARRY_1 = new GuardAnimation(0.05f,0.6f, "biped/lamp_cb/parry_1", biped).addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f);
+        LAMP_CB_PARRY_2 = new DodgeAnimation(0.05f,1f, "biped/lamp_cb/parry_2", 1, 2, biped).addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f).addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, lampGuardEvent());
+        LAMP_CB_PARRY_3 = new GuardAnimation(0.05f,2f, "biped/lamp_cb/parry_3", biped).addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f);
 
         LAMP_CB_AUTO_M_DASH = new BasicEgoAttackAnimation(0.05F, 0.2F, 0.25f, 0.66F, 1.5f, EgoWeaponsCapabilityPresets.LAMP_CROSSBOW_MELEE, "Tool_R", "biped/lamp_cb/dash", biped)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.PIERCE)
@@ -119,6 +106,7 @@ public class LampCrossbowMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.SWING_EFFECT, basicSwingEvent)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "lamp_cb_auto_m_2")
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, false)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.LAMP_CROSSBOW_MELEE_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.SHORT)
@@ -185,7 +173,7 @@ public class LampCrossbowMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
                 .addProperty(EgoWeaponsAttackProperty.CONSUMES_AMMO, true)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "lamp_cb_innate")
-                .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
+                .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, false)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.LAMP_CROSSBOW_RANGED_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, SoundEvents.CROSSBOW_SHOOT)
@@ -221,6 +209,7 @@ public class LampCrossbowMovesetAnims {
                         .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.LAMP_CROSSBOW_RANGED_HIT),
                 new EgoAttackAnimation.EgoAttackPhase(1F, 1.1F, 2.51f, 2.6f, 4.5f, 4.5f, "Tool_R", EgoWeaponsCapabilityPresets.LAMP_SPECIAL_HITBOX)
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER, "lamp_cb_sp_2_2")
+                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.FINAL_COIN, true)
                         .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.LAMP_HIT)
                         .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.CLICK)
                         .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(1.5f))
@@ -275,6 +264,7 @@ public class LampCrossbowMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.PIERCE)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.BLACK)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
+                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "lamp_cb_special_2")
                 .addProperty(EgoWeaponsAttackProperty.CONSUMES_AMMO, true)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "lamp_cb_sp_2b")
@@ -359,6 +349,22 @@ public class LampCrossbowMovesetAnims {
 
             }
         }, StaticAnimation.Event.Side.BOTH);
+        return events;
+    }
+
+    private static StaticAnimation.Event[] lampGuardEvent() {
+        StaticAnimation.Event[] events = new StaticAnimation.Event[1];
+
+        events[0] = StaticAnimation.Event.create(0F, (entitypatch) -> {
+            LivingEntity entity = entitypatch.getOriginal();
+            World world = entity.level;
+
+            entity.level.addParticle(EgoWeaponsParticles.TEXTURED_AFTER_IMAGE.get(), entity.getX(), entity.getY(), entity.getZ(), Double.longBitsToDouble(entity.getId()), 0, 0);
+
+        }, StaticAnimation.Event.Side.BOTH);
+
+
+
         return events;
     }
 

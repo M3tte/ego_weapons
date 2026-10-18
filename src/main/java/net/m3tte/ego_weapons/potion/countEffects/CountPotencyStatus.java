@@ -32,6 +32,10 @@ public abstract class CountPotencyStatus extends Effect {
         this.icon = new ResourceLocation("ego_weapons", "textures/mob_effect/" + potionName + ".png");
     }
 
+    public void expirationEffect(LivingEntity entity) {
+
+    }
+
     @Override
     public List<ItemStack> getCurativeItems() {
         return new LinkedList<>();

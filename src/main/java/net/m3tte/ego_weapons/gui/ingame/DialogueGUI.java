@@ -36,7 +36,6 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.system.CallbackI;
 import yesman.epicfight.client.gui.EntityIndicator;
 
-import javax.xml.soap.Text;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -124,10 +123,12 @@ public class DialogueGUI extends EntityIndicator {
             if (alphaRed < 0.95f) {
                 GL11.glPushMatrix();
 
-                EgoWeaponsMod.LOGGER.warn("CHECKING FOR SLOT : "+ordinal+" ALPHARED = "+alphaRed );
-
                 float evalSize = Math.max(entry.getSize() - 1.3f, 0);
-                GL11.glColor4f(1,1,1,Math.max(0,1 - alphaRed));
+                //GL11.glColor4f(1,1,1,Math.max(0,1 - alphaRed));
+                GL11.glBlendFunc(
+                        GL11.GL_SRC_ALPHA,
+                        GL11.GL_ONE_MINUS_SRC_ALPHA
+                );
                 this.internDrawTexturedModalRect3DPlane(mvMatrix, vertexBuilder, -0.4f - 0.5f*sizeMult - evalSize, -0.4f * sizeMult, -0.03f,0.4f + 0.5f*sizeMult + evalSize, 0.4f * sizeMult, -0.03f,0, 0, 256, 100, (int)((1 - alphaRed) * 255));
 
                 GL11.glPopMatrix();

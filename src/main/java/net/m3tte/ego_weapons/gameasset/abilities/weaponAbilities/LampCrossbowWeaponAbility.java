@@ -9,9 +9,12 @@ import net.m3tte.ego_weapons.gameasset.abilities.AbilityUtils;
 import net.m3tte.ego_weapons.gameasset.abilities.ItemAbility;
 import net.m3tte.ego_weapons.gameasset.movesets.LCARifleMovesetAnims;
 import net.m3tte.ego_weapons.gameasset.movesets.LampCrossbowMovesetAnims;
+import net.m3tte.ego_weapons.procedures.SharedFunctions;
+import net.m3tte.ego_weapons.procedures.TeamLockedPredicate;
 import net.m3tte.ego_weapons.world.capabilities.AmmoSystem;
 import net.m3tte.ego_weapons.world.capabilities.AmmoType;
 import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.Hand;
@@ -24,6 +27,8 @@ import net.minecraft.world.server.ServerWorld;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 import yesman.epicfight.world.effect.EpicFightMobEffects;
+
+import java.util.List;
 
 public class LampCrossbowWeaponAbility extends ItemAbility {
 
@@ -38,7 +43,7 @@ public class LampCrossbowWeaponAbility extends ItemAbility {
 
     @Override
     public ResourceLocation getIconLocation(PlayerEntity player, PlayerVariables vars) {
-        return AbilityUtils.getAbilityIcon("salvation_lamp");
+        return AbilityUtils.getAbilityIcon("firefist");
 
     }
 
@@ -98,20 +103,45 @@ public class LampCrossbowWeaponAbility extends ItemAbility {
 
                 if (!world.isClientSide()) {
 
-                    world.playSound(null, new BlockPos(x, y, z),
+                    world.playSound(null, player,
                             EgoWeaponsSounds.PAPER_FLIP,
                             SoundCategory.PLAYERS, (float) 1, (float) 1.5);
                 }
             }
 
+            LivingEntity dazzleTarget = null;
+            double targetDistance = 99;
 
+            List<LivingEntity> nearbyEntities = SharedFunctions.getNearbyEntities(player, 20, 20, TeamLockedPredicate.ONLY_HOSTILES.additionalCondition((ent) -> {
+                if (ent instanceof LivingEntity) {
+                    return ((LivingEntity) ent).hasEffect(EgoWeaponsEffects.DAZZLE.get());
+                }
+                return false;
+            }));
+
+            for (LivingEntity nearbyEntity : nearbyEntities) {
+                double distance = nearbyEntity.distanceTo(player);
+
+                if (distance < targetDistance) {
+                    targetDistance = distance;
+                    dazzleTarget = nearbyEntity;
+                }
+            }
 
             // player.addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 20, 0));
-            if (EgoWeaponsEffects.LAMP.get().getPotency(player) >= 20) {
+            if (dazzleTarget instanceof LivingEntity) {
+                LivingEntityPatch<?> targetPatch = (LivingEntityPatch<?>) dazzleTarget.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+
+                SharedFunctions.staggerEntity(targetPatch, 1, false);
+
+                if (player.level instanceof ServerWorld) {
+                    ((ServerWorld) player.level).sendParticles(EgoWeaponsParticles.LAMP_EMBERS_INV.get(), dazzleTarget.getX(), (dazzleTarget.getY() + dazzleTarget.getEyeHeight()), dazzleTarget.getZ(), 20, 0.1, 0.1, 0.1, 1);
+                }
+
                 entitypatch.playAnimationSynchronized(LampCrossbowMovesetAnims.LAMP_CB_SP_1B, 0.00f);
                 boolean success = DialogueSystem.speakEvalDialogue(player, "dialogue.ego_weapons.skills.lamp_crossbow.special_dazzle", DialogueSystem.DialogueTypes.SKILL, TextFormatting.WHITE);
                 if (!world.isClientSide() && success) {
-                    world.playSound(null, new BlockPos(x, y, z),
+                    world.playSound(null, player,
                             EgoWeaponsSounds.LAMP_CROSSBOW_VOICE_SPECIAL_DAZZLE,
                             SoundCategory.PLAYERS, (float) 1, (float) 1);
                 }
@@ -119,7 +149,7 @@ public class LampCrossbowWeaponAbility extends ItemAbility {
             } else {
                 boolean success = DialogueSystem.speakEvalDialogue(player, "dialogue.ego_weapons.skills.lamp_crossbow.special", DialogueSystem.DialogueTypes.SKILL, TextFormatting.WHITE);
                 if (!world.isClientSide() && success) {
-                    world.playSound(null, new BlockPos(x, y, z),
+                    world.playSound(null, player,
                             EgoWeaponsSounds.LAMP_CROSSBOW_VOICE_SPECIAL,
                             SoundCategory.PLAYERS, (float) 1, (float) 1);
                 }

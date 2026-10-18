@@ -75,7 +75,7 @@ public class AtelierLogicMovesetAnims {
                 .addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1f);
 
 
-        ATELIER_REVOLVER_COUNTER_FULL = (new BasicEgoAttackAnimation(0.16F, 0.2F, 0.75F, 0.8F, 1.4F, EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX_EXT, "Tool_R", "biped/atelier_revolver/counter_full", biped))
+        ATELIER_REVOLVER_COUNTER_FULL = (new BasicEgoAttackAnimation(0.16F, 0.2F, 0.75F, 0.8F, 1.4F, EgoWeaponsCapabilityPresets.GUN_SHORT_RANGE_PLUS, "Tool_R", "biped/atelier_revolver/counter_full", biped))
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
@@ -91,7 +91,7 @@ public class AtelierLogicMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.1f)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, AtelierLogicRevolver.revolverFire(0.75f, "Tool_R"));
 
-        ATELIER_REVOLVER_JUMP_ATTACK_A = (new EgoAttackAnimation(0.16F, 0.2F, 0.25F, 0.3F, 1.1F, EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX_EXT, "Tool_L", "biped/atelier_revolver/jump_attack_1a", biped))
+        ATELIER_REVOLVER_JUMP_ATTACK_A = (new EgoAttackAnimation(0.16F, 0.2F, 0.25F, 0.3F, 1.1F, EgoWeaponsCapabilityPresets.GUN_SHORT_RANGE_PLUS, "Tool_L", "biped/atelier_revolver/jump_attack_1a", biped))
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
@@ -106,7 +106,7 @@ public class AtelierLogicMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.7f)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, AtelierLogicRevolver.revolverFire(0.25f, "Tool_L"));
 
-        ATELIER_REVOLVER_JUMP_ATTACK_B = (new BasicEgoAttackAnimation(0.16F, 0.2F, 0.25F, 0.3F, 1.1F, EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX_EXT, "Tool_R", "biped/atelier_revolver/jump_attack_1b", biped))
+        ATELIER_REVOLVER_JUMP_ATTACK_B = (new BasicEgoAttackAnimation(0.16F, 0.2F, 0.25F, 0.3F, 1.1F, EgoWeaponsCapabilityPresets.GUN_SHORT_RANGE_PLUS, "Tool_R", "biped/atelier_revolver/jump_attack_1b", biped))
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
@@ -122,7 +122,7 @@ public class AtelierLogicMovesetAnims {
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, AtelierLogicRevolver.revolverFire(0.25f, "Tool_R"));
 
 
-        ATELIER_REVOLVER_AUTO_1a = (new BasicEgoAttackAnimation(0.16F, 0.2F, 0.55F, 0.6F, 1F, EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX_EXT, "Tool_R", "biped/atelier_revolver/auto_1a", biped))
+        ATELIER_REVOLVER_AUTO_1a = (new BasicEgoAttackAnimation(0.16F, 0.2F, 0.55F, 0.6F, 1F, EgoWeaponsCapabilityPresets.GUN_SHORT_RANGE_PLUS, "Tool_R", "biped/atelier_revolver/auto_1a", biped))
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
@@ -136,7 +136,7 @@ public class AtelierLogicMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 0.5f)
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, AtelierLogicRevolver.firstRevolverFire(0.5f, "Tool_R"));
 
-        ATELIER_REVOLVER_AUTO_2a = (new BasicEgoAttackAnimation(0.16F, 0.2F, 0.5F, 0.55F, 1F, EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX_EXT, "Tool_L", "biped/atelier_revolver/auto_2a", biped))
+        ATELIER_REVOLVER_AUTO_2a = (new BasicEgoAttackAnimation(0.16F, 0.2F, 0.5F, 0.55F, 1F, EgoWeaponsCapabilityPresets.GUN_SHORT_RANGE_PLUS, "Tool_L", "biped/atelier_revolver/auto_2a", biped))
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
@@ -180,8 +180,8 @@ public class AtelierLogicMovesetAnims {
                 .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, AtelierLogicRevolver.revolverAutoReload());
 
         ATELIER_REVOLVER_SPECIAL = (new EgoAttackAnimation(0.1F, "biped/atelier_revolver/special", biped,
-                new AttackAnimation.Phase(0.0F, 0.1F, 0.5F, 0.55F, 2F, 2F, "Tool_L", EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX_EXT),
-                new EgoAttackAnimation.EgoAttackPhase(0.63F, 0.65F, 0.71F, 0.75F, 2F, 2F, "Tool_R", EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX_EXT).addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.FINAL_COIN, true))
+                new AttackAnimation.Phase(0.0F, 0.1F, 0.5F, 0.55F, 2F, 2F, "Tool_L", EgoWeaponsCapabilityPresets.GUN_SHORT_RANGE_PLUS),
+                new EgoAttackAnimation.EgoAttackPhase(0.63F, 0.65F, 0.71F, 0.75F, 2F, 2F, "Tool_R", EgoWeaponsCapabilityPresets.GUN_SHORT_RANGE_PLUS).addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.FINAL_COIN, true))
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)

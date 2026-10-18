@@ -19,6 +19,7 @@ import net.m3tte.ego_weapons.item.fullstop_sniper.FullstopSniperWeapon;
 import net.m3tte.ego_weapons.item.heishou_mao.HeishouMaoRobe;
 import net.m3tte.ego_weapons.item.heishou_mao.HeishouMaoSword;
 import net.m3tte.ego_weapons.item.lamp.LampCrossbow;
+import net.m3tte.ego_weapons.item.lamp.LampEGOSuit;
 import net.m3tte.ego_weapons.item.liu.LiuFireGauntlet;
 import net.m3tte.ego_weapons.item.magic_bullet.MagicBullet;
 import net.m3tte.ego_weapons.item.magic_bullet.MagicBulletArmor;
@@ -275,6 +276,8 @@ public class SharedFunctions {
         if (patch == null)
             return false;
 
+
+
         if (patch.getHitAnimation(ExtendedDamageSource.StunType.KNOCKDOWN) != null) {
             if (stunImmunity)
                 patch.getOriginal().addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 40, 0));
@@ -282,7 +285,8 @@ public class SharedFunctions {
                 patch.getOriginal().addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 2, 0, false, false, false));
 
             if (patch.getHitAnimation(ExtendedDamageSource.StunType.KNOCKDOWN).getId() == Animations.BIPED_KNOCKDOWN.getId()) {
-                patch.playAnimationSynchronized(EgoWeaponsAnimations.LONG_HITSTUN, time);
+                if (!patch.getOriginal().level.isClientSide())
+                    patch.playAnimationSynchronized(EgoWeaponsAnimations.LONG_HITSTUN, time);
 
                 return true;
             }
@@ -298,7 +302,8 @@ public class SharedFunctions {
                 else
                     patch.getOriginal().addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 2, 0, false, false, false));
 
-                patch.playAnimationSynchronized(stunAnim, time);
+                if (!patch.getOriginal().level.isClientSide())
+                    patch.playAnimationSynchronized(stunAnim, time);
 
             }
             return true;
@@ -310,7 +315,8 @@ public class SharedFunctions {
         if (patch == null)
             return;
 
-
+        if (patch.getOriginal().level.isClientSide())
+            return;
 
         if (patch.getHitAnimation(ExtendedDamageSource.StunType.KNOCKDOWN) != null) {
             if (stunImmunity)
@@ -319,8 +325,8 @@ public class SharedFunctions {
                 patch.getOriginal().addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 3, 0));
 
             if (patch.getHitAnimation(ExtendedDamageSource.StunType.KNOCKDOWN).getId() == Animations.BIPED_KNOCKDOWN.getId()) {
-
-                patch.playAnimationSynchronized(EgoWeaponsAnimations.STAGGER, 0);
+                if (!patch.getOriginal().level.isClientSide())
+                    patch.playAnimationSynchronized(EgoWeaponsAnimations.STAGGER, 0);
                 return;
             }
         }
@@ -334,8 +340,8 @@ public class SharedFunctions {
                     patch.getOriginal().addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 40, 0));
                 else
                     patch.getOriginal().addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 3, 0));
-
-                patch.playAnimationSynchronized(stunAnim, 0);
+                if (!patch.getOriginal().level.isClientSide())
+                    patch.playAnimationSynchronized(stunAnim, 0);
             }
 
         }
@@ -452,6 +458,18 @@ public class SharedFunctions {
             }
         }
 
+        // Calculate damage malus for Dazzled
+
+        if (self.hasEffect(EgoWeaponsEffects.DAZZLE.get())) {
+            LivingEntityPatch<?> sourcePatch = (LivingEntityPatch<?>) source.getEntity().getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+            multiplier = DazzleEffect.applyOnHit(sourcePatch, self, multiplier, source);
+        }
+
+        if (self.hasEffect(EgoWeaponsEffects.SALVATION.get())) {
+            LivingEntityPatch<?> sourcePatch = (LivingEntityPatch<?>) source.getEntity().getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+            multiplier = SalvationEffect.applyOnHit(sourcePatch, self, multiplier, source);
+        }
+
         // Calculate additional poise damage for movesets
         // Damage Increase for Target Spotted
         if (self.hasEffect(EgoWeaponsEffects.TARGET_SPOTTED.get()) && source.getEntity() != null) {
@@ -552,6 +570,9 @@ public class SharedFunctions {
                                 break;
                             case "heishou_mao_robe":
                                 multiplier = HeishouMaoRobe.onHitTargetEffect(self, (LivingEntity) source.getEntity(), amount, multiplier, source);
+                                break;
+                            case "lamp_suit":
+                                multiplier = LampEGOSuit.onHitTargetEffect(self, (LivingEntity) source.getEntity(), amount, multiplier, source);
                                 break;
                             case "spider_tracksuit": multiplier = SpidersTracksuit.modifyDamageAmount(self, (LivingEntity) source.getEntity(), multiplier, source, crit); break;
 

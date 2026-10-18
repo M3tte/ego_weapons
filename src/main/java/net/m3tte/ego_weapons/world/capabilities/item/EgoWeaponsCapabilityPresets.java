@@ -66,8 +66,8 @@ public class EgoWeaponsCapabilityPresets {
 
     public static final Collider FSTL_BLADE = new MultiOBBCollider(4, 0.4, 0.6, 1.1, 0.0, 0.0, -1.2);
 
-    public static final Collider SOLEMN_LAMENT_HITBOX = new MultiOBBCollider(4, 0.6, 2.8, 0.6, 0, -2.5, 0);
-    public static final Collider SOLEMN_LAMENT_HITBOX_EXT = new MultiOBBCollider(4, 0.6, 3.3, 0.6, 0, -3.3, 0);
+    public static final Collider GUN_SHORT_RANGE = new MultiOBBCollider(4, 0.6, 2.8, 0.6, 0, -2.5, 0);
+    public static final Collider GUN_SHORT_RANGE_PLUS = new MultiOBBCollider(4, 0.6, 3.3, 0.6, 0, -3.3, 0);
     public static final Collider LAMP_SPECIAL_HITBOX = new MultiOBBCollider(4, 0.6, 5.3, 0.6, 0, -5.3, 0);
     public static final Collider RAILGUN_HITBOX = new MultiOBBCollider(4, 0.3, 9.3, 0.3, 0, -9.3, 0);
     public static final Collider RAILGUN_HITBOX_SP = new MultiOBBCollider(4, 0.7, 14.3, 0.7, -0.3, -14.3, -0.3);
@@ -446,7 +446,7 @@ public class EgoWeaponsCapabilityPresets {
                 }
             }
             )
-            .collider(SOLEMN_LAMENT_HITBOX)
+            .collider(GUN_SHORT_RANGE)
             .specialAttack(EgoWeaponsStyles.DUAL_WIELDED, EgoWeaponsSkills.SOLEMN_LAMENT_BURST)
             .specialAttack(EgoWeaponsStyles.LEFT_HANDED, EgoWeaponsSkills.SOLEMN_LAMENT_BURST)
             .specialAttack(EgoWeaponsStyles.RIGHT_HANDED, EgoWeaponsSkills.SOLEMN_LAMENT_BURST)
@@ -567,7 +567,7 @@ public class EgoWeaponsCapabilityPresets {
 
                 return EgoWeaponsStyles.RIGHT_HANDED;
             })
-            .collider(SOLEMN_LAMENT_HITBOX)
+            .collider(GUN_SHORT_RANGE)
             .hitSound(EpicFightSounds.BLUNT_HIT)
             .weaponCombinationPredicator((entitypatch) -> EpicFightCapabilities.getItemStackCapability(entitypatch.getOriginal().getOffhandItem()).getWeaponCategory() == EgoWeaponsCategories.FULLSTOP_REP)
 
@@ -620,7 +620,7 @@ public class EgoWeaponsCapabilityPresets {
 
                 return Styles.ONE_HAND;
             })
-            .collider(SOLEMN_LAMENT_HITBOX_EXT)
+            .collider(GUN_SHORT_RANGE_PLUS)
             .hitSound(EpicFightSounds.BLUNT_HIT)
            
             .livingMotionModifier(Styles.ONE_HAND, LivingMotions.IDLE, FullstopOfficeSniperMovesetAnims.FULLSTOP_SNIPER_IDLE)
@@ -864,7 +864,7 @@ public class EgoWeaponsCapabilityPresets {
 
                 return Styles.ONE_HAND;
             })
-            .collider(SOLEMN_LAMENT_HITBOX_EXT)
+            .collider(GUN_SHORT_RANGE_PLUS)
             .hitSound(EpicFightSounds.BLUNT_HIT)
 
             .livingMotionModifier(Styles.ONE_HAND, LivingMotions.IDLE, LCARifleMovesetAnims.LCA_RIFLE_IDLE)
@@ -908,7 +908,7 @@ public class EgoWeaponsCapabilityPresets {
 
                 return Styles.ONE_HAND;
             })
-            .collider(SOLEMN_LAMENT_HITBOX_EXT)
+            .collider(GUN_SHORT_RANGE_PLUS)
             .hitSound(EpicFightSounds.BLUNT_HIT)
 
             .livingMotionModifier(Styles.ONE_HAND, LivingMotions.IDLE, LampCrossbowMovesetAnims.LAMP_CB_IDLE)
@@ -929,7 +929,7 @@ public class EgoWeaponsCapabilityPresets {
 
             .specialAttack(EgoWeaponsStyles.RIGHT_HANDED, EgoWeaponsSkills.LAMP_CROSSBOW_INNATE)
             .specialAttack(Styles.ONE_HAND, EgoWeaponsSkills.LAMP_CROSSBOW_INNATE)
-            .passiveSkill(EgoWeaponsSkills.FULLSTOP_SNIPER_PASSIVE)
+            .passiveSkill(EgoWeaponsSkills.LAMP_CROSSBOW_PASSIVE)
             .newStyleCombo(EgoWeaponsStyles.RIGHT_HANDED, LampCrossbowMovesetAnims.LAMP_CB_AUTO_R_1, LampCrossbowMovesetAnims.LAMP_CB_AUTO_R_2, LampCrossbowMovesetAnims.LAMP_CB_AUTO_R_3, LampCrossbowMovesetAnims.LAMP_CB_AUTO_M_DASH, LCARifleMovesetAnims.LCA_RIFLE_AUTO_G_1)
             .newStyleCombo(Styles.ONE_HAND, LampCrossbowMovesetAnims.LAMP_CB_AUTO_M_1, LampCrossbowMovesetAnims.LAMP_CB_AUTO_M_2, LampCrossbowMovesetAnims.LAMP_CB_AUTO_M_DASH, LCARifleMovesetAnims.LCA_RIFLE_AUTO_M_1)
             //.newStyleCombo(Styles.ONE_HAND, FullstopOfficeSniperMovesetAnims.FULLSTOP_SNIPER_IDLE)

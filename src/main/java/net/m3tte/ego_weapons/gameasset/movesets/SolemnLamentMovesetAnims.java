@@ -95,7 +95,7 @@ public class SolemnLamentMovesetAnims {
 
 
         SOLEMN_LAMENT_SPECIAL = (new EgoAttackAnimation(0.01F, "biped/solemn_lament/special", biped,
-                new EgoAttackAnimation.EgoAttackPhase(0.0F, 0.5F, 0.5F, 0.55F, 2F, 0.7F, "Tool_L", EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX)
+                new EgoAttackAnimation.EgoAttackPhase(0.0F, 0.5F, 0.5F, 0.55F, 2F, 0.7F, "Tool_L", EgoWeaponsCapabilityPresets.GUN_SHORT_RANGE)
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER, "solemn_lament_special_1")
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
@@ -103,7 +103,7 @@ public class SolemnLamentMovesetAnims {
                         .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.85f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_E_HIT)
                         .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_HIT),
-                new EgoAttackAnimation.EgoAttackPhase(0.71F, 0.8f, 0.85f, 0.9F, 1f, 1F, "Tool_R", EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX)
+                new EgoAttackAnimation.EgoAttackPhase(0.71F, 0.8f, 0.85f, 0.9F, 1f, 1F, "Tool_R", EgoWeaponsCapabilityPresets.GUN_SHORT_RANGE)
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER, "solemn_lament_special_2")
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.WHITE)
@@ -111,7 +111,7 @@ public class SolemnLamentMovesetAnims {
                         .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.85f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_E_HIT)
                         .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_HIT),
-                new EgoAttackAnimation.EgoAttackPhase(1.01F, 1.10f, 1.15F, 1.2F, 1.33f, 1.34F, "Tool_L", EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX)
+                new EgoAttackAnimation.EgoAttackPhase(1.01F, 1.10f, 1.15F, 1.2F, 1.33f, 1.34F, "Tool_L", EgoWeaponsCapabilityPresets.GUN_SHORT_RANGE)
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER, "solemn_lament_special_3")
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
@@ -119,7 +119,7 @@ public class SolemnLamentMovesetAnims {
                         .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.85f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_E_HIT)
                         .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.SOLEMN_LAMENT_DEPARTED_HIT),
-                new EgoAttackAnimation.EgoAttackPhase(1.35F, 1.36f, 1.37f, 1.43F, 1.9F, 1.9F, "Tool_R", EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX)
+                new EgoAttackAnimation.EgoAttackPhase(1.35F, 1.36f, 1.37f, 1.43F, 1.9F, 1.9F, "Tool_R", EgoWeaponsCapabilityPresets.GUN_SHORT_RANGE)
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER, "solemn_lament_special_4")
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.WHITE)
@@ -127,7 +127,7 @@ public class SolemnLamentMovesetAnims {
                         .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.85f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.SOLEMN_LAMENT_AUTO_E_HIT)
                         .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.SOLEMN_LAMENT_LIVING_HIT),
-                new EgoAttackAnimation.EgoAttackPhase(1.9f, 2.4f, 2.65f, 2.7f, 3.33f, 3.33f, "Tool_R", EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX_EXT)
+                new EgoAttackAnimation.EgoAttackPhase(1.9f, 2.4f, 2.65f, 2.7f, 3.33f, 3.33f, "Tool_R", EgoWeaponsCapabilityPresets.GUN_SHORT_RANGE_PLUS)
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER, "solemn_lament_special_fin")
                         .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.KNOCKDOWN)
                         .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1.4f))
@@ -485,7 +485,7 @@ public class SolemnLamentMovesetAnims {
         SOLEMN_LAMENT_GUARD_HIT = new GuardAnimation(0.05f,0.4f, "biped/solemn_lament/guard_hit", biped);
         SOLEMN_LAMENT_GUARD_PARRY1 = new GuardAnimation(0.05f,0.5f, "biped/solemn_lament/parry1", biped).addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1.2f);
         SOLEMN_LAMENT_GUARD_PARRY2 = new GuardAnimation(0.05f,0.5f, "biped/solemn_lament/parry2", biped).addProperty(AnimationProperty.StaticAnimationProperty.PLAY_SPEED, 1.2f);
-        SOLEMN_LAMENT_GUARD_COUNTERATTACK = new BasicEgoAttackAnimation(0.08F, 0.05F, 0.92F, 0.94F, 1.5F, EgoWeaponsCapabilityPresets.SOLEMN_LAMENT_HITBOX_EXT, "Tool_R", "biped/solemn_lament/counterattack", biped)
+        SOLEMN_LAMENT_GUARD_COUNTERATTACK = new BasicEgoAttackAnimation(0.08F, 0.05F, 0.92F, 0.94F, 1.5F, EgoWeaponsCapabilityPresets.GUN_SHORT_RANGE_PLUS, "Tool_R", "biped/solemn_lament/counterattack", biped)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.PIERCE)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.BLACK)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_MOVE_TYPE, AttackMoveType.RANGED)
