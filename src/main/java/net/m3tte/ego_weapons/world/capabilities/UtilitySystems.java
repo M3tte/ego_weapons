@@ -96,7 +96,7 @@ public class UtilitySystems {
     public static EGOAttackContext generateAttackContext(LivingEntityPatch<?> patch) {
 
         if (patch == null)
-            return null;
+            return new EGOAttackContext();
 
         return new EGOAttackContext(patch);
     }
@@ -136,6 +136,10 @@ public class UtilitySystems {
         DynamicAnimation animation = null;
         AttackMoveType moveType = AttackMoveType.MELEE;
         AttackLogicPredicate logicPredicate = AttackLogicPredicate.DEFAULT;
+
+        public EGOAttackContext() {
+        }
+
 
         public EGOAttackContext(LivingEntityPatch<?> entityPatch) {
 

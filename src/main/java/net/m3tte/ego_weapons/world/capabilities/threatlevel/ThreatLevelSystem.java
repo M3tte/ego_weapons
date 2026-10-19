@@ -47,7 +47,7 @@ public class ThreatLevelSystem {
             ThreatLevels levelA = getThreatLevel((Entity) a);
             return levelA != null ? levelA.ordinal() : -1;
         })
-                .thenComparingDouble((a) -> ((LivingEntity) a).getMaxHealth()))
+                .thenComparingDouble((a) -> ((LivingEntity) a).getMaxHealth() * -1))
                 .collect(Collectors.toList());
     }
 }

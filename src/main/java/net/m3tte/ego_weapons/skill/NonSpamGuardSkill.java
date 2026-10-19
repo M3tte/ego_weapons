@@ -1,11 +1,14 @@
 package net.m3tte.ego_weapons.skill;
 
+import net.m3tte.ego_weapons.world.capabilities.item.EgoWeaponsCategories;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import yesman.epicfight.skill.GuardSkill;
 import yesman.epicfight.skill.SkillContainer;
 import yesman.epicfight.skill.SkillDataManager;
@@ -79,7 +82,7 @@ public class NonSpamGuardSkill extends GuardSkill {
     @Override
     public void onRemoved(SkillContainer container) {
         container.getExecuter().getEventListener().removeListener(PlayerEventListener.EventType.SERVER_ITEM_USE_EVENT, EVENT_UUID);
-        container.getExecuter().getEventListener().removeListener(PlayerEventListener.EventType.SERVER_ITEM_STOP_EVENT, EVENT_UUID);
+        // container.getExecuter().getEventListener().removeListener(PlayerEventListener.EventType.SERVER_ITEM_STOP_EVENT, EVENT_UUID);
         super.onRemoved(container);
     }
 
@@ -118,4 +121,9 @@ public class NonSpamGuardSkill extends GuardSkill {
         });
     }
 
+    // Important. Otherwise this crashes the game apparantly.
+    @OnlyIn(Dist.CLIENT)
+    public boolean shouldDraw(SkillContainer container) {
+        return container.getExecuter().getHoldingItemCapability(Hand.MAIN_HAND).getWeaponCategory() instanceof EgoWeaponsCategories && (Float)container.getDataManager().getDataValue(PENALTY) > 0.0F;
+    }
 }

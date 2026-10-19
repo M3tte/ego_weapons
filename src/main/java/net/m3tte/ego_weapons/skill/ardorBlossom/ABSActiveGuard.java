@@ -12,6 +12,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
@@ -126,6 +127,8 @@ public class ABSActiveGuard extends NonSpamGuardSkill {
         return super.getGuardMotion(playerpatch, itemCapability, blockType);
     }
 
+
+
     public Skill getPriorSkill() {
         return Skills.GUARD;
     }
@@ -137,7 +140,7 @@ public class ABSActiveGuard extends NonSpamGuardSkill {
     @OnlyIn(Dist.CLIENT)
     public List<Object> getTooltipArgs() {
         List<Object> list = Lists.newArrayList();
-        list.add(String.format("%s, %s, %s, %s", EgoWeaponsCategories.FIREFIST_GAUNTLET).toLowerCase());
+        list.add(String.format("%s, %s, %s, %s", EgoWeaponsCategories.ARDOR_BLOSSOM_BLUNT).toLowerCase());
         return list;
     }
 

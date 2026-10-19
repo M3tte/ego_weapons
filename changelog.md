@@ -23,6 +23,8 @@
 + Dealing "Generic" Red black white or pale damage now uses the damage type icon instead of the background.
 + Optimizes no collision logic. Should be more compatible and such.
 + Fixed opacity for chat bubbles. They now fade rather smoothly effectively scaling with amount of bubbles.
++ **Fixed Battlemodegui crash relating to guarding actions** (Hopefully. The main culprit is gone but variations may still exist)
++ Fixed a bunch of errors in translation files.
 
 # ..v1.01.19
 + Added Udjat Khopesh + Translations

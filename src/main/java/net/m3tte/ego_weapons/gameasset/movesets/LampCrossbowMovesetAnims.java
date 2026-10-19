@@ -320,7 +320,6 @@ public class LampCrossbowMovesetAnims {
             LivingEntity entity = entitypatch.getOriginal();
 
             AmmoType ammo = AmmoSystem.getAndRemovelastammo(entity.getItemInHand(Hand.MAIN_HAND), entity, true);
-            System.out.println("Ammo is :: "+ammo);
             if (ammo != null) {
 
                 if (entity instanceof PlayerEntity) {
@@ -359,8 +358,9 @@ public class LampCrossbowMovesetAnims {
             LivingEntity entity = entitypatch.getOriginal();
             World world = entity.level;
 
-            entity.level.addParticle(EgoWeaponsParticles.TEXTURED_AFTER_IMAGE.get(), entity.getX(), entity.getY(), entity.getZ(), Double.longBitsToDouble(entity.getId()), 0, 0);
-
+            if (entity.level.isClientSide()) {
+                entity.level.addParticle(EgoWeaponsParticles.TEXTURED_AFTER_IMAGE.get(), entity.getX(), entity.getY(), entity.getZ(), Double.longBitsToDouble(entity.getId()), TexturedAfterImagePresets.BLACK.ordinal(), 0);
+            }
         }, StaticAnimation.Event.Side.BOTH);
 
 
@@ -373,6 +373,10 @@ public class LampCrossbowMovesetAnims {
         events[0] = StaticAnimation.Event.create(0, (entitypatch) -> {
             World world = entitypatch.getOriginal().level;
             LivingEntity entity = entitypatch.getOriginal();
+
+            if (entity.level.isClientSide()) {
+                entity.level.addParticle(EgoWeaponsParticles.TEXTURED_AFTER_IMAGE.get(), entity.getX(), entity.getY(), entity.getZ(), Double.longBitsToDouble(entity.getId()), TexturedAfterImagePresets.BLACK.ordinal(), 0);
+            }
 
             if (!world.isClientSide()) {
                 world.playSound(null, new BlockPos(entity.getX(), entity.getY(), entity.getZ()),
@@ -507,8 +511,6 @@ public class LampCrossbowMovesetAnims {
 
                 if (!entity.level.isClientSide()) {
                     entitypatch.playAnimationSynchronized(LAMP_CB_SP_2, 0);
-                } else {
-                    entity.level.addParticle(EgoWeaponsParticles.TEXTURED_AFTER_IMAGE.get(), entity.getX(), entity.getY(), entity.getZ(), Double.longBitsToDouble(entity.getId()), TexturedAfterImagePresets.BLACK.ordinal(), 0);
                 }
             }
         }, StaticAnimation.Event.Side.BOTH);
@@ -516,8 +518,16 @@ public class LampCrossbowMovesetAnims {
     }
 
     public static StaticAnimation.Event[] special2Event(float fire1, float charge, float fire2) {
-        StaticAnimation.Event[] events = new StaticAnimation.Event[3];
-        events[0] = StaticAnimation.Event.create(fire1, (entitypatch) -> {
+        StaticAnimation.Event[] events = new StaticAnimation.Event[4];
+        events[0] = StaticAnimation.Event.create(0, (entitypatch) -> {
+            World world = entitypatch.getOriginal().level;
+            LivingEntity entity = entitypatch.getOriginal();
+
+            if (entity.level.isClientSide()) {
+                entity.level.addParticle(EgoWeaponsParticles.TEXTURED_AFTER_IMAGE.get(), entity.getX(), entity.getY(), entity.getZ(), Double.longBitsToDouble(entity.getId()), TexturedAfterImagePresets.BLACK.ordinal(), 0);
+            }
+        }, StaticAnimation.Event.Side.CLIENT);
+        events[1] = StaticAnimation.Event.create(fire1, (entitypatch) -> {
             World world = entitypatch.getOriginal().level;
             LivingEntity entity = entitypatch.getOriginal();
 
@@ -551,7 +561,7 @@ public class LampCrossbowMovesetAnims {
 
             }
         }, StaticAnimation.Event.Side.BOTH);
-        events[1] = StaticAnimation.Event.create(charge, (entitypatch) -> {
+        events[2] = StaticAnimation.Event.create(charge, (entitypatch) -> {
             World world = entitypatch.getOriginal().level;
             LivingEntity entity = entitypatch.getOriginal();
 
@@ -567,7 +577,7 @@ public class LampCrossbowMovesetAnims {
 
             }
         }, StaticAnimation.Event.Side.BOTH);
-        events[2] = StaticAnimation.Event.create(fire2, (entitypatch) -> {
+        events[3] = StaticAnimation.Event.create(fire2, (entitypatch) -> {
             World world = entitypatch.getOriginal().level;
             LivingEntity entity = entitypatch.getOriginal();
 
@@ -703,18 +713,23 @@ public class LampCrossbowMovesetAnims {
 
                 if (!entity.level.isClientSide()) {
                     entitypatch.playAnimationSynchronized(LAMP_CB_SP_2B, 0);
-                }  else {
-                    entity.level.addParticle(EgoWeaponsParticles.TEXTURED_AFTER_IMAGE.get(), entity.getX(), entity.getY(), entity.getZ(), Double.longBitsToDouble(entity.getId()), TexturedAfterImagePresets.BLACK.ordinal(), 0);
                 }
-
             }
         }, StaticAnimation.Event.Side.BOTH);
         return events;
     }
 
     public static StaticAnimation.Event[] special2BEvent(float charge, float fire2) {
-        StaticAnimation.Event[] events = new StaticAnimation.Event[2];
-        events[0] = StaticAnimation.Event.create(charge, (entitypatch) -> {
+        StaticAnimation.Event[] events = new StaticAnimation.Event[3];
+        events[0] = StaticAnimation.Event.create(0, (entitypatch) -> {
+            World world = entitypatch.getOriginal().level;
+            LivingEntity entity = entitypatch.getOriginal();
+
+            if (entity.level.isClientSide()) {
+                entity.level.addParticle(EgoWeaponsParticles.TEXTURED_AFTER_IMAGE.get(), entity.getX(), entity.getY(), entity.getZ(), Double.longBitsToDouble(entity.getId()), TexturedAfterImagePresets.BLACK.ordinal(), 0);
+            }
+        }, StaticAnimation.Event.Side.CLIENT);
+        events[1] = StaticAnimation.Event.create(charge, (entitypatch) -> {
             World world = entitypatch.getOriginal().level;
             LivingEntity entity = entitypatch.getOriginal();
 
@@ -735,7 +750,7 @@ public class LampCrossbowMovesetAnims {
 
             }
         }, StaticAnimation.Event.Side.BOTH);
-        events[1] = StaticAnimation.Event.create(fire2, (entitypatch) -> {
+        events[2] = StaticAnimation.Event.create(fire2, (entitypatch) -> {
             World world = entitypatch.getOriginal().level;
             LivingEntity entity = entitypatch.getOriginal();
 

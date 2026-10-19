@@ -90,6 +90,7 @@ public class RatKnifeGuard extends EnergizingGuardSkill {
     @Override
     public void onRemoved(SkillContainer container) {
         container.getExecuter().getEventListener().removeListener(EventType.SERVER_ITEM_USE_EVENT, EVENT_UUID);
+        container.getExecuter().getEventListener().removeListener(EventType.SERVER_ITEM_STOP_EVENT, EVENT_UUID);
         super.onRemoved(container);
     }
 
