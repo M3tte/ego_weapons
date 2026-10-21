@@ -25,6 +25,16 @@
 + Fixed opacity for chat bubbles. They now fade rather smoothly effectively scaling with amount of bubbles.
 + **Fixed Battlemodegui crash relating to guarding actions** (Hopefully. The main culprit is gone but variations may still exist)
 + Fixed a bunch of errors in translation files.
++ Proximity entity operations now automatically factor in distance. Taking the closest entities first.
++ Improved skill card text scaling and presentation.
++ Properly added final coin identifiers to (hopefully) all skills again.
+
+### Balance Changes
++ Nerfed Mao Butcherblade :
+  + Attack weight reduced to 1.
+  + Reduced Speed Damage Scaling (3% Per Speed. [Max 30%] -> 2% Per Speed [Max 20%])
+  + Dash stun now puts the blade on cooldown (Disables block and cannot be repeatedly triggered)
+
 
 # ..v1.01.19
 + Added Udjat Khopesh + Translations

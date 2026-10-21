@@ -269,6 +269,7 @@ public class ArdorBlossomMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.RED)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.SPECIAL)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.SWING_EFFECT, basicSwingEvent)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "ardor_blossom_special_2")
                 .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
@@ -393,6 +394,7 @@ public class ArdorBlossomMovesetAnims {
                         .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.ARDOR_BLOSSOM_SPECIAL_D_HIT_1),
                 new EgoAttackAnimation.EgoAttackPhase(4.5F, 4.8F, 250 / 60f, 5.5f, 7.33f, 7.3333335f, "Tool_R", ColliderPreset.FIST)
                         .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.IDENTIFIER, "ardor_blossom_sp_u_3")
+                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.FINAL_COIN, true)
                         .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.FIREFIST_HIT)
                         .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(2f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.SHORT)

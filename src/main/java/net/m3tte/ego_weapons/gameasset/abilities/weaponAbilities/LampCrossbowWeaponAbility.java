@@ -43,7 +43,7 @@ public class LampCrossbowWeaponAbility extends ItemAbility {
 
     @Override
     public ResourceLocation getIconLocation(PlayerEntity player, PlayerVariables vars) {
-        return AbilityUtils.getAbilityIcon("firefist");
+        return AbilityUtils.getAbilityIcon("salvation_lamp");
 
     }
 
@@ -55,13 +55,13 @@ public class LampCrossbowWeaponAbility extends ItemAbility {
 
     @Override
     public AbilityTier getAbilityTier(PlayerEntity player, PlayerVariables playerVars) {
-        return AbilityTier.ALEPH;
+        return AbilityTier.WAW;
     }
 
     @Override
     public String getName(PlayerEntity player, PlayerVariables playerVars) {
-        return  "    Salvation for those    \n" +
-                "   Enchanted by the Lamp      ";
+        return  " Salvation for those                    \n" +
+                "Enchanted by the Lamp                      ";
     }
 
     @Override

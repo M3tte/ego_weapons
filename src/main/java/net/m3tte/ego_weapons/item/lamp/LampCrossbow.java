@@ -208,6 +208,17 @@ public class LampCrossbow extends GunItem {
 		int FburnSinking = burnSinking / 5;
 		int lampOnSelf = EgoWeaponsEffects.LAMP.get().getPotency(source);
 		float burstMult = 1.0f;
+
+		// Deal +20% Damage to targets with Dazzle
+		if (target.hasEffect(EgoWeaponsEffects.DAZZLE.get())) {
+			mult += SharedFunctions.incrementBonusDamage(damageSource, 0.2f);
+		}
+
+		// For every 5 Burn + Sinking. Deal +5% Damage [Max 25%]
+		if (FburnSinking > 0) {
+			mult += SharedFunctions.incrementBonusDamage(damageSource, Math.min(0.25f, 0.05f * FburnSinking));
+		}
+
 		switch (context.getAnimationIdentifier()) {
 			case "lamp_cb_auto_m_dash":
 			case "lamp_cb_auto_m_1":

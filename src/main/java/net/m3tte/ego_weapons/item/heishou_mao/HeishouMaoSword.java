@@ -11,6 +11,7 @@ import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.UtilitySystems;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -248,8 +249,18 @@ public class HeishouMaoSword extends EgoWeaponsWeapon {
 				case "heishou_mao_dash":
 					EgoWeaponsEffects.RUPTURE.get().increment(target, 1, 1);
 					onHitHasteConsumeLight(sourceentity, entityData, 5);
-					if (speedDif >= 5)
-						SharedFunctions.hitstunEntity(targetPatch, 3, false, 0);
+					if (speedDif >= 5) {
+						if (sourceentity instanceof PlayerEntity) {
+							if (!((PlayerEntity)sourceentity).getCooldowns().isOnCooldown(EgoWeaponsItems.HEISHOU_MAO_SWORD.get())) {
+								SharedFunctions.hitstunEntity(targetPatch, 3, false, 0);
+
+								((PlayerEntity) sourceentity).getCooldowns().addCooldown(EgoWeaponsItems.HEISHOU_MAO_SWORD.get(), 30);
+							}
+						} else {
+							SharedFunctions.hitstunEntity(targetPatch, 3, false, 0);
+						}
+					}
+
 
 					break;
 				case "heishou_mao_special_1":
@@ -313,8 +324,8 @@ public class HeishouMaoSword extends EgoWeaponsWeapon {
 		int hastePot = EgoWeaponsEffects.SPEED_UP.get().getPotency(source);
 
 		if (hastePot > 0) {
-			SharedFunctions.incrementBonusDamage(damageSource, Math.min(0.03f * hastePot, 0.3f));
-			mult += Math.min(0.03f * hastePot, 0.3f);
+			SharedFunctions.incrementBonusDamage(damageSource, Math.min(0.02f * hastePot, 0.2f));
+			mult += Math.min(0.02f * hastePot, 0.2f);
 		}
 
 		switch (context.getAnimationIdentifier()) {

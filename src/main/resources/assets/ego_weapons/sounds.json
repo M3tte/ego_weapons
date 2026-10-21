@@ -96,6 +96,24 @@
       }
     ]
   },
+  "lamp.armor.special.alone": {
+    "category": "player",
+    "subtitle": "lamp_crossbow",
+    "sounds": [
+      {
+        "name": "ego_weapons:lamp/voice_armor_sp_alone"
+      }
+    ]
+  },
+  "lamp.armor.special.ally": {
+    "category": "player",
+    "subtitle": "lamp_crossbow",
+    "sounds": [
+      {
+        "name": "ego_weapons:lamp/voice_armor_sp_ally"
+      }
+    ]
+  },
   "lamp.crossbow.melee.swing": {
     "category": "player",
     "subtitle": "lamp_crossbow",

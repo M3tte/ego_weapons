@@ -1155,7 +1155,7 @@
   "desc.ego_weapons.lamp_crossbow.passive.5": "§8§oThis effect prioritizes targets of higher risk level.",
   "desc.ego_weapons.lamp_crossbow.passive.6": "§8§oThe duration of %2$s §8§oscales with the targets §f\uE046 §bSanity§7.",
 
-  "desc.ego_weapons.lamp_crossbow.passive2.meta": "%1 - Lamp",
+  "desc.ego_weapons.lamp_crossbow.passive2.meta": "%1 - Dazzle",
   "desc.ego_weapons.lamp_crossbow.passive2.desc": "§oA lantern made of feathers formed into a wick...",
   "desc.ego_weapons.lamp_crossbow.passive2.title": "§b[Passive] §fDon't blindly follow the light...",
   "desc.ego_weapons.lamp_crossbow.passive2.1": "§7Deal §f+20%% §7Damage against targets with %1$s§7.",
@@ -1223,7 +1223,7 @@
   "desc.ego_weapons.lamp_suit.passive.6": "§8§oThis effect prioritizes targets of higher risk level.",
   "desc.ego_weapons.lamp_suit.passive.7": "§8§oThe duration of %2$s §8§oscales with the targets §f\uE046 §bSanity§7.",
 
-  "desc.ego_weapons.lamp_suit.passive2.meta": "%1 - Lamp, %2 - Salvation",
+  "desc.ego_weapons.lamp_suit.passive2.meta": "%1 - Lamp, %2 - Salvation, %3 - Dazzle",
   "desc.ego_weapons.lamp_suit.passive2.title": "§b[Passive] §fDazzling Lamp",
   "desc.ego_weapons.lamp_suit.passive2.1": "§7Take §f-1%% §7Damage for every §f2 %1$s§7 on Self.",
   "desc.ego_weapons.lamp_suit.passive2.2": "§7If §f%2$s §7is active:",
@@ -1232,13 +1232,14 @@
 
   "desc.ego_weapons.lamp_suit.ability.meta": "%1 - Lamp, %2 - Dazzled, %3 - Guardian of the Forest",
   "desc.ego_weapons.lamp_suit.ability.desc": "§o\"The eyes and lamp of Big Bird light up the dark chamber like stars.\"",
-  "desc.ego_weapons.lamp_suit.ability.title": "§b[Ability] §6Eyes Watching the Dark Forest §f- \uE004\uE004\uE004\uE004\uE004\uE004",
-  "desc.ego_weapons.lamp_suit.ability.1": "§7Gain §f6 %1$s§7.",
+  "desc.ego_weapons.lamp_suit.ability.title": "§b[Ability] §6Eyes Watching the Dark Forest §f- \uE004\uE004\uE004\uE004\uE004",
+  "desc.ego_weapons.lamp_suit.ability.1": "§7Gain up to §f6 %1$s§7. Consume §f2%% §7Health and Sanity for every §f%1$s §7gained. §8[Cannot Kill]",
   "desc.ego_weapons.lamp_suit.ability.2": "§7Inflict §f2 \uE043 §cFragile §7to one enemy with %2$s§7.",
   "desc.ego_weapons.lamp_suit.ability.3": "§7Apply §f1 %3$s§7 to §f2 §7nearby allies.",
   "desc.ego_weapons.lamp_suit.ability.4": "§7- The above effect prioritizes allies with §6[Bird E.G.O]",
   "desc.ego_weapons.lamp_suit.ability.5": "§7- Said allies gain §f2 %3$s§7 instead.",
   "desc.ego_weapons.lamp_suit.ability.6": "§7- Said allies gain §f1 \uE030 §cPower Up§7. §8[Max 3]",
+  "desc.ego_weapons.lamp_suit.ability.7": "§7When alone. Gain §f1 %3$s§7 and §f1 \uE030 §cPower Up §7instead.",
 
   "item.ego_weapons.justitia": "§f\uEC05 Justitia",
   "item.ego_weapons.justitia_cloak": "§f\uEC05 Justitia Cloak",
@@ -1333,7 +1334,7 @@
   "desc.ego_weapons.stigma_workshop_armor.passive.2": "§7When emotion level increases: (to x)",
   "desc.ego_weapons.stigma_workshop_armor.passive.3": "  §7Gain §fx \uE022 §cOffense Level Up§7.",
 
-  "desc.ego_weapons.stigma_workshop_sword.passive2.desc": "§oFor some... the agonizing sensation of burning flesh only furthers their resolve.",
+  "desc.ego_weapons.stigma_workshop_armor.passive2.desc": "§oFor some... the agonizing sensation of burning flesh only furthers their resolve.",
   "desc.ego_weapons.stigma_workshop_armor.passive2.title": "§b[Passive] §fFire Resilient Fabric // Burning Passion",
   "desc.ego_weapons.stigma_workshop_armor.passive2.1": "§7Take §f-2 §cDamage §7from §f\uE002 §cBurn.",
   "desc.ego_weapons.stigma_workshop_armor.passive2.2": "§7Deal §f+2% §cDamage §7for every §f\uE002 §cBurn §7on self. §8[Max: 30%]",
@@ -1352,7 +1353,7 @@
   "desc.ego_weapons.stigma_workshop_sword.ability.desc": "§oEven if one were to survive the heated strike of this blade... This brand would remain on them for life.",
   "desc.ego_weapons.stigma_workshop_sword.ability.title": "§b[Ability] §fStigmatize \uED01 \uE004\uE004\uE004\uE004\uE004",
   "desc.ego_weapons.stigma_workshop_sword.ability.1": "    - = | \uED41  \uED41 | = -",
-  "desc.ego_weapons.stigma_workshop_sword.ability.2": "§7If §f\uE037 §cBranding Blade §7is active, reduce §f\uE004 §6Light§7 cost by 2.",
+  "desc.ego_weapons.stigma_workshop_sword.ability.2": "§7If §f\uE037 §cBranding Blade §7is active, reduce §f\uE004 §6Light§7 cost by §f2§7.",
   "desc.ego_weapons.stigma_workshop_sword.ability.3": "§7If §f\uE037 §cBranding Blade §7is active, reduce windup time.",
   "desc.ego_weapons.stigma_workshop_sword.ability.4": "[Use] §7If §cno §f\uE037 §cBranding Blade §7is active, gain §f15 \uE037 §cBranding Blade§7.",
   "desc.ego_weapons.stigma_workshop_sword.ability.5": "[I]   §7Inflict §f2 \uE002 §cBurn §7Potency.",
@@ -2206,7 +2207,6 @@
   "desc.ego_weapons.statuses.black_fragility.1": "§8[Max: 10]",
   "desc.ego_weapons.statuses.black_fragility.2": "§7Modify §f\uED03 §5Black §7Resistance by §f+0.1x §7for every Stack",
 
-
   "effect.ego_weapons.salvation.meta":"%1 - Salvation, %2 - Dazzled, %3 - Lamp",
   "effect.ego_weapons.salvation":"Salvation",
   "desc.ego_weapons.statuses.salvation.title": "%1$s",
@@ -2559,6 +2559,8 @@
   "dialogue.ego_weapons.skills.lamp_crossbow.special_dazzle": "Ngh... ||I see with such clarity... ||the life I must save!",
   "dialogue.ego_weapons.skills.lamp_crossbow.trigger_dazzle": "Come here...||I’ll watch over you.",
 
+  "dialogue.ego_weapons.skills.lamp_suit.special.alone": "Boosting E.G.O Attunement...",
+  "dialogue.ego_weapons.skills.lamp_suit.special.ally": "Everyone...||don't let me lose sight of you...",
 
   "dialogue.ego_weapons.skills.arayashiki.trigger_unsheath": "Come here...||I’ll watch over you.",
 

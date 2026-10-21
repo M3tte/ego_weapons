@@ -4,6 +4,7 @@ import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
 import net.m3tte.ego_weapons.gameasset.*;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
+import net.m3tte.ego_weapons.gameasset.abilities.armorAbilities.LampArmorAbility;
 import net.m3tte.ego_weapons.potion.NoAmmo;
 import net.m3tte.ego_weapons.specialParticles.texturedAfterImage.TexturedAfterImagePresets;
 import net.m3tte.ego_weapons.world.capabilities.*;
@@ -20,6 +21,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import yesman.epicfight.api.animation.property.AnimationProperty;
 import yesman.epicfight.api.animation.types.*;
 import yesman.epicfight.api.model.Model;
@@ -59,9 +61,14 @@ public class LampCrossbowMovesetAnims {
     public static StaticAnimation LAMP_CB_SP_2;
     public static StaticAnimation LAMP_CB_SP_1B;
     public static StaticAnimation LAMP_CB_SP_2B;
+
+    public static StaticAnimation LAMP_ARMOR_SP;
+
     public static void build(Model biped) {
         System.out.println("Building LAMP_CROSSBOW Animations");
 
+        LAMP_ARMOR_SP = new ActionAnimation( 0, "biped/lamp_cb/armor_sp", biped)
+                .addProperty(AnimationProperty.StaticAnimationProperty.EVENTS, armorSpecialEvent(0.66f));
 
         LAMP_CB_IDLE = new StaticAnimation(true, "biped/lamp_cb/idle", biped);
         LAMP_CB_WALK = new MovementAnimation(true, "biped/lamp_cb/walk", biped);
@@ -796,6 +803,44 @@ public class LampCrossbowMovesetAnims {
 
             }
         }, StaticAnimation.Event.Side.BOTH);
+        return events;
+    }
+
+    public static StaticAnimation.Event[] armorSpecialEvent(float abilityTime) {
+        StaticAnimation.Event[] events = new StaticAnimation.Event[2];
+        events[0] = StaticAnimation.Event.create(0, (entitypatch) -> {
+            World world = entitypatch.getOriginal().level;
+            LivingEntity entity = entitypatch.getOriginal();
+
+            if (!world.isClientSide()) {
+                world.playSound(null, new BlockPos(entity.getX(), entity.getY(), entity.getZ()),
+                        SoundEvents.ARMOR_EQUIP_LEATHER,
+                        SoundCategory.PLAYERS, 1f, (float) 1);
+            }
+
+            if (entity.level instanceof ServerWorld) {
+                ((ServerWorld) entity.level).sendParticles(EgoWeaponsParticles.LAMP_EMBERS_INV.get(), entity.getX(), (entity.getY() + entity.getBbHeight() / 2), entity.getZ(), 50, 0.1, 0.4, 0.1, 2);
+            }
+
+        }, StaticAnimation.Event.Side.BOTH);
+
+        events[1] = StaticAnimation.Event.create(abilityTime, (entitypatch) -> {
+            World world = entitypatch.getOriginal().level;
+            LivingEntity entity = entitypatch.getOriginal();
+
+            LampArmorAbility.processArmorAbility(entitypatch, entity);
+            if (!world.isClientSide()) {
+                world.playSound(null, new BlockPos(entity.getX(), entity.getY(), entity.getZ()),
+                        SoundEvents.BELL_RESONATE,
+                        SoundCategory.PLAYERS, 1f, (float) 1);
+            }
+
+            if (entity.level instanceof ServerWorld) {
+                ((ServerWorld) entity.level).sendParticles(EgoWeaponsParticles.LAMP_EMBERS.get(), entity.getX(), (entity.getY() + entity.getBbHeight() / 2), entity.getZ(), 40, 0.1, 0.4, 0.1, 0.5);
+            }
+
+        }, StaticAnimation.Event.Side.BOTH);
+
         return events;
     }
 }

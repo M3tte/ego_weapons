@@ -65,6 +65,7 @@ public class ArmorAbilityProcedure {
 		armorAbilities.put(EgoWeaponsItems.UDJAT_SUIT.get(), new UdjatArmorAbility());
 		armorAbilities.put(EgoWeaponsItems.LCA_UDJAT_SUIT.get(), new LCAUdjatArmorAbility());
 		armorAbilities.put(EgoWeaponsItems.SPIDER_TRACKSUIT.get(), new TracksuitArmorAbility());
+		armorAbilities.put(EgoWeaponsItems.LAMP_SUIT.get(), new LampArmorAbility());
 
 	}
 

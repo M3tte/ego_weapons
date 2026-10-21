@@ -4,15 +4,15 @@ import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.minecraft.util.ResourceLocation;
 
 public enum AbilityTier {
-    NUUN(new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/abilities/bg/omega.png")),
-    ZAYIN(new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/abilities/bg/zeta.png")),
-    TETH(new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/abilities/bg/delta.png")),
-    HE(new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/abilities/bg/gamma.png")),
-    WAW(new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/abilities/bg/beta.png")),
-    ALEPH(new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/abilities/bg/alpha.png"));
+    NUUN(new ResourceLocation(EgoWeaponsMod.MODID, "textures/gui/abilities/bg/omega.png")),
+    ZAYIN(new ResourceLocation(EgoWeaponsMod.MODID, "textures/gui/abilities/bg/zeta.png")),
+    TETH(new ResourceLocation(EgoWeaponsMod.MODID, "textures/gui/abilities/bg/delta.png")),
+    HE(new ResourceLocation(EgoWeaponsMod.MODID, "textures/gui/abilities/bg/gamma.png")),
+    WAW(new ResourceLocation(EgoWeaponsMod.MODID, "textures/gui/abilities/bg/beta.png")),
+    ALEPH(new ResourceLocation(EgoWeaponsMod.MODID, "textures/gui/abilities/bg/alpha.png"));
 
 
-    public static ResourceLocation baseBG = new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/abilities/bg/base.png");
+    public static ResourceLocation baseBG = new ResourceLocation(EgoWeaponsMod.MODID, "textures/gui/abilities/bg/base.png");
     private ResourceLocation background;
 
 

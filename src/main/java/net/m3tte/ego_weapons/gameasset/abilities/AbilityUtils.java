@@ -26,11 +26,11 @@ public class AbilityUtils {
     }
 
     public static ResourceLocation getAbilityIcon(String ability) {
-        return new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/abilities/"+ability+".png");
+        return new ResourceLocation(EgoWeaponsMod.MODID, "textures/gui/abilities/"+ability+".png");
     }
 
     public static ResourceLocation getOverlay(String overlay) {
-        return new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/abilities/bg/overlays/"+overlay+".png");
+        return new ResourceLocation(EgoWeaponsMod.MODID, "textures/gui/abilities/bg/overlays/"+overlay+".png");
     }
 
 

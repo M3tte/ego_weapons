@@ -22,6 +22,8 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -843,13 +845,26 @@ public class GenericOverlay extends ModIngameGui {
 
 				String abilityName = ability.getName(entity, playerVariables);
 				String[] lines = null;
-				float subTractor = Math.min(0.6f,abilityName.length() * 0.04f);
-				GL11.glScaled(1.4f - subTractor,1.4f - subTractor,1.4f - subTractor);
 				lines = abilityName.split("\\n");
+				float subTractor = 3;
+
+				for (String l : lines) {
+					float lineSize = Math.max(0.4f, Math.min(1.4f - l.length() * 0.02f, 1.4f / (lines.length)));
+
+					if (lineSize < subTractor)
+						subTractor = lineSize;
+				}
+
+
+
+				GL11.glScaled(subTractor,subTractor,subTractor);
+
 				int position = (lines.length) * -2;
 
 				for (String line : lines) {
-					Minecraft.getInstance().font.draw(event.getMatrixStack(), line, 0, position, 0);
+					Minecraft.getInstance().font.draw(event.getMatrixStack(), new StringTextComponent(line).withStyle(TextFormatting.DARK_GRAY), 0.4f, position+0.4f, 0);
+					Minecraft.getInstance().font.draw(event.getMatrixStack(), new StringTextComponent(line).withStyle(TextFormatting.DARK_GRAY), -0.4f, position-0.4f, 0);
+					Minecraft.getInstance().font.draw(event.getMatrixStack(), new StringTextComponent(line).withStyle(TextFormatting.BLACK), 0, position, 0);
 					position += 9;
 				}
 

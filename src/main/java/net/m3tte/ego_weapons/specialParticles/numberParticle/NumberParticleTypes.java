@@ -10,7 +10,8 @@ public enum NumberParticleTypes {
     DEATHRITE_HASTE(12291840, "\uE042"),
     BUTTERFLY(16777215, "\uE045"),
     EMBERS(16742400, "\uE050"),
-    SHEUT_FRACTURE(12291840, "\uE053");
+    SHEUT_FRACTURE(12291840, "\uE053"),
+    LAMP(0xffcd35, "\uE063");
 
 
     NumberParticleTypes(int color, String icon) {

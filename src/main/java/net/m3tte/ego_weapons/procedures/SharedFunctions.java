@@ -84,6 +84,7 @@ import yesman.epicfight.world.effect.EpicFightMobEffects;
 
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import static net.m3tte.ego_weapons.EgoWeaponsModVars.PLAYER_VARIABLES_CAPABILITY;
 import static net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.canProcEffects;
@@ -197,13 +198,20 @@ public class SharedFunctions {
 
     public static List<LivingEntity> getLivingEntitiesRadius(World level, LivingEntity source, Vector3d pos, float radius, EntityPredicate predicate) {
         List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, new AxisAlignedBB(pos.x() - (radius), pos.y() - (radius), pos.z() - (radius), pos.x() + (radius), pos.y() + (radius), pos.z() + (radius)));
-        List<LivingEntity> list1 = Lists.newArrayList();
+        List<Tuple<LivingEntity, Float>> list1 = Lists.newArrayList();
+
+
+        // Add all the entities that pass the predicate and are close enough
         for(LivingEntity t : list) {
             if (predicate.test(source, t) && t.position().distanceTo(pos) <= radius) {
-                list1.add(t);
+
+                list1.add(new Tuple<>(t, radius));
             }
         }
-        return list1;
+        // Sort the entries by their distance
+        return list1.stream()
+                .sorted(Comparator.comparingDouble(Tuple::getB))
+                .map(Tuple::getA).collect(Collectors.toList());
     }
 
 
@@ -589,7 +597,12 @@ public class SharedFunctions {
                             case "heishou_mao_robe":
                                 multiplier = HeishouMaoRobe.onHitSelfEffect(self, (LivingEntity) source.getEntity(), amount, multiplier, source);
                                 break;
-                            case "spider_tracksuit": multiplier = SpidersTracksuit.modifyDamageAmountTarget(self, (LivingEntity) source.getEntity(), multiplier, source, crit); break;
+                            case "lamp_suit":
+                                multiplier = LampEGOSuit.onHitSelfEffect(self, (LivingEntity) source.getEntity(), amount, multiplier, source);
+                                break;
+                            case "spider_tracksuit":
+                                multiplier = SpidersTracksuit.modifyDamageAmountTarget(self, (LivingEntity) source.getEntity(), multiplier, source, crit);
+                                break;
 
                         }
                     }

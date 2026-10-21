@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
+import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
@@ -100,7 +101,7 @@ public class LampEGOSuit extends GenericEgoWeaponsArmor {
 	}
 
 
-	public static float onHitTargetEffect(LivingEntity sourceEntity, LivingEntity targetEntity, float amount, float multiplier, DamageSource damageSource) {
+	public static float onHitTargetEffect(LivingEntity targetEntity, LivingEntity sourceEntity, float amount, float multiplier, DamageSource damageSource) {
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceEntity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
 
@@ -115,11 +116,13 @@ public class LampEGOSuit extends GenericEgoWeaponsArmor {
 			}
 		}*/
 
+		System.out.println("SUBJECT :: "+sourceEntity.getName()+" // HIT LAMP : "+context.isValidEgoAnimation()+" // "+context.isFinalCoin());
+
 		if (context.isValidEgoAnimation()) {
 			if (context.isFinalCoin()) {
-				if (targetEntity instanceof PlayerEntity) {
-					if (!((PlayerEntity) targetEntity).getCooldowns().isOnCooldown(EgoWeaponsItems.LAMP_SUIT.get())) {
-						((PlayerEntity) targetEntity).getCooldowns().addCooldown(EgoWeaponsItems.LAMP_SUIT.get(), 10);
+				if (sourceEntity instanceof PlayerEntity) {
+					if (!((PlayerEntity) sourceEntity).getCooldowns().isOnCooldown(EgoWeaponsItems.LAMP_SUIT.get())) {
+						((PlayerEntity) sourceEntity).getCooldowns().addCooldown(EgoWeaponsItems.LAMP_SUIT.get(), 10);
 						EgoWeaponsEffects.LAMP.get().increment(sourceEntity, 0, 1);
 					}
 				}
@@ -128,9 +131,26 @@ public class LampEGOSuit extends GenericEgoWeaponsArmor {
 		return multiplier;
 	}
 
-	public static float onHitSelfEffect(LivingEntity sourceEntity, LivingEntity targetEntity, float amount, float multiplier, DamageSource damageSource) {
+	public static float onHitSelfEffect(LivingEntity targetEntity, LivingEntity sourceEntity, float amount, float multiplier, DamageSource damageSource) {
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceEntity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
+
+		int lampPotencySelf = EgoWeaponsEffects.LAMP.get().getPotency(targetEntity);
+
+		// Take -1% Damage for every Lamp on self.
+
+		if (targetEntity.hasEffect(EgoWeaponsEffects.SALVATION.get())) {
+			if (sourceEntity.hasEffect(EgoWeaponsEffects.DAZZLE.get())) {
+				multiplier += SharedFunctions.incrementBonusDamage(damageSource, -0.2f);
+			} else {
+				multiplier += SharedFunctions.incrementBonusDamage(damageSource, 0.2f);
+			}
+
+		}
+		else if (lampPotencySelf > 0) {
+			multiplier += SharedFunctions.incrementBonusDamage(damageSource, -0.01f * lampPotencySelf);
+		}
+
 
 		/*if (context != null) {
 			int targetSpeed = EgoWeaponsEffects.speedMult(targetEntity);

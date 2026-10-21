@@ -174,7 +174,6 @@ public class JustitiaMovesetAnims {
                 .addProperty(AnimationProperty.AttackAnimationProperty.BASIS_ATTACK_SPEED, 1.6F);
 
         JUSTITIA_AUTO_3 = new BasicEgoAttackAnimation(0.01F, 0.08F, 1F, 1.33F, 1.66F, null, "Tool_R", "biped/justitia/auto_3", biped)
-                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.PALE)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "justitia_auto3")
@@ -192,7 +191,6 @@ public class JustitiaMovesetAnims {
                 .addProperty(EgoWeaponsAttackProperty.ATTACK_TYPE, AttackTypes.SLASH)
                 .addProperty(EgoWeaponsAttackProperty.DAMAGE_TYPE, DamageTypes.PALE)
                 .addProperty(EgoWeaponsAttackProperty.IDENTIFIER, "justitia_auto4")
-                .addProperty(EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.JUSTITIA_HIT)
                 .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EgoWeaponsSounds.RAT_PIPE_SWING)

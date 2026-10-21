@@ -45,7 +45,7 @@ public class EntityTick {
 				dependencies.put("world", world);
 				dependencies.put("entity", entity);
 				dependencies.put("event", event);
-				executeProcedure(dependencies);
+				runTick(dependencies);
 			}
 		}
 	}
@@ -72,7 +72,6 @@ public class EntityTick {
 
 		if (player.hasEffect(EgoWeaponsEffects.SEALED.get()))
 			return;
-
 
 		if (EgoWeaponsItems.MAGIC_BULLET_CLOAK.get().equals(player.getItemBySlot(EquipmentSlotType.CHEST).getItem())) {
 
@@ -109,7 +108,7 @@ public class EntityTick {
 		}
 	}
 
-	public static void executeProcedure(Map<String, Object> dependencies) {
+	public static void runTick(Map<String, Object> dependencies) {
 		if (dependencies.get("entity") == null) {
 			if (!dependencies.containsKey("entity"))
 				EgoWeaponsMod.LOGGER.warn("Failed to load dependency entity for procedure Bliphandler!");
@@ -192,17 +191,22 @@ public class EntityTick {
 				}
 				entity.getPersistentData().putInt("damageDialogueTier", damageTier);
 			}
+
+			// STAGGER TICKS
 			if (entityData.stagger < EgoWeaponsAttributes.getMaxStagger(entity)) {
 				StaggerSystem.healStagger(entity, 0.1f);
 			} else {
 				entityData.stagger = EgoWeaponsAttributes.getMaxStagger(entity);
 			}
 
+			// SANITY TICKS
 			if (entity.hasEffect(EgoWeaponsEffects.TERROR.get())) {
 				SanitySystem.damageSanity(entity, 0.25f);
 			} else {
 				if (entityData.sanity < EgoWeaponsAttributes.getMaxSanity(entity)) {
 					float sanityHeal = 0.1f;
+
+					sanityHeal = processSanityBuffs(entity, sanityHeal);
 
 					if (entity.getItemBySlot(EquipmentSlotType.CHEST).equals(EgoWeaponsItems.SUNSHOWER_CLOAK.get())) {
 						if (EntityType.byString(entity.getShoulderEntityRight().getString("id")).filter((p_215344_0_) -> p_215344_0_ == EgoWeaponsEntities.SUNSHOWER_FOX.get()).isPresent()) {
@@ -223,9 +227,6 @@ public class EntityTick {
 
 		if (entity.tickCount % 10 == 0) {
 
-
-
-
 			EmotionSystem.decreaseEmotionPoints(entity, 0.6f);
 
 			int maxEnergy = EgoWeaponsAttributes.getMaxLight(entity);
@@ -241,7 +242,8 @@ public class EntityTick {
 				entityData.sanity = 0;
 			}
 
-			if (!entity.hasEffect(EgoWeaponsEffects.SEALED.get())) {
+			// LIGHT TICKS
+			if (canRegenerateLight(entity)) {
 				if (entityData.light < maxEnergy) {
 					if (entityData.blipcooldown <= 0 && !entity.hasEffect(EgoWeaponsEffects.TERROR.get())) {
 
@@ -297,13 +299,34 @@ public class EntityTick {
 					case "heishou_mao_robe":
 						int playerSpeed = EgoWeaponsEffects.speedMult(entity);
 						val *= 1 + Math.min(0.3f, 0.03f * playerSpeed);
-
-
 						break;
 				}
 			}
 		}
 
+		if (entity.hasEffect(EgoWeaponsEffects.GUARDIAN_OF_THE_FOREST.get())) {
+			val *= 1 + 0.2f;
+		}
+
 		return val;
+	}
+
+	public static boolean canRegenerateLight(LivingEntity entity) {
+		if (entity.hasEffect(EgoWeaponsEffects.SEALED.get()))
+			return false;
+
+		if (entity.hasEffect(EgoWeaponsEffects.DAZZLE.get()))
+			return false;
+
+		return true;
+	}
+
+	public static float processSanityBuffs(LivingEntity entity, float mult) {
+
+		if (entity.hasEffect(EgoWeaponsEffects.GUARDIAN_OF_THE_FOREST.get())) {
+			mult += 0.15f;
+		}
+
+		return mult;
 	}
 }

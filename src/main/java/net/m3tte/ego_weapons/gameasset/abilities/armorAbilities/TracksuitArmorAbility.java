@@ -24,7 +24,7 @@ public class TracksuitArmorAbility extends ItemAbility {
 
     @Override
     public ResourceLocation getIconLocation(PlayerEntity player, PlayerVariables vars) {
-        return isAscended(player, vars) ? AbilityUtils.getAbilityIcon("focus_embers") : AbilityUtils.getAbilityIcon("focus_embers");
+        return AbilityUtils.getAbilityIcon("battle_instinct");
     }
 
     @Override
@@ -34,7 +34,7 @@ public class TracksuitArmorAbility extends ItemAbility {
 
     @Override
     public String getName(PlayerEntity player, PlayerVariables playerVars) {
-        return isAscended(player, playerVars) ? "    Recall \n Memories" : "    Battle \n Instinct";
+        return isAscended(player, playerVars) ? "Recall Memories     " : " Battle Instinct     ";
     }
 
     private static boolean isAscended(PlayerEntity player, PlayerVariables playerVars) {

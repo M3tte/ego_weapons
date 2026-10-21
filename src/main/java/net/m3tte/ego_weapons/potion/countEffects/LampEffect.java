@@ -21,6 +21,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -99,12 +100,15 @@ public class LampEffect extends PotencyOnlyStatus {
             Vector3d targetPos = target.position().add(0, target.getEyeHeight(), 0);
             Vector3d difference = targetPos.subtract(sourcePos).normalize();
             double dist = Math.min(20,targetPos.distanceTo(sourcePos));
-            for (float x = 0; x < dist; x += 0.5) {
+            for (float x = 0; x < dist; x += 0.5f) {
                 Vector3d calculatedVector = sourcePos.add(difference.multiply(x,x,x));
 
                 if (self.level instanceof ServerWorld)
                     ((ServerWorld) self.level).sendParticles(EgoWeaponsParticles.LAMP_EMBERS.get(), calculatedVector.x(), calculatedVector.y(), calculatedVector.z(), 3, 0.1, 0.1, 0.1, 0.2);
             }
+
+            target.addEffect(new EffectInstance(Effects.GLOWING.getEffect(), 10, 0));
+
             if (target instanceof PlayerEntity) {
                 UtilitySystems.sendShockwavePacket((PlayerEntity) target, 3f, 0.8f, 1f, 2);
             }

@@ -3,8 +3,8 @@
 	{
 		"common":
 		{
-			"impact":3.5,
-			"max_strikes":2
+			"impact":3.3,
+			"max_strikes":1
 		}
 	},
 	"type":"heishou_mao_sword"

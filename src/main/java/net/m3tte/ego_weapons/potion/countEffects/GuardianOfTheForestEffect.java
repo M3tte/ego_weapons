@@ -89,9 +89,4 @@ public class GuardianOfTheForestEffect extends PotencyOnlyStatus {
     }
 
 
-    @Override
-    public void applyEffectTick(LivingEntity entity, int amplifier) {
-        // No ticking needed as time is handled normally.
-    }
-
 }

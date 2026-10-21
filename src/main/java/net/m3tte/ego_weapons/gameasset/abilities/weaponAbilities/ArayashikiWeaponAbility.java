@@ -32,7 +32,7 @@ public class ArayashikiWeaponAbility extends ItemAbility {
 
     @Override
     public ResourceLocation getIconLocation(PlayerEntity player, PlayerVariables vars) {
-        return AbilityUtils.getAbilityIcon("perfected_palm_strike");
+        return AbilityUtils.getAbilityIcon(variant(player, vars) ? "erasing_me_erasing_you" : "brush_stroke");
 
     }
 
@@ -49,7 +49,7 @@ public class ArayashikiWeaponAbility extends ItemAbility {
 
     @Override
     public String getName(PlayerEntity player, PlayerVariables playerVars) {
-        return "Brush Stroke";
+        return variant(player, playerVars) ? "ERASING ME\nERASING YOU" : "Brush Stroke      ";
     }
 
     @Override
@@ -59,6 +59,13 @@ public class ArayashikiWeaponAbility extends ItemAbility {
         }
 
         return 1.0f;
+    }
+
+    private boolean variant(PlayerEntity player, PlayerVariables vars) {
+        int lossOfSelfStacks = EgoWeaponsEffects.LOSS_OF_SELF.get().getPotency(player);
+        if (vars.firingMode && lossOfSelfStacks >= 50)
+            return true;
+        return false;
     }
 
     @Override

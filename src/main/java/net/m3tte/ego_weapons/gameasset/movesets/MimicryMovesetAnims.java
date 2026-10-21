@@ -175,6 +175,7 @@ public class MimicryMovesetAnims {
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "kali_auto_4")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.SLASH)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(AnimationProperty.AttackAnimationProperty.LOCK_ROTATION, true).addProperty(AnimationProperty.AttackAnimationProperty.ROTATE_X, true)
                 .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.KALI_HARD_HORIZONTAL)
                 .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MIMICRY_HORIZONTAL_HIT)
@@ -261,6 +262,7 @@ public class MimicryMovesetAnims {
                         .addProperty(AnimationProperty.AttackPhaseProperty.IMPACT, ValueCorrector.multiplier(5f))
                         .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.SHORT))
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "kali_great_split_horizontal")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "mimicry_redmist_special")
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.GSH)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.SLASH)
@@ -276,7 +278,14 @@ public class MimicryMovesetAnims {
                         .addProperty(EgoWeaponsAttackPhaseProperty.IDENTIFIER, "kali_great_split_vertical_1"),
                 new EgoAttackPhase(0.91F, 0.91F, 1.1F, 1.61F, 1.62F, 1.62F, "Tool_R", EgoWeaponsCapabilityPresets.LONGER_BLADE).addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(1)).addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.HOLD).addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND,  EgoWeaponsSounds.KALI_SPLIT_VERTICAL_HIT).addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(0.8f)).addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EpicFightParticles.EVISCERATE)
                         .addProperty(EgoWeaponsAttackPhaseProperty.IDENTIFIER, "kali_great_split_vertical_2"),
-                new EgoAttackPhase(1.625F, 1.7F, 2F, 2.18F, 3F, 3F, "Tool_R", EgoWeaponsCapabilityPresets.LONGER_BLADE).addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(2)).addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.LONG).addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH_BIG).addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.KALI_SPLIT_VERTICAL_SLASH).addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1.5f)).addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MIMICRY_VERTICAL_HIT)
+                new EgoAttackPhase(1.625F, 1.7F, 2F, 2.18F, 3F, 3F, "Tool_R", EgoWeaponsCapabilityPresets.LONGER_BLADE)
+                        .addProperty(EgoAttackAnimation.EgoAttackPhase.EgoWeaponsAttackPhaseProperty.FINAL_COIN, true)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES, ValueCorrector.setter(2))
+                        .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, ExtendedDamageSource.StunType.LONG)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, EpicFightSounds.WHOOSH_BIG)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.HIT_SOUND, EgoWeaponsSounds.KALI_SPLIT_VERTICAL_SLASH)
+                        .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE, ValueCorrector.multiplier(1.5f))
+                        .addProperty(AnimationProperty.AttackPhaseProperty.PARTICLE, EgoWeaponsParticles.MIMICRY_VERTICAL_HIT)
                         .addProperty(EgoWeaponsAttackPhaseProperty.IDENTIFIER, "kali_great_split_vertical_3"))
 
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.CLASH_KNOCK, false)
@@ -331,6 +340,7 @@ public class MimicryMovesetAnims {
 
         MIMICRY_HELLO = (new EgoAttackAnimation(0.1F, 0.1F, 0.43F, 0.9F, 1.2F, ColliderPreset.FIST, "Tool_L", "biped/mimicry/hello", biped))
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "mimicry_hello")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_CYCLE_TYPE, AttackCycleType.INNATE)
@@ -348,6 +358,7 @@ public class MimicryMovesetAnims {
 
         MIMICRY_GOODBYE = (new EgoAttackAnimation(0.01F, 0.02F, 0.5F, 0.85F, 1.5F, EgoWeaponsCapabilityPresets.LONGER_BLADE, "Tool_R", "biped/mimicry/goodbye_1", biped))
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "mimicry_goodbye")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.SLASH)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DEATH_MESSAGE, "mimicry_special")
@@ -365,6 +376,7 @@ public class MimicryMovesetAnims {
 
         MIMICRY_GOODBYE_ENHANCED = (new EgoAttackAnimation(0.01F, 0.02F, 0.75F, 1.4F, 1.6F, EgoWeaponsCapabilityPresets.EVEN_LONGER_BLADE, "Tool_R", "biped/mimicry/goodbye_2", biped))
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "mimicry_goodbye_enh")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.SLASH)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.LOGIC_PREDICATE, AttackLogicPredicate.GSH)
@@ -407,6 +419,7 @@ public class MimicryMovesetAnims {
 
         KALI_ONRUSH = (new EgoAttackAnimation(0.02F, 0.4F, 0.5F, 0.833F, 1.5F, ColliderPreset.FIST, "Arm_L", "biped/kali/onrush", biped))
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.IDENTIFIER, "kali_onrush")
+                .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.FINAL_COIN, true)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.ATTACK_TYPE, GenericEgoDamage.AttackTypes.BLUNT)
                 .addProperty(EgoAttackAnimation.EgoWeaponsAttackProperty.DAMAGE_TYPE, GenericEgoDamage.DamageTypes.RED)
                 .addProperty(AnimationProperty.AttackAnimationProperty.FIXED_MOVE_DISTANCE, true)
