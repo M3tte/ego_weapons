@@ -2,9 +2,8 @@
 package net.m3tte.ego_weapons.item.blackSilence.weapons;
 
 import net.m3tte.ego_weapons.execFunctions.BlackSilenceEvaluator;
-import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.gameasset.movesets.BlackSilenceMovesetAnims;
-import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
+import net.m3tte.ego_weapons.item.descriptionSystem.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
@@ -17,12 +16,10 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import org.apache.logging.log4j.core.pattern.AbstractStyleNameConverter;
 import yesman.epicfight.api.animation.types.DynamicAnimation;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;

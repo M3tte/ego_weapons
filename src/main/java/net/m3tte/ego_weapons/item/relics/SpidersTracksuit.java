@@ -13,7 +13,7 @@ import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
 import net.m3tte.ego_weapons.world.capabilities.UtilitySystems;
-import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoWeaponsArmor;
+import net.m3tte.ego_weapons.item.descriptionSystem.GenericEgoWeaponsArmor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;

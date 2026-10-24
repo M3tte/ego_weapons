@@ -443,56 +443,56 @@
     },
     {
       "type": "bitmap",
-      "file": "ego_weapons:damage_types/red.png",
+      "file": "ego_weapons:damage_types/icons/red.png",
       "ascent": 8,
       "height": 9,
       "chars": ["\uED01"]
     },
     {
       "type": "bitmap",
-      "file": "ego_weapons:damage_types/white.png",
+      "file": "ego_weapons:damage_types/icons/white.png",
       "ascent": 8,
       "height": 9,
       "chars": ["\uED02"]
     },
     {
       "type": "bitmap",
-      "file": "ego_weapons:damage_types/black.png",
+      "file": "ego_weapons:damage_types/icons/black.png",
       "ascent": 8,
       "height": 9,
       "chars": ["\uED03"]
     },
     {
       "type": "bitmap",
-      "file": "ego_weapons:damage_types/pale.png",
+      "file": "ego_weapons:damage_types/icons/pale.png",
       "ascent": 8,
       "height": 9,
       "chars": ["\uED04"]
     },
     {
       "type": "bitmap",
-      "file": "ego_weapons:damage_types/icons/red.png",
+      "file": "ego_weapons:damage_types/red.png",
       "ascent": 8,
       "height": 9,
       "chars": ["\uED11"]
     },
     {
       "type": "bitmap",
-      "file": "ego_weapons:damage_types/icons/white.png",
+      "file": "ego_weapons:damage_types/white.png",
       "ascent": 8,
       "height": 9,
       "chars": ["\uED12"]
     },
     {
       "type": "bitmap",
-      "file": "ego_weapons:damage_types/icons/black.png",
+      "file": "ego_weapons:damage_types/black.png",
       "ascent": 8,
       "height": 9,
       "chars": ["\uED13"]
     },
     {
       "type": "bitmap",
-      "file": "ego_weapons:damage_types/icons/pale.png",
+      "file": "ego_weapons:damage_types/pale.png",
       "ascent": 8,
       "height": 9,
       "chars": ["\uED14"]

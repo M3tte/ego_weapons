@@ -22,6 +22,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
+import static net.m3tte.ego_weapons.world.capabilities.DamageResistanceSystem.getDamageIdentifier;
+import static net.m3tte.ego_weapons.world.capabilities.DamageResistanceSystem.getDamageIdentifierCol;
+
 public final class DamageNumberParticle extends TexturedParticle {
 
     double number = 0;
@@ -38,6 +41,8 @@ public final class DamageNumberParticle extends TexturedParticle {
     float targetSize = 0.020F;
 
     String damageIdentifier = "";
+
+    int damageColor = 0xFFFFFF;
 
     public DamageNumberParticle(ClientWorld world, double x, double y, double z, float number, int type, double inMultiplier) {
         super(world, x, y, z, inMultiplier, number, type);
@@ -71,38 +76,11 @@ public final class DamageNumberParticle extends TexturedParticle {
 
         this.number = number;
         this.lifetime = (int) (60 + Math.min(40, this.number));
-        this.damageIdentifier = getDamageIdentifier((float) ((inMultiplier % 1000) * zeroMult));
-
+        this.damageIdentifier = getDamageIdentifier((float) ((inMultiplier % 1000) * zeroMult), false);
+        this.damageColor = getDamageIdentifierCol((float) (((inMultiplier % 1000) * zeroMult) - 1)/2 + 1);
     }
 
-    private String getDamageIdentifier(float mult) {
-        if (mult < 0) {
-            return "Absorb.";
-        }
 
-        if (mult <= 0.05f) {
-            return "Immune";
-        }
-
-        if (mult < 0.3f) {
-            return "Ineff.";
-        }
-
-        if (mult < 0.7f) {
-            return "Endured";
-        }
-
-        if (mult > 2f) {
-            return "Fatal";
-        }
-
-        if (mult > 1.2f) {
-            return "Weak";
-        }
-
-        return "";
-
-    }
 
     public void setColor(float red, float green, float blue, float alpha) {
         this.rCol = red;
@@ -147,9 +125,9 @@ public final class DamageNumberParticle extends TexturedParticle {
         float value = (((float) ((int) (number * 10))) / 10);
         String text;
         if (((int)value) == value) {
-            text = " "+((int)value);
+            text = ""+((int)value);
         } else {
-            text = " "+(value);
+            text = ""+(value);
         }
 
 
@@ -173,7 +151,9 @@ public final class DamageNumberParticle extends TexturedParticle {
         matrixStack.mulPose(secondRot);
         int multiplier = (int)((this.multiplier - 1) * 100) + bonusMultiplier;
 
-        int textColor = crit ? 16746263 : 16773613;
+
+
+        int critColor = crit ? 16746263 : 0xFFFFFF;
         matrixStack.translate(0.4f, 0.4f, 0.4f);
         matrixStack.pushPose();
 
@@ -220,7 +200,7 @@ public final class DamageNumberParticle extends TexturedParticle {
         matrixStack.translate(-identifierX + 0.5, 6, 0);
         matrixStack.scale(0.4f,0.4f,0.4f);
         matrixStack.translate(0f, 0f, -0.05f);
-        textRenderer.draw(matrixStack, this.damageIdentifier, 0, 0, 16773613);
+        textRenderer.draw(matrixStack, this.damageIdentifier, 0, 0, this.damageColor);
         matrixStack.popPose();
 
         matrixStack.popPose();
@@ -230,13 +210,13 @@ public final class DamageNumberParticle extends TexturedParticle {
         matrixStack.translate(-0.5f, 0f, -0.08f);
         matrixStack.mulPose(angledRot);
         if (multiplier != 0)
-            textRenderer.draw(matrixStack, (multiplier > 0 ? "+" : "") + multiplier + "%", textX - 2, -8, 16773613);
+            textRenderer.draw(matrixStack, (multiplier > 0 ? "+" : "") + multiplier + "%", textX - 2, -8, 0xFFFFFF);
         matrixStack.popPose();
 
-        textRenderer.draw(matrixStack, text, -textX + 6, 0, textColor);
+        textRenderer.draw(matrixStack, text, -textX + 6, 0, critColor);
 
         if (crit) {
-            textRenderer.draw(matrixStack, "CRITICAL!", -textX-20, 18, textColor);
+            textRenderer.draw(matrixStack, "CRITICAL!", -textX-20, 18, critColor);
         }
 
         matrixStack.popPose();

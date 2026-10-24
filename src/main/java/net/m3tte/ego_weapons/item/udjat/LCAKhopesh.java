@@ -2,7 +2,7 @@
 package net.m3tte.ego_weapons.item.udjat;
 
 import net.m3tte.ego_weapons.*;
-import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
+import net.m3tte.ego_weapons.item.descriptionSystem.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;

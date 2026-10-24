@@ -42,6 +42,5 @@ public class RenderStigmaWorkshopSword extends RenderItemBase {
         Minecraft.getInstance().getItemRenderer().renderStatic(stack, TransformType.THIRD_PERSON_RIGHT_HAND, packedLight, OverlayTexture.NO_OVERLAY, poseStack, buffer);
         poseStack.popPose();
 
-        System.out.println("RENDERING OFFHAND ITEM TEST");
     }
 }

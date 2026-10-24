@@ -847,7 +847,7 @@ public class EgoWeaponsCapabilityPresets {
             .canBePlacedOffhand(false);
 
     public static final Function<Item, CapabilityItem.Builder> LCA_RIFLE = (item) -> WeaponCapability.builder()
-            .category(EgoWeaponsCategories.FULLSTOP_SNIPER)
+            .category(EgoWeaponsCategories.LCA_RIFLE)
             .styleProvider((playerpatch) -> {
 
                 EgoWeaponsModVars.PlayerVariables entityData = playerpatch.getOriginal().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);

@@ -2,7 +2,7 @@
 package net.m3tte.ego_weapons.item.blackSilence.weapons;
 
 import net.m3tte.ego_weapons.execFunctions.BlackSilenceEvaluator;
-import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
+import net.m3tte.ego_weapons.item.descriptionSystem.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.minecraft.entity.LivingEntity;
@@ -16,7 +16,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.client.util.ITooltipFlag;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;

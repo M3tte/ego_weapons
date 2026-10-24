@@ -17,13 +17,14 @@
     "rendering.renderBufferInterface"
   ],
   "client": [
-    "PushEntityMixin",
+    "CharacterManagerMixin",
     "HotbarRenderMixin",
     "ItemStackMixin",
     "LanguageMapMixin",
     "LivingRenderLayersMixin",
     "MusicTickerMixin",
     "PlayerRenderLayerMixin",
+    "PushEntityMixin",
     "epicfight.EntityIndicatorMixin",
     "epicfight.HealthbarIndicatorMixin",
     "epicfight.ItemInHandLayerMixin",

@@ -3,7 +3,7 @@ package net.m3tte.ego_weapons.item.liu;
 
 import net.m3tte.ego_weapons.*;
 import net.m3tte.ego_weapons.gameasset.movesets.LiuSouth6MovesetAnims;
-import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
+import net.m3tte.ego_weapons.item.descriptionSystem.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;

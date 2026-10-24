@@ -1,5 +1,8 @@
 package net.m3tte.ego_weapons.world.capabilities.damage;
 
+import net.m3tte.ego_weapons.EgoWeaponsMod;
+import net.minecraft.util.ResourceLocation;
+
 public interface GenericEgoDamage {
 
     AttackTypes getAttackType();
@@ -19,13 +22,14 @@ public interface GenericEgoDamage {
     boolean getConsumesStatus();
 
     enum AttackTypes {
-        GENERIC(""),
-        SLASH("\uED22"),
-        PIERCE("\uED21"),
-        BLUNT("\uED23"),
-        HIDDEN("");
+        GENERIC("", null),
+        SLASH("\uED22", new ResourceLocation(EgoWeaponsMod.MODID, "textures/damage_types/icons/slash.png")),
+        PIERCE("\uED21", new ResourceLocation(EgoWeaponsMod.MODID, "textures/damage_types/icons/pierce.png")),
+        BLUNT("\uED23", new ResourceLocation(EgoWeaponsMod.MODID, "textures/damage_types/icons/blunt.png")),
+        HIDDEN("", null);
 
         String icon;
+        ResourceLocation iconLoc;
 
         public static AttackTypes fromString(String str) {
             switch (str.toLowerCase()) {
@@ -44,16 +48,21 @@ public interface GenericEgoDamage {
             return icon;
         }
 
-        AttackTypes(String icon) {
+        public ResourceLocation getIconLoc() {
+            return iconLoc;
+        }
+
+        AttackTypes(String icon, ResourceLocation iconLoc) {
             this.icon = icon;
+            this.iconLoc = iconLoc;
         }
     }
 
     enum DamageTypes {
-        RED("\uED01", "\uED11"),
-        WHITE("\uED02", "\uED12"),
-        BLACK("\uED03", "\uED13"),
-        PALE("\uED04", "\uED14");
+        RED("\uED01", "\uED11", new ResourceLocation(EgoWeaponsMod.MODID, "textures/damage_types/icons/red.png")),
+        WHITE("\uED02", "\uED12", new ResourceLocation(EgoWeaponsMod.MODID, "textures/damage_types/icons/white.png")),
+        BLACK("\uED03", "\uED13", new ResourceLocation(EgoWeaponsMod.MODID, "textures/damage_types/icons/black.png")),
+        PALE("\uED04", "\uED14", new ResourceLocation(EgoWeaponsMod.MODID, "textures/damage_types/icons/pale.png"));
 
         String icon;
         String damageBorder;
@@ -81,9 +90,15 @@ public interface GenericEgoDamage {
             return damageBorder;
         }
 
-        DamageTypes(String icon, String damageBorder) {
+        public ResourceLocation getIconLoc() {
+            return iconLoc;
+        }
+
+        ResourceLocation iconLoc;
+        DamageTypes(String icon, String damageBorder, ResourceLocation iconLoc) {
             this.icon = icon;
             this.damageBorder = damageBorder;
+            this.iconLoc = iconLoc;
         }
     }
 }

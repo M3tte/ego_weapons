@@ -195,6 +195,83 @@ public class DamageResistanceSystem {
         return multiplier;
     }
 
+    public static int getDamageIdentifierCol(float mult) {
+        if (mult < 0) {
+            return 0x089F03;
+        }
+
+        if (mult >= 2f) {
+            return 0xDD0000;
+        }
+
+        int base = 0x000000;
+
+        if (mult < 1) {
+
+            base = 0x404040;
+
+            int value = (int)(191f * mult);
+
+            base = addToCol(base, value, value, value);
+        } else if (mult > 1) {
+            int value = (int)(255f * (mult - 1));
+
+            base = addToCol(base, 255, 255 - value, 255 - value);
+        } else {
+            base = 0xFFFFFF;
+        }
+
+        return base;
+
+    }
+
+    /***
+     *
+     * @param baseCol integer
+     * @param r 0 - 255
+     * @param g 0 - 255
+     * @param b 0 - 255
+     * @return
+     */
+    private static int addToCol(int baseCol, int r, int g, int b) {
+        r = Math.min(255, ((baseCol >> 16) & 0xFF) + r);
+        g = Math.min(255, ((baseCol >> 8) & 0xFF) + g);
+        b = Math.min(255, (baseCol & 0xFF) + b);
+
+        System.out.println("RESOLVED VALUES : "+r+"/"+g+"/"+b);
+
+        return (r << 16) | (g << 8) | b;
+    }
+
+    public static String getDamageIdentifier(float mult, boolean doNeutral) {
+        if (mult < 0) {
+            return "Absorb.";
+        }
+
+        if (mult <= 0.05f) {
+            return "Immune";
+        }
+
+        if (mult < 0.3f) {
+            return "Ineff.";
+        }
+
+        if (mult <= 0.85f) {
+            return "Endured";
+        }
+
+        if (mult >= 2f) {
+            return "Fatal";
+        }
+
+        if (mult > 1.15f) {
+            return "Weak";
+        }
+
+        return doNeutral ? "Neutral" : "";
+
+    }
+
     private static float getFullyQualifiedResistanceMult(GenericEgoDamage.DamageTypes damageType, GenericEgoDamage.AttackTypes attackType, LivingEntity target) {
         float mult = 1;
 

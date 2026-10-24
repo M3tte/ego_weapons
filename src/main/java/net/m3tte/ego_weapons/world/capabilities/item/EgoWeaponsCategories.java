@@ -31,6 +31,7 @@ public enum EgoWeaponsCategories implements WeaponCategory {
     OEUFI,
     FULLSTOP_REP,
     FULLSTOP_SNIPER,
+    LCA_RIFLE,
     STIGMA_WORKSHOP_SWORD,
     HEISHOU_MAO_SWORD,
     JUSTITIA,

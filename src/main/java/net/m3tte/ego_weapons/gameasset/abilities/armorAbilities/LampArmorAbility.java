@@ -102,6 +102,19 @@ public class LampArmorAbility extends ItemAbility {
             return isBird(entity) ? 0 : 1;
         })).collect(Collectors.toList());
 
+        List<LivingEntity> nearbyDazzle = SharedFunctions.getNearbyEntities(entity, 20, 10, TeamLockedPredicate.ONLY_HOSTILES.additionalCondition((ent) -> {
+            if (ent instanceof LivingEntity) {
+                return ((LivingEntity) ent).hasEffect(EgoWeaponsEffects.DAZZLE.get());
+            }
+            return false;
+        }));
+
+        // Apply 2 Fragile to nearest entity with dazzle.
+        if (!nearbyDazzle.isEmpty()) {
+            EgoWeaponsEffects.FRAGILE.get().increment(nearbyDazzle.get(0), 0, 2);
+        }
+
+
         boolean nearbyAllies = !nearbyFriendlies.isEmpty();
 
         int previousLamp = EgoWeaponsEffects.LAMP.get().getPotency(entity);

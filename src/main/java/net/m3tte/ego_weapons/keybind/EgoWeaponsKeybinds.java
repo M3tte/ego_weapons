@@ -28,6 +28,8 @@ public class EgoWeaponsKeybinds {
         return uiPage;
     }
 
+
+
     public static boolean isHoldingShift() {
         return holdingShift;
     }

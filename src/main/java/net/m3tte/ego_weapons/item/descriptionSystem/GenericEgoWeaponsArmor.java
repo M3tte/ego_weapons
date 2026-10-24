@@ -1,9 +1,15 @@
-package net.m3tte.ego_weapons.world.capabilities.damage;
+package net.m3tte.ego_weapons.item.descriptionSystem;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.m3tte.ego_weapons.EgoWeaponsAttributes;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.AttributeDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.AttributeTextPlaceholder;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.ResistanceDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.metadata.ArmorMetadata;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -19,11 +25,11 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateDescription;
-import static net.m3tte.ego_weapons.procedures.TooltipFuncs.generateStatusDescription;
+import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
 
 public class GenericEgoWeaponsArmor extends ArmorItem {
 
@@ -41,12 +47,20 @@ public class GenericEgoWeaponsArmor extends ArmorItem {
 
     private Multimap<Attribute, AttributeModifier> attributes;
 
+    protected boolean doDescription = false;
 
+    public GenericEgoWeaponsArmor(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, boolean doDescription) {
+        super(armorMaterial, slot, props);
+        this.doDescription = true;
+    }
 
     public GenericEgoWeaponsArmor(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props) {
         super(armorMaterial, slot, props);
     }
 
+
+    // Moved to description page
+    @Deprecated
     public void resistanceMods(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 
         list.add(new TranslationTextComponent("desc.ego_weapons.resistances.title.1").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
@@ -130,6 +144,23 @@ public class GenericEgoWeaponsArmor extends ArmorItem {
 
 
 
+    public GenericEgoWeaponsArmor(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStaggerThreshold, float bonusSanity, boolean doDescription) {
+        super(armorMaterial, slot, props);
+        this.redResistance = redResistance;
+        this.whiteResistance = whiteResistance;
+        this.blackResistance = blackResistance;
+        this.paleResistance = paleResistance;
+        this.slashResistance = slashResistance;
+        this.pierceResistance = pierceResistance;
+        this.bluntResistance = bluntResistance;
+        this.bonusStaggerThreshold = bonusStaggerThreshold;
+        this.bonusSanity = bonusSanity;
+        this.doDescription = doDescription;
+    }
+
+
+    // TODO: SHOULD NOT BE USED. DOES NOT PROPERLY INTEGRATE DESCRIPTIONS
+    @Deprecated
     public GenericEgoWeaponsArmor(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStaggerThreshold, float bonusSanity) {
         super(armorMaterial, slot, props);
         this.redResistance = redResistance;
@@ -141,5 +172,69 @@ public class GenericEgoWeaponsArmor extends ArmorItem {
         this.bluntResistance = bluntResistance;
         this.bonusStaggerThreshold = bonusStaggerThreshold;
         this.bonusSanity = bonusSanity;
+    }
+
+    // Hover text Mechanics
+    protected String identifier = "";
+    protected EmptyDescriptionPage defaultPageResult = new EmptyDescriptionPage();
+    protected HashMap<Integer, EmptyDescriptionPage> pages = null;
+    protected String tierText = "";
+
+    public void addPage(EmptyDescriptionPage page) {
+        pages.put(pages.size(), page);
+    }
+    public void setupWeaponDescription() {
+        addPage(new AttributeDescriptionPage(AttributeTextPlaceholder.PlaceholderType.ARMOR, 10,
+                new ArmorMetadata("armordata", this.material.getDefenseForSlot(this.slot), this.redResistance, this.whiteResistance, this.blackResistance, this.paleResistance, this.slashResistance, this.bluntResistance, this.pierceResistance)));
+
+        addPage(new ResistanceDescriptionPage(this.material.getDefenseForSlot(this.slot), this.bonusStaggerThreshold, this.bonusSanity, this.redResistance, this.whiteResistance, this.blackResistance, this.paleResistance, this.slashResistance, this.bluntResistance, this.pierceResistance));
+
+    }
+
+
+
+    @Override
+    public void appendHoverText(@NotNull ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+        super.appendHoverText(itemstack, world, list, flag);
+
+        if (!doDescription) {
+            list.add(new StringTextComponent("Cosmetic Item"));
+            return;
+        }
+
+        if (pages == null) {
+            this.pages = new HashMap<>();
+            setupWeaponDescription();
+        }
+
+        TooltipFuncs.generateItemDescription(list, "desc.ego_weapons."+identifier+".desc");
+        list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+
+        list.add(new TranslationTextComponent("item.ego_weapons.generic.page", EgoWeaponsKeybinds.getUiPage()+1, pages.size()));
+        list.add(new TranslationTextComponent(tierText));
+        list.add(new StringTextComponent(" "));
+        this.pages.getOrDefault(EgoWeaponsKeybinds.getUiPage(), defaultPageResult).render(itemstack, world, list);
+
+        generateStatusHelp(list);
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public EmptyDescriptionPage getDefaultPageResult() {
+        return defaultPageResult;
+    }
+
+    public HashMap<Integer, EmptyDescriptionPage> getPages() {
+        if (pages == null) {
+            this.pages = new HashMap<>();
+            setupWeaponDescription();
+        }
+        return pages;
+    }
+
+    public String getTierText() {
+        return tierText;
     }
 }

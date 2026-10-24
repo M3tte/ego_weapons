@@ -78,7 +78,7 @@ public class TooltipFuncs {
             switch (status) {
                 case "salvation": generateDescription(list, "statuses", "salvation", 7, true, EgoWeaponsEffects.SALVATION.get(), EgoWeaponsEffects.DAZZLE.get(), EgoWeaponsEffects.LAMP.get()); break;
                 case "guardian_of_the_forest": generateDescription(list, "statuses", "guardian_of_the_forest", 5, true, EgoWeaponsEffects.GUARDIAN_OF_THE_FOREST.get()); break;
-                case "feather_wick_bolt": generateDescription(list, "statuses", "feather_wick_bolt", 3); break;
+                case "feather_wick_bolt": generateDescription(list, "statuses", "feather_wick_bolt", 2); break;
                 case "dazzle": generateDescription(list, "statuses", "dazzle", 5, EgoWeaponsEffects.DAZZLE.get(), EgoWeaponsEffects.LAMP.get()); break;
                 case "lamp": generateDescription(list, "statuses", "lamp", 2, EgoWeaponsEffects.LAMP.get()); break;
                 case "sealed": generateDescription(list, "statuses", "sealed", 2); break;

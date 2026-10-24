@@ -3,20 +3,12 @@ package net.m3tte.ego_weapons.mixin;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.m3tte.ego_weapons.world.capabilities.EgoAttribute;
-import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoWeaponsArmor;
+import net.m3tte.ego_weapons.item.descriptionSystem.GenericEgoWeaponsArmor;
 import net.minecraft.entity.ai.attributes.*;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
-
-import java.util.Collection;
-import java.util.Map;
-
-import static net.m3tte.ego_weapons.procedures.SharedFunctions.evaluateDamageSource;
 
 @Mixin(ItemStack.class)
 public class ItemStackMixin {

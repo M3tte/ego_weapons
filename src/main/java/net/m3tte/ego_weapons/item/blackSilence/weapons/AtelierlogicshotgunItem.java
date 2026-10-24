@@ -1,7 +1,7 @@
 
 package net.m3tte.ego_weapons.item.blackSilence.weapons;
 
-import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
+import net.m3tte.ego_weapons.item.descriptionSystem.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.minecraft.util.text.TextFormatting;
@@ -15,7 +15,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.ActionResult;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.SwordItem;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.IItemTier;
@@ -25,7 +24,6 @@ import net.minecraft.block.BlockState;
 
 import net.m3tte.ego_weapons.procedures.legacy.AtelierlogicshotgunuseProcedure;
 
-import javax.annotation.Nullable;
 import java.util.stream.Stream;
 import java.util.Map;
 import java.util.List;

@@ -110,7 +110,6 @@ public class LampCrossbowWeaponAbility extends ItemAbility {
             }
 
             LivingEntity dazzleTarget = null;
-            double targetDistance = 99;
 
             List<LivingEntity> nearbyEntities = SharedFunctions.getNearbyEntities(player, 20, 20, TeamLockedPredicate.ONLY_HOSTILES.additionalCondition((ent) -> {
                 if (ent instanceof LivingEntity) {
@@ -119,13 +118,8 @@ public class LampCrossbowWeaponAbility extends ItemAbility {
                 return false;
             }));
 
-            for (LivingEntity nearbyEntity : nearbyEntities) {
-                double distance = nearbyEntity.distanceTo(player);
-
-                if (distance < targetDistance) {
-                    targetDistance = distance;
-                    dazzleTarget = nearbyEntity;
-                }
+            if (!nearbyEntities.isEmpty()) {
+                dazzleTarget = nearbyEntities.get(0);
             }
 
             // player.addEffect(new EffectInstance(EpicFightMobEffects.STUN_IMMUNITY.get(), 20, 0));

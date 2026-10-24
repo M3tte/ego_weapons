@@ -28,6 +28,12 @@
 + Proximity entity operations now automatically factor in distance. Taking the closest entities first.
 + Improved skill card text scaling and presentation.
 + Properly added final coin identifiers to (hopefully) all skills again.
++ Overhauled system for drawing description pages and such
++ Overhauled Statistic Screen For armor
+  + Nice damage resistance system and such.
++ Damage indicator color is now affected by the resistance. (Not multipliers).
+- [ ] Add a tag that identifies entity as living (Will be affected by pale damage and sanity?)
+- [ ] Add a tag to weapons that causes a force-reload for a given ammo type.
 
 ### Balance Changes
 + Nerfed Mao Butcherblade :

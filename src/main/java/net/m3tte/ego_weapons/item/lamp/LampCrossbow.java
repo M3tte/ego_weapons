@@ -6,31 +6,23 @@ import net.m3tte.ego_weapons.gameasset.AttackLogicPredicate;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
-import net.m3tte.ego_weapons.gameasset.movesets.JustitiaMovesetAnims;
 import net.m3tte.ego_weapons.gameasset.movesets.LampCrossbowMovesetAnims;
-import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.item.guns.GunCaliber;
 import net.m3tte.ego_weapons.item.guns.GunItem;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
-import net.m3tte.ego_weapons.potion.countEffects.DarkFlameEffect;
 import net.m3tte.ego_weapons.procedures.DelayedEvent;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
-import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
 import net.m3tte.ego_weapons.world.capabilities.UtilitySystems;
 import net.m3tte.ego_weapons.world.capabilities.damage.DirectEgoDamageSource;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -41,7 +33,6 @@ import yesman.epicfight.api.animation.types.DynamicAnimation;
 import yesman.epicfight.api.utils.ExtendedDamageSource;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
-import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 
 import java.util.List;
 
@@ -52,8 +43,40 @@ import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.generateAt
 
 public class LampCrossbow extends GunItem {
 
+
 	@Override
-	public void appendHoverText(@NotNull ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+	public void setupWeaponDescription() {
+		super.setupWeaponDescription();
+		this.tierText = "desc.ego_weapons.risk.waw";
+		this.identifier = "lamp_crossbow";
+
+		addPage(new SkillDescriptionPage(this.identifier, "ability", 16,
+				new String[]{"burn", "sinking", "feather_wick_bolt","lamp","black_fragility"},
+				EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.DAZZLE.get()));
+
+		addPage(new SkillDescriptionPage(this.identifier, "innate", 8,
+				new String[]{"burn", "sinking", "feather_wick_bolt","lamp","black_fragility"},
+				EgoWeaponsEffects.LAMP.get()));
+
+		addPage(new SkillDescriptionPage(this.identifier, "auto2", 10,
+				new String[]{"burn", "sinking", "feather_wick_bolt","lamp"},
+				EgoWeaponsEffects.LAMP.get()));
+
+		addPage(new SkillDescriptionPage(this.identifier, "auto", 4,
+				new String[]{"burn", "sinking", "lamp"},
+				EgoWeaponsEffects.LAMP.get()));
+
+		addPage(new SkillDescriptionPage(this.identifier, "passive2", 2,
+				new String[]{"burn", "sinking", "lamp"},
+				EgoWeaponsEffects.DAZZLE.get()));
+
+		addPage(new SkillDescriptionPage(this.identifier, "passive", 6,
+				new String[]{"offense_up","lamp","dazzle"},
+				EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.DAZZLE.get()));
+	}
+
+	//@Override
+	public void appendHoverTexta(@NotNull ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
 		TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.magic_bullet.desc");
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
@@ -61,7 +84,7 @@ public class LampCrossbow extends GunItem {
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 6) + 1) + "/6] - - - - - - - =").withStyle(TextFormatting.GRAY));
 		list.add(new TranslationTextComponent("desc.ego_weapons.risk.waw"));
 		list.add(new StringTextComponent(" "));
-		switch (EgoWeaponsKeybinds.getUiPage() % 6) {
+		switch (EgoWeaponsKeybinds.getUiPage()) {
 			case 0:
 				if (EgoWeaponsKeybinds.isHoldingShift())
 					generateStatusDescription(list, new String[]{"burn", "sinking", "feather_wick_bolt","lamp","black_fragility"});
@@ -98,6 +121,9 @@ public class LampCrossbow extends GunItem {
 					generateStatusDescription(list, new String[]{"offense_up","lamp","dazzle"});
 				else
 					generateDescription(list,"lamp_crossbow", "passive", 6, true, EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.DAZZLE.get());
+				break;
+			default:
+				EgoWeaponsKeybinds.setUiPage(0);
 				break;
 		}
 

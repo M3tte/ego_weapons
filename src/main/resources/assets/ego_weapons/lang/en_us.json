@@ -175,6 +175,7 @@
   "key.ego_weapons.swap_firing_mode": "Swap Firing Mode",
 
 
+  "item.ego_weapons.generic.page": "= - - - - - - - [Page: %s/%s] - - - - - - - =",
 
 
   "entity.ego_weapons.doubt": "Doubt",
@@ -1227,8 +1228,8 @@
   "desc.ego_weapons.lamp_suit.passive2.title": "§b[Passive] §fDazzling Lamp",
   "desc.ego_weapons.lamp_suit.passive2.1": "§7Take §f-1%% §7Damage for every §f2 %1$s§7 on Self.",
   "desc.ego_weapons.lamp_suit.passive2.2": "§7If §f%2$s §7is active:",
-  "desc.ego_weapons.lamp_suit.passive2.3": "§7Take §f-20%% §7Damage from targets with §f%3$s§7 instead.",
-  "desc.ego_weapons.lamp_suit.passive2.4": "§7Take §f+20%% §7Damage from targets without §f%3$s§7 instead.",
+  "desc.ego_weapons.lamp_suit.passive2.3": "§7Take §f-15%% §7Damage from targets with §f%3$s§7 instead.",
+  "desc.ego_weapons.lamp_suit.passive2.4": "§7Take §f+15%% §7Damage from targets without §f%3$s§7 instead.",
 
   "desc.ego_weapons.lamp_suit.ability.meta": "%1 - Lamp, %2 - Dazzled, %3 - Guardian of the Forest",
   "desc.ego_weapons.lamp_suit.ability.desc": "§o\"The eyes and lamp of Big Bird light up the dark chamber like stars.\"",
@@ -1726,14 +1727,14 @@
 
   "desc.ego_weapons.lca_rifle.o_ability.title": "§b[Alt Ability] §fBackup Burst Fire \uE004\uE004\uE004",
   "desc.ego_weapons.lca_rifle.o_ability.1": "    - = | \uED31 | = -",
-  "desc.ego_weapons.lca_rifle.o_ability.3": "[Use] §7Deal §f+4% §7Damage for every §f\uE041 §bSpeed Difference§7. §8[Max 20%]",
-  "desc.ego_weapons.lca_rifle.o_ability.4": "[Use] §7Gain §f1 \uE007 §cProtection§7.",
-  "desc.ego_weapons.lca_rifle.o_ability.5": "[Use] §7If the first coin isnt Reused. Refund §f1 \uE004 §6Light§7.",
-  "desc.ego_weapons.lca_rifle.o_ability.6": "[I] §7Spend §f1 \uE012 §cAmmo.",
-  "desc.ego_weapons.lca_rifle.o_ability.7": "[I] §7Inflict §f1 \uE008 §cTremor §7Potency.",
-  "desc.ego_weapons.lca_rifle.o_ability.8": "[I] §7Reuse this coin once for every §f2 \uE041 §bSpeed §7on self. §8[Max 2x]",
-  "desc.ego_weapons.lca_rifle.o_ability.9": "[Reuse] §7Deal §f+25% §7Damage for every reuse§7. §8[Max 50%]",
-  "desc.ego_weapons.lca_rifle.o_ability.10": "[2nd Reuse] §7Trigger §f\uE006 §cTremor Burst.",
+  "desc.ego_weapons.lca_rifle.o_ability.2": "[Use] §7Deal §f+4% §7Damage for every §f\uE041 §bSpeed Difference§7. §8[Max 20%]",
+  "desc.ego_weapons.lca_rifle.o_ability.3": "[Use] §7Gain §f1 \uE007 §cProtection§7.",
+  "desc.ego_weapons.lca_rifle.o_ability.4": "[Use] §7If the first coin isnt Reused. Refund §f1 \uE004 §6Light§7.",
+  "desc.ego_weapons.lca_rifle.o_ability.5": "[I] §7Spend §f1 \uE012 §cAmmo.",
+  "desc.ego_weapons.lca_rifle.o_ability.6": "[I] §7Inflict §f1 \uE008 §cTremor §7Potency.",
+  "desc.ego_weapons.lca_rifle.o_ability.7": "[I] §7Reuse this coin once for every §f2 \uE041 §bSpeed §7on self. §8[Max 2x]",
+  "desc.ego_weapons.lca_rifle.o_ability.8": "[Reuse] §7Deal §f+25% §7Damage for every reuse§7. §8[Max 50%]",
+  "desc.ego_weapons.lca_rifle.o_ability.9": "[2nd Reuse] §7Trigger §f\uE006 §cTremor Burst.",
 
   "desc.ego_weapons.lca_udjat_armor.passive.title": "§b[Passive] §fM Corp Cognition Filter §7[M.C.F]",
   "desc.ego_weapons.lca_udjat_armor.passive.1": "§7If §f\uE055 §cUdjat Vanguard §7is active:",
@@ -1927,8 +1928,8 @@
   "desc.ego_weapons.statuses.d10fuel.4": "§7At <= §f50 Potency§7, turn into §f\uE035 §cOverheated Fuel",
 
   "desc.ego_weapons.statuses.feather_wick_bolt.title": "\uE050 §cFeather-Wick Bolt",
-  "desc.ego_weapons.statuses.feather_wick_bolt.2": "  §8[Special §f\uE012 §6Ammo§8]",
-  "desc.ego_weapons.statuses.feather_wick_bolt.3": "§7Utilized by certain Skills",
+  "desc.ego_weapons.statuses.feather_wick_bolt.1": " §8[Special §f\uE012 §6Ammo§8]",
+  "desc.ego_weapons.statuses.feather_wick_bolt.2": "§7Utilized by certain Skills",
 
   "desc.ego_weapons.statuses.firefist_overdrive.title": "\uE036 §cFirefist: Overdrive",
   "desc.ego_weapons.statuses.firefist_overdrive.1": "§7Decrements by 1 per second.",
@@ -1965,6 +1966,10 @@
   "desc.ego_weapons.ammo.unique": "§fUnique",
 
   "desc.ego_weapons.ammo.mag": "§7| Magazine Size: ",
+
+  "desc.ego_weapons.defense_level": "Defense",
+  "desc.ego_weapons.sanity_bonus": "§f\uE046 §bMax Sanity §f",
+  "desc.ego_weapons.stagger_bonus": "§f\uED45 §bMax Stagger §f",
 
   "desc.ego_weapons.statuses.red_damage.title": "Deals \uED01 §4Red Damage §f\uED01",
   "desc.ego_weapons.statuses.white_damage.title": "Deals \uED02 §fWhite Damage §f\uED02",
@@ -2040,7 +2045,7 @@
   "desc.ego_weapons.statuses.ego_att_ardor.2": "§8§oDecays by 1 every 10 Seconds",
   "desc.ego_weapons.statuses.ego_att_ardor.3": "§7Gain §f2 \uE038 §cHaste",
   "desc.ego_weapons.statuses.ego_att_ardor.4": "§7Enhance Mobility Skill",
-  "desc.ego_weapons.statuses.ego_att_ardor.5": "§7[When Attacked] Consume §f1 \uE050 §cE.G.O Attunement :: A.B.S §7to §bEvade§7.",
+  "desc.ego_weapons.statuses.ego_att_ardor.5": "§7[When Attacked] Consume §f1 %1$s §7to §bEvade§7.",
 
   "effect.ego_weapons.strider_mao":"Strider [Mao]",
   "desc.ego_weapons.statuses.strider_mao.title": "\uE040 §cStrider [Mao]",

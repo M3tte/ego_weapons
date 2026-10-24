@@ -6,13 +6,13 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
-import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.UtilitySystems;
-import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoWeaponsArmor;
+import net.m3tte.ego_weapons.item.descriptionSystem.GenericEgoWeaponsArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -25,7 +25,6 @@ import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.CooldownTracker;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -46,6 +45,10 @@ import static net.m3tte.ego_weapons.procedures.TooltipFuncs.*;
 import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.generateAttackContext;
 
 public class LampEGOSuit extends GenericEgoWeaponsArmor {
+
+
+
+
 
 	static IArmorMaterial lobotomyEgoLamp = new IArmorMaterial() {
 		@Override
@@ -94,10 +97,8 @@ public class LampEGOSuit extends GenericEgoWeaponsArmor {
 		super(p_i48534_1_, p_i48534_2_, p_i48534_3_);
 	}
 
-	public LampEGOSuit(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity) {
-		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
-
-
+	public LampEGOSuit(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity, boolean doDescription) {
+		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity, doDescription);
 	}
 
 
@@ -116,7 +117,6 @@ public class LampEGOSuit extends GenericEgoWeaponsArmor {
 			}
 		}*/
 
-		System.out.println("SUBJECT :: "+sourceEntity.getName()+" // HIT LAMP : "+context.isValidEgoAnimation()+" // "+context.isFinalCoin());
 
 		if (context.isValidEgoAnimation()) {
 			if (context.isFinalCoin()) {
@@ -135,15 +135,15 @@ public class LampEGOSuit extends GenericEgoWeaponsArmor {
 		LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) sourceEntity.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
 		UtilitySystems.EGOAttackContext context = generateAttackContext(entitypatch);
 
-		int lampPotencySelf = EgoWeaponsEffects.LAMP.get().getPotency(targetEntity);
+		int lampPotencySelf = EgoWeaponsEffects.LAMP.get().getPotency(targetEntity) / 2;
 
 		// Take -1% Damage for every Lamp on self.
 
 		if (targetEntity.hasEffect(EgoWeaponsEffects.SALVATION.get())) {
 			if (sourceEntity.hasEffect(EgoWeaponsEffects.DAZZLE.get())) {
-				multiplier += SharedFunctions.incrementBonusDamage(damageSource, -0.2f);
+				multiplier += SharedFunctions.incrementBonusDamage(damageSource, -0.15f);
 			} else {
-				multiplier += SharedFunctions.incrementBonusDamage(damageSource, 0.2f);
+				multiplier += SharedFunctions.incrementBonusDamage(damageSource, 0.15f);
 			}
 
 		}
@@ -201,7 +201,7 @@ public class LampEGOSuit extends GenericEgoWeaponsArmor {
 			return 0;
 		}
 	};
-	static Item chest = new LampEGOSuit(lobotomyEgoLamp, EquipmentSlotType.CHEST, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 0.5f, 0.5f, 0.5f ,0.5f, 1.3f, 1f, 0.7f, -4, -4) {
+	static Item chest = new LampEGOSuit(lobotomyEgoLamp, EquipmentSlotType.CHEST, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 0.5f, 0.5f, 0.5f ,0.5f, 1.3f, 1f, 0.7f, -4, -4, true) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -219,7 +219,28 @@ public class LampEGOSuit extends GenericEgoWeaponsArmor {
 		}
 
 		@Override
-		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+		public void setupWeaponDescription() {
+			super.setupWeaponDescription();
+			this.tierText = "desc.ego_weapons.risk.waw";
+			this.identifier = "lamp_suit";
+
+			addPage(new SkillDescriptionPage(this.identifier, "passive", 7,
+					new String[]{"lamp", "dazzle", "salvation", "defense_up"},
+					EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.DAZZLE.get(), EgoWeaponsEffects.SALVATION.get()));
+
+			addPage(new SkillDescriptionPage(this.identifier, "passive2", 4,
+					new String[]{"burn", "sinking", "feather_wick_bolt","lamp","black_fragility"},
+					EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.SALVATION.get()));
+
+			addPage(new SkillDescriptionPage(this.identifier, "ability", 6,
+					new String[]{"lamp","dazzle","guardian_of_the_forest", "power_up"},
+					EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.DAZZLE.get(), EgoWeaponsEffects.GUARDIAN_OF_THE_FOREST.get()));
+
+		}
+
+
+		//@Override
+		public void appendHoverTexta(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.appendHoverText(itemstack, world, list, flag);
 			TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.justitia_cloak.desc");
 			list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));

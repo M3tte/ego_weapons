@@ -1,7 +1,7 @@
 package net.m3tte.ego_weapons.item.guns;
 
 import net.m3tte.ego_weapons.EgoWeaponsMod;
-import net.m3tte.ego_weapons.item.EgoWeaponsWeapon;
+import net.m3tte.ego_weapons.item.descriptionSystem.EgoWeaponsWeapon;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
