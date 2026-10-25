@@ -9,6 +9,7 @@ import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.UtilitySystems;
@@ -47,8 +48,10 @@ import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.generateAt
 public class LampEGOSuit extends GenericEgoWeaponsArmor {
 
 
-
-
+	@Override
+	public CountPotencyStatus[] getKeywords() {
+		return new CountPotencyStatus[]{EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.DAZZLE.get(), EgoWeaponsEffects.FRAGILE.get()};
+	}
 
 	static IArmorMaterial lobotomyEgoLamp = new IArmorMaterial() {
 		@Override
@@ -201,7 +204,7 @@ public class LampEGOSuit extends GenericEgoWeaponsArmor {
 			return 0;
 		}
 	};
-	static Item chest = new LampEGOSuit(lobotomyEgoLamp, EquipmentSlotType.CHEST, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 0.5f, 0.5f, 0.5f ,0.5f, 1.3f, 1f, 0.7f, -4, -4, true) {
+	static Item chest = new LampEGOSuit(lobotomyEgoLamp, EquipmentSlotType.CHEST, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 0.8f, 0.7f, 0.4f ,1.5f, 1f, 0.7f, 1.3f, 4, 4, true) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {

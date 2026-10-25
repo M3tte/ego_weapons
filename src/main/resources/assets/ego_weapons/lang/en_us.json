@@ -177,6 +177,13 @@
 
   "item.ego_weapons.generic.page": "= - - - - - - - [Page: %s/%s] - - - - - - - =",
 
+  "desc.ego_weapons.tags.ego_gear": "E.G.O Gear",
+  "desc.ego_weapons.tags.bird":  "Bird of the Dark Forest",
+  "desc.ego_weapons.tags.zayin": "ZAYIN",
+  "desc.ego_weapons.tags.teth":  "TETH",
+  "desc.ego_weapons.tags.he":    "HE",
+  "desc.ego_weapons.tags.waw":   "WAW",
+  "desc.ego_weapons.tags.aleph": "ALEPH",
 
   "entity.ego_weapons.doubt": "Doubt",
   "entity.ego_weapons.craving_bloodbag": "Craving Bloodbag",
@@ -1178,7 +1185,7 @@
   "desc.ego_weapons.lamp_crossbow.auto2.5": "[II]  §7Inflict §f1 \uE002 §cBurn §7Count. §7Inflict §f2 \uE003 §cSinking §7Count.",
   "desc.ego_weapons.lamp_crossbow.auto2.6": "[III] §7Consume §f1 \uE050 §cFeather-Wick Bolt§7.",
   "desc.ego_weapons.lamp_crossbow.auto2.7": "[III] §7Inflict §f1 \uE002 §cBurn §7Count. §7Inflict §f1 \uE002 §cBurn §7Potency.",
-  "desc.ego_weapons.lamp_crossbow.auto2.8": "[III] §7Inflict §f2 \uE003 §cSinking §7Count. §7Inflict §f2 \uE003 §cSinking §7Potency.",
+  "desc.ego_weapons.lamp_crossbow.auto2.8": "[III] §7Inflict §f1 \uE003 §cSinking §7Count. §7Inflict §f1 \uE003 §cSinking §7Potency.",
   "desc.ego_weapons.lamp_crossbow.auto2.9": "[III] §7Deal §f+3% §7Damage for every §f3 \uE003 §cSinking §f+ \uE002 §cBurn§7 on Target. §8[Max +21%]",
   "desc.ego_weapons.lamp_crossbow.auto2.10": "[III] §7Gain §f2 %1$s§7.",
 
@@ -1204,7 +1211,7 @@
   "desc.ego_weapons.lamp_crossbow.ability.7": "- §cStun §7the Target.",
   "desc.ego_weapons.lamp_crossbow.ability.8": "- §7Deal §f+30% §7Damage.",
   "desc.ego_weapons.lamp_crossbow.ability.9": "[I]   §7Consume §f1 \uE050 §cFeather-Wick Bolt§7.",
-  "desc.ego_weapons.lamp_crossbow.ability.10": "[I]   §7Inflict §f2 \uE002 §cBurn §7Count. §7Inflict §f4 \uE003 §cSinking §7Count.",
+  "desc.ego_weapons.lamp_crossbow.ability.10": "[I]   §7Inflict §f2 \uE002 §cBurn §7Count. §7Inflict §f3 \uE003 §cSinking §7Count.",
   "desc.ego_weapons.lamp_crossbow.ability.11": "[II]  §7Consume §f1 \uE050 §cFeather-Wick Bolt§7.",
   "desc.ego_weapons.lamp_crossbow.ability.12": "[II]  §7Inflict §f2 \uE002 §cBurn §7Potency. §7Inflict §f2 \uE003 §cSinking §7Potency.",
   "desc.ego_weapons.lamp_crossbow.ability.13": "[III] §7Consume §f2 \uE050 §cFeather-Wick Bolt§7.",
@@ -1212,7 +1219,7 @@
   "desc.ego_weapons.lamp_crossbow.ability.15": "[III] §7Deal §f\uED03 §5Black Damage §7by §f(\uE003 §cSinking §f+ \uE002 §cBurn§f)§7 on Target. §8[Max 15]",
   "desc.ego_weapons.lamp_crossbow.ability.16": "[III] §7If §cEmpowered§7: Increase the above effect by §f50%%§7.",
 
-
+  "desc.ego_weapons.lamp_suit.desc": "§o\"The feathers of this suit glow and burn ever fervently...\"",
   "desc.ego_weapons.lamp_suit.passive.meta": "%1 - Lamp, %2 - Dazzled, %3 - Salvation",
   "desc.ego_weapons.lamp_suit.passive.desc": "§o\"Should one peer into the lamplight too long...\"",
   "desc.ego_weapons.lamp_suit.passive.title": "§b[Passive] §fEyes bright like lamps.",

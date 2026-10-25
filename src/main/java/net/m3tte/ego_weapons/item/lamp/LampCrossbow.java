@@ -261,28 +261,28 @@ public class LampCrossbow extends GunItem {
 				break;
 			case "lamp_cb_auto_r_3":
 				EgoWeaponsEffects.BURN.get().increment(target, 1, 1);
-				EgoWeaponsEffects.SINKING.get().increment(target, 2, 2);
+				EgoWeaponsEffects.SINKING.get().increment(target, 1, 1);
 				break;
 			case "lamp_cb_innate":
 
 				boolean isEmpowered = false;
 
 				if (mainhandItem.isEmpty())
-					mainhandItem.getOrCreateTag().getBoolean("empoweredInnate");
+					isEmpowered = mainhandItem.getOrCreateTag().getBoolean("empoweredInnate");
 
 				if (isEmpowered) {
 					EgoWeaponsEffects.BLACK_FRAGILITY.get().increment(target, 0, 1);
 					mult += SharedFunctions.incrementBonusDamage(damageSource, 0.5f);
 				}
 
-				EgoWeaponsEffects.BURN.get().increment(target, 1, 1);
-				EgoWeaponsEffects.SINKING.get().increment(target, 2, 2);
+				EgoWeaponsEffects.BURN.get().increment(target, isEmpowered ? 2 : 0, 1);
+				EgoWeaponsEffects.SINKING.get().increment(target, isEmpowered ? 3 : 0, 1);
 				break;
 			case "lamp_cb_sp_1b_1":
 				mult += SharedFunctions.incrementBonusDamage(damageSource, 0.3f);
 			case "lamp_cb_sp_1":
 				EgoWeaponsEffects.BURN.get().increment(target, 2, 0);
-				EgoWeaponsEffects.SINKING.get().increment(target, 4, 0);
+				EgoWeaponsEffects.SINKING.get().increment(target, 3, 0);
 
 				mult += SharedFunctions.incrementBonusDamage(damageSource, Math.min(FburnSinking * 0.05f, 0.25f));
 				mult += SharedFunctions.incrementBonusDamage(damageSource, lampOnSelf * 0.03f);

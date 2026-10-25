@@ -19,7 +19,7 @@ public class AttributeTextPlaceholder extends StringTextComponent {
     }
 
     public AttributeTextPlaceholder(PlaceholderType type, int emptyLines, PlaceholderMetadata metadata) {
-        super(": :");
+        super(" ");
         this.type = type;
         this.emptyLines = emptyLines;
         this.metadata = metadata;
@@ -30,8 +30,10 @@ public class AttributeTextPlaceholder extends StringTextComponent {
     }
 
     public enum PlaceholderType {
-        ARMOR,
+        ARMOR_STATISTICS,
+        TAGS,
         WEAPON,
+        KEYWORDS,
         OTHER;
     }
 }

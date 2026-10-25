@@ -238,8 +238,6 @@ public class DamageResistanceSystem {
         g = Math.min(255, ((baseCol >> 8) & 0xFF) + g);
         b = Math.min(255, (baseCol & 0xFF) + b);
 
-        System.out.println("RESOLVED VALUES : "+r+"/"+g+"/"+b);
-
         return (r << 16) | (g << 8) | b;
     }
 

@@ -3,12 +3,14 @@ package net.m3tte.ego_weapons.item.descriptionSystem;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.m3tte.ego_weapons.EgoWeaponsAttributes;
-import net.m3tte.ego_weapons.client.util.descriptionHandler.AttributeDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.ArmorStatisticPage;
 import net.m3tte.ego_weapons.client.util.descriptionHandler.AttributeTextPlaceholder;
 import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
 import net.m3tte.ego_weapons.client.util.descriptionHandler.ResistanceDescriptionPage;
 import net.m3tte.ego_weapons.client.util.descriptionHandler.metadata.ArmorMetadata;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.metadata.ItemMetadata;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -184,14 +186,16 @@ public class GenericEgoWeaponsArmor extends ArmorItem {
         pages.put(pages.size(), page);
     }
     public void setupWeaponDescription() {
-        addPage(new AttributeDescriptionPage(AttributeTextPlaceholder.PlaceholderType.ARMOR, 10,
-                new ArmorMetadata("armordata", this.material.getDefenseForSlot(this.slot), this.redResistance, this.whiteResistance, this.blackResistance, this.paleResistance, this.slashResistance, this.bluntResistance, this.pierceResistance)));
+        addPage(new ArmorStatisticPage(AttributeTextPlaceholder.PlaceholderType.ARMOR_STATISTICS, 11,
+                new ArmorMetadata("armordata", this, this.getKeywords(), this.material.getDefenseForSlot(this.slot), this.redResistance, this.whiteResistance, this.blackResistance, this.paleResistance, this.slashResistance, this.bluntResistance, this.pierceResistance, this.bonusSanity, this.bonusStaggerThreshold)));
 
         addPage(new ResistanceDescriptionPage(this.material.getDefenseForSlot(this.slot), this.bonusStaggerThreshold, this.bonusSanity, this.redResistance, this.whiteResistance, this.blackResistance, this.paleResistance, this.slashResistance, this.bluntResistance, this.pierceResistance));
 
     }
 
-
+    public CountPotencyStatus[] getKeywords() {
+        return new CountPotencyStatus[]{};
+    }
 
     @Override
     public void appendHoverText(@NotNull ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
@@ -208,12 +212,20 @@ public class GenericEgoWeaponsArmor extends ArmorItem {
         }
 
         TooltipFuncs.generateItemDescription(list, "desc.ego_weapons."+identifier+".desc");
+
+        EmptyDescriptionPage page = this.pages.getOrDefault(EgoWeaponsKeybinds.getUiPage(), defaultPageResult);
+
+        if (page.isShowTags()) {
+            list.add(new AttributeTextPlaceholder(AttributeTextPlaceholder.PlaceholderType.TAGS, 1, new ItemMetadata("tags_item", itemstack.getItem(), getKeywords())));
+            list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
+        }
+
         list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
 
         list.add(new TranslationTextComponent("item.ego_weapons.generic.page", EgoWeaponsKeybinds.getUiPage()+1, pages.size()));
         list.add(new TranslationTextComponent(tierText));
         list.add(new StringTextComponent(" "));
-        this.pages.getOrDefault(EgoWeaponsKeybinds.getUiPage(), defaultPageResult).render(itemstack, world, list);
+        page.render(itemstack, world, list);
 
         generateStatusHelp(list);
     }

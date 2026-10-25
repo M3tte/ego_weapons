@@ -1,6 +1,6 @@
 package net.m3tte.ego_weapons.item.descriptionSystem;
 
-import net.m3tte.ego_weapons.client.util.descriptionHandler.AttributeDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.ArmorStatisticPage;
 import net.m3tte.ego_weapons.client.util.descriptionHandler.AttributeTextPlaceholder;
 import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
@@ -48,7 +48,7 @@ public class EgoWeaponsWeapon extends SwordItem {
         pages.put(pages.size(), page);
     }
     public void setupWeaponDescription() {
-        addPage(new AttributeDescriptionPage(AttributeTextPlaceholder.PlaceholderType.WEAPON, 3, new PlaceholderMetadata("weaponData")));
+        addPage(new ArmorStatisticPage(AttributeTextPlaceholder.PlaceholderType.WEAPON, 3, new PlaceholderMetadata("weaponData")));
     }
 
 

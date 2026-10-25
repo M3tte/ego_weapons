@@ -11,6 +11,20 @@ public class EmptyDescriptionPage {
 
 
     // If on an empty page. Set UI Page to 0.
+
+    boolean showTags = false;
+
+    public boolean isShowTags() {
+        return showTags;
+    }
+
+    public EmptyDescriptionPage(boolean showTags) {
+        this.showTags = showTags;
+    }
+
+    public EmptyDescriptionPage() {
+    }
+
     public void render(ItemStack itemstack, World world, List<ITextComponent> list) {
         EgoWeaponsKeybinds.setUiPage(0);
     }

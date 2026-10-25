@@ -24,6 +24,7 @@ public class ResistanceDescriptionPage extends EmptyDescriptionPage {
     float pierceRes = 1;
 
     public ResistanceDescriptionPage(float defenseValue, float bonusStagger, float bonusSanity, float redRes, float whiteRes, float blackRes, float paleRes, float slashRes, float bluntRes, float pierceRes) {
+        super(true);
         this.defenseValue = defenseValue;
         this.bonusStagger = bonusStagger;
         this.bonusSanity = bonusSanity;

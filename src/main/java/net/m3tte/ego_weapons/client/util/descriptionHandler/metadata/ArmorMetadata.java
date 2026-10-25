@@ -1,18 +1,23 @@
 package net.m3tte.ego_weapons.client.util.descriptionHandler.metadata;
 
-public class ArmorMetadata extends PlaceholderMetadata {
-    float defenseLevel = 0;
-    float redRes = 1;
-    float whiteRes = 1;
-    float blackRes = 1;
-    float paleRes = 1;
+import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
+import net.minecraft.item.Item;
 
-    float slashRes = 1;
-    float pierceRes = 1;
-    float bluntRes = 1;
+public class ArmorMetadata extends ItemMetadata {
+    private float defenseLevel = 0;
+    private float redRes = 1;
+    private float whiteRes = 1;
+    private float blackRes = 1;
+    private float paleRes = 1;
 
-    public ArmorMetadata(String itemIdentifier, float defenseLevel, float redRes, float whiteRes, float blackRes, float paleRes, float slashRes, float pierceRes, float bluntRes) {
-        super(itemIdentifier);
+    private float slashRes = 1;
+    private float pierceRes = 1;
+    private float bluntRes = 1;
+    private float bonusSanity = 0;
+    private float bonusStagger = 0;
+
+    public ArmorMetadata(String itemIdentifier, Item item, CountPotencyStatus[] keywords, float defenseLevel, float redRes, float whiteRes, float blackRes, float paleRes, float slashRes, float pierceRes, float bluntRes, float bonusSanity, float bonusStagger) {
+        super(itemIdentifier, item, keywords);
         this.defenseLevel = defenseLevel;
         this.redRes = redRes;
         this.whiteRes = whiteRes;
@@ -21,6 +26,16 @@ public class ArmorMetadata extends PlaceholderMetadata {
         this.slashRes = slashRes;
         this.pierceRes = pierceRes;
         this.bluntRes = bluntRes;
+        this.bonusSanity = bonusSanity;
+        this.bonusStagger = bonusStagger;
+    }
+
+    public float getBonusSanity() {
+        return bonusSanity;
+    }
+
+    public float getBonusStagger() {
+        return bonusStagger;
     }
 
     public float getDefenseLevel() {

@@ -21,6 +21,7 @@ public class SkillDescriptionPage extends EmptyDescriptionPage {
     Effect[] assignedEffects = null;
 
     public SkillDescriptionPage(String gearIdentifier, String skillType, int lines, String[] statusEffects, Effect... assignedEffects) {
+        super(false);
         this.gearIdentifier = gearIdentifier;
         this.skillType = skillType;
         this.lines = lines;
@@ -29,6 +30,7 @@ public class SkillDescriptionPage extends EmptyDescriptionPage {
     }
 
     public SkillDescriptionPage(String gearIdentifier, String skillType, int lines, String[] statusEffects) {
+        super(false);
         this.gearIdentifier = gearIdentifier;
         this.skillType = skillType;
         this.lines = lines;

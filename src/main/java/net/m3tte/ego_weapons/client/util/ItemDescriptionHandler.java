@@ -2,13 +2,17 @@ package net.m3tte.ego_weapons.client.util;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.client.util.descriptionHandler.AttributeTextPlaceholder;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.metadata.ItemMetadata;
 import net.m3tte.ego_weapons.item.descriptionSystem.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.item.descriptionSystem.GenericEgoWeaponsArmor;
 import net.m3tte.ego_weapons.client.util.descriptionHandler.metadata.ArmorMetadata;
+import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
 import net.m3tte.ego_weapons.world.capabilities.DamageResistanceSystem;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
+import net.m3tte.ego_weapons.world.capabilities.item.TagSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -26,6 +30,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Set;
 
 import static net.m3tte.ego_weapons.world.capabilities.DamageResistanceSystem.getDamageIdentifierCol;
 
@@ -70,11 +77,8 @@ public class ItemDescriptionHandler {
                     AttributeTextPlaceholder.PlaceholderType type = ((AttributeTextPlaceholder) line).getType();
 
 
-
-
-
                     switch (type) {
-                        case ARMOR:
+                        case ARMOR_STATISTICS:
                             if (((AttributeTextPlaceholder) line).getMetadata() instanceof ArmorMetadata) {
                                 renderDamageResistances(event, offsetLine, renderType, mat, tickTime, 0.8f, (ArmorMetadata) ((AttributeTextPlaceholder) line).getMetadata());
                             }
@@ -83,8 +87,15 @@ public class ItemDescriptionHandler {
                         case WEAPON:
                             renderWeaponStats(event, offsetLine);
                             break;
-                        case OTHER:
-
+                        case TAGS:
+                            if (((AttributeTextPlaceholder) line).getMetadata() instanceof ItemMetadata) {
+                                renderTags(event, offsetLine, renderType, tickTime, 0.8f, (ItemMetadata) ((AttributeTextPlaceholder) line).getMetadata());
+                            }
+                            break;
+                        case KEYWORDS:
+                            if (((AttributeTextPlaceholder) line).getMetadata() instanceof ItemMetadata) {
+                                renderKeywords(event, offsetLine, renderType, tickTime, 0.8f, (ItemMetadata) ((AttributeTextPlaceholder) line).getMetadata());
+                            }
                             break;
                     }
                 }
@@ -96,10 +107,6 @@ public class ItemDescriptionHandler {
 
 
 
-
-        if (found) {
-
-        }
 
         // Every line offsets y by 10
         //AbstractGui.blit(event.getMatrixStack(), event.getX(), event.getY(), 0, 0, 16, 16, 16, 16);
@@ -131,7 +138,7 @@ public class ItemDescriptionHandler {
         renderResistanceIcon(scaledOffs + scaledWidth     , (float) (yOffs + 60 + lineDist*offsetLine + Math.min(0, Math.sin(gameTime * 0.1f + 2.5f) * 2f)), GenericEgoDamage.AttackTypes.PIERCE.getIconLoc(), 20, 20, metadata.getPierceRes(), event, renderType, mat, gameTime);
         renderResistanceIcon(scaledOffs + scaledWidth + 40, (float) (yOffs + 60 + lineDist*offsetLine + Math.min(0, Math.sin(gameTime * 0.1f + 3.5f) * 2f)), GenericEgoDamage.AttackTypes.BLUNT.getIconLoc(), 20, 20, metadata.getBluntRes(), event, renderType, mat, gameTime);
 
-        int firstElementSize = renderExtraAttribute(scaledOffs + scaledWidth, yOffs + lineDist*(offsetLine + 10), event, new Tuple<>("desc.ego_weapons.sanity_bonus", 1f), new Tuple<>("desc.ego_weapons.stagger_bonus", 3f));
+        int firstElementSize = renderExtraAttributes(scaledOffs + scaledWidth, yOffs + lineDist*(offsetLine + 10), event, new Tuple<>("desc.ego_weapons.sanity_bonus", metadata.getBonusSanity()), new Tuple<>("desc.ego_weapons.stagger_bonus", metadata.getBonusStagger()));
         event.getMatrixStack().popPose();
     }
 
@@ -146,8 +153,194 @@ public class ItemDescriptionHandler {
         event.getMatrixStack().popPose();
     }
 
+    private static void renderTags(RenderTooltipEvent.PostBackground event, int offsetLine, IRenderTypeBuffer.Impl renderType, float gameTime, float scaleFactor, ItemMetadata metadata) {
+        event.getMatrixStack().pushPose();
+
+        event.getMatrixStack().translate(0,0,405);
+        event.getMatrixStack().scale(scaleFactor, scaleFactor, scaleFactor);
+
+        // Invert the scale factor
+        scaleFactor = 1 / scaleFactor;
+
+        float scaledOffs = ((event.getX()) * (scaleFactor)) ;
+        float scaledWidth = (event.getWidth() / 2f) * scaleFactor;
+        float lineDist = 10 * scaleFactor;
+        float yOffs = event.getY() * (scaleFactor);
+
+        renderTagsLinewise(scaledOffs + scaledWidth, yOffs + 5 + lineDist*offsetLine, event, metadata.getTargetItem(), scaledWidth * 2, 3);
+
+        //int firstElementSize = renderExtraAttributes(scaledOffs + scaledWidth, yOffs + lineDist*(offsetLine + 10), event, new Tuple<>("desc.ego_weapons.sanity_bonus", 1f), new Tuple<>("desc.ego_weapons.stagger_bonus", 3f));
+        event.getMatrixStack().popPose();
+    }
+
+    private static void renderKeywords(RenderTooltipEvent.PostBackground event, int offsetLine, IRenderTypeBuffer.Impl renderType, float gameTime, float scaleFactor, ItemMetadata metadata) {
+        event.getMatrixStack().pushPose();
+
+        event.getMatrixStack().translate(0,0,405);
+        event.getMatrixStack().scale(scaleFactor, scaleFactor, scaleFactor);
+
+        // Invert the scale factor
+        scaleFactor = 1 / scaleFactor;
+
+        float scaledOffs = ((event.getX()) * (scaleFactor)) ;
+        float scaledWidth = (event.getWidth() / 2f) * scaleFactor;
+        float lineDist = 10 * scaleFactor;
+        float yOffs = event.getY() * (scaleFactor);
+
+        renderKeywordsLinewise(scaledOffs + scaledWidth, yOffs + 5 + lineDist*offsetLine, event, metadata.getTargetItem(), scaledWidth * 2, 3, metadata.getKeywords());
+
+        //int firstElementSize = renderExtraAttributes(scaledOffs + scaledWidth, yOffs + lineDist*(offsetLine + 10), event, new Tuple<>("desc.ego_weapons.sanity_bonus", 1f), new Tuple<>("desc.ego_weapons.stagger_bonus", 3f));
+        event.getMatrixStack().popPose();
+    }
+
+    private static void renderKeywordsLinewise(float offsX, float offsY, RenderTooltipEvent.PostBackground event, Item item, float lineWidth, int maxLines, CountPotencyStatus... keywords) {
+
+        int[] textSize = new int[keywords.length];
+        int i = 0;
+
+        LinkedList<LinkedList<Tuple<ResourceLocation, IFormattableTextComponent>>> lines = new LinkedList<>();
+
+        LinkedList<Tuple<ResourceLocation, IFormattableTextComponent>> operatingLine = new LinkedList<>();
+        LinkedList<Integer> lineSizes = new LinkedList<>();
+        int lineIDX = 0;
+        int lineSize = 0;
+        for (CountPotencyStatus countPotencyStatus : keywords) {
+
+            IFormattableTextComponent translationText = new TranslationTextComponent(countPotencyStatus.getDescriptionId());
+            int size = event.getFontRenderer().width(translationText) + 26;
+            textSize[i] = size;
+
+            Tuple<ResourceLocation, IFormattableTextComponent> currentElement = new Tuple<>(countPotencyStatus.getIcon() , translationText);
+
+            if ((lineSize + size) >= lineWidth) {
+                lineSizes.add(lineSize);
+                lines.add(operatingLine);
+                operatingLine = new LinkedList<>();
+                lineIDX++;
+                lineSize = 0;
+            }
+            i++;
+            lineSize += size + 6;
+            operatingLine.add(currentElement);
+        }
+
+        if (!operatingLine.isEmpty()) {
+            lines.add(operatingLine);
+            lineSizes.add(lineSize);
+        }
+
+        i = 0;
+        int lineIdx = 1;
+        for (LinkedList<Tuple<ResourceLocation, IFormattableTextComponent>> line : lines) {
+            int horizontalOffset = 0;
+            event.getMatrixStack().pushPose();
+
+            if (lineSizes.isEmpty())
+                break;
+
+            event.getMatrixStack().translate(offsX - lineSizes.removeFirst()/2f, offsY + 18 * (lineIdx - 1), 0);
+
+            for (Tuple<ResourceLocation, IFormattableTextComponent> element : line) {
+                Minecraft.getInstance().getTextureManager().bind(TagSystem.TagPresets.WHITE_BORDER.getBackground());
+                int offsetFactor = (textSize[i] / 64) + 1;
+                AbstractGui.blit(event.getMatrixStack(), horizontalOffset, 5, offsetFactor + 1, 0, textSize[i] - offsetFactor, 16, Math.max(64,textSize[i] + offsetFactor), 16);
+
+                event.getMatrixStack().pushPose();
+                event.getMatrixStack().translate(horizontalOffset, -2, 0);
+                Minecraft.getInstance().getTextureManager().bind(element.getA());
+                AbstractGui.blit(event.getMatrixStack(), 0, 0, 0, 0, 20, 20, 20, 20);
+                event.getMatrixStack().popPose();
+
+                event.getFontRenderer().draw(event.getMatrixStack(), element.getB(), 24 + horizontalOffset, 4, 0xff5555);
+                horizontalOffset += 6 + textSize[i];
+                i++;
+            }
+            event.getMatrixStack().popPose();
+
+            lineIdx++;
+
+            if (lineIdx > maxLines)
+                break;
+        }
+    }
+
+    private static void renderTagsLinewise(float offsX, float offsY, RenderTooltipEvent.PostBackground event, Item item, float lineWidth, int maxLines) {
+        Set<ResourceLocation> tags = item.getTags();
+
+        if (tags.isEmpty())
+            return;
+
+        int[] textSize = new int[tags.size()];
+        int i = 0;
+
+        LinkedList<LinkedList<Tuple<TagSystem.TagPresets, IFormattableTextComponent>>> lines = new LinkedList<>();
+
+        HashMap<ResourceLocation, TagSystem.TagPresets> presets = TagSystem.getRegisteredTagPresets();
+
+        LinkedList<Tuple<TagSystem.TagPresets, IFormattableTextComponent>> operatingLine = new LinkedList<>();
+        LinkedList<Integer> lineSizes = new LinkedList<>();
+        int lineIDX = 0;
+        int lineSize = 0;
+        for (ResourceLocation resourceLocation : tags) {
+
+            IFormattableTextComponent translationText = new TranslationTextComponent("desc."+resourceLocation.getNamespace()+".tags."+resourceLocation.getPath());
+            int size = event.getFontRenderer().width(translationText) + 12;
+            textSize[i] = size;
+
+            Tuple<TagSystem.TagPresets, IFormattableTextComponent> currentElement = new Tuple<>(presets.getOrDefault(resourceLocation, TagSystem.TagPresets.DEFAULT), translationText);
+
+            if ((lineSize + size) >= lineWidth) {
+                lineSizes.add(lineSize);
+                lines.add(operatingLine);
+                operatingLine = new LinkedList<>();
+                lineIDX++;
+                lineSize = 0;
+            }
+            i++;
+            lineSize += size + 6;
+            operatingLine.add(currentElement);
+        }
+
+        if (!operatingLine.isEmpty()) {
+            lines.add(operatingLine);
+            lineSizes.add(lineSize);
+        }
+
+        i = 0;
+        int lineIdx = 1;
+        for (LinkedList<Tuple<TagSystem.TagPresets, IFormattableTextComponent>> line : lines) {
+            int horizontalOffset = 0;
+            event.getMatrixStack().pushPose();
+
+            if (lineSizes.isEmpty())
+                break;
+
+            event.getMatrixStack().translate(offsX - lineSizes.removeFirst()/2f, offsY + 18 * (lineIdx - 1), 0);
+
+            for (Tuple<TagSystem.TagPresets, IFormattableTextComponent> element : line) {
+                Minecraft.getInstance().getTextureManager().bind(element.getA().getBackground());
+                int offsetFactor = (textSize[i] / 64) + 1;
+                AbstractGui.blit(event.getMatrixStack(), horizontalOffset, 0, offsetFactor + 1, 0, textSize[i] - offsetFactor, 16, Math.max(64,textSize[i] + offsetFactor), 16);
+
+                // Blit the 2 edges
+                AbstractGui.blit(event.getMatrixStack(), horizontalOffset, 0, 0, 0, 1, 16, 64, 16);
+                AbstractGui.blit(event.getMatrixStack(), horizontalOffset + textSize[i] - offsetFactor, 0, 0, 0, 1, 16, 64, 16);
+
+                event.getFontRenderer().draw(event.getMatrixStack(), element.getB(), 6 + horizontalOffset, 4, element.getA().getColor());
+                horizontalOffset += 6 + textSize[i];
+                i++;
+            }
+            event.getMatrixStack().popPose();
+
+            lineIdx++;
+
+            if (lineIdx > maxLines)
+                break;
+        }
+    }
+
     @SafeVarargs
-    private static int renderExtraAttribute(float offsX, float offsY, RenderTooltipEvent.PostBackground event, Tuple<String, Float>... values) {
+    private static int renderExtraAttributes(float offsX, float offsY, RenderTooltipEvent.PostBackground event, Tuple<String, Float>... values) {
         event.getMatrixStack().pushPose();
 
         IFormattableTextComponent[] formattedTexts = new IFormattableTextComponent[values.length];
@@ -176,8 +369,9 @@ public class ItemDescriptionHandler {
 
         for (IFormattableTextComponent textComponent : formattedTexts) {
 
-            Minecraft.getInstance().getTextureManager().bind(PLAQUE_SILVER);
+            Minecraft.getInstance().getTextureManager().bind(TagSystem.TagPresets.SIMPLE.getBackground());
             AbstractGui.blit(event.getMatrixStack(), horizontalOffset, 0, 1, 0, textSize[i] +2, 16, textSize[i] +4, 16);
+            AbstractGui.blit(event.getMatrixStack(), horizontalOffset + textSize[i]+2, 0, 0, 0, 1, 16, 64, 16);
 
             event.getFontRenderer().draw(event.getMatrixStack(), textComponent, 6 + horizontalOffset, 4, 0xFFFFFF);
 
@@ -207,9 +401,9 @@ public class ItemDescriptionHandler {
         // RenderSystem.enableAlphaTest();
         event.getMatrixStack().translate(offsX, offsY, 0);
 
-        if (value > 1f) {
+        if (value > 1.1f) {
             event.getMatrixStack().pushPose();
-            float correctedValue = (float) Math.min(1, (value - 1f) * 0.9f + (value - 1f) * 0.1f * Math.sin(gameTime * 0.1f));
+            float correctedValue = (float) Math.min(1, (value * 1.4 - 1.4f) * 0.9f + (value - 1f) * 0.1f * Math.sin(gameTime * 0.1f));
             //RenderSystem.disableAlphaTest();
             RenderSystem.enableBlend();
             RenderSystem.depthMask(false);
@@ -218,7 +412,7 @@ public class ItemDescriptionHandler {
 
 
             Minecraft.getInstance().getTextureManager().bind(ICON_BORDER_GLOW);
-            AbstractGui.blit(event.getMatrixStack(), - (18), - 14, 0, 0, 70, 70, 70, 70);
+            AbstractGui.blit(event.getMatrixStack(), - (19), - 14, 0, 0, 70, 70, 70, 70);
 
             //RenderSystem.enableAlphaTest();
             RenderSystem.defaultBlendFunc();
@@ -252,8 +446,8 @@ public class ItemDescriptionHandler {
         //event.getFontRenderer().drawInBatch(multiplier, event.getX() + offsX + (17f - size/2f), (float)event.getY() + offsY + 36, -1, true, mat, renderType, false, 0, 15728880);
         event.getMatrixStack().pushPose();
         event.getMatrixStack().scale(0.8f, 0.8f, 0.8f);
-        // 2 / 0.8f
         event.getMatrixStack().translate((17f - size/(2.5f)), 0, 0);
+        // 2 / 0.8f
         // 36 / 0.8f
         event.getFontRenderer().draw(event.getMatrixStack(), multiplier, 0, 45.0f, col);
         event.getMatrixStack().popPose();
