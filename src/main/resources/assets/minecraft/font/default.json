@@ -233,14 +233,14 @@
     },
     {
       "type": "bitmap",
-      "file": "ego_weapons:mob_effect/district_10_fuel.png",
+      "file": "ego_weapons:mob_effect/district_12_fuel.png",
       "ascent": 8,
       "height": 9,
       "chars": ["\uE034"]
     },
     {
       "type": "bitmap",
-      "file": "ego_weapons:mob_effect/overheated_district_10_fuel.png",
+      "file": "ego_weapons:mob_effect/overheated_district_12_fuel.png",
       "ascent": 8,
       "height": 9,
       "chars": ["\uE035"]

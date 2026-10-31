@@ -2,12 +2,15 @@
 package net.m3tte.ego_weapons.item.sunshower;
 
 import net.m3tte.ego_weapons.*;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.entities.SunshowerUmbrellaEntity;
 import net.m3tte.ego_weapons.gameasset.EgoWeaponsAnimations;
 import net.m3tte.ego_weapons.gameasset.movesets.SunshowerMovesetAnims;
 import net.m3tte.ego_weapons.item.descriptionSystem.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.network.packages.VFXPackages;
+import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
 import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
@@ -95,6 +98,35 @@ public class Sunshower extends EgoWeaponsWeapon {
 		return "sunshower";
 	}
 
+
+	@Override
+	public void setupWeaponDescription() {
+		super.setupWeaponDescription();
+		this.tierText = "desc.ego_weapons.risk.he";
+		this.identifier = "sunshower";
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability", 4,
+				new String[]{"white", "sinking", "rupture"}, true));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INNATE, this.identifier, "innate", 6,
+				new String[]{"white", "sinking", "tremor_burst", "rupture"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, this.identifier, "auto", 8,
+				new String[]{"white", "sinking"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.DEFENSE, this.identifier, "guard", 3,
+				new String[]{"white", "sinking"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive", 5,
+				new String[]{"sinking", "offense_down"}));
+	}
+
+	@Override
+	public CountPotencyStatus[] getKeywords() {
+		return new CountPotencyStatus[]{EgoWeaponsEffects.SINKING.get()};
+	}
+
+	/*
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
@@ -138,7 +170,7 @@ public class Sunshower extends EgoWeaponsWeapon {
 
 		generateStatusHelp(list);
 
-	}
+	}*/
 
 	private static int[] sunshowerAutoAnimIds = null;
 	public static void interruptedAttack(LivingEntity target) {

@@ -1,6 +1,9 @@
 package net.m3tte.ego_weapons.item.relics;
 
 import net.m3tte.ego_weapons.*;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.ConditionalDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.gameasset.AttackLogicPredicate;
 import net.m3tte.ego_weapons.item.descriptionSystem.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
@@ -8,6 +11,8 @@ import net.m3tte.ego_weapons.network.packages.KeybindPackages;
 import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.potion.MugaDeathPrevention;
 import net.m3tte.ego_weapons.potion.countEffects.BleedEffect;
+import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
+import net.m3tte.ego_weapons.potion.countEffects.EffectLike;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.EmotionSystem;
@@ -78,7 +83,7 @@ public class Arayashiki extends EgoWeaponsWeapon {
 
 
 
-	@OnlyIn(Dist.CLIENT)
+	/*@OnlyIn(Dist.CLIENT)
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
@@ -100,9 +105,85 @@ public class Arayashiki extends EgoWeaponsWeapon {
 
 
 		generateStatusHelp(list);
+	}*/
+
+	@Override
+	public void setupWeaponDescription() {
+		super.setupWeaponDescription();
+		this.tierText = "desc.ego_weapons.risk.1";
+		this.identifier = "arayashiki";
+		String altIdentifier = this.identifier+"_u";
+
+
+
+		SkillDescriptionPage sp_1 = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability", 9,
+				new String[]{"red", "poise", "bleed"}, true);
+		SkillDescriptionPage sp_2 = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability_b", 9,
+				new String[]{"red", "pale", "poise", "bleed", "loss_of_self"}, true);
+		SkillDescriptionPage sp_3 = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, altIdentifier, "ability", 11,
+				new String[]{"pale", "poise", "bleed", "loss_of_self", "sever_the_thread"}, true);
+
+		addPage(new ConditionalDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, () -> {
+			boolean firemode = Minecraft.getInstance().player != null ? KeybindPackages.getFireMode(Minecraft.getInstance().player) : false;
+			boolean time = Minecraft.getInstance().player != null ? Minecraft.getInstance().player.tickCount % 300 <= 150 : false;
+			boolean threshold = EmotionSystem.getEmotionLevel(Minecraft.getInstance().player) >= 3;
+
+			if (firemode)
+				return sp_3;
+
+			if (time && threshold)
+				return sp_2;
+
+			return sp_1;
+		}));
+
+		SkillDescriptionPage inn_1 = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INNATE, this.identifier, "innate", 6,
+				new String[]{"red", "poise", "bleed"});
+		SkillDescriptionPage inn_2 = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INNATE, altIdentifier, "innate", 10,
+				new String[]{"pale", "poise", "bleed"});
+		addPage(new ConditionalDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INNATE, () -> {
+			boolean firemode = Minecraft.getInstance().player != null ? KeybindPackages.getFireMode(Minecraft.getInstance().player) : false;
+
+			return firemode ? inn_2 : inn_1;
+		}));
+
+		//addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INNATE, this.identifier, "innate", 6,
+		//		new String[]{"white", "sinking", "tremor_burst", "rupture"}));
+
+		SkillDescriptionPage auto_1 = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, this.identifier, "auto", 7,
+				new String[]{"red", "poise", "bleed"});
+		SkillDescriptionPage auto_2 = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, altIdentifier, "auto", 12,
+				new String[]{"pale", "poise", "bleed"});
+		addPage(new ConditionalDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, () -> {
+			boolean firemode = Minecraft.getInstance().player != null ? KeybindPackages.getFireMode(Minecraft.getInstance().player) : false;
+
+			return firemode ? auto_2 : auto_1;
+		}));
+
+		//addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, this.identifier, "auto", 8,
+		//		new String[]{"white", "sinking"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.DEFENSE, this.identifier, "guard", 3,
+				new String[]{"red", "poise"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive", 3,
+				new String[]{"poise", "offense_up"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive2", 7,
+				new String[]{"pale" ,"loss_of_self", "sever_the_thread", "tianshia_star"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive3", 1,
+				new String[]{"tianshia_star"}));
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Override
+	public EffectLike[] getKeywords() {
+		return new EffectLike[]{EgoWeaponsEffects.BLEED.get(), EgoWeaponsEffects.POISE.get()};
+	}
+
+
+
+	/*@OnlyIn(Dist.CLIENT)
 	public void appendHoverTextMain(ItemStack itemstack, World world, List<ITextComponent> list) {
 
 		boolean time = Minecraft.getInstance().player != null ? Minecraft.getInstance().player.tickCount % 300 <= 150 : false;
@@ -218,7 +299,7 @@ public class Arayashiki extends EgoWeaponsWeapon {
 					generateDescription(list,"arayashiki_u", "auto", 12);
 				break;
 		}
-	}
+	}*/
 
 	public static void interruptedAttack(LivingEntity target) {
 

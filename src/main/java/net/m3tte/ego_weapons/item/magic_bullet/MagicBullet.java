@@ -2,10 +2,13 @@
 package net.m3tte.ego_weapons.item.magic_bullet;
 
 import net.m3tte.ego_weapons.*;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.gameasset.*;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
 import net.m3tte.ego_weapons.item.descriptionSystem.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
 import net.m3tte.ego_weapons.potion.countEffects.DarkFlameEffect;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
@@ -41,6 +44,31 @@ import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.generateAt
 
 public class MagicBullet extends EgoWeaponsWeapon {
 
+	@Override
+	public void setupWeaponDescription() {
+		super.setupWeaponDescription();
+		this.tierText = "desc.ego_weapons.risk.waw";
+		this.identifier = "magic_bullet";
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability", 8,
+				new String[]{"black", "burn", "dark_flame", "magic_bullet"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INNATE, this.identifier, "innate", 4,
+				new String[]{"black", "burn", "dark_flame", "magic_bullet"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, this.identifier, "auto", 5,
+				new String[]{"black", "burn", "dark_flame"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.DEFENSE, this.identifier, "guard", 2,
+				new String[]{"magic_bullet"}));
+	}
+
+	@Override
+	public CountPotencyStatus[] getKeywords() {
+		return new CountPotencyStatus[]{EgoWeaponsEffects.BURN.get()};
+	}
+
+	/*
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
@@ -79,7 +107,7 @@ public class MagicBullet extends EgoWeaponsWeapon {
 		}
 
 		generateStatusHelp(list);
-	}
+	}*/
 
 
 	public static float damageMultiplier(LivingEntity target, LivingEntity sourceentity, float multiplier, DamageSource source) {

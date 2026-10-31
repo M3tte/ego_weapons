@@ -19,9 +19,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class CountPotencyStatus extends Effect {
+public abstract class CountPotencyStatus extends Effect implements EffectLike {
 
-
+    @Override
+    public String getName() {
+        return this.getDescriptionId();
+    }
+    @Override
+    public ResourceLocation getIconLoc() {
+        return this.getIcon();
+    }
     public boolean displaysOnHudNormally() {
         return true;
     }

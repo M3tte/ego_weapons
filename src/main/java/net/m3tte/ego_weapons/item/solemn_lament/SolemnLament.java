@@ -2,11 +2,15 @@
 package net.m3tte.ego_weapons.item.solemn_lament;
 
 import net.m3tte.ego_weapons.*;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.MultiDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.item.descriptionSystem.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.potion.SolemnLamentEffects;
+import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.StaggerSystem;
@@ -48,10 +52,54 @@ public class SolemnLament extends EgoWeaponsWeapon {
 	}
 
 	@Override
+	public void setupWeaponDescription() {
+		super.setupWeaponDescription();
+		this.tierText = "desc.ego_weapons.risk.waw";
+		this.identifier = "solemn_lament";
+
+		SkillDescriptionPage ability1 = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability", 13,
+				new String[]{"living_departed", "living_departed", "the_living", "the_departed", "sinking", "butterfly"});
+
+		SkillDescriptionPage ability2 = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability2", 2,
+				new String[]{"living_departed", "living_departed", "the_living", "the_departed", "sinking", "butterfly"}, true);
+
+		addPage(new MultiDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, ability1, ability2));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INNATE, this.identifier, "innate", 6,
+				new String[]{"living_departed", "the_living", "the_departed", "sinking", "butterfly"}));
+
+		SkillDescriptionPage auto1 = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, this.identifier, "auto", 6,
+				new String[]{"living_departed", "the_living", "the_departed", "sinking", "butterfly"});
+
+		SkillDescriptionPage auto2 = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, this.identifier, "auto2", 6,
+				new String[]{"living_departed", "the_living", "the_departed", "sinking", "butterfly"});
+
+		addPage(new MultiDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, auto1, auto2));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.DEFENSE, this.identifier, "guard", 5,
+				new String[]{"living_departed", "the_living", "the_departed", "sinking"}));
+
+		SkillDescriptionPage reload1 = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INFO, this.identifier, "reload", 1,
+				new String[]{"living_departed", "the_living", "the_departed"});
+
+		SkillDescriptionPage reload2 = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INFO, this.identifier, "reload2", 3,
+				new String[]{"living_departed", "the_living", "the_departed"});
+
+		addPage(new MultiDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INFO, reload1, reload2));
+
+	}
+
+	@Override
+	public CountPotencyStatus[] getKeywords() {
+		return new CountPotencyStatus[]{EgoWeaponsEffects.SINKING.get()};
+	}
+
+	@Override
 	public String getDefaultKillIdentifier() {
 		return "solemn_lament";
 	}
 
+	/*
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
@@ -104,7 +152,7 @@ public class SolemnLament extends EgoWeaponsWeapon {
 
 		generateStatusHelp(list);
 
-	}
+	}*/
 
 	@Override
 	public boolean hurtEnemy(ItemStack itemstack, LivingEntity target, LivingEntity sourceentity) {

@@ -5,9 +5,13 @@ import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.EgoWeaponsParticles;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.ConditionalDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.item.descriptionSystem.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.network.packages.VFXPackages;
+import net.m3tte.ego_weapons.potion.countEffects.EffectLike;
 import net.m3tte.ego_weapons.procedures.DelayedEvent;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
@@ -80,8 +84,49 @@ public class ArdorBlossomBat extends EgoWeaponsWeapon {
 		super(ardorBlossomTier, p_i48460_2_, p_i48460_3_, p_i48460_4_);
 	}
 
+	@Override
+	public void setupWeaponDescription() {
+		super.setupWeaponDescription();
+		this.tierText = "desc.ego_weapons.risk.waw";
+		this.identifier = "ardor_blossom_bat";
+
+		SkillDescriptionPage special1 = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability1", 10,
+				new String[]{"red", "burn", "embers", "ego_att_ardor"}, true, EgoWeaponsEffects.EMBERS.get(), EgoWeaponsEffects.EGO_ATTUNEMENT_ARDOR_BLOSSOM.get());
+
+		SkillDescriptionPage special2 = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability2", 15,
+				new String[]{"red", "burn", "embers", "ego_att_ardor", "fragile"}, true, EgoWeaponsEffects.EMBERS.get());
+
+		addPage(new ConditionalDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, () -> {
+			boolean swap = false;
+			if (Minecraft.getInstance().player != null) {
+				if (EgoWeaponsEffects.BURN.get().getPotency(Minecraft.getInstance().player) >= 25) {
+					swap = true;
+				}
+			}
+
+			return swap ? special2 : special1;
+		}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability", 9,
+				new String[]{"red", "burn", "embers"}, true, EgoWeaponsEffects.EMBERS.get()));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INNATE, this.identifier, "innate", 5,
+				new String[]{"red", "burn", "embers"}, true, EgoWeaponsEffects.EMBERS.get()));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, this.identifier, "auto", 6,
+				new String[]{"red", "burn", "embers"}, EgoWeaponsEffects.EMBERS.get()));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive", 3,
+				new String[]{"red", "burn", "embers"}, EgoWeaponsEffects.EMBERS.get(), EgoWeaponsEffects.EGO_ATTUNEMENT_ARDOR_BLOSSOM.get()));
+	}
+
+	@Override
+	public EffectLike[] getKeywords() {
+		return new EffectLike[]{EgoWeaponsEffects.POISE.get(), EgoWeaponsEffects.AMMO};
+	}
 
 
+	/*
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
@@ -143,7 +188,7 @@ public class ArdorBlossomBat extends EgoWeaponsWeapon {
 		}
 
 		generateStatusHelp(list);
-	}
+	}*/
 
 
 

@@ -2,11 +2,15 @@
 package net.m3tte.ego_weapons.item.firefist;
 
 import net.m3tte.ego_weapons.*;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.MultiDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
 import net.m3tte.ego_weapons.gameasset.movesets.FirefistMovesetAnims;
 import net.m3tte.ego_weapons.item.descriptionSystem.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.network.packages.VFXPackages;
+import net.m3tte.ego_weapons.potion.countEffects.EffectLike;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.DialogueSystem;
@@ -88,8 +92,37 @@ public class FirefistGauntlet extends EgoWeaponsWeapon {
 	}
 
 
+	@Override
+	public void setupWeaponDescription() {
+		super.setupWeaponDescription();
+		this.tierText = "desc.ego_weapons.risk.5";
+		this.identifier = "firefist_gauntlet";
 
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability", 11,
+				new String[]{"red", "burn", "d12fuel", "power_up"}, false));
 
+		SkillDescriptionPage innate1 = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INNATE, this.identifier, "innate", 6,
+				new String[]{"red", "burn", "d12fuel"});
+		SkillDescriptionPage innate2 = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INNATE, this.identifier, "innateb", 3,
+				new String[]{"red", "burn", "d12fuel"});
+		addPage(new MultiDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INNATE, innate1, innate2));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, this.identifier, "auto", 5,
+				new String[]{"red", "burn", "d12fuel"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.DEFENSE, this.identifier, "guard", 3,
+				new String[]{"red", "burn", "d12fuel"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive", 4,
+				new String[]{"red", "burn", "d12fuel"}));
+	}
+
+	@Override
+	public EffectLike[] getKeywords() {
+		return new EffectLike[]{EgoWeaponsEffects.BURN.get(), EgoWeaponsEffects.D12FUEL};
+	}
+
+	/*
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
@@ -135,7 +168,7 @@ public class FirefistGauntlet extends EgoWeaponsWeapon {
 		}
 
 		generateStatusHelp(list);
-	}
+	}*/
 
 
 

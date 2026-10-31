@@ -5,9 +5,13 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.EgoWeaponsAttributes;
 import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.item.descriptionSystem.GenericEgoWeaponsArmor;
@@ -106,8 +110,8 @@ public class SunshowerArmor extends GenericEgoWeaponsArmor {
 		}
 	}
 
-	public SunshowerArmor(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity) {
-		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
+	public SunshowerArmor(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity, boolean doDesc) {
+		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity, doDesc);
 	}
 
 	static Item head = new SunshowerArmor(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS)) {
@@ -144,7 +148,7 @@ public class SunshowerArmor extends GenericEgoWeaponsArmor {
 		return dmgMult;
 	}
 
-	static Item chest = new SunshowerArmor(armormaterial, EquipmentSlotType.CHEST, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 1f, 0.7f, 1.2f ,1.3f, 0.7f, 1f, 1.3f, 5, 0) {
+	static Item chest = new SunshowerArmor(armormaterial, EquipmentSlotType.CHEST, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 1f, 0.7f, 1.2f ,1.3f, 0.7f, 1f, 1.3f, 5, 0, true) {
 
 
 
@@ -169,6 +173,28 @@ public class SunshowerArmor extends GenericEgoWeaponsArmor {
 		}
 
 
+		@Override
+		public CountPotencyStatus[] getKeywords() {
+			return new CountPotencyStatus[]{EgoWeaponsEffects.PROTECTION.get()};
+		}
+
+		@Override
+		public void setupWeaponDescription() {
+			super.setupWeaponDescription();
+			this.tierText = "desc.ego_weapons.risk.2";
+			this.identifier = "lca_udjat_armor";
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability", 4,
+					new String[]{"bleed", "sinking"}, true));
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive", 2,
+					new String[]{"protection", "sinking"}, true));
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive2", 9,
+					new String[]{"protection", "offense_up", "offense_down", "rupture"}, true));
+		}
+
+		/*
 		@Override
 		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.appendHoverText(itemstack, world, list, flag);
@@ -204,7 +230,7 @@ public class SunshowerArmor extends GenericEgoWeaponsArmor {
 
 			generateStatusHelp(list);
 
-		}
+		}*/
 
 	};
 	//@ObjectHolder("ego_weapons:cigarette")

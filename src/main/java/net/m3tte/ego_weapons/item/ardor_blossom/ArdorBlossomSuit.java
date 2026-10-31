@@ -4,11 +4,15 @@ package net.m3tte.ego_weapons.item.ardor_blossom;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.*;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.MultiDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.gameasset.AttackCycleType;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.network.packages.VFXPackages;
+import net.m3tte.ego_weapons.potion.countEffects.EffectLike;
 import net.m3tte.ego_weapons.procedures.DelayedEvent;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
@@ -96,8 +100,8 @@ public class ArdorBlossomSuit extends GenericEgoWeaponsArmor {
 		super(p_i48534_1_, p_i48534_2_, p_i48534_3_);
 	}
 
-	public ArdorBlossomSuit(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity) {
-		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
+	public ArdorBlossomSuit(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity, boolean doDesc) {
+		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity, doDesc);
 	}
 
 
@@ -255,7 +259,7 @@ public class ArdorBlossomSuit extends GenericEgoWeaponsArmor {
 	}
 
 
-	static Item chest = new ArdorBlossomSuit(firefistArmor, EquipmentSlotType.CHEST, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 0.6f, 1.5f, 0.8f ,1f, 1f, 1.3f, 0.7f, 4, 0) {
+	static Item chest = new ArdorBlossomSuit(firefistArmor, EquipmentSlotType.CHEST, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 0.6f, 1.5f, 0.8f ,1f, 1f, 1.3f, 0.7f, 4, 0, true) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -273,8 +277,38 @@ public class ArdorBlossomSuit extends GenericEgoWeaponsArmor {
 		}
 
 
+		@Override
+		public EffectLike[] getKeywords() {
+			return new EffectLike[]{EgoWeaponsEffects.BURN.get()};
+		}
 
+		@Override
+		public void setupWeaponDescription() {
+			super.setupWeaponDescription();
+			this.tierText = "desc.ego_weapons.risk.waw";
+			this.identifier = "ardor_blossom_suit";
 
+			SkillDescriptionPage s1 = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "ability", 5,
+					new String[]{"offense_up", "burn", "ego_att_ardor"}, false, EgoWeaponsEffects.EGO_ATTUNEMENT_ARDOR_BLOSSOM.get());
+			SkillDescriptionPage s2 = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "ability2", 4,
+					new String[]{"offense_up", "burn", "ego_att_ardor"}, true, EgoWeaponsEffects.EGO_ATTUNEMENT_ARDOR_BLOSSOM.get());
+			addPage(new MultiDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, s1, s2));
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "reload", 1,
+					new String[]{"d12fuel"}, false));
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive", 3,
+					new String[]{"burn"}, false));
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive2", 5,
+					new String[]{"offense_up", "burn"}, false));
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive3", 4,
+					new String[]{"burn", "power_up"}, true));
+
+		}
+
+		/*
 		@Override
 		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.appendHoverText(itemstack, world, list, flag);
@@ -318,7 +352,7 @@ public class ArdorBlossomSuit extends GenericEgoWeaponsArmor {
 			}
 
 			generateStatusHelp(list);
-		}
+		}*/
 
 	};
 

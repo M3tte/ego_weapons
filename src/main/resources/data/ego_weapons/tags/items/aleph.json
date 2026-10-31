@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "ego_weapons:justitia_cloak",
+    "ego_weapons:justitia",
+
+    "ego_weapons:mimicry_chestplate",
+    "ego_weapons:mimicry"
+  ]
+}

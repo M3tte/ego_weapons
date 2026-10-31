@@ -1,8 +1,12 @@
 
 package net.m3tte.ego_weapons.item.blackSilence.weapons;
 
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.item.descriptionSystem.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.potion.countEffects.EffectLike;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -41,6 +45,28 @@ public class AtelierlogicshotgunItem extends EgoWeaponsWeapon {
 	}
 
 	@Override
+	public void setupWeaponDescription() {
+		super.setupWeaponDescription();
+		this.tierText = "desc.ego_weapons.risk.1";
+		this.identifier = "atelier_logic_shotgun";
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, "blacksilenceweapon", "ability", 1,
+				new String[]{""}, true));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INNATE, this.identifier, "auto", 1,
+				new String[]{"black"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, this.identifier, "auto2", 3,
+				new String[]{"black"}));
+	}
+
+	@Override
+	public EffectLike[] getKeywords() {
+		return new EffectLike[]{EgoWeaponsEffects.POWER_UP.get(), EgoWeaponsEffects.OFFENSE_LEVEL_UP.get()};
+	}
+
+	/*
+	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
 		TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.atelier_logic_pistols.desc");
@@ -71,7 +97,7 @@ public class AtelierlogicshotgunItem extends EgoWeaponsWeapon {
 		}
 
 		generateStatusHelp(list);
-	}
+	}*/
 
 	@Override
 	public ActionResult<ItemStack> use(World world, PlayerEntity entity, Hand hand) {

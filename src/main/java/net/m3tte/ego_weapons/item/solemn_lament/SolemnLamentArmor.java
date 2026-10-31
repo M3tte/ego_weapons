@@ -4,8 +4,12 @@ package net.m3tte.ego_weapons.item.solemn_lament;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.item.descriptionSystem.GenericEgoWeaponsArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
@@ -87,8 +91,8 @@ public class SolemnLamentArmor extends GenericEgoWeaponsArmor {
 		return "ego_weapons:textures/entities/solemn_lament.png";
 	}
 
-	public SolemnLamentArmor(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity) {
-		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
+	public SolemnLamentArmor(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity, boolean doDesc) {
+		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity, doDesc);
 	}
 
 	public static Item getArmorForSlot(EquipmentSlotType slot) {
@@ -98,7 +102,7 @@ public class SolemnLamentArmor extends GenericEgoWeaponsArmor {
 			case HEAD: return butterfly;
 		}
 	}
-	static Item chest = new SolemnLamentArmor(solemnLamentArmor, EquipmentSlotType.CHEST, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 1.3f, 0.6f, 0.6f ,1.5f, 1f, 1.3f, 0.7f, 0, 4) {
+	static Item chest = new SolemnLamentArmor(solemnLamentArmor, EquipmentSlotType.CHEST, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 1.3f, 0.6f, 0.6f ,1.5f, 1f, 1.3f, 0.7f, 0, 4, true) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -115,6 +119,24 @@ public class SolemnLamentArmor extends GenericEgoWeaponsArmor {
 			armorModel.riding = defaultModel.riding;
 			armorModel.young = living.isBaby();
 			return armorModel;
+		}
+
+		@Override
+		public CountPotencyStatus[] getKeywords() {
+			return new CountPotencyStatus[]{EgoWeaponsEffects.SINKING.get()};
+		}
+
+		@Override
+		public void setupWeaponDescription() {
+			super.setupWeaponDescription();
+			this.tierText = "desc.ego_weapons.risk.waw";
+			this.identifier = "solemn_lament_armor";
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability", 6,
+					new String[]{"eternal_rest","living_departed", "sinking"}, true));
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive", 2,
+					new String[]{"pale", "offense_up"}, true));
 		}
 
 		@Override

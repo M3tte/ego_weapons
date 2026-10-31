@@ -5,8 +5,11 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.UtilitySystems;
@@ -90,8 +93,8 @@ public class HeishouMaoRobe extends GenericEgoWeaponsArmor {
 		super(p_i48534_1_, p_i48534_2_, p_i48534_3_);
 	}
 
-	public HeishouMaoRobe(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity) {
-		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
+	public HeishouMaoRobe(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity, boolean doDesc) {
+		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity, doDesc);
 
 
 	}
@@ -138,7 +141,7 @@ public class HeishouMaoRobe extends GenericEgoWeaponsArmor {
 			return 0;
 		}
 	};
-	static Item chest = new HeishouMaoRobe(firefistArmor, EquipmentSlotType.CHEST, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 1.2f, 1.2f, 0.8f ,0.8f, 0.7f, 1f, 1.3f, 2, 0) {
+	static Item chest = new HeishouMaoRobe(firefistArmor, EquipmentSlotType.CHEST, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 1.2f, 1.2f, 0.8f ,0.8f, 0.7f, 1f, 1.3f, 2, 0, true) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -157,6 +160,28 @@ public class HeishouMaoRobe extends GenericEgoWeaponsArmor {
 			return armorModel;
 		}
 
+		@Override
+		public CountPotencyStatus[] getKeywords() {
+			return new CountPotencyStatus[]{EgoWeaponsEffects.SPEED_UP.get(), EgoWeaponsEffects.RUPTURE.get()};
+		}
+
+		@Override
+		public void setupWeaponDescription() {
+			super.setupWeaponDescription();
+			this.tierText = "desc.ego_weapons.risk.4";
+			this.identifier = "heishou_mao_robe";
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability", 7,
+					new String[]{"speed_up","strider_mao"}, false));
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive", 3,
+					new String[]{"rupture", "speed"}, false));
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive2", 1,
+					new String[]{"speed_up"}, false));
+		}
+
+		/*
 		@Override
 		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.appendHoverText(itemstack, world, list, flag);
@@ -191,7 +216,7 @@ public class HeishouMaoRobe extends GenericEgoWeaponsArmor {
 			}
 
 			generateStatusHelp(list);
-		}
+		}*/
 
 	};
 

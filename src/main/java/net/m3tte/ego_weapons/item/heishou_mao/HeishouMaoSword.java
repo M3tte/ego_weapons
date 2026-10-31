@@ -2,10 +2,14 @@
 package net.m3tte.ego_weapons.item.heishou_mao;
 
 import net.m3tte.ego_weapons.*;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.gameasset.movesets.StigmaWorkshopMovesetAnims;
 import net.m3tte.ego_weapons.item.descriptionSystem.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.network.packages.VFXPackages;
+import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
+import net.m3tte.ego_weapons.potion.countEffects.EffectLike;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.UtilitySystems;
@@ -82,8 +86,43 @@ public class HeishouMaoSword extends EgoWeaponsWeapon {
 	}
 
 
+	@Override
+	public void setupWeaponDescription() {
+		super.setupWeaponDescription();
+		this.tierText = "desc.ego_weapons.risk.4";
+		this.identifier = "heishou_mao_sword";
 
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability", 12,
+				new String[]{"black", "speed", "rupture", "deathrite_haste"}));
 
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INNATE, this.identifier, "innate", 7,
+				new String[]{"black", "speed", "rupture","strider_mao"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, this.identifier, "auto", 7,
+				new String[]{"black", "speed", "rupture", "speed_up"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, this.identifier, "dash", 4,
+				new String[]{"black", "rupture", "speed_up"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, this.identifier, "jump", 2,
+				new String[]{"black", "rupture"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.DEFENSE, this.identifier, "guard", 5,
+				new String[]{"black", "speed_up", "speed", "rupture"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive2", 4,
+				new String[]{"speed_up"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive", 2,
+				new String[]{"deathrite_haste", "strider_mao"}));
+	}
+
+	@Override
+	public EffectLike[] getKeywords() {
+		return new EffectLike[]{EgoWeaponsEffects.RUPTURE.get(), EgoWeaponsEffects.SPEED_UP.get(), EgoWeaponsEffects.DEATHRITE_HASTE.get()};
+	}
+
+	/*
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
@@ -147,7 +186,7 @@ public class HeishouMaoSword extends EgoWeaponsWeapon {
 		}
 
 		generateStatusHelp(list);
-	}
+	}*/
 
 
 

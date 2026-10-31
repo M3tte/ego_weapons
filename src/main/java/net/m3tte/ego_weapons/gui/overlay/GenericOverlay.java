@@ -80,8 +80,8 @@ public class GenericOverlay extends ModIngameGui {
 	final static ResourceLocation emotion_bar = new ResourceLocation("ego_weapons:textures/screens/gui/emotion_bar.png");
 
 	final static ResourceLocation d10fuelbg = new ResourceLocation("ego_weapons:textures/screens/gui/firefist/fuel_tank.png");
-	final static ResourceLocation d10fuel = new ResourceLocation("ego_weapons:textures/screens/gui/firefist/district_10_fuel.png");
-	final static ResourceLocation d10fuel_ignited = new ResourceLocation("ego_weapons:textures/screens/gui/firefist/burning_district_10_fuel.png");
+	final static ResourceLocation d12fuel = new ResourceLocation("ego_weapons:textures/screens/gui/firefist/district_12_fuel.png");
+	final static ResourceLocation d12fuel_ignited = new ResourceLocation("ego_weapons:textures/screens/gui/firefist/burning_district_12_fuel.png");
 
 	final static ResourceLocation lightTextureMap = new ResourceLocation("ego_weapons:textures/screens/light_texmap.png");
 	static ResourceLocation[] shellLeft = parseMultiStateTexture(1 ,5, "overlay/shell/shell_left");
@@ -684,7 +684,7 @@ public class GenericOverlay extends ModIngameGui {
 		int offset2 = ((player.tickCount + 6) / 2) % (18);
 
 
-		ResourceLocation texture = (district10Count > 50 && !player.hasEffect(EgoWeaponsEffects.FUEL_IGNITION.get())) ? d10fuel : d10fuel_ignited;
+		ResourceLocation texture = (district10Count > 50 && !player.hasEffect(EgoWeaponsEffects.FUEL_IGNITION.get())) ? d12fuel : d12fuel_ignited;
 
 		Minecraft.getInstance().getTextureManager().bind(d10fuelbg);
 		AbstractGui.blit(event.getMatrixStack(), offsetX, offsetY, 0, 0, 17, 83, 17, 83);

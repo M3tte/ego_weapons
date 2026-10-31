@@ -1,6 +1,7 @@
 package net.m3tte.ego_weapons.client.util.descriptionHandler.metadata;
 
 import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
+import net.m3tte.ego_weapons.potion.countEffects.EffectLike;
 import net.minecraft.item.Item;
 
 public class ArmorMetadata extends ItemMetadata {
@@ -16,7 +17,7 @@ public class ArmorMetadata extends ItemMetadata {
     private float bonusSanity = 0;
     private float bonusStagger = 0;
 
-    public ArmorMetadata(String itemIdentifier, Item item, CountPotencyStatus[] keywords, float defenseLevel, float redRes, float whiteRes, float blackRes, float paleRes, float slashRes, float pierceRes, float bluntRes, float bonusSanity, float bonusStagger) {
+    public ArmorMetadata(String itemIdentifier, Item item, EffectLike[] keywords, float defenseLevel, float redRes, float whiteRes, float blackRes, float paleRes, float slashRes, float pierceRes, float bluntRes, float bonusSanity, float bonusStagger) {
         super(itemIdentifier, item, keywords);
         this.defenseLevel = defenseLevel;
         this.redRes = redRes;

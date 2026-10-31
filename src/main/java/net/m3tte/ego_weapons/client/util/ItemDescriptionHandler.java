@@ -5,16 +5,20 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsMod;
 import net.m3tte.ego_weapons.client.util.descriptionHandler.AttributeTextPlaceholder;
-import net.m3tte.ego_weapons.client.util.descriptionHandler.metadata.ItemMetadata;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.metadata.*;
 import net.m3tte.ego_weapons.item.descriptionSystem.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.item.descriptionSystem.GenericEgoWeaponsArmor;
-import net.m3tte.ego_weapons.client.util.descriptionHandler.metadata.ArmorMetadata;
+import net.m3tte.ego_weapons.item.guns.GunItem;
 import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
+import net.m3tte.ego_weapons.potion.countEffects.EffectLike;
+import net.m3tte.ego_weapons.world.capabilities.DamageDefaults;
 import net.m3tte.ego_weapons.world.capabilities.DamageResistanceSystem;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.m3tte.ego_weapons.world.capabilities.item.TagSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.item.Item;
@@ -51,7 +55,10 @@ public class ItemDescriptionHandler {
     static ResourceLocation ICON_BORDER_GLOW = new ResourceLocation(EgoWeaponsMod.MODID, "textures/gui/description_elements/element_glow_70x70.png");
     static ResourceLocation LIVING_BULLET = new ResourceLocation(EgoWeaponsMod.MODID, "textures/screens/gui/bullets/the_living_bullet.png");
     static ResourceLocation DEFENSE_LEVEL_ICON = new ResourceLocation(EgoWeaponsMod.MODID, "textures/gui/description_elements/defense_level.png");
-    static ResourceLocation PLAQUE_SILVER = new ResourceLocation(EgoWeaponsMod.MODID, "textures/gui/description_elements/plaque_silver.png");
+    static ResourceLocation OFFENSE_LEVEL_ICON = new ResourceLocation(EgoWeaponsMod.MODID, "textures/gui/description_elements/offense_level.png");
+    static ResourceLocation H_LINE = new ResourceLocation(EgoWeaponsMod.MODID, "textures/gui/description_elements/horizontal_line.png");
+    static ResourceLocation H_LINE_B = new ResourceLocation(EgoWeaponsMod.MODID, "textures/gui/description_elements/horizontal_line_double.png");
+    static ResourceLocation BOX_ICON = new ResourceLocation(EgoWeaponsMod.MODID, "textures/gui/description_elements/box_icon.png");
 
     @SubscribeEvent
     public static void renderTooltipPostBG(RenderTooltipEvent.PostBackground event) {
@@ -85,7 +92,8 @@ public class ItemDescriptionHandler {
 
                             break;
                         case WEAPON:
-                            renderWeaponStats(event, offsetLine);
+                            if (((AttributeTextPlaceholder) line).getMetadata() instanceof WeaponMetadata)
+                                renderWeaponStats(event, offsetLine, tickTime, 0.9f, (WeaponMetadata) ((AttributeTextPlaceholder) line).getMetadata());
                             break;
                         case TAGS:
                             if (((AttributeTextPlaceholder) line).getMetadata() instanceof ItemMetadata) {
@@ -96,6 +104,9 @@ public class ItemDescriptionHandler {
                             if (((AttributeTextPlaceholder) line).getMetadata() instanceof ItemMetadata) {
                                 renderKeywords(event, offsetLine, renderType, tickTime, 0.8f, (ItemMetadata) ((AttributeTextPlaceholder) line).getMetadata());
                             }
+                            break;
+                        case H_LINE:
+                            renderHLine(event, offsetLine, ((AttributeTextPlaceholder) line).getMetadata(), tickTime);
                             break;
                     }
                 }
@@ -113,6 +124,52 @@ public class ItemDescriptionHandler {
         //font.drawInBatch(LanguageMap.getInstance().getVisualOrder(line), (float)tooltipX, (float)tooltipY, -1, true, mat, renderType, false, 0, 15728880);
     }
 
+    public static final int LINE_SIZE = 10;
+
+    private  static void renderHLine(RenderTooltipEvent.PostBackground event, int offsetLine, PlaceholderMetadata metadata, float gameTime) {
+        event.getMatrixStack().pushPose();
+        event.getMatrixStack().translate(event.getX(),LINE_SIZE * offsetLine + event.getY(),405);
+
+        boolean hasPages = metadata instanceof PageMetadata;
+
+        Minecraft.getInstance().getTextureManager().bind(hasPages ? H_LINE_B : H_LINE);
+        AbstractGui.blit(event.getMatrixStack(), 2, -4, 0, 0, event.getWidth() - 4, 16, Math.max(32,event.getWidth() - 4), 16);
+
+        if (hasPages) {
+
+
+            HashMap<Integer, EmptyDescriptionPage> totalPages = ((PageMetadata) metadata).getPages();
+            int pages = totalPages.size();
+            int offs = (int)(event.getWidth() * 0.5f - (15 * 0.5f * pages));
+            int selectedPage = ((PageMetadata) metadata).getCurrPage();
+            if (selectedPage >= pages)
+                return;
+
+            EmptyDescriptionPage blankPage = new EmptyDescriptionPage();
+
+            for (int i = 0; i < pages; i++) {
+                if (selectedPage != i) {
+                    Minecraft.getInstance().getTextureManager().bind(BOX_ICON);
+                    AbstractGui.blit(event.getMatrixStack(), offs, -6, 0, 0, 16, 16, 16, 16);
+                    Minecraft.getInstance().getTextureManager().bind(totalPages.getOrDefault(i, blankPage).getIdentifier().getIcon());
+                    AbstractGui.blit(event.getMatrixStack(), offs, -6, 0, 0, 16, 16, 16, 16);
+
+                }
+
+                offs += 15;
+            }
+
+            offs = (int)(event.getWidth() * 0.5f - (15 * 0.5f * pages));
+
+            RenderSystem.color4f(0.5f, (float) (0.88f + Math.sin(gameTime * 0.5f) * 0.1f), 0.5f, 1);
+            Minecraft.getInstance().getTextureManager().bind(BOX_ICON);
+            AbstractGui.blit(event.getMatrixStack(), offs + 15 * selectedPage, -8, 0, 0, 16, 18, 16, 18);
+            Minecraft.getInstance().getTextureManager().bind(totalPages.getOrDefault(selectedPage, blankPage).getIdentifier().getIcon());
+            AbstractGui.blit(event.getMatrixStack(), offs + 15 * selectedPage, -6, 0, 0, 16, 16, 16, 16);
+            RenderSystem.color4f(1,1,1,1);
+        }
+        event.getMatrixStack().popPose();
+    }
     private  static void renderDamageResistances(RenderTooltipEvent.PostBackground event, int offsetLine, IRenderTypeBuffer.Impl renderType, Matrix4f mat, float gameTime, float scaleFactor, ArmorMetadata metadata) {
         event.getMatrixStack().pushPose();
 
@@ -124,7 +181,7 @@ public class ItemDescriptionHandler {
 
         float scaledOffs = ((event.getX()) * (scaleFactor)) ;
         float scaledWidth = (event.getWidth() / 2f) * scaleFactor;
-        float lineDist = 10 * scaleFactor;
+        float lineDist = LINE_SIZE * scaleFactor;
         float yOffs = event.getY() * (scaleFactor);
 
         renderResistanceIcon(scaledOffs + scaledWidth - 80, (float) (yOffs + lineDist*offsetLine + Math.min(0, Math.sin(gameTime * 0.1f    ) * 2f)), GenericEgoDamage.DamageTypes.RED.getIconLoc(), 20, 20, metadata.getRedRes(), event, renderType, mat, gameTime);
@@ -133,7 +190,7 @@ public class ItemDescriptionHandler {
         renderResistanceIcon(scaledOffs + scaledWidth + 40, (float) (yOffs + lineDist*offsetLine + Math.min(0, Math.sin(gameTime * 0.1f + 3) * 2f)), GenericEgoDamage.DamageTypes.PALE.getIconLoc(), 20, 20, metadata.getPaleRes(), event, renderType, mat, gameTime);
         //renderResistanceIcon(event.getWidth() / 2 - -36, 10, GenericEgoDamage.DamageTypes.RED.getIconLoc(), 20, 20, 0.6f, event, renderType, mat);
 
-        renderValueIcon     (scaledOffs + scaledWidth - 80, (float) (yOffs + 60 + lineDist*offsetLine + Math.min(0, Math.sin(gameTime * 0.1f + 0.5f) * 2f)), DEFENSE_LEVEL_ICON, 20, 20, metadata.getDefenseLevel(), event, "desc.ego_weapons.defense_level", gameTime);
+        renderValueIcon     (scaledOffs + scaledWidth - 80, (float) (yOffs + 60 + lineDist*offsetLine + Math.min(0, Math.sin(gameTime * 0.1f + 0.5f) * 2f)), DEFENSE_LEVEL_ICON, 20, 20, "+"+metadata.getDefenseLevel(), event, "desc.ego_weapons.defense_level", gameTime, true);
         renderResistanceIcon(scaledOffs + scaledWidth - 40, (float) (yOffs + 60 + lineDist*offsetLine + Math.min(0, Math.sin(gameTime * 0.1f + 1.5f) * 2f)), GenericEgoDamage.AttackTypes.SLASH.getIconLoc(), 20, 20, metadata.getSlashRes(), event, renderType, mat, gameTime);
         renderResistanceIcon(scaledOffs + scaledWidth     , (float) (yOffs + 60 + lineDist*offsetLine + Math.min(0, Math.sin(gameTime * 0.1f + 2.5f) * 2f)), GenericEgoDamage.AttackTypes.PIERCE.getIconLoc(), 20, 20, metadata.getPierceRes(), event, renderType, mat, gameTime);
         renderResistanceIcon(scaledOffs + scaledWidth + 40, (float) (yOffs + 60 + lineDist*offsetLine + Math.min(0, Math.sin(gameTime * 0.1f + 3.5f) * 2f)), GenericEgoDamage.AttackTypes.BLUNT.getIconLoc(), 20, 20, metadata.getBluntRes(), event, renderType, mat, gameTime);
@@ -143,12 +200,46 @@ public class ItemDescriptionHandler {
     }
 
 
-    private  static void renderWeaponStats(RenderTooltipEvent.PostBackground event, int offsetLine) {
+    private  static void renderWeaponStats(RenderTooltipEvent.PostBackground event, int offsetLine, float gameTime, float scaleFactor, WeaponMetadata metadata) {
         event.getMatrixStack().pushPose();
 
-        event.getMatrixStack().translate(0,0,401);
-        Minecraft.getInstance().getTextureManager().bind(ICON_BORDER);
-        AbstractGui.blit(event.getMatrixStack(), event.getX(), event.getY()-6+10*offsetLine, 0, 0, 34, 34, 34, 34);
+        event.getMatrixStack().translate(0,0,405);
+        event.getMatrixStack().scale(scaleFactor, scaleFactor, scaleFactor);
+
+        // Invert the scale factor
+        scaleFactor = 1 / scaleFactor;
+
+        float scaledOffs = ((event.getX()) * (scaleFactor)) ;
+        float scaledWidth = (event.getWidth() / 2f) * scaleFactor;
+        float lineDist = LINE_SIZE * scaleFactor;
+        float yOffs = event.getY() * (scaleFactor);
+
+
+        int elements = 3;
+
+        ResourceLocation ammoIcon = null;
+        String ammoIdentifier = "";
+        int ammoCapacity = 0;
+
+        if (metadata.getTargetItem() instanceof GunItem) {
+            elements++;
+            ammoIdentifier = ((GunItem) metadata.getTargetItem()).getCaliberIdentifier();
+            ammoIcon = ((GunItem) metadata.getTargetItem()).getAmmoRL();
+            ammoCapacity = ((GunItem) metadata.getTargetItem()).getMaxAmmo();
+        }
+
+
+        int baseOffs = (int)(-40f * elements * 0.5f);
+
+        DamageDefaults defaults = DamageResistanceSystem.getDefaultsFor(metadata.getTargetItem());
+
+        renderValueIcon     (scaledOffs + scaledWidth + baseOffs, (float) (yOffs + 10 + lineDist*offsetLine + Math.min(0, Math.sin(gameTime * 0.1f + 0.5f) * 2f)), OFFENSE_LEVEL_ICON, 24, 24, "+"+(((EgoWeaponsWeapon)metadata.getTargetItem()).getDamage() + 1), event, "desc.ego_weapons.offense_level", gameTime, false);
+        renderValueIcon     (scaledOffs + scaledWidth + baseOffs + 40, (float) (yOffs + 10 + lineDist*offsetLine + Math.min(0, Math.sin(gameTime * 0.1f + 1.5f) * 2f)), defaults.getAttackType().getIconLoc(), 20, 20, "", event, "", gameTime, false);
+        renderValueIcon     (scaledOffs + scaledWidth + baseOffs + 80, (float) (yOffs + 10 + lineDist*offsetLine + Math.min(0, Math.sin(gameTime * 0.1f + 2.5f) * 2f)), defaults.getDamageType().getIconLoc(), 20, 20, "", event, "", gameTime, false);
+
+        if (ammoIcon != null) {
+            renderValueIcon     (scaledOffs + scaledWidth + baseOffs + 120, (float) (yOffs + 10 + lineDist*offsetLine + Math.min(0, Math.sin(gameTime * 0.1f + 3.5f) * 2f)), ammoIcon, 20, 20, ammoCapacity+"x", event, ammoIdentifier, gameTime, false);
+        }
 
         event.getMatrixStack().popPose();
     }
@@ -164,7 +255,7 @@ public class ItemDescriptionHandler {
 
         float scaledOffs = ((event.getX()) * (scaleFactor)) ;
         float scaledWidth = (event.getWidth() / 2f) * scaleFactor;
-        float lineDist = 10 * scaleFactor;
+        float lineDist = LINE_SIZE * scaleFactor;
         float yOffs = event.getY() * (scaleFactor);
 
         renderTagsLinewise(scaledOffs + scaledWidth, yOffs + 5 + lineDist*offsetLine, event, metadata.getTargetItem(), scaledWidth * 2, 3);
@@ -184,7 +275,7 @@ public class ItemDescriptionHandler {
 
         float scaledOffs = ((event.getX()) * (scaleFactor)) ;
         float scaledWidth = (event.getWidth() / 2f) * scaleFactor;
-        float lineDist = 10 * scaleFactor;
+        float lineDist = LINE_SIZE * scaleFactor;
         float yOffs = event.getY() * (scaleFactor);
 
         renderKeywordsLinewise(scaledOffs + scaledWidth, yOffs + 5 + lineDist*offsetLine, event, metadata.getTargetItem(), scaledWidth * 2, 3, metadata.getKeywords());
@@ -193,7 +284,7 @@ public class ItemDescriptionHandler {
         event.getMatrixStack().popPose();
     }
 
-    private static void renderKeywordsLinewise(float offsX, float offsY, RenderTooltipEvent.PostBackground event, Item item, float lineWidth, int maxLines, CountPotencyStatus... keywords) {
+    private static void renderKeywordsLinewise(float offsX, float offsY, RenderTooltipEvent.PostBackground event, Item item, float lineWidth, int maxLines, EffectLike... keywords) {
 
         int[] textSize = new int[keywords.length];
         int i = 0;
@@ -204,13 +295,13 @@ public class ItemDescriptionHandler {
         LinkedList<Integer> lineSizes = new LinkedList<>();
         int lineIDX = 0;
         int lineSize = 0;
-        for (CountPotencyStatus countPotencyStatus : keywords) {
+        for (EffectLike countPotencyStatus : keywords) {
 
-            IFormattableTextComponent translationText = new TranslationTextComponent(countPotencyStatus.getDescriptionId());
+            IFormattableTextComponent translationText = new TranslationTextComponent(countPotencyStatus.getName());
             int size = event.getFontRenderer().width(translationText) + 26;
             textSize[i] = size;
 
-            Tuple<ResourceLocation, IFormattableTextComponent> currentElement = new Tuple<>(countPotencyStatus.getIcon() , translationText);
+            Tuple<ResourceLocation, IFormattableTextComponent> currentElement = new Tuple<>(countPotencyStatus.getIconLoc() , translationText);
 
             if ((lineSize + size) >= lineWidth) {
                 lineSizes.add(lineSize);
@@ -350,7 +441,7 @@ public class ItemDescriptionHandler {
 
         int i = 0;
         for (Tuple<String, Float> value : values) {
-            IFormattableTextComponent translationText = new TranslationTextComponent(value.getA()).append(new StringTextComponent("  "+(value.getB() > 0 ? "+" : "-")+value.getB()+"   "));
+            IFormattableTextComponent translationText = new TranslationTextComponent(value.getA()).append(new StringTextComponent("  "+(value.getB() > 0 ? "+" : "")+value.getB()+"   "));
             int size = event.getFontRenderer().width(translationText);
 
 
@@ -456,7 +547,7 @@ public class ItemDescriptionHandler {
         event.getMatrixStack().popPose();
     }
 
-    private static void renderValueIcon(float offsX, float offsY, ResourceLocation iconLoc, int iconX, int iconY, float value, RenderTooltipEvent.PostBackground event, String title, float gameTime) {
+    private static void renderValueIcon(float offsX, float offsY, ResourceLocation iconLoc, int iconX, int iconY, String value, RenderTooltipEvent.PostBackground event, String title, float gameTime, boolean bypassZero) {
         event.getMatrixStack().pushPose();
 
         // RenderSystem.enableAlphaTest();
@@ -470,23 +561,35 @@ public class ItemDescriptionHandler {
 
 
         // Place the damage type icon in the middle.
-        Minecraft.getInstance().getTextureManager().bind(iconLoc);
-        AbstractGui.blit(event.getMatrixStack(), (17 - iconX/2), (17-iconY/2), 0, 0, iconX, iconY, iconX, iconY);
+        if (iconLoc != null) {
+            Minecraft.getInstance().getTextureManager().bind(iconLoc);
+            AbstractGui.blit(event.getMatrixStack(), (17 - iconX/2), (17-iconY/2), 0, 0, iconX, iconY, iconX, iconY);
+        }
 
-        IFormattableTextComponent valueText = new StringTextComponent("+"+((int)value)).withStyle(TextFormatting.UNDERLINE).withStyle(TextFormatting.ITALIC);
+
+
+
+        IFormattableTextComponent valueText = new StringTextComponent((value)).withStyle(TextFormatting.UNDERLINE).withStyle(TextFormatting.ITALIC);
         IFormattableTextComponent titleTExt = new TranslationTextComponent(title).withStyle(TextFormatting.ITALIC);
         int titleSize = event.getFontRenderer().width(titleTExt);
         int size2 = event.getFontRenderer().width(valueText);
 
         //event.getFontRenderer().drawInBatch(multiplier, event.getX() + offsX + (17f - size/2f), (float)event.getY() + offsY + 36, -1, true, mat, renderType, false, 0, 15728880);
-        event.getMatrixStack().pushPose();
-        event.getMatrixStack().scale(0.8f, 0.8f, 0.8f);
-        // 2 / 0.8f
-        event.getMatrixStack().translate((17f - titleSize/(2.5f)), 0, 0);
-        // 36 / 0.8f
-        event.getFontRenderer().draw(event.getMatrixStack(), titleTExt, 0, 45.0f, 0xAAAAAA);
-        event.getMatrixStack().popPose();
-        event.getFontRenderer().draw(event.getMatrixStack(), valueText, (17f - size2/2f), 46, 0xDDDDDD);
+        if (!title.isEmpty()) {
+            event.getMatrixStack().pushPose();
+            event.getMatrixStack().scale(0.8f, 0.8f, 0.8f);
+            // 2 / 0.8f
+            event.getMatrixStack().translate((17f - titleSize/(2.5f)), 0, 0);
+            // 36 / 0.8f
+            event.getFontRenderer().draw(event.getMatrixStack(), titleTExt, 0, 45.0f, 0xAAAAAA);
+            event.getMatrixStack().popPose();
+        }
+
+        if ((!value.isEmpty()) || bypassZero) {
+            event.getFontRenderer().draw(event.getMatrixStack(), valueText, (17f - size2/2f), 46, 0xDDDDDD);
+
+        }
+
 
         event.getMatrixStack().popPose();
     }

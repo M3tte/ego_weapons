@@ -6,8 +6,11 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsModVars;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.item.descriptionSystem.GenericEgoWeaponsArmor;
@@ -102,10 +105,10 @@ public class MagicBulletArmor extends GenericEgoWeaponsArmor {
 		}
 	}
 
-	public MagicBulletArmor(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity) {
-		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
+	public MagicBulletArmor(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity, boolean doDesc) {
+		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity, doDesc);
 	}
-	static Item chest = new MagicBulletArmor(magicBulletArmor, EquipmentSlotType.CHEST, new Item.Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 0.7f, 0.7f, 0.7f ,1.5f, 1f, 0.7f, 1.3f, -5, 0) {
+	static Item chest = new MagicBulletArmor(magicBulletArmor, EquipmentSlotType.CHEST, new Item.Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 0.7f, 0.7f, 0.7f ,1.5f, 1f, 0.7f, 1.3f, -5, 0, true) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -121,6 +124,29 @@ public class MagicBulletArmor extends GenericEgoWeaponsArmor {
 			return armorModel;
 		}
 
+		@Override
+		public CountPotencyStatus[] getKeywords() {
+			return new CountPotencyStatus[]{EgoWeaponsEffects.BURN.get()};
+		}
+
+		@Override
+		public void setupWeaponDescription() {
+			super.setupWeaponDescription();
+			this.tierText = "desc.ego_weapons.risk.waw";
+			this.identifier = "magic_bullet_armor";
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability", 3,
+					new String[]{"magic_bullet", "poise", "power_up"}, false));
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive", 4,
+					new String[]{"dark_flame", "poise"}, false));
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive2", 3,
+					new String[]{"dark_flame", "burn"}, true));
+
+		}
+
+		/*
 		@Override
 		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.appendHoverText(itemstack, world, list, flag);
@@ -155,7 +181,7 @@ public class MagicBulletArmor extends GenericEgoWeaponsArmor {
 			}
 
 			generateStatusHelp(list);
-		}
+		}*/
 
 	};
 	static Item pipe = new MagicBulletArmor(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Item.Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS)) {

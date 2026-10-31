@@ -6,6 +6,8 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage.PAGE_TYPE;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
@@ -48,10 +50,7 @@ import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.generateAt
 public class LampEGOSuit extends GenericEgoWeaponsArmor {
 
 
-	@Override
-	public CountPotencyStatus[] getKeywords() {
-		return new CountPotencyStatus[]{EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.DAZZLE.get(), EgoWeaponsEffects.FRAGILE.get()};
-	}
+
 
 	static IArmorMaterial lobotomyEgoLamp = new IArmorMaterial() {
 		@Override
@@ -222,22 +221,28 @@ public class LampEGOSuit extends GenericEgoWeaponsArmor {
 		}
 
 		@Override
+		public CountPotencyStatus[] getKeywords() {
+			return new CountPotencyStatus[]{EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.DAZZLE.get(), EgoWeaponsEffects.FRAGILE.get()};
+		}
+
+		@Override
 		public void setupWeaponDescription() {
 			super.setupWeaponDescription();
 			this.tierText = "desc.ego_weapons.risk.waw";
 			this.identifier = "lamp_suit";
 
-			addPage(new SkillDescriptionPage(this.identifier, "passive", 7,
-					new String[]{"lamp", "dazzle", "salvation", "defense_up"},
+			addPage(new SkillDescriptionPage(PAGE_TYPE.SPECIAL, this.identifier, "ability", 6,
+					new String[]{"lamp","dazzle","guardian_of_the_forest", "power_up"}, true,
+					EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.DAZZLE.get(), EgoWeaponsEffects.GUARDIAN_OF_THE_FOREST.get()));
+
+			addPage(new SkillDescriptionPage(PAGE_TYPE.PASSIVE, this.identifier, "passive", 7,
+					new String[]{"lamp", "dazzle", "salvation", "defense_up"}, true,
 					EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.DAZZLE.get(), EgoWeaponsEffects.SALVATION.get()));
 
-			addPage(new SkillDescriptionPage(this.identifier, "passive2", 4,
+			addPage(new SkillDescriptionPage(PAGE_TYPE.PASSIVE, this.identifier, "passive2", 4,
 					new String[]{"burn", "sinking", "feather_wick_bolt","lamp","black_fragility"},
 					EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.SALVATION.get()));
 
-			addPage(new SkillDescriptionPage(this.identifier, "ability", 6,
-					new String[]{"lamp","dazzle","guardian_of_the_forest", "power_up"},
-					EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.DAZZLE.get(), EgoWeaponsEffects.GUARDIAN_OF_THE_FOREST.get()));
 
 		}
 

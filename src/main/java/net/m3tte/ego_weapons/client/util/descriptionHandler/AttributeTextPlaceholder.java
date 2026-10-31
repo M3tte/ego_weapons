@@ -34,6 +34,7 @@ public class AttributeTextPlaceholder extends StringTextComponent {
         TAGS,
         WEAPON,
         KEYWORDS,
+        H_LINE,
         OTHER;
     }
 }

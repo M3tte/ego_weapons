@@ -2,12 +2,16 @@
 package net.m3tte.ego_weapons.item.fullstop_rep;
 
 import net.m3tte.ego_weapons.*;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.MultiDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation.EgoWeaponsAttackProperty;
 import net.m3tte.ego_weapons.item.guns.GunCaliber;
 import net.m3tte.ego_weapons.item.guns.GunItem;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.potion.countEffects.EffectLike;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.AmmoSystem;
@@ -84,8 +88,42 @@ public class FullstopRepWeapon extends GunItem {
 		}
 
 
+	@Override
+	public void setupWeaponDescription() {
+		super.setupWeaponDescription();
+		this.tierText = "desc.ego_weapons.risk.3";
+		this.identifier = "fullstop_rep";
 
+		SkillDescriptionPage sp1 = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability", 8,
+				new String[]{"red", "poise", "ammo", "target_marked"}, false);
 
+		SkillDescriptionPage sp2 = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability_alt", 4,
+				new String[]{"red", "poise", "ammo", "target_marked"}, false);
+
+		addPage(new MultiDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, sp1, sp2));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INNATE, this.identifier, "innate", 7,
+				new String[]{"red", "poise", "target_marked"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, this.identifier, "auto", 6,
+				new String[]{"poise", "ammo"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, this.identifier, "auto_alt", 2,
+				new String[]{"poise", "ammo"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INFO, this.identifier, "reload", 2,
+				new String[]{"ammo"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive", 2,
+				new String[]{"poise", "ammo"}));
+	}
+
+	@Override
+	public EffectLike[] getKeywords() {
+		return new EffectLike[]{EgoWeaponsEffects.POISE.get(), EgoWeaponsEffects.AMMO};
+	}
+
+	/*
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
@@ -139,7 +177,8 @@ public class FullstopRepWeapon extends GunItem {
 			}
 
 		generateStatusHelp(list);
-	}
+	}*/
+
 	public static void interruptedAttack(LivingEntity target) {
 
 	}

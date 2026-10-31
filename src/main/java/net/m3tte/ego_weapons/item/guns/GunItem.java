@@ -45,6 +45,9 @@ public class GunItem extends EgoWeaponsWeapon {
         return ammoBGOverride;
     }
 
+    public String getCaliberIdentifier() {
+        return this.caliber.getCaliberIdentifier();
+    }
     public void appendAmmoDialogueLine(List<ITextComponent> list) {
         list.add(new TranslationTextComponent("desc.ego_weapons.ammo.top"));
         list.add(new TranslationTextComponent("desc.ego_weapons.ammo").append(new TranslationTextComponent(this.caliber.getCaliber())));

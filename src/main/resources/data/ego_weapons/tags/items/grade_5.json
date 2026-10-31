@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "ego_weapons:firefist_gauntlet",
+    "ego_weapons:firefist_suit",
+
+    "ego_weapons:oeufi_association_vest",
+    "ego_weapons:oeufi_association_halberd"
+  ]
+}

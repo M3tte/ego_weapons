@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "ego_weapons:jacket_of_the_red_mist",
+    "ego_weapons:suit_of_the_black_silence",
+
+    "ego_weapons:allas_spear",
+    "ego_weapons:atelier_logic_pistols",
+    "ego_weapons:atelier_logic_shotgun",
+    "ego_weapons:crystal_atelier",
+    "ego_weapons:durandal",
+    "ego_weapons:mook_workshop",
+    "ego_weapons:old_boys_workshop",
+    "ego_weapons:ranga_claw",
+    "ego_weapons:ranga_claw_l",
+    "ego_weapons:wheels_industry",
+    "ego_weapons:zelkova_axe",
+    "ego_weapons:zelkova_mace"
+  ]
+}

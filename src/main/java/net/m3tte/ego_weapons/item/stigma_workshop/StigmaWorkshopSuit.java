@@ -5,9 +5,12 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.item.magic_bullet.MagicBulletArmor;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.item.descriptionSystem.GenericEgoWeaponsArmor;
@@ -89,8 +92,8 @@ public class StigmaWorkshopSuit extends GenericEgoWeaponsArmor {
 		super(p_i48534_1_, p_i48534_2_, p_i48534_3_);
 	}
 
-	public StigmaWorkshopSuit(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity) {
-		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
+	public StigmaWorkshopSuit(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity, boolean doDesc) {
+		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity, doDesc);
 
 
 	}
@@ -160,7 +163,7 @@ public class StigmaWorkshopSuit extends GenericEgoWeaponsArmor {
 			return 0;
 		}
 	};
-	static Item chest = new StigmaWorkshopSuit(firefistArmor, EquipmentSlotType.CHEST, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 0.7f, 2f, 0.7f ,1.2f, 0.7f, 1f, 1.3f, 2, 0) {
+	static Item chest = new StigmaWorkshopSuit(firefistArmor, EquipmentSlotType.CHEST, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 0.7f, 2f, 0.7f ,1.2f, 0.7f, 1f, 1.3f, 2, 0, true) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -179,6 +182,28 @@ public class StigmaWorkshopSuit extends GenericEgoWeaponsArmor {
 			return armorModel;
 		}
 
+		@Override
+		public CountPotencyStatus[] getKeywords() {
+			return new CountPotencyStatus[]{EgoWeaponsEffects.BURN.get(), EgoWeaponsEffects.OFFENSE_LEVEL_UP.get()};
+		}
+
+		@Override
+		public void setupWeaponDescription() {
+			super.setupWeaponDescription();
+			this.tierText = "desc.ego_weapons.risk.6";
+			this.identifier = "stigma_workshop_armor";
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability", 6,
+					new String[]{"offense_up","defense_down","power_up"}, true));
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive", 3,
+					new String[]{"offense_up"}));
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive2", 2,
+					new String[]{"offense_up", "burn"}, true));
+		}
+
+		/*
 		@Override
 		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.appendHoverText(itemstack, world, list, flag);
@@ -213,7 +238,7 @@ public class StigmaWorkshopSuit extends GenericEgoWeaponsArmor {
 			}
 
 			generateStatusHelp(list);
-		}
+		}*/
 
 	};
 

@@ -3,6 +3,9 @@ package net.m3tte.ego_weapons.procedures;
 import jdk.nashorn.internal.ir.annotations.Ignore;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.client.StatusEffectIconHandler;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.AttributeTextPlaceholder;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.metadata.PageMetadata;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.metadata.PlaceholderMetadata;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.minecraft.potion.Effect;
 import net.minecraft.util.text.*;
@@ -66,8 +69,9 @@ public class TooltipFuncs {
 
     public static void generateStatusHelp(List<ITextComponent> list) {
         list.add(new StringTextComponent("   "));
+        list.add(new AttributeTextPlaceholder(AttributeTextPlaceholder.PlaceholderType.H_LINE, 0, new PlaceholderMetadata("h_line_page")));
         list.add(new TranslationTextComponent("desc.ego_weapons.info.status.1").append(new KeybindTextComponent("key.ego_weapons.status_detail").withStyle(TextFormatting.ITALIC).withStyle(EgoWeaponsKeybinds.isHoldingShift() ? TextFormatting.GREEN : TextFormatting.WHITE)).append(new TranslationTextComponent("desc.ego_weapons.info.status.2")));
-        list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
+
     }
 
     public static void generateStatusDescription(List<ITextComponent> list, String[] statuses) {
@@ -104,7 +108,7 @@ public class TooltipFuncs {
                 case "strider_mao": generateDescription(list, "statuses", "strider_mao", 5); break;
                 case "speed": generateDescription(list, "statuses", "speed", 2); break;
                 case "branding_blade": generateDescription(list, "statuses", "branding_blade", 3); break;
-                case "d10fuel": generateDescription(list, "statuses", "d10fuel", 4); break;
+                case "d12fuel": generateDescription(list, "statuses", "d12fuel", 4); break;
                 case "firefist_overdrive": generateDescription(list, "statuses", "firefist_overdrive", 6); break;
                 case "orlando": generateDescription(list, "statuses", "orlando", 2); break;
                 case "sin": generateDescription(list, "statuses", "sin", 4); break;

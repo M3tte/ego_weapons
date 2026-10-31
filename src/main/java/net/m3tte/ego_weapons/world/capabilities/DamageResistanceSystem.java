@@ -4,6 +4,7 @@ import net.m3tte.ego_weapons.EgoWeaponsAttributes;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsEntities;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
+import net.m3tte.ego_weapons.item.descriptionSystem.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.world.capabilities.damage.GenericEgoDamage;
 import net.minecraft.entity.EntityType;
@@ -28,6 +29,10 @@ public class DamageResistanceSystem {
 
     public static HashMap<Item, DamageDefaults> getItemDefaults() {
         return itemDamageDefaults;
+    }
+
+    public static DamageDefaults getDefaultsFor(Item item) {
+        return itemDamageDefaults.getOrDefault(item, new DamageDefaults(GenericEgoDamage.DamageTypes.RED, GenericEgoDamage.AttackTypes.GENERIC));
     }
 
     public static void loadMobDamageDefaults() {
@@ -104,6 +109,44 @@ public class DamageResistanceSystem {
     }
 
     public static void loadItemDamageDefaults() {
+        // EGO Weapons Defaults
+        registerItemDefaults(EgoWeaponsItems.LAMP_CROSSBOW.get(), GenericEgoDamage.AttackTypes.PIERCE, GenericEgoDamage.DamageTypes.BLACK);
+        registerItemDefaults(EgoWeaponsItems.JUSTITIA_SWORD.get(), GenericEgoDamage.AttackTypes.BLUNT, GenericEgoDamage.DamageTypes.PALE);
+        registerItemDefaults(EgoWeaponsItems.ARAYASHIKI.get(), GenericEgoDamage.AttackTypes.SLASH, GenericEgoDamage.DamageTypes.RED);
+        registerItemDefaults(EgoWeaponsItems.LCA_UDJAT_KHOPESH.get(), GenericEgoDamage.AttackTypes.SLASH, GenericEgoDamage.DamageTypes.WHITE);
+        registerItemDefaults(EgoWeaponsItems.LCA_RIFLE.get(), GenericEgoDamage.AttackTypes.PIERCE, GenericEgoDamage.DamageTypes.WHITE);
+        registerItemDefaults(EgoWeaponsItems.UDJAT_KHOPESH.get(), GenericEgoDamage.AttackTypes.SLASH, GenericEgoDamage.DamageTypes.WHITE);
+        registerItemDefaults(EgoWeaponsItems.ARDOR_BLOSSOM_BAT.get(), GenericEgoDamage.AttackTypes.BLUNT, GenericEgoDamage.DamageTypes.RED);
+        registerItemDefaults(EgoWeaponsItems.STIGMA_WORKSHOP_SWORD.get(), GenericEgoDamage.AttackTypes.SLASH, GenericEgoDamage.DamageTypes.RED);
+        registerItemDefaults(EgoWeaponsItems.SOLEMN_LAMENT_BLACK.get(), GenericEgoDamage.AttackTypes.BLUNT, GenericEgoDamage.DamageTypes.BLACK);
+        registerItemDefaults(EgoWeaponsItems.SOLEMN_LAMENT_WHITE.get(), GenericEgoDamage.AttackTypes.BLUNT, GenericEgoDamage.DamageTypes.WHITE);
+        registerItemDefaults(EgoWeaponsItems.SUNSHOWER.get(), GenericEgoDamage.AttackTypes.PIERCE, GenericEgoDamage.DamageTypes.WHITE);
+        registerItemDefaults(EgoWeaponsItems.MIMICRY.get(), GenericEgoDamage.AttackTypes.SLASH, GenericEgoDamage.DamageTypes.RED);
+        registerItemDefaults(EgoWeaponsItems.RAT_PIPE.get(), GenericEgoDamage.AttackTypes.BLUNT, GenericEgoDamage.DamageTypes.RED);
+        registerItemDefaults(EgoWeaponsItems.RAT_SHANK.get(), GenericEgoDamage.AttackTypes.PIERCE, GenericEgoDamage.DamageTypes.RED);
+        registerItemDefaults(EgoWeaponsItems.HEISHOU_MAO_SWORD.get(), GenericEgoDamage.AttackTypes.SLASH, GenericEgoDamage.DamageTypes.BLACK);
+        registerItemDefaults(EgoWeaponsItems.FULLSTOP_SNIPER_RAILGUN.get(), GenericEgoDamage.AttackTypes.PIERCE, GenericEgoDamage.DamageTypes.RED);
+        registerItemDefaults(EgoWeaponsItems.FULLSTOP_REP_PISTOL.get(), GenericEgoDamage.AttackTypes.PIERCE, GenericEgoDamage.DamageTypes.RED);
+        registerItemDefaults(EgoWeaponsItems.FULLSTOP_REP_MACHETE.get(), GenericEgoDamage.AttackTypes.SLASH, GenericEgoDamage.DamageTypes.RED);
+        registerItemDefaults(EgoWeaponsItems.FIREFIST_GAUNTLET.get(), GenericEgoDamage.AttackTypes.BLUNT, GenericEgoDamage.DamageTypes.RED);
+        registerItemDefaults(EgoWeaponsItems.LIU_FIRE_GAUNTLET.get(), GenericEgoDamage.AttackTypes.BLUNT, GenericEgoDamage.DamageTypes.RED);
+        registerItemDefaults(EgoWeaponsItems.MAGIC_BULLET.get(), GenericEgoDamage.AttackTypes.BLUNT, GenericEgoDamage.DamageTypes.BLACK);
+        registerItemDefaults(EgoWeaponsItems.OEUFI_HALBERD.get(), GenericEgoDamage.AttackTypes.SLASH, GenericEgoDamage.DamageTypes.BLACK);
+
+        registerItemDefaults(EgoWeaponsItems.ALLAS_SPEAR.get(), GenericEgoDamage.AttackTypes.PIERCE, GenericEgoDamage.DamageTypes.BLACK);
+        registerItemDefaults(EgoWeaponsItems.ATELIER_LOGIC_PISTOLS.get(), GenericEgoDamage.AttackTypes.PIERCE, GenericEgoDamage.DamageTypes.BLACK);
+        registerItemDefaults(EgoWeaponsItems.ATELIER_LOGIC_SHOTGUN.get(), GenericEgoDamage.AttackTypes.BLUNT, GenericEgoDamage.DamageTypes.BLACK);
+        registerItemDefaults(EgoWeaponsItems.CRYSTAL_ATELIER.get(), GenericEgoDamage.AttackTypes.SLASH, GenericEgoDamage.DamageTypes.BLACK);
+        registerItemDefaults(EgoWeaponsItems.DURANDAL.get(), GenericEgoDamage.AttackTypes.SLASH, GenericEgoDamage.DamageTypes.BLACK);
+        registerItemDefaults(EgoWeaponsItems.MOOK_WORKSHOP.get(), GenericEgoDamage.AttackTypes.SLASH, GenericEgoDamage.DamageTypes.BLACK);
+        registerItemDefaults(EgoWeaponsItems.OLD_BOYS_WORKSHOP.get(), GenericEgoDamage.AttackTypes.BLUNT, GenericEgoDamage.DamageTypes.BLACK);
+        registerItemDefaults(EgoWeaponsItems.RANGA_CLAW.get(), GenericEgoDamage.AttackTypes.PIERCE, GenericEgoDamage.DamageTypes.BLACK);
+        registerItemDefaults(EgoWeaponsItems.RANGA_CLAW_L.get(), GenericEgoDamage.AttackTypes.PIERCE, GenericEgoDamage.DamageTypes.BLACK);
+        registerItemDefaults(EgoWeaponsItems.WHEELS_INDUSTRY.get(), GenericEgoDamage.AttackTypes.BLUNT, GenericEgoDamage.DamageTypes.BLACK);
+        registerItemDefaults(EgoWeaponsItems.ZELKOVA_AXE.get(), GenericEgoDamage.AttackTypes.SLASH, GenericEgoDamage.DamageTypes.BLACK);
+        registerItemDefaults(EgoWeaponsItems.ZELKOVA_MACE.get(), GenericEgoDamage.AttackTypes.BLUNT, GenericEgoDamage.DamageTypes.BLACK);
+
+        // Vanilla Defaults
         registerItemDefaults(Items.WOODEN_SWORD, GenericEgoDamage.AttackTypes.SLASH, GenericEgoDamage.DamageTypes.RED);
         registerItemDefaults(Items.STONE_SWORD, GenericEgoDamage.AttackTypes.SLASH, GenericEgoDamage.DamageTypes.RED);
         registerItemDefaults(Items.IRON_SWORD, GenericEgoDamage.AttackTypes.SLASH, GenericEgoDamage.DamageTypes.RED);
@@ -147,7 +190,10 @@ public class DamageResistanceSystem {
 
         registerItemDefaults(EpicFightItems.KATANA.get(), GenericEgoDamage.AttackTypes.SLASH, GenericEgoDamage.DamageTypes.RED);
 
+        registerItemDefaults(EpicFightItems.KATANA.get(), GenericEgoDamage.AttackTypes.SLASH, GenericEgoDamage.DamageTypes.RED);
     }
+
+
 
     private static void registerDefaults(EntityType<?> entity, GenericEgoDamage.AttackTypes attackType, GenericEgoDamage.DamageTypes damageType) {
         mobDamageDefaults.put(entity, new DamageDefaults(damageType, attackType));

@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "ego_weapons:lca_rifle",
+    "ego_weapons:lca_khopesh",
+    "ego_weapons:lca_udjat_suit"
+  ]
+}

@@ -178,12 +178,29 @@
   "item.ego_weapons.generic.page": "= - - - - - - - [Page: %s/%s] - - - - - - - =",
 
   "desc.ego_weapons.tags.ego_gear": "E.G.O Gear",
+  "desc.ego_weapons.tags.fixer_gear": "Fixer Gear",
+  "desc.ego_weapons.tags.relic": "Relic",
   "desc.ego_weapons.tags.bird":  "Bird of the Dark Forest",
   "desc.ego_weapons.tags.zayin": "ZAYIN",
   "desc.ego_weapons.tags.teth":  "TETH",
   "desc.ego_weapons.tags.he":    "HE",
   "desc.ego_weapons.tags.waw":   "WAW",
   "desc.ego_weapons.tags.aleph": "ALEPH",
+
+  "desc.ego_weapons.tags.grade_10": "Unclassified",
+  "desc.ego_weapons.tags.grade_9": "Grade 9",
+  "desc.ego_weapons.tags.grade_8": "Grade 8",
+  "desc.ego_weapons.tags.grade_7": "Grade 7",
+  "desc.ego_weapons.tags.grade_6": "Grade 6",
+  "desc.ego_weapons.tags.grade_5": "Grade 5",
+  "desc.ego_weapons.tags.grade_4": "Grade 4",
+  "desc.ego_weapons.tags.grade_3": "Grade 3",
+  "desc.ego_weapons.tags.grade_2": "Grade 2",
+  "desc.ego_weapons.tags.grade_1": "Grade 1",
+
+  "desc.ego_weapons.tags.blacksilenceweapons": "The Black Silence",
+
+  "desc.ego_weapons.tags.heishou": "Heishou",
 
   "entity.ego_weapons.doubt": "Doubt",
   "entity.ego_weapons.craving_bloodbag": "Craving Bloodbag",
@@ -258,6 +275,7 @@
   "desc.ego_weapons.sunshower_cloak.ability.3": "[Umbrella] §7Periodically inflict §f1 \uE003§c Sinking §7to foes.",
   "desc.ego_weapons.sunshower_cloak.ability.4": "[Umbrella] §7Apply §f(Sinking Consumed / 5)§7 §f\uE048 §fShield §7to user. §8[Max: §fSinking Consumed§8]",
 
+  "desc.ego_weapons.blacksilenceweapon.desc": "§oA glove based pocket dimension allowing for rapid deployment of weapons.",
   "desc.ego_weapons.blacksilenceweapon.ability.title": "§b[Ability] §fPocket Dimension - \uE004",
   "desc.ego_weapons.blacksilenceweapon.ability.1": "§7Swap Weapon",
 
@@ -444,7 +462,7 @@
   "desc.ego_weapons.solemn_lament.reload2.3": "[I] §7Gain §f2 \uE038 §cHaste§7.",
 
 
-  "desc.ego_weapons.solemn_lament.ability.desc": "§oWhile rapid usage of the E.G.O Gear is certainly an option. The strain on the users sanity is not to be underestimated.",
+
   "desc.ego_weapons.solemn_lament.ability.title": "§b[Ability] §fFireIShallFire - \uED02 \uED03 \uE004\uE004\uE004\uE004\uE004",
   "desc.ego_weapons.solemn_lament.ability.1": "    - = | \uED31  \uED31  \uED31  \uED31  \uED31 | = -",
   "desc.ego_weapons.solemn_lament.ability.2": "§8§oIf used during a Counter Move, Trigger §b[Alt Ability] §fResentful Coffin Burst §7before Attack.",
@@ -460,7 +478,7 @@
   "desc.ego_weapons.solemn_lament.ability.12": "[V]   §7Spend §f1 \uE017 §cThe Living§7. Spend §f1 \uE017 §cThe Departed§7.",
   "desc.ego_weapons.solemn_lament.ability.13": "[V]   §7Deal §f+5% Damage §7for every §f\uE003 §cSinking §7Potency + Count on Target. §8[Max: 75%]",
 
-
+  "desc.ego_weapons.solemn_lament.ability2.desc": "§oWhile rapid usage of the E.G.O Gear is certainly an option. The strain on the users sanity is not to be underestimated.",
   "desc.ego_weapons.solemn_lament.ability2.title": "§b[Ability] §fLamenting Coffin Burst - \uED04",
   "desc.ego_weapons.solemn_lament.ability2.1": "    - = | \uED43 | = -",
   "desc.ego_weapons.solemn_lament.ability2.2": "[I] §7Deal §6Stagger Damage §7for every §f\uE045 §cButterfly §7on Target.",
@@ -543,6 +561,15 @@
   "desc.ego_weapons.mimicry.auto.5": "[III] §7Gain §f1 \uE022 §cOffense Level Up§7.",
   "desc.ego_weapons.mimicry.auto.6": "[III] §7Gain §f1 \uE044 §cImitation§7.",
 
+  "desc.ego_weapons.mimicry.dash.title": "§b[Dash] §fPierce. \uED01",
+  "desc.ego_weapons.mimicry.dash.1": "    - = | \uED31 | = -",
+  "desc.ego_weapons.mimicry.dash.2": "[I] §7Inflict §f1 \uE001 §cBleed §7Potency.",
+
+  "desc.ego_weapons.mimicry.guard.title": "§c[Clashable Counter] §fBlocking Husk",
+  "desc.ego_weapons.mimicry.guard.1": "§8§oTriggers after 4 parries",
+  "desc.ego_weapons.mimicry.guard.2": "[I] §7Gain §f2 \uE048 §fShield for every §f\uE028 §cShell §7on self.",
+  "desc.ego_weapons.mimicry.guard.3": "[I] §7Inflict §f1 \uE001 §cBleed §7Count.",
+
   "desc.ego_weapons.kali_mimicry.desc": "§o\"The ability to shape anothers E.G.O... truly remarkable.\"",
   "desc.ego_weapons.kali_mimicry.auto.title": "§b[Auto] §fLevel Slashes \uED01",
   "desc.ego_weapons.kali_mimicry.auto.1": "    - = | \uED33  \uED32  \uED32  \uED32 | = -",
@@ -587,7 +614,7 @@
   "desc.ego_weapons.kali_mimicry.jump.6": "[II] §7Regenerate §f1 \uE004 §6Light§7.",
   "desc.ego_weapons.kali_mimicry.jump.7": "[II] §7Consume §f1 \uE023 §cOffense Level Down §7on Target.",
 
-  "desc.ego_weapons.kali_mimicry.guard.title": "§c[Clashable Counter] §fFocus Spirit",
+  "desc.ego_weapons.kali_mimicry.guard.title": "§c[Clashable Guard] §fFocus Spirit",
   "desc.ego_weapons.kali_mimicry.guard.1": "[On Parry] §7Recover §6Stamina§7.",
   "desc.ego_weapons.kali_mimicry.guard.2": "[Max Stamina] §7Regenerate §f1 \uE004 §6Light§7.",
   "desc.ego_weapons.kali_mimicry.guard.3": "[Max Stamina] §7Inflict §f1 \uE023 §cOffense Level Down§7.",
@@ -931,7 +958,7 @@
   "desc.ego_weapons.firefist_gauntlet.ability.5": "[I]   §7Inflict §f2 \uE002 §cBurn §7Potency.",
   "desc.ego_weapons.firefist_gauntlet.ability.6": "[II]  §7Inflict §f2 \uE002 §cBurn §7Potency.",
   "desc.ego_weapons.firefist_gauntlet.ability.7": "[III] §7Inflict §f3 \uE002 §cBurn §7Count. §7Inflict §f2 \uE002 §cBurn §7Potency.",
-  "desc.ego_weapons.firefist_gauntlet.ability.8": "[III] §7Deal +1% Damage per consumed §f\uE035 §cOverheated Fuel§7. §8[Max 100%]",
+  "desc.ego_weapons.firefist_gauntlet.ability.8": "[III] §7Deal §f+1% Damage per consumed §f\uE035 §cOverheated Fuel§7. §8[Max 100%]",
   "desc.ego_weapons.firefist_gauntlet.ability.9": "[III] §8Breaks Guard / Bypasses Dodge",
   "desc.ego_weapons.firefist_gauntlet.ability.10": "[On Stagger or Kill] §7Gain §f2 \uE030 §cPower Up§7. §8[Max 4]",
   "desc.ego_weapons.firefist_gauntlet.ability.11": "[On Stagger or Kill] §7Regenerate §f1 \uE004 §6Light§7.",
@@ -1021,6 +1048,7 @@
 
 
 
+  "desc.ego_weapons.rat_outfit.desc": "§oRoughly sewn together clothes... probably sufficient for combat.",
   "desc.ego_weapons.rat_outfit.passive.title": "§b[Passive] §fDetermination of a Rat",
   "desc.ego_weapons.rat_outfit.passive.1": "§7Deal §f+10% §7Damage for every §f15% Health §7missing on self.",
 
@@ -1152,6 +1180,7 @@
   "item.ego_weapons.lamp_crossbow": "§f\uEC04 Lamp :: Alteration ",
   "item.ego_weapons.lamp_suit": "§f\uEC04 Lamp Suit",
   "item.ego_weapons.lamp_pants": "§fLamp Pants",
+  "desc.ego_weapons.lamp_crossbow.desc": "§o\"An alterated variant of the \"Lamp\" hammer.\"",
 
   "desc.ego_weapons.lamp_crossbow.passive.meta": "%1 - Lamp, %2 - Dazzled",
   "desc.ego_weapons.lamp_crossbow.passive.desc": "§o\"Should one peer into the lamplight too long...\"",
@@ -1494,7 +1523,7 @@
   "desc.ego_weapons.ardor_blossom_suit.passive3.3": "§7- Increase Burn §f\uE002 §cBurn §7Count on self to §f3§7.",
   "desc.ego_weapons.ardor_blossom_suit.passive3.4": "§7- Gain §f2 \uE030 §cPower Up§7.",
 
-  "desc.ego_weapons.ardor_blossom_suit.ability.desc": "§oRaising the attunement level seems to allow for abnormal manifestations such as wings on users of this E.G.O.",
+  "desc.ego_weapons.ardor_blossom_suit.ability2.desc": "§oRaising the attunement level seems to allow for abnormal manifestations such as wings on users of this E.G.O.",
   "desc.ego_weapons.ardor_blossom_suit.ability.title": "§b[Ability] §fRaising A.B.S Attunement \uE004\uE004\uE004\uE004\uE004",
   "desc.ego_weapons.ardor_blossom_suit.ability.1": "[I]   §7Gain up to §f10 \uE002 §cBurn §7Potency. ",
   "desc.ego_weapons.ardor_blossom_suit.ability.2": "[I]   §7Gain §f3 \uE002 §cBurn §7Count. ",
@@ -1563,7 +1592,7 @@
   "desc.ego_weapons.udjat_khopesh.ability.7": "[II]  §7Inflict §f2 \uE003 §cSinking §7Potency.",
   "desc.ego_weapons.udjat_khopesh.ability.8": "[III] §7Inflict §f1 \uE052 §cBlue Sand§7.",
   "desc.ego_weapons.udjat_khopesh.ability.9": "[III] §7Inflict §f1 \uE003 §cSinking §7Count.",
-  "desc.ego_weapons.udjat_khopesh.ability.10": "[III] §7At §f4+ \uE007 §cProtection §7on self. Apply [IV]",
+  "desc.ego_weapons.udjat_khopesh.ability.10": "[III] §7At §f4+ \uE007 §cProtection §7on self. Apply §f[IV]§7.",
   "desc.ego_weapons.udjat_khopesh.ability.11":"[IV]  §7Inflict §f1 \uE052 §cBlue Sand§7.",
   "desc.ego_weapons.udjat_khopesh.ability.12":"[IV]  §7Deal §6Stagger Damage§7 by §cSinking §7Potency on Target.",
 
@@ -1714,7 +1743,7 @@
   "desc.ego_weapons.lca_rifle.innate.5": "[I] §7Spend §f1 \uE012 §cAmmo.",
   "desc.ego_weapons.lca_rifle.innate.6": "[I] §7Inflict §f1 \uE008 §cTremor §7Potency.",
   "desc.ego_weapons.lca_rifle.innate.7": "[I] §7Reuse this coin once for every §f2 \uE041 §bSpeed §7on self. §8[Max 2x]",
-  "desc.ego_weapons.lca_rifle.innate.8": "[Reuse] §7Deal +30% Damage for every reuse§7. §8[Max 60%]",
+  "desc.ego_weapons.lca_rifle.innate.8": "[Reuse] §7Deal §f+30% §7Damage for every reuse§7. §8[Max 60%]",
   "desc.ego_weapons.lca_rifle.innate.9": "[2nd Reuse] §7Trigger §f\uE006 §cTremor Burst.",
 
   "desc.ego_weapons.lca_rifle.ability.desc": "§oCover the gap on our left. Prevent the target from escaping.",
@@ -1928,11 +1957,12 @@
   "desc.ego_weapons.arayashiki_armor.ability2.3": "[Use] §7Lose §f5 \uE059 §cLoss of Self§7.",
   "desc.ego_weapons.arayashiki_armor.ability2.4": "§8§o[Toggle Firing Mode to View §7§oBattle Instinct§8§o]",
 
-  "desc.ego_weapons.statuses.d10fuel.title": "\uE034 §cDistrict 12 Fuel",
-  "desc.ego_weapons.statuses.d10fuel.1": "  §8§o[Max 100]",
-  "desc.ego_weapons.statuses.d10fuel.2": "  §8[Special §f\uE012 §6Ammo§8]",
-  "desc.ego_weapons.statuses.d10fuel.3": "§7Utilized by certain Skills",
-  "desc.ego_weapons.statuses.d10fuel.4": "§7At <= §f50 Potency§7, turn into §f\uE035 §cOverheated Fuel",
+  "desc.ego_weapons.statuses.d12fuel": "§cDistrict 12 Fuel",
+  "desc.ego_weapons.statuses.d12fuel.title": "\uE034 §cDistrict 12 Fuel",
+  "desc.ego_weapons.statuses.d12fuel.1": "  §8§o[Max 100]",
+  "desc.ego_weapons.statuses.d12fuel.2": "  §8[Special §f\uE012 §6Ammo§8]",
+  "desc.ego_weapons.statuses.d12fuel.3": "§7Utilized by certain Skills",
+  "desc.ego_weapons.statuses.d12fuel.4": "§7At <= §f50 Potency§7, turn into §f\uE035 §cOverheated Fuel",
 
   "desc.ego_weapons.statuses.feather_wick_bolt.title": "\uE050 §cFeather-Wick Bolt",
   "desc.ego_weapons.statuses.feather_wick_bolt.1": " §8[Special §f\uE012 §6Ammo§8]",
@@ -1970,10 +2000,13 @@
   "desc.ego_weapons.ammo.none": "§fNONE",
   "desc.ego_weapons.ammo.light": "§fLight Bullets",
   "desc.ego_weapons.ammo.rifle": "§fRifle Bullets",
-  "desc.ego_weapons.ammo.unique": "§fUnique",
+  "desc.ego_weapons.ammo.unique": "§fUnique Ammo",
+  "desc.ego_weapons.ammo.feather_wick_bolt": "§fFeather-Wick Bolt",
 
   "desc.ego_weapons.ammo.mag": "§7| Magazine Size: ",
 
+
+  "desc.ego_weapons.offense_level": "Offense",
   "desc.ego_weapons.defense_level": "Defense",
   "desc.ego_weapons.sanity_bonus": "§f\uE046 §bMax Sanity §f",
   "desc.ego_weapons.stagger_bonus": "§f\uED45 §bMax Stagger §f",
@@ -2346,6 +2379,7 @@
   "desc.ego_weapons.statuses.eternal_rest.5": "[On Hit] §7Inflict §f+2 \uE003 §cSinking §7Potency.",
   "desc.ego_weapons.statuses.eternal_rest.6": "[On Hit] §7Deal additional §6Stagger §7and \uED03 §5Black Damage §f\uED03",
 
+  "desc.ego_weapons.statuses.ammo": "§cAmmo ",
   "desc.ego_weapons.statuses.ammo.title": "\uE012 §cAmmo ",
   "desc.ego_weapons.statuses.ammo.1": "Used by certain Attack Skills",
   "desc.ego_weapons.statuses.ammo.2": "[On Attack]: §7Apply bullet effect.",

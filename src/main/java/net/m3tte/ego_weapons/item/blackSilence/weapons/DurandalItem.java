@@ -2,12 +2,15 @@
 package net.m3tte.ego_weapons.item.blackSilence.weapons;
 
 import net.m3tte.ego_weapons.*;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.execFunctions.BlackSilenceEvaluator;
 import net.m3tte.ego_weapons.gameasset.movesets.DurandalMovesetAnims;
 import net.m3tte.ego_weapons.item.descriptionSystem.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.network.packages.VFXPackages;
 import net.m3tte.ego_weapons.particle.BlacksilenceshadowParticle;
+import net.m3tte.ego_weapons.potion.countEffects.EffectLike;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -42,6 +45,35 @@ public class DurandalItem extends EgoWeaponsWeapon {
 	public DurandalItem(int p_i48460_2_, float p_i48460_3_, Properties p_i48460_4_) {
 		super(durandalTier, p_i48460_2_, p_i48460_3_, p_i48460_4_);
 	}
+
+	@Override
+	public void setupWeaponDescription() {
+		super.setupWeaponDescription();
+		this.tierText = "desc.ego_weapons.risk.1";
+		this.identifier = "durandal";
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, "blacksilenceweapon", "ability", 1,
+				new String[]{""}, true));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INNATE, this.identifier, "innate", 2,
+				new String[]{"black", "offense_up"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, this.identifier, "auto", 3,
+				new String[]{"black", "power_up"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, this.identifier, "dash", 3,
+				new String[]{"black", "power_up"}));
+
+
+	}
+
+	@Override
+	public EffectLike[] getKeywords() {
+		return new EffectLike[]{EgoWeaponsEffects.POWER_UP.get(), EgoWeaponsEffects.OFFENSE_LEVEL_UP.get()};
+	}
+
+
+	/*
 	// elements.items.add(() -> new SwordItem(, 3, -2.9f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)) {
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
@@ -79,7 +111,7 @@ public class DurandalItem extends EgoWeaponsWeapon {
 		}
 
 		generateStatusHelp(list);
-	}
+	}*/
 
 	int[] hitAnimations = null;
 

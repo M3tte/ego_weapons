@@ -1,6 +1,8 @@
 package net.m3tte.ego_weapons;
 
 import net.m3tte.ego_weapons.potion.countEffects.*;
+import net.m3tte.ego_weapons.potion.effectLikes.AmmoEffectlike;
+import net.m3tte.ego_weapons.potion.effectLikes.D12FuelEffectLike;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
@@ -85,6 +87,8 @@ public class EgoWeaponsEffects {
     public static final RegistryObject<CountPotencyStatus> SALVATION = registerEffect("salvation", new SalvationEffect());
     public static final RegistryObject<CountPotencyStatus> MANG = registerEffect("mang", new Mang());
 
+    public static final EffectLike AMMO = new AmmoEffectlike();
+    public static final EffectLike D12FUEL = new D12FuelEffectLike();
 
     public static int speedMult(LivingEntity entity) {
         return SPEED_UP.get().getPotency(entity) - SPEED_DOWN.get().getPotency(entity) + UDJAT_VANGUARD.get().getPotency(entity)*2;

@@ -16,12 +16,14 @@ public class SkillDescriptionPage extends EmptyDescriptionPage {
     String skillType = "";
     int lines = 0;
 
+    boolean showDescription = false;
+
     String[] statusEffects;
 
     Effect[] assignedEffects = null;
 
-    public SkillDescriptionPage(String gearIdentifier, String skillType, int lines, String[] statusEffects, Effect... assignedEffects) {
-        super(false);
+    public SkillDescriptionPage(PAGE_TYPE identifier, String gearIdentifier, String skillType, int lines, String[] statusEffects, Effect... assignedEffects) {
+        super(identifier, false);
         this.gearIdentifier = gearIdentifier;
         this.skillType = skillType;
         this.lines = lines;
@@ -29,12 +31,31 @@ public class SkillDescriptionPage extends EmptyDescriptionPage {
         this.assignedEffects = assignedEffects;
     }
 
-    public SkillDescriptionPage(String gearIdentifier, String skillType, int lines, String[] statusEffects) {
-        super(false);
+    public SkillDescriptionPage(PAGE_TYPE identifier, String gearIdentifier, String skillType, int lines, String[] statusEffects) {
+        super(identifier, false);
         this.gearIdentifier = gearIdentifier;
         this.skillType = skillType;
         this.lines = lines;
         this.statusEffects = statusEffects;
+    }
+
+    public SkillDescriptionPage(PAGE_TYPE identifier, String gearIdentifier, String skillType, int lines, String[] statusEffects, boolean showDescription, Effect... assignedEffects) {
+        super(identifier, false);
+        this.gearIdentifier = gearIdentifier;
+        this.skillType = skillType;
+        this.lines = lines;
+        this.statusEffects = statusEffects;
+        this.assignedEffects = assignedEffects;
+        this.showDescription = showDescription;
+    }
+
+    public SkillDescriptionPage(PAGE_TYPE identifier, String gearIdentifier, String skillType, int lines, boolean showDescription, String[] statusEffects) {
+        super(identifier, false);
+        this.gearIdentifier = gearIdentifier;
+        this.skillType = skillType;
+        this.lines = lines;
+        this.statusEffects = statusEffects;
+        this.showDescription = showDescription;
     }
 
     @Override
@@ -44,9 +65,9 @@ public class SkillDescriptionPage extends EmptyDescriptionPage {
         }
         else {
             if (assignedEffects != null) {
-                generateDescription(list,gearIdentifier, skillType, lines, assignedEffects);
+                generateDescription(list,this.gearIdentifier, this.skillType, this.lines, this.showDescription, this.assignedEffects);
             } else {
-                generateDescription(list,gearIdentifier, skillType, lines);
+                generateDescription(list,this.gearIdentifier, this.skillType, this.lines, this.showDescription);
             }
 
         }

@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class ArmorStatisticPage extends EmptyDescriptionPage{
+public class StatisticsPage extends EmptyDescriptionPage{
 
     public PlaceholderType getType() {
         return type;
@@ -23,8 +23,8 @@ public class ArmorStatisticPage extends EmptyDescriptionPage{
 
     PlaceholderMetadata metadata;
     private int emptyLines = 0;
-    public ArmorStatisticPage(PlaceholderType type, int emptyLines, PlaceholderMetadata metadata) {
-        super(true);
+    public StatisticsPage(PAGE_TYPE identifier, PlaceholderType type, int emptyLines, PlaceholderMetadata metadata) {
+        super(identifier, true);
         this.type = type;
         this.emptyLines = emptyLines;
         this.metadata = metadata;

@@ -2,9 +2,14 @@
 package net.m3tte.ego_weapons.item.udjat;
 
 import net.m3tte.ego_weapons.*;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.ConditionalDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.item.descriptionSystem.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.network.packages.VFXPackages;
+import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
+import net.m3tte.ego_weapons.potion.countEffects.EffectLike;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.world.capabilities.SanitySystem;
@@ -74,8 +79,47 @@ public class LCAKhopesh extends EgoWeaponsWeapon {
 		super(ardorBlossomTier, p_i48460_2_, p_i48460_3_, p_i48460_4_);
 	}
 
+	@Override
+	public void setupWeaponDescription() {
+		super.setupWeaponDescription();
+		this.tierText = "desc.ego_weapons.risk.2";
+		this.identifier = "lca_khopesh";
 
 
+		SkillDescriptionPage defaultAbility = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability", 14,
+				new String[]{"white", "protection", "sinking", "blue_sand", "sheut_fracture", "white_fragility"}, true);
+
+		SkillDescriptionPage comboAbility = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "combo_ability", 14,
+				new String[]{"speed", "udjat_vanguard", "ammo", "speed_down", "white_fragility", "protection", "tremor", "sinking", "blue_sand", "sheut_fracture"}, true);
+
+		addPage(new ConditionalDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, () -> {
+			if (Minecraft.getInstance().player.getItemBySlot(EquipmentSlotType.OFFHAND).getItem().equals(EgoWeaponsItems.LCA_RIFLE.get())) {
+				return comboAbility;
+			} else {
+				return defaultAbility;
+			}
+		}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INNATE, this.identifier, "innate", 7,
+				new String[]{"white", "fragile", "protection","sinking", "blue_sand", "sheut_fracture", "white_fragility"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, this.identifier, "auto", 8,
+				new String[]{"white", "sinking", "protection", "sheut_fracture", "white_fragility"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive2", 3,
+				new String[]{"protection", "offense_down"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive", 3,
+				new String[]{"sinking", "blue_sand"}));
+	}
+
+	@Override
+	public EffectLike[] getKeywords() {
+		return new EffectLike[]{EgoWeaponsEffects.SINKING.get(), EgoWeaponsEffects.PROTECTION.get()};
+	}
+
+
+	/*
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
@@ -132,7 +176,7 @@ public class LCAKhopesh extends EgoWeaponsWeapon {
 		}
 
 		generateStatusHelp(list);
-	}
+	}*/
 
 
 

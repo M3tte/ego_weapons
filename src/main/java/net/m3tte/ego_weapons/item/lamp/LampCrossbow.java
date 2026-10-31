@@ -2,6 +2,7 @@
 package net.m3tte.ego_weapons.item.lamp;
 
 import net.m3tte.ego_weapons.*;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
 import net.m3tte.ego_weapons.gameasset.AttackLogicPredicate;
 import net.m3tte.ego_weapons.gameasset.BasicEgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
@@ -11,6 +12,8 @@ import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage
 import net.m3tte.ego_weapons.item.guns.GunCaliber;
 import net.m3tte.ego_weapons.item.guns.GunItem;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
+import net.m3tte.ego_weapons.potion.countEffects.EffectLike;
 import net.m3tte.ego_weapons.procedures.DelayedEvent;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
@@ -43,6 +46,10 @@ import static net.m3tte.ego_weapons.world.capabilities.UtilitySystems.generateAt
 
 public class LampCrossbow extends GunItem {
 
+	@Override
+	public String getCaliberIdentifier() {
+		return "desc.ego_weapons.ammo.feather_wick_bolt";
+	}
 
 	@Override
 	public void setupWeaponDescription() {
@@ -50,29 +57,34 @@ public class LampCrossbow extends GunItem {
 		this.tierText = "desc.ego_weapons.risk.waw";
 		this.identifier = "lamp_crossbow";
 
-		addPage(new SkillDescriptionPage(this.identifier, "ability", 16,
-				new String[]{"burn", "sinking", "feather_wick_bolt","lamp","black_fragility"},
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability", 16,
+				new String[]{"black", "burn", "sinking", "feather_wick_bolt","lamp","black_fragility"},
 				EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.DAZZLE.get()));
 
-		addPage(new SkillDescriptionPage(this.identifier, "innate", 8,
-				new String[]{"burn", "sinking", "feather_wick_bolt","lamp","black_fragility"},
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INNATE, this.identifier, "innate", 8,
+				new String[]{"black", "burn", "sinking", "feather_wick_bolt","lamp","black_fragility"},
 				EgoWeaponsEffects.LAMP.get()));
 
-		addPage(new SkillDescriptionPage(this.identifier, "auto2", 10,
-				new String[]{"burn", "sinking", "feather_wick_bolt","lamp"},
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, this.identifier, "auto2", 10,
+				new String[]{"black", "burn", "sinking", "feather_wick_bolt","lamp"},
 				EgoWeaponsEffects.LAMP.get()));
 
-		addPage(new SkillDescriptionPage(this.identifier, "auto", 4,
-				new String[]{"burn", "sinking", "lamp"},
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, this.identifier, "auto", 4,
+				new String[]{"black", "burn", "sinking", "lamp"},
 				EgoWeaponsEffects.LAMP.get()));
 
-		addPage(new SkillDescriptionPage(this.identifier, "passive2", 2,
-				new String[]{"burn", "sinking", "lamp"},
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive2", 2,
+				new String[]{"burn", "sinking", "lamp"}, true,
 				EgoWeaponsEffects.DAZZLE.get()));
 
-		addPage(new SkillDescriptionPage(this.identifier, "passive", 6,
-				new String[]{"offense_up","lamp","dazzle"},
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive", 6,
+				new String[]{"offense_up","lamp","dazzle"}, true,
 				EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.DAZZLE.get()));
+	}
+
+	@Override
+	public EffectLike[] getKeywords() {
+		return new EffectLike[]{EgoWeaponsEffects.BURN.get(), EgoWeaponsEffects.SINKING.get(), EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.DAZZLE.get()};
 	}
 
 	//@Override

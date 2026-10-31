@@ -4,10 +4,14 @@ package net.m3tte.ego_weapons.item.mimicry;
 import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
 import net.m3tte.ego_weapons.EgoWeaponsSounds;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.ConditionalDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.gameasset.EgoAttackAnimation;
 import net.m3tte.ego_weapons.gameasset.movesets.MimicryMovesetAnims;
 import net.m3tte.ego_weapons.item.descriptionSystem.EgoWeaponsWeapon;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
 import net.m3tte.ego_weapons.procedures.EntityTick;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
@@ -84,6 +88,119 @@ public class MimicryItem extends EgoWeaponsWeapon {
 		super(mimicryTier, p_i48460_2_, p_i48460_3_, p_i48460_4_);
 	}
 
+	@Override
+	public void setupWeaponDescription() {
+		super.setupWeaponDescription();
+		this.tierText = "desc.ego_weapons.risk.aleph";
+		this.identifier = "mimicry";
+		String secondaryIdent = "kali_mimicry";
+
+
+
+		SkillDescriptionPage normalS = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability", 10,
+				new String[]{"red", "bleed", "defense_down", "imitation"});
+		SkillDescriptionPage kaliS = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, secondaryIdent, "ability", 6,
+				new String[]{"red", "bleed", "defense_down"});
+		addPage(new ConditionalDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, () -> {
+			boolean conditional = false;
+			if (Minecraft.getInstance().player != null) {
+				Item chestItem = Minecraft.getInstance().player.getItemBySlot(EquipmentSlotType.CHEST).getItem();
+				if (chestItem.equals(EgoWeaponsItems.JACKET_OF_THE_RED_MIST.get()) || chestItem.equals(EgoWeaponsItems.RED_MIST_EGO_CHESTPLATE.get())) {
+					conditional = true;
+				}
+			}
+			return conditional ? kaliS : normalS;
+		}));
+
+		SkillDescriptionPage normalI = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INNATE, this.identifier, "innate", 6,
+				new String[]{"red", "defense_up", "bleed", "imitation"});
+		SkillDescriptionPage kaliI = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INNATE, secondaryIdent, "innate", 8,
+				new String[]{"red", "bleed", "defense_down", "offense_down"});
+
+		addPage(new ConditionalDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INNATE, () -> {
+			boolean conditional = false;
+			if (Minecraft.getInstance().player != null) {
+				Item chestItem = Minecraft.getInstance().player.getItemBySlot(EquipmentSlotType.CHEST).getItem();
+				if (chestItem.equals(EgoWeaponsItems.JACKET_OF_THE_RED_MIST.get()) || chestItem.equals(EgoWeaponsItems.RED_MIST_EGO_CHESTPLATE.get())) {
+					conditional = true;
+				}
+			}
+			return conditional ? kaliI : normalI;
+		}));
+
+		SkillDescriptionPage normalA = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, this.identifier, "auto", 6,
+				new String[]{"red", "bleed", "offense_up", "imitation"});
+		SkillDescriptionPage kaliA = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, secondaryIdent, "auto", 6,
+				new String[]{"red", "bleed", "offense_down", "defense_down"});
+
+		addPage(new ConditionalDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, () -> {
+			boolean conditional = false;
+			if (Minecraft.getInstance().player != null) {
+				Item chestItem = Minecraft.getInstance().player.getItemBySlot(EquipmentSlotType.CHEST).getItem();
+				if (chestItem.equals(EgoWeaponsItems.JACKET_OF_THE_RED_MIST.get()) || chestItem.equals(EgoWeaponsItems.RED_MIST_EGO_CHESTPLATE.get())) {
+					conditional = true;
+				}
+			}
+			return conditional ? kaliA : normalA;
+		}));
+
+		SkillDescriptionPage normalJ = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, this.identifier, "jump", 2,
+				new String[]{"red", "bleed"});
+		SkillDescriptionPage kaliJ = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, secondaryIdent, "jump", 7,
+				new String[]{"red", "bleed", "rupture", "offense_down"});
+
+		addPage(new ConditionalDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, () -> {
+			boolean conditional = false;
+			if (Minecraft.getInstance().player != null) {
+				Item chestItem = Minecraft.getInstance().player.getItemBySlot(EquipmentSlotType.CHEST).getItem();
+				if (chestItem.equals(EgoWeaponsItems.JACKET_OF_THE_RED_MIST.get()) || chestItem.equals(EgoWeaponsItems.RED_MIST_EGO_CHESTPLATE.get())) {
+					conditional = true;
+				}
+			}
+			return conditional ? kaliJ : normalJ;
+		}));
+
+		SkillDescriptionPage normalD = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, this.identifier, "dash", 2,
+				new String[]{"red", "bleed"});
+		SkillDescriptionPage kaliD = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, secondaryIdent, "dash", 5,
+				new String[]{"red", "bleed", "rupture"});
+
+		addPage(new ConditionalDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, () -> {
+			boolean conditional = false;
+			if (Minecraft.getInstance().player != null) {
+				Item chestItem = Minecraft.getInstance().player.getItemBySlot(EquipmentSlotType.CHEST).getItem();
+				if (chestItem.equals(EgoWeaponsItems.JACKET_OF_THE_RED_MIST.get()) || chestItem.equals(EgoWeaponsItems.RED_MIST_EGO_CHESTPLATE.get())) {
+					conditional = true;
+				}
+			}
+			return conditional ? kaliD : normalD;
+		}));
+		SkillDescriptionPage normalG = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.DEFENSE, this.identifier, "guard", 3,
+				new String[]{"red", "bleed"});
+		SkillDescriptionPage kaliG = new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.DEFENSE, secondaryIdent, "guard", 3,
+				new String[]{"red", "offense_down"});
+
+		addPage(new ConditionalDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.DEFENSE, () -> {
+			boolean conditional = false;
+			if (Minecraft.getInstance().player != null) {
+				Item chestItem = Minecraft.getInstance().player.getItemBySlot(EquipmentSlotType.CHEST).getItem();
+				if (chestItem.equals(EgoWeaponsItems.JACKET_OF_THE_RED_MIST.get()) || chestItem.equals(EgoWeaponsItems.RED_MIST_EGO_CHESTPLATE.get())) {
+					conditional = true;
+				}
+			}
+			return conditional ? kaliG : normalG;
+		}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive", 1,
+				new String[]{}));
+	}
+
+	@Override
+	public CountPotencyStatus[] getKeywords() {
+		return new CountPotencyStatus[]{EgoWeaponsEffects.BLEED.get()};
+	}
+
+	/*
 	public void appendHoverTextALT(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.kali_mimicry.desc");
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
@@ -196,7 +313,7 @@ public class MimicryItem extends EgoWeaponsWeapon {
 		}
 		list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
 	}
-
+*/
 	@Override
 	public boolean hurtEnemy(ItemStack itemstack, LivingEntity target, LivingEntity sourceentity) {
 		boolean retval = super.hurtEnemy(itemstack, target, sourceentity);

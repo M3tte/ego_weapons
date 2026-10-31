@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "ego_weapons:rat_pipe",
+    "ego_weapons:rat_blunt_outfit",
+
+    "ego_weapons:rat_shank",
+    "ego_weapons:rat_outfit"
+
+  ]
+}

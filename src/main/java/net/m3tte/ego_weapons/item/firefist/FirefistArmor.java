@@ -4,9 +4,14 @@ package net.m3tte.ego_weapons.item.firefist;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.item.magic_bullet.MagicBulletArmor;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
+import net.m3tte.ego_weapons.potion.countEffects.EffectLike;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.item.descriptionSystem.GenericEgoWeaponsArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
@@ -82,8 +87,8 @@ public class FirefistArmor extends GenericEgoWeaponsArmor {
 		super(p_i48534_1_, p_i48534_2_, p_i48534_3_);
 	}
 
-	public FirefistArmor(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity) {
-		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
+	public FirefistArmor(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity, boolean doDesc) {
+		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity, doDesc);
 
 
 	}
@@ -107,7 +112,7 @@ public class FirefistArmor extends GenericEgoWeaponsArmor {
 		}
 	}
 
-	static Item mask = new MagicBulletArmor(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Item.Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS)) {
+	static Item mask = new FirefistArmor(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Item.Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS)) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -134,7 +139,7 @@ public class FirefistArmor extends GenericEgoWeaponsArmor {
 			return 0;
 		}
 	};
-	static Item chest = new FirefistArmor(firefistArmor, EquipmentSlotType.CHEST, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 0.7f, 1.3f, 0.7f ,1.5f, 0.7f, 1.3f, 1.0f, 5, -5) {
+	static Item chest = new FirefistArmor(firefistArmor, EquipmentSlotType.CHEST, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 0.7f, 1.3f, 0.7f ,1.5f, 0.7f, 1.3f, 1.0f, 5, -5, true) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -153,6 +158,32 @@ public class FirefistArmor extends GenericEgoWeaponsArmor {
 			return armorModel;
 		}
 
+		@Override
+		public EffectLike[] getKeywords() {
+			return new EffectLike[]{EgoWeaponsEffects.BURN.get(), EgoWeaponsEffects.D12FUEL};
+		}
+
+		@Override
+		public void setupWeaponDescription() {
+			super.setupWeaponDescription();
+			this.tierText = "desc.ego_weapons.risk.5";
+			this.identifier = "firefist_armor";
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability", 4,
+					new String[]{"burn", "offense_up", "defense_down", "firefist_overdrive"}, false));
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "reload", 1,
+					new String[]{"d12fuel"}, false));
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive", 1,
+					new String[]{"burn"}, false));
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive2", 3,
+					new String[]{"d12fuel"}, false));
+		}
+
+
+		/*
 		@Override
 		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.appendHoverText(itemstack, world, list, flag);
@@ -176,13 +207,13 @@ public class FirefistArmor extends GenericEgoWeaponsArmor {
 					break;
 				case 2:
 					if (EgoWeaponsKeybinds.isHoldingShift())
-						generateStatusDescription(list, new String[]{"d10fuel"});
+						generateStatusDescription(list, new String[]{"d12fuel"});
 					else
 						generateDescription(list, "firefist_armor", "passive2", 3);
 					break;
 				case 3:
 					if (EgoWeaponsKeybinds.isHoldingShift())
-						generateStatusDescription(list, new String[]{"d10fuel"});
+						generateStatusDescription(list, new String[]{"d12fuel"});
 					else
 						generateDescription(list, "firefist_armor", "reload", 1);
 					break;
@@ -195,7 +226,7 @@ public class FirefistArmor extends GenericEgoWeaponsArmor {
 			}
 
 			generateStatusHelp(list);
-		}
+		}*/
 
 	};
 

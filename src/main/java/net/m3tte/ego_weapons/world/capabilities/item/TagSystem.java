@@ -32,7 +32,22 @@ public class TagSystem {
         registeredTagPresets = new HashMap<>();
 
         registeredTagPresets.put(getTag(EgoWeaponsMod.MODID, "bird"), TagPresets.GOLD);
+        registeredTagPresets.put(getTag(EgoWeaponsMod.MODID, "aleph"), TagPresets.ALEPH);
         registeredTagPresets.put(getTag(EgoWeaponsMod.MODID, "waw"), TagPresets.WAW);
+        registeredTagPresets.put(getTag(EgoWeaponsMod.MODID, "he"), TagPresets.HE);
+        registeredTagPresets.put(getTag(EgoWeaponsMod.MODID, "teth"), TagPresets.TETH);
+        registeredTagPresets.put(getTag(EgoWeaponsMod.MODID, "zayin"), TagPresets.ZAYIN);
+
+        registeredTagPresets.put(getTag(EgoWeaponsMod.MODID, "grade_1"), TagPresets.ALEPH);
+        registeredTagPresets.put(getTag(EgoWeaponsMod.MODID, "grade_2"), TagPresets.WAW);
+        registeredTagPresets.put(getTag(EgoWeaponsMod.MODID, "grade_3"), TagPresets.WAW);
+        registeredTagPresets.put(getTag(EgoWeaponsMod.MODID, "grade_4"), TagPresets.HE);
+        registeredTagPresets.put(getTag(EgoWeaponsMod.MODID, "grade_5"), TagPresets.HE);
+        registeredTagPresets.put(getTag(EgoWeaponsMod.MODID, "grade_6"), TagPresets.TETH);
+        registeredTagPresets.put(getTag(EgoWeaponsMod.MODID, "grade_7"), TagPresets.TETH);
+        registeredTagPresets.put(getTag(EgoWeaponsMod.MODID, "grade_8"), TagPresets.ZAYIN);
+        registeredTagPresets.put(getTag(EgoWeaponsMod.MODID, "grade_9"), TagPresets.ZAYIN);
+        registeredTagPresets.put(getTag(EgoWeaponsMod.MODID, "grade_10"), TagPresets.SIMPLE);
     }
 
     static ResourceLocation PLAQUE_SILVER = new ResourceLocation(EgoWeaponsMod.MODID, "textures/gui/description_elements/plaque_silver.png");

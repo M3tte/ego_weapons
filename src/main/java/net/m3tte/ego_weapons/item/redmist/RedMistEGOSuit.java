@@ -4,10 +4,14 @@ package net.m3tte.ego_weapons.item.redmist;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
 import net.m3tte.ego_weapons.EgoWeaponsItems;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.potion.ManifestEgoPotionEffect;
+import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
 import net.m3tte.ego_weapons.item.descriptionSystem.GenericEgoWeaponsArmor;
 import net.minecraft.client.renderer.entity.model.BipedModel;
@@ -125,10 +129,10 @@ public class RedMistEGOSuit extends GenericEgoWeaponsArmor {
 		}
 	};
 
-	public RedMistEGOSuit(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity) {
-		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
+	public RedMistEGOSuit(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity, boolean doDesc) {
+		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity, doDesc);
 	}
-	static Item chest = new RedMistEGOSuit(armormaterial, EquipmentSlotType.CHEST, new Item.Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 0.5f, 0.5f, 1.0f ,1.6f, 0.8f, 0.5f, 1.3f, 10, 0) {
+	static Item chest = new RedMistEGOSuit(armormaterial, EquipmentSlotType.CHEST, new Item.Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 0.5f, 0.5f, 1.0f ,1.6f, 0.8f, 0.5f, 1.3f, 10, 0, true) {
 
 
 
@@ -159,6 +163,31 @@ public class RedMistEGOSuit extends GenericEgoWeaponsArmor {
 			}
 		}
 
+		@Override
+		public CountPotencyStatus[] getKeywords() {
+			return new CountPotencyStatus[]{};
+		}
+
+		@Override
+		public void setupWeaponDescription() {
+			super.setupWeaponDescription();
+			this.tierText = "desc.ego_weapons.risk.1";
+			this.identifier = "red_mist_armor";
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability", 1,
+					new String[]{"manifest_ego"}, false));
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability2", 4,
+					new String[]{"resilience","protection"}, false));
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive", 1,
+					new String[]{}, false));
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive2", 3,
+					new String[]{"defense_up", "offense_up", "power_up", "manifest_ego"}, false));
+		}
+
+		/*
 		@Override
 		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.appendHoverText(itemstack, world, list, flag);
@@ -199,7 +228,7 @@ public class RedMistEGOSuit extends GenericEgoWeaponsArmor {
 			}
 
 			generateStatusHelp(list);
-		}
+		}*/
 	};
 
 	static Item legs = new RedMistEGOSuit(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.LEGS, new Item.Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS)) {

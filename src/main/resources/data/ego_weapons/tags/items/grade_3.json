@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "ego_weapons:fullstop_office_sniper_suit",
+    "ego_weapons:fullstop_office_railgun",
+
+    "ego_weapons:fullstop_office_rep_cloak",
+    "ego_weapons:fullstop_atelier_pistol",
+    "ego_weapons:fullstop_machete",
+
+    "ego_weapons:udjat_suit",
+    "ego_weapons:udjat_khopesh"
+  ]
+}

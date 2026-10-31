@@ -4,10 +4,14 @@ package net.m3tte.ego_weapons.item.blackSilence;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.m3tte.ego_weapons.EgoWeaponsCreativeTabs;
+import net.m3tte.ego_weapons.EgoWeaponsEffects;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.item.NoArmorToughnessMaterial;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
 import net.m3tte.ego_weapons.potion.OrlandoPotionEffect;
 import net.m3tte.ego_weapons.item.descriptionSystem.GenericEgoWeaponsArmor;
+import net.m3tte.ego_weapons.potion.countEffects.EffectLike;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -101,10 +105,10 @@ public class BlackSilenceArmor  extends GenericEgoWeaponsArmor {
 		}
 	}
 
-	public BlackSilenceArmor(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity) {
-		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity);
+	public BlackSilenceArmor(IArmorMaterial armorMaterial, EquipmentSlotType slot, Properties props, float redResistance, float whiteResistance, float blackResistance, float paleResistance, float slashResistance, float pierceResistance, float bluntResistance, float bonusStagger, float bonusSanity, boolean doDesc) {
+		super(armorMaterial, slot, props, redResistance, whiteResistance, blackResistance, paleResistance,slashResistance, pierceResistance, bluntResistance, bonusStagger, bonusSanity , doDesc);
 	}
-	static Item chest = new BlackSilenceArmor(blackSilenceArmor, EquipmentSlotType.CHEST, new Item.Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 0.7f, 1f, 0.5f ,1.2f, 0.8f, 1.3f, 0.8f, 5, -5) {
+	static Item chest = new BlackSilenceArmor(blackSilenceArmor, EquipmentSlotType.CHEST, new Item.Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS), 0.7f, 1f, 0.5f ,1.2f, 0.8f, 1.3f, 0.8f, 5, -5, true) {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public BipedModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlotType slot, BipedModel defaultModel) {
@@ -119,6 +123,29 @@ public class BlackSilenceArmor  extends GenericEgoWeaponsArmor {
 			return armorModel;
 		}
 
+		@Override
+		public EffectLike[] getKeywords() {
+			return new EffectLike[]{EgoWeaponsEffects.BURN.get(), EgoWeaponsEffects.D12FUEL};
+		}
+
+		@Override
+		public void setupWeaponDescription() {
+			super.setupWeaponDescription();
+			this.tierText = "desc.ego_weapons.risk.1";
+			this.identifier = "black_silence_suit";
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability", 1,
+					new String[]{"orlando"}, false));
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability1", 1,
+					new String[]{"furioso"}, false));
+
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive1", 4,
+					new String[]{"poise"}, false));
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive2", 4,
+					new String[]{"offense_up", "power_up"}, false));
+		}
+
+		/*
 		@Override
 		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.appendHoverText(itemstack, world, list, flag);
@@ -165,7 +192,7 @@ public class BlackSilenceArmor  extends GenericEgoWeaponsArmor {
 			}
 
 			list.add(new StringTextComponent("= - - - - - - - - - - - - - - - - - - - - =").withStyle(TextFormatting.GRAY));
-		}
+		}*/
 	};
 	static Item mask = new ArmorItem(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Item.Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS)) {
 		@Override

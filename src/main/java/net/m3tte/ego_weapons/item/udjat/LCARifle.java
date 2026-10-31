@@ -2,10 +2,14 @@
 package net.m3tte.ego_weapons.item.udjat;
 
 import net.m3tte.ego_weapons.*;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.EmptyDescriptionPage;
+import net.m3tte.ego_weapons.client.util.descriptionHandler.SkillDescriptionPage;
 import net.m3tte.ego_weapons.gameasset.movesets.FullstopOfficeSniperMovesetAnims;
 import net.m3tte.ego_weapons.item.guns.GunCaliber;
 import net.m3tte.ego_weapons.item.guns.GunItem;
 import net.m3tte.ego_weapons.keybind.EgoWeaponsKeybinds;
+import net.m3tte.ego_weapons.potion.countEffects.CountPotencyStatus;
+import net.m3tte.ego_weapons.potion.countEffects.EffectLike;
 import net.m3tte.ego_weapons.potion.countEffects.TremorEffect;
 import net.m3tte.ego_weapons.procedures.SharedFunctions;
 import net.m3tte.ego_weapons.procedures.TooltipFuncs;
@@ -83,14 +87,49 @@ public class LCARifle extends GunItem {
 	}
 
 
+	@Override
+	public void setupWeaponDescription() {
+		super.setupWeaponDescription();
+		this.tierText = "desc.ego_weapons.risk.2";
+		this.identifier = "lca_rifle";
 
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability", 12,
+				new String[]{"speed", "udjat_vanguard", "ammo", "tremor", "speed_down", "white_fragility"}, false));
 
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "o_ability", 9,
+				new String[]{"speed", "udjat_vanguard", "ammo", "tremor", "speed_down", "white_fragility"}, false));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INNATE, this.identifier, "innate", 9,
+				new String[]{"protection", "speed", "ammo", "tremor"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, this.identifier, "auto", 7,
+				new String[]{"ammo", "tremor", "protection"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.AUTO, this.identifier, "auto_m", 4,
+				new String[]{"white", "protection", "tremor"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.INFO, this.identifier, "reload", 3,
+				new String[]{"ammo", "offense_up"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive", 4,
+				new String[]{"tremor", "ammo", "offense_up"}));
+
+		addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive2", 2,
+				new String[]{"protection"}));
+	}
+
+	@Override
+	public EffectLike[] getKeywords() {
+		return new EffectLike[]{EgoWeaponsEffects.AMMO, EgoWeaponsEffects.TREMOR.get(), EgoWeaponsEffects.PROTECTION.get()};
+	}
+
+	/*
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
 		TooltipFuncs.generateItemDescription(list, "desc.ego_weapons.lca_rifle.desc");
 		list.add(new StringTextComponent(" ").withStyle(TextFormatting.GRAY).withStyle(TextFormatting.ITALIC));
-		appendAmmoDialogueLine(list);
+
 		list.add(new StringTextComponent("= - - - - - - - [Page: "+ ((EgoWeaponsKeybinds.getUiPage() % 8) + 1) + "/8] - - - - - - - =").withStyle(TextFormatting.GRAY));
 		list.add(new TranslationTextComponent("desc.ego_weapons.risk.2"));
 		list.add(new StringTextComponent(" "));
@@ -148,8 +187,7 @@ public class LCARifle extends GunItem {
 		}
 
 		generateStatusHelp(list);
-		generateOffhandHelp(list);
-	}
+	}*/
 
 	public static void interruptedAttack(LivingEntity target) {
 

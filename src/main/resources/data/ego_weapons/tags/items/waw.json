@@ -1,6 +1,17 @@
 {
   "replace": false,
   "values": [
-    "ego_weapons:lamp_suit"
+    "ego_weapons:lamp_suit",
+    "ego_weapons:lamp_crossbow",
+
+    "ego_weapons:ardor_blossom_suit",
+    "ego_weapons:ardor_blossom_bat",
+
+    "ego_weapons:solemn_lament_living",
+    "ego_weapons:solemn_lament_departed",
+    "ego_weapons:solemn_lament_cloak",
+
+    "ego_weapons:magic_bullet_cloak",
+    "ego_weapons:magic_bullet"
   ]
 }
