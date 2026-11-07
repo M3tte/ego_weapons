@@ -164,7 +164,7 @@ public class SpidersTracksuit extends GenericEgoWeaponsArmor {
 
 		@Override
 		public CountPotencyStatus[] getKeywords() {
-			return new CountPotencyStatus[]{EgoWeaponsEffects.SINKING.get()};
+			return new CountPotencyStatus[]{EgoWeaponsEffects.POISE.get()};
 		}
 
 		@Override

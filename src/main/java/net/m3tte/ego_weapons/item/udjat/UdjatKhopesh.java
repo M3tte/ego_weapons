@@ -91,7 +91,7 @@ public class UdjatKhopesh extends EgoWeaponsWeapon {
 
 	@Override
 	public CountPotencyStatus[] getKeywords() {
-		return new CountPotencyStatus[]{EgoWeaponsEffects.SINKING.get(), EgoWeaponsEffects.PROTECTION.get()};
+		return new CountPotencyStatus[]{EgoWeaponsEffects.SINKING.get(), EgoWeaponsEffects.PROTECTION.get(), EgoWeaponsEffects.BLUE_SAND.get()};
 	}
 
 	/*@OnlyIn(Dist.CLIENT)

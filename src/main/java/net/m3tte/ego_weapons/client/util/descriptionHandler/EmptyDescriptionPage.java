@@ -40,7 +40,8 @@ public class EmptyDescriptionPage {
     }
 
     public void render(ItemStack itemstack, World world, List<ITextComponent> list) {
-        EgoWeaponsKeybinds.setUiPage(0);
+        if (EgoWeaponsKeybinds.getUiPage() != 0)
+            EgoWeaponsKeybinds.setUiPage(Math.max(0, EgoWeaponsKeybinds.getUiPage()-1));
     }
 
     public static ResourceLocation genIcon(String suffix) {

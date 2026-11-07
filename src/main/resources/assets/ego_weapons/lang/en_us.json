@@ -215,7 +215,7 @@
   "desc.ego_weapons.sunshower.ability.desc": "§o\"Extended use of the E.G.O Gear caused increased tendencies to push other researchers away...\"",
   "desc.ego_weapons.sunshower.ability.title": "§b[Ability] §fSpread Out! - \uED02 - \uE004\uE004\uE004\uE004\uE004",
   "desc.ego_weapons.sunshower.ability.1": "    - = | \uED33 \uED31 \uED31 | = -",
-  "desc.ego_weapons.sunshower.ability.2": "[I] §7Gain §f5 \uE003 §cSinking §7Potency. Gain §f1 \uE003 §cSinking §7 Count.",
+  "desc.ego_weapons.sunshower.ability.2": "[I] §7Gain §f5 \uE003 §cSinking §7Potency. Gain §f1 \uE003 §cSinking §7Count.",
   "desc.ego_weapons.sunshower.ability.3": "[I] §7Inflict §f4 §f\uE003 §cSinking §7Count.",
   "desc.ego_weapons.sunshower.ability.4": "[III] §7Deal §f+100% §7Damage.",
   "desc.ego_weapons.sunshower.ability.5": "[III] §7Inflict §f2 \uE005 §cRupture §7Count, §7Inflict §f4 \uE005 §cRupture §7Potency.",
@@ -248,7 +248,7 @@
   "desc.ego_weapons.sunshower.passive.2": "§7Deal §f+1% §7damage for every §f\uE003 §cSinking §7Potency on target. §8[Max 10%]",
   "desc.ego_weapons.sunshower.passive.3": "§7On final attacks at §f10+ §7combined §f\uE003 §cSinking §7Potency on Target and Self:",
   "desc.ego_weapons.sunshower.passive.4": "§7- Consume §f3 \uE003 §cSinking §7Potency on Target or Self",
-  "desc.ego_weapons.sunshower.passive.5": "§7- Inflict §f2 \uE023 §cOffense Level Down §on Hit. §8[Max 4]",
+  "desc.ego_weapons.sunshower.passive.5": "§7- Inflict §f2 \uE023 §cOffense Level Down §7on Hit. §8[Max 4]",
 
 
   "desc.ego_weapons.sunshower_cloak.passive.desc": "§oDefensive Capabilities would see a sharp increase in tandem with the desire to push others away...",
@@ -442,7 +442,7 @@
   "desc.ego_weapons.solemn_lament.auto2.3": "[II] §7Inflict §f1 \uE003 §cSinking §7Potency.",
   "desc.ego_weapons.solemn_lament.auto2.4": "[III] §7Inflict §f1 \uE003 §cSinking §7Potency.",
   "desc.ego_weapons.solemn_lament.auto2.5": "[IV] §7Inflict §f2 \uE003 §cSinking §7Count. §7Inflict §f1 \uE003 §cSinking §7Potency.",
-  "desc.ego_weapons.solemn_lament.auto2.6": "[IV] §7Deal §f+2.5% Damage §7for every §f\uE003 §cSinking §7Potency + Count on Target. §8[Max: 50%]",
+  "desc.ego_weapons.solemn_lament.auto2.6": "[IV] §7Deal §f+2.5% §cDamage §7for every §f\uE003 §cSinking §7Potency + Count on Target. §8[Max: 50%]",
 
 
   "desc.ego_weapons.solemn_lament.innate.title": "§b[Innate] §fA Sorrow In You \uED02 \uED03",
@@ -450,7 +450,7 @@
   "desc.ego_weapons.solemn_lament.innate.2": "[I] §7Consume §f66% §7of all §f\uE017 §cThe Living and The Departed§7.",
   "desc.ego_weapons.solemn_lament.innate.3": "[I] §7Inflict §f\uE018 §cButterfly: The Living §7consumed §f\uE018 §cThe Living§7.",
   "desc.ego_weapons.solemn_lament.innate.4": "[I] §7Inflict §f\uE019 §cButterfly: The Departed §7consumed §f\uE019 §cThe Departed§7.",
-  "desc.ego_weapons.solemn_lament.innate.5": "[I] §7Deal §f+5% Damage §7for every §f\uE045 §cButterfly §7on Target. §8[Max: 100%]",
+  "desc.ego_weapons.solemn_lament.innate.5": "[I] §7Deal §f+5% §cDamage §7§7for every §f\uE045 §cButterfly §7on Target. §8[Max: 100%]",
   "desc.ego_weapons.solemn_lament.innate.6": "[On Stagger or Kill] §6[Reload]§7 §f12 \uE017 §cThe Living and The Departed§7.",
 
   "desc.ego_weapons.solemn_lament.reload.title": "§b[Reload] §fGather Lamentations - \uE004\uE004\uE004\uE004",
@@ -465,18 +465,18 @@
 
   "desc.ego_weapons.solemn_lament.ability.title": "§b[Ability] §fFireIShallFire - \uED02 \uED03 \uE004\uE004\uE004\uE004\uE004",
   "desc.ego_weapons.solemn_lament.ability.1": "    - = | \uED31  \uED31  \uED31  \uED31  \uED31 | = -",
-  "desc.ego_weapons.solemn_lament.ability.2": "§8§oIf used during a Counter Move, Trigger §b[Alt Ability] §fResentful Coffin Burst §7before Attack.",
+  "desc.ego_weapons.solemn_lament.ability.2": "§8§oIf used during a Counter Move, Trigger §b[Alt Ability] §fLamenting Coffin Burst §7before Attack.",
   "desc.ego_weapons.solemn_lament.ability.3": "§8§oWhen running out of ammo, instantly Trigger §b[Alt Reload] §fMy Sorrow has run Empty",
   "desc.ego_weapons.solemn_lament.ability.4": "[I]  §7Spend §f1 \uE017 §cThe Departed§7.",
-  "desc.ego_weapons.solemn_lament.ability.5": "[I]  §7Deal §f+3% Damage §7for every §f\uE003 §cSinking §7Count on Target. §8[Max: 45%]",
+  "desc.ego_weapons.solemn_lament.ability.5": "[I]  §7Deal §f+3% §cDamage §7§7for every §f\uE003 §cSinking §7Count on Target. §8[Max: 45%]",
   "desc.ego_weapons.solemn_lament.ability.6": "[II]  §7Spend §f1 \uE017 §cThe Living§7.",
-  "desc.ego_weapons.solemn_lament.ability.7": "[II]  §7Deal §f+3% Damage §7for every §f\uE003 §cSinking §7Potency on Target. §8[Max: 45%]",
+  "desc.ego_weapons.solemn_lament.ability.7": "[II]  §7Deal §f+3% §cDamage §7§7for every §f\uE003 §cSinking §7Potency on Target. §8[Max: 45%]",
   "desc.ego_weapons.solemn_lament.ability.8": "[III] §7Spend §f1 \uE017 §cThe Departed§7.",
-  "desc.ego_weapons.solemn_lament.ability.9": "[III] §7Deal §f+5% Damage §7for every §f\uE003 §cSinking §7Count §7on Target. §8[Max: 45%]",
+  "desc.ego_weapons.solemn_lament.ability.9": "[III] §7Deal §f+5% §cDamage §7§7for every §f\uE003 §cSinking §7Count §7on Target. §8[Max: 45%]",
   "desc.ego_weapons.solemn_lament.ability.10": "[IV]  §7Spend §f1 \uE017 §cThe Living§7.",
-  "desc.ego_weapons.solemn_lament.ability.11": "[IV]  §7Deal §f+5% Damage §7for every §f\uE003 §cSinking §7Potency §7on Target. §8[Max: 45%]",
+  "desc.ego_weapons.solemn_lament.ability.11": "[IV]  §7Deal §f+5% §cDamage §7§7for every §f\uE003 §cSinking §7Potency §7on Target. §8[Max: 45%]",
   "desc.ego_weapons.solemn_lament.ability.12": "[V]   §7Spend §f1 \uE017 §cThe Living§7. Spend §f1 \uE017 §cThe Departed§7.",
-  "desc.ego_weapons.solemn_lament.ability.13": "[V]   §7Deal §f+5% Damage §7for every §f\uE003 §cSinking §7Potency + Count on Target. §8[Max: 75%]",
+  "desc.ego_weapons.solemn_lament.ability.13": "[V]   §7Deal §f+5% §cDamage §7§7for every §f\uE003 §cSinking §7Potency + Count on Target. §8[Max: 75%]",
 
   "desc.ego_weapons.solemn_lament.ability2.desc": "§oWhile rapid usage of the E.G.O Gear is certainly an option. The strain on the users sanity is not to be underestimated.",
   "desc.ego_weapons.solemn_lament.ability2.title": "§b[Ability] §fLamenting Coffin Burst - \uED04",
@@ -536,10 +536,10 @@
   "desc.ego_weapons.mimicry_armor.passive.2": "§7Enhances §4[ALEPH] §cMimicry §7Innate: §f[I] §7Regenerate §f1 \uE004 §6Light§7.",
 
   "desc.ego_weapons.mimicry_armor.passive2.title": "§b[Passive] §fMimic",
-  "desc.ego_weapons.mimicry_armor.passive2.1": "§7When taking 8 or more Damage:",
+  "desc.ego_weapons.mimicry_armor.passive2.1": "§7When taking §f8 §7or more §cDamage§7:",
   "desc.ego_weapons.mimicry_armor.passive2.2": " §7Gain §f1 \uE022 §cOffense Level Up§7.",
   "desc.ego_weapons.mimicry_armor.passive2.3": " §7Gain §f1 \uE024 §cDefense Level Up§7.",
-  "desc.ego_weapons.mimicry_armor.passive2.4": "§7When taking 16 or more Damage:",
+  "desc.ego_weapons.mimicry_armor.passive2.4": "§7When taking §f16 §7or more §cDamage§7:",
   "desc.ego_weapons.mimicry_armor.passive2.5": " §7Gain another §f1 \uE022 §cOffense Level Up§7.",
   "desc.ego_weapons.mimicry_armor.passive2.6": " §7Gain another §f1 \uE024 §cDefense Level Up§7.",
 
@@ -550,7 +550,7 @@
   "desc.ego_weapons.mimicry_armor.ability.4": " §7Take §f50% §7Less §cDamage§7.",
   "desc.ego_weapons.mimicry_armor.ability.5": " §7Inflict §f\uE027 §cTerror §7on Attacker by §6Emotion Level §7on self. §8[Max 3]",
   "desc.ego_weapons.mimicry_armor.ability.6": " §7Gain §f1 \uE028 §cShell §7for every §f5 §cAttack Power §7of Attacker. §8[Max 5]",
-  "desc.ego_weapons.mimicry_armor.ability.7": " §7Gain §f1 \uE028 §cImitation §7for every §f5 §cAttack Power §7of Attacker. §8[Max 5]",
+  "desc.ego_weapons.mimicry_armor.ability.7": " §7Gain §f1 \uE044 §cImitation §7for every §f5 §cAttack Power §7of Attacker. §8[Max 5]",
 
   "desc.ego_weapons.mimicry.desc": "§o\"And so the many shells cried out one word...\"",
   "desc.ego_weapons.mimicry.auto.title": "§b[Auto] §fSlashes of a Husk \uED01",
@@ -620,7 +620,7 @@
   "desc.ego_weapons.kali_mimicry.guard.3": "[Max Stamina] §7Inflict §f1 \uE023 §cOffense Level Down§7.",
 
   "desc.ego_weapons.mimicry.passive.title": "§b[Passive] §fRegenerating Cocoon",
-  "desc.ego_weapons.mimicry.passive.1": "§c[On Hit] §7Heal by §f7% §7of Damage Dealt §8[Max 1.5 HP]",
+  "desc.ego_weapons.mimicry.passive.1": "§c[On Hit] §aHeal §7by §f7% §7of §cDamage §7Dealt §8[Max 1.5 HP]",
 
   "desc.ego_weapons.mimicry.jump.title": "§b[Jump] §fFlail Skin \uED01",
   "desc.ego_weapons.mimicry.jump.1": "    - = | \uED32 | = -",
@@ -631,8 +631,8 @@
   "desc.ego_weapons.mimicry.innate.2": "[I] §7Gain §f3 \uE024 §cDefense Level Up§7.",
   "desc.ego_weapons.mimicry.innate.3": "[I] §7Gain §f2 \uE044 §cImitation§7.",
   "desc.ego_weapons.mimicry.innate.4": "[I] §7If target has §f\uE001 §cBleed:",
-  "desc.ego_weapons.mimicry.innate.5": "    §7Heal §f1 §aHealth§7.",
-  "desc.ego_weapons.mimicry.innate.6": "    §7Heal §f0.5 §7additional §aHealth §7for every §f\uE001 §cBleed §7Potency on Target §8[Max 4]",
+  "desc.ego_weapons.mimicry.innate.5": "    §aHeal §7§f1 §aHealth§7.",
+  "desc.ego_weapons.mimicry.innate.6": "    §aHeal §7§f0.5 §7additional §aHealth §7for every §f\uE001 §cBleed §7Potency on Target §8[Max 4]",
 
   "desc.ego_weapons.mimicry.ability.title": "§b[Ability] §fGoOdbYe - \uED01 - \uE004\uE004\uE004\uE004\uE004\uE004",
   "desc.ego_weapons.mimicry.ability.1": "    - = | \uED42 | = -",
@@ -776,7 +776,7 @@
   "desc.ego_weapons.fullstop_sniper.ability.5": "[I] §7Spend §f1 \uE012 §cAmmo.",
   "desc.ego_weapons.fullstop_sniper.ability.6": "[I] §c[On Crit] §7Deal §f+60% Damage.",
   "desc.ego_weapons.fullstop_sniper.ability.7": "[I] §c[On Crit] §7Consume §f\uE013 §cPoise §7Potency over §f20 §8[Max 25]",
-  "desc.ego_weapons.fullstop_sniper.ability.8": "-   §7Deal §f+3% Damage §7for every §f\uE013 §cPoise §7Potency consumed.",
+  "desc.ego_weapons.fullstop_sniper.ability.8": "-   §7Deal §f+3% §cDamage §7for every §f\uE013 §cPoise §7Potency consumed.",
 
   "desc.ego_weapons.fullstop_sniper.reload.title": "§b[Reload] §fLoading Rounds",
   "desc.ego_weapons.fullstop_sniper.reload.1": "[Use] §7Reload §f1 \uE012 §cAmmo.",
@@ -816,8 +816,8 @@
   "desc.ego_weapons.magic_bullet.ability.2": "[Use] §7Consume §f\uE047 §cSanity §7depending on §f\uE016 §cMagic Bullet §7Count.",
   "desc.ego_weapons.magic_bullet.ability.3": "[Use] §7If this would cause panic, consume no §f\uE047 §cSanity§7. Bullet also hits user.",
   "desc.ego_weapons.magic_bullet.ability.4": "[Use] §7This Coin can strike Allies if §f\uE047 §cSanity§7 is below §f50%§7.",
-  "desc.ego_weapons.magic_bullet.ability.5": "[I] §7Deal §f+5% Damage §7for every §f\uE002 §cBurn §7on Target. §8[Max 100%]",
-  "desc.ego_weapons.magic_bullet.ability.6": "[I] §7Gain §f+20% Damage §7for every §f\uE016 §cMagic Bullet §7Count.",
+  "desc.ego_weapons.magic_bullet.ability.5": "[I] §7Deal §f+5% §cDamage §7for every §f\uE002 §cBurn §7on Target. §8[Max 100%]",
+  "desc.ego_weapons.magic_bullet.ability.6": "[I] §7Gain §f+20% §cDamage §7for every §f\uE016 §cMagic Bullet §7Count.",
   "desc.ego_weapons.magic_bullet.ability.7": "[I] §7Gain attack weight by §f\uE016 §cMagic Bullet §7Count.",
   "desc.ego_weapons.magic_bullet.ability.8": "[I] §7Inflict §f\uE009 §cDark Flame§7 equal to §f\uE016 §cMagic Bullet §7Count.",
 
@@ -844,6 +844,7 @@
   "desc.ego_weapons.magic_bullet_armor.ability.2": "§7Gain §f+1 \uE013 §cPoise §7Potency for every §f\uE016 §cMagic Bullet §7on self.",
   "desc.ego_weapons.magic_bullet_armor.ability.3": "§7Gain §f1 \uE030 §cPower Up §7for every §f2 \uE016 §cMagic Bullet §7on self. §8[Max 3]",
 
+  "desc.ego_weapons.black_silence_suit.desc": "§oA shadowy suit with shadowy gloves...",
   "desc.ego_weapons.black_silence_suit.passive.title": "§b[Passive] §fPerception Blocking Mask",
   "desc.ego_weapons.black_silence_suit.passive.1": "§fFinal Attacks §7of Combos gain the following effects:",
   "desc.ego_weapons.black_silence_suit.passive.2": "- §7Attack becomes §cUnblockable & Undodgeable",
@@ -889,7 +890,7 @@
 
 
   "desc.ego_weapons.liu_south_6_gauntlet.passive.title": "§b[Passive] §fIgnition",
-  "desc.ego_weapons.liu_south_6_gauntlet.passive.1": "§7Deal §f+2% Damage §7for every §f\uE002 §cBurn §7on Target. §8[Max 20%]",
+  "desc.ego_weapons.liu_south_6_gauntlet.passive.1": "§7Deal §f+2% §cDamage §7for every §f\uE002 §cBurn §7on Target. §8[Max 20%]",
 
   "desc.ego_weapons.liu_south_6_gauntlet.desc": "§oA gauntlet commonly used by the Liu. The material allows for easy ignition of flames.",
   "desc.ego_weapons.liu_south_6_gauntlet.auto.title": "§b[Auto] §fBlazing Fists \uED01",
@@ -958,14 +959,14 @@
   "desc.ego_weapons.firefist_gauntlet.ability.5": "[I]   §7Inflict §f2 \uE002 §cBurn §7Potency.",
   "desc.ego_weapons.firefist_gauntlet.ability.6": "[II]  §7Inflict §f2 \uE002 §cBurn §7Potency.",
   "desc.ego_weapons.firefist_gauntlet.ability.7": "[III] §7Inflict §f3 \uE002 §cBurn §7Count. §7Inflict §f2 \uE002 §cBurn §7Potency.",
-  "desc.ego_weapons.firefist_gauntlet.ability.8": "[III] §7Deal §f+1% Damage per consumed §f\uE035 §cOverheated Fuel§7. §8[Max 100%]",
+  "desc.ego_weapons.firefist_gauntlet.ability.8": "[III] §7Deal §f+1% §cDamage §7per consumed §f\uE035 §cOverheated Fuel§7. §8[Max 100%]",
   "desc.ego_weapons.firefist_gauntlet.ability.9": "[III] §8Breaks Guard / Bypasses Dodge",
   "desc.ego_weapons.firefist_gauntlet.ability.10": "[On Stagger or Kill] §7Gain §f2 \uE030 §cPower Up§7. §8[Max 4]",
   "desc.ego_weapons.firefist_gauntlet.ability.11": "[On Stagger or Kill] §7Regenerate §f1 \uE004 §6Light§7.",
 
   "desc.ego_weapons.firefist_armor.desc": "§oA suit originating from the Firefist office. Fitted with a fuel tank.",
   "desc.ego_weapons.firefist_armor.passive.title": "§b[Passive] §fFire Resilient Suit",
-  "desc.ego_weapons.firefist_armor.passive.1": "§7Take 25% less damage from §f\uE002 §cBurn §7Effects §8[Min 1]",
+  "desc.ego_weapons.firefist_armor.passive.1": "§7Take §f25% §7less §cDamage §7from §f\uE002 §cBurn §7Effects §8[Min 1]",
 
   "desc.ego_weapons.firefist_armor.passive2.title": "§b[Passive] §fDistrict 12 Fuel Tank",
   "desc.ego_weapons.firefist_armor.passive2.1": "§7Store §f\uE034 §cDistrict 12 Fuel§7. §8[Max 100]",
@@ -988,8 +989,8 @@
 
   "desc.ego_weapons.rat_blunt_outfit.desc": "§oA shabby hoodie stuffed with cloth. Provides some protection.",
   "desc.ego_weapons.rat_blunt_outfit.passive.title": "§b[Passive] §fTrembling Steps",
-  "desc.ego_weapons.rat_blunt_outfit.passive.1": "§7Take §f2% §7Less Damage for every §f\uE008 §cTremor §7Count on Self. §8[Max 20%]",
-  "desc.ego_weapons.rat_blunt_outfit.passive.2": "§7Take §f1% §7Less Damage for every §f\uE008 §cTremor §7Potency on Self. §8[Max 10%]",
+  "desc.ego_weapons.rat_blunt_outfit.passive.1": "§7Take §f2% §7Less §cDamage §7for every §f\uE008 §cTremor §7Count on Self. §8[Max 20%]",
+  "desc.ego_weapons.rat_blunt_outfit.passive.2": "§7Take §f1% §7Less §cDamage §7for every §f\uE008 §cTremor §7Potency on Self. §8[Max 10%]",
 
   "desc.ego_weapons.rat_blunt_outfit.ability.title": "§b[Ability] §fQuick Breather \uE004\uE004\uE004\uE004",
   "desc.ego_weapons.rat_blunt_outfit.ability.1": "[Use] §7Recover §fall §6Stamina§7.",
@@ -1050,7 +1051,7 @@
 
   "desc.ego_weapons.rat_outfit.desc": "§oRoughly sewn together clothes... probably sufficient for combat.",
   "desc.ego_weapons.rat_outfit.passive.title": "§b[Passive] §fDetermination of a Rat",
-  "desc.ego_weapons.rat_outfit.passive.1": "§7Deal §f+10% §7Damage for every §f15% Health §7missing on self.",
+  "desc.ego_weapons.rat_outfit.passive.1": "§7Deal §f+10% §7Damage for every §f15% §aHealth §7missing on self.",
 
   "desc.ego_weapons.rat_outfit.ability.title": "§b[Ability] §fReckless Offense \uE004\uE004\uE004\uE004",
   "desc.ego_weapons.rat_outfit.ability.1": "[Use] §7Gain §f1 \uE038 §cHaste§7.",
@@ -1061,7 +1062,7 @@
   "desc.ego_weapons.rat_shank.desc": "§oA piece of sharp metal... Manufactured by ???",
   "desc.ego_weapons.rat_shank.passive.title": "§b[Passive] §fRats guide to Survival",
   "desc.ego_weapons.rat_shank.passive.1": "§7Deal §f+5% §7Damage for every §f\uE038 §cHaste§7 on self. §8[Max 25%]",
-  "desc.ego_weapons.rat_shank.passive.2": "§7At < §f35% Health:",
+  "desc.ego_weapons.rat_shank.passive.2": "§7At < §f35% §aHealth§7:",
   "desc.ego_weapons.rat_shank.passive.3": "§7If at less than §f1 \uE038 §cHaste§7, gain §f1 \uE038 §cHaste§7.",
 
 
@@ -1085,7 +1086,7 @@
   "desc.ego_weapons.rat_shank.ability.2": "[I] §7Gain §f1 \uE038 §cHaste§7.",
   "desc.ego_weapons.rat_shank.ability.3": "[I] §7Inflict §f1 \uE001 §cBleed §7Count. §7Inflict §f2 \uE001 §cBleed §7Potency.",
   "desc.ego_weapons.rat_shank.ability.4": "[I] §7If at §f4+ \uE038 §cHaste§7, Reuse Coin Once.",
-  "desc.ego_weapons.rat_shank.ability.5": "[Reuse] §7Deal +50% Damage",
+  "desc.ego_weapons.rat_shank.ability.5": "[Reuse] §7Deal §f+50% §7Damage",
   "desc.ego_weapons.rat_shank.ability.6": "[Reuse] §7Inflict §f+1 §f\uE001 §cBleed §7Potency and Count",
 
   "desc.ego_weapons.rat_shank.guard.title": "§c[Guard] §fSkitter Away",
@@ -1114,7 +1115,7 @@
   "desc.ego_weapons.heishou_mao_robe.passive.3": "  §7Take §f-10% §7Damage.",
 
   "desc.ego_weapons.heishou_mao_robe.passive2.title": "§b[Passive] §fHeishou Mutation: Mao",
-  "desc.ego_weapons.heishou_mao_robe.passive2.1": "§7Increase §f\uE004 §6Light §7regeneration by 3% for every §f\uE041 §bSpeed §7on self. §8[Max 30%]",
+  "desc.ego_weapons.heishou_mao_robe.passive2.1": "§7Increase §f\uE004 §6Light §7regeneration by §f3% §7for every §f\uE041 §bSpeed §7on self. §8[Max 30%]",
 
   "desc.ego_weapons.heishou_mao_sword.desc": "§oA deathrite engraved sword commonly used by the Mao Branch.",
   "desc.ego_weapons.heishou_mao_sword.ability.title": "§b[Ability] §fCursewrit Butcherblade \uED03 \uE004\uE004\uE004\uE004\uE004\uE004",
@@ -1128,7 +1129,7 @@
   "desc.ego_weapons.heishou_mao_sword.ability.8": "[III] §7Inflict §f2 \uE005 §cRupture §7Count.",
   "desc.ego_weapons.heishou_mao_sword.ability.9": "[III] §7When at §f5+ \uE041 §bSpeed§7: Deal §f+25% §7Damage.",
   "desc.ego_weapons.heishou_mao_sword.ability.10": "[III] §7When at §f7+ \uE041 §bSpeed§7: Reuse this Coin once.",
-  "desc.ego_weapons.heishou_mao_sword.ability.11": "[Reuse] §7Deals §f\uED04 §bPale Damage §f\uED04",
+  "desc.ego_weapons.heishou_mao_sword.ability.11": "[Reuse] §7Deals §f\uED04 §bPale §cDamage §f\uED04",
   "desc.ego_weapons.heishou_mao_sword.ability.12": "[Reuse] §7Inflict §f3 \uE042 §cDeathrite [Haste]§7. §8[Max 3]",
   "desc.ego_weapons.heishou_mao_sword.ability.13": "[After Attack] §7Gain §f2 \uE040 §cStrider [Mao]§7. §8[Max 3]",
 
@@ -1262,15 +1263,15 @@
 
   "desc.ego_weapons.lamp_suit.passive2.meta": "%1 - Lamp, %2 - Salvation, %3 - Dazzle",
   "desc.ego_weapons.lamp_suit.passive2.title": "§b[Passive] §fDazzling Lamp",
-  "desc.ego_weapons.lamp_suit.passive2.1": "§7Take §f-1%% §7Damage for every §f2 %1$s§7 on Self.",
+  "desc.ego_weapons.lamp_suit.passive2.1": "§7Take §f-1%% §cDamage §7for every §f2 %1$s§7 on Self.",
   "desc.ego_weapons.lamp_suit.passive2.2": "§7If §f%2$s §7is active:",
-  "desc.ego_weapons.lamp_suit.passive2.3": "§7Take §f-15%% §7Damage from targets with §f%3$s§7 instead.",
-  "desc.ego_weapons.lamp_suit.passive2.4": "§7Take §f+15%% §7Damage from targets without §f%3$s§7 instead.",
+  "desc.ego_weapons.lamp_suit.passive2.3": "§7Take §f-15%% §cDamage §7from targets with §f%3$s§7 instead.",
+  "desc.ego_weapons.lamp_suit.passive2.4": "§7Take §f+15%% §cDamage §7from targets without §f%3$s§7 instead.",
 
   "desc.ego_weapons.lamp_suit.ability.meta": "%1 - Lamp, %2 - Dazzled, %3 - Guardian of the Forest",
   "desc.ego_weapons.lamp_suit.ability.desc": "§o\"The eyes and lamp of Big Bird light up the dark chamber like stars.\"",
   "desc.ego_weapons.lamp_suit.ability.title": "§b[Ability] §6Eyes Watching the Dark Forest §f- \uE004\uE004\uE004\uE004\uE004",
-  "desc.ego_weapons.lamp_suit.ability.1": "§7Gain up to §f6 %1$s§7. Consume §f2%% §7Health and Sanity for every §f%1$s §7gained. §8[Cannot Kill]",
+  "desc.ego_weapons.lamp_suit.ability.1": "§7Gain up to §f6 %1$s§7. Consume §f2%% §aHealth and Sanity for every §f%1$s §7gained. §8[Cannot Kill]",
   "desc.ego_weapons.lamp_suit.ability.2": "§7Inflict §f2 \uE043 §cFragile §7to one enemy with %2$s§7.",
   "desc.ego_weapons.lamp_suit.ability.3": "§7Apply §f1 %3$s§7 to §f2 §7nearby allies.",
   "desc.ego_weapons.lamp_suit.ability.4": "§7- The above effect prioritizes allies with §6[Bird E.G.O]",
@@ -1285,8 +1286,8 @@
 
   "desc.ego_weapons.justitia.desc": "§o\"E.G.O Resonance seems to regularly have harmful effects to other employees. Especially with lower affinity agents.\"",
   "desc.ego_weapons.justitia.passive.title": "§b[Passive] §fTilted Scale",
-  "desc.ego_weapons.justitia.passive.1": "§7Deal §f5% §7more damage for every §f\uED47 §cSin §7on target.",
-  "desc.ego_weapons.justitia.passive.2": "§7Deal §f5% §7more damage for every §f\uED47 §cSin §7on self.",
+  "desc.ego_weapons.justitia.passive.1": "§7Deal §f5% §7more §cDamage §7for every §f\uED47 §cSin §7on target.",
+  "desc.ego_weapons.justitia.passive.2": "§7Deal §f5% §7more §cDamage §7for every §f\uED47 §cSin §7on self.",
   "desc.ego_weapons.justitia.passive.3": "§7At §f4+ \uED47 §cSin §7on self: attacks become §c[Indiscriminate]",
   "desc.ego_weapons.justitia.passive.4": "§7Allies with §f4+ \uED47 §cSin §7may be targeted.",
 
@@ -1333,7 +1334,7 @@
   "desc.ego_weapons.justitia_cloak.desc": "§o\"The feathers of this E.G.O allow for dispelling of afflictions... curious...\"",
   "desc.ego_weapons.justitia_cloak.passive.title": "§b[Passive] §fSin Destabilization",
   "desc.ego_weapons.justitia_cloak.passive.1": "§7For every §f\uED47 §cSin§7 on Self:",
-  "desc.ego_weapons.justitia_cloak.passive.2": "§7Increase §f\uED01 §4Red§7,§f \uED02 §fWhite§7,§f \uED03 §5Black§7, and§f \uED04 §bPale §7Damage taken by 0.1x.",
+  "desc.ego_weapons.justitia_cloak.passive.2": "§7Increase §f\uED01 §4Red§7,§f \uED02 §fWhite§7,§f \uED03 §5Black§7, and§f \uED04 §bPale §7Damage taken by §f0.1x§7.",
   "desc.ego_weapons.justitia_cloak.passive.3": "§7Increase Passive §f\uE004 §6Light§7 regeneration.",
 
   "desc.ego_weapons.justitia_cloak.passive2.title": "§b[Passive] §fFeathery shroud of Justice",
@@ -1394,9 +1395,9 @@
   "desc.ego_weapons.stigma_workshop_sword.ability.3": "§7If §f\uE037 §cBranding Blade §7is active, reduce windup time.",
   "desc.ego_weapons.stigma_workshop_sword.ability.4": "[Use] §7If §cno §f\uE037 §cBranding Blade §7is active, gain §f15 \uE037 §cBranding Blade§7.",
   "desc.ego_weapons.stigma_workshop_sword.ability.5": "[I]   §7Inflict §f2 \uE002 §cBurn §7Potency.",
-  "desc.ego_weapons.stigma_workshop_sword.ability.6": "[I]   §7Deal §f+10% §7Damage for every §f4 \uE002 §cBurn §7Potency on target. §8[Max 20%]",
+  "desc.ego_weapons.stigma_workshop_sword.ability.6": "[I]   §7Deal §f+10% §cDamage §7for every §f4 \uE002 §cBurn §7Potency on target. §8[Max 20%]",
   "desc.ego_weapons.stigma_workshop_sword.ability.7": "[II]  §7Inflict §f2 \uE002 §cBurn §7Potency.",
-  "desc.ego_weapons.stigma_workshop_sword.ability.8": "[II]  §7Deal §f+10% §7Damage for every §f4 \uE002 §cBurn §7Potency on target. §8[Max 20%]",
+  "desc.ego_weapons.stigma_workshop_sword.ability.8": "[II]  §7Deal §f+10% §cDamage §7for every §f4 \uE002 §cBurn §7Potency on target. §8[Max 20%]",
 
 
 
@@ -1406,7 +1407,7 @@
   "desc.ego_weapons.stigma_workshop_sword.innate.1": "    - = | \uED32 | = -",
   "desc.ego_weapons.stigma_workshop_sword.innate.2": "[I]     §7Inflict §f1 \uE002 §cBurn §7Count.",
   "desc.ego_weapons.stigma_workshop_sword.innate.3": "[I]     §7Reuse this Coin once for every remaining §b[Innate] §fSunset Blade§7. §8[Max 2]",
-  "desc.ego_weapons.stigma_workshop_sword.innate.4": "[Reuse] §7Deal §f+20% §7Damage for every §fReuse§f. §8[Max 40%]",
+  "desc.ego_weapons.stigma_workshop_sword.innate.4": "[Reuse] §7Deal §f+20% §cDamage §7for every §fReuse§f. §8[Max 40%]",
 
   "desc.ego_weapons.stigma_workshop_sword.auto.title": "§b[Auto] §fHandle Request §f\uED01",
   "desc.ego_weapons.stigma_workshop_sword.auto.1": "    - = | \uED32  \uED32  \uED32 | = -",
@@ -1424,7 +1425,7 @@
 
   "desc.ego_weapons.ardor_blossom_bat.passive.title": "§b[Passive] §fSpreading the Flames",
   "desc.ego_weapons.ardor_blossom_bat.passive.1": "§7Deal §f+10%% §cDamage §7against targets with §f%1$s§7.",
-  "desc.ego_weapons.ardor_blossom_bat.passive.2": "§7Deal §f+2% §7Damage for every §f\uE002 §cBurn §7Potency on Target and Self. §8[Max 30%]",
+  "desc.ego_weapons.ardor_blossom_bat.passive.2": "§7Deal §f+2% §cDamage §7for every §f\uE002 §cBurn §7Potency on Target and Self. §8[Max 30%]",
   "desc.ego_weapons.ardor_blossom_bat.passive.3": "[On Kill] §7Evenly inflict Targets §f\uE002 §cBurn §7Potency upon all nearby Enemies §8[Min 1, Max 10]",
 
   "desc.ego_weapons.ardor_blossom_bat.auto.title": "§b[Auto] §fIgnition §f\uED01",
@@ -1441,7 +1442,7 @@
   "desc.ego_weapons.ardor_blossom_bat.innate.2": "[I]   §7Inflict §f1 \uE002 §cBurn §7Potency.",
   "desc.ego_weapons.ardor_blossom_bat.innate.3": "[I]   §7Gain §f1 \uE002 §cBurn §7Count.",
   "desc.ego_weapons.ardor_blossom_bat.innate.4": "[I]   §7Reuse this Coin once for every remaining §b[Innate] §fE.G.O :: A.B.S Engagement§7. §8[Max 2]",
-  "desc.ego_weapons.ardor_blossom_bat.innate.5": "[I]   §7Deal §f+20% §7Damage for every §fReuse§f. §8[Max 40%]",
+  "desc.ego_weapons.ardor_blossom_bat.innate.5": "[I]   §7Deal §f+20% §cDamage §7for every §fReuse§f. §8[Max 40%]",
   "desc.ego_weapons.ardor_blossom_bat.innate.6": "[Reuse] §7Inflict §f+1 \uE002 §cBurn §7Count on Target and Self for every §fReuse§7. §8[Max +2]",
   "desc.ego_weapons.ardor_blossom_bat.innate.7": "[2nd Reuse] §7At §f10+ \uE002 §cBurn §7on Self and §f1+ %1$s §7on Target Trigger §f[IV]",
   "desc.ego_weapons.ardor_blossom_bat.innate.8": "[IV]  §8§oUndodgeable | Unblockable",
@@ -1471,20 +1472,20 @@
   "desc.ego_weapons.ardor_blossom_bat.ability.6": "[II]  §7Inflict §f2 \uE002 §cBurn §7Potency on Target and Self.",
   "desc.ego_weapons.ardor_blossom_bat.ability.7": "[II]  §7Deal §f+25% §7Damage.",
   "desc.ego_weapons.ardor_blossom_bat.ability.8": "[II]  §7Inflict §f1 %1$s.",
-  "desc.ego_weapons.ardor_blossom_bat.ability.9": "[II]  §7Deal §f+2.5% §7Damage for every §f\uE002 §cBurn §7Potency on Target and Self. §8[Max 50%]",
+  "desc.ego_weapons.ardor_blossom_bat.ability.9": "[II]  §7Deal §f+2.5% §cDamage §7for every §f\uE002 §cBurn §7Potency on Target and Self. §8[Max 50%]",
 
   "desc.ego_weapons.ardor_blossom_bat.ability2.desc": "§oReckless usage of High-Resonance E.G.O Gears like these usually results in dire consequences. ",
   "desc.ego_weapons.ardor_blossom_bat.ability2.title": "§b[Ability] §fA.B.S. Max Attunement [Degraded Corrosion] \uED01 \uE004\uE004\uE004\uE004\uE004\uE004",
   "desc.ego_weapons.ardor_blossom_bat.ability2.1": "    - = | \uED43 \uED42 \uED43  | = -",
   "desc.ego_weapons.ardor_blossom_bat.ability2.2": "  §8§oUndodgeable | Unblockable",
-  "desc.ego_weapons.ardor_blossom_bat.ability2.3": "[Use] §7Deal §f+1% §7Damage for every HP % Missing on Self.",
-  "desc.ego_weapons.ardor_blossom_bat.ability2.4": "[Use] §7Deal §f+5% §7Damage for every §6Emotion Level§7.",
+  "desc.ego_weapons.ardor_blossom_bat.ability2.3": "[Use] §7Deal §f+1% §cDamage §7for every HP % Missing on Self.",
+  "desc.ego_weapons.ardor_blossom_bat.ability2.4": "[Use] §7Deal §f+5% §cDamage §7for every §6Emotion Level§7.",
   "desc.ego_weapons.ardor_blossom_bat.ability2.5": "[Use] §7Stun nearby Enemies§7.",
   "desc.ego_weapons.ardor_blossom_bat.ability2.6": "[Use] §7Gain §f1 %1$s§7.",
   "desc.ego_weapons.ardor_blossom_bat.ability2.7": "[I]   §7Inflict §f4 \uE002 §cBurn §7Count. §7Inflict §f3 \uE002 §cBurn §7Potency.",
   "desc.ego_weapons.ardor_blossom_bat.ability2.8": "[I]   §7Inflict §f1 %1$s§7.",
   "desc.ego_weapons.ardor_blossom_bat.ability2.9": "[II]  §7Inflict §f4 \uE002 §cBurn §7Count. §7Inflict §f3 \uE002 §cBurn §7Potency.",
-  "desc.ego_weapons.ardor_blossom_bat.ability2.10": "[III]  §7Deal +1% Damage for every §f\uE002 §cBurn §7Potency + Count on self. §8[Max 50%]",
+  "desc.ego_weapons.ardor_blossom_bat.ability2.10": "[III]  §7Deal +1% §cDamage §7for every §f\uE002 §cBurn §7Potency + Count on self. §8[Max 50%]",
   "desc.ego_weapons.ardor_blossom_bat.ability2.11": "[III]  §7Deal §f\uED01 §4Red Damage §7by §f\uE002 §cBurn §7on Target. Decrease §f%1$s §7by §f1§7.",
   "desc.ego_weapons.ardor_blossom_bat.ability2.12": "[III]  §7If any §f%1$s §7remain. Repeat the above Effect. §8[Max 1x]",
   "desc.ego_weapons.ardor_blossom_bat.ability2.13": "[III]  §7Take §f\uED01 §4Red Damage §7by §f\uE002 §cBurn §7on Self.",
@@ -1505,9 +1506,9 @@
   "desc.ego_weapons.ardor_blossom_suit.desc": "§o\"Perhaps it would be advisable to raise the containment ceiling roofs for further testing...\"",
 
   "desc.ego_weapons.ardor_blossom_suit.passive.title": "§b[Passive] §fFireproof",
-  "desc.ego_weapons.ardor_blossom_suit.passive.1": "§7Damage from §f\uE002 §cBurn §7is reduced by §f50%",
-  "desc.ego_weapons.ardor_blossom_suit.passive.2": "§7Damage from §f\uE002 §cBurn §7cannot drain health past §f25%",
-  "desc.ego_weapons.ardor_blossom_suit.passive.3": "§7Damage from §f\uE002 §cBurn §7causes no §6Stagger Damage§7.",
+  "desc.ego_weapons.ardor_blossom_suit.passive.1": "§cDamage §7from §f\uE002 §cBurn §7is reduced by §f50%",
+  "desc.ego_weapons.ardor_blossom_suit.passive.2": "§cDamage §7from §f\uE002 §cBurn §7cannot drain §aHealth §7past §f25%",
+  "desc.ego_weapons.ardor_blossom_suit.passive.3": "§cDamage §7from §f\uE002 §cBurn §7causes no §6Stagger Damage§7.",
 
   "desc.ego_weapons.ardor_blossom_suit.passive2.title": "§b[Passive] §fFlame Moth",
   "desc.ego_weapons.ardor_blossom_suit.passive2.1": "§7Gain §f1 \uE022 §cOffense Level Up §7for every §f6 \uE002 §cBurn §7on self. §8[Max 5]",
@@ -1518,7 +1519,7 @@
 
   "desc.ego_weapons.ardor_blossom_suit.passive3.desc": "§o\"Guys... there's no other option... I'm sorry...\"",
   "desc.ego_weapons.ardor_blossom_suit.passive3.title": "§b[Passive] §fThe Last Resort",
-  "desc.ego_weapons.ardor_blossom_suit.passive3.1": "§7At §f< 20% §7Health on Self and §f3+ §6Emotion Level",
+  "desc.ego_weapons.ardor_blossom_suit.passive3.1": "§7At §f< 20% §aHealth §7on Self and §f3+ §6Emotion Level",
   "desc.ego_weapons.ardor_blossom_suit.passive3.2": "§7- Increase Burn §f\uE002 §cBurn §7Potency on self to §f30§7.",
   "desc.ego_weapons.ardor_blossom_suit.passive3.3": "§7- Increase Burn §f\uE002 §cBurn §7Count on self to §f3§7.",
   "desc.ego_weapons.ardor_blossom_suit.passive3.4": "§7- Gain §f2 \uE030 §cPower Up§7.",
@@ -1536,12 +1537,12 @@
   "desc.ego_weapons.ardor_blossom_suit.ability2.1": "    - = | \uED43 | = -",
   "desc.ego_weapons.ardor_blossom_suit.ability2.2": "[I] §7Knock Targets Back",
   "desc.ego_weapons.ardor_blossom_suit.ability2.3": "[I] §7Inflict §f1 \uE002 §cBurn §7Potency for every §f%1$s§7.",
-  "desc.ego_weapons.ardor_blossom_suit.ability2.4": "[I] §7Deal Damage by §f%1$s§7.",
+  "desc.ego_weapons.ardor_blossom_suit.ability2.4": "[I] §7Deal §cDamage §7by §f%1$s§7.",
 
   "item.ego_weapons.lca_udjat_khopesh": "§f\uEC11 LCA Udjat Khopesh",
   "desc.ego_weapons.lca_udjat_khopesh.desc": "§o\"From Company to Company... The Udjat still serves their sole leader.\"",
 
-  "desc.ego_weapons.lca_udjat_suit.desc": "§o\"Protective Alloy... Cognition sensor... all systems in order. Good.\"",
+  "desc.ego_weapons.lca_udjat_armor.desc": "§o\"Protective Alloy... Cognition sensor... all systems in order. Good.\"",
   "item.ego_weapons.lca_udjat_suit": "§f\uEC11 LCA Udjat Suit",
   "item.ego_weapons.lca_udjat_mask": "§fLCA Udjat Mask",
   "item.ego_weapons.lca_udjat_pants": "§fLCA Udjat Pants",
@@ -1556,11 +1557,11 @@
   "item.ego_weapons.udjat_pants": "§fUdjat Pants",
 
   "desc.ego_weapons.udjat_khopesh.passive.title": "§b[Passive] §fSpreading the Sands",
-  "desc.ego_weapons.udjat_khopesh.passive.1": "§7Deal §f+10% §7Damage to Targets with §f\uE052 §cBlue Sand§7.",
-  "desc.ego_weapons.udjat_khopesh.passive.2": "§7Deal §f+2% §7Damage for every §f\uE003 §cSinking §7on Target. §8[Max 20%]",
+  "desc.ego_weapons.udjat_khopesh.passive.1": "§7Deal §f+10% §cDamage §7to Targets with §f\uE052 §cBlue Sand§7.",
+  "desc.ego_weapons.udjat_khopesh.passive.2": "§7Deal §f+2% §cDamage §7for every §f\uE003 §cSinking §7on Target. §8[Max 20%]",
 
   "desc.ego_weapons.udjat_khopesh.passive2.title": "§b[Passive] §fThe Udjat",
-  "desc.ego_weapons.udjat_khopesh.passive2.1": "§7Deal §f+5% §cDamage §7for every §f\uE007 §cProtection §7on self. §8[Max 25%]",
+  "desc.ego_weapons.udjat_khopesh.passive2.1": "§7Deal §f+5% §cDamage §7§7for every §f\uE007 §cProtection §7on self. §8[Max 25%]",
   "desc.ego_weapons.udjat_khopesh.passive2.2": "§7Effects from this Weapon cannot increase §f\uE007 §cProtection §7past §f5§7.",
   "desc.ego_weapons.udjat_khopesh.passive2.3": "§7At §f5+ \uE007 §cProtection §7on self. Final Coins inflict §f1 \uE023 §cOffense Level Down §7.",
 
@@ -1584,7 +1585,7 @@
   "desc.ego_weapons.udjat_khopesh.ability.desc": "§oRend and Sever. Scatter the sacred sands. They will fall before the Eye of the Udjat.",
   "desc.ego_weapons.udjat_khopesh.ability.title": "§b[Ability] §fJamadhar \uED02 \uE004\uE004\uE004\uE004\uE004",
   "desc.ego_weapons.udjat_khopesh.ability.1": "    - = | \uED42  \uED32  \uED32  \uED31 | = -",
-  "desc.ego_weapons.udjat_khopesh.ability.2": "[Use] §7Deal §f+15% §7Damage for every §f\uE007 §cProtection §7on self. §8[Max 100%]",
+  "desc.ego_weapons.udjat_khopesh.ability.2": "[Use] §7Deal §f+15% §cDamage §7for every §f\uE007 §cProtection §7on self. §8[Max 100%]",
   "desc.ego_weapons.udjat_khopesh.ability.3": "[Use] §f# §7of §f\uE052 §cBlue Sand §7on Target Coins inflict §f+1 \uE003 §cSinking §7Count.",
   "desc.ego_weapons.udjat_khopesh.ability.4": "[Use] §7Gain §f2 \uE007 §cProtection§7.",
   "desc.ego_weapons.udjat_khopesh.ability.5": "[Use] §7Apply §f1 \uE007 §cProtection §7to nearby allies.",
@@ -1608,7 +1609,7 @@
   "desc.ego_weapons.udjat_suit.passive3.desc": "§oWhen a stepping stone is to shatter. It shall stand upright in a Mirage of Colours.",
   "desc.ego_weapons.udjat_suit.passive3.title": "§b[Passive] §fMirage",
   "desc.ego_weapons.udjat_suit.passive3.1": "§7When §cStaggered§7. Spend §f5 \uE007 §cProtection §7on self:",
-  "desc.ego_weapons.udjat_suit.passive3.2": "§7- Recover §f33% §6Stagger §7Health.",
+  "desc.ego_weapons.udjat_suit.passive3.2": "§7- Recover §f33% §6Stagger§7.",
   "desc.ego_weapons.udjat_suit.passive3.3": "§7- Inflict §f2 \uE039 §cBind§7 on the Attacker.",
   "desc.ego_weapons.udjat_suit.passive3.4": "§7- Evade the Attack.",
   "desc.ego_weapons.udjat_suit.passive3.5": "§7When Suffering Fatal Damage§7. Spend §f5 \uE007 §cProtection §7on self:",
@@ -1627,9 +1628,9 @@
   "desc.ego_weapons.lca_khopesh.desc": "§o\"The Name changed... but their leader remained the same.\"",
 
   "desc.ego_weapons.lca_khopesh.passive.title": "§b[Passive] §fThe Scepter of Horus :: Replica",
-  "desc.ego_weapons.lca_khopesh.passive.1": "§7Deal §f+15% §7Damage to Targets with §f\uE052 §cBlue Sand§7.",
-  "desc.ego_weapons.lca_khopesh.passive.2": "§7Deal §f+3% §7Damage for every §f\uE003 §cSinking §7on Target. §8[Max 30%]",
-  "desc.ego_weapons.lca_khopesh.passive.3": "§7Deal §f+15% §7Damage to targets with less than §f50% \uE046 §bSanity",
+  "desc.ego_weapons.lca_khopesh.passive.1": "§7Deal §f+15% §cDamage §7to Targets with §f\uE052 §cBlue Sand§7.",
+  "desc.ego_weapons.lca_khopesh.passive.2": "§7Deal §f+3% §cDamage §7for every §f\uE003 §cSinking §7on Target. §8[Max 30%]",
+  "desc.ego_weapons.lca_khopesh.passive.3": "§7Deal §f+15% §cDamage §7to targets with less than §f50% \uE046 §bSanity",
 
   "desc.ego_weapons.lca_khopesh.passive2.title": "§b[Passive] §fThe §8§mUdjat§r Vanguard",
   "desc.ego_weapons.lca_khopesh.passive2.1": "§7Deal §f+7% §cDamage §7for every §f\uE007 §cProtection §7on self. §8[Max 35%]",
@@ -1658,7 +1659,7 @@
   "desc.ego_weapons.lca_khopesh.ability.desc": "§oRend and Sever. Scatter the sacred sands. They will fall before the Eye of the Udjat.",
   "desc.ego_weapons.lca_khopesh.ability.title": "§b[Ability] §fJamadhar \uED02 \uE004\uE004\uE004\uE004\uE004",
   "desc.ego_weapons.lca_khopesh.ability.1": "    - = | \uED42  \uED32  \uED32  \uED31 | = -",
-  "desc.ego_weapons.lca_khopesh.ability.2": "[Use] §7Deal §f+20% §7Damage for every §f\uE007 §cProtection §7on self. §8[Max 120%]",
+  "desc.ego_weapons.lca_khopesh.ability.2": "[Use] §7Deal §f+20% §cDamage §7for every §f\uE007 §cProtection §7on self. §8[Max 120%]",
   "desc.ego_weapons.lca_khopesh.ability.3": "[Use] §f# §7of §f\uE052 §cBlue Sand §7on Target Coins inflict §f+1 \uE003 §cSinking §7Count.",
   "desc.ego_weapons.lca_khopesh.ability.4": "[Use] §f# §7of §f\uE052 §cBlue Sand §7on Target Coins inflict §f+1 \uE053 §cSheut Fracture§7.",
   "desc.ego_weapons.lca_khopesh.ability.5": "[Use] §7Gain §f2 \uE007 §cProtection§7.",
@@ -1675,7 +1676,7 @@
   "desc.ego_weapons.lca_khopesh.combo_ability.desc": "§o\"Suppress the target. They shall kneel before the Vanguard.\"",
   "desc.ego_weapons.lca_khopesh.combo_ability.title": "§b[Ability] §fThe Vanguard will see it Through \uE004\uE004\uE004\uE004\uE004\uE004",
   "desc.ego_weapons.lca_khopesh.combo_ability.1": "    - = | \uED41  \uED41  \uED32  \uED32  | = -",
-  "desc.ego_weapons.lca_khopesh.combo_ability.2": "[Use] §7Deal §f+6% §7Damage for every §f\uE041 §bSpeed Difference§7. §8[Max 30%]",
+  "desc.ego_weapons.lca_khopesh.combo_ability.2": "[Use] §7Deal §f+6% §cDamage §7for every §f\uE041 §bSpeed Difference§7. §8[Max 30%]",
   "desc.ego_weapons.lca_khopesh.combo_ability.3": "[Use] §7If user has §f\uE055 §cUdjat Vanguard§7, deal §f+30% §7Damage.",
   "desc.ego_weapons.lca_khopesh.combo_ability.4": "[Use] §7If user has §f\uE055 §cUdjat Vanguard§7, reload to §f4 \uE012 §cAmmo.",
   "desc.ego_weapons.lca_khopesh.combo_ability.5": "[I] §7Spend §f1 \uE012 §cAmmo.",
@@ -1738,18 +1739,18 @@
   "desc.ego_weapons.lca_rifle.innate.title": "§b[Innate] §fBurst Fire §8[3x] ",
   "desc.ego_weapons.lca_rifle.innate.1": "    - = | \uED31 | = -",
   "desc.ego_weapons.lca_rifle.innate.2": "[Use] §7At §f6+ \uE041 §bSpeed§7: Coin becomes \uED42 §cUnbreakable§7.",
-  "desc.ego_weapons.lca_rifle.innate.3": "[Use] §7Deal §f+4% §7Damage for every §f\uE041 §bSpeed Difference§7. §8[Max 20%]",
+  "desc.ego_weapons.lca_rifle.innate.3": "[Use] §7Deal §f+4% §cDamage §7for every §f\uE041 §bSpeed Difference§7. §8[Max 20%]",
   "desc.ego_weapons.lca_rifle.innate.4": "[Use] §7Gain §f1 \uE007 §cProtection§7.",
   "desc.ego_weapons.lca_rifle.innate.5": "[I] §7Spend §f1 \uE012 §cAmmo.",
   "desc.ego_weapons.lca_rifle.innate.6": "[I] §7Inflict §f1 \uE008 §cTremor §7Potency.",
   "desc.ego_weapons.lca_rifle.innate.7": "[I] §7Reuse this coin once for every §f2 \uE041 §bSpeed §7on self. §8[Max 2x]",
-  "desc.ego_weapons.lca_rifle.innate.8": "[Reuse] §7Deal §f+30% §7Damage for every reuse§7. §8[Max 60%]",
+  "desc.ego_weapons.lca_rifle.innate.8": "[Reuse] §7Deal §f+30% §cDamage §7for every reuse§7. §8[Max 60%]",
   "desc.ego_weapons.lca_rifle.innate.9": "[2nd Reuse] §7Trigger §f\uE006 §cTremor Burst.",
 
   "desc.ego_weapons.lca_rifle.ability.desc": "§oCover the gap on our left. Prevent the target from escaping.",
   "desc.ego_weapons.lca_rifle.ability.title": "§b[Ability] §fRushdown Maneuver :: Talata \uE004\uE004\uE004\uE004\uE004",
   "desc.ego_weapons.lca_rifle.ability.1": "    - = | \uED41  \uED41  \uED32  | = -",
-  "desc.ego_weapons.lca_rifle.ability.2": "[Use] §7Deal §f+6% §7Damage for every §f\uE041 §bSpeed Difference§7. §8[Max 30%]",
+  "desc.ego_weapons.lca_rifle.ability.2": "[Use] §7Deal §f+6% §cDamage §7for every §f\uE041 §bSpeed Difference§7. §8[Max 30%]",
   "desc.ego_weapons.lca_rifle.ability.3": "[Use] §7If user has §f\uE055 §cUdjat Vanguard§7, deal §f+30% §7Damage.",
   "desc.ego_weapons.lca_rifle.ability.4": "[Use] §7If user has §f\uE055 §cUdjat Vanguard§7, reload to §f4 \uE012 §cAmmo.",
   "desc.ego_weapons.lca_rifle.ability.5": "[I] §7Spend §f1 \uE012 §cAmmo.",
@@ -1763,13 +1764,13 @@
 
   "desc.ego_weapons.lca_rifle.o_ability.title": "§b[Alt Ability] §fBackup Burst Fire \uE004\uE004\uE004",
   "desc.ego_weapons.lca_rifle.o_ability.1": "    - = | \uED31 | = -",
-  "desc.ego_weapons.lca_rifle.o_ability.2": "[Use] §7Deal §f+4% §7Damage for every §f\uE041 §bSpeed Difference§7. §8[Max 20%]",
+  "desc.ego_weapons.lca_rifle.o_ability.2": "[Use] §7Deal §f+4% §cDamage §7for every §f\uE041 §bSpeed Difference§7. §8[Max 20%]",
   "desc.ego_weapons.lca_rifle.o_ability.3": "[Use] §7Gain §f1 \uE007 §cProtection§7.",
   "desc.ego_weapons.lca_rifle.o_ability.4": "[Use] §7If the first coin isnt Reused. Refund §f1 \uE004 §6Light§7.",
   "desc.ego_weapons.lca_rifle.o_ability.5": "[I] §7Spend §f1 \uE012 §cAmmo.",
   "desc.ego_weapons.lca_rifle.o_ability.6": "[I] §7Inflict §f1 \uE008 §cTremor §7Potency.",
   "desc.ego_weapons.lca_rifle.o_ability.7": "[I] §7Reuse this coin once for every §f2 \uE041 §bSpeed §7on self. §8[Max 2x]",
-  "desc.ego_weapons.lca_rifle.o_ability.8": "[Reuse] §7Deal §f+25% §7Damage for every reuse§7. §8[Max 50%]",
+  "desc.ego_weapons.lca_rifle.o_ability.8": "[Reuse] §7Deal §f+25% §cDamage §7for every reuse§7. §8[Max 50%]",
   "desc.ego_weapons.lca_rifle.o_ability.9": "[2nd Reuse] §7Trigger §f\uE006 §cTremor Burst.",
 
   "desc.ego_weapons.lca_udjat_armor.passive.title": "§b[Passive] §fM Corp Cognition Filter §7[M.C.F]",
@@ -1777,19 +1778,22 @@
   "desc.ego_weapons.lca_udjat_armor.passive.2": "§7- Lower incoming §f\uED02 White Damage §7by §f15%§7.",
   "desc.ego_weapons.lca_udjat_armor.passive.3": "§7- Lower incoming §f\uE047 §cSanity§7 Damage by §f25%§7.",
 
+  "desc.ego_weapons.lca_udjat_armor.passive1.desc": "§oShock absorbant armor plating to improve combat performance.",
   "desc.ego_weapons.lca_udjat_armor.passive1.title": "§b[Passive] §fImpact Distributive Unit §7[I.D.U]",
   "desc.ego_weapons.lca_udjat_armor.passive1.1": "§7Reduce incoming §6Stagger Damage §7by §f10%§7.",
   "desc.ego_weapons.lca_udjat_armor.passive1.2": "§7If §f\uE055 §cUdjat Vanguard §7is active:",
   "desc.ego_weapons.lca_udjat_armor.passive1.3": "§7- Reduce incoming §6Stagger Damage §7by §f20%§7 instead.",
 
+  "desc.ego_weapons.lca_udjat_armor.passive2.desc": "§oSpecialized armor alloy to prevent needless operator death.",
   "desc.ego_weapons.lca_udjat_armor.passive2.title": "§b[Passive] §fP Corp Emergency Shielding Alloy §7[P.E.S.A]",
   "desc.ego_weapons.lca_udjat_armor.passive2.1": "§7When taking §f>10 §7or §4Lethal §7Damage:",
-  "desc.ego_weapons.lca_udjat_armor.passive2.2": "§7- Reduce §cDamage §7by §f50%§7. Health does not go below §f1§7.",
+  "desc.ego_weapons.lca_udjat_armor.passive2.2": "§7- Reduce §cDamage §7by §f50%§7. §aHealth §7does not go below §f1§7.",
   "desc.ego_weapons.lca_udjat_armor.passive2.3": "§7- Gain §f15 - §f\uE007 §cProtection§7 on Self §f\uE057 §cEmergency Alloy Regenerative Cycle",
   "desc.ego_weapons.lca_udjat_armor.passive2.4": "§7- Consume all §f\uE007 §cProtection§7 on Self.",
   "desc.ego_weapons.lca_udjat_armor.passive2.5": "§7- Gain §f\uE048 §fShield §7by §f\uE007 §cProtection§7 consumed",
-  "desc.ego_weapons.lca_udjat_armor.passive2.6": "§c§oThis effect does not trigger for attacks that exceed 100% of Max Health.",
+  "desc.ego_weapons.lca_udjat_armor.passive2.6": "§c§oThis effect does not trigger for attacks that exceed 100% of §aMax Health§7.",
 
+  "desc.ego_weapons.lca_udjat_armor.passive3.desc": "§oA cognition filter not unlike that of L Corp.",
   "desc.ego_weapons.lca_udjat_armor.passive3.title": "§b[Passive] §fUdjat Suppression Protocol // Eye of Horus",
   "desc.ego_weapons.lca_udjat_armor.passive3.1": "§7When Staggering or Panicking an Enemy:",
   "desc.ego_weapons.lca_udjat_armor.passive3.2": "§7- §7Gain §f1 \uE055 §cUdjat Vanguard§7.",
@@ -1801,8 +1805,8 @@
   "desc.ego_weapons.lca_udjat_armor.ability.2": "-     §7For every §f\uE055 §cUdjat Vanguard§7 exceeding the cap:",
   "desc.ego_weapons.lca_udjat_armor.ability.3": "-     §7Apply §f1 \uE022 §cOffense Level Up§7 to self and nearby allies. §8[Max 6]",
   "desc.ego_weapons.lca_udjat_armor.ability.4": "-     §7Apply §f1 \uE038 §cHaste§7 to self and nearby allies. §8[Max 3]",
-  "desc.ego_weapons.lca_udjat_armor.ability.5": "[Use] §7Inflict §f\uE056 §cTarget Mark of the Udjat§7 onto the Enemy with the most Health.",
-  "desc.ego_weapons.lca_udjat_armor.ability.6": "[Use] §7Inflict §f2 \uE039 §cBind §7onto the Enemy with the most Health.",
+  "desc.ego_weapons.lca_udjat_armor.ability.5": "[Use] §7Inflict §f\uE056 §cTarget Mark of the Udjat§7 onto the Enemy with the most §aHealth§7.",
+  "desc.ego_weapons.lca_udjat_armor.ability.6": "[Use] §7Inflict §f2 \uE039 §cBind §7onto the Enemy with the most §aHealth§7.",
 
   "item.ego_weapons.spider_tracksuit": "§f\uEC13 Spiders Tracksuit",
   "desc.ego_weapons.spider_tracksuit.desc": "§o\"Another batch of \"Homework\"... is it?.\"",
@@ -1863,7 +1867,7 @@
   "desc.ego_weapons.arayashiki.ability.4": "[I]   §7Inflict §f1 \uE001 §cBleed §7Potency.",
   "desc.ego_weapons.arayashiki.ability.5": "[II]  §7Inflict §f1 \uE001 §cBleed §7Potency.",
   "desc.ego_weapons.arayashiki.ability.6": "[III] §7Inflict §f2 \uE001 §cBleed §7Count.",
-  "desc.ego_weapons.arayashiki.ability.7": "[III] [Crit] §7Deal §f+1% §7Damage for every §f\uE013 §cPoise §7on self. §8[Max 50%]",
+  "desc.ego_weapons.arayashiki.ability.7": "[III] [Crit] §7Deal §f+1% §cDamage §7for every §f\uE013 §cPoise §7on self. §8[Max 50%]",
   "desc.ego_weapons.arayashiki.ability.8": "[III] [Crit] §7Trigger §f[IV]",
   "desc.ego_weapons.arayashiki.ability.9": "[IV] §7Trigger §f\uE001 §cBleed §7on Target.",
 
@@ -1890,7 +1894,7 @@
   "desc.ego_weapons.arayashiki_u.auto.7": "[III] §7Inflict §f2 \uE001 §cBleed §7Count.",
   "desc.ego_weapons.arayashiki_u.auto.8": "[III] §7Gain §f3 \uE013 §cPoise §7Count.",
   "desc.ego_weapons.arayashiki_u.auto.9": "[III] §7At §f25+ \uE013 §cPoise §7. Consume §f5 \uE013 §cPoise §7to trigger [IV]",
-  "desc.ego_weapons.arayashiki_u.auto.10": "[IV] §7Deal §f+0.5% §7Damage for every §f\uE060 §cThread Severance §7on Target.",
+  "desc.ego_weapons.arayashiki_u.auto.10": "[IV] §7Deal §f+0.5% §cDamage §7for every §f\uE060 §cThread Severance §7on Target.",
   "desc.ego_weapons.arayashiki_u.auto.11": "[IV] §7Deal §f+50% §7Damage.",
   "desc.ego_weapons.arayashiki_u.auto.12": "[IV] §7Inflict §f3 \uE025 §cDefense Level Down§7.",
 
@@ -1911,19 +1915,19 @@
   "desc.ego_weapons.arayashiki_u.ability.1": "    - = | \uED42  \uED42  \uED42  \uED42  \uED42 | = -",
   "desc.ego_weapons.arayashiki_u.ability.2": "    §f\uE061 §8§oArayashiki Exclusive Skill",
   "desc.ego_weapons.arayashiki_u.ability.3": "[Use] §7Gain §f5 \uE013 §cPoise §7Count.",
-  "desc.ego_weapons.arayashiki_u.ability.4": "[Use] §7Deal §f+0.5% §7Damage for every §f\uE060 §cThread Severance §7on Target.",
-  "desc.ego_weapons.arayashiki_u.ability.5": "[Use] §7Deal §f+0.5% §7Damage for every §f\uE059 §cLoss of Self §7on Self.",
+  "desc.ego_weapons.arayashiki_u.ability.4": "[Use] §7Deal §f+0.5% §cDamage §7for every §f\uE060 §cThread Severance §7on Target.",
+  "desc.ego_weapons.arayashiki_u.ability.5": "[Use] §7Deal §f+0.5% §cDamage §7for every §f\uE059 §cLoss of Self §7on Self.",
   "desc.ego_weapons.arayashiki_u.ability.6": "[I]   §7Inflict §f2 \uE001 §cBleed §7Potency.",
   "desc.ego_weapons.arayashiki_u.ability.7": "[II]  §7Inflict §f2 \uE001 §cBleed §7Potency.",
   "desc.ego_weapons.arayashiki_u.ability.8": "[III] §7Inflict §f2 \uE001 §cBleed §7Potency.",
   "desc.ego_weapons.arayashiki_u.ability.9": "[IV]  §7Inflict §f2 \uE001 §cBleed §7Potency.",
-  "desc.ego_weapons.arayashiki_u.ability.10": "[V]   §7Deal §f+1% §7Damage for every §f\uE060 §cThread Severance §7on Target.",
+  "desc.ego_weapons.arayashiki_u.ability.10": "[V]   §7Deal §f+1% §cDamage §7for every §f\uE060 §cThread Severance §7on Target.",
   "desc.ego_weapons.arayashiki_u.ability.11": "[V]   §7At §f100 \uE060 §cThread Severance §7on Target: Deal §f+100% §7Damage",
 
   "item.ego_weapons.blade_jumpsuit": "§f\uEC12 Tracksuit",
-  "desc.ego_weapons.blade_jumpsuit.desc": "§o\"A simplistic tracksuit. Heavily resilient\"",
   "item.ego_weapons.blade_jumpsuit_pants": "§fTracksuit Pants",
 
+  "desc.ego_weapons.arayashiki_armor.desc": "§o\"A simplistic tracksuit. Heavily resilient\"",
   "desc.ego_weapons.arayashiki_armor.passive.title": "§b[Passive] §fDisassociation",
   "desc.ego_weapons.arayashiki_armor.passive.1": "§7Deal §f+15% §7Damage",
   "desc.ego_weapons.arayashiki_armor.passive.2": "§7Take §f-15% §7Damage",
@@ -1970,8 +1974,8 @@
 
   "desc.ego_weapons.statuses.firefist_overdrive.title": "\uE036 §cFirefist: Overdrive",
   "desc.ego_weapons.statuses.firefist_overdrive.1": "§7Decrements by 1 per second.",
-  "desc.ego_weapons.statuses.firefist_overdrive.2": "§7Deal §f+1% §7Damage per §f\uE002 §cBurn §7on target. §8[Max 15%]",
-  "desc.ego_weapons.statuses.firefist_overdrive.3": "§7Deal §f+2% §7Damage per §f\uE002 §cBurn §7on self. §8[Max 20%]",
+  "desc.ego_weapons.statuses.firefist_overdrive.2": "§7Deal §f+1% §cDamage §7per §f\uE002 §cBurn §7on target. §8[Max 15%]",
+  "desc.ego_weapons.statuses.firefist_overdrive.3": "§7Deal §f+2% §cDamage §7per §f\uE002 §cBurn §7on self. §8[Max 20%]",
   "desc.ego_weapons.statuses.firefist_overdrive.4": "§7Attacks inflict §f+1 \uE002 §cBurn §7Potency on target and self.",
   "desc.ego_weapons.statuses.firefist_overdrive.5": "§c[Expiration] §7Gain §f1 \uE002 §cBurn §7Potency per §f5 \uE034 §cDistrict 12 Fuel.",
   "desc.ego_weapons.statuses.firefist_overdrive.6": "§c[Expiration] §7Deplete all §f\uE034 §cDistrict 12 Fuel.",
@@ -2172,7 +2176,7 @@
   "desc.ego_weapons.statuses.obligation.1": "§7Decrements by 1 per second.",
   "desc.ego_weapons.statuses.obligation.2": "§f\uE046 §bSanity §7cannot go below 1.",
   "desc.ego_weapons.statuses.obligation.3": "§6Stagger §7cannot go below 1.",
-  "desc.ego_weapons.statuses.obligation.4": "[On Hit] §7Deal §f+25% §7Damage to Targets with \uE011 §cTremor: Decay§7.",
+  "desc.ego_weapons.statuses.obligation.4": "[On Hit] §7Deal §f+25% §cDamage §7to Targets with \uE011 §cTremor: Decay§7.",
   "desc.ego_weapons.statuses.obligation.5": "[Final Coins] §7Trigger §f\uE006 §cTremor Burst.",
 
   "effect.ego_weapons.shell": "Shell",
@@ -2259,7 +2263,7 @@
   "desc.ego_weapons.statuses.salvation.2": "§8§oCannot gain %3$s §8§owhile this effect is active.",
   "desc.ego_weapons.statuses.salvation.3": "§8§oThis effect counts as having %3$s §8§o.",
   "desc.ego_weapons.statuses.salvation.4": "§7Gain §f+3 \uE022 §cDefense Level§7.",
-  "desc.ego_weapons.statuses.salvation.5": "§7Deal §f+15%% §7Damage against targets with %2$s",
+  "desc.ego_weapons.statuses.salvation.5": "§7Deal §f+15%% §cDamage §7against targets with %2$s",
   "desc.ego_weapons.statuses.salvation.6": "[On Kill] §7If Target had §f%2$s§7: Gain §f2 \uE022 §cOffense Level Up§7.",
   "desc.ego_weapons.statuses.salvation.7": "[On Kill] §7If Target had §f%2$s§7: §7Recover §f2 \uE004 §6Light§7.",
   "desc.ego_weapons.statuses.salvation.desc": "§oAnd so the big birds eyes turned crimson...",
@@ -2285,12 +2289,12 @@
   "desc.ego_weapons.statuses.dazzle.1": "§8§oDuration scales with Sanity.",
   "desc.ego_weapons.statuses.dazzle.2": "§8§oInstantly decays if there is no nearby hostile with %2$s",
   "desc.ego_weapons.statuses.dazzle.3": "§7Gain §f3 \uE039 §cBind§7.",
-  "desc.ego_weapons.statuses.dazzle.4": "§7Deal §f-80%% §7Damage against targets without %2$s§7.",
+  "desc.ego_weapons.statuses.dazzle.4": "§7Deal §f-80%% §cDamage §7against targets without %2$s§7.",
   "desc.ego_weapons.statuses.dazzle.5": "§7Disable §f\uE004 §6Light §7regeneration.",
 
   "effect.ego_weapons.terror": "Terror",
   "desc.ego_weapons.statuses.terror.title": "\uE027 §cTerror",
-  "desc.ego_weapons.statuses.terror.1": "§7Deal §f-20% §7Damage against targets with §f\uE028 §cShell§7.",
+  "desc.ego_weapons.statuses.terror.1": "§7Deal §f-20% §cDamage §7against targets with §f\uE028 §cShell§7.",
   "desc.ego_weapons.statuses.terror.2": "§7Passively drain §f\uE047 §cSanity§7.",
   "desc.ego_weapons.statuses.terror.3": "§7Disable the use of §fAbilities§7.",
   "desc.ego_weapons.statuses.terror.desc": "§oSuch extensive and paralyzing fear... Not a muscle to be moved.",
@@ -2608,7 +2612,7 @@
   "dialogue.ego_weapons.skills.lamp_suit.special.alone": "Boosting E.G.O Attunement...",
   "dialogue.ego_weapons.skills.lamp_suit.special.ally": "Everyone...||don't let me lose sight of you...",
 
-  "dialogue.ego_weapons.skills.arayashiki.trigger_unsheath": "Come here...||I’ll watch over you.",
+  "dialogue.ego_weapons.skills.arayashiki.trigger_unsheath": "Easy...||It’s not done yet.",
 
   "dialogue.ego_weapons.skills.lca_rifle.reload": "Reloading...",
   "dialogue.ego_weapons.skills.lca_rifle.special.fire": "Bar entry and...",

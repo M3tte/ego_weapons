@@ -147,6 +147,9 @@ public class TooltipFuncs {
                 case "black": statusDAMAGE(list, "black_damage"); break;
                 case "white": statusDAMAGE(list, "white_damage"); break;
                 case "pale": statusDAMAGE(list, "pale_damage"); break;
+                default:
+                    list.add(new StringTextComponent("[RESOLVE ERROR] no description for <"+status+">"));
+                    break;
             }
         }
     }

@@ -115,7 +115,7 @@ public class LCAKhopesh extends EgoWeaponsWeapon {
 
 	@Override
 	public EffectLike[] getKeywords() {
-		return new EffectLike[]{EgoWeaponsEffects.SINKING.get(), EgoWeaponsEffects.PROTECTION.get()};
+		return new EffectLike[]{EgoWeaponsEffects.SINKING.get(), EgoWeaponsEffects.PROTECTION.get(), EgoWeaponsEffects.BLUE_SAND.get()};
 	}
 
 

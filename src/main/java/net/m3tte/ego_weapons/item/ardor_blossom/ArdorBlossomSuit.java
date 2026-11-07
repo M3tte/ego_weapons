@@ -294,8 +294,8 @@ public class ArdorBlossomSuit extends GenericEgoWeaponsArmor {
 					new String[]{"offense_up", "burn", "ego_att_ardor"}, true, EgoWeaponsEffects.EGO_ATTUNEMENT_ARDOR_BLOSSOM.get());
 			addPage(new MultiDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, s1, s2));
 
-			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "reload", 1,
-					new String[]{"d12fuel"}, false));
+			//addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "reload", 1,
+			//		new String[]{"d12fuel"}, false));
 
 			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive", 3,
 					new String[]{"burn"}, false));

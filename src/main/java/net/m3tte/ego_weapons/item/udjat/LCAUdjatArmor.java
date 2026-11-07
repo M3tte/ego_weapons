@@ -207,13 +207,13 @@ public class LCAUdjatArmor extends GenericEgoWeaponsArmor {
 					new String[]{"udjat_vanguard"}));
 
 			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive1", 3,
-					new String[]{"udjat_vanguard"}));
+					new String[]{"udjat_vanguard"}, true));
 
 			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive2", 6,
-					new String[]{"protection"}));
+					new String[]{"protection"}, true));
 
 			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive3", 3,
-					new String[]{"udjat_vanguard","offense_up"}));
+					new String[]{"udjat_vanguard","offense_up"}, true));
 		}
 
 		/*

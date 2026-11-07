@@ -182,7 +182,7 @@ public class SunshowerArmor extends GenericEgoWeaponsArmor {
 		public void setupWeaponDescription() {
 			super.setupWeaponDescription();
 			this.tierText = "desc.ego_weapons.risk.2";
-			this.identifier = "lca_udjat_armor";
+			this.identifier = "sunshower_cloak";
 
 			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability", 4,
 					new String[]{"bleed", "sinking"}, true));

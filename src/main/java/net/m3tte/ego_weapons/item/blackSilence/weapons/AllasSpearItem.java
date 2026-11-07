@@ -55,6 +55,7 @@ public class AllasSpearItem extends EgoWeaponsWeapon {
 				new String[]{"black"}));
 	}
 
+	/*
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
@@ -86,7 +87,7 @@ public class AllasSpearItem extends EgoWeaponsWeapon {
 		}
 
 		generateStatusHelp(list);
-	}
+	}*/
 
 	@Override
 	public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {

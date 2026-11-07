@@ -153,6 +153,7 @@ public class AtelierLogicRevolver extends EgoWeaponsWeapon {
 		return new EffectLike[]{EgoWeaponsEffects.AMMO};
 	}
 
+	/*
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
@@ -214,7 +215,8 @@ public class AtelierLogicRevolver extends EgoWeaponsWeapon {
 		}
 
 		generateStatusHelp(list);
-	}
+	}*/
+
 	public static StaticAnimation.Event[] revolverFire(float time, String limb) {
 		StaticAnimation.Event[] events = new StaticAnimation.Event[1];
 		events[0] = StaticAnimation.Event.create(time, (entitypatch) -> {

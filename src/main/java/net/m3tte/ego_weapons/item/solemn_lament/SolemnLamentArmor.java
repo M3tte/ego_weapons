@@ -139,6 +139,7 @@ public class SolemnLamentArmor extends GenericEgoWeaponsArmor {
 					new String[]{"pale", "offense_up"}, true));
 		}
 
+		/*
 		@Override
 		public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 			super.appendHoverText(itemstack, world, list, flag);
@@ -169,7 +170,7 @@ public class SolemnLamentArmor extends GenericEgoWeaponsArmor {
 
 			generateStatusHelp(list);
 
-		}
+		}*/
 
 	};
 	static Item butterfly = new SolemnLamentArmor(NoArmorToughnessMaterial.notoughness, EquipmentSlotType.HEAD, new Properties().tab(EgoWeaponsCreativeTabs.EGO_WEAPONS)) {

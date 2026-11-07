@@ -48,6 +48,7 @@ public class CrystalatelierItem extends EgoWeaponsWeapon {
 	}
 
 
+	/*
 	@Override
 	public void appendHoverText(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
@@ -79,7 +80,7 @@ public class CrystalatelierItem extends EgoWeaponsWeapon {
 		}
 
 		generateStatusHelp(list);
-	}
+	}*/
 
 
 	@Override

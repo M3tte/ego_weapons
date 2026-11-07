@@ -241,7 +241,7 @@ public class LampEGOSuit extends GenericEgoWeaponsArmor {
 
 			addPage(new SkillDescriptionPage(PAGE_TYPE.PASSIVE, this.identifier, "passive2", 4,
 					new String[]{"burn", "sinking", "feather_wick_bolt","lamp","black_fragility"},
-					EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.SALVATION.get()));
+					EgoWeaponsEffects.LAMP.get(), EgoWeaponsEffects.SALVATION.get(), EgoWeaponsEffects.DAZZLE.get()));
 
 
 		}

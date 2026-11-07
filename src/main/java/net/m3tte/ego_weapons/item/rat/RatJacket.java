@@ -143,7 +143,7 @@ public class RatJacket extends GenericEgoWeaponsArmor {
 			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.SPECIAL, this.identifier, "ability", 3,
 					new String[]{"speed_up","offense_up","defense_down"}, false));
 
-			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive", 2,
+			addPage(new SkillDescriptionPage(EmptyDescriptionPage.PAGE_TYPE.PASSIVE, this.identifier, "passive", 1,
 					new String[]{}, false));
 
 		}

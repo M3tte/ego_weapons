@@ -32,8 +32,7 @@
 + Overhauled Statistic Screen For armor
   + Nice damage resistance system and such.
 + Damage indicator color is now affected by the resistance. (Not multipliers).
-- [ ] Add a tag that identifies entity as living (Will be affected by pale damage and sanity?)
-- [ ] Add a tag to weapons that causes a force-reload for a given ammo type.
++ Went over Damage and Health literals in descriptions. Damage is now always red and health is always green.
 
 ### Balance Changes
 + Nerfed Mao Butcherblade :
@@ -110,3 +109,5 @@
 - [x] Add command for dealing damage
 - [x] Add target mark of the udjat
 - [x] Add stagger animation for nothing there
+- [ ] Add a tag that identifies entity as living (Will be affected by pale damage and sanity?)
+- [ ] Add a tag to weapons that causes a force-reload for a given ammo type.

@@ -125,7 +125,7 @@ public class BlackSilenceArmor  extends GenericEgoWeaponsArmor {
 
 		@Override
 		public EffectLike[] getKeywords() {
-			return new EffectLike[]{EgoWeaponsEffects.BURN.get(), EgoWeaponsEffects.D12FUEL};
+			return new EffectLike[]{EgoWeaponsEffects.POISE.get(), EgoWeaponsEffects.OFFENSE_LEVEL_UP.get()};
 		}
 
 		@Override
