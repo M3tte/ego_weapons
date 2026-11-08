@@ -111,3 +111,8 @@
 - [x] Add stagger animation for nothing there
 - [ ] Add a tag that identifies entity as living (Will be affected by pale damage and sanity?)
 - [ ] Add a tag to weapons that causes a force-reload for a given ammo type.
+- [ ] lamp trigger voiceline wrong
+- [ ] black silence,red mist and sunshower armor trigger don't work properly
+- [ ] AI Inject for lamp aggro
+- [ ] Jump attack for lamp crossbow
+- [ ] Draw arayashiki innate

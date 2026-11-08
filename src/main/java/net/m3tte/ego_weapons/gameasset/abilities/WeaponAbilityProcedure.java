@@ -69,7 +69,7 @@ public class WeaponAbilityProcedure {
 		altWeaponAbilities.put(EgoWeaponsItems.LCA_RIFLE.get(), new LCARifleAltWeaponAbility());
 
 	}
-	public static void setupWeaponAbilities() {
+	public synchronized static void setupWeaponAbilities() {
 		weaponAbilities = new HashMap<>();
 		BlackSilenceWeaponAbility bsWeaponAb = new BlackSilenceWeaponAbility();
 		weaponAbilities.put(EgoWeaponsItems.DURANDAL.get(), bsWeaponAb);

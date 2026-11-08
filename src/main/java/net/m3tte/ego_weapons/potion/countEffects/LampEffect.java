@@ -68,7 +68,7 @@ public class LampEffect extends PotencyOnlyStatus {
             boolean success = DialogueSystem.speakEvalDialogue(self, "dialogue.ego_weapons.skills.lamp_crossbow.trigger_dazzle", DialogueSystem.DialogueTypes.SKILL, TextFormatting.WHITE);
             if (!self.level.isClientSide() && success) {
                 self.level.playSound(null, self,
-                        EgoWeaponsSounds.LAMP_CROSSBOW_VOICE_SPECIAL_DAZZLE,
+                        EgoWeaponsSounds.LAMP_CROSSBOW_VOICE_TRIGGER_DAZZLE,
                         SoundCategory.PLAYERS, (float) 1, (float) 1);
             }
 

@@ -21,6 +21,7 @@ public class ArmorAbilityProcedure {
 		if (armorAbilities == null) {
 			setupArmorAbilities();
 		}
+
 		return armorAbilities;
 	}
 
@@ -28,7 +29,7 @@ public class ArmorAbilityProcedure {
 		return getArmorAbilities().getOrDefault(item, new ItemAbility());
 	}
 
-	public static void setupArmorAbilities() {
+	public static synchronized void setupArmorAbilities() {
 		armorAbilities = new HashMap<>();
 
 		// armorAbilities.put(CursedlabcoatItem.body.getItem(), new CursedLabCoatArmorAbility());
@@ -71,8 +72,6 @@ public class ArmorAbilityProcedure {
 
 	public static void runArmorAbility(PlayerEntity entity) {
 		EgoWeaponsModVars.PlayerVariables playerVars = entity.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(null);
-
-
 
 		Item chestItem = entity.getItemBySlot(EquipmentSlotType.CHEST).getItem();
 

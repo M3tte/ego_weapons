@@ -59,31 +59,26 @@ public class SunshowerArmorAbility extends ItemAbility {
     @Override
     public void trigger(PlayerEntity player, PlayerVariables playerVars) {
 
-        if (playerVars.light >= getBlipCost(player, playerVars)) {
+        if (!canTrigger(player, playerVars))
+            return;
+
+        playerVars.light -= getBlipCost(player, playerVars);
+        World world = player.level;
+        if (world instanceof ServerWorld) {
+            ((ServerWorld) world).sendParticles(EgoWeaponsParticles.EXPEND_LIGHT_PARTICLE.get(), player.getX(), (player.getY() + 1), player.getZ(), this.getBlipCost(player, playerVars), 0, 0.3, 0, 0.05);
+        }
+
+        LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
+        playerVars.globalcooldown = 100;
 
 
-
-
-            playerVars.light -= getBlipCost(player, playerVars);
-            World world = player.level;
-            if (world instanceof ServerWorld) {
-                ((ServerWorld) world).sendParticles(EgoWeaponsParticles.EXPEND_LIGHT_PARTICLE.get(), player.getX(), (player.getY() + 1), player.getZ(), this.getBlipCost(player, playerVars), 0, 0.3, 0, 0.05);
-            }
-
-            LivingEntityPatch<?> entitypatch = (LivingEntityPatch<?>) player.getCapability(EpicFightCapabilities.CAPABILITY_ENTITY, null).orElse(null);
-            playerVars.globalcooldown = 100;
-
-
-            entitypatch.playAnimationSynchronized(SunshowerMovesetAnims.SUNSHOWER_GET_AWAY, 0.1f);
+        entitypatch.playAnimationSynchronized(SunshowerMovesetAnims.SUNSHOWER_GET_AWAY, 0.1f);
             /*if (world instanceof ServerWorld) {
                 ((ServerWorld) world).sendParticles(DamagefxParticle.particle, x, (y + 1), z, (int) 4, 0.4, 0.6, 0.4, 0);
             }*/
-            //EgoWeaponsEffects.SINKING.get().increment(player, 1, 5);
-            AbilityUtils.applyBlipCooldown(5, playerVars);
-            playerVars.syncPlayerVariables(player);
-
-
-        }
+        //EgoWeaponsEffects.SINKING.get().increment(player, 1, 5);
+        AbilityUtils.applyBlipCooldown(5, playerVars);
+        playerVars.syncPlayerVariables(player);
 
 
     }
